@@ -1,0 +1,16 @@
+<div class="card-box">
+  <mat-card>
+    <mat-card-title>{{ actionable.name }}</mat-card-title>
+    <mat-card-subtitle>{{ actionable.brief }}</mat-card-subtitle>
+    <mat-card-content>{{ actionable.long }}</mat-card-content>
+    <mat-card-actions>
+      <button
+        *ngFor="let action of actionable.actions"
+        mat-button
+        (click)="actionSelected(action.id)"
+      >
+        {{ action.name }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
