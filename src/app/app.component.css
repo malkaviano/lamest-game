@@ -1,0 +1,8 @@
+div.main-content {
+  padding: 10px 40px 10px 40px;
+}
+
+.header, .footer {
+  text-align: center;
+  margin: 20px 20px 20px 20px;
+}
