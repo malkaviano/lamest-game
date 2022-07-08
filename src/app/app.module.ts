@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from '../material/material.module';
 import { InteractiveComponent } from './interactive/interactive.component';
 import { MainTextComponent } from './main-text/main-text.component';
+import { MainPanelComponent } from './main-panel/main-panel.component';
 
 @NgModule({
-  declarations: [AppComponent, InteractiveComponent, MainTextComponent],
+  declarations: [AppComponent, InteractiveComponent, MainTextComponent, MainPanelComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

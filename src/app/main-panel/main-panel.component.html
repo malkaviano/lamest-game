@@ -1,0 +1,11 @@
+<mat-grid-list cols="5" rowHeight="50px">
+  <mat-grid-tile colspan="5" rowspan="5">
+    <app-main-text [text]="scene.text"></app-main-text>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="4" *ngFor="let interactive of scene.interactives">
+    <app-interactive
+      [interactive]="interactive"
+      (onActionSelected)="actionSelected($event)"
+    ></app-interactive>
+  </mat-grid-tile>
+</mat-grid-list>
