@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { Actionable } from '../../definitions/actionable.definition';
-import { SelectedAction } from '../../definitions/selected-action.definition';
+import { Actionable } from '../definitions/actionable.definition';
+import { SelectedAction } from '../definitions/selected-action.definition';
 
 @Component({
   selector: 'app-actionable',

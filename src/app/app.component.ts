@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Actionable } from '../definitions/actionable.definition';
-import { ActionSelection } from '../definitions/action-selection.definition';
-import { SelectedAction } from '../definitions/selected-action.definition';
+import { Actionable } from './definitions/actionable.definition';
+import { ActionSelection } from './definitions/action-selection.definition';
+import { SelectedAction } from './definitions/selected-action.definition';
 
 @Component({
   selector: 'app-root',

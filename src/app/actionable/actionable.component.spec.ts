@@ -5,11 +5,11 @@ import { MatCardHarness } from '@angular/material/card/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 
 import { ActionableComponent } from './actionable.component';
-import { Actionable } from '../../definitions/actionable.definition';
+import { Actionable } from '../definitions/actionable.definition';
 import { MaterialModule } from '../../material/material.module';
-import { ActionSelection } from '../../definitions/action-selection.definition';
+import { ActionSelection } from '../definitions/action-selection.definition';
 import { first } from 'rxjs';
-import { SelectedAction } from '../../definitions/selected-action.definition';
+import { SelectedAction } from '../definitions/selected-action.definition';
 
 let loader: HarnessLoader;
 
