@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Scene } from '../definitions/scene.definition';
 import { SelectedAction } from '../definitions/selected-action.definition';
@@ -12,7 +13,10 @@ import { GameManagerService } from '../game-manager.service';
 export class MainPanelComponent implements OnInit {
   scene: Scene;
 
-  constructor(private readonly gameManager: GameManagerService) {
+  constructor(
+    private readonly snackBar: MatSnackBar,
+    private readonly gameManager: GameManagerService
+  ) {
     this.scene = gameManager.currentScene;
   }
 
@@ -22,5 +26,10 @@ export class MainPanelComponent implements OnInit {
 
   actionSelected(event: SelectedAction): void {
     this.scene.registerEvent(event);
+
+    this.snackBar.open(event.id, 'dismiss', {
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+    });
   }
 }
