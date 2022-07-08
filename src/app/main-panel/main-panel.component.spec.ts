@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MainPanelComponent } from './main-panel.component';
 
@@ -8,9 +10,9 @@ describe('MainPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainPanelComponent ]
-    })
-    .compileComponents();
+      imports: [MatSnackBarModule, NoopAnimationsModule],
+      declarations: [MainPanelComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MainPanelComponent);
     component = fixture.componentInstance;

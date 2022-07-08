@@ -17,7 +17,7 @@ describe('InteractiveComponent', () => {
   let component: InteractiveComponent;
   let fixture: ComponentFixture<InteractiveComponent>;
 
-  const actionable = new Interactive(
+  const interactive = new Interactive(
     'aid1',
     'Action1',
     'Simple action to be performed',
@@ -36,7 +36,7 @@ describe('InteractiveComponent', () => {
 
     fixture = TestBed.createComponent(InteractiveComponent);
 
-    fixture.componentInstance.actionable = actionable;
+    fixture.componentInstance.interactive = interactive;
     loader = TestbedHarnessEnvironment.loader(fixture);
   });
 

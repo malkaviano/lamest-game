@@ -1,24 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
 import { ActionSelection } from './definitions/action-selection.definition';
 import { Interactive } from './definitions/interactive.definition';
 import { Scene } from './definitions/scene.definition';
+import { SelectedAction } from './definitions/selected-action.definition';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameManagerService {
-  private readonly scene: Scene;
+  private currentScene: Scene;
 
-  constructor() {
-    this.scene = this.start();
-  }
+  private sceneChanged: BehaviorSubject<Scene>;
 
-  public get currentScene(): Scene {
-    return this.scene;
-  }
+  private playerAction: Subject<string>;
 
-  private start(): Scene {
-    return new Scene(
+  sceneChanged$: Observable<Scene>;
+
+  playerAction$: Observable<string>;
+
+  private readonly scenes = [
+    new Scene(
+      'scene1',
       'You are in you room.\n' +
         'The bed is unmade.\n' +
         "There're leftovers from yesterday over the table\n" +
@@ -52,6 +56,48 @@ export class GameManagerService {
           [new ActionSelection('exit_room1', 'Exit')]
         ),
       ]
-    );
+    ),
+    new Scene(
+      'scene2',
+      'This is the kitchen, your mom is angry and yelling at you!',
+      [
+        new Interactive(
+          'mom1',
+          'Angry mom',
+          'She is mad',
+          'After sleeping all day long, you deserve it',
+          [
+            new ActionSelection('tank_mom1', 'Shut up!'),
+            new ActionSelection('apologize_mom1', 'Sorry!'),
+          ]
+        ),
+      ]
+    ),
+  ];
+
+  constructor() {
+    this.currentScene = this.scenes[0];
+    this.sceneChanged = new BehaviorSubject<Scene>(this.currentScene);
+    this.sceneChanged$ = this.sceneChanged.asObservable();
+    this.playerAction = new Subject<string>();
+    this.playerAction$ = this.playerAction.asObservable();
+  }
+
+  public registerEvent(event: SelectedAction) {
+    this.playerAction.next(event.id);
+
+    switch (event.id) {
+      case 'exit_room1':
+        this.changeCurrentScene(1);
+
+        this.sceneChanged.next(this.currentScene);
+        break;
+      default:
+        break;
+    }
+  }
+
+  private changeCurrentScene(index: number): void {
+    this.currentScene = this.scenes[index];
   }
 }

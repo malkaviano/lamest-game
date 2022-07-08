@@ -8,16 +8,12 @@ import { SelectedAction } from '../definitions/selected-action.definition';
   templateUrl: './interactive.component.html',
   styleUrls: ['./interactive.component.css'],
 })
-export class InteractiveComponent implements OnInit {
+export class InteractiveComponent {
   @Input() interactive!: Interactive;
   @Output() onActionSelected: EventEmitter<SelectedAction>;
 
   constructor() {
     this.onActionSelected = new EventEmitter<SelectedAction>();
-  }
-
-  ngOnInit(): void {
-    /* TODO document why this method 'ngOnInit' is empty */
   }
 
   actionSelected(id: string): void {

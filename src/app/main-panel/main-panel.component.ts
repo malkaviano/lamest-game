@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 import { Scene } from '../definitions/scene.definition';
 import { SelectedAction } from '../definitions/selected-action.definition';
@@ -10,26 +11,41 @@ import { GameManagerService } from '../game-manager.service';
   templateUrl: './main-panel.component.html',
   styleUrls: ['./main-panel.component.css'],
 })
-export class MainPanelComponent implements OnInit {
-  scene: Scene;
+export class MainPanelComponent implements OnInit, OnDestroy {
+  scene!: Scene;
+
+  sceneChangedSubscription: Subscription;
+
+  playerActionSubscription: Subscription;
 
   constructor(
     private readonly snackBar: MatSnackBar,
     private readonly gameManager: GameManagerService
   ) {
-    this.scene = gameManager.currentScene;
+    this.sceneChangedSubscription = Subscription.EMPTY;
+    this.playerActionSubscription = Subscription.EMPTY;
+  }
+
+  ngOnDestroy(): void {
+    this.sceneChangedSubscription.unsubscribe();
+    this.playerActionSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    /* TODO document why this method 'ngOnInit' is empty */
+    this.sceneChangedSubscription = this.gameManager.sceneChanged$.subscribe(
+      (scene) => (this.scene = scene)
+    );
+
+    this.playerActionSubscription = this.gameManager.playerAction$.subscribe(
+      (action) =>
+        this.snackBar.open(action, 'dismiss', {
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
+        })
+    );
   }
 
   actionSelected(event: SelectedAction): void {
-    this.scene.registerEvent(event);
-
-    this.snackBar.open(event.id, 'dismiss', {
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
+    this.gameManager.registerEvent(event);
   }
 }
