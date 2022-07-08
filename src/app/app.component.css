@@ -1,8 +1,15 @@
 div.main-content {
   padding: 10px 40px 10px 40px;
+  min-height: 500px;
 }
 
-.header, .footer {
+div.header, div.footer {
   text-align: center;
-  margin: 20px 20px 20px 20px;
+  background-color: aqua;
+}
+
+div.header h3, div.footer h4  {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-height: 50px;
 }

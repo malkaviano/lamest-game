@@ -1,11 +1,13 @@
-<h3 class="header mat-display-2">Lamest Game Project</h3>
+<div class="header" role="header">
+  <h3 class="mat-display-2">Lamest Game Project</h3>
+</div>
 
 <div class="main-content" role="main">
   <mat-grid-list cols="5" rowHeight="50px">
     <mat-grid-tile colspan="5" rowspan="5">
-      <app-main-text [text]="text"></app-main-text>
+      <app-main-text [text]="scene.text"></app-main-text>
     </mat-grid-tile>
-    <mat-grid-tile rowspan="4" *ngFor="let interactive of interactives">
+    <mat-grid-tile rowspan="4" *ngFor="let interactive of scene.interactives">
       <app-interactive
         [interactive]="interactive"
         (onActionSelected)="actionSelected($event)"
@@ -13,22 +15,9 @@
     </mat-grid-tile>
   </mat-grid-list>
 </div>
-
-<h4 class="footer mat-display-1">
-  This is a toy project, any joke is just a personal opinion not intended to be
-  offensive to anyone.
-</h4>
+<hr />
+<div class="footer">
+  <h4 class="mat-display-1">This is a toy project.</h4>
+</div>
 
 <router-outlet></router-outlet>
-
-<!-- <h1 class="mat-display-4">display-4 &mdash; 112px light</h1>
-<h2 class="mat-display-3">display-3 &mdash; 56px normal</h2>
-<h3 class="mat-display-2">display-2 &mdash; 45px normal</h3>
-<h4 class="mat-display-1">display-1 &mdash; 34px normal</h4>
-<h1 class="mat-headline">headline (h1) &mdash; 24px normal</h1>
-<h2 class="mat-title">title (h2) &mdash; 20px medium</h2>
-<h3 class="mat-subheading-2">subheading-2 (h3) &mdash; 16px normal</h3>
-<h4 class="mat-subheading-1">subheading-1 (h4) &mdash; 15px normal</h4>
-<p class="mat-body-1">body-1 &mdash; 14px normal</p>
-<p class="mat-body-2">body-2 &mdash; 14px medium</p>
-<p class="mat-caption">caption &mdash; 12px normal</p> -->
