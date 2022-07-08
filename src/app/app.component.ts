@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Actionable } from './definitions/actionable.definition';
+import { Interactive } from './definitions/interactive.definition';
 import { ActionSelection } from './definitions/action-selection.definition';
 import { SelectedAction } from './definitions/selected-action.definition';
 
@@ -20,8 +20,8 @@ export class AppComponent {
     '\n' +
     'Pellentesque viverra quam eu lobortis volutpat. Pellentesque dui turpis, accumsan sed venenatis et, blandit a erat. Integer quis laoreet purus, ut hendrerit erat. Phasellus ut pretium libero, nec faucibus orci. Sed nec consectetur nibh. Praesent id interdum magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis feugiat posuere enim, mattis pellentesque diam viverra ut. Etiam rutrum sed lorem in consectetur.';
 
-  actionables = [
-    new Actionable(
+  interactives = [
+    new Interactive(
       'aid1',
       'Action1',
       'Simple action to be performed',
@@ -31,7 +31,7 @@ export class AppComponent {
         new ActionSelection('id2', "Don't do it"),
       ]
     ),
-    new Actionable(
+    new Interactive(
       'aid2',
       'Action2',
       'Simple action to be performed',

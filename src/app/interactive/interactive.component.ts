@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { Actionable } from '../definitions/actionable.definition';
+import { Interactive } from '../definitions/interactive.definition';
 import { SelectedAction } from '../definitions/selected-action.definition';
 
 @Component({
-  selector: 'app-actionable',
-  templateUrl: './actionable.component.html',
-  styleUrls: ['./actionable.component.css'],
+  selector: 'app-interactive',
+  templateUrl: './interactive.component.html',
+  styleUrls: ['./interactive.component.css'],
 })
-export class ActionableComponent implements OnInit {
-  @Input() actionable!: Actionable;
+export class InteractiveComponent implements OnInit {
+  @Input() interactive!: Interactive;
   @Output() onActionSelected: EventEmitter<SelectedAction>;
 
   constructor() {
@@ -21,6 +21,6 @@ export class ActionableComponent implements OnInit {
   }
 
   actionSelected(id: string): void {
-    this.onActionSelected.emit(new SelectedAction(id, this.actionable.id));
+    this.onActionSelected.emit(new SelectedAction(id, this.interactive.id));
   }
 }

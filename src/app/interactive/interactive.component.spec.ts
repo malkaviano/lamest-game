@@ -4,8 +4,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 
-import { ActionableComponent } from './actionable.component';
-import { Actionable } from '../definitions/actionable.definition';
+import { InteractiveComponent } from './interactive.component';
+import { Interactive } from '../definitions/interactive.definition';
 import { MaterialModule } from '../../material/material.module';
 import { ActionSelection } from '../definitions/action-selection.definition';
 import { first } from 'rxjs';
@@ -13,11 +13,11 @@ import { SelectedAction } from '../definitions/selected-action.definition';
 
 let loader: HarnessLoader;
 
-describe('ActionableComponent', () => {
-  let component: ActionableComponent;
-  let fixture: ComponentFixture<ActionableComponent>;
+describe('InteractiveComponent', () => {
+  let component: InteractiveComponent;
+  let fixture: ComponentFixture<InteractiveComponent>;
 
-  const actionable = new Actionable(
+  const actionable = new Interactive(
     'aid1',
     'Action1',
     'Simple action to be performed',
@@ -30,11 +30,11 @@ describe('ActionableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ActionableComponent],
+      declarations: [InteractiveComponent],
       imports: [MaterialModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ActionableComponent);
+    fixture = TestBed.createComponent(InteractiveComponent);
 
     fixture.componentInstance.actionable = actionable;
     loader = TestbedHarnessEnvironment.loader(fixture);

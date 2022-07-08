@@ -1,6 +1,6 @@
 import { ActionSelection } from './action-selection.definition';
 
-export class Actionable {
+export class Interactive {
   constructor(
     public readonly id: string,
     public readonly name: string,
