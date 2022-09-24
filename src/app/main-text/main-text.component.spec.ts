@@ -6,7 +6,7 @@ import { MainTextComponent } from './main-text.component';
 describe('MainTextComponent', () => {
   let component: MainTextComponent;
   let fixture: ComponentFixture<MainTextComponent>;
-  let text = 'p1\np2\np3\np4';
+  let paragraphs = ['p1', 'p2', 'p3', 'p4'];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,7 +16,7 @@ describe('MainTextComponent', () => {
     fixture = TestBed.createComponent(MainTextComponent);
     component = fixture.componentInstance;
 
-    fixture.componentInstance.text = text;
+    fixture.componentInstance.paragraphs = paragraphs;
 
     fixture.detectChanges();
   });

@@ -6,11 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./main-text.component.css'],
 })
 export class MainTextComponent {
+  @Input()
   public paragraphs: string[];
-
-  @Input() set text(value: string) {
-    this.paragraphs = value.split('\n');
-  }
 
   constructor() {
     this.paragraphs = [];

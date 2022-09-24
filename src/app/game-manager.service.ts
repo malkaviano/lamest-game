@@ -23,10 +23,12 @@ export class GameManagerService {
   private readonly scenes = [
     new Scene(
       'scene1',
-      'You are in you room.\n' +
-        'The bed is unmade.\n' +
-        "There're leftovers from yesterday over the table\n" +
-        'And your mom is calling you downstairs\n',
+      [
+        'You are in you room.',
+        'The bed is unmade.',
+        "There're leftovers from yesterday over the table",
+        'And your mom is calling you downstairs',
+      ],
       [
         new Interactive(
           'bed1',
@@ -59,7 +61,7 @@ export class GameManagerService {
     ),
     new Scene(
       'scene2',
-      'This is the kitchen, your mom is angry and yelling at you!',
+      ['This is the kitchen, your mom is angry and yelling at you!'],
       [
         new Interactive(
           'mom1',
