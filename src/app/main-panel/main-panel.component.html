@@ -1,11 +1,83 @@
-<mat-grid-list cols="5" rowHeight="50px">
-  <mat-grid-tile colspan="5" rowspan="6">
-    <app-main-text [paragraphs]="scene.paragraphs"></app-main-text>
-  </mat-grid-tile>
-  <mat-grid-tile rowspan="5" *ngFor="let interactive of scene.interactives">
+<mat-grid-list cols="1" rowHeight="fit">
+  <div class="main-panel flex-panel debug">
+    <div class="description item debug">
+      <app-main-text [paragraphs]="scene.paragraphs"></app-main-text>
+    </div>
+    <div class="logging item debug">
+      <p>
+        This is log. something lame happened This is log. something lame
+        happened This is log. something lame happened
+      </p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+    </div>
+
+    <div class="item debug">
+      <p>
+        This is log. something lame happened This is log. something lame
+        happened This is log. something lame happened
+      </p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+    </div>
+
+    <div class="item debug">
+      <p>
+        This is log. something lame happened This is log. something lame
+        happened This is log. something lame happened
+      </p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+      <p>This is log. something lame happened</p>
+    </div>
+  </div>
+  <div class="interaction-panel flex-panel debug">
     <app-interactive
+      class="item"
+      *ngFor="let interactive of scene.interactives"
       [interactive]="interactive"
       (onActionSelected)="actionSelected($event)"
     ></app-interactive>
-  </mat-grid-tile>
+  </div>
 </mat-grid-list>
