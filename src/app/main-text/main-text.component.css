@@ -1,5 +1,6 @@
 div.main-text {
-  max-height: 200px;
+  min-height: 200px;
+  max-height: 600px;
   overflow-y: auto;
   text-align: justify;
 }

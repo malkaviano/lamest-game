@@ -1,11 +1,37 @@
-<div class="header" role="header">
-  <h3 class="mat-display-2">Lamest Game Project</h3>
+<div class="header mat-headline" role="header">
+  <mat-toolbar color="primary">
+    <button
+      mat-icon-button
+      class="sidenav-icon"
+      aria-label="Sidenav icon-button with menu icon"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Lamest Game</span>
+    <span class="span-spacer"></span>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+    >
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
 </div>
 
-<div class="main-content" role="main">
-  <router-outlet></router-outlet>
-</div>
-<hr />
-<div class="footer">
-  <h4 class="mat-display-1">This is a toy project.</h4>
+<div class="main" role="main">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side">Sidenav content</mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
