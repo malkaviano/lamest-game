@@ -5,7 +5,7 @@
   justify-content: space-around;
 }
 
-.main-panel .item {
+.panel-item {
   min-width: 200px;
   max-width: 400px;
   min-height: 200px;
@@ -13,9 +13,5 @@
   overflow-y: auto;
   overflow-x: auto;
   padding: 15px 15px;
-  margin: 5px 5px;
-}
-
-.interaction-panel .item {
   margin: 10px 10px;
 }

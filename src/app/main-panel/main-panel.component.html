@@ -1,83 +1,81 @@
-<mat-grid-list cols="1" rowHeight="fit">
-  <div class="main-panel flex-panel debug">
-    <div class="description item debug">
-      <app-main-text [paragraphs]="scene.paragraphs"></app-main-text>
-    </div>
-    <div class="logging item debug">
-      <p>
-        This is log. something lame happened This is log. something lame
-        happened This is log. something lame happened
-      </p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-    </div>
-
-    <div class="item debug">
-      <p>
-        This is log. something lame happened This is log. something lame
-        happened This is log. something lame happened
-      </p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-    </div>
-
-    <div class="item debug">
-      <p>
-        This is log. something lame happened This is log. something lame
-        happened This is log. something lame happened
-      </p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-      <p>This is log. something lame happened</p>
-    </div>
+<div class="flex-panel debug">
+  <div class="description panel-item debug">
+    <app-main-text [paragraphs]="scene.paragraphs"></app-main-text>
   </div>
-  <div class="interaction-panel flex-panel debug">
-    <app-interactive
-      class="item"
-      *ngFor="let interactive of scene.interactives"
-      [interactive]="interactive"
-      (onActionSelected)="actionSelected($event)"
-    ></app-interactive>
+  <app-interactive
+    class="item"
+    *ngFor="let interactive of scene.interactives"
+    [interactive]="interactive"
+    (onActionSelected)="actionSelected($event)"
+  ></app-interactive>
+</div>
+<div class="flex-panel debug">
+  <div class="logging panel-item debug">
+    <p>
+      This is log. something lame happened This is log. something lame happened
+      This is log. something lame happened
+    </p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
   </div>
-</mat-grid-list>
+
+  <div class="panel-item debug">
+    <p>
+      This is log. something lame happened This is log. something lame happened
+      This is log. something lame happened
+    </p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+  </div>
+
+  <div class="panel-item debug">
+    <p>
+      This is log. something lame happened This is log. something lame happened
+      This is log. something lame happened
+    </p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+    <p>This is log. something lame happened</p>
+  </div>
+</div>
