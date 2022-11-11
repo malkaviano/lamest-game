@@ -1,0 +1,17 @@
+.flex-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-around;
+}
+
+.panel-item {
+  min-width: 250px;
+  max-width: 450px;
+  min-height: 50px;
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 5px 5px;
+  margin: 2px 2px;
+}

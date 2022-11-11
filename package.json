@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --browsers ChromeHeadless",
+    "playwright": "playwright test"
   },
   "private": true,
   "dependencies": {
@@ -26,7 +27,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.0.4",
-    "@angular/cli": "~14.0.4",
+    "@angular/cli": "~14.2.9",
     "@angular/compiler-cli": "^14.0.0",
     "@playwright/test": "^1.23.1",
     "@types/jasmine": "~4.0.0",

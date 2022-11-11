@@ -8,9 +8,20 @@ import { MaterialModule } from '../material/material.module';
 import { InteractiveComponent } from './interactive/interactive.component';
 import { MainTextComponent } from './main-text/main-text.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
+import { CharacteristicComponent } from './widgets/characteristic/characteristic.component';
+import { CharacteristicsComponent } from './panels/characteristics/characteristics.component';
+import { CharacterComponent } from './pages/character/character.component';
 
 @NgModule({
-  declarations: [AppComponent, InteractiveComponent, MainTextComponent, MainPanelComponent],
+  declarations: [
+    AppComponent,
+    InteractiveComponent,
+    MainTextComponent,
+    MainPanelComponent,
+    CharacteristicComponent,
+    CharacteristicsComponent,
+    CharacterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

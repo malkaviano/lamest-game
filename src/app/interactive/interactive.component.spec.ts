@@ -4,17 +4,17 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 
+import { first } from 'rxjs';
+
 import { InteractiveComponent } from './interactive.component';
 import { Interactive } from '../definitions/interactive.definition';
 import { MaterialModule } from '../../material/material.module';
 import { ActionSelection } from '../definitions/action-selection.definition';
-import { first } from 'rxjs';
 import { SelectedAction } from '../definitions/selected-action.definition';
 
 let loader: HarnessLoader;
 
 describe('InteractiveComponent', () => {
-  let component: InteractiveComponent;
   let fixture: ComponentFixture<InteractiveComponent>;
 
   const interactive = new Interactive(

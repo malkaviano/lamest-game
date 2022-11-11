@@ -1,0 +1,8 @@
+.spacing {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-block {
+  display: block;
+}

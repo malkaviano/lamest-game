@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { MainPanelComponent } from './main-panel.component';
 
@@ -12,6 +13,7 @@ describe('MainPanelComponent', () => {
     await TestBed.configureTestingModule({
       imports: [MatSnackBarModule, NoopAnimationsModule],
       declarations: [MainPanelComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MainPanelComponent);
