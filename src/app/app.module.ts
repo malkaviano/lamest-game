@@ -8,9 +8,9 @@ import { MaterialModule } from '../material/material.module';
 import { InteractiveComponent } from './interactive/interactive.component';
 import { MainTextComponent } from './main-text/main-text.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
-import { CharacteristicComponent } from './widgets/characteristic/characteristic.component';
-import { CharacteristicsComponent } from './panels/characteristics/characteristics.component';
+import { UniformPanelComponent } from './panels/uniform-panel/uniform-panel.component';
 import { CharacterComponent } from './pages/character/character.component';
+import { KeyValueComponent } from './widgets/key-value/key-value.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +18,9 @@ import { CharacterComponent } from './pages/character/character.component';
     InteractiveComponent,
     MainTextComponent,
     MainPanelComponent,
-    CharacteristicComponent,
-    CharacteristicsComponent,
+    UniformPanelComponent,
     CharacterComponent,
+    KeyValueComponent,
   ],
   imports: [
     BrowserModule,

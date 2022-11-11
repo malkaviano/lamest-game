@@ -4,25 +4,25 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
-import { CharacteristicsComponent } from './characteristics.component';
-import { Characteristic } from '../../definitions/characteristic.definition';
+import { UniformPanelComponent } from './uniform-panel.component';
+import { KeyValue } from '../../definitions/key-value.definition';
 
-describe('CharacteristicsComponent', () => {
-  let component: CharacteristicsComponent;
-  let fixture: ComponentFixture<CharacteristicsComponent>;
+describe('UniformPanelComponent', () => {
+  let component: UniformPanelComponent;
+  let fixture: ComponentFixture<UniformPanelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CharacteristicsComponent],
+      declarations: [UniformPanelComponent],
       imports: [MaterialModule, NoopAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CharacteristicsComponent);
+    fixture = TestBed.createComponent(UniformPanelComponent);
 
     component = fixture.componentInstance;
 
-    fixture.componentInstance.characteristics = characteristics();
+    fixture.componentInstance.keyValues = characteristics();
 
     fixture.detectChanges();
   });
@@ -43,11 +43,11 @@ describe('CharacteristicsComponent', () => {
 });
 
 const characteristics = () => [
-  new Characteristic('STR', 10, 'The character physical force'),
-  new Characteristic('CON', 12, 'The character body constitution'),
-  new Characteristic('SIZ', 11, 'The character body shape'),
-  new Characteristic('DEX', 9, 'The character agility'),
-  new Characteristic('INT', 13, 'The character intelligence'),
-  new Characteristic('POW', 14, 'The character mental strength'),
-  new Characteristic('APP', 16, 'The character looks'),
+  new KeyValue('STR', '10', 'The character physical force'),
+  new KeyValue('CON', '12', 'The character body constitution'),
+  new KeyValue('SIZ', '11', 'The character body shape'),
+  new KeyValue('DEX', '9', 'The character agility'),
+  new KeyValue('INT', '13', 'The character intelligence'),
+  new KeyValue('POW', '14', 'The character mental strength'),
+  new KeyValue('APP', '16', 'The character looks'),
 ];

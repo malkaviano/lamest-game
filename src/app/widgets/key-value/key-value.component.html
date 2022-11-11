@@ -1,0 +1,13 @@
+<div class="spacing">
+  <div
+    class="flex-block"
+    matTooltip="{{ keyValue.description }}"
+    attr.data-testid="tooltip-{{ keyValue.key }}"
+  >
+    <span attr.data-testid="key-{{ keyValue.key }}">{{ keyValue.key }}</span>
+    <span>:&nbsp;&nbsp;</span>
+    <span attr.data-testid="value-{{ keyValue.key }}">{{
+      keyValue.value
+    }}</span>
+  </div>
+</div>

@@ -4,27 +4,23 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
-import { CharacteristicComponent } from './characteristic.component';
-import { Characteristic } from '../../definitions/characteristic.definition';
+import { KeyValueComponent } from './key-value.component';
+import { KeyValue } from '../../definitions/key-value.definition';
 
-describe('CharacteristicComponent', () => {
-  let fixture: ComponentFixture<CharacteristicComponent>;
-  let component: CharacteristicComponent;
+describe('KeyValueComponent', () => {
+  let fixture: ComponentFixture<KeyValueComponent>;
+  let component: KeyValueComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CharacteristicComponent],
+      declarations: [KeyValueComponent],
       imports: [MaterialModule, NoopAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CharacteristicComponent);
+    fixture = TestBed.createComponent(KeyValueComponent);
 
-    fixture.componentInstance.characteristic = characteristic(
-      'STR',
-      8,
-      'Strength'
-    );
+    fixture.componentInstance.keyValue = characteristic('STR', '8', 'Strength');
 
     component = fixture.componentInstance;
 
@@ -36,19 +32,9 @@ describe('CharacteristicComponent', () => {
   });
 
   it('should have name', async () => {
-    const input = fixture.debugElement.query(
-      By.css('[data-testid="name-STR"]')
-    );
+    const input = fixture.debugElement.query(By.css('[data-testid="key-STR"]'));
 
     expect(input.nativeElement.innerHTML).toEqual('STR');
-  });
-
-  it('should have description', async () => {
-    const input = fixture.debugElement.query(
-      By.css('[data-testid="description-STR"]')
-    );
-
-    expect(input.nativeElement.innerHTML).toEqual('Strength');
   });
 
   it('should have value', async () => {
@@ -60,5 +46,5 @@ describe('CharacteristicComponent', () => {
   });
 });
 
-const characteristic = (name: string, value: number, description: string) =>
-  new Characteristic(name, value, description);
+const characteristic = (name: string, value: string, description: string) =>
+  new KeyValue(name, value, description);

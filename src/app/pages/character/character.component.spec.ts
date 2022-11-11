@@ -28,4 +28,8 @@ describe('CharacterComponent', () => {
   it('should have characteristics', () => {
     expect(component.characteristics.length).toBe(7);
   });
+
+  it('should have characteristics', () => {
+    expect(component.identities.length).toBe(7);
+  });
 });
