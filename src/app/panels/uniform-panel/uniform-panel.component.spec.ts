@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
 import { UniformPanelComponent } from './uniform-panel.component';
-import { KeyValue } from '../../definitions/key-value.definition';
+import { KeyValueDescription } from '../../definitions/key-value-description.definition';
 
 describe('UniformPanelComponent', () => {
   let component: UniformPanelComponent;
@@ -43,11 +43,11 @@ describe('UniformPanelComponent', () => {
 });
 
 const characteristics = () => [
-  new KeyValue('STR', '10', 'The character physical force'),
-  new KeyValue('CON', '12', 'The character body constitution'),
-  new KeyValue('SIZ', '11', 'The character body shape'),
-  new KeyValue('DEX', '9', 'The character agility'),
-  new KeyValue('INT', '13', 'The character intelligence'),
-  new KeyValue('POW', '14', 'The character mental strength'),
-  new KeyValue('APP', '16', 'The character looks'),
+  new KeyValueDescription('STR', '10', 'The character physical force'),
+  new KeyValueDescription('CON', '12', 'The character body constitution'),
+  new KeyValueDescription('SIZ', '11', 'The character body shape'),
+  new KeyValueDescription('DEX', '9', 'The character agility'),
+  new KeyValueDescription('INT', '13', 'The character intelligence'),
+  new KeyValueDescription('POW', '14', 'The character mental strength'),
+  new KeyValueDescription('APP', '16', 'The character looks'),
 ];

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { KeyValue } from '../../definitions/key-value.definition';
+import { KeyValueDescription } from '../../definitions/key-value-description.definition';
 
 @Component({
   selector: 'app-uniform-panel',
@@ -8,5 +8,5 @@ import { KeyValue } from '../../definitions/key-value.definition';
   styleUrls: ['./uniform-panel.component.css'],
 })
 export class UniformPanelComponent {
-  @Input() public keyValues!: KeyValue[];
+  @Input() public keyValues!: KeyValueDescription[];
 }

@@ -9,7 +9,7 @@ import { InteractiveComponent } from './interactive/interactive.component';
 import { MainTextComponent } from './main-text/main-text.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
 import { UniformPanelComponent } from './panels/uniform-panel/uniform-panel.component';
-import { CharacterComponent } from './pages/character/character.component';
+import { CharacterPageComponent } from './pages/character-page/character-page.component';
 import { KeyValueComponent } from './widgets/key-value/key-value.component';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { KeyValueComponent } from './widgets/key-value/key-value.component';
     MainTextComponent,
     MainPanelComponent,
     UniformPanelComponent,
-    CharacterComponent,
+    CharacterPageComponent,
     KeyValueComponent,
   ],
   imports: [

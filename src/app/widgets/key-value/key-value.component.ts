@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { KeyValue } from '../../definitions/key-value.definition';
+import { KeyValueDescription } from '../../definitions/key-value-description.definition';
 
 @Component({
   selector: 'app-key-value',
@@ -8,5 +8,5 @@ import { KeyValue } from '../../definitions/key-value.definition';
   styleUrls: ['./key-value.component.css'],
 })
 export class KeyValueComponent {
-  @Input() public keyValue!: KeyValue;
+  @Input() public keyValue!: KeyValueDescription;
 }

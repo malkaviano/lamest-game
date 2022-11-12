@@ -4,7 +4,7 @@
   </mat-toolbar>
 </div>
 
-<app-uniform-panel [keyValues]="identities"></app-uniform-panel>
+<app-uniform-panel [keyValues]="identityView.keyValues"></app-uniform-panel>
 
 <div class="title-border">
   <mat-toolbar>
@@ -12,13 +12,19 @@
   </mat-toolbar>
 </div>
 
-<app-uniform-panel [keyValues]="characteristics"></app-uniform-panel>
+<app-uniform-panel
+  [keyValues]="characteristicsView.keyValues"
+></app-uniform-panel>
 
 <div class="title-border">
   <mat-toolbar>
     <span class="title-text">Attributes</span>
   </mat-toolbar>
 </div>
+
+<app-uniform-panel
+  [keyValues]="derivedAttributesView.keyValues"
+></app-uniform-panel>
 
 <div class="title-border">
   <mat-toolbar>

@@ -9,13 +9,13 @@ const endpoint = 'character-generation';
 const characteristics = ['STR', 'CON', 'DEX', 'SIZ', 'INT', 'POW', 'APP'];
 
 const identities = [
-  'Name',
-  'Profession',
-  'Gender',
-  'Age',
-  'Race',
-  'Height',
-  'Weight',
+  'NAME',
+  'PROFESSION',
+  'GENDER',
+  'AGE',
+  'RACE',
+  'HEIGHT',
+  'WEIGHT',
 ];
 
 test.beforeEach(async ({ page }) => {

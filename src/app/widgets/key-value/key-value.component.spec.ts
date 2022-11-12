@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
 import { KeyValueComponent } from './key-value.component';
-import { KeyValue } from '../../definitions/key-value.definition';
+import { KeyValueDescription } from '../../definitions/key-value-description.definition';
 
 describe('KeyValueComponent', () => {
   let fixture: ComponentFixture<KeyValueComponent>;
@@ -47,4 +47,4 @@ describe('KeyValueComponent', () => {
 });
 
 const characteristic = (name: string, value: string, description: string) =>
-  new KeyValue(name, value, description);
+  new KeyValueDescription(name, value, description);

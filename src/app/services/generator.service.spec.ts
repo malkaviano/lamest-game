@@ -1,5 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-
+import { anyNumber, instance, mock, when } from 'ts-mockito';
+import { CharacterIdentity } from '../definitions/character-identity.definition';
+import { Characteristic } from '../definitions/characteristic.definition';
+import { Characteristics } from '../definitions/characteristics.definition';
+import { IdentityFeature } from '../definitions/identity-feature.definition';
 import { ages } from '../literals/age.literal';
 import { genders } from '../literals/gender.literal';
 import { heights } from '../literals/height.literal';
@@ -8,12 +12,22 @@ import { races } from '../literals/race.literal';
 import { weights } from '../literals/weight.literal';
 
 import { GeneratorService } from './generator.service';
+import { RandomIntService } from './random-int.service';
+
+const mockedRandomIntService = mock(RandomIntService);
 
 describe('GeneratorService', () => {
   let service: GeneratorService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: RandomIntService,
+          useValue: instance(mockedRandomIntService),
+        },
+      ],
+    });
     service = TestBed.inject(GeneratorService);
   });
 
@@ -22,86 +36,64 @@ describe('GeneratorService', () => {
   });
 
   describe('generating random characteristics', () => {
-    it('should generate random characteristics between 8 and 18', () => {
+    it('should have STR | CON | SIZ | DEX | INT | POW | APP', () => {
+      when(mockedRandomIntService.getRandomInterval(1, 6))
+        .thenReturn(1)
+        .thenReturn(3)
+        .thenReturn(3)
+        .thenReturn(3)
+        .thenReturn(3)
+        .thenReturn(2)
+        .thenReturn(4)
+        .thenReturn(4)
+        .thenReturn(3)
+        .thenReturn(4)
+        .thenReturn(1)
+        .thenReturn(1)
+        .thenReturn(2)
+        .thenReturn(1);
+
       const characteristics = service.characteristics();
 
-      expect(
-        characteristics.every(
-          (c) => parseInt(c.value) >= 8 && parseInt(c.value) <= 18
-        )
-      ).toBe(true);
-    });
-
-    ['STR', 'CON', 'SIZ', 'DEX', 'INT', 'POW', 'APP'].forEach((name) => {
-      it(`should generate random ${name}`, () => {
-        const characteristics = service.characteristics();
-
-        expect(characteristics.some((c) => c.key === name)).toBe(true);
-      });
+      expect(characteristics).toEqual(expectedCharacteristics);
     });
   });
 
   describe('generating random identity', () => {
-    it('should generate random height', () => {
-      const result = randomChecker(heights, () => service.height());
+    it('should have new identity', () => {
+      when(
+        mockedRandomIntService.getRandomInterval(anyNumber(), anyNumber())
+      ).thenReturn(0);
 
-      expect(result).toBe(true);
-    });
+      const identity = service.identity();
 
-    it('should generate random weight', () => {
-      const result = randomChecker(weights, () => service.weight());
-
-      expect(result).toBe(true);
-    });
-
-    it('should generate random age', () => {
-      const result = randomChecker(ages, () => service.age());
-
-      expect(result).toBe(true);
-    });
-
-    it('should generate random gender', () => {
-      const result = randomChecker(genders, () => service.gender());
-
-      expect(result).toBe(true);
-    });
-
-    it('should generate random race', () => {
-      const result = randomChecker(races, () => service.race());
-
-      expect(result).toBe(true);
-    });
-
-    it('should generate random profession', () => {
-      const result = randomChecker(professions, () => service.profession());
-
-      expect(result).toBe(true);
-    });
-
-    it('should generate random name', () => {
-      const result = service.name().split(' ').length;
-
-      expect(result).toBe(2);
+      expect(identity.profession).toEqual(expectedIdentity.profession);
+      expect(identity.age).toEqual(expectedIdentity.age);
+      expect(identity.gender).toEqual(expectedIdentity.gender);
+      expect(identity.race).toEqual(expectedIdentity.race);
+      expect(identity.height).toEqual(expectedIdentity.height);
+      expect(identity.weight).toEqual(expectedIdentity.weight);
+      expect(identity.name).not.toBeNull();
     });
   });
 });
 
-const randomChecker = (keys: string[], f: () => string): boolean => {
-  const samples = keys.length * 5;
+const expectedCharacteristics = new Characteristics(
+  new Characteristic('STR', 10, 'The character physical force'),
+  new Characteristic('CON', 12, 'The character body constitution'),
+  new Characteristic('SIZ', 11, 'The character body shape'),
+  new Characteristic('DEX', 14, 'The character agility'),
+  new Characteristic('INT', 13, 'The character intelligence'),
+  new Characteristic('POW', 8, 'The character mental strength'),
+  new Characteristic('APP', 9, 'The character looks')
+);
 
-  const results: any = {};
-
-  for (let index = 0; index < samples; index++) {
-    const r = f();
-
-    results[r] = true;
-  }
-
-  let result = true;
-
-  for (const key of keys) {
-    result = result && results[key];
-  }
-
-  return result && !!!results['undefined'];
-};
+const expectedIdentity = new CharacterIdentity(
+  new IdentityFeature('NAME', 'Alice Shields', 'Character name'),
+  new IdentityFeature('PROFESSION', professions[0], 'Character profession'),
+  new IdentityFeature('GENDER', genders[0], 'Character gender'),
+  new IdentityFeature('AGE', ages[0], 'Character age'),
+  new IdentityFeature('RACE', races[0], 'Character race'),
+  new IdentityFeature('HEIGHT', heights[0], 'Character height'),
+  new IdentityFeature('WEIGHT', weights[0], 'Character weight')
+);

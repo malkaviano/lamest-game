@@ -1,4 +1,4 @@
-export class KeyValue {
+export class KeyValueDescription {
   constructor(
     public readonly key: string,
     public readonly value: string,
