@@ -3,11 +3,10 @@ import { anyNumber, instance, mock, when } from 'ts-mockito';
 import { CharacterIdentity } from '../definitions/character-identity.definition';
 import { Characteristic } from '../definitions/characteristic.definition';
 import { Characteristics } from '../definitions/characteristics.definition';
-import { IdentityFeature } from '../definitions/identity-feature.definition';
+import { professions } from '../definitions/profession.definition';
 import { ages } from '../literals/age.literal';
 import { genders } from '../literals/gender.literal';
 import { heights } from '../literals/height.literal';
-import { professions } from '../literals/profession.literal';
 import { races } from '../literals/race.literal';
 import { weights } from '../literals/weight.literal';
 
@@ -79,21 +78,21 @@ describe('GeneratorService', () => {
 });
 
 const expectedCharacteristics = new Characteristics(
-  new Characteristic('STR', 10, 'The character physical force'),
-  new Characteristic('CON', 12, 'The character body constitution'),
-  new Characteristic('SIZ', 11, 'The character body shape'),
-  new Characteristic('DEX', 14, 'The character agility'),
-  new Characteristic('INT', 13, 'The character intelligence'),
-  new Characteristic('POW', 8, 'The character mental strength'),
-  new Characteristic('APP', 9, 'The character looks')
+  new Characteristic('STR', 10),
+  new Characteristic('CON', 12),
+  new Characteristic('SIZ', 11),
+  new Characteristic('DEX', 14),
+  new Characteristic('INT', 13),
+  new Characteristic('POW', 8),
+  new Characteristic('APP', 9)
 );
 
 const expectedIdentity = new CharacterIdentity(
-  new IdentityFeature('NAME', 'Alice Shields', 'Character name'),
-  new IdentityFeature('PROFESSION', professions[0], 'Character profession'),
-  new IdentityFeature('GENDER', genders[0], 'Character gender'),
-  new IdentityFeature('AGE', ages[0], 'Character age'),
-  new IdentityFeature('RACE', races[0], 'Character race'),
-  new IdentityFeature('HEIGHT', heights[0], 'Character height'),
-  new IdentityFeature('WEIGHT', weights[0], 'Character weight')
+  'Alice Shields',
+  professions.keyValues[0],
+  genders[0],
+  ages[0],
+  races[0],
+  heights[0],
+  weights[0]
 );

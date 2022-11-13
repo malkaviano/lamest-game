@@ -3,7 +3,6 @@ import { CharacteristicNameLiteral } from '../literals/characteristic-name.liter
 export class Characteristic {
   constructor(
     public readonly key: CharacteristicNameLiteral,
-    public readonly value: number,
-    public readonly description: string
+    public readonly value: number
   ) {}
 }

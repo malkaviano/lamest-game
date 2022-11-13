@@ -1,19 +1,27 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '../definitions/array-view.definition';
-import { KeyValueDescription } from '../definitions/key-value-description.definition';
 import { GeneratorService } from './generator.service';
 import { Characteristics } from '../definitions/characteristics.definition';
 import { DerivedAttributes } from '../definitions/attributes.definition';
 import { DerivedAttribute } from '../definitions/attribute.definition';
 import { CharacterIdentity } from '../definitions/character-identity.definition';
-import { IdentityFeature } from '../definitions/identity-feature.definition';
+import { SkillService } from './skill.service';
+import { CharacterSkills } from '../definitions/character-skills.definition';
+import { professionSkillDefinitions } from '../definitions/profession.definition';
+import { SkillNameLiteral } from '../literals/skill-name.literal';
+import {
+  commonSkillDefinitions,
+  skillDefinitions,
+} from '../definitions/skill.definition';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CharacterService {
-  constructor(private readonly generator: GeneratorService) {}
+  constructor(
+    private readonly generator: GeneratorService,
+    private readonly skillService: SkillService
+  ) {}
 
   public identity(): CharacterIdentity {
     return this.generator.identity();
@@ -31,9 +39,46 @@ export class CharacterService {
     const pp = characteristics.pow.value;
 
     return new DerivedAttributes(
-      new DerivedAttribute('HP', hp, 'The character hit points'),
-      new DerivedAttribute('PP', pp, 'The character power points'),
-      new DerivedAttribute('MOV', 10, 'The character movement')
+      new DerivedAttribute('HP', hp),
+      new DerivedAttribute('PP', pp),
+      new DerivedAttribute('MOV', 10)
     );
+  }
+
+  public skills(
+    identity: CharacterIdentity,
+    characteristics: Characteristics
+  ): CharacterSkills {
+    const professionSkills = professionSkillDefinitions[identity.profession];
+
+    const distributedProfessionSkills = this.skillService.distribute(
+      this.skillService.newSkillSetFor(professionSkills),
+      300
+    );
+
+    const characterSkills: CharacterSkills = {};
+
+    Object.assign(
+      characterSkills,
+      this.skillService.newSkillSetFor(commonSkillDefinitions),
+      distributedProfessionSkills
+    );
+
+    const distributedCharacterSkills = this.skillService.distribute(
+      characterSkills,
+      characteristics.int.value * 10
+    );
+
+    for (const key in distributedCharacterSkills) {
+      if (
+        Object.prototype.hasOwnProperty.call(distributedCharacterSkills, key)
+      ) {
+        const baseValue =
+          skillDefinitions[key as SkillNameLiteral].base(characteristics);
+
+        distributedCharacterSkills[key] += baseValue;
+      }
+    }
+    return distributedCharacterSkills;
   }
 }

@@ -1,8 +1,8 @@
 export type IdentityLiteral =
-  | 'NAME'
-  | 'PROFESSION'
-  | 'GENDER'
-  | 'AGE'
-  | 'RACE'
-  | 'HEIGHT'
-  | 'WEIGHT';
+  | 'name'
+  | 'profession'
+  | 'gender'
+  | 'age'
+  | 'race'
+  | 'height'
+  | 'weight';
