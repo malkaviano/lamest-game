@@ -6,14 +6,11 @@ import { DerivedAttributesDefinition } from '../definitions/attributes.definitio
 import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
 import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { SkillService } from './skill.service';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { professionSkillDefinitions } from '../definitions/profession.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
-import {
-  commonSkillDefinitions,
-  skillDefinitions,
-} from '../definitions/skill.definition';
+import { commonSkillDefinitions } from '../definitions/skill.definition';
 import { CharacterDefinition } from '../definitions/character.definition';
+import { ProfessionLiteral } from '../literals/profession.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -25,11 +22,14 @@ export class CharacterService {
   ) {}
 
   public character(): CharacterDefinition {
+    const identity = this.identity();
+    const characteristics = this.characteristics();
+
     return new CharacterDefinition(
-      this.identity(),
-      this.characteristics(),
-      this.attributes(this.characteristics()),
-      this.skills(this.identity(), this.characteristics())
+      identity,
+      characteristics,
+      this.attributes(characteristics),
+      this.skills(identity.profession, characteristics.int.value)
     );
   }
 
@@ -58,39 +58,27 @@ export class CharacterService {
   }
 
   private skills(
-    identity: CharacterIdentityDefinition,
-    characteristics: CharacteristicsDefinition
-  ): KeyValueInterface {
-    const professionSkills = professionSkillDefinitions[identity.profession];
+    profession: ProfessionLiteral,
+    intelligence: number
+  ): Map<SkillNameLiteral, number> {
+    const professionSkills = professionSkillDefinitions[profession];
 
-    const distributedProfessionSkills = this.skillService.distribute(
+    const distributedSkills = this.skillService.distribute(
       this.skillService.newSkillSetFor(professionSkills),
       300
     );
 
-    const characterSkills: KeyValueInterface = {};
-
-    Object.assign(
-      characterSkills,
-      this.skillService.newSkillSetFor(commonSkillDefinitions),
-      distributedProfessionSkills
-    );
+    commonSkillDefinitions.keyValues.forEach((skillName) => {
+      if (!distributedSkills.has(skillName)) {
+        distributedSkills.set(skillName, 0);
+      }
+    });
 
     const distributedCharacterSkills = this.skillService.distribute(
-      characterSkills,
-      characteristics.int.value * 10
+      distributedSkills,
+      intelligence * 10
     );
 
-    for (const key in distributedCharacterSkills) {
-      if (
-        Object.prototype.hasOwnProperty.call(distributedCharacterSkills, key)
-      ) {
-        const baseValue =
-          skillDefinitions[key as SkillNameLiteral].base(characteristics);
-
-        distributedCharacterSkills[key] += baseValue;
-      }
-    }
     return distributedCharacterSkills;
   }
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { ArrayView } from '../definitions/array-view.definition';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RandomIntService } from './random-int.service';
 
@@ -13,45 +12,36 @@ export class SkillService {
 
   public newSkillSetFor(
     skillNames: ArrayView<SkillNameLiteral>
-  ): KeyValueInterface {
-    return skillNames.keyValues.reduce(
-      (acc: { [key: string]: number }, skillName) => {
-        acc[skillName] = 0;
+  ): Map<SkillNameLiteral, number> {
+    let skills = new Map<SkillNameLiteral, number>();
 
-        return acc;
-      },
-      {}
-    );
+    return skillNames.keyValues.reduce((acc, skillName) => {
+      acc.set(skillName, 0);
+
+      return acc;
+    }, skills);
   }
 
   public distribute(
-    characterSkills: KeyValueInterface,
+    characterSkills: Map<SkillNameLiteral, number>,
     points: number
-  ): KeyValueInterface {
+  ): Map<SkillNameLiteral, number> {
     let spent = 0;
 
-    const distributedSkills: { [key: string]: number } = {};
-
-    Object.assign(distributedSkills, characterSkills);
-
     while (spent < points) {
-      for (const key in distributedSkills) {
-        if (Object.prototype.hasOwnProperty.call(distributedSkills, key)) {
-          if (spent >= points) {
-            break;
-          }
-
+      characterSkills.forEach((v, k, m) => {
+        if (spent < points) {
           const roll = this.randomIntService.getRandomInterval(0, 1);
 
           if (roll) {
-            distributedSkills[key] += 5;
+            characterSkills.set(k, v + 5);
 
             spent += 5;
           }
         }
-      }
+      });
     }
 
-    return distributedSkills;
+    return characterSkills;
   }
 }

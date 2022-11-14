@@ -42,12 +42,12 @@ describe('SkillService', () => {
   });
 
   it('should distribute 20 points over skills', () => {
-    const selectedSkills = {
-      'First Aid': 0,
-      Insight: 0,
-      Research: 0,
-      Listen: 0,
-    };
+    const selectedSkills = new Map<SkillNameLiteral, number>([
+      ['First Aid', 0],
+      ['Insight', 0],
+      ['Research', 0],
+      ['Listen', 0],
+    ]);
 
     when(mockedRandomIntService.getRandomInterval(0, 1))
       .thenReturn(1)
@@ -61,16 +61,16 @@ describe('SkillService', () => {
   });
 });
 
-const expectedSkills = {
-  'First Aid': 10,
-  Insight: 5,
-  Research: 0,
-  Listen: 5,
-};
+const expectedSkills = new Map<SkillNameLiteral, number>([
+  ['First Aid', 10],
+  ['Insight', 5],
+  ['Research', 0],
+  ['Listen', 5],
+]);
 
-const expectedNewSkillSet = {
-  'First Aid': 0,
-  Insight: 0,
-  Research: 0,
-  Listen: 0,
-};
+const expectedNewSkillSet = new Map<SkillNameLiteral, number>([
+  ['First Aid', 0],
+  ['Insight', 0],
+  ['Research', 0],
+  ['Listen', 0],
+]);
