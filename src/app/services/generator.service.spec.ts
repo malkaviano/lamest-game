@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { anyNumber, instance, mock, when } from 'ts-mockito';
-import { CharacterIdentity } from '../definitions/character-identity.definition';
-import { Characteristic } from '../definitions/characteristic.definition';
-import { Characteristics } from '../definitions/characteristics.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { CharacteristicDefinition } from '../definitions/characteristic.definition';
+import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { professions } from '../definitions/profession.definition';
 import { ages } from '../literals/age.literal';
 import { genders } from '../literals/gender.literal';
@@ -77,17 +77,17 @@ describe('GeneratorService', () => {
   });
 });
 
-const expectedCharacteristics = new Characteristics(
-  new Characteristic('STR', 10),
-  new Characteristic('CON', 12),
-  new Characteristic('SIZ', 11),
-  new Characteristic('DEX', 14),
-  new Characteristic('INT', 13),
-  new Characteristic('POW', 8),
-  new Characteristic('APP', 9)
+const expectedCharacteristics = new CharacteristicsDefinition(
+  new CharacteristicDefinition('STR', 10),
+  new CharacteristicDefinition('CON', 12),
+  new CharacteristicDefinition('SIZ', 11),
+  new CharacteristicDefinition('DEX', 14),
+  new CharacteristicDefinition('INT', 13),
+  new CharacteristicDefinition('POW', 8),
+  new CharacteristicDefinition('APP', 9)
 );
 
-const expectedIdentity = new CharacterIdentity(
+const expectedIdentity = new CharacterIdentityDefinition(
   'Alice Shields',
   professions.keyValues[0],
   genders[0],

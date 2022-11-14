@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ArrayView } from '../definitions/array-view.definition';
-import { CharacterSkills } from '../definitions/character-skills.definition';
+import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RandomIntService } from './random-int.service';
 
@@ -13,7 +13,7 @@ export class SkillService {
 
   public newSkillSetFor(
     skillNames: ArrayView<SkillNameLiteral>
-  ): CharacterSkills {
+  ): KeyValueInterface {
     return skillNames.keyValues.reduce(
       (acc: { [key: string]: number }, skillName) => {
         acc[skillName] = 0;
@@ -25,9 +25,9 @@ export class SkillService {
   }
 
   public distribute(
-    characterSkills: CharacterSkills,
+    characterSkills: KeyValueInterface,
     points: number
-  ): CharacterSkills {
+  ): KeyValueInterface {
     let spent = 0;
 
     const distributedSkills: { [key: string]: number } = {};

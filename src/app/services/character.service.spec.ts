@@ -4,13 +4,13 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { CharacterService } from './character.service';
 import { GeneratorService } from './generator.service';
-import { Characteristic } from '../definitions/characteristic.definition';
-import { Characteristics } from '../definitions/characteristics.definition';
-import { DerivedAttributes } from '../definitions/attributes.definition';
-import { DerivedAttribute } from '../definitions/attribute.definition';
-import { CharacterIdentity } from '../definitions/character-identity.definition';
+import { CharacteristicDefinition } from '../definitions/characteristic.definition';
+import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
+import { DerivedAttributesDefinition } from '../definitions/attributes.definition';
+import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { RandomIntService } from './random-int.service';
-import { Character } from '../definitions/character.definition';
+import { CharacterDefinition } from '../definitions/character.definition';
 
 const mockedGeneratorService = mock(GeneratorService);
 const mockedRandomIntService = mock(RandomIntService);
@@ -54,7 +54,7 @@ const fakeIdentity = () => {
   when(mockedGeneratorService.identity()).thenReturn(expectedIdentity);
 };
 
-const expectedIdentity = new CharacterIdentity(
+const expectedIdentity = new CharacterIdentityDefinition(
   'Some Name',
   'Police Detective',
   'MALE',
@@ -78,20 +78,20 @@ const prepareMock = () => {
   when(mockedRandomIntService.getRandomInterval(0, 1)).thenReturn(1);
 };
 
-const expectedCharacteristics = new Characteristics(
-  new Characteristic('STR', 8),
-  new Characteristic('CON', 9),
-  new Characteristic('SIZ', 10),
-  new Characteristic('DEX', 11),
-  new Characteristic('INT', 12),
-  new Characteristic('POW', 13),
-  new Characteristic('APP', 14)
+const expectedCharacteristics = new CharacteristicsDefinition(
+  new CharacteristicDefinition('STR', 8),
+  new CharacteristicDefinition('CON', 9),
+  new CharacteristicDefinition('SIZ', 10),
+  new CharacteristicDefinition('DEX', 11),
+  new CharacteristicDefinition('INT', 12),
+  new CharacteristicDefinition('POW', 13),
+  new CharacteristicDefinition('APP', 14)
 );
 
-const expectedAttributes = new DerivedAttributes(
-  new DerivedAttribute('HP', 9),
-  new DerivedAttribute('PP', 13),
-  new DerivedAttribute('MOV', 10)
+const expectedAttributes = new DerivedAttributesDefinition(
+  new DerivedAttributeDefinition('HP', 9),
+  new DerivedAttributeDefinition('PP', 13),
+  new DerivedAttributeDefinition('MOV', 10)
 );
 
 const expectedSkills = {
@@ -131,7 +131,7 @@ const expectedSkills = {
   'Firearm (Shooter)': 30 + expectedCharacteristics.dex.value,
 };
 
-const expectedCharacter = new Character(
+const expectedCharacter = new CharacterDefinition(
   expectedIdentity,
   expectedCharacteristics,
   expectedAttributes,

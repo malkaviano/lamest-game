@@ -1,11 +1,11 @@
 import { AttributeNameLiteral } from '../literals/attribute-name.literal';
-import { DerivedAttribute } from './attribute.definition';
+import { DerivedAttributeDefinition } from './attribute.definition';
 
-export class DerivedAttributes {
+export class DerivedAttributesDefinition {
   constructor(
-    public readonly hp: DerivedAttribute,
-    public readonly pp: DerivedAttribute,
-    public readonly mov: DerivedAttribute
+    public readonly hp: DerivedAttributeDefinition,
+    public readonly pp: DerivedAttributeDefinition,
+    public readonly mov: DerivedAttributeDefinition
   ) {}
 }
 

@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 
 import { GeneratorService } from './generator.service';
-import { Characteristics } from '../definitions/characteristics.definition';
-import { DerivedAttributes } from '../definitions/attributes.definition';
-import { DerivedAttribute } from '../definitions/attribute.definition';
-import { CharacterIdentity } from '../definitions/character-identity.definition';
+import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
+import { DerivedAttributesDefinition } from '../definitions/attributes.definition';
+import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { SkillService } from './skill.service';
-import { CharacterSkills } from '../definitions/character-skills.definition';
+import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { professionSkillDefinitions } from '../definitions/profession.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import {
   commonSkillDefinitions,
   skillDefinitions,
 } from '../definitions/skill.definition';
-import { Character } from '../definitions/character.definition';
+import { CharacterDefinition } from '../definitions/character.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,8 @@ export class CharacterService {
     private readonly skillService: SkillService
   ) {}
 
-  public character(): Character {
-    return new Character(
+  public character(): CharacterDefinition {
+    return new CharacterDefinition(
       this.identity(),
       this.characteristics(),
       this.attributes(this.characteristics()),
@@ -33,32 +33,34 @@ export class CharacterService {
     );
   }
 
-  private identity(): CharacterIdentity {
+  private identity(): CharacterIdentityDefinition {
     return this.generator.identity();
   }
 
-  private characteristics(): Characteristics {
+  private characteristics(): CharacteristicsDefinition {
     return this.generator.characteristics();
   }
 
-  private attributes(characteristics: Characteristics): DerivedAttributes {
+  private attributes(
+    characteristics: CharacteristicsDefinition
+  ): DerivedAttributesDefinition {
     const hp = Math.trunc(
       (characteristics.con.value + characteristics.siz.value) / 2
     );
 
     const pp = characteristics.pow.value;
 
-    return new DerivedAttributes(
-      new DerivedAttribute('HP', hp),
-      new DerivedAttribute('PP', pp),
-      new DerivedAttribute('MOV', 10)
+    return new DerivedAttributesDefinition(
+      new DerivedAttributeDefinition('HP', hp),
+      new DerivedAttributeDefinition('PP', pp),
+      new DerivedAttributeDefinition('MOV', 10)
     );
   }
 
   private skills(
-    identity: CharacterIdentity,
-    characteristics: Characteristics
-  ): CharacterSkills {
+    identity: CharacterIdentityDefinition,
+    characteristics: CharacteristicsDefinition
+  ): KeyValueInterface {
     const professionSkills = professionSkillDefinitions[identity.profession];
 
     const distributedProfessionSkills = this.skillService.distribute(
@@ -66,7 +68,7 @@ export class CharacterService {
       300
     );
 
-    const characterSkills: CharacterSkills = {};
+    const characterSkills: KeyValueInterface = {};
 
     Object.assign(
       characterSkills,

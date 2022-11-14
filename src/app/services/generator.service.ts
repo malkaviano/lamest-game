@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
-import { CharacterIdentity } from '../definitions/character-identity.definition';
-import { Characteristic } from '../definitions/characteristic.definition';
-import { Characteristics } from '../definitions/characteristics.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { CharacteristicDefinition } from '../definitions/characteristic.definition';
+import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { professions } from '../definitions/profession.definition';
 
 import { AgeLiteral, ages } from '../literals/age.literal';
@@ -20,20 +20,20 @@ import { RandomIntService } from './random-int.service';
 export class GeneratorService {
   constructor(private readonly randomIntService: RandomIntService) {}
 
-  public characteristics(): Characteristics {
-    return new Characteristics(
-      new Characteristic('STR', this.twoD6Plus6()),
-      new Characteristic('CON', this.twoD6Plus6()),
-      new Characteristic('SIZ', this.twoD6Plus6()),
-      new Characteristic('DEX', this.twoD6Plus6()),
-      new Characteristic('INT', this.twoD6Plus6()),
-      new Characteristic('POW', this.twoD6Plus6()),
-      new Characteristic('APP', this.twoD6Plus6())
+  public characteristics(): CharacteristicsDefinition {
+    return new CharacteristicsDefinition(
+      new CharacteristicDefinition('STR', this.twoD6Plus6()),
+      new CharacteristicDefinition('CON', this.twoD6Plus6()),
+      new CharacteristicDefinition('SIZ', this.twoD6Plus6()),
+      new CharacteristicDefinition('DEX', this.twoD6Plus6()),
+      new CharacteristicDefinition('INT', this.twoD6Plus6()),
+      new CharacteristicDefinition('POW', this.twoD6Plus6()),
+      new CharacteristicDefinition('APP', this.twoD6Plus6())
     );
   }
 
-  public identity(): CharacterIdentity {
-    return new CharacterIdentity(
+  public identity(): CharacterIdentityDefinition {
+    return new CharacterIdentityDefinition(
       this.name(),
       this.profession(),
       this.gender(),
