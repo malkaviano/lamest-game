@@ -3,7 +3,13 @@ import { test, expect } from '@playwright/test';
 import { characteristicsDefinitions } from '../src/app/definitions/characteristics.definition';
 import { characterIdentityDefinitions } from '../src/app/definitions/character-identity.definition';
 import { derivedAttributeDefinitions } from '../src/app/definitions/attributes.definition';
-import { commonSkillDefinitions } from '../src/app/definitions/skill.definition';
+import {
+  commonSkillDefinitions,
+  skillDefinitions,
+} from '../src/app/definitions/skill.definition';
+import { SkillNameLiteral } from '../src/app/literals/skill-name.literal';
+import { professionSkillDefinitions } from '../src/app/definitions/profession.definition';
+import { ProfessionLiteral } from '../src/app/literals/profession.literal';
 
 const protocol = 'http';
 
@@ -80,7 +86,16 @@ test.describe('Generating a random character', () => {
   });
 
   test('Skill', async ({ page }) => {
-    for (const key of commonSkillDefinitions.keyValues) {
+    const profession = await page
+      .locator(`data-testid=value-PROFESSION`)
+      .textContent();
+
+    const professionSkills =
+      professionSkillDefinitions[profession as ProfessionLiteral];
+
+    for (const key of professionSkills.keyValues.concat(
+      commonSkillDefinitions.keyValues
+    )) {
       const name = await page.locator(`data-testid=key-${key}`).textContent();
 
       expect(name).not.toBeNull();
