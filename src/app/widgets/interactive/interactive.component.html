@@ -1,0 +1,17 @@
+<div class="card-box">
+  <mat-card>
+    <mat-card-title>{{ interactive.name }}</mat-card-title>
+    <mat-card-content>{{ interactive.description }}</mat-card-content>
+    <mat-card-actions>
+      <button
+        *ngFor="let action of interactive.actions"
+        mat-stroked-button
+        color="primary"
+        (click)="actionSelected(action.id)"
+        id="{{ action.id }}"
+      >
+        {{ action.label }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

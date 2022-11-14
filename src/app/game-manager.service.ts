@@ -1,10 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { ActionSelection } from './definitions/action-selection.definition';
-import { Interactive } from './definitions/interactive.definition';
+import { ActionSelected } from './definitions/action-selected.definition';
+import { InteractiveEntity } from './entities/interactive.entity';
 import { Scene } from './definitions/scene.definition';
-import { SelectedAction } from './definitions/selected-action.definition';
+import { SelectedActionEvent } from './events/selected-action.event';
 
 @Injectable({
   providedIn: 'root',
@@ -30,49 +30,27 @@ export class GameManagerService {
         'And your mom is calling you downstairs',
       ],
       [
-        new Interactive(
-          'bed1',
-          'BED',
-          'Making your bed',
-          'To make your bed is the best way to start the day',
-          [
-            new ActionSelection('make_bed1', 'Make the bed'),
-            new ActionSelection('make_bed2', 'Change bedclothes'),
-          ]
-        ),
-        new Interactive(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          'Some food tastes better the day(s) after',
-          [
-            new ActionSelection('eat_food1', 'Eat leftovers'),
-            new ActionSelection('throw_food1', 'Throw away'),
-          ]
-        ),
-        new Interactive(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          "You mommy is calling, don't take too long",
-          [new ActionSelection('exit_room1', 'Exit')]
-        ),
+        new InteractiveEntity('bed1', 'BED', 'Making your bed', [
+          new ActionSelected('make_bed1', 'Make the bed'),
+          new ActionSelected('make_bed2', 'Change bedclothes'),
+        ]),
+        new InteractiveEntity('food1', 'LEFTOVERS', 'Food?', [
+          new ActionSelected('eat_food1', 'Eat leftovers'),
+          new ActionSelected('throw_food1', 'Throw away'),
+        ]),
+        new InteractiveEntity('exit1', 'DOWNSTAIRS', 'Leave', [
+          new ActionSelected('exit_room1', 'Exit'),
+        ]),
       ]
     ),
     new Scene(
       'scene2',
       ['This is the kitchen, your mom is angry and yelling at you!'],
       [
-        new Interactive(
-          'mom1',
-          'Angry mom',
-          'She is mad',
-          'After sleeping all day long, you deserve it',
-          [
-            new ActionSelection('tank_mom1', 'Shut up!'),
-            new ActionSelection('apologize_mom1', 'Sorry!'),
-          ]
-        ),
+        new InteractiveEntity('mom1', 'Angry mom', 'She is mad', [
+          new ActionSelected('tank_mom1', 'Shut up!'),
+          new ActionSelected('apologize_mom1', 'Sorry!'),
+        ]),
       ]
     ),
   ];
@@ -85,10 +63,10 @@ export class GameManagerService {
     this.playerAction$ = this.playerAction.asObservable();
   }
 
-  public registerEvent(event: SelectedAction) {
-    this.playerAction.next(event.id);
+  public registerEvent(event: SelectedActionEvent) {
+    this.playerAction.next(event.actionId);
 
-    switch (event.id) {
+    switch (event.actionId) {
       case 'exit_room1':
         this.changeCurrentScene(1);
 

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { first, take } from 'rxjs';
 
 import { Scene } from './definitions/scene.definition';
-import { SelectedAction } from './definitions/selected-action.definition';
+import { SelectedActionEvent } from './events/selected-action.event';
 import { GameManagerService } from './game-manager.service';
 
 describe('GameManagerService', () => {
@@ -38,7 +38,7 @@ describe('GameManagerService', () => {
           .pipe(take(2))
           .subscribe((scene) => (result = scene));
 
-        service.registerEvent(new SelectedAction('exit_room1', 'exit1'));
+        service.registerEvent(new SelectedActionEvent('exit_room1', 'exit1'));
 
         expect(result?.id).toEqual('scene2');
       });

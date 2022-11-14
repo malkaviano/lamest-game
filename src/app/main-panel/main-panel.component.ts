@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
 import { Scene } from '../definitions/scene.definition';
-import { SelectedAction } from '../definitions/selected-action.definition';
+import { SelectedActionEvent } from '../events/selected-action.event';
 import { GameManagerService } from '../game-manager.service';
 
 @Component({
@@ -45,7 +45,7 @@ export class MainPanelComponent implements OnInit, OnDestroy {
     );
   }
 
-  actionSelected(event: SelectedAction): void {
+  actionSelected(event: SelectedActionEvent): void {
     this.gameManager.registerEvent(event);
   }
 }

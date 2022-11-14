@@ -7,24 +7,23 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { first } from 'rxjs';
 
 import { InteractiveComponent } from './interactive.component';
-import { Interactive } from '../definitions/interactive.definition';
-import { MaterialModule } from '../../material/material.module';
-import { ActionSelection } from '../definitions/action-selection.definition';
-import { SelectedAction } from '../definitions/selected-action.definition';
+import { InteractiveEntity } from '../../entities/interactive.entity';
+import { MaterialModule } from '../../../material/material.module';
+import { ActionSelected } from '../../definitions/action-selected.definition';
+import { SelectedActionEvent } from '../../events/selected-action.event';
 
 let loader: HarnessLoader;
 
 describe('InteractiveComponent', () => {
   let fixture: ComponentFixture<InteractiveComponent>;
 
-  const interactive = new Interactive(
+  const interactive = new InteractiveEntity(
     'aid1',
     'Action1',
     'Simple action to be performed',
-    'This is the long description about the actionable',
     [
-      new ActionSelection('id1', 'Do it'),
-      new ActionSelection('id2', "Don't do it"),
+      new ActionSelected('id1', 'Do it'),
+      new ActionSelected('id2', "Don't do it"),
     ]
   );
 
@@ -44,26 +43,10 @@ describe('InteractiveComponent', () => {
     expect(await loader.getHarness(MatCardHarness)).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render description', async () => {
     const card = await loader.getHarness(MatCardHarness);
 
-    expect(await card.getTitleText()).toEqual('Action1');
-  });
-
-  it('should render brief description', async () => {
-    const card = await loader.getHarness(MatCardHarness);
-
-    expect(await card.getSubtitleText()).toEqual(
-      'Simple action to be performed'
-    );
-  });
-
-  it('should render long description', async () => {
-    const card = await loader.getHarness(MatCardHarness);
-
-    expect(await card.getText()).toContain(
-      'This is the long description about the actionable'
-    );
+    expect(await card.getText()).toContain('Simple action to be performed');
   });
 
   it('should render actions', async () => {
@@ -79,12 +62,12 @@ describe('InteractiveComponent', () => {
     it('return the the actionable id and selected action id', async () => {
       const button = await loader.getHarness(MatButtonHarness);
 
-      let result: SelectedAction | undefined;
-      const expected = new SelectedAction('id1', 'aid1');
+      let result: SelectedActionEvent | undefined;
+      const expected = new SelectedActionEvent('id1', 'aid1');
 
       fixture.componentInstance.onActionSelected
         .pipe(first())
-        .subscribe((action: SelectedAction) => (result = action));
+        .subscribe((action: SelectedActionEvent) => (result = action));
 
       await button.click();
 

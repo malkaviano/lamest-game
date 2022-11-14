@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from '../material/material.module';
-import { InteractiveComponent } from './interactive/interactive.component';
+import { InteractiveComponent } from './widgets/interactive/interactive.component';
 import { MainTextComponent } from './main-text/main-text.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
 import { UniformPanelComponent } from './panels/uniform-panel/uniform-panel.component';
