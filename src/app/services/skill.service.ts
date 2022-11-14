@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { ArrayView } from '../definitions/array-view.definition';
 import { CharacterSkills } from '../definitions/character-skills.definition';
-import { commonSkillDefinitions } from '../definitions/skill.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RandomIntService } from './random-int.service';
 

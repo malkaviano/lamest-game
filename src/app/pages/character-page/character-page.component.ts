@@ -26,10 +26,10 @@ export class CharacterPageComponent implements OnInit {
   constructor(private readonly characterService: CharacterService) {}
 
   ngOnInit(): void {
-    const identity = this.characterService.identity();
+    const character = this.characterService.character();
 
     this.identityView = new ArrayView(
-      Object.entries(identity).map(([key, value]) => {
+      Object.entries(character.identity).map(([key, value]) => {
         return new KeyValueDescription(
           key.toUpperCase(),
           value,
@@ -38,10 +38,8 @@ export class CharacterPageComponent implements OnInit {
       })
     );
 
-    const characteristics = this.characterService.characteristics();
-
     this.characteristicsView = new ArrayView(
-      Object.values(characteristics).map((c: Characteristic) => {
+      Object.values(character.characteristics).map((c: Characteristic) => {
         return new KeyValueDescription(
           c.key,
           c.value.toString(),
@@ -50,10 +48,8 @@ export class CharacterPageComponent implements OnInit {
       })
     );
 
-    const derivedAttributes = this.characterService.attributes(characteristics);
-
     this.derivedAttributesView = new ArrayView(
-      Object.values(derivedAttributes).map((da: DerivedAttribute) => {
+      Object.values(character.derivedAttributes).map((da: DerivedAttribute) => {
         return new KeyValueDescription(
           da.key,
           da.value.toString(),
@@ -62,10 +58,8 @@ export class CharacterPageComponent implements OnInit {
       })
     );
 
-    const skills = this.characterService.skills(identity, characteristics);
-
     this.skillsView = new ArrayView(
-      Object.entries(skills).map(([key, value]) => {
+      Object.entries(character.skills).map(([key, value]) => {
         return new KeyValueDescription(
           key,
           value.toString(),

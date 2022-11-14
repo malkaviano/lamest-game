@@ -10,6 +10,7 @@ import { DerivedAttributes } from '../definitions/attributes.definition';
 import { DerivedAttribute } from '../definitions/attribute.definition';
 import { CharacterIdentity } from '../definitions/character-identity.definition';
 import { RandomIntService } from './random-int.service';
+import { Character } from '../definitions/character.definition';
 
 const mockedGeneratorService = mock(GeneratorService);
 const mockedRandomIntService = mock(RandomIntService);
@@ -17,7 +18,7 @@ const mockedRandomIntService = mock(RandomIntService);
 describe('CharacterService', () => {
   let service: CharacterService;
 
-  beforeEach(() => {
+  beforeAll(() => {
     TestBed.configureTestingModule({
       providers: [
         {
@@ -38,34 +39,14 @@ describe('CharacterService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should have identity', () => {
-    fakeIdentity();
+  describe('character', () => {
+    it('return new character', () => {
+      prepareMock();
 
-    const result = service.identity();
+      const character = service.character();
 
-    expect(result).toEqual(expectedIdentity);
-  });
-
-  it('should have characteristics', () => {
-    fakeCharacteristics();
-
-    const result = service.characteristics();
-
-    expect(result).toEqual(expectedCharacteristics);
-  });
-
-  it('should have attributes', () => {
-    const result = service.attributes(expectedCharacteristics);
-
-    expect(result).toEqual(expectedAttributes);
-  });
-
-  it('should have skills', () => {
-    when(mockedRandomIntService.getRandomInterval(0, 1)).thenReturn(1);
-
-    const result = service.skills(expectedIdentity, expectedCharacteristics);
-
-    expect(result).toEqual(expectedSkills);
+      expect(character).toEqual(expectedCharacter);
+    });
   });
 });
 
@@ -87,6 +68,14 @@ const fakeCharacteristics = () => {
   when(mockedGeneratorService.characteristics()).thenReturn(
     expectedCharacteristics
   );
+};
+
+const prepareMock = () => {
+  fakeIdentity();
+
+  fakeCharacteristics();
+
+  when(mockedRandomIntService.getRandomInterval(0, 1)).thenReturn(1);
 };
 
 const expectedCharacteristics = new Characteristics(
@@ -141,3 +130,10 @@ const expectedSkills = {
   Throw: expectedCharacteristics.dex.value + 5,
   'Firearm (Shooter)': 30 + expectedCharacteristics.dex.value,
 };
+
+const expectedCharacter = new Character(
+  expectedIdentity,
+  expectedCharacteristics,
+  expectedAttributes,
+  expectedSkills
+);

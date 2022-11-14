@@ -13,6 +13,7 @@ import {
   commonSkillDefinitions,
   skillDefinitions,
 } from '../definitions/skill.definition';
+import { Character } from '../definitions/character.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -23,15 +24,24 @@ export class CharacterService {
     private readonly skillService: SkillService
   ) {}
 
-  public identity(): CharacterIdentity {
+  public character(): Character {
+    return new Character(
+      this.identity(),
+      this.characteristics(),
+      this.attributes(this.characteristics()),
+      this.skills(this.identity(), this.characteristics())
+    );
+  }
+
+  private identity(): CharacterIdentity {
     return this.generator.identity();
   }
 
-  public characteristics(): Characteristics {
+  private characteristics(): Characteristics {
     return this.generator.characteristics();
   }
 
-  public attributes(characteristics: Characteristics): DerivedAttributes {
+  private attributes(characteristics: Characteristics): DerivedAttributes {
     const hp = Math.trunc(
       (characteristics.con.value + characteristics.siz.value) / 2
     );
@@ -45,7 +55,7 @@ export class CharacterService {
     );
   }
 
-  public skills(
+  private skills(
     identity: CharacterIdentity,
     characteristics: Characteristics
   ): CharacterSkills {
