@@ -104,6 +104,24 @@ export class GameManagerService {
           'Leave',
           new OpenedContainerState(new ArrayView([]))
         ),
+        new InteractiveEntity(
+          'bed1',
+          'BED',
+          'Making your bed',
+          new OpenedContainerState(new ArrayView([]))
+        ),
+        new InteractiveEntity(
+          'food1',
+          'LEFTOVERS',
+          'Food?',
+          new OpenedContainerState(new ArrayView([]))
+        ),
+        new InteractiveEntity(
+          'exit1',
+          'DOWNSTAIRS',
+          'Leave',
+          new OpenedContainerState(new ArrayView([]))
+        ),
       ]
     ),
     new Scene(

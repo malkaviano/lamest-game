@@ -2,20 +2,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { MainTextComponent } from './main-text.component';
+import { TextBoxComponent } from './text-box.component';
 
-describe('MainTextComponent', () => {
-  let component: MainTextComponent;
-  let fixture: ComponentFixture<MainTextComponent>;
+describe('TextBoxComponent', () => {
+  let component: TextBoxComponent;
+  let fixture: ComponentFixture<TextBoxComponent>;
   let paragraphs = ['p1', 'p2', 'p3', 'p4'];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainTextComponent],
+      declarations: [TextBoxComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MainTextComponent);
+    fixture = TestBed.createComponent(TextBoxComponent);
     component = fixture.componentInstance;
 
     fixture.componentInstance.paragraphs = paragraphs;
@@ -29,7 +29,7 @@ describe('MainTextComponent', () => {
 
   it('should have 4 paragraphs', () => {
     const result = fixture.debugElement
-      .queryAll(By.css('.main-text p'))
+      .queryAll(By.css('.text-box p'))
       .map((e) => e.nativeElement);
 
     expect(result.length).toEqual(4);

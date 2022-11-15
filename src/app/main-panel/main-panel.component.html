@@ -1,6 +1,6 @@
 <div class="flex-panel debug">
   <div class="panel-box width-scene debug">
-    <app-main-text [paragraphs]="scene.paragraphs"></app-main-text>
+    <app-text-box [paragraphs]="scene.paragraphs"></app-text-box>
   </div>
   <div class="panel-box debug">
     <app-interactive
@@ -9,5 +9,8 @@
       [interactive]="interactive"
       (onActionSelected)="actionSelected($event)"
     ></app-interactive>
+  </div>
+  <div class="panel-box width-scene debug">
+    <app-text-box [paragraphs]="scene.paragraphs"></app-text-box>
   </div>
 </div>
