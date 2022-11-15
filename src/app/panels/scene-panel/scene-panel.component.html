@@ -1,0 +1,69 @@
+<div class="flex-panel">
+  <div class="section text-box-width base-margin-left">
+    <div class="title-border">
+      <mat-toolbar>
+        <span class="title-text">Character</span>
+      </mat-toolbar>
+    </div>
+    <div class="main-box vertical-scrollable">
+      <app-key-value
+        class="panel-item"
+        *ngFor="let keyValue of keyValues"
+        [keyValue]="keyValue"
+        attr.data-testid="{{ keyValue.key }}"
+      ></app-key-value>
+    </div>
+  </div>
+  <div class="section text-box-width">
+    <div class="title-border">
+      <mat-toolbar>
+        <span class="title-text">Description</span>
+      </mat-toolbar>
+    </div>
+    <div class="main-box vertical-scrollable">
+      <app-text-box [paragraphs]="scene.paragraphs"></app-text-box>
+    </div>
+  </div>
+  <div class="section">
+    <div class="title-border">
+      <mat-toolbar>
+        <span class="title-text">Interactables</span>
+      </mat-toolbar>
+    </div>
+    <div class="main-box vertical-scrollable">
+      <app-interactive
+        class="item"
+        *ngFor="let interactive of scene.interactives"
+        [interactive]="interactive"
+        (onActionSelected)="actionSelected($event)"
+      ></app-interactive>
+    </div>
+  </div>
+  <div class="section text-box-width base-margin-right">
+    <div class="title-border">
+      <mat-toolbar>
+        <span class="title-text">Action Log</span>
+      </mat-toolbar>
+    </div>
+    <div class="main-box">
+      <div class="half-box vertical-scrollable">
+        <div class="">
+          <app-text-box [paragraphs]="scene.paragraphs"></app-text-box>
+        </div>
+      </div>
+      <div class="title-border">
+        <mat-toolbar>
+          <span class="title-text">Inventory</span>
+        </mat-toolbar>
+      </div>
+      <div class="half-box vertical-scrollable">
+        <app-key-value
+          class="panel-item"
+          *ngFor="let keyValue of inventory"
+          [keyValue]="keyValue"
+          attr.data-testid="{{ keyValue.key }}"
+        ></app-key-value>
+      </div>
+    </div>
+  </div>
+</div>

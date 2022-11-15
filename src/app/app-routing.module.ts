@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MainPanelComponent } from './main-panel/main-panel.component';
+import { ScenePanelComponent } from './panels/scene-panel/scene-panel.component';
 import { CharacterPageComponent } from './pages/character-page/character-page.component';
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
     component: CharacterPageComponent,
     pathMatch: 'full',
   },
-  { path: '', component: MainPanelComponent, pathMatch: 'full' },
+  { path: '', component: ScenePanelComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

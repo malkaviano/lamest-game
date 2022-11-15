@@ -4,21 +4,21 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
-import { UniformPanelComponent } from './uniform-panel.component';
+import { KeyValuePanelComponent } from './key-value-panel.component';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 
-describe('UniformPanelComponent', () => {
-  let component: UniformPanelComponent;
-  let fixture: ComponentFixture<UniformPanelComponent>;
+describe('KeyValuePanelComponent', () => {
+  let component: KeyValuePanelComponent;
+  let fixture: ComponentFixture<KeyValuePanelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UniformPanelComponent],
+      declarations: [KeyValuePanelComponent],
       imports: [MaterialModule, NoopAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UniformPanelComponent);
+    fixture = TestBed.createComponent(KeyValuePanelComponent);
 
     component = fixture.componentInstance;
 

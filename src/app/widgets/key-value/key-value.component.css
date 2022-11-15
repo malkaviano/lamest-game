@@ -6,3 +6,7 @@
 .flex-block {
   display: block;
 }
+
+div.key-value-description {
+  font-size: larger;
+}

@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from '../material/material.module';
 import { InteractiveComponent } from './widgets/interactive/interactive.component';
 import { TextBoxComponent } from './widgets/text-box/text-box.component';
-import { MainPanelComponent } from './main-panel/main-panel.component';
-import { UniformPanelComponent } from './panels/uniform-panel/uniform-panel.component';
+import { ScenePanelComponent } from './panels/scene-panel/scene-panel.component';
+import { KeyValuePanelComponent } from './panels/key-value-panel/key-value-panel.component';
 import { CharacterPageComponent } from './pages/character-page/character-page.component';
 import { KeyValueComponent } from './widgets/key-value/key-value.component';
 
@@ -17,8 +17,8 @@ import { KeyValueComponent } from './widgets/key-value/key-value.component';
     AppComponent,
     InteractiveComponent,
     TextBoxComponent,
-    MainPanelComponent,
-    UniformPanelComponent,
+    ScenePanelComponent,
+    KeyValuePanelComponent,
     CharacterPageComponent,
     KeyValueComponent,
   ],

@@ -6,3 +6,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .debug {
   border: 1px solid;
 }
+
+.base-margin-left {
+  margin-left: 20px;
+}
+
+.base-margin-right {
+  margin-right: 20px;
+}

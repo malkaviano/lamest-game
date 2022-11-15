@@ -5,15 +5,25 @@
   justify-content: space-around;
 }
 
-.panel-box {
-  min-height: 400px;
-  max-height: 800px;
+.vertical-scrollable {
   overflow-y: auto;
-  overflow-x: auto;
+}
+
+.section {
   padding: 10px 10px;
 }
 
-.width-scene {
+.main-box {
+  min-height: 300px;
+  max-height: 500px;
+}
+
+.half-box {
+  min-height: 100px;
+  max-height: 200px;
+}
+
+.text-box-width {
   min-width: 200px;
   max-width: 400px;
 }
