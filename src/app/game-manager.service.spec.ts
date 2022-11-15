@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { first, take } from 'rxjs';
+import { actionableDefinitions } from './definitions/actionable.definition';
 
 import { Scene } from './definitions/scene.definition';
-import { SelectedActionEvent } from './events/selected-action.event';
 import { GameManagerService } from './game-manager.service';
 
 describe('GameManagerService', () => {
@@ -38,7 +38,7 @@ describe('GameManagerService', () => {
           .pipe(take(2))
           .subscribe((scene) => (result = scene));
 
-        service.registerEvent(new SelectedActionEvent('exit_room1', 'exit1'));
+        service.registerEvent(actionableDefinitions['OPEN']);
 
         expect(result?.id).toEqual('scene2');
       });

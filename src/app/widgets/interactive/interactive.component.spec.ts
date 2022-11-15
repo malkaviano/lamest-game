@@ -7,10 +7,14 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { first } from 'rxjs';
 
 import { InteractiveComponent } from './interactive.component';
-import { InteractiveEntity } from '../../entities/interactive.entity';
 import { MaterialModule } from '../../../material/material.module';
-import { ActionSelected } from '../../definitions/action-selected.definition';
-import { SelectedActionEvent } from '../../events/selected-action.event';
+import { ArrayView } from '../../definitions/array-view.definition';
+import { OpenedContainerState } from '../../states/opened-container.state';
+import { InteractiveEntity } from '../../entities/interactive.entity';
+import {
+  ActionableDefinition,
+  actionableDefinitions,
+} from '../../definitions/actionable.definition';
 
 let loader: HarnessLoader;
 
@@ -19,12 +23,9 @@ describe('InteractiveComponent', () => {
 
   const interactive = new InteractiveEntity(
     'aid1',
-    'Action1',
-    'Simple action to be performed',
-    [
-      new ActionSelected('id1', 'Do it'),
-      new ActionSelected('id2', "Don't do it"),
-    ]
+    'Ornate Chest',
+    'A brilliant chest',
+    new OpenedContainerState(new ArrayView([]))
   );
 
   beforeEach(async () => {
@@ -43,10 +44,16 @@ describe('InteractiveComponent', () => {
     expect(await loader.getHarness(MatCardHarness)).toBeTruthy();
   });
 
+  it('should render title', async () => {
+    const card = await loader.getHarness(MatCardHarness);
+
+    expect(await card.getTitleText()).toContain('Ornate Chest');
+  });
+
   it('should render description', async () => {
     const card = await loader.getHarness(MatCardHarness);
 
-    expect(await card.getText()).toContain('Simple action to be performed');
+    expect(await card.getText()).toContain('A brilliant chest');
   });
 
   it('should render actions', async () => {
@@ -54,24 +61,28 @@ describe('InteractiveComponent', () => {
 
     const text = await card.getText();
 
-    expect(text).toContain('Do it');
-    expect(text).toContain("Don't do it");
+    expect(text).toContain('Close');
+    expect(text).toContain('Pick');
   });
 
   describe('clicking action button', () => {
-    it('return the the actionable id and selected action id', async () => {
+    it('return the the actionable name and interactive id', async () => {
       const button = await loader.getHarness(MatButtonHarness);
 
-      let result: SelectedActionEvent | undefined;
-      const expected = new SelectedActionEvent('id1', 'aid1');
+      let result: ActionableDefinition | undefined;
+      const expected = actionableDefinitions['CLOSE'];
 
       fixture.componentInstance.onActionSelected
         .pipe(first())
-        .subscribe((action: SelectedActionEvent) => (result = action));
+        .subscribe((action: ActionableDefinition) => {
+          result = action;
+
+          expect(result).toEqual(expected);
+        });
 
       await button.click();
 
-      expect(result).toEqual(expected);
+      fixture.detectChanges();
     });
   });
 });

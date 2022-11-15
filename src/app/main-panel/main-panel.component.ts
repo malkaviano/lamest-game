@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { ActionableDefinition } from '../definitions/actionable.definition';
 
 import { Scene } from '../definitions/scene.definition';
-import { SelectedActionEvent } from '../events/selected-action.event';
 import { GameManagerService } from '../game-manager.service';
 
 @Component({
@@ -38,14 +38,14 @@ export class MainPanelComponent implements OnInit, OnDestroy {
 
     this.playerActionSubscription = this.gameManager.playerAction$.subscribe(
       (action) =>
-        this.snackBar.open(action, 'dismiss', {
+        this.snackBar.open(action.label, 'dismiss', {
           horizontalPosition: 'end',
           verticalPosition: 'top',
         })
     );
   }
 
-  actionSelected(event: SelectedActionEvent): void {
+  actionSelected(event: ActionableDefinition): void {
     this.gameManager.registerEvent(event);
   }
 }

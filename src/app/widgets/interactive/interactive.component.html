@@ -4,11 +4,11 @@
     <mat-card-content>{{ interactive.description }}</mat-card-content>
     <mat-card-actions>
       <button
-        *ngFor="let action of interactive.actions"
+        *ngFor="let action of actions.keyValues"
         mat-stroked-button
         color="primary"
-        (click)="actionSelected(action.id)"
-        id="{{ action.id }}"
+        (click)="actionSelected(action.name)"
+        id="{{ action.name }}"
       >
         {{ action.label }}
       </button>

@@ -1,24 +1,51 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import {
+  ActionableDefinition,
+  actionableDefinitions,
+} from '../../definitions/actionable.definition';
+import { ArrayView } from '../../definitions/array-view.definition';
 
 import { InteractiveEntity } from '../../entities/interactive.entity';
-import { SelectedActionEvent } from '../../events/selected-action.event';
+import { ActionableLiteral } from '../../literals/actionable.literal';
 
 @Component({
   selector: 'app-interactive',
   templateUrl: './interactive.component.html',
   styleUrls: ['./interactive.component.css'],
 })
-export class InteractiveComponent {
+export class InteractiveComponent implements OnInit, OnDestroy {
+  private actionsSubscription: Subscription;
+
   @Input() interactive!: InteractiveEntity;
-  @Output() onActionSelected: EventEmitter<SelectedActionEvent>;
+  @Output() onActionSelected: EventEmitter<ActionableDefinition>;
+  actions: ArrayView<ActionableDefinition> = new ArrayView([]);
 
   constructor() {
-    this.onActionSelected = new EventEmitter<SelectedActionEvent>();
+    this.onActionSelected = new EventEmitter<ActionableDefinition>();
+    this.actionsSubscription = Subscription.EMPTY;
   }
 
-  actionSelected(id: string): void {
-    this.onActionSelected.emit(
-      new SelectedActionEvent(id, this.interactive.id)
+  ngOnInit(): void {
+    this.actionsSubscription = this.interactive.stateChanged$.subscribe(
+      (actions) => {
+        this.actions = actions;
+      }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.actionsSubscription.unsubscribe();
+  }
+
+  actionSelected(id: ActionableLiteral): void {
+    this.onActionSelected.emit(actionableDefinitions[id]);
   }
 }
