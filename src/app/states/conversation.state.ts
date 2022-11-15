@@ -37,7 +37,10 @@ export class ConversationState extends InteractiveState {
     this.currentMessages = currentMessages;
   }
 
-  public execute(action: ActionableDefinition): InteractiveState {
+  public execute(action: ActionableDefinition): {
+    state: InteractiveState;
+    log: LogMessage;
+  } {
     if (action.action !== 'ASK') {
       throw new Error(errorMessages['WRONG-ACTION']);
     }
@@ -48,12 +51,13 @@ export class ConversationState extends InteractiveState {
       throw new Error(errorMessages['UNKNOWN-MESSAGE']);
     }
 
-    this.logMessageProduced.next(new LogMessage(action, response.answer));
-
-    return new ConversationState(
-      this.entityId,
-      this.messageMap,
-      response.change ?? this.currentMap
-    );
+    return {
+      state: new ConversationState(
+        this.entityId,
+        this.messageMap,
+        response.change ?? this.currentMap
+      ),
+      log: new LogMessage(action, response.answer),
+    };
   }
 }

@@ -2,6 +2,7 @@ import { first } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
+import { LogMessage } from '../definitions/log-message.definition';
 
 import { InteractiveState } from '../states/interactive.state';
 import { InteractiveEntity } from './interactive.entity';
@@ -20,11 +21,13 @@ const entity = new InteractiveEntity(
 describe('InteractiveEntity', () => {
   describe('when interactive state changes', () => {
     it('push an event changed notification', (done) => {
-      when(mockedState.execute(anything())).thenReturn(state);
+      const action = new ActionableDefinition('OPEN', 'name1', 'label1', 'id1');
 
-      const expected = new ArrayView([
-        new ActionableDefinition('OPEN', 'name1', 'label1', 'id1'),
-      ]);
+      const expected = new ArrayView([action]);
+
+      const log = new LogMessage(action, 'gg');
+
+      when(mockedState.execute(anything())).thenReturn({ state, log });
 
       when(mockedState.actions)
         .thenReturn(

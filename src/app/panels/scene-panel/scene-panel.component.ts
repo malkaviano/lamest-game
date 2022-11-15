@@ -425,17 +425,23 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
 
   playerActionSubscription: Subscription;
 
+  actionLogSubscription: Subscription[];
+
   constructor(
     private readonly snackBar: MatSnackBar,
     private readonly gameManager: GameManagerService
   ) {
     this.sceneChangedSubscription = Subscription.EMPTY;
     this.playerActionSubscription = Subscription.EMPTY;
+
+    this.actionLogSubscription = [];
   }
 
   ngOnDestroy(): void {
     this.sceneChangedSubscription.unsubscribe();
     this.playerActionSubscription.unsubscribe();
+
+    this.actionLogSubscription.forEach((sub) => sub.unsubscribe());
   }
 
   ngOnInit(): void {
@@ -450,6 +456,14 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
           verticalPosition: 'top',
         })
     );
+
+    this.actionLogSubscription = this.scene.interactives.map((i) => {
+      return i.logMessageProduced$.subscribe((log) => {
+        const strLog = `${log.action.label} => ${log.response}`;
+
+        this.scene.pushLog(strLog);
+      });
+    });
   }
 
   actionSelected(action: ActionableDefinition): void {

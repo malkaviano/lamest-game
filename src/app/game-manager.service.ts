@@ -8,7 +8,6 @@ import { ArrayView } from './definitions/array-view.definition';
 import { Scene } from './definitions/scene.definition';
 import { InteractiveEntity } from './entities/interactive.entity';
 import { ConversationState } from './states/conversation.state';
-import { OpenedContainerState } from './states/opened-container.state';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +55,7 @@ export class GameManagerService {
                 },
                 things: {
                   label: 'How are things',
-                  answer: 'So so, dat by day',
+                  answer: 'So so, day by day',
                 },
                 bar: {
                   label: 'Next bar',
@@ -74,156 +73,6 @@ export class GameManagerService {
             },
             'map1'
           )
-        ),
-        new InteractiveEntity(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          new OpenedContainerState('food1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          new OpenedContainerState('exit1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'bed1',
-          'BED',
-          'Making your bed',
-          new OpenedContainerState('bed1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          new OpenedContainerState('food1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          new OpenedContainerState('exit1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'bed1',
-          'BED',
-          'Making your bed',
-          new OpenedContainerState('bed1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          new OpenedContainerState('food1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          new OpenedContainerState('exit1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'bed1',
-          'BED',
-          'Making your bed',
-          new OpenedContainerState('bed1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          new OpenedContainerState('food1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          new OpenedContainerState('exit1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'bed1',
-          'BED',
-          'Making your bed',
-          new OpenedContainerState('bed1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          new OpenedContainerState('food1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          new OpenedContainerState('exit1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'bed1',
-          'BED',
-          'Making your bed',
-          new OpenedContainerState('bed1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          new OpenedContainerState('food1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          new OpenedContainerState('exit1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'bed1',
-          'BED',
-          'Making your bed',
-          new OpenedContainerState('bed1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          new OpenedContainerState('food1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          new OpenedContainerState('exit1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'bed1',
-          'BED',
-          'Making your bed',
-          new OpenedContainerState('bed1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'food1',
-          'LEFTOVERS',
-          'Food?',
-          new OpenedContainerState('food1', new ArrayView([]))
-        ),
-        new InteractiveEntity(
-          'exit1',
-          'DOWNSTAIRS',
-          'Leave',
-          new OpenedContainerState('exit1', new ArrayView([]))
-        ),
-      ]
-    ),
-    new Scene(
-      'scene2',
-      ['This is the kitchen, your mom is angry and yelling at you!'],
-      [
-        new InteractiveEntity(
-          'mom1',
-          'Angry mom',
-          'She is mad',
-          new OpenedContainerState('mom1', new ArrayView([]))
         ),
       ]
     ),

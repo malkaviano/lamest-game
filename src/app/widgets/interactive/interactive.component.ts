@@ -26,11 +26,12 @@ export class InteractiveComponent implements OnInit, OnDestroy {
 
   @Input() interactive!: InteractiveEntity;
   @Output() onActionSelected: EventEmitter<ActionableDefinition>;
-  actions: ArrayView<ActionableDefinition> = new ArrayView([]);
+  actions: ArrayView<ActionableDefinition>;
 
   constructor() {
     this.onActionSelected = new EventEmitter<ActionableDefinition>();
     this.actionsSubscription = Subscription.EMPTY;
+    this.actions = new ArrayView([]);
   }
 
   ngOnInit(): void {

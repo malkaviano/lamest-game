@@ -4,29 +4,26 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 
-import { first } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
+import { first, of } from 'rxjs';
 
 import { InteractiveComponent } from './interactive.component';
 import { MaterialModule } from '../../../material/material.module';
-import { ArrayView } from '../../definitions/array-view.definition';
-import { OpenedContainerState } from '../../states/opened-container.state';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import {
   ActionableDefinition,
   actionableDefinitions,
 } from '../../definitions/actionable.definition';
+import { ArrayView } from '../../definitions/array-view.definition';
 
 let loader: HarnessLoader;
 
+const mockedInteractive = mock(InteractiveEntity);
+
+const expected = actionableDefinitions['CLOSE']('id1', 'close', 'Close');
+
 describe('InteractiveComponent', () => {
   let fixture: ComponentFixture<InteractiveComponent>;
-
-  const interactive = new InteractiveEntity(
-    'aid1',
-    'Ornate Chest',
-    'A brilliant chest',
-    new OpenedContainerState('aid1', new ArrayView([]))
-  );
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -36,8 +33,21 @@ describe('InteractiveComponent', () => {
 
     fixture = TestBed.createComponent(InteractiveComponent);
 
-    fixture.componentInstance.interactive = interactive;
+    fixture.componentInstance.interactive = instance(mockedInteractive);
+
     loader = TestbedHarnessEnvironment.loader(fixture);
+
+    when(mockedInteractive.actionsChanged$).thenReturn(of());
+    when(mockedInteractive.name).thenReturn('Ornate Chest');
+    when(mockedInteractive.description).thenReturn('A brilliant chest');
+    when(mockedInteractive.actionsChanged$).thenReturn(
+      of(
+        new ArrayView([
+          expected,
+          new ActionableDefinition('PICK', 'pick', 'Pick', 'id1'),
+        ])
+      )
+    );
   });
 
   it('should create', async () => {
@@ -70,7 +80,6 @@ describe('InteractiveComponent', () => {
       const button = await loader.getHarness(MatButtonHarness);
 
       let result: ActionableDefinition | undefined;
-      const expected = actionableDefinitions['CLOSE']('aid1', 'Close');
 
       fixture.componentInstance.onActionSelected
         .pipe(first())

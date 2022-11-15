@@ -1,5 +1,3 @@
-import { first } from 'rxjs';
-
 import { actionableDefinitions } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
@@ -40,20 +38,16 @@ describe('ConversationState', () => {
     expect(state.actions).toEqual(new ArrayView([helloAction, dieAction]));
   });
 
-  describe(`when receiving hello`, () => {
-    it('produces log "Hi, how are you?"', (done) => {
+  describe('when receiving hello', () => {
+    it('produces log "Hi, how are you?"', () => {
       const expectedLogMessage = new LogMessage(
         helloAction,
         'Hi, how are you?'
       );
 
-      state.logMessageProduced$.pipe(first()).subscribe((log) => {
-        expect(log).toEqual(expectedLogMessage);
+      const result = state.execute(helloAction);
 
-        done();
-      });
-
-      state.execute(helloAction);
+      expect(result.log).toEqual(expectedLogMessage);
     });
   });
 
@@ -62,7 +56,9 @@ describe('ConversationState', () => {
       it('keep context', () => {
         const result = state.execute(helloAction);
 
-        expect(result.actions).toEqual(new ArrayView([helloAction, dieAction]));
+        expect(result.state.actions).toEqual(
+          new ArrayView([helloAction, dieAction])
+        );
       });
     });
 
@@ -70,7 +66,7 @@ describe('ConversationState', () => {
       it('change context', () => {
         const result = state.execute(dieAction);
 
-        expect(result.actions).toEqual(new ArrayView([sorryAction]));
+        expect(result.state.actions).toEqual(new ArrayView([sorryAction]));
       });
     });
   });
