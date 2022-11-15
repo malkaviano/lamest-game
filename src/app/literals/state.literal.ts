@@ -1,1 +1,4 @@
-export type StateLiteral = 'ContainerOpenedState' | 'ContainerClosedState';
+export type StateLiteral =
+  | 'ContainerOpenedState'
+  | 'ContainerClosedState'
+  | 'ConversationState';

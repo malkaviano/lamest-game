@@ -7,6 +7,7 @@ import { ArrayView } from './definitions/array-view.definition';
 
 import { Scene } from './definitions/scene.definition';
 import { InteractiveEntity } from './entities/interactive.entity';
+import { ConversationState } from './states/conversation.state';
 import { OpenedContainerState } from './states/opened-container.state';
 
 @Injectable({
@@ -42,148 +43,175 @@ export class GameManagerService {
       ],
       [
         new InteractiveEntity(
-          'bed1',
-          'BED',
-          'Making your bed',
-          new OpenedContainerState(new ArrayView([]))
+          'npc1',
+          'Carlos Joaquim',
+          'Small guy with an ugly face wearing a cheap suit',
+          new ConversationState(
+            'npc1',
+            {
+              map1: {
+                strange: {
+                  label: 'Strange sights',
+                  answer: 'I did see nothing',
+                },
+                things: {
+                  label: 'How are things',
+                  answer: 'So so, dat by day',
+                },
+                bar: {
+                  label: 'Next bar',
+                  answer: 'Around the corner',
+                  change: 'map2',
+                },
+              },
+              map2: {
+                drink: {
+                  label: 'Want a drink?',
+                  answer: 'Fuck off',
+                  change: 'map1',
+                },
+              },
+            },
+            'map1'
+          )
         ),
         new InteractiveEntity(
           'food1',
           'LEFTOVERS',
           'Food?',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('food1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'exit1',
           'DOWNSTAIRS',
           'Leave',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('exit1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'bed1',
           'BED',
           'Making your bed',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('bed1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'food1',
           'LEFTOVERS',
           'Food?',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('food1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'exit1',
           'DOWNSTAIRS',
           'Leave',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('exit1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'bed1',
           'BED',
           'Making your bed',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('bed1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'food1',
           'LEFTOVERS',
           'Food?',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('food1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'exit1',
           'DOWNSTAIRS',
           'Leave',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('exit1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'bed1',
           'BED',
           'Making your bed',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('bed1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'food1',
           'LEFTOVERS',
           'Food?',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('food1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'exit1',
           'DOWNSTAIRS',
           'Leave',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('exit1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'bed1',
           'BED',
           'Making your bed',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('bed1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'food1',
           'LEFTOVERS',
           'Food?',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('food1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'exit1',
           'DOWNSTAIRS',
           'Leave',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('exit1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'bed1',
           'BED',
           'Making your bed',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('bed1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'food1',
           'LEFTOVERS',
           'Food?',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('food1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'exit1',
           'DOWNSTAIRS',
           'Leave',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('exit1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'bed1',
           'BED',
           'Making your bed',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('bed1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'food1',
           'LEFTOVERS',
           'Food?',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('food1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'exit1',
           'DOWNSTAIRS',
           'Leave',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('exit1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'bed1',
           'BED',
           'Making your bed',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('bed1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'food1',
           'LEFTOVERS',
           'Food?',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('food1', new ArrayView([]))
         ),
         new InteractiveEntity(
           'exit1',
           'DOWNSTAIRS',
           'Leave',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('exit1', new ArrayView([]))
         ),
       ]
     ),
@@ -195,7 +223,7 @@ export class GameManagerService {
           'mom1',
           'Angry mom',
           'She is mad',
-          new OpenedContainerState(new ArrayView([]))
+          new OpenedContainerState('mom1', new ArrayView([]))
         ),
       ]
     ),
@@ -212,7 +240,7 @@ export class GameManagerService {
   public registerEvent(event: ActionableDefinition) {
     this.playerAction.next(event);
 
-    switch (event.name) {
+    switch (event.action) {
       case 'OPEN':
         this.changeCurrentScene(1);
 

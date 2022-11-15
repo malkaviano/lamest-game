@@ -27,7 +27,7 @@ export class CharacterEntity {
     );
   }
 
-  public get skills(): KeyValueInterface {
+  public get skills(): KeyValueInterface<number> {
     return Array.from(this.mSkills.entries()).reduce((acc: any, [k, v]) => {
       const base = skillDefinitions[k].base(this.characteristics);
 

@@ -1,3 +1,3 @@
-export interface KeyValueInterface {
-  readonly [key: string]: number;
+export interface KeyValueInterface<Value> {
+  readonly [key: string]: Value;
 }

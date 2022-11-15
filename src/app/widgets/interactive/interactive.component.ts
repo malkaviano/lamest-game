@@ -34,7 +34,7 @@ export class InteractiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.actionsSubscription = this.interactive.stateChanged$.subscribe(
+    this.actionsSubscription = this.interactive.actionsChanged$.subscribe(
       (actions) => {
         this.actions = actions;
       }
@@ -45,7 +45,7 @@ export class InteractiveComponent implements OnInit, OnDestroy {
     this.actionsSubscription.unsubscribe();
   }
 
-  actionSelected(id: ActionableLiteral): void {
-    this.onActionSelected.emit(actionableDefinitions[id]);
+  actionSelected(action: ActionableDefinition): void {
+    this.onActionSelected.emit(action);
   }
 }

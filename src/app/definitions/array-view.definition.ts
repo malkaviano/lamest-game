@@ -4,4 +4,8 @@ export class ArrayView<T> {
   public get keyValues(): T[] {
     return [...this.collection];
   }
+
+  public equals(other: ArrayView<T>): boolean {
+    return JSON.stringify(this.keyValues) === JSON.stringify(other.keyValues);
+  }
 }

@@ -25,7 +25,7 @@ describe('InteractiveComponent', () => {
     'aid1',
     'Ornate Chest',
     'A brilliant chest',
-    new OpenedContainerState(new ArrayView([]))
+    new OpenedContainerState('aid1', new ArrayView([]))
   );
 
   beforeEach(async () => {
@@ -70,7 +70,7 @@ describe('InteractiveComponent', () => {
       const button = await loader.getHarness(MatButtonHarness);
 
       let result: ActionableDefinition | undefined;
-      const expected = actionableDefinitions['CLOSE'];
+      const expected = actionableDefinitions['CLOSE']('aid1', 'Close');
 
       fixture.componentInstance.onActionSelected
         .pipe(first())

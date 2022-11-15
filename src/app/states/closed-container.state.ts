@@ -7,15 +7,17 @@ import { InteractiveState } from './interactive.state';
 import { OpenedContainerState } from './opened-container.state';
 
 export class ClosedContainerState extends InteractiveState {
-  constructor(public readonly items: ArrayView<unknown>) {
-    super('ContainerClosedState', [actionableDefinitions['OPEN']]);
+  constructor(entityId: string, public readonly items: ArrayView<unknown>) {
+    super(entityId, 'ContainerClosedState', [
+      actionableDefinitions['OPEN'](entityId, 'Open'),
+    ]);
   }
 
   public override execute(action: ActionableDefinition): InteractiveState {
-    if (action.name !== 'OPEN') {
+    if (action.action !== 'OPEN') {
       throw new Error('Illegal Action Performed');
     }
 
-    return new OpenedContainerState(this.items);
+    return new OpenedContainerState(this.entityId, this.items);
   }
 }

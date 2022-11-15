@@ -5,10 +5,10 @@ import { ArrayView } from '../definitions/array-view.definition';
 import { InteractiveState } from '../states/interactive.state';
 
 export class InteractiveEntity {
-  protected readonly stateChanged: BehaviorSubject<
+  protected readonly actionsChanged: BehaviorSubject<
     ArrayView<ActionableDefinition>
   >;
-  public stateChanged$: Observable<ArrayView<ActionableDefinition>>;
+  public actionsChanged$: Observable<ArrayView<ActionableDefinition>>;
 
   constructor(
     public readonly id: string,
@@ -16,15 +16,21 @@ export class InteractiveEntity {
     public readonly description: string,
     protected currentState: InteractiveState
   ) {
-    this.stateChanged = new BehaviorSubject<ArrayView<ActionableDefinition>>(
+    this.actionsChanged = new BehaviorSubject<ArrayView<ActionableDefinition>>(
       this.currentState.actions
     );
-    this.stateChanged$ = this.stateChanged.asObservable();
+    this.actionsChanged$ = this.actionsChanged.asObservable();
   }
 
   public onActionSelected(actionableDefinition: ActionableDefinition): void {
+    const oldActions = this.currentState.actions;
+
     this.currentState = this.currentState.execute(actionableDefinition);
 
-    this.stateChanged.next(this.currentState.actions);
+    const currentActions = this.currentState.actions;
+
+    if (!oldActions.equals(currentActions)) {
+      this.actionsChanged.next(currentActions);
+    }
   }
 }

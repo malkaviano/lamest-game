@@ -452,7 +452,11 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
     );
   }
 
-  actionSelected(event: ActionableDefinition): void {
-    this.gameManager.registerEvent(event);
+  actionSelected(action: ActionableDefinition): void {
+    this.scene.interactives
+      .filter((i) => i.id === action.interactiveId)
+      .forEach((i) => i.onActionSelected(action));
+
+    this.gameManager.registerEvent(action);
   }
 }
