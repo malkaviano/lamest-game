@@ -1,81 +1,13 @@
 <div class="flex-panel debug">
-  <div class="description panel-item debug">
+  <div class="panel-box width-scene debug">
     <app-main-text [paragraphs]="scene.paragraphs"></app-main-text>
   </div>
-  <app-interactive
-    class="item"
-    *ngFor="let interactive of scene.interactives"
-    [interactive]="interactive"
-    (onActionSelected)="actionSelected($event)"
-  ></app-interactive>
-</div>
-<div class="flex-panel debug">
-  <div class="logging panel-item debug">
-    <p>
-      This is log. something lame happened This is log. something lame happened
-      This is log. something lame happened
-    </p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-  </div>
-
-  <div class="panel-item debug">
-    <p>
-      This is log. something lame happened This is log. something lame happened
-      This is log. something lame happened
-    </p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-  </div>
-
-  <div class="panel-item debug">
-    <p>
-      This is log. something lame happened This is log. something lame happened
-      This is log. something lame happened
-    </p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
-    <p>This is log. something lame happened</p>
+  <div class="panel-box debug">
+    <app-interactive
+      class="item"
+      *ngFor="let interactive of scene.interactives"
+      [interactive]="interactive"
+      (onActionSelected)="actionSelected($event)"
+    ></app-interactive>
   </div>
 </div>

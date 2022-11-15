@@ -1,4 +1,6 @@
 .card-box {
-  max-width: 600px;
+  min-width: 200px;
+  max-width: 400px;
   display: inline-block;
+  padding: 5px 5px;
 }
