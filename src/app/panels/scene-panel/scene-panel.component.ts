@@ -446,7 +446,7 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
     );
 
     this.withSubscriptionHelper.addSubscriptions(
-      this.scene.interactives.map((i) => {
+      this.scene.interactives.keyValues.map((i) => {
         return i.logMessageProduced$.subscribe((log) => {
           const strLog = `${log.action.label} => ${log.response}`;
 
@@ -457,7 +457,7 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
   }
 
   actionSelected(action: ActionableDefinition): void {
-    this.scene.interactives
+    this.scene.interactives.keyValues
       .filter((i) => i.id === action.interactiveId)
       .forEach((i) => i.onActionSelected(action));
 

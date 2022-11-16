@@ -6,8 +6,8 @@ export class SceneEntity {
 
   constructor(
     public readonly id: string,
-    public readonly paragraphs: string[],
-    public readonly interactives: InteractiveEntity[]
+    public readonly description: ArrayView<string>,
+    public readonly interactives: ArrayView<InteractiveEntity>
   ) {
     this.logs = [];
   }

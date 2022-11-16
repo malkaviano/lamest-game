@@ -21,7 +21,7 @@
       </mat-toolbar>
     </div>
     <div class="main-box vertical-scrollable">
-      <app-text-box [paragraphs]="scene.paragraphs"></app-text-box>
+      <app-text-box [paragraphs]="scene.description.keyValues"></app-text-box>
     </div>
   </div>
   <div class="section">
@@ -33,7 +33,7 @@
     <div class="main-box vertical-scrollable">
       <app-interactive
         class="item"
-        *ngFor="let interactive of scene.interactives"
+        *ngFor="let interactive of scene.interactives.keyValues"
         [interactive]="interactive"
         (onActionSelected)="actionSelected($event)"
       ></app-interactive>
