@@ -3,22 +3,16 @@ import { test, expect } from '@playwright/test';
 import { characteristicsDefinitions } from '../src/app/definitions/characteristics.definition';
 import { characterIdentityDefinitions } from '../src/app/definitions/character-identity.definition';
 import { derivedAttributeDefinitions } from '../src/app/definitions/attributes.definition';
-import {
-  commonSkillDefinitions,
-  skillDefinitions,
-} from '../src/app/definitions/skill.definition';
-import { SkillNameLiteral } from '../src/app/literals/skill-name.literal';
+import { commonSkillDefinitions } from '../src/app/definitions/skill.definition';
 import { professionSkillDefinitions } from '../src/app/definitions/profession.definition';
 import { ProfessionLiteral } from '../src/app/literals/profession.literal';
 
-const protocol = 'http';
-
-const address = 'localhost:4200';
+const url = process.env['PLAYWRIGHT_TEST_BASE_URL'] ?? 'http://localhost:4200';
 
 const endpoint = 'character-generation';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto(`${protocol}://${address}/${endpoint}`);
+  await page.goto(`${url}/${endpoint}`);
 });
 
 test.describe('Generating a random character', () => {
