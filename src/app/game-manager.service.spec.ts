@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { first } from 'rxjs';
 
-import { SceneEntity } from './entities/scene.entity';
+import { SceneDefinition } from './definitions/scene.definition';
 import { GameManagerService } from './game-manager.service';
 
 describe('GameManagerService', () => {
@@ -19,13 +19,13 @@ describe('GameManagerService', () => {
   describe('current scene', () => {
     describe('when starting the game', () => {
       it('should be scene1', () => {
-        let result: SceneEntity | undefined;
+        let result: SceneDefinition | undefined;
 
         service.sceneChanged$
           .pipe(first())
           .subscribe((scene) => (result = scene));
 
-        expect(result?.id).toEqual('scene1');
+        expect(result).not.toBeNull();
       });
     });
   });

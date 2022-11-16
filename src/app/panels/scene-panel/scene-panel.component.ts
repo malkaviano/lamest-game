@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 
-import { SceneEntity } from '../../entities/scene.entity';
+import { SceneDefinition } from '../../definitions/scene.definition';
 import { GameManagerService } from '../../game-manager.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
@@ -13,7 +13,7 @@ import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
   styleUrls: ['./scene-panel.component.css'],
 })
 export class ScenePanelComponent implements OnInit, OnDestroy {
-  scene!: SceneEntity;
+  scene!: SceneDefinition;
 
   inventory: KeyValueDescriptionDefinition[] = [
     new KeyValueDescriptionDefinition(
@@ -444,23 +444,9 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
         })
       )
     );
-
-    this.withSubscriptionHelper.addSubscriptions(
-      this.scene.interactives.keyValues.map((i) => {
-        return i.logMessageProduced$.subscribe((log) => {
-          const strLog = `${log.action.label} => ${log.response}`;
-
-          this.scene.addLog(strLog);
-        });
-      })
-    );
   }
 
   actionSelected(action: ActionableDefinition): void {
-    this.scene.interactives.keyValues
-      .filter((i) => i.id === action.interactiveId)
-      .forEach((i) => i.onActionSelected(action));
-
     this.gameManager.registerEvent(action);
   }
 }

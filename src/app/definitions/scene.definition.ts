@@ -1,11 +1,10 @@
-import { InteractiveEntity } from './interactive.entity';
-import { ArrayView } from '../definitions/array-view.definition';
+import { InteractiveEntity } from '../entities/interactive.entity';
+import { ArrayView } from './array-view.definition';
 
-export class SceneEntity {
+export class SceneDefinition {
   private readonly logs: string[];
 
   constructor(
-    public readonly id: string,
     public readonly description: ArrayView<string>,
     public readonly interactives: ArrayView<InteractiveEntity>
   ) {
