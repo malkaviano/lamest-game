@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
 import { ActionableDefinition } from './definitions/actionable.definition';
-
-import { ArrayView } from './definitions/array-view.definition';
-
 import { Scene } from './definitions/scene.definition';
 import { InteractiveEntity } from './entities/interactive.entity';
 import { ConversationState } from './states/conversation.state';

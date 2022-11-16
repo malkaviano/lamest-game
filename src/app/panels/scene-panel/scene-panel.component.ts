@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
 import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 
 import { Scene } from '../../definitions/scene.definition';
 import { GameManagerService } from '../../game-manager.service';
+import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
 @Component({
   selector: 'app-scene-panel',
@@ -421,49 +421,39 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
     ),
   ];
 
-  sceneChangedSubscription: Subscription;
-
-  playerActionSubscription: Subscription;
-
-  actionLogSubscription: Subscription[];
-
   constructor(
     private readonly snackBar: MatSnackBar,
-    private readonly gameManager: GameManagerService
-  ) {
-    this.sceneChangedSubscription = Subscription.EMPTY;
-    this.playerActionSubscription = Subscription.EMPTY;
-
-    this.actionLogSubscription = [];
-  }
+    private readonly gameManager: GameManagerService,
+    private readonly withSubscriptionHelper: WithSubscriptionHelper
+  ) {}
 
   ngOnDestroy(): void {
-    this.sceneChangedSubscription.unsubscribe();
-    this.playerActionSubscription.unsubscribe();
-
-    this.actionLogSubscription.forEach((sub) => sub.unsubscribe());
+    this.withSubscriptionHelper.unsubscribeAll();
   }
 
   ngOnInit(): void {
-    this.sceneChangedSubscription = this.gameManager.sceneChanged$.subscribe(
-      (scene) => (this.scene = scene)
+    this.withSubscriptionHelper.addSubscription(
+      this.gameManager.sceneChanged$.subscribe((scene) => (this.scene = scene))
     );
 
-    this.playerActionSubscription = this.gameManager.playerAction$.subscribe(
-      (action) =>
+    this.withSubscriptionHelper.addSubscription(
+      this.gameManager.playerAction$.subscribe((action) =>
         this.snackBar.open(action.label, 'dismiss', {
           horizontalPosition: 'end',
           verticalPosition: 'top',
         })
+      )
     );
 
-    this.actionLogSubscription = this.scene.interactives.map((i) => {
-      return i.logMessageProduced$.subscribe((log) => {
-        const strLog = `${log.action.label} => ${log.response}`;
+    this.withSubscriptionHelper.addSubscriptions(
+      this.scene.interactives.map((i) => {
+        return i.logMessageProduced$.subscribe((log) => {
+          const strLog = `${log.action.label} => ${log.response}`;
 
-        this.scene.pushLog(strLog);
-      });
-    });
+          this.scene.pushLog(strLog);
+        });
+      })
+    );
   }
 
   actionSelected(action: ActionableDefinition): void {

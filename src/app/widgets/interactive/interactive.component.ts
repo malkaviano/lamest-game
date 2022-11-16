@@ -6,15 +6,11 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import {
-  ActionableDefinition,
-  actionableDefinitions,
-} from '../../definitions/actionable.definition';
+import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { ArrayView } from '../../definitions/array-view.definition';
 
 import { InteractiveEntity } from '../../entities/interactive.entity';
-import { ActionableLiteral } from '../../literals/actionable.literal';
+import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
 @Component({
   selector: 'app-interactive',
@@ -22,28 +18,25 @@ import { ActionableLiteral } from '../../literals/actionable.literal';
   styleUrls: ['./interactive.component.css'],
 })
 export class InteractiveComponent implements OnInit, OnDestroy {
-  private actionsSubscription: Subscription;
-
   @Input() interactive!: InteractiveEntity;
   @Output() onActionSelected: EventEmitter<ActionableDefinition>;
   actions: ArrayView<ActionableDefinition>;
 
-  constructor() {
+  constructor(private readonly withSubscriptionHelper: WithSubscriptionHelper) {
     this.onActionSelected = new EventEmitter<ActionableDefinition>();
-    this.actionsSubscription = Subscription.EMPTY;
     this.actions = new ArrayView([]);
   }
 
   ngOnInit(): void {
-    this.actionsSubscription = this.interactive.actionsChanged$.subscribe(
-      (actions) => {
+    this.withSubscriptionHelper.addSubscription(
+      this.interactive.actionsChanged$.subscribe((actions) => {
         this.actions = actions;
-      }
+      })
     );
   }
 
   ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
+    this.withSubscriptionHelper.unsubscribeAll();
   }
 
   actionSelected(action: ActionableDefinition): void {
