@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { ActionableDefinition } from './definitions/actionable.definition';
-import { Scene } from './definitions/scene.definition';
+import { SceneEntity } from './entities/scene.entity';
 import { InteractiveEntity } from './entities/interactive.entity';
 import { ConversationState } from './states/conversation.state';
 
@@ -11,18 +11,18 @@ import { ConversationState } from './states/conversation.state';
   providedIn: 'root',
 })
 export class GameManagerService {
-  private currentScene: Scene;
+  private currentScene: SceneEntity;
 
-  private sceneChanged: BehaviorSubject<Scene>;
+  private sceneChanged: BehaviorSubject<SceneEntity>;
 
   private playerAction: Subject<ActionableDefinition>;
 
-  sceneChanged$: Observable<Scene>;
+  sceneChanged$: Observable<SceneEntity>;
 
   playerAction$: Observable<ActionableDefinition>;
 
   private readonly scenes = [
-    new Scene(
+    new SceneEntity(
       'scene1',
       [
         `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
@@ -78,7 +78,7 @@ export class GameManagerService {
 
   constructor() {
     this.currentScene = this.scenes[0];
-    this.sceneChanged = new BehaviorSubject<Scene>(this.currentScene);
+    this.sceneChanged = new BehaviorSubject<SceneEntity>(this.currentScene);
     this.sceneChanged$ = this.sceneChanged.asObservable();
     this.playerAction = new Subject<ActionableDefinition>();
     this.playerAction$ = this.playerAction.asObservable();

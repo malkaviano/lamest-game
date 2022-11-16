@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 
-import { Scene } from '../../definitions/scene.definition';
+import { SceneEntity } from '../../entities/scene.entity';
 import { GameManagerService } from '../../game-manager.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
@@ -13,7 +13,7 @@ import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
   styleUrls: ['./scene-panel.component.css'],
 })
 export class ScenePanelComponent implements OnInit, OnDestroy {
-  scene!: Scene;
+  scene!: SceneEntity;
 
   inventory: KeyValueDescriptionDefinition[] = [
     new KeyValueDescriptionDefinition(
@@ -450,7 +450,7 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
         return i.logMessageProduced$.subscribe((log) => {
           const strLog = `${log.action.label} => ${log.response}`;
 
-          this.scene.pushLog(strLog);
+          this.scene.addLog(strLog);
         });
       })
     );

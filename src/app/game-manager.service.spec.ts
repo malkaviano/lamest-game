@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { first } from 'rxjs';
 
-import { Scene } from './definitions/scene.definition';
+import { SceneEntity } from './entities/scene.entity';
 import { GameManagerService } from './game-manager.service';
 
 describe('GameManagerService', () => {
@@ -19,7 +19,7 @@ describe('GameManagerService', () => {
   describe('current scene', () => {
     describe('when starting the game', () => {
       it('should be scene1', () => {
-        let result: Scene | undefined;
+        let result: SceneEntity | undefined;
 
         service.sceneChanged$
           .pipe(first())

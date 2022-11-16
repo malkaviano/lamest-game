@@ -1,8 +1,8 @@
-import { InteractiveEntity } from '../entities/interactive.entity';
-import { ArrayView } from './array-view.definition';
+import { InteractiveEntity } from './interactive.entity';
+import { ArrayView } from '../definitions/array-view.definition';
 
-export class Scene {
-  private logs: string[];
+export class SceneEntity {
+  private readonly logs: string[];
 
   constructor(
     public readonly id: string,
@@ -16,7 +16,7 @@ export class Scene {
     return new ArrayView(this.logs);
   }
 
-  public pushLog(log: string): void {
-    this.logs.push(log);
+  public addLog(log: string): void {
+    this.logs.unshift(log);
   }
 }
