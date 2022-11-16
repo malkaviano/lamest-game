@@ -11,8 +11,8 @@ const url = process.env['PLAYWRIGHT_TEST_BASE_URL'] ?? 'http://localhost:4200';
 
 const endpoint = 'character-generation';
 
-test.beforeEach(async ({ page }) => {
-  await page.goto(`${url}/${endpoint}`);
+test.beforeEach(async ({ page, baseURL }) => {
+  await page.goto(`${baseURL}/${endpoint}`);
 });
 
 test.describe('Generating a random character', () => {
