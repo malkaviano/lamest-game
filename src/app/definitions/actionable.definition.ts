@@ -7,6 +7,15 @@ export class ActionableDefinition {
     public readonly label: string,
     public readonly interactiveId: string
   ) {}
+
+  public equals(other: ActionableDefinition): boolean {
+    return (
+      this.action === other.action &&
+      this.name === other.name &&
+      this.label === other.label &&
+      this.interactiveId === other.interactiveId
+    );
+  }
 }
 
 export const actionableDefinitions: {

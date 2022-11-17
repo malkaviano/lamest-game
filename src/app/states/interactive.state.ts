@@ -1,7 +1,8 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
-import { LogMessage } from '../definitions/log-message.definition';
+import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
+import { StateResult } from '../results/state.result';
 
 export abstract class InteractiveState {
   constructor(
@@ -14,8 +15,13 @@ export abstract class InteractiveState {
     return new ArrayView(this.stateActions);
   }
 
-  public abstract execute(action: ActionableDefinition): {
-    state: InteractiveState;
-    log: LogMessage;
-  };
+  public execute(action: ActionableDefinition): StateResult {
+    if (!this.stateActions.some((a) => a.equals(action))) {
+      throw new Error(errorMessages['WRONG-ACTION']);
+    }
+
+    return this.stateResult(action);
+  }
+
+  protected abstract stateResult(action: ActionableDefinition): StateResult;
 }

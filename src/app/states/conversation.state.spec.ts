@@ -1,6 +1,5 @@
 import { actionableDefinitions } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
-import { errorMessages } from '../definitions/error-messages.definition';
 import { LogMessage } from '../definitions/log-message.definition';
 import {
   ConversationMessageMap,
@@ -68,14 +67,6 @@ describe('ConversationState', () => {
 
         expect(result.state.actions).toEqual(new ArrayView([sorryAction]));
       });
-    });
-  });
-
-  describe('when receiving an unknown message', () => {
-    it(`throws ${errorMessages['UNKNOWN-MESSAGE']}`, () => {
-      expect(() =>
-        state.execute(actionableDefinitions['ASK']('id1', 'unknown'))
-      ).toThrowError(errorMessages['UNKNOWN-MESSAGE']);
     });
   });
 });

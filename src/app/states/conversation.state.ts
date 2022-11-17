@@ -2,8 +2,8 @@ import {
   ActionableDefinition,
   actionableDefinitions,
 } from '../definitions/actionable.definition';
-import { errorMessages } from '../definitions/error-messages.definition';
 import { LogMessage } from '../definitions/log-message.definition';
+import { StateResult } from '../results/state.result';
 import { InteractiveState } from './interactive.state';
 
 export type ConversationMessageMap = {
@@ -37,27 +37,19 @@ export class ConversationState extends InteractiveState {
     this.currentMessages = currentMessages;
   }
 
-  public execute(action: ActionableDefinition): {
+  protected stateResult(action: ActionableDefinition): {
     state: InteractiveState;
     log: LogMessage;
   } {
-    if (action.action !== 'ASK') {
-      throw new Error(errorMessages['WRONG-ACTION']);
-    }
-
     const response = this.currentMessages[action.name];
 
-    if (!response) {
-      throw new Error(errorMessages['UNKNOWN-MESSAGE']);
-    }
-
-    return {
-      state: new ConversationState(
+    return new StateResult(
+      new ConversationState(
         this.entityId,
         this.messageMap,
         response.change ?? this.currentMap
       ),
-      log: new LogMessage(action, response.answer),
-    };
+      new LogMessage(action, response.answer)
+    );
   }
 }
