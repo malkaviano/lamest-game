@@ -1,9 +1,9 @@
-import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
 import { InteractiveLogDefinition } from '../definitions/interactive-log.definition';
-import { InteractiveState } from '../states/interactive.state';
+import { ActionableState } from '../states/actionable.state';
 
 export class InteractiveEntity {
   protected readonly actionsChanged: BehaviorSubject<
@@ -20,7 +20,7 @@ export class InteractiveEntity {
     public readonly id: string,
     public readonly name: string,
     public readonly description: string,
-    protected currentState: InteractiveState
+    protected currentState: ActionableState
   ) {
     this.actionsChanged = new BehaviorSubject<ArrayView<ActionableDefinition>>(
       this.currentState.actions

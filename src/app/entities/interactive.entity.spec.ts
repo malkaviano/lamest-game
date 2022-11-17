@@ -4,12 +4,12 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
 
-import { InteractiveState } from '../states/interactive.state';
+import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 import { StateResult } from '../results/state.result';
 import { InteractiveLogDefinition } from '../definitions/interactive-log.definition';
 
-const mockedState = mock<InteractiveState>();
+const mockedState = mock<ActionableState>();
 
 const state = instance(mockedState);
 

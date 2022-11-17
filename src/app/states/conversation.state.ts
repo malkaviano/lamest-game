@@ -4,7 +4,7 @@ import {
 } from '../definitions/actionable.definition';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
 import { StateResult } from '../results/state.result';
-import { InteractiveState } from './interactive.state';
+import { ActionableState } from './actionable.state';
 
 export type ConversationMessageMap = {
   [key: string]: {
@@ -12,7 +12,7 @@ export type ConversationMessageMap = {
   };
 };
 
-export class ConversationState extends InteractiveState {
+export class ConversationState extends ActionableState {
   protected readonly currentMessages: {
     [key: string]: { label: string; answer: string; change?: string };
   };

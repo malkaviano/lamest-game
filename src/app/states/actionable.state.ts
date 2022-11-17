@@ -4,7 +4,7 @@ import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
 import { StateResult } from '../results/state.result';
 
-export abstract class InteractiveState {
+export abstract class ActionableState {
   constructor(
     public readonly entityId: string,
     public readonly name: StateLiteral,
