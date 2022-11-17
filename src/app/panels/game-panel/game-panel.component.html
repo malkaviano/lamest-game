@@ -8,7 +8,25 @@
     <div class="main-box vertical-scrollable">
       <app-key-value
         class="panel-item"
-        *ngFor="let keyValue of keyValues"
+        *ngFor="let keyValue of characterValues.identity.keyValues"
+        [keyValue]="keyValue"
+        attr.data-testid="{{ keyValue.key }}"
+      ></app-key-value>
+      <app-key-value
+        class="panel-item"
+        *ngFor="let keyValue of characterValues.characteristics.keyValues"
+        [keyValue]="keyValue"
+        attr.data-testid="{{ keyValue.key }}"
+      ></app-key-value>
+      <app-key-value
+        class="panel-item"
+        *ngFor="let keyValue of characterValues.derivedAttributes.keyValues"
+        [keyValue]="keyValue"
+        attr.data-testid="{{ keyValue.key }}"
+      ></app-key-value>
+      <app-key-value
+        class="panel-item"
+        *ngFor="let keyValue of characterValues.skills.keyValues"
         [keyValue]="keyValue"
         attr.data-testid="{{ keyValue.key }}"
       ></app-key-value>

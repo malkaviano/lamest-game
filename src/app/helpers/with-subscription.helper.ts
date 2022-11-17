@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class WithSubscriptionHelper {
   private subscriptions: Subscription[];
 

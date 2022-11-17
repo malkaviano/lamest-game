@@ -29,7 +29,7 @@ describe('CharacterPageComponent', () => {
     expect(component.characteristicsView.keyValues.length).toBe(7);
   });
 
-  it('should have characteristics', () => {
+  it('should have identity', () => {
     expect(component.identityView.keyValues.length).toBe(7);
   });
 

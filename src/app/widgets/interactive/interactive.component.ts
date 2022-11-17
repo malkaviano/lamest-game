@@ -16,6 +16,7 @@ import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
   selector: 'app-interactive',
   templateUrl: './interactive.component.html',
   styleUrls: ['./interactive.component.css'],
+  providers: [WithSubscriptionHelper],
 })
 export class InteractiveComponent implements OnInit, OnDestroy {
   @Input() interactive!: InteractiveEntity;

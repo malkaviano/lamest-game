@@ -1,15 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ArrayView } from '../../definitions/array-view.definition';
-import { DerivedAttributeDefinition } from '../../definitions/attribute.definition';
-import { derivedAttributeDefinitions } from '../../definitions/attributes.definition';
-import { characterIdentityDefinitions } from '../../definitions/character-identity.definition';
-import { CharacteristicDefinition } from '../../definitions/characteristic.definition';
-import { characteristicsDefinitions } from '../../definitions/characteristics.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
-import { skillDefinitions } from '../../definitions/skill.definition';
-import { IdentityLiteral } from '../../literals/identity.literal';
-import { SkillNameLiteral } from '../../literals/skill-name.literal';
+import { ConverterHelper } from '../../helpers/converter.helper';
 import { CharacterManagerService } from '../../services/character-manager.service';
 
 @Component({
@@ -24,54 +17,22 @@ export class CharacterPageComponent implements OnInit {
   public skillsView!: ArrayView<KeyValueDescriptionDefinition>;
 
   constructor(
-    private readonly characterManagerService: CharacterManagerService
+    private readonly characterManagerService: CharacterManagerService,
+    private readonly converterHelper: ConverterHelper
   ) {}
 
   ngOnInit(): void {
     const character = this.characterManagerService.randomCharacter;
 
-    this.identityView = new ArrayView(
-      Object.entries(character.identity).map(([key, value]) => {
-        return new KeyValueDescriptionDefinition(
-          key.toUpperCase(),
-          value,
-          characterIdentityDefinitions[key as IdentityLiteral]
-        );
-      })
-    );
+    const characterValues =
+      this.converterHelper.characterToKeyValueDescription(character);
 
-    this.characteristicsView = new ArrayView(
-      Object.values(character.characteristics).map(
-        (c: CharacteristicDefinition) => {
-          return new KeyValueDescriptionDefinition(
-            c.key,
-            c.value.toString(),
-            characteristicsDefinitions[c.key]
-          );
-        }
-      )
-    );
+    this.identityView = characterValues.identity;
 
-    this.derivedAttributesView = new ArrayView(
-      Object.values(character.derivedAttributes).map(
-        (da: DerivedAttributeDefinition) => {
-          return new KeyValueDescriptionDefinition(
-            da.key,
-            da.value.toString(),
-            derivedAttributeDefinitions[da.key]
-          );
-        }
-      )
-    );
+    this.characteristicsView = characterValues.characteristics;
 
-    this.skillsView = new ArrayView(
-      Object.entries(character.skills).map(([key, value]) => {
-        return new KeyValueDescriptionDefinition(
-          key,
-          value.toString(),
-          skillDefinitions[key as SkillNameLiteral].description
-        );
-      })
-    );
+    this.derivedAttributesView = characterValues.derivedAttributes;
+
+    this.skillsView = characterValues.skills;
   }
 }

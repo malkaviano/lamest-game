@@ -11,6 +11,8 @@ import { InteractiveEntity } from './entities/interactive.entity';
 import { ConversationState } from './states/conversation.state';
 import { ArrayView } from './definitions/array-view.definition';
 import { SimpleState } from './states/simple.state';
+import { CharacterEntity } from './entities/character.entity';
+import { CharacterManagerService } from './services/character-manager.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +22,9 @@ export class GameManagerService {
 
   private readonly sceneChanged: BehaviorSubject<SceneDefinition>;
 
-  private readonly playerAction: Subject<ActionableDefinition>;
+  private readonly playerActed: Subject<ActionableDefinition>;
+
+  private readonly characterChanged: BehaviorSubject<CharacterEntity>;
 
   private readonly descriptions: { [key: string]: string[] };
 
@@ -28,11 +32,21 @@ export class GameManagerService {
 
   public readonly sceneChanged$: Observable<SceneDefinition>;
 
-  public readonly playerAction$: Observable<ActionableDefinition>;
+  public readonly playerActed$: Observable<ActionableDefinition>;
 
-  public readonly actionLog$: Observable<string>;
+  public readonly actionLogged$: Observable<string>;
 
-  constructor() {
+  public readonly characterChanged$: Observable<CharacterEntity>;
+
+  constructor(
+    private readonly characterManagerService: CharacterManagerService
+  ) {
+    this.characterChanged = new BehaviorSubject(
+      this.characterManagerService.currentCharacter
+    );
+
+    this.characterChanged$ = this.characterChanged;
+
     this.descriptions = {
       scene1: [
         `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
@@ -108,18 +122,18 @@ export class GameManagerService {
     this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
     this.sceneChanged$ = this.sceneChanged.asObservable();
 
-    this.playerAction = new Subject<ActionableDefinition>();
-    this.playerAction$ = this.playerAction.asObservable();
+    this.playerActed = new Subject<ActionableDefinition>();
+    this.playerActed$ = this.playerActed.asObservable();
 
     const interactiveKeys = Object.keys(this.interactives);
 
     interactiveKeys.forEach((key) =>
       this.interactives[key].actionSelected$.subscribe((action) => {
-        this.playerAction.next(action);
+        this.playerActed.next(action);
       })
     );
 
-    this.actionLog$ = merge(
+    this.actionLogged$ = merge(
       ...interactiveKeys.map((key) => {
         return this.interactives[key].actionResult$.pipe(
           map((result) => {
