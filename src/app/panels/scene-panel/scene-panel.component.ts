@@ -421,11 +421,15 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
     ),
   ];
 
+  public readonly logs: string[];
+
   constructor(
     private readonly snackBar: MatSnackBar,
     private readonly gameManager: GameManagerService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper
-  ) {}
+  ) {
+    this.logs = [];
+  }
 
   ngOnDestroy(): void {
     this.withSubscriptionHelper.unsubscribeAll();
@@ -443,6 +447,12 @@ export class ScenePanelComponent implements OnInit, OnDestroy {
           verticalPosition: 'top',
         })
       )
+    );
+
+    this.withSubscriptionHelper.addSubscription(
+      this.gameManager.actionLog$.subscribe((log) => {
+        this.logs.unshift(log);
+      })
     );
   }
 

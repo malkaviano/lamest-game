@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, merge, Observable, Subject } from 'rxjs';
 
 import {
   ActionableDefinition,
@@ -29,6 +29,8 @@ export class GameManagerService {
   public readonly sceneChanged$: Observable<SceneDefinition>;
 
   public readonly playerAction$: Observable<ActionableDefinition>;
+
+  public readonly actionLog$: Observable<string>;
 
   constructor() {
     this.descriptions = {
@@ -107,17 +109,23 @@ export class GameManagerService {
     this.playerAction = new Subject<ActionableDefinition>();
     this.playerAction$ = this.playerAction.asObservable();
 
-    Object.keys(this.interactives).forEach((key) => {
-      this.interactives[key].actionResult$.subscribe((result) => {
-        const strLog = `${result.interactiveName} => ${result.actionLog.label} => ${result.actionLog.msg}`;
+    const interactiveKeys = Object.keys(this.interactives);
 
-        this.currentScene.addLog(strLog);
-      });
-
+    interactiveKeys.forEach((key) =>
       this.interactives[key].actionSelected$.subscribe((action) => {
         this.playerAction.next(action);
-      });
-    });
+      })
+    );
+
+    this.actionLog$ = merge(
+      ...interactiveKeys.map((key) => {
+        return this.interactives[key].actionResult$.pipe(
+          map((result) => {
+            return `${result.interactiveName} => ${result.actionLog.label} => ${result.actionLog.msg}`;
+          })
+        );
+      })
+    );
   }
 
   public registerEvent(action: ActionableDefinition) {
