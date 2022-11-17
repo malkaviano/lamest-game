@@ -2,7 +2,7 @@ import {
   ActionableDefinition,
   actionableDefinitions,
 } from '../definitions/actionable.definition';
-import { LogMessage } from '../definitions/log-message.definition';
+import { ActionLogDefinition } from '../definitions/action-log.definition';
 import { StateResult } from '../results/state.result';
 import { InteractiveState } from './interactive.state';
 
@@ -37,10 +37,7 @@ export class ConversationState extends InteractiveState {
     this.currentMessages = currentMessages;
   }
 
-  protected stateResult(action: ActionableDefinition): {
-    state: InteractiveState;
-    log: LogMessage;
-  } {
+  protected stateResult(action: ActionableDefinition): StateResult {
     const response = this.currentMessages[action.name];
 
     return new StateResult(
@@ -49,7 +46,7 @@ export class ConversationState extends InteractiveState {
         this.messageMap,
         response.change ?? this.currentMap
       ),
-      new LogMessage(action, response.answer)
+      new ActionLogDefinition(action.label, response.answer)
     );
   }
 }

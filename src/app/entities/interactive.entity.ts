@@ -2,17 +2,19 @@ import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
-import { LogMessage } from '../definitions/log-message.definition';
+import { InteractiveLogDefinition } from '../definitions/interactive-log.definition';
 import { InteractiveState } from '../states/interactive.state';
 
 export class InteractiveEntity {
   protected readonly actionsChanged: BehaviorSubject<
     ArrayView<ActionableDefinition>
   >;
-  protected readonly logMessageProduced: Subject<LogMessage>;
+  protected readonly actionResult: Subject<InteractiveLogDefinition>;
+  protected readonly actionSelected: Subject<ActionableDefinition>;
 
   public readonly actionsChanged$: Observable<ArrayView<ActionableDefinition>>;
-  public readonly logMessageProduced$: Observable<LogMessage>;
+  public readonly actionResult$: Observable<InteractiveLogDefinition>;
+  public readonly actionSelected$: Observable<ActionableDefinition>;
 
   constructor(
     public readonly id: string,
@@ -26,21 +28,27 @@ export class InteractiveEntity {
 
     this.actionsChanged$ = this.actionsChanged.asObservable();
 
-    this.logMessageProduced = new Subject<LogMessage>();
+    this.actionResult = new Subject<InteractiveLogDefinition>();
 
-    this.logMessageProduced$ = this.logMessageProduced.asObservable();
+    this.actionResult$ = this.actionResult.asObservable();
+
+    this.actionSelected = new Subject<ActionableDefinition>();
+
+    this.actionSelected$ = this.actionSelected.asObservable();
   }
 
-  public onActionSelected(actionableDefinition: ActionableDefinition): void {
+  public onActionSelected(action: ActionableDefinition): void {
     const oldActions = this.currentState.actions;
 
-    const { state, log } = this.currentState.execute(actionableDefinition);
+    const { state, log } = this.currentState.execute(action);
 
     this.currentState = state;
 
     const currentActions = this.currentState.actions;
 
-    this.logMessageProduced.next(log);
+    this.actionResult.next(new InteractiveLogDefinition(this.name, log));
+
+    this.actionSelected.next(action);
 
     if (!oldActions.equals(currentActions)) {
       this.actionsChanged.next(currentActions);

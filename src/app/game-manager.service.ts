@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { ActionableDefinition } from './definitions/actionable.definition';
+import {
+  ActionableDefinition,
+  actionableDefinitions,
+} from './definitions/actionable.definition';
 import { SceneDefinition } from './definitions/scene.definition';
 import { InteractiveEntity } from './entities/interactive.entity';
 import { ConversationState } from './states/conversation.state';
 import { ArrayView } from './definitions/array-view.definition';
+import { BasicState } from './states/basic.state';
 
 @Injectable({
   providedIn: 'root',
@@ -18,32 +22,38 @@ export class GameManagerService {
 
   private readonly playerAction: Subject<ActionableDefinition>;
 
-  private readonly description: string[];
+  private readonly descriptions: { [key: string]: string[] };
 
-  private readonly interactives: InteractiveEntity[];
+  private readonly interactives: { [key: string]: InteractiveEntity };
 
   public readonly sceneChanged$: Observable<SceneDefinition>;
 
   public readonly playerAction$: Observable<ActionableDefinition>;
 
   constructor() {
-    this.description = [
-      `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
-      `Algumas pessoas que caminham pelas ruas olham para vocês com um ar de curiosidade. Já outras olham com desconfiança. De uma forma ou de outra, existe uma certeza: vocês não são parte dessa cidade. São estranhos. Os olhares se intensificam quando vocês se aproximam da delegacia, onde Caio combinou de se encontrar com Larissa.`,
-      `A investigadora os espera na porta da delegacia. Larissa Ribeiro é uma mulher jovem e magra, de óculos e cabelos presos num coque. Seu olhar é de preocupação. O uniforme da polícia está ligeiramente, escondido debaixo de um casaco mais grosso, para escapar do clima frio da cidade.`,
-      `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
-      `Algumas pessoas que caminham pelas ruas olham para vocês com um ar de curiosidade. Já outras olham com desconfiança. De uma forma ou de outra, existe uma certeza: vocês não são parte dessa cidade. São estranhos. Os olhares se intensificam quando vocês se aproximam da delegacia, onde Caio combinou de se encontrar com Larissa.`,
-      `A investigadora os espera na porta da delegacia. Larissa Ribeiro é uma mulher jovem e magra, de óculos e cabelos presos num coque. Seu olhar é de preocupação. O uniforme da polícia está ligeiramente, escondido debaixo de um casaco mais grosso, para escapar do clima frio da cidade.`,
-      `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
-      `Algumas pessoas que caminham pelas ruas olham para vocês com um ar de curiosidade. Já outras olham com desconfiança. De uma forma ou de outra, existe uma certeza: vocês não são parte dessa cidade. São estranhos. Os olhares se intensificam quando vocês se aproximam da delegacia, onde Caio combinou de se encontrar com Larissa.`,
-      `A investigadora os espera na porta da delegacia. Larissa Ribeiro é uma mulher jovem e magra, de óculos e cabelos presos num coque. Seu olhar é de preocupação. O uniforme da polícia está ligeiramente, escondido debaixo de um casaco mais grosso, para escapar do clima frio da cidade.`,
-      `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
-      `Algumas pessoas que caminham pelas ruas olham para vocês com um ar de curiosidade. Já outras olham com desconfiança. De uma forma ou de outra, existe uma certeza: vocês não são parte dessa cidade. São estranhos. Os olhares se intensificam quando vocês se aproximam da delegacia, onde Caio combinou de se encontrar com Larissa.`,
-      `A investigadora os espera na porta da delegacia. Larissa Ribeiro é uma mulher jovem e magra, de óculos e cabelos presos num coque. Seu olhar é de preocupação. O uniforme da polícia está ligeiramente, escondido debaixo de um casaco mais grosso, para escapar do clima frio da cidade.`,
-    ];
+    this.descriptions = {
+      scene1: [
+        `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
+        `Algumas pessoas que caminham pelas ruas olham para vocês com um ar de curiosidade. Já outras olham com desconfiança. De uma forma ou de outra, existe uma certeza: vocês não são parte dessa cidade. São estranhos. Os olhares se intensificam quando vocês se aproximam da delegacia, onde Caio combinou de se encontrar com Larissa.`,
+        `A investigadora os espera na porta da delegacia. Larissa Ribeiro é uma mulher jovem e magra, de óculos e cabelos presos num coque. Seu olhar é de preocupação. O uniforme da polícia está ligeiramente, escondido debaixo de um casaco mais grosso, para escapar do clima frio da cidade.`,
+        `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
+        `Algumas pessoas que caminham pelas ruas olham para vocês com um ar de curiosidade. Já outras olham com desconfiança. De uma forma ou de outra, existe uma certeza: vocês não são parte dessa cidade. São estranhos. Os olhares se intensificam quando vocês se aproximam da delegacia, onde Caio combinou de se encontrar com Larissa.`,
+        `A investigadora os espera na porta da delegacia. Larissa Ribeiro é uma mulher jovem e magra, de óculos e cabelos presos num coque. Seu olhar é de preocupação. O uniforme da polícia está ligeiramente, escondido debaixo de um casaco mais grosso, para escapar do clima frio da cidade.`,
+        `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
+        `Algumas pessoas que caminham pelas ruas olham para vocês com um ar de curiosidade. Já outras olham com desconfiança. De uma forma ou de outra, existe uma certeza: vocês não são parte dessa cidade. São estranhos. Os olhares se intensificam quando vocês se aproximam da delegacia, onde Caio combinou de se encontrar com Larissa.`,
+        `A investigadora os espera na porta da delegacia. Larissa Ribeiro é uma mulher jovem e magra, de óculos e cabelos presos num coque. Seu olhar é de preocupação. O uniforme da polícia está ligeiramente, escondido debaixo de um casaco mais grosso, para escapar do clima frio da cidade.`,
+        `O veículo de vocês parece acelerar um pouco mais e saltar um pouco menos. A estrada rústica dá lugar a uma rodovia asfaltada e mais luzes parecem se aproximar de vocês. Luzes de uma cidade que parece estar viva no cair da noite. A van atravessa o pórtico da cidade e é possível ler o letreiro que os recebe: “Boas vindas a Aurora, a cidade das flores”.`,
+        `Algumas pessoas que caminham pelas ruas olham para vocês com um ar de curiosidade. Já outras olham com desconfiança. De uma forma ou de outra, existe uma certeza: vocês não são parte dessa cidade. São estranhos. Os olhares se intensificam quando vocês se aproximam da delegacia, onde Caio combinou de se encontrar com Larissa.`,
+        `A investigadora os espera na porta da delegacia. Larissa Ribeiro é uma mulher jovem e magra, de óculos e cabelos presos num coque. Seu olhar é de preocupação. O uniforme da polícia está ligeiramente, escondido debaixo de um casaco mais grosso, para escapar do clima frio da cidade.`,
+      ],
+      scene2: [
+        'This is the exit',
+        'Congratulations, this game is a piece of garbage',
+      ],
+    };
 
-    this.interactives = [
-      new InteractiveEntity(
+    this.interactives = {
+      npc1: new InteractiveEntity(
         'npc1',
         'Carlos Joaquim',
         'Small guy with an ugly face wearing a cheap suit',
@@ -76,32 +86,50 @@ export class GameManagerService {
           'map1'
         )
       ),
-    ];
+      sceneExitDoor: new InteractiveEntity(
+        'sceneExitDoor',
+        'Exit Door',
+        'A strange door that may lead to the exit',
+        new BasicState('sceneExitDoor', [
+          actionableDefinitions['USE']('sceneExitDoor', 'use', 'Use'),
+        ])
+      ),
+    };
 
     this.currentScene = new SceneDefinition(
-      new ArrayView(this.description),
-      new ArrayView(this.interactives)
+      new ArrayView(this.descriptions['scene1']),
+      new ArrayView(Object.entries(this.interactives).map((e) => e[1]))
     );
 
     this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
     this.sceneChanged$ = this.sceneChanged.asObservable();
+
     this.playerAction = new Subject<ActionableDefinition>();
     this.playerAction$ = this.playerAction.asObservable();
 
-    this.interactives.forEach((i) => {
-      return i.logMessageProduced$.subscribe((log) => {
-        const strLog = `${log.action.label} => ${log.response}`;
+    Object.keys(this.interactives).forEach((key) => {
+      this.interactives[key].actionResult$.subscribe((result) => {
+        const strLog = `${result.interactiveName} => ${result.actionLog.label} => ${result.actionLog.msg}`;
 
         this.currentScene.addLog(strLog);
+      });
+
+      this.interactives[key].actionSelected$.subscribe((action) => {
+        this.playerAction.next(action);
       });
     });
   }
 
   public registerEvent(action: ActionableDefinition) {
-    this.interactives
-      .filter((i) => i.id === action.interactiveId)
-      .forEach((i) => i.onActionSelected(action));
+    this.interactives[action.interactiveId].onActionSelected(action);
 
-    this.playerAction.next(action);
+    if (action.interactiveId === 'sceneExitDoor') {
+      this.currentScene = new SceneDefinition(
+        new ArrayView(this.descriptions['scene2']),
+        new ArrayView([])
+      );
+
+      this.sceneChanged.next(this.currentScene);
+    }
   }
 }

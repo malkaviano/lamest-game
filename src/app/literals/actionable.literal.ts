@@ -1,1 +1,1 @@
-export type ActionableLiteral = 'OPEN' | 'CLOSE' | 'PICK' | 'ASK';
+export type ActionableLiteral = 'OPEN' | 'CLOSE' | 'PICK' | 'ASK' | 'USE';

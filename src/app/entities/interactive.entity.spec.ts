@@ -2,7 +2,7 @@ import { first } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
-import { LogMessage } from '../definitions/log-message.definition';
+import { ActionLogDefinition } from '../definitions/action-log.definition';
 
 import { InteractiveState } from '../states/interactive.state';
 import { InteractiveEntity } from './interactive.entity';
@@ -25,7 +25,7 @@ describe('InteractiveEntity', () => {
 
       const expected = new ArrayView([action]);
 
-      const log = new LogMessage(action, 'gg');
+      const log = new ActionLogDefinition(action.label, 'gg');
 
       when(mockedState.execute(anything())).thenReturn({ state, log });
 

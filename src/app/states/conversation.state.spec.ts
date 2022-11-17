@@ -1,6 +1,6 @@
 import { actionableDefinitions } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
-import { LogMessage } from '../definitions/log-message.definition';
+import { ActionLogDefinition } from '../definitions/action-log.definition';
 import {
   ConversationMessageMap,
   ConversationState,
@@ -39,8 +39,8 @@ describe('ConversationState', () => {
 
   describe('when receiving hello', () => {
     it('produces log "Hi, how are you?"', () => {
-      const expectedLogMessage = new LogMessage(
-        helloAction,
+      const expectedLogMessage = new ActionLogDefinition(
+        helloAction.label,
         'Hi, how are you?'
       );
 

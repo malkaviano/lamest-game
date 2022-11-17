@@ -1,5 +1,5 @@
 import { actionableDefinitions } from '../definitions/actionable.definition';
-import { LogMessage } from '../definitions/log-message.definition';
+import { ActionLogDefinition } from '../definitions/action-log.definition';
 import { StateResult } from '../results/state.result';
 import { BasicState } from './basic.state';
 
@@ -19,8 +19,6 @@ const pickAction = actionableDefinitions['PICK'](
   'Get bubble gum'
 );
 
-const unknownAction = actionableDefinitions['CLOSE']('error', 'unknown');
-
 const state = new BasicState('basic1', [askAction1, askAction2, pickAction]);
 
 describe('BasicState', () => {
@@ -29,7 +27,7 @@ describe('BasicState', () => {
       it('return same state and log "executed"', () => {
         const result = state.execute(pickAction);
 
-        const log = new LogMessage(pickAction, 'executed');
+        const log = new ActionLogDefinition(pickAction.label, 'selected');
 
         const expected = new StateResult(state, log);
 
