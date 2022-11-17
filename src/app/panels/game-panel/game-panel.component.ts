@@ -8,11 +8,11 @@ import { GameManagerService } from '../../game-manager.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
 @Component({
-  selector: 'app-scene-panel',
-  templateUrl: './scene-panel.component.html',
-  styleUrls: ['./scene-panel.component.css'],
+  selector: 'app-game-panel',
+  templateUrl: './game-panel.component.html',
+  styleUrls: ['./game-panel.component.css'],
 })
-export class ScenePanelComponent implements OnInit, OnDestroy {
+export class GamePanelComponent implements OnInit, OnDestroy {
   scene!: SceneDefinition;
 
   inventory: KeyValueDescriptionDefinition[] = [
