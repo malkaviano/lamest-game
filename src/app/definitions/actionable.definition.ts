@@ -33,6 +33,6 @@ export const actionableDefinitions: {
     new ActionableDefinition('PICK', name, label ?? name, id),
   ASK: (id, name, label) =>
     new ActionableDefinition('ASK', name, label ?? name, id),
-  USE: (id, name, label) =>
-    new ActionableDefinition('USE', name, label ?? name, id),
+  SCENE: (id, name, label) =>
+    new ActionableDefinition('SCENE', name, label ?? name, id),
 };

@@ -91,7 +91,7 @@ export class GameManagerService {
         'Exit Door',
         'A strange door that may lead to the exit',
         new BasicState('sceneExitDoor', [
-          actionableDefinitions['USE']('sceneExitDoor', 'use', 'Use'),
+          actionableDefinitions['SCENE']('sceneExitDoor', 'use', 'Use'),
         ])
       ),
     };
@@ -123,7 +123,7 @@ export class GameManagerService {
   public registerEvent(action: ActionableDefinition) {
     this.interactives[action.interactiveId].onActionSelected(action);
 
-    if (action.interactiveId === 'sceneExitDoor') {
+    if (action.action === 'SCENE' && action.interactiveId === 'sceneExitDoor') {
       this.currentScene = new SceneDefinition(
         new ArrayView(this.descriptions['scene2']),
         new ArrayView([])
