@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { GeneratorService } from './generator.service';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
-import { DerivedAttributesDefinition } from '../definitions/attributes.definition';
-import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
 import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { SkillService } from './skill.service';
 import { professionSkillDefinitions } from '../definitions/profession.definition';

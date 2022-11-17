@@ -10,7 +10,7 @@ import { KeyValueDescriptionDefinition } from '../../definitions/key-value-descr
 import { skillDefinitions } from '../../definitions/skill.definition';
 import { IdentityLiteral } from '../../literals/identity.literal';
 import { SkillNameLiteral } from '../../literals/skill-name.literal';
-import { RandomCharacterService } from '../../services/random-character.service';
+import { CharacterManagerService } from '../../services/character-manager.service';
 
 @Component({
   selector: 'app-character',
@@ -23,10 +23,12 @@ export class CharacterPageComponent implements OnInit {
   public derivedAttributesView!: ArrayView<KeyValueDescriptionDefinition>;
   public skillsView!: ArrayView<KeyValueDescriptionDefinition>;
 
-  constructor(private readonly characterService: RandomCharacterService) {}
+  constructor(
+    private readonly characterManagerService: CharacterManagerService
+  ) {}
 
   ngOnInit(): void {
-    const character = this.characterService.character();
+    const character = this.characterManagerService.randomCharacter;
 
     this.identityView = new ArrayView(
       Object.entries(character.identity).map(([key, value]) => {

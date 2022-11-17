@@ -9,7 +9,7 @@ import { ProfessionLiteral } from '../src/app/literals/profession.literal';
 
 const url = process.env['PLAYWRIGHT_TEST_BASE_URL'] ?? 'http://localhost:4200';
 
-const endpoint = 'character-generation';
+const endpoint = 'random-character-generation';
 
 test.beforeEach(async ({ page, baseURL }) => {
   await page.goto(`${baseURL}/${endpoint}`);
