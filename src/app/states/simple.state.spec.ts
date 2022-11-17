@@ -1,7 +1,7 @@
 import { actionableDefinitions } from '../definitions/actionable.definition';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
 import { StateResult } from '../results/state.result';
-import { BasicState } from './basic.state';
+import { SimpleState } from './simple.state';
 
 const askAction1 = actionableDefinitions['ASK'](
   'basic1',
@@ -19,9 +19,13 @@ const pickAction = actionableDefinitions['PICK'](
   'Get bubble gum'
 );
 
-const state = new BasicState('basic1', [askAction1, askAction2, pickAction]);
+const state = new SimpleState(
+  'basic1',
+  [askAction1, askAction2, pickAction],
+  'selected'
+);
 
-describe('BasicState', () => {
+describe('SimpleState', () => {
   describe('execute action', () => {
     describe('when known message received', () => {
       it('return same state and log "executed"', () => {

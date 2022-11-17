@@ -10,7 +10,7 @@ import { SceneDefinition } from './definitions/scene.definition';
 import { InteractiveEntity } from './entities/interactive.entity';
 import { ConversationState } from './states/conversation.state';
 import { ArrayView } from './definitions/array-view.definition';
-import { BasicState } from './states/basic.state';
+import { SimpleState } from './states/simple.state';
 
 @Injectable({
   providedIn: 'root',
@@ -92,9 +92,11 @@ export class GameManagerService {
         'sceneExitDoor',
         'Exit Door',
         'A strange door that may lead to the exit',
-        new BasicState('sceneExitDoor', [
-          actionableDefinitions['SCENE']('sceneExitDoor', 'use', 'Use'),
-        ])
+        new SimpleState(
+          'sceneExitDoor',
+          [actionableDefinitions['SCENE']('sceneExitDoor', 'use', 'Use')],
+          'Leaving scene'
+        )
       ),
     };
 
