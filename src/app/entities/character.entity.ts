@@ -36,4 +36,18 @@ export class CharacterEntity {
       return acc;
     }, {});
   }
+
+  public copy(
+    values: {
+      identity?: CharacterIdentityDefinition;
+      characteristics?: CharacteristicsDefinition;
+      skills?: Map<SkillNameLiteral, number>;
+    } = {}
+  ): CharacterEntity {
+    return new CharacterEntity(
+      values.identity ?? this.identity,
+      values.characteristics ?? this.characteristics,
+      values.skills ?? this.mSkills
+    );
+  }
 }
