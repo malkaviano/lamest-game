@@ -1,5 +1,5 @@
 import { ArrayView } from '../definitions/array-view.definition';
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
@@ -21,7 +21,7 @@ describe('ConverterHelper', () => {
 const helper = new ConverterHelper();
 
 const character = new CharacterEntity(
-  new CharacterIdentityDefinition(
+  new IdentityDefinition(
     'name',
     'Hunter',
     'FEMALE',

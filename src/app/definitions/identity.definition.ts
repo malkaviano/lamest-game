@@ -6,7 +6,7 @@ import { ProfessionLiteral } from '../literals/profession.literal';
 import { RaceLiteral } from '../literals/race.literal';
 import { WeightLiteral } from '../literals/weight.literal';
 
-export class CharacterIdentityDefinition {
+export class IdentityDefinition {
   constructor(
     public readonly name: string,
     public readonly profession: ProfessionLiteral,

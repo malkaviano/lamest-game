@@ -1,5 +1,5 @@
 import { DerivedAttributesDefinition } from '../definitions/attributes.definition';
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
@@ -8,7 +8,7 @@ import { DerivedAttributeDefinition } from '../definitions/attribute.definition'
 
 export class CharacterEntity {
   constructor(
-    public readonly identity: CharacterIdentityDefinition,
+    public readonly identity: IdentityDefinition,
     public readonly characteristics: CharacteristicsDefinition,
     private readonly mSkills: Map<SkillNameLiteral, number>
   ) {}
@@ -39,7 +39,7 @@ export class CharacterEntity {
 
   public copy(
     values: {
-      identity?: CharacterIdentityDefinition;
+      identity?: IdentityDefinition;
       characteristics?: CharacteristicsDefinition;
       skills?: Map<SkillNameLiteral, number>;
     } = {}

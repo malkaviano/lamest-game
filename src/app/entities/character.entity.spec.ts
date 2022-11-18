@@ -1,6 +1,6 @@
 import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
 import { DerivedAttributesDefinition } from '../definitions/attributes.definition';
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
@@ -58,7 +58,7 @@ describe('CharacterEntity', () => {
           fakeSkills
         );
 
-        const identity = new CharacterIdentityDefinition(
+        const identity = new IdentityDefinition(
           'Some Name',
           'Police Detective',
           'FEMALE',
@@ -132,7 +132,7 @@ describe('CharacterEntity', () => {
   });
 });
 
-const fakeIdentity = new CharacterIdentityDefinition(
+const fakeIdentity = new IdentityDefinition(
   'Some Name',
   'Police Detective',
   'MALE',

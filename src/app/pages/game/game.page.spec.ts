@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 import { GamePage } from './game.page';
 import { ArrayView } from '../../definitions/array-view.definition';
 import { CharacterEntity } from '../../entities/character.entity';
-import { CharacterIdentityDefinition } from '../../definitions/character-identity.definition';
+import { IdentityDefinition } from '../../definitions/identity.definition';
 import { CharacteristicsDefinition } from '../../definitions/characteristics.definition';
 import { CharacteristicDefinition } from '../../definitions/characteristic.definition';
 import { SkillNameLiteral } from '../../literals/skill-name.literal';
@@ -120,7 +120,7 @@ describe('GamePage', () => {
 });
 
 const characterEntity = new CharacterEntity(
-  new CharacterIdentityDefinition(
+  new IdentityDefinition(
     'name',
     'Hunter',
     'FEMALE',

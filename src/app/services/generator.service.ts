@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { professions } from '../definitions/profession.definition';
@@ -32,8 +32,8 @@ export class GeneratorService {
     );
   }
 
-  public identity(): CharacterIdentityDefinition {
-    return new CharacterIdentityDefinition(
+  public identity(): IdentityDefinition {
+    return new IdentityDefinition(
       this.name(),
       this.profession(),
       this.gender(),

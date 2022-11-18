@@ -6,7 +6,7 @@ import { RandomCharacterService } from './random-character.service';
 import { GeneratorService } from './generator.service';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { SkillService } from './skill.service';
@@ -74,7 +74,7 @@ const prepareMock = () => {
     .thenReturn(fakeSkills);
 };
 
-const fakeIdentity = new CharacterIdentityDefinition(
+const fakeIdentity = new IdentityDefinition(
   'Some Name',
   'Police Detective',
   'MALE',

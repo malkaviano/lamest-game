@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, mock, reset, when } from 'ts-mockito';
 
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { CharacterEntity } from '../entities/character.entity';
@@ -14,7 +14,7 @@ import { RandomCharacterService } from './random-character.service';
 const mockedRandomCharacterService = mock(RandomCharacterService);
 
 const expected = new CharacterEntity(
-  new CharacterIdentityDefinition(
+  new IdentityDefinition(
     'name',
     'Hunter',
     'FEMALE',
@@ -62,7 +62,7 @@ const expected = new CharacterEntity(
 );
 
 const notUsed = new CharacterEntity(
-  new CharacterIdentityDefinition(
+  new IdentityDefinition(
     'name',
     'Doctor',
     'MALE',

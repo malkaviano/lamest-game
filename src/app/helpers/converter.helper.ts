@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ArrayView } from '../definitions/array-view.definition';
 import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
 import { derivedAttributeDefinitions } from '../definitions/attributes.definition';
-import { characterIdentityDefinitions } from '../definitions/character-identity.definition';
+import { characterIdentityDefinitions } from '../definitions/identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { characteristicsDefinitions } from '../definitions/characteristics.definition';
