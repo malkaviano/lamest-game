@@ -4,9 +4,9 @@ import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
-import { GameManagerService } from '../../game-manager.service';
 import { ConverterHelper } from '../../helpers/converter.helper';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { GameManagerService } from '../../services/game-manager.service';
 
 @Component({
   selector: 'app-game-panel',

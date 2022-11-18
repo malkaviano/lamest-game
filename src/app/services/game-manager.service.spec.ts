@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { first } from 'rxjs';
 
-import { SceneDefinition } from './definitions/scene.definition';
+import { SceneDefinition } from '../definitions/scene.definition';
 import { GameManagerService } from './game-manager.service';
 
 describe('GameManagerService', () => {

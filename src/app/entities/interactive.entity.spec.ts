@@ -1,17 +1,13 @@
-import { first, last, take, takeLast } from 'rxjs';
+import { first, last, take } from 'rxjs';
 import { anything, instance, mock, reset, when } from 'ts-mockito';
+
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../definitions/array-view.definition';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
-
 import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 import { StateResult } from '../results/state.result';
 import { InteractiveLogDefinition } from '../definitions/interactive-log.definition';
-
-const mockedState = mock<ActionableState>();
-
-const state = instance(mockedState);
 
 beforeEach(() => {
   reset(mockedState);
@@ -117,6 +113,10 @@ describe('InteractiveEntity', () => {
     });
   });
 });
+
+const mockedState = mock<ActionableState>();
+
+const state = instance(mockedState);
 
 const fakeEntity = () =>
   new InteractiveEntity('id1', 'SomeEntity', 'Testing Entity', state);

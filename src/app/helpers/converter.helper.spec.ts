@@ -8,6 +8,16 @@ import { CharacterEntity } from '../entities/character.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { ConverterHelper } from './converter.helper';
 
+describe('ConverterHelper', () => {
+  describe('converting a character to keyValues', () => {
+    it('return keyvalue array', () => {
+      const result = helper.characterToKeyValueDescription(character);
+
+      expect(result).toEqual(expected);
+    });
+  });
+});
+
 const helper = new ConverterHelper();
 
 const character = new CharacterEntity(
@@ -92,13 +102,3 @@ const expected = new CharacterValuesDefinition(
     new KeyValueDescriptionDefinition('Research', '47', ''),
   ])
 );
-
-describe('ConverterHelper', () => {
-  describe('converting a character to keyvalues', () => {
-    it('return keyvalue array', () => {
-      const result = helper.characterToKeyValueDescription(character);
-
-      expect(result).toEqual(expected);
-    });
-  });
-});

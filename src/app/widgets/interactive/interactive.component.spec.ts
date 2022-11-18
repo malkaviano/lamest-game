@@ -16,12 +16,6 @@ import {
 } from '../../definitions/actionable.definition';
 import { ArrayView } from '../../definitions/array-view.definition';
 
-let loader: HarnessLoader;
-
-const mockedInteractive = mock(InteractiveEntity);
-
-const expected = actionableDefinitions['CLOSE']('id1', 'close', 'Close');
-
 describe('InteractiveComponent', () => {
   let fixture: ComponentFixture<InteractiveComponent>;
 
@@ -95,3 +89,9 @@ describe('InteractiveComponent', () => {
     });
   });
 });
+
+let loader: HarnessLoader;
+
+const mockedInteractive = mock(InteractiveEntity);
+
+const expected = actionableDefinitions['CLOSE']('id1', 'close', 'Close');

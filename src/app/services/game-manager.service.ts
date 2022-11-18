@@ -5,14 +5,14 @@ import { BehaviorSubject, map, merge, Observable, Subject } from 'rxjs';
 import {
   ActionableDefinition,
   actionableDefinitions,
-} from './definitions/actionable.definition';
-import { SceneDefinition } from './definitions/scene.definition';
-import { InteractiveEntity } from './entities/interactive.entity';
-import { ConversationState } from './states/conversation.state';
-import { ArrayView } from './definitions/array-view.definition';
-import { SimpleState } from './states/simple.state';
-import { CharacterEntity } from './entities/character.entity';
-import { CharacterManagerService } from './services/character-manager.service';
+} from '../definitions/actionable.definition';
+import { SceneDefinition } from '../definitions/scene.definition';
+import { InteractiveEntity } from '../entities/interactive.entity';
+import { ConversationState } from '../states/conversation.state';
+import { SimpleState } from '../states/simple.state';
+import { CharacterEntity } from '../entities/character.entity';
+import { CharacterManagerService } from '../services/character-manager.service';
+import { ArrayView } from '../definitions/array-view.definition';
 
 @Injectable({
   providedIn: 'root',

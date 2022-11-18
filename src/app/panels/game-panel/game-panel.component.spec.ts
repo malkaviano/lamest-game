@@ -9,7 +9,6 @@ import { of } from 'rxjs';
 
 import { GamePanelComponent } from './game-panel.component';
 import { ArrayView } from '../../definitions/array-view.definition';
-import { GameManagerService } from '../../game-manager.service';
 import { CharacterEntity } from '../../entities/character.entity';
 import { CharacterIdentityDefinition } from '../../definitions/character-identity.definition';
 import { CharacteristicsDefinition } from '../../definitions/characteristics.definition';
@@ -19,6 +18,7 @@ import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
 import { actionableDefinitions } from '../../definitions/actionable.definition';
+import { GameManagerService } from '../../services/game-manager.service';
 
 describe('GamePanelComponent', () => {
   let component: GamePanelComponent;
