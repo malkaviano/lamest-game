@@ -5,22 +5,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from '../material/material.module';
-import { InteractiveComponent } from './widgets/interactive/interactive.component';
-import { TextBoxComponent } from './widgets/text-box/text-box.component';
-import { GamePageComponent } from './pages/game-page/game-page.component';
-import { KeyValuePanelComponent } from './panels/key-value-panel/key-value-panel.component';
-import { CharacterPageComponent } from './pages/character-page/character-page.component';
-import { KeyValueComponent } from './widgets/key-value/key-value.component';
+import { InteractiveWidget } from './widgets/interactive/interactive.widget';
+import { GamePage } from './pages/game/game.page';
+import { KeyValuePanel } from './panels/key-value/key-value.panel';
+import { CharacterPage } from './pages/character/character.page';
+import { TextAreaWindow } from './windows/text-area/text-area.window';
+import { KeyValueWindow } from './windows/key-value/key-value.window';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InteractiveComponent,
-    TextBoxComponent,
-    GamePageComponent,
-    KeyValuePanelComponent,
-    CharacterPageComponent,
-    KeyValueComponent,
+    InteractiveWidget,
+    TextAreaWindow,
+    GamePage,
+    KeyValuePanel,
+    CharacterPage,
+    KeyValueWindow,
   ],
   imports: [
     BrowserModule,

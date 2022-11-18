@@ -4,9 +4,9 @@ import { KeyValueDescriptionDefinition } from '../../definitions/key-value-descr
 
 @Component({
   selector: 'app-key-value-panel',
-  templateUrl: './key-value-panel.component.html',
-  styleUrls: ['./key-value-panel.component.css'],
+  templateUrl: './key-value.panel.html',
+  styleUrls: ['./key-value.panel.css'],
 })
-export class KeyValuePanelComponent {
+export class KeyValuePanel {
   @Input() public keyValues!: KeyValueDescriptionDefinition[];
 }

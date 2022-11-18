@@ -1,5 +1,4 @@
-div.text-box {
+div.text-area {
   overflow-y: auto;
   text-align: justify;
-  font-size: larger;
 }

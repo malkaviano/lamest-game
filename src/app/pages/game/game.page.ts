@@ -10,11 +10,11 @@ import { GameManagerService } from '../../services/game-manager.service';
 
 @Component({
   selector: 'app-game-page',
-  templateUrl: './game-page.component.html',
-  styleUrls: ['./game-page.component.css'],
+  templateUrl: './game.page.html',
+  styleUrls: ['./game.page.css'],
   providers: [WithSubscriptionHelper],
 })
-export class GamePageComponent implements OnInit, OnDestroy {
+export class GamePage implements OnInit, OnDestroy {
   scene!: SceneDefinition;
 
   inventory: KeyValueDescriptionDefinition[] = [

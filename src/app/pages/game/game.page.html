@@ -7,32 +7,32 @@
     </div>
     <div class="main-box vertical-scrollable" data-testid="character">
       <div data-testid="identity">
-        <app-key-value
+        <app-key-value-window
           *ngFor="let keyValue of characterValues.identity.keyValues"
           [keyValue]="keyValue"
           attr.data-testid="{{ keyValue.key }}"
-        ></app-key-value>
+        ></app-key-value-window>
       </div>
       <div data-testid="characteristics">
-        <app-key-value
+        <app-key-value-window
           *ngFor="let keyValue of characterValues.characteristics.keyValues"
           [keyValue]="keyValue"
           attr.data-testid="{{ keyValue.key }}"
-        ></app-key-value>
+        ></app-key-value-window>
       </div>
       <div data-testid="derived-attributes">
-        <app-key-value
+        <app-key-value-window
           *ngFor="let keyValue of characterValues.derivedAttributes.keyValues"
           [keyValue]="keyValue"
           attr.data-testid="{{ keyValue.key }}"
-        ></app-key-value>
+        ></app-key-value-window>
       </div>
       <div data-testid="skills">
-        <app-key-value
+        <app-key-value-window
           *ngFor="let keyValue of characterValues.skills.keyValues"
           [keyValue]="keyValue"
           attr.data-testid="{{ keyValue.key }}"
-        ></app-key-value>
+        ></app-key-value-window>
       </div>
     </div>
   </div>
@@ -43,10 +43,10 @@
       </mat-toolbar>
     </div>
     <div class="main-box vertical-scrollable">
-      <app-text-box
+      <app-text-area-window
         [paragraphs]="scene.description.keyValues"
         data-testid="description"
-      ></app-text-box>
+      ></app-text-area-window>
     </div>
   </div>
   <div class="section">
@@ -57,11 +57,11 @@
     </div>
     <div class="main-box vertical-scrollable">
       <div data-testid="interactables">
-        <app-interactive
+        <app-interactive-widget
           *ngFor="let interactive of scene.interactives.keyValues"
           [interactive]="interactive"
           (onActionSelected)="actionSelected($event)"
-        ></app-interactive>
+        ></app-interactive-widget>
       </div>
     </div>
   </div>
@@ -73,7 +73,10 @@
     </div>
     <div class="main-box">
       <div class="half-box vertical-scrollable">
-        <app-text-box [paragraphs]="logs" data-testid="log"></app-text-box>
+        <app-text-area-window
+          [paragraphs]="logs"
+          data-testid="log"
+        ></app-text-area-window>
       </div>
       <div class="title-border">
         <mat-toolbar>
@@ -81,11 +84,11 @@
         </mat-toolbar>
       </div>
       <div class="half-box vertical-scrollable">
-        <app-key-value
+        <app-key-value-window
           *ngFor="let keyValue of inventory"
           [keyValue]="keyValue"
           attr.data-testid="{{ keyValue.key }}"
-        ></app-key-value>
+        ></app-key-value-window>
       </div>
     </div>
   </div>

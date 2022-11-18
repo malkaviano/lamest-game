@@ -1,5 +1,5 @@
 <div class="card-box">
-  <mat-card>
+  <mat-card attr.data-testid="interactive-{{ interactive.id }}">
     <mat-card-title>{{ interactive.name }}</mat-card-title>
     <mat-card-content>{{ interactive.description }}</mat-card-content>
     <mat-card-actions>
@@ -9,7 +9,7 @@
             mat-raised-button
             color="primary"
             (click)="actionSelected(action)"
-            id="{{ action.name }}"
+            attr.data-testid="actionable-{{ action.name }}"
           >
             {{ action.label }}
           </button>

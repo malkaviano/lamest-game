@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-text-box',
-  templateUrl: './text-box.component.html',
-  styleUrls: ['./text-box.component.css'],
+  selector: 'app-text-area-window',
+  templateUrl: './text-area.window.html',
+  styleUrls: ['./text-area.window.css'],
 })
-export class TextBoxComponent {
+export class TextAreaWindow {
   @Input()
   public paragraphs: string[];
 

@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { GamePageComponent } from './pages/game-page/game-page.component';
-import { CharacterPageComponent } from './pages/character-page/character-page.component';
+import { GamePage } from './pages/game/game.page';
+import { CharacterPage } from './pages/character/character.page';
 
 const routes: Routes = [
   {
     path: 'random-character-generation',
-    component: CharacterPageComponent,
+    component: CharacterPage,
     pathMatch: 'full',
   },
-  { path: '', component: GamePageComponent, pathMatch: 'full' },
+  { path: '', component: GamePage, pathMatch: 'full' },
 ];
 
 @NgModule({

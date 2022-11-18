@@ -4,21 +4,21 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
-import { KeyValueComponent } from './key-value.component';
+import { KeyValueWindow } from './key-value.window';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 
 describe('KeyValueComponent', () => {
-  let fixture: ComponentFixture<KeyValueComponent>;
-  let component: KeyValueComponent;
+  let fixture: ComponentFixture<KeyValueWindow>;
+  let component: KeyValueWindow;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [KeyValueComponent],
+      declarations: [KeyValueWindow],
       imports: [MaterialModule, NoopAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(KeyValueComponent);
+    fixture = TestBed.createComponent(KeyValueWindow);
 
     fixture.componentInstance.keyValue = characteristic('STR', '8', 'Strength');
 

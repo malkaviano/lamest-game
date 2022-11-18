@@ -7,7 +7,7 @@ import { By } from '@angular/platform-browser';
 import { instance, mock, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
-import { GamePageComponent } from './game-page.component';
+import { GamePage } from './game.page';
 import { ArrayView } from '../../definitions/array-view.definition';
 import { CharacterEntity } from '../../entities/character.entity';
 import { CharacterIdentityDefinition } from '../../definitions/character-identity.definition';
@@ -20,14 +20,14 @@ import { SimpleState } from '../../states/simple.state';
 import { actionableDefinitions } from '../../definitions/actionable.definition';
 import { GameManagerService } from '../../services/game-manager.service';
 
-describe('GamePageComponent', () => {
-  let component: GamePageComponent;
-  let fixture: ComponentFixture<GamePageComponent>;
+describe('GamePage', () => {
+  let component: GamePage;
+  let fixture: ComponentFixture<GamePage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MatSnackBarModule, NoopAnimationsModule],
-      declarations: [GamePageComponent],
+      declarations: [GamePage],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -37,7 +37,7 @@ describe('GamePageComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GamePageComponent);
+    fixture = TestBed.createComponent(GamePage);
 
     component = fixture.componentInstance;
 

@@ -6,11 +6,11 @@ import { ConverterHelper } from '../../helpers/converter.helper';
 import { CharacterManagerService } from '../../services/character-manager.service';
 
 @Component({
-  selector: 'app-character',
-  templateUrl: './character-page.component.html',
-  styleUrls: ['./character-page.component.css'],
+  selector: 'app-character-page',
+  templateUrl: './character.page.html',
+  styleUrls: ['./character.page.css'],
 })
-export class CharacterPageComponent implements OnInit {
+export class CharacterPage implements OnInit {
   public identityView!: ArrayView<KeyValueDescriptionDefinition>;
   public characteristicsView!: ArrayView<KeyValueDescriptionDefinition>;
   public derivedAttributesView!: ArrayView<KeyValueDescriptionDefinition>;

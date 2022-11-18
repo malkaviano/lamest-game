@@ -7,7 +7,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { instance, mock, when } from 'ts-mockito';
 import { first, of } from 'rxjs';
 
-import { InteractiveComponent } from './interactive.component';
+import { InteractiveWidget } from './interactive.widget';
 import { MaterialModule } from '../../../material/material.module';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import {
@@ -16,16 +16,16 @@ import {
 } from '../../definitions/actionable.definition';
 import { ArrayView } from '../../definitions/array-view.definition';
 
-describe('InteractiveComponent', () => {
-  let fixture: ComponentFixture<InteractiveComponent>;
+describe('InteractiveWidget', () => {
+  let fixture: ComponentFixture<InteractiveWidget>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InteractiveComponent],
+      declarations: [InteractiveWidget],
       imports: [MaterialModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InteractiveComponent);
+    fixture = TestBed.createComponent(InteractiveWidget);
 
     fixture.componentInstance.interactive = instance(mockedInteractive);
 

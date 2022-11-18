@@ -13,12 +13,12 @@ import { InteractiveEntity } from '../../entities/interactive.entity';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
 @Component({
-  selector: 'app-interactive',
-  templateUrl: './interactive.component.html',
-  styleUrls: ['./interactive.component.css'],
+  selector: 'app-interactive-widget',
+  templateUrl: './interactive.widget.html',
+  styleUrls: ['./interactive.widget.css'],
   providers: [WithSubscriptionHelper],
 })
-export class InteractiveComponent implements OnInit, OnDestroy {
+export class InteractiveWidget implements OnInit, OnDestroy {
   @Input() interactive!: InteractiveEntity;
   @Output() onActionSelected: EventEmitter<ActionableDefinition>;
   actions: ArrayView<ActionableDefinition>;
