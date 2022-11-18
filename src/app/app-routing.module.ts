@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { GamePanelComponent } from './panels/game-panel/game-panel.component';
+import { GamePageComponent } from './pages/game-page/game-page.component';
 import { CharacterPageComponent } from './pages/character-page/character-page.component';
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
     component: CharacterPageComponent,
     pathMatch: 'full',
   },
-  { path: '', component: GamePanelComponent, pathMatch: 'full' },
+  { path: '', component: GamePageComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

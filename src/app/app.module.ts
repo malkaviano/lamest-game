@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from '../material/material.module';
 import { InteractiveComponent } from './widgets/interactive/interactive.component';
 import { TextBoxComponent } from './widgets/text-box/text-box.component';
-import { GamePanelComponent } from './panels/game-panel/game-panel.component';
+import { GamePageComponent } from './pages/game-page/game-page.component';
 import { KeyValuePanelComponent } from './panels/key-value-panel/key-value-panel.component';
 import { CharacterPageComponent } from './pages/character-page/character-page.component';
 import { KeyValueComponent } from './widgets/key-value/key-value.component';
@@ -17,7 +17,7 @@ import { KeyValueComponent } from './widgets/key-value/key-value.component';
     AppComponent,
     InteractiveComponent,
     TextBoxComponent,
-    GamePanelComponent,
+    GamePageComponent,
     KeyValuePanelComponent,
     CharacterPageComponent,
     KeyValueComponent,
