@@ -3,11 +3,12 @@ import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { TextAreaWindow } from './text-area.window';
+import { ArrayView } from '../../views/array.view';
 
 describe('TextBoxComponent', () => {
   let component: TextAreaWindow;
   let fixture: ComponentFixture<TextAreaWindow>;
-  let paragraphs = ['p1', 'p2', 'p3', 'p4'];
+  let paragraphs = new ArrayView(['p1', 'p2', 'p3', 'p4']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

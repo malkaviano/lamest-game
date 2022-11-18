@@ -12,7 +12,7 @@ import { ConversationState } from '../states/conversation.state';
 import { SimpleState } from '../states/simple.state';
 import { CharacterEntity } from '../entities/character.entity';
 import { CharacterManagerService } from '../services/character-manager.service';
-import { ArrayView } from '../definitions/array-view.definition';
+import { ArrayView } from '../views/array.view';
 
 @Injectable({
   providedIn: 'root',

@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../../../material/material.module';
 import { KeyValuePanel } from './key-value.panel';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
+import { ArrayView } from '../../views/array.view';
 
 describe('KeyValuePanel', () => {
   let component: KeyValuePanel;
@@ -22,7 +23,7 @@ describe('KeyValuePanel', () => {
 
     component = fixture.componentInstance;
 
-    fixture.componentInstance.keyValues = characteristics();
+    fixture.componentInstance.items = new ArrayView(characteristics());
 
     fixture.detectChanges();
   });

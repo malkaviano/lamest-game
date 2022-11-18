@@ -86,10 +86,10 @@ export class GeneratorService {
   private profession(): ProfessionLiteral {
     const index = this.randomIntService.getRandomInterval(
       0,
-      professions.keyValues.length - 1
+      professions.items.length - 1
     );
 
-    return professions.keyValues[index];
+    return professions.items[index];
   }
 
   private name(): string {

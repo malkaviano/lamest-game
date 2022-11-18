@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ArrayView } from '../../views/array.view';
 
 @Component({
   selector: 'app-text-area-window',
@@ -7,9 +8,9 @@ import { Component, Input } from '@angular/core';
 })
 export class TextAreaWindow {
   @Input()
-  public paragraphs: string[];
+  public paragraphs: ArrayView<string>;
 
   constructor() {
-    this.paragraphs = [];
+    this.paragraphs = new ArrayView([]);
   }
 }

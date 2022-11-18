@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '../definitions/array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
 import { derivedAttributeDefinitions } from '../definitions/attributes.definition';
 import { characterIdentityDefinitions } from '../definitions/identity.definition';

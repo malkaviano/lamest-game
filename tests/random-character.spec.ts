@@ -87,8 +87,8 @@ test.describe('Generating a random character', () => {
     const professionSkills =
       professionSkillDefinitions[profession as ProfessionLiteral];
 
-    for (const key of professionSkills.keyValues.concat(
-      commonSkillDefinitions.keyValues
+    for (const key of professionSkills.items.concat(
+      commonSkillDefinitions.items
     )) {
       const name = await page.locator(`data-testid=key-${key}`).textContent();
 

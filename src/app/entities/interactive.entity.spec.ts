@@ -2,7 +2,7 @@ import { first, last, take } from 'rxjs';
 import { anything, instance, mock, reset, when } from 'ts-mockito';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ArrayView } from '../definitions/array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
 import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';

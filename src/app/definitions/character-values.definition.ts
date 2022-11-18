@@ -1,4 +1,4 @@
-import { ArrayView } from './array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { KeyValueDescriptionDefinition } from './key-value-description.definition';
 
 export class CharacterValuesDefinition {

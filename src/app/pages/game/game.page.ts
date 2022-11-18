@@ -7,6 +7,7 @@ import { SceneDefinition } from '../../definitions/scene.definition';
 import { ConverterHelper } from '../../helpers/converter.helper';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameManagerService } from '../../services/game-manager.service';
+import { ArrayView } from '../../views/array.view';
 
 @Component({
   selector: 'app-game-page',
@@ -15,6 +16,8 @@ import { GameManagerService } from '../../services/game-manager.service';
   providers: [WithSubscriptionHelper],
 })
 export class GamePage implements OnInit, OnDestroy {
+  private readonly gameLogs: string[];
+
   scene!: SceneDefinition;
 
   inventory: KeyValueDescriptionDefinition[] = [
@@ -222,14 +225,12 @@ export class GamePage implements OnInit, OnDestroy {
 
   characterValues!: CharacterValuesDefinition;
 
-  public readonly logs: string[];
-
   constructor(
     private readonly gameManagerService: GameManagerService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly converterHelper: ConverterHelper
   ) {
-    this.logs = [];
+    this.gameLogs = [];
   }
 
   ngOnDestroy(): void {
@@ -252,12 +253,16 @@ export class GamePage implements OnInit, OnDestroy {
 
     this.withSubscriptionHelper.addSubscription(
       this.gameManagerService.actionLogged$.subscribe((log) => {
-        this.logs.unshift(log);
+        this.gameLogs.unshift(log);
       })
     );
   }
 
   actionSelected(action: ActionableDefinition): void {
     this.gameManagerService.registerEvent(action);
+  }
+
+  public get logs(): ArrayView<string> {
+    return new ArrayView(this.gameLogs);
   }
 }

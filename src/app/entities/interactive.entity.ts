@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ArrayView } from '../definitions/array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { InteractiveLogDefinition } from '../definitions/interactive-log.definition';
 import { ActionableState } from '../states/actionable.state';
 

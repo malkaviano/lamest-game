@@ -3,7 +3,7 @@
     <mat-card-title>{{ interactive.name }}</mat-card-title>
     <mat-card-content>{{ interactive.description }}</mat-card-content>
     <mat-card-actions>
-      <ng-template ngFor let-action [ngForOf]="actions.keyValues">
+      <ng-template ngFor let-action [ngForOf]="actions.items">
         <div class="action">
           <button
             mat-raised-button

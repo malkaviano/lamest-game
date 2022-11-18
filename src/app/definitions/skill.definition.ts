@@ -1,6 +1,6 @@
 import { SkillCategoryLiteral } from '../literals/skill-category.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
-import { ArrayView } from './array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { CharacteristicsDefinition } from './characteristics.definition';
 
 export class SkillDefinition {

@@ -26,14 +26,14 @@ describe('CharacterPage', () => {
   });
 
   it('should have characteristics', () => {
-    expect(component.characteristicsView.keyValues.length).toBe(7);
+    expect(component.characteristicsView.items.length).toBe(7);
   });
 
   it('should have identity', () => {
-    expect(component.identityView.keyValues.length).toBe(7);
+    expect(component.identityView.items.length).toBe(7);
   });
 
   it('should have attributes', () => {
-    expect(component.derivedAttributesView.keyValues.length).toBe(3);
+    expect(component.derivedAttributesView.items.length).toBe(3);
   });
 });

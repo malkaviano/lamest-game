@@ -49,7 +49,7 @@ export class RandomCharacterService {
       300
     );
 
-    commonSkillDefinitions.keyValues.forEach((skillName) => {
+    commonSkillDefinitions.items.forEach((skillName) => {
       if (!distributedSkills.has(skillName)) {
         distributedSkills.set(skillName, 0);
       }

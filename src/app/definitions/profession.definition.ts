@@ -1,6 +1,6 @@
 import { ProfessionLiteral } from '../literals/profession.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
-import { ArrayView } from './array-view.definition';
+import { ArrayView } from '../views/array.view';
 
 export const professions: ArrayView<ProfessionLiteral> = new ArrayView([
   'Police Detective',

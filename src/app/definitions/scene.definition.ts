@@ -1,5 +1,5 @@
 import { InteractiveEntity } from '../entities/interactive.entity';
-import { ArrayView } from './array-view.definition';
+import { ArrayView } from '../views/array.view';
 
 export class SceneDefinition {
   constructor(

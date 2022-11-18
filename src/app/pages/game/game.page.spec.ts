@@ -8,7 +8,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePage } from './game.page';
-import { ArrayView } from '../../definitions/array-view.definition';
+import { ArrayView } from '../../views/array.view';
 import { CharacterEntity } from '../../entities/character.entity';
 import { IdentityDefinition } from '../../definitions/identity.definition';
 import { CharacteristicsDefinition } from '../../definitions/characteristics.definition';
@@ -99,7 +99,7 @@ describe('GamePage', () => {
 
     expect(result).not.toBeNull();
 
-    expect(component.scene.description.keyValues.length).toEqual(2);
+    expect(component.scene.description.items.length).toEqual(2);
   });
 
   it(`should have interactibles`, () => {
@@ -115,7 +115,7 @@ describe('GamePage', () => {
 
     expect(result).not.toBeNull();
 
-    expect(component.logs.length).toEqual(3);
+    expect(component.logs.items.length).toEqual(3);
   });
 });
 

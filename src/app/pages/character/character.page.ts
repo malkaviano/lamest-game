@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ArrayView } from '../../definitions/array-view.definition';
+import { ArrayView } from '../../views/array.view';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 import { ConverterHelper } from '../../helpers/converter.helper';
 import { CharacterManagerService } from '../../services/character-manager.service';

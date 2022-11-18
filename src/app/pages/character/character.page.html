@@ -4,7 +4,7 @@
   </mat-toolbar>
 </div>
 
-<app-key-value-panel [keyValues]="identityView.keyValues"></app-key-value-panel>
+<app-key-value-panel [items]="identityView"></app-key-value-panel>
 
 <div class="title-border">
   <mat-toolbar>
@@ -12,9 +12,7 @@
   </mat-toolbar>
 </div>
 
-<app-key-value-panel
-  [keyValues]="characteristicsView.keyValues"
-></app-key-value-panel>
+<app-key-value-panel [items]="characteristicsView"></app-key-value-panel>
 
 <div class="title-border">
   <mat-toolbar>
@@ -22,9 +20,7 @@
   </mat-toolbar>
 </div>
 
-<app-key-value-panel
-  [keyValues]="derivedAttributesView.keyValues"
-></app-key-value-panel>
+<app-key-value-panel [items]="derivedAttributesView"></app-key-value-panel>
 
 <div class="title-border">
   <mat-toolbar>
@@ -32,4 +28,4 @@
   </mat-toolbar>
 </div>
 
-<app-key-value-panel [keyValues]="skillsView.keyValues"></app-key-value-panel>
+<app-key-value-panel [items]="skillsView"></app-key-value-panel>

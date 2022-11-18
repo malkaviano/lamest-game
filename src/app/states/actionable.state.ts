@@ -1,5 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ArrayView } from '../definitions/array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
 import { StateResult } from '../results/state.result';

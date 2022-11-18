@@ -89,7 +89,7 @@ const expectedCharacteristics = new CharacteristicsDefinition(
 
 const expectedIdentity = new IdentityDefinition(
   'Alice Shields',
-  professions.keyValues[0],
+  professions.items[0],
   genders[0],
   ages[0],
   races[0],

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '../definitions/array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RandomIntService } from './random-int.service';
 
@@ -15,7 +15,7 @@ export class SkillService {
   ): Map<SkillNameLiteral, number> {
     let skills = new Map<SkillNameLiteral, number>();
 
-    return skillNames.keyValues.reduce((acc, skillName) => {
+    return skillNames.items.reduce((acc, skillName) => {
       acc.set(skillName, 0);
 
       return acc;

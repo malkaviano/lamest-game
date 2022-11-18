@@ -14,7 +14,7 @@ import {
   ActionableDefinition,
   actionableDefinitions,
 } from '../../definitions/actionable.definition';
-import { ArrayView } from '../../definitions/array-view.definition';
+import { ArrayView } from '../../views/array.view';
 
 describe('InteractiveWidget', () => {
   let fixture: ComponentFixture<InteractiveWidget>;

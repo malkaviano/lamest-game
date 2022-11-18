@@ -1,5 +1,5 @@
 import { actionableDefinitions } from '../definitions/actionable.definition';
-import { ArrayView } from '../definitions/array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
 import {
   ConversationMessageMap,

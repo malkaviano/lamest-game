@@ -1,4 +1,4 @@
-import { ArrayView } from '../definitions/array-view.definition';
+import { ArrayView } from '../views/array.view';
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
