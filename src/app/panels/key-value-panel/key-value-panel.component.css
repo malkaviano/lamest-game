@@ -6,12 +6,6 @@
 }
 
 .panel-item {
-  min-width: 100px;
-  max-width: 300px;
-  min-height: 50px;
-  max-height: 100px;
-  overflow-y: auto;
-  overflow-x: auto;
   padding: 5px 5px;
   margin: 2px 2px;
 }

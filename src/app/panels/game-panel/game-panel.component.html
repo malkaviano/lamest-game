@@ -5,31 +5,35 @@
         <span class="title-text">Character</span>
       </mat-toolbar>
     </div>
-    <div class="main-box vertical-scrollable">
-      <app-key-value
-        class="panel-item"
-        *ngFor="let keyValue of characterValues.identity.keyValues"
-        [keyValue]="keyValue"
-        attr.data-testid="{{ keyValue.key }}"
-      ></app-key-value>
-      <app-key-value
-        class="panel-item"
-        *ngFor="let keyValue of characterValues.characteristics.keyValues"
-        [keyValue]="keyValue"
-        attr.data-testid="{{ keyValue.key }}"
-      ></app-key-value>
-      <app-key-value
-        class="panel-item"
-        *ngFor="let keyValue of characterValues.derivedAttributes.keyValues"
-        [keyValue]="keyValue"
-        attr.data-testid="{{ keyValue.key }}"
-      ></app-key-value>
-      <app-key-value
-        class="panel-item"
-        *ngFor="let keyValue of characterValues.skills.keyValues"
-        [keyValue]="keyValue"
-        attr.data-testid="{{ keyValue.key }}"
-      ></app-key-value>
+    <div class="main-box vertical-scrollable" data-testid="character">
+      <div data-testid="identity">
+        <app-key-value
+          *ngFor="let keyValue of characterValues.identity.keyValues"
+          [keyValue]="keyValue"
+          attr.data-testid="{{ keyValue.key }}"
+        ></app-key-value>
+      </div>
+      <div data-testid="characteristics">
+        <app-key-value
+          *ngFor="let keyValue of characterValues.characteristics.keyValues"
+          [keyValue]="keyValue"
+          attr.data-testid="{{ keyValue.key }}"
+        ></app-key-value>
+      </div>
+      <div data-testid="derived-attributes">
+        <app-key-value
+          *ngFor="let keyValue of characterValues.derivedAttributes.keyValues"
+          [keyValue]="keyValue"
+          attr.data-testid="{{ keyValue.key }}"
+        ></app-key-value>
+      </div>
+      <div data-testid="skills">
+        <app-key-value
+          *ngFor="let keyValue of characterValues.skills.keyValues"
+          [keyValue]="keyValue"
+          attr.data-testid="{{ keyValue.key }}"
+        ></app-key-value>
+      </div>
     </div>
   </div>
   <div class="section text-box-width">
@@ -39,7 +43,10 @@
       </mat-toolbar>
     </div>
     <div class="main-box vertical-scrollable">
-      <app-text-box [paragraphs]="scene.description.keyValues"></app-text-box>
+      <app-text-box
+        [paragraphs]="scene.description.keyValues"
+        data-testid="description"
+      ></app-text-box>
     </div>
   </div>
   <div class="section">
@@ -49,12 +56,13 @@
       </mat-toolbar>
     </div>
     <div class="main-box vertical-scrollable">
-      <app-interactive
-        class="item"
-        *ngFor="let interactive of scene.interactives.keyValues"
-        [interactive]="interactive"
-        (onActionSelected)="actionSelected($event)"
-      ></app-interactive>
+      <div data-testid="interactables">
+        <app-interactive
+          *ngFor="let interactive of scene.interactives.keyValues"
+          [interactive]="interactive"
+          (onActionSelected)="actionSelected($event)"
+        ></app-interactive>
+      </div>
     </div>
   </div>
   <div class="section text-box-width base-margin-right">
@@ -65,9 +73,7 @@
     </div>
     <div class="main-box">
       <div class="half-box vertical-scrollable">
-        <div class="">
-          <app-text-box [paragraphs]="logs"></app-text-box>
-        </div>
+        <app-text-box [paragraphs]="logs" data-testid="log"></app-text-box>
       </div>
       <div class="title-border">
         <mat-toolbar>
@@ -76,7 +82,6 @@
       </div>
       <div class="half-box vertical-scrollable">
         <app-key-value
-          class="panel-item"
           *ngFor="let keyValue of inventory"
           [keyValue]="keyValue"
           attr.data-testid="{{ keyValue.key }}"

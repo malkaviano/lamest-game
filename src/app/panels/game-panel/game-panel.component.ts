@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
@@ -226,8 +225,7 @@ export class GamePanelComponent implements OnInit, OnDestroy {
   public readonly logs: string[];
 
   constructor(
-    private readonly snackBar: MatSnackBar,
-    private readonly gameManager: GameManagerService,
+    private readonly gameManagerService: GameManagerService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly converterHelper: ConverterHelper
   ) {
@@ -240,33 +238,26 @@ export class GamePanelComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.withSubscriptionHelper.addSubscription(
-      this.gameManager.characterChanged$.subscribe((character) => {
+      this.gameManagerService.characterChanged$.subscribe((character) => {
         this.characterValues =
           this.converterHelper.characterToKeyValueDescription(character);
       })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameManager.sceneChanged$.subscribe((scene) => (this.scene = scene))
-    );
-
-    this.withSubscriptionHelper.addSubscription(
-      this.gameManager.playerActed$.subscribe((action) =>
-        this.snackBar.open(action.label, 'dismiss', {
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-        })
+      this.gameManagerService.sceneChanged$.subscribe(
+        (scene) => (this.scene = scene)
       )
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameManager.actionLogged$.subscribe((log) => {
+      this.gameManagerService.actionLogged$.subscribe((log) => {
         this.logs.unshift(log);
       })
     );
   }
 
   actionSelected(action: ActionableDefinition): void {
-    this.gameManager.registerEvent(action);
+    this.gameManagerService.registerEvent(action);
   }
 }

@@ -12,7 +12,7 @@ describe('TextBoxComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TextBoxComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TextBoxComponent);
