@@ -1,5 +1,4 @@
 import { ArrayView } from '../views/array.view';
-import { ActionLogDefinition } from '../definitions/action-log.definition';
 import {
   ConversationMessageMap,
   ConversationState,
@@ -37,27 +36,12 @@ describe('ConversationState', () => {
     expect(state.actions).toEqual(new ArrayView([helloAction, dieAction]));
   });
 
-  describe('when receiving hello', () => {
-    it('produces log "Hi, how are you?"', () => {
-      const expectedLogMessage = new ActionLogDefinition(
-        helloAction.label,
-        'Hi, how are you?'
-      );
-
-      const result = state.execute(helloAction);
-
-      expect(result.log).toEqual(expectedLogMessage);
-    });
-  });
-
   describe('message context', () => {
     describe('when message Hello is received', () => {
       it('keep context', () => {
         const result = state.execute(helloAction);
 
-        expect(result.state.actions).toEqual(
-          new ArrayView([helloAction, dieAction])
-        );
+        expect(result.actions).toEqual(new ArrayView([helloAction, dieAction]));
       });
     });
 
@@ -65,7 +49,7 @@ describe('ConversationState', () => {
       it('change context', () => {
         const result = state.execute(dieAction);
 
-        expect(result.state.actions).toEqual(new ArrayView([sorryAction]));
+        expect(result.actions).toEqual(new ArrayView([sorryAction]));
       });
     });
   });

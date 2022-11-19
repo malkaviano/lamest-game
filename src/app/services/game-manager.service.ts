@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, map, merge, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import {
   ActionableDefinition,
@@ -20,6 +20,8 @@ import { GameEventsDefinition } from '../definitions/game-events.definition';
 })
 export class GameManagerService {
   private currentScene: SceneDefinition;
+
+  private readonly gameLog: Subject<string>;
 
   private readonly sceneChanged: BehaviorSubject<SceneDefinition>;
 
@@ -164,35 +166,21 @@ export class GameManagerService {
 
     this.playerActed = new Subject<ActionableDefinition>();
 
-    const interactiveKeys = Object.keys(this.interactives);
-
-    interactiveKeys.forEach((key) =>
-      this.interactives[key].actionSelected$.subscribe((action) => {
-        this.playerActed.next(action);
-      })
-    );
-
-    const actionLogged = merge(
-      ...interactiveKeys.map((key) => {
-        return this.interactives[key].actionResult$.pipe(
-          map((result) => {
-            return `${result.interactiveName} => ${result.actionLog.label} => ${result.actionLog.msg}`;
-          })
-        );
-      })
-    );
+    this.gameLog = new Subject<string>();
 
     this.events = new GameEventsDefinition(
       this.sceneChanged.asObservable(),
       this.playerActed.asObservable(),
-      actionLogged,
+      this.gameLog.asObservable(),
       this.characterChanged.asObservable(),
-      (action: ActionableDefinition) => this.registerActionableTaken(action)
+      (action: ActionableDefinition) => this.actionableReceived(action)
     );
   }
 
-  private registerActionableTaken(action: ActionableDefinition): void {
-    this.interactives[action.interactiveId].onActionSelected(action);
+  private actionableReceived(action: ActionableDefinition): void {
+    const interactive = this.interactives[action.interactiveId];
+
+    this.gameLog.next(`${interactive.name} - ${action.label}`);
 
     if (action.actionable === 'SCENE') {
       if (action.interactiveId === 'sceneExitDoor') {
@@ -217,5 +205,8 @@ export class GameManagerService {
         // TODO: Roll skill and decide what to do
       }
     }
+
+    // TODO: Improve message sent
+    interactive.onActionSelected(action);
   }
 }

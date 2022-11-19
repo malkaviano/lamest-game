@@ -2,7 +2,6 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
-import { StateResult } from '../results/state.result';
 
 export abstract class ActionableState {
   constructor(
@@ -15,7 +14,7 @@ export abstract class ActionableState {
     return new ArrayView(this.stateActions);
   }
 
-  public execute(action: ActionableDefinition): StateResult {
+  public execute(action: ActionableDefinition): ActionableState {
     if (!this.stateActions.some((a) => a.equals(action))) {
       throw new Error(errorMessages['WRONG-ACTION']);
     }
@@ -23,5 +22,5 @@ export abstract class ActionableState {
     return this.stateResult(action);
   }
 
-  protected abstract stateResult(action: ActionableDefinition): StateResult;
+  protected abstract stateResult(action: ActionableDefinition): ActionableState;
 }

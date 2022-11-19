@@ -3,7 +3,6 @@ import {
   createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
-import { StateResult } from '../results/state.result';
 import { ActionableState } from './actionable.state';
 
 const askAction1 = createActionableDefinition(
@@ -28,7 +27,7 @@ const pickAction = createActionableDefinition(
 const unknownAction = createActionableDefinition('CLOSE', 'error', 'unknown');
 
 const state = new (class extends ActionableState {
-  protected stateResult(_: ActionableDefinition): StateResult {
+  protected stateResult(_: ActionableDefinition): ActionableState {
     throw new Error('SHOULD NOT HAPPEN');
   }
 })('basic1', 'SimpleState', [askAction1, askAction2, pickAction]);

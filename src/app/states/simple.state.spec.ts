@@ -1,6 +1,4 @@
-import { ActionLogDefinition } from '../definitions/action-log.definition';
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { StateResult } from '../results/state.result';
 import { SimpleState } from './simple.state';
 
 const askAction1 = createActionableDefinition(
@@ -34,11 +32,7 @@ describe('SimpleState', () => {
       it('return same state and log "executed"', () => {
         const result = state.execute(pickAction);
 
-        const log = new ActionLogDefinition(pickAction.label, 'selected');
-
-        const expected = new StateResult(state, log);
-
-        expect(result).toEqual(expected);
+        expect(result).toEqual(state);
       });
     });
   });

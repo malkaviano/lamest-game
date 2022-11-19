@@ -1,6 +1,4 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ActionLogDefinition } from '../definitions/action-log.definition';
-import { StateResult } from '../results/state.result';
 import { ActionableState } from './actionable.state';
 
 export class SimpleState extends ActionableState {
@@ -12,10 +10,7 @@ export class SimpleState extends ActionableState {
     super(entityId, 'SimpleState', stateActions);
   }
 
-  protected stateResult(action: ActionableDefinition): StateResult {
-    return new StateResult(
-      this,
-      new ActionLogDefinition(action.label, this.msg)
-    );
+  protected stateResult(action: ActionableDefinition): ActionableState {
+    return this;
   }
 }

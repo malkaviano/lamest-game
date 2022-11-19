@@ -16,6 +16,10 @@ export class ActionableDefinition {
       this.interactiveId === other.interactiveId
     );
   }
+
+  public toString(): string {
+    return `${this.actionable} - ${this.label}`;
+  }
 }
 
 export const createActionableDefinition = (
