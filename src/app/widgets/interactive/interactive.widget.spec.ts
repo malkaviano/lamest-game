@@ -12,7 +12,7 @@ import { MaterialModule } from '../../../material/material.module';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import {
   ActionableDefinition,
-  actionableDefinitions,
+  createActionableDefinition,
 } from '../../definitions/actionable.definition';
 import { ArrayView } from '../../views/array.view';
 
@@ -94,4 +94,4 @@ let loader: HarnessLoader;
 
 const mockedInteractive = mock(InteractiveEntity);
 
-const expected = actionableDefinitions['CLOSE']('id1', 'close', 'Close');
+const expected = createActionableDefinition('CLOSE', 'id1', 'close', 'Close');

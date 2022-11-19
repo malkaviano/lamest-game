@@ -1,28 +1,31 @@
 import {
   ActionableDefinition,
-  actionableDefinitions,
+  createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { StateResult } from '../results/state.result';
 import { ActionableState } from './actionable.state';
 
-const askAction1 = actionableDefinitions['ASK'](
+const askAction1 = createActionableDefinition(
+  'ASK',
   'basic1',
   'ask1',
   'May I help?'
 );
-const askAction2 = actionableDefinitions['ASK'](
+const askAction2 = createActionableDefinition(
+  'ASK',
   'basic1',
   'ask2',
   'Are you ok?'
 );
-const pickAction = actionableDefinitions['PICK'](
+const pickAction = createActionableDefinition(
+  'PICK',
   'basic1',
   'pickBubbleGum',
   'Get bubble gum'
 );
 
-const unknownAction = actionableDefinitions['CLOSE']('error', 'unknown');
+const unknownAction = createActionableDefinition('CLOSE', 'error', 'unknown');
 
 const state = new (class extends ActionableState {
   protected stateResult(_: ActionableDefinition): StateResult {

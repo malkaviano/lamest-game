@@ -4,7 +4,7 @@ import { BehaviorSubject, map, merge, Subject } from 'rxjs';
 
 import {
   ActionableDefinition,
-  actionableDefinitions,
+  createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
@@ -103,7 +103,14 @@ export class GameManagerService {
         'Demo Simple Interactable',
         new SimpleState(
           'sceneExitDoor',
-          [actionableDefinitions['SCENE']('sceneExitDoor', 'exit', 'Exit')],
+          [
+            createActionableDefinition(
+              'SCENE',
+              'sceneExitDoor',
+              'exit',
+              'Exit'
+            ),
+          ],
           'Leaving scene'
         )
       ),
@@ -113,8 +120,25 @@ export class GameManagerService {
         'Demo Simple Interactable',
         new SimpleState(
           'enterSceneDoor',
-          [actionableDefinitions['SCENE']('enterSceneDoor', 'enter', 'Enter')],
+          [
+            createActionableDefinition(
+              'SCENE',
+              'enterSceneDoor',
+              'enter',
+              'Enter'
+            ),
+          ],
           'Entering scene'
+        )
+      ),
+      hideShadows: new InteractiveEntity(
+        'hideShadows',
+        'Hide skill',
+        'Demo using a skill',
+        new SimpleState(
+          'hideShadows',
+          [createActionableDefinition('SKILL', 'hideShadows', 'Hide')],
+          'Trying to hide'
         )
       ),
     };
@@ -125,6 +149,7 @@ export class GameManagerService {
         new ArrayView([
           this.interactives['npc1'],
           this.interactives['sceneExitDoor'],
+          this.interactives['hideShadows'],
         ])
       ),
       scene2: new SceneDefinition(
@@ -169,7 +194,7 @@ export class GameManagerService {
   private registerActionableTaken(action: ActionableDefinition): void {
     this.interactives[action.interactiveId].onActionSelected(action);
 
-    if (action.action === 'SCENE') {
+    if (action.actionable === 'SCENE') {
       if (action.interactiveId === 'sceneExitDoor') {
         this.currentScene = this.scenes['scene2'];
       }
@@ -179,6 +204,18 @@ export class GameManagerService {
       }
 
       this.sceneChanged.next(this.currentScene);
+    }
+
+    if (action.actionable === 'SKILL') {
+      const skillName = action.name;
+      const skillValue =
+        this.characterManagerService.currentCharacter.skills[skillName];
+
+      if (skillValue) {
+        console.log(skillName, skillValue);
+
+        // TODO: Roll skill and decide what to do
+      }
     }
   }
 }

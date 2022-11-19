@@ -17,9 +17,9 @@ import { SkillNameLiteral } from '../../literals/skill-name.literal';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
-import { actionableDefinitions } from '../../definitions/actionable.definition';
 import { GameManagerService } from '../../services/game-manager.service';
 import { GameEventsDefinition } from '../../definitions/game-events.definition';
+import { createActionableDefinition } from '../../definitions/actionable.definition';
 
 describe('GamePage', () => {
   let component: GamePage;
@@ -154,7 +154,7 @@ const scene = new SceneDefinition(
       'This is props1',
       new SimpleState(
         'id1',
-        [actionableDefinitions['ASK']('id1', 'action1', 'Got action?')],
+        [createActionableDefinition('ASK', 'id1', 'action1', 'Got action?')],
         'none'
       )
     ),

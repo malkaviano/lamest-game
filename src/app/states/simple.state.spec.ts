@@ -1,19 +1,22 @@
-import { actionableDefinitions } from '../definitions/actionable.definition';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
+import { createActionableDefinition } from '../definitions/actionable.definition';
 import { StateResult } from '../results/state.result';
 import { SimpleState } from './simple.state';
 
-const askAction1 = actionableDefinitions['ASK'](
+const askAction1 = createActionableDefinition(
+  'ASK',
   'basic1',
   'ask1',
   'May I help?'
 );
-const askAction2 = actionableDefinitions['ASK'](
+const askAction2 = createActionableDefinition(
+  'ASK',
   'basic1',
   'ask2',
   'Are you ok?'
 );
-const pickAction = actionableDefinitions['PICK'](
+const pickAction = createActionableDefinition(
+  'PICK',
   'basic1',
   'pickBubbleGum',
   'Get bubble gum'

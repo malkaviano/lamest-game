@@ -1,6 +1,6 @@
 import {
   ActionableDefinition,
-  actionableDefinitions,
+  createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
 import { StateResult } from '../results/state.result';
@@ -25,7 +25,8 @@ export class ConversationState extends ActionableState {
     const currentMessages = messageMap[currentMap];
 
     const actions = Object.keys(currentMessages).map((topic) =>
-      actionableDefinitions['ASK'](
+      createActionableDefinition(
+        'ASK',
         entityId,
         topic,
         currentMessages[topic].label

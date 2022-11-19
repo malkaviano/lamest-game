@@ -1,10 +1,10 @@
-import { actionableDefinitions } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { ActionLogDefinition } from '../definitions/action-log.definition';
 import {
   ConversationMessageMap,
   ConversationState,
 } from './conversation.state';
+import { createActionableDefinition } from '../definitions/actionable.definition';
 
 const messageMap: ConversationMessageMap = {
   map1: {
@@ -26,9 +26,9 @@ const messageMap: ConversationMessageMap = {
   },
 };
 
-const helloAction = actionableDefinitions['ASK']('id1', 'hello', 'Hello');
-const dieAction = actionableDefinitions['ASK']('id1', 'die', 'Die');
-const sorryAction = actionableDefinitions['ASK']('id1', 'sorry', 'Sorry');
+const helloAction = createActionableDefinition('ASK', 'id1', 'hello', 'Hello');
+const dieAction = createActionableDefinition('ASK', 'id1', 'die', 'Die');
+const sorryAction = createActionableDefinition('ASK', 'id1', 'sorry', 'Sorry');
 
 const state = new ConversationState('id1', messageMap, 'map1');
 
