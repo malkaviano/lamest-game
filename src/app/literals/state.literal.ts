@@ -1,5 +1,5 @@
 export type StateLiteral =
-  | 'BasicState'
+  | 'SimpleState'
   | 'ContainerOpenedState'
   | 'ContainerClosedState'
   | 'ConversationState';

@@ -19,6 +19,7 @@ import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
 import { actionableDefinitions } from '../../definitions/actionable.definition';
 import { GameManagerService } from '../../services/game-manager.service';
+import { GameEventsDefinition } from '../../definitions/game-events.definition';
 
 describe('GamePage', () => {
   let component: GamePage;
@@ -161,11 +162,16 @@ const scene = new SceneDefinition(
 );
 
 const mockedGameManagerService = mock(GameManagerService);
+const mockedGameEventsService = mock(GameEventsDefinition);
 
-when(mockedGameManagerService.characterChanged$).thenReturn(
-  of(characterEntity)
+when(mockedGameManagerService.events).thenReturn(
+  instance(mockedGameEventsService)
 );
-when(mockedGameManagerService.sceneChanged$).thenReturn(of(scene));
-when(mockedGameManagerService.actionLogged$).thenReturn(
+
+when(mockedGameEventsService.characterChanged$).thenReturn(of(characterEntity));
+
+when(mockedGameEventsService.sceneChanged$).thenReturn(of(scene));
+
+when(mockedGameEventsService.actionLogged$).thenReturn(
   of('OMG', 'This is not happening', 'GG')
 );

@@ -239,27 +239,29 @@ export class GamePage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.withSubscriptionHelper.addSubscription(
-      this.gameManagerService.characterChanged$.subscribe((character) => {
-        this.characterValues =
-          this.converterHelper.characterToKeyValueDescription(character);
-      })
+      this.gameManagerService.events.characterChanged$.subscribe(
+        (character) => {
+          this.characterValues =
+            this.converterHelper.characterToKeyValueDescription(character);
+        }
+      )
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameManagerService.sceneChanged$.subscribe(
+      this.gameManagerService.events.sceneChanged$.subscribe(
         (scene) => (this.scene = scene)
       )
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameManagerService.actionLogged$.subscribe((log) => {
+      this.gameManagerService.events.actionLogged$.subscribe((log) => {
         this.gameLogs.unshift(log);
       })
     );
   }
 
   actionSelected(action: ActionableDefinition): void {
-    this.gameManagerService.registerEvent(action);
+    this.gameManagerService.events.registerActionableTaken(action);
   }
 
   public get logs(): ArrayView<string> {

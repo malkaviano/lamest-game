@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, map, merge, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, merge, Subject } from 'rxjs';
 
 import {
   ActionableDefinition,
@@ -13,6 +13,7 @@ import { SimpleState } from '../states/simple.state';
 import { CharacterEntity } from '../entities/character.entity';
 import { CharacterManagerService } from '../services/character-manager.service';
 import { ArrayView } from '../views/array.view';
+import { GameEventsDefinition } from '../definitions/game-events.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -32,13 +33,7 @@ export class GameManagerService {
 
   private readonly interactives: { [key: string]: InteractiveEntity };
 
-  public readonly sceneChanged$: Observable<SceneDefinition>;
-
-  public readonly playerActed$: Observable<ActionableDefinition>;
-
-  public readonly actionLogged$: Observable<string>;
-
-  public readonly characterChanged$: Observable<CharacterEntity>;
+  public readonly events: GameEventsDefinition;
 
   constructor(
     private readonly characterManagerService: CharacterManagerService
@@ -46,8 +41,6 @@ export class GameManagerService {
     this.characterChanged = new BehaviorSubject(
       this.characterManagerService.currentCharacter
     );
-
-    this.characterChanged$ = this.characterChanged;
 
     this.descriptions = {
       scene1: [
@@ -73,8 +66,8 @@ export class GameManagerService {
     this.interactives = {
       npc1: new InteractiveEntity(
         'npc1',
-        'Carlos Joaquim',
-        'Small guy with an ugly face wearing a cheap suit',
+        'NPC',
+        'Demo Conversation Interactable',
         new ConversationState(
           'npc1',
           {
@@ -107,7 +100,7 @@ export class GameManagerService {
       sceneExitDoor: new InteractiveEntity(
         'sceneExitDoor',
         'Exit Door',
-        'A strange door that may lead to the exit',
+        'Demo Simple Interactable',
         new SimpleState(
           'sceneExitDoor',
           [actionableDefinitions['SCENE']('sceneExitDoor', 'exit', 'Exit')],
@@ -117,7 +110,7 @@ export class GameManagerService {
       enterSceneDoor: new InteractiveEntity(
         'enterSceneDoor',
         'Enter scene',
-        'Go inside to play this crap',
+        'Demo Simple Interactable',
         new SimpleState(
           'enterSceneDoor',
           [actionableDefinitions['SCENE']('enterSceneDoor', 'enter', 'Enter')],
@@ -143,10 +136,8 @@ export class GameManagerService {
     this.currentScene = this.scenes['scene1'];
 
     this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
-    this.sceneChanged$ = this.sceneChanged.asObservable();
 
     this.playerActed = new Subject<ActionableDefinition>();
-    this.playerActed$ = this.playerActed.asObservable();
 
     const interactiveKeys = Object.keys(this.interactives);
 
@@ -156,7 +147,7 @@ export class GameManagerService {
       })
     );
 
-    this.actionLogged$ = merge(
+    const actionLogged = merge(
       ...interactiveKeys.map((key) => {
         return this.interactives[key].actionResult$.pipe(
           map((result) => {
@@ -165,9 +156,17 @@ export class GameManagerService {
         );
       })
     );
+
+    this.events = new GameEventsDefinition(
+      this.sceneChanged.asObservable(),
+      this.playerActed.asObservable(),
+      actionLogged,
+      this.characterChanged.asObservable(),
+      (action: ActionableDefinition) => this.registerActionableTaken(action)
+    );
   }
 
-  public registerEvent(action: ActionableDefinition) {
+  private registerActionableTaken(action: ActionableDefinition): void {
     this.interactives[action.interactiveId].onActionSelected(action);
 
     if (action.action === 'SCENE') {

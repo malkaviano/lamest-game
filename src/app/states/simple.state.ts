@@ -9,7 +9,7 @@ export class SimpleState extends ActionableState {
     stateActions: ActionableDefinition[],
     protected readonly msg: string
   ) {
-    super(entityId, 'BasicState', stateActions);
+    super(entityId, 'SimpleState', stateActions);
   }
 
   protected stateResult(action: ActionableDefinition): StateResult {

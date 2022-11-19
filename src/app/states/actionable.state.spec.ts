@@ -28,7 +28,7 @@ const state = new (class extends ActionableState {
   protected stateResult(_: ActionableDefinition): StateResult {
     throw new Error('SHOULD NOT HAPPEN');
   }
-})('basic1', 'BasicState', [askAction1, askAction2, pickAction]);
+})('basic1', 'SimpleState', [askAction1, askAction2, pickAction]);
 
 describe('ActionableState', () => {
   describe('execute action', () => {
