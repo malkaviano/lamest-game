@@ -49,7 +49,6 @@ export type SkillNameLiteral =
   | 'Science(Physics)'
   | 'Sleight of Hand'
   | 'Spot'
-  | 'Stealth'
   | 'Survival'
   | 'Engineering (Computer)'
   | 'Engineering (Electrical)'

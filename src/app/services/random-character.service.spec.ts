@@ -117,7 +117,6 @@ const fakeSkills = new Map<SkillNameLiteral, number>([
   ['Navigate', 5],
   ['Performance', 5],
   ['Sleight of Hand', 5],
-  ['Stealth', 5],
   ['Survival', 5],
   ['Throw', 0],
 ]);

@@ -332,7 +332,6 @@ export const skillDefinitions: {
     justDex
   ),
   Spot: new SkillDefinition('Spot', '', 'COMMON', false, justPow),
-  Stealth: new SkillDefinition('Stealth', '', 'COMMON', false, justDex),
   Survival: new SkillDefinition('Survival', '', 'COMMON', false, justInt),
   Throw: new SkillDefinition('Throw', '', 'COMMON', false, justDex),
   Track: new SkillDefinition('Track', '', 'TRAINED', false, justInt),

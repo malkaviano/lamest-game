@@ -47,7 +47,7 @@ const privateInvestigator: ArrayView<SkillNameLiteral> = new ArrayView([
   'Spot',
   'Research',
   'Drive (Automobile)',
-  'Stealth',
+  'Hide',
   'Engineering (Computer)',
   'Disguise',
 ]);
@@ -58,7 +58,7 @@ const hunter: ArrayView<SkillNameLiteral> = new ArrayView([
   'Hide',
   'Listen',
   'Spot',
-  'Stealth',
+  'Craft (Leatherworking)',
   'Track',
   'Survival',
   'Firearm (Shooter)',
@@ -92,7 +92,6 @@ const fisherman: ArrayView<SkillNameLiteral> = new ArrayView([
 ]);
 
 const vagabond: ArrayView<SkillNameLiteral> = new ArrayView([
-  'Stealth',
   'Firearm (Handgun)',
   'Dodge',
   'Melee Weapon (Simple)',
@@ -102,6 +101,7 @@ const vagabond: ArrayView<SkillNameLiteral> = new ArrayView([
   'Persuade',
   'Sleight of Hand',
   'Hide',
+  'Throw',
 ]);
 
 const scholar: ArrayView<SkillNameLiteral> = new ArrayView([
