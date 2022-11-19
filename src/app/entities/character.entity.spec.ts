@@ -9,24 +9,12 @@ import { CharacterEntity } from './character.entity';
 describe('CharacterEntity', () => {
   describe('Calculating Derived Attributes', () => {
     it('return HP 9, PP 13, MOV 10', () => {
-      const character = new CharacterEntity(
-        fakeIdentity,
-        fakeCharacteristics,
-        fakeSkills
-      );
-
       expect(character.derivedAttributes).toEqual(expectedDerivedAttributes);
     });
   });
 
   describe('Applying characteristic value to related skill', () => {
     it('return Appraise 12 and Dodge 32', () => {
-      const character = new CharacterEntity(
-        fakeIdentity,
-        fakeCharacteristics,
-        fakeSkills
-      );
-
       expect(character.skills).toEqual(expectedSkills);
     });
   });
@@ -34,12 +22,6 @@ describe('CharacterEntity', () => {
   describe('Copying entity', () => {
     describe('when making an identical copy', () => {
       it('return equal entity', () => {
-        const character = new CharacterEntity(
-          fakeIdentity,
-          fakeCharacteristics,
-          fakeSkills
-        );
-
         const copied = new CharacterEntity(
           fakeIdentity,
           fakeCharacteristics,
@@ -52,12 +34,6 @@ describe('CharacterEntity', () => {
 
     describe('when making a copy with different identity', () => {
       it('return entity with new identity', () => {
-        const character = new CharacterEntity(
-          fakeIdentity,
-          fakeCharacteristics,
-          fakeSkills
-        );
-
         const identity = new IdentityDefinition(
           'Some Name',
           'Police Detective',
@@ -80,12 +56,6 @@ describe('CharacterEntity', () => {
 
     describe('when making a copy with different characteristics', () => {
       it('return entity with new characteristics', () => {
-        const character = new CharacterEntity(
-          fakeIdentity,
-          fakeCharacteristics,
-          fakeSkills
-        );
-
         const characteristics = new CharacteristicsDefinition(
           new CharacteristicDefinition('STR', 11),
           new CharacteristicDefinition('CON', 11),
@@ -108,12 +78,6 @@ describe('CharacterEntity', () => {
 
     describe('when making a copy with different skills', () => {
       it('return entity with new skills', () => {
-        const character = new CharacterEntity(
-          fakeIdentity,
-          fakeCharacteristics,
-          fakeSkills
-        );
-
         const skills = new Map<SkillNameLiteral, number>([
           ['Artillery (War)', 0],
           ['Dodge', 10],
@@ -127,6 +91,17 @@ describe('CharacterEntity', () => {
         );
 
         expect(character.copy({ skills })).toEqual(copied);
+      });
+    });
+  });
+
+  describe('All skills', () => {
+    it('return all skills with characteristics applied', () => {
+      const result = character.skills;
+
+      expect(result).toEqual({
+        Appraise: 12,
+        Dodge: 32,
       });
     });
   });
@@ -161,6 +136,12 @@ const expectedDerivedAttributes = new DerivedAttributesDefinition(
   new DerivedAttributeDefinition('HP', 9),
   new DerivedAttributeDefinition('PP', 13),
   new DerivedAttributeDefinition('MOV', 10)
+);
+
+const character = new CharacterEntity(
+  fakeIdentity,
+  fakeCharacteristics,
+  fakeSkills
 );
 
 const expectedSkills = {
