@@ -26,6 +26,8 @@ export class GameManagerService {
 
   private readonly characterChanged: BehaviorSubject<CharacterEntity>;
 
+  private readonly scenes: { [key: string]: SceneDefinition };
+
   private readonly descriptions: { [key: string]: string[] };
 
   private readonly interactives: { [key: string]: InteractiveEntity };
@@ -108,16 +110,37 @@ export class GameManagerService {
         'A strange door that may lead to the exit',
         new SimpleState(
           'sceneExitDoor',
-          [actionableDefinitions['SCENE']('sceneExitDoor', 'use', 'Use')],
+          [actionableDefinitions['SCENE']('sceneExitDoor', 'exit', 'Exit')],
           'Leaving scene'
+        )
+      ),
+      enterSceneDoor: new InteractiveEntity(
+        'enterSceneDoor',
+        'Enter scene',
+        'Go inside to play this crap',
+        new SimpleState(
+          'enterSceneDoor',
+          [actionableDefinitions['SCENE']('enterSceneDoor', 'enter', 'Enter')],
+          'Entering scene'
         )
       ),
     };
 
-    this.currentScene = new SceneDefinition(
-      new ArrayView(this.descriptions['scene1']),
-      new ArrayView(Object.entries(this.interactives).map((e) => e[1]))
-    );
+    this.scenes = {
+      scene1: new SceneDefinition(
+        new ArrayView(this.descriptions['scene1']),
+        new ArrayView([
+          this.interactives['npc1'],
+          this.interactives['sceneExitDoor'],
+        ])
+      ),
+      scene2: new SceneDefinition(
+        new ArrayView(this.descriptions['scene2']),
+        new ArrayView([this.interactives['enterSceneDoor']])
+      ),
+    };
+
+    this.currentScene = this.scenes['scene1'];
 
     this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
     this.sceneChanged$ = this.sceneChanged.asObservable();
@@ -147,11 +170,14 @@ export class GameManagerService {
   public registerEvent(action: ActionableDefinition) {
     this.interactives[action.interactiveId].onActionSelected(action);
 
-    if (action.action === 'SCENE' && action.interactiveId === 'sceneExitDoor') {
-      this.currentScene = new SceneDefinition(
-        new ArrayView(this.descriptions['scene2']),
-        new ArrayView([])
-      );
+    if (action.action === 'SCENE') {
+      if (action.interactiveId === 'sceneExitDoor') {
+        this.currentScene = this.scenes['scene2'];
+      }
+
+      if (action.interactiveId === 'enterSceneDoor') {
+        this.currentScene = this.scenes['scene1'];
+      }
 
       this.sceneChanged.next(this.currentScene);
     }
