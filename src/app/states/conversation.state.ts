@@ -2,6 +2,7 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '../definitions/actionable.definition';
+import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
 
 export type ConversationMessageMap = {
@@ -36,7 +37,10 @@ export class ConversationState extends ActionableState {
     this.currentMessages = currentMessages;
   }
 
-  protected stateResult(action: ActionableDefinition): ActionableState {
+  protected override stateResult(
+    action: ActionableDefinition,
+    result: ResultLiteral
+  ): ActionableState {
     const response = this.currentMessages[action.name];
 
     return new ConversationState(

@@ -39,7 +39,7 @@ describe('ConversationState', () => {
   describe('message context', () => {
     describe('when message Hello is received', () => {
       it('keep context', () => {
-        const result = state.execute(helloAction);
+        const result = state.onResult(helloAction, 'NONE');
 
         expect(result.actions).toEqual(new ArrayView([helloAction, dieAction]));
       });
@@ -47,7 +47,7 @@ describe('ConversationState', () => {
 
     describe('when message Die is received', () => {
       it('change context', () => {
-        const result = state.execute(dieAction);
+        const result = state.onResult(dieAction, 'NONE');
 
         expect(result.actions).toEqual(new ArrayView([sorryAction]));
       });

@@ -14,6 +14,8 @@ import { CharacterEntity } from '../entities/character.entity';
 import { CharacterManagerService } from '../services/character-manager.service';
 import { ArrayView } from '../views/array.view';
 import { GameEventsDefinition } from '../definitions/game-events.definition';
+import { ResultLiteral } from '../literals/result.literal';
+import { TryState } from '../states/try.state';
 
 @Injectable({
   providedIn: 'root',
@@ -103,44 +105,31 @@ export class GameManagerService {
         'sceneExitDoor',
         'Exit Door',
         'Demo Simple Interactable',
-        new SimpleState(
-          'sceneExitDoor',
-          [
-            createActionableDefinition(
-              'SCENE',
-              'sceneExitDoor',
-              'exit',
-              'Exit'
-            ),
-          ],
-          'Leaving scene'
-        )
+        new SimpleState('sceneExitDoor', [
+          createActionableDefinition('SCENE', 'sceneExitDoor', 'exit', 'Exit'),
+        ])
       ),
       enterSceneDoor: new InteractiveEntity(
         'enterSceneDoor',
         'Enter scene',
         'Demo Simple Interactable',
-        new SimpleState(
-          'enterSceneDoor',
-          [
-            createActionableDefinition(
-              'SCENE',
-              'enterSceneDoor',
-              'enter',
-              'Enter'
-            ),
-          ],
-          'Entering scene'
-        )
+        new SimpleState('enterSceneDoor', [
+          createActionableDefinition(
+            'SCENE',
+            'enterSceneDoor',
+            'enter',
+            'Enter'
+          ),
+        ])
       ),
-      hideShadows: new InteractiveEntity(
-        'hideShadows',
-        'Hide skill',
-        'Demo using a skill',
-        new SimpleState(
-          'hideShadows',
-          [createActionableDefinition('SKILL', 'hideShadows', 'Hide')],
-          'Trying to hide'
+      athleticism: new InteractiveEntity(
+        'athleticism',
+        'Athleticism skill',
+        'Demo failing a skill with 2 tries',
+        new TryState(
+          'athleticism',
+          createActionableDefinition('SKILL', 'athleticism', 'Athleticism'),
+          2
         )
       ),
     };
@@ -151,7 +140,7 @@ export class GameManagerService {
         new ArrayView([
           this.interactives['npc1'],
           this.interactives['sceneExitDoor'],
-          this.interactives['hideShadows'],
+          this.interactives['athleticism'],
         ])
       ),
       scene2: new SceneDefinition(
@@ -180,7 +169,9 @@ export class GameManagerService {
   private actionableReceived(action: ActionableDefinition): void {
     const interactive = this.interactives[action.interactiveId];
 
-    this.gameLog.next(`${interactive.name} - ${action.label}`);
+    this.gameLog.next(`selected: ${interactive.name} -> ${action.label}`);
+
+    let result: ResultLiteral = 'NONE';
 
     if (action.actionable === 'SCENE') {
       if (action.interactiveId === 'sceneExitDoor') {
@@ -189,6 +180,9 @@ export class GameManagerService {
 
       if (action.interactiveId === 'enterSceneDoor') {
         this.currentScene = this.scenes['scene1'];
+
+        this.interactives['athleticism'].reset();
+        this.interactives['npc1'].reset();
       }
 
       this.sceneChanged.next(this.currentScene);
@@ -200,13 +194,13 @@ export class GameManagerService {
         this.characterManagerService.currentCharacter.skills[skillName];
 
       if (skillValue) {
-        console.log(skillName, skillValue);
-
         // TODO: Roll skill and decide what to do
+
+        result = 'FAILURE';
       }
     }
 
     // TODO: Improve message sent
-    interactive.onActionSelected(action);
+    interactive.actionSelected(action, result);
   }
 }

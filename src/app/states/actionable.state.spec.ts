@@ -36,7 +36,7 @@ describe('ActionableState', () => {
   describe('execute action', () => {
     describe('when unknown message received', () => {
       it('throw "WRONG-ACTION"', () => {
-        expect(() => state.execute(unknownAction)).toThrowError(
+        expect(() => state.onResult(unknownAction, 'NONE')).toThrowError(
           errorMessages['WRONG-ACTION']
         );
       });

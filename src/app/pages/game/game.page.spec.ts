@@ -152,11 +152,9 @@ const scene = new SceneDefinition(
       'id1',
       'props1',
       'This is props1',
-      new SimpleState(
-        'id1',
-        [createActionableDefinition('ASK', 'id1', 'action1', 'Got action?')],
-        'none'
-      )
+      new SimpleState('id1', [
+        createActionableDefinition('ASK', 'id1', 'action1', 'Got action?'),
+      ])
     ),
   ])
 );
