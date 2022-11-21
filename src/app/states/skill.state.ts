@@ -17,7 +17,6 @@ export class SkillState extends ActionableState {
     _1: ActionableDefinition,
     result: ResultLiteral
   ): ActionableState {
-    console.log(this.maximumTries);
     switch (result) {
       case 'SUCCESS':
         return this.successState;

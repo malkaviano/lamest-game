@@ -8,7 +8,8 @@ import { errorMessages } from '../definitions/error-messages.definition';
 export class SceneEntity {
   constructor(
     public readonly description: ArrayView<string>,
-    public readonly interactives: ArrayView<InteractiveEntity>
+    public readonly interactives: ArrayView<InteractiveEntity>,
+    public readonly transitions: { readonly [key: string]: string }
   ) {}
 
   public get definition(): SceneDefinition {
