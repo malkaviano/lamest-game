@@ -1,4 +1,3 @@
-import { errorMessages } from '../definitions/error-messages.definition';
 import { ActionableState } from './actionable.state';
 
 class EmptyState extends ActionableState {
@@ -6,8 +5,10 @@ class EmptyState extends ActionableState {
     super('emptyState', 'EmptyState', []);
   }
 
+  // Unreachable code
+  /* istanbul ignore next */
   protected override stateResult(): ActionableState {
-    throw new Error(errorMessages['SHOULD-NOT-HAPPEN']);
+    return this;
   }
 }
 

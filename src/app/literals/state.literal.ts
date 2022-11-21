@@ -3,5 +3,5 @@ export type StateLiteral =
   | 'ContainerOpenedState'
   | 'ContainerClosedState'
   | 'ConversationState'
-  | 'TryState'
+  | 'SkillState'
   | 'EmptyState';
