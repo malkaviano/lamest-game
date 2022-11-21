@@ -64,4 +64,4 @@ const successState = new SimpleState('basic1', [
 const state1: () => ActionableState = () =>
   new SkillState('basic1', pickAction, successState, 2);
 
-const state2 = () => new SkillState('basic1', pickAction, successState, 2, 1);
+const state2 = () => new SkillState('basic1', pickAction, successState, 1);

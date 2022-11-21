@@ -8,8 +8,7 @@ export class SkillState extends ActionableState {
     entityId: string,
     stateAction: ActionableDefinition,
     private readonly successState: ActionableState,
-    private readonly maximumTries: number,
-    private readonly tries: number = 0
+    private readonly maximumTries: number
   ) {
     super(entityId, 'SkillState', [stateAction]);
   }
@@ -18,25 +17,25 @@ export class SkillState extends ActionableState {
     _1: ActionableDefinition,
     result: ResultLiteral
   ): ActionableState {
+    console.log(this.maximumTries);
     switch (result) {
       case 'SUCCESS':
         return this.successState;
       case 'FAILURE':
-        return this.tries + 1 >= this.maximumTries
-          ? emptyState
-          : this.clone(this.tries + 1);
+        return this.maximumTries - 1 > 0
+          ? this.clone(this.maximumTries - 1)
+          : emptyState;
       default:
         return this;
     }
   }
 
-  private clone(tries: number): SkillState {
+  private clone(maximumTries: number): SkillState {
     return new SkillState(
       this.entityId,
       this.stateActions[0],
       this.successState,
-      this.maximumTries,
-      tries
+      maximumTries
     );
   }
 }
