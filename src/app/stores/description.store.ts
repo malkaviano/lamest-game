@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+
+import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ArrayView } from '../views/array.view';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DescriptionStore {
-  public readonly descriptions: { [key: string]: ArrayView<string> };
+  public readonly descriptions: KeyValueInterface<ArrayView<string>>;
 
   constructor() {
     this.descriptions = {

@@ -2,19 +2,20 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '../definitions/actionable.definition';
+import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
 
-export type ConversationMessageMap = {
-  [key: string]: {
-    [key: string]: { label: string; answer: string; change?: string };
-  };
-};
+export type ConversationMessageMap = KeyValueInterface<
+  KeyValueInterface<{ label: string; answer: string; change?: string }>
+>;
 
 export class ConversationState extends ActionableState {
-  protected readonly currentMessages: {
-    [key: string]: { label: string; answer: string; change?: string };
-  };
+  protected readonly currentMessages: KeyValueInterface<{
+    label: string;
+    answer: string;
+    change?: string;
+  }>;
 
   constructor(
     protected readonly messageMap: ConversationMessageMap,

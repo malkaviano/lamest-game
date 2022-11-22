@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
+import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ConversationState } from '../states/conversation.state';
 import { SimpleState } from '../states/simple.state';
 import { SkillState } from '../states/skill.state';
@@ -9,7 +11,7 @@ import { SkillState } from '../states/skill.state';
   providedIn: 'root',
 })
 export class InteractiveStore {
-  public readonly interactives: { [key: string]: InteractiveEntity };
+  public readonly interactives: KeyValueInterface<InteractiveEntity>;
 
   constructor() {
     this.interactives = {

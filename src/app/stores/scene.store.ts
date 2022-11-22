@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { SceneEntity } from '../entities/scene.entity';
-import { ArrayView } from '../views/array.view';
 
+import { SceneEntity } from '../entities/scene.entity';
+import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { ArrayView } from '../views/array.view';
 import { DescriptionStore } from './description.store';
 import { InteractiveStore } from './interactive.store';
 
@@ -9,7 +10,7 @@ import { InteractiveStore } from './interactive.store';
   providedIn: 'root',
 })
 export class SceneStore {
-  public readonly scenes: { [key: string]: SceneEntity };
+  public readonly scenes: KeyValueInterface<SceneEntity>;
 
   constructor(
     public readonly descriptionsStore: DescriptionStore,
