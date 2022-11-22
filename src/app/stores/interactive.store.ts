@@ -4,6 +4,7 @@ import { createActionableDefinition } from '../definitions/actionable.definition
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ConversationState } from '../states/conversation.state';
+import { DiscardState } from '../states/discard.state';
 import { SimpleState } from '../states/simple.state';
 import { SkillState } from '../states/skill.state';
 
@@ -55,17 +56,20 @@ export class InteractiveStore {
           createActionableDefinition('SCENE', 'sceneExitDoor', 'exit'),
         ])
       ),
-      athleticism: new InteractiveEntity(
-        'athleticism',
-        'Athleticism skill',
+      upperShelf: new InteractiveEntity(
+        'upperShelf',
+        'Upper Shelf',
         'Demo failing a skill with 2 tries',
         new SkillState(
           createActionableDefinition('SKILL', 'Athleticism'),
-          new SimpleState([
-            createActionableDefinition('PICK', 'athleticism', 'secretItem'),
+          new DiscardState([
+            createActionableDefinition('PICK', 'knife', 'Hunting Knife'),
+            createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
+            createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
           ]),
           2
-        )
+        ),
+        false
       ),
       enterSceneDoor: new InteractiveEntity(
         'enterSceneDoor',

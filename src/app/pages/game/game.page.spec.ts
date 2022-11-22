@@ -21,6 +21,8 @@ import { GameManagerService } from '../../services/game-manager.service';
 import { GameEventsDefinition } from '../../definitions/game-events.definition';
 import { createActionableDefinition } from '../../definitions/actionable.definition';
 import { ActionableEvent } from '../../events/actionable.event';
+import { WeaponDefinition } from '../../definitions/weapon.definition';
+import { ItemStorageDefinition } from '../../definitions/item-storage.definition';
 
 describe('GamePage', () => {
   let component: GamePage;
@@ -48,6 +50,15 @@ describe('GamePage', () => {
     );
 
     when(mockedGameEventsService.sceneChanged$).thenReturn(of(scene));
+
+    when(mockedGameEventsService.playerInventory$).thenReturn(
+      of(
+        new ArrayView([
+          new ItemStorageDefinition(weapon1, 1),
+          new ItemStorageDefinition(weapon2, 2),
+        ])
+      )
+    );
 
     when(mockedGameEventsService.actionLogged$).thenReturn(
       of('OMG', 'This is not happening', 'GG')
@@ -134,6 +145,16 @@ describe('GamePage', () => {
     expect(component.logs.items.length).toEqual(3);
   });
 
+  it(`should have inventory`, () => {
+    const result = fixture.debugElement.query(
+      By.css('[data-testid="inventory"]')
+    );
+
+    expect(result).not.toBeNull();
+
+    expect(component.inventory.length).toEqual(2);
+  });
+
   describe('actionSelected', () => {
     it('should send an ActionableEvent', () => {
       const event = new ActionableEvent(askAction, 'id1');
@@ -194,3 +215,15 @@ const scene = new SceneDefinition(
 
 const mockedGameManagerService = mock(GameManagerService);
 const mockedGameEventsService = mock(GameEventsDefinition);
+
+const weapon1 = new WeaponDefinition(
+  'sword1',
+  'Rusted Sword',
+  'Old sword full of rust'
+);
+
+const weapon2 = new WeaponDefinition(
+  'sword2',
+  'Decent Sword',
+  'A good sword, not exceptional'
+);

@@ -10,28 +10,24 @@
         <app-key-value-window
           *ngFor="let keyValue of characterValues.identity.items"
           [keyValue]="keyValue"
-          attr.data-testid="{{ keyValue.key }}"
         ></app-key-value-window>
       </div>
       <div data-testid="characteristics">
         <app-key-value-window
           *ngFor="let keyValue of characterValues.characteristics.items"
           [keyValue]="keyValue"
-          attr.data-testid="{{ keyValue.key }}"
         ></app-key-value-window>
       </div>
       <div data-testid="derived-attributes">
         <app-key-value-window
           *ngFor="let keyValue of characterValues.derivedAttributes.items"
           [keyValue]="keyValue"
-          attr.data-testid="{{ keyValue.key }}"
         ></app-key-value-window>
       </div>
       <div data-testid="skills">
         <app-key-value-window
           *ngFor="let keyValue of characterValues.skills.items"
           [keyValue]="keyValue"
-          attr.data-testid="{{ keyValue.key }}"
         ></app-key-value-window>
       </div>
     </div>
@@ -84,11 +80,12 @@
         </mat-toolbar>
       </div>
       <div class="half-box vertical-scrollable">
-        <app-key-value-window
-          *ngFor="let keyValue of inventory"
-          [keyValue]="keyValue"
-          attr.data-testid="{{ keyValue.key }}"
-        ></app-key-value-window>
+        <div data-testid="inventory">
+          <app-key-value-window
+            *ngFor="let keyValue of inventory"
+            [keyValue]="keyValue"
+          ></app-key-value-window>
+        </div>
       </div>
     </div>
   </div>

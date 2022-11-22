@@ -22,7 +22,7 @@ export class SceneStore {
         new ArrayView([
           this.interactiveStore.interactives['npc1'],
           this.interactiveStore.interactives['sceneExitDoor'],
-          this.interactiveStore.interactives['athleticism'],
+          this.interactiveStore.interactives['upperShelf'],
         ]),
         { sceneExitDoor: 'scene2' }
       ),

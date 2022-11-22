@@ -8,7 +8,7 @@ import { ResultLiteral } from '../literals/result.literal';
 export class InteractiveEntity {
   private readonly initialState: ActionableState;
 
-  protected readonly actionsChanged: BehaviorSubject<
+  private readonly actionsChanged: BehaviorSubject<
     ArrayView<ActionableDefinition>
   >;
 
@@ -18,7 +18,8 @@ export class InteractiveEntity {
     public readonly id: string,
     public readonly name: string,
     public readonly description: string,
-    protected currentState: ActionableState
+    private currentState: ActionableState,
+    private readonly resettable: boolean = true
   ) {
     this.initialState = this.currentState;
 
@@ -47,8 +48,10 @@ export class InteractiveEntity {
   }
 
   public reset(): void {
-    this.currentState = this.initialState;
+    if (this.resettable) {
+      this.currentState = this.initialState;
 
-    this.actionsChanged.next(this.currentState.actions);
+      this.actionsChanged.next(this.currentState.actions);
+    }
   }
 }

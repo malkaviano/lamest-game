@@ -1,4 +1,4 @@
-import { first, last, take } from 'rxjs';
+import { first, take } from 'rxjs';
 import { anyString, anything, instance, mock, reset, when } from 'ts-mockito';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
@@ -37,34 +37,63 @@ describe('InteractiveEntity', () => {
 
       const entity = fakeEntity();
 
-      entity.actionsChanged$
-        .pipe(take(2))
-        .pipe(last())
-        .subscribe((event) => {
-          expect(event).toEqual(new ArrayView([pick]));
-        });
+      let result: any;
 
-      entity.actionSelected(pick, 'NONE');
-
-      done();
-    });
-  });
-
-  describe('when reset is invoked', () => {
-    it('push an actionsChanged notification with initial action', (done) => {
-      when(mockedState1.onResult(anything(), anyString())).thenReturn(state2);
-
-      const entity = fakeEntity();
-
-      entity.actionsChanged$.pipe(take(3), last()).subscribe((event) => {
-        expect(event).toEqual(new ArrayView([action]));
+      entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
+        result = event;
       });
 
       entity.actionSelected(pick, 'NONE');
 
-      entity.reset();
-
       done();
+
+      expect(result).toEqual(new ArrayView([pick]));
+    });
+  });
+
+  describe('when reset is invoked', () => {
+    describe('when interactive is resettable', () => {
+      it('push an actionsChanged notification with initial action', (done) => {
+        when(mockedState1.onResult(anything(), anyString())).thenReturn(state2);
+
+        const entity = fakeEntity();
+
+        let result: any;
+
+        entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        entity.actionSelected(pick, 'NONE');
+
+        entity.reset();
+
+        done();
+
+        expect(result).toEqual(new ArrayView([action]));
+      });
+    });
+
+    describe('when interactive is not resettable', () => {
+      it('keep current state', (done) => {
+        when(mockedState1.onResult(anything(), anyString())).thenReturn(state2);
+
+        const entity = fakeEntity(false);
+
+        let result: any;
+
+        entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        entity.actionSelected(pick, 'NONE');
+
+        entity.reset();
+
+        done();
+
+        expect(result).toEqual(new ArrayView([pick]));
+      });
     });
   });
 });
@@ -81,5 +110,11 @@ const state1 = instance(mockedState1);
 
 const state2 = instance(mockedState2);
 
-const fakeEntity = () =>
-  new InteractiveEntity('id1', 'SomeEntity', 'Testing Entity', state1);
+const fakeEntity = (resettable: boolean = true) =>
+  new InteractiveEntity(
+    'id1',
+    'SomeEntity',
+    'Testing Entity',
+    state1,
+    resettable
+  );

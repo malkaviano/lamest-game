@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
@@ -21,210 +20,9 @@ export class GamePage implements OnInit, OnDestroy {
 
   scene!: SceneDefinition;
 
-  inventory: KeyValueDescriptionDefinition[] = [
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-    new KeyValueDescriptionDefinition(
-      'SomeItemGG',
-      '+10 to Damage BRILLIANT!!!',
-      'Omg it is going to happen'
-    ),
-  ];
-
   characterValues!: CharacterValuesDefinition;
+
+  inventory!: KeyValueDescriptionDefinition[];
 
   constructor(
     private readonly gameManagerService: GameManagerService,
@@ -257,6 +55,18 @@ export class GamePage implements OnInit, OnDestroy {
     this.withSubscriptionHelper.addSubscription(
       this.gameManagerService.events.actionLogged$.subscribe((log) => {
         this.gameLogs.unshift(log);
+      })
+    );
+
+    this.withSubscriptionHelper.addSubscription(
+      this.gameManagerService.events.playerInventory$.subscribe((inventory) => {
+        this.inventory = inventory.items.map((i) => {
+          return new KeyValueDescriptionDefinition(
+            i.item.name,
+            i.item.label,
+            i.item.description
+          );
+        });
       })
     );
   }

@@ -1,4 +1,4 @@
 export type ErrorMessageLiteral =
-  | 'UNKNOWN-MESSAGE'
+  | 'INVALID-OPERATION'
   | 'WRONG-ACTION'
   | 'SHOULD-NOT-HAPPEN';
