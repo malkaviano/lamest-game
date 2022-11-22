@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 
 import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
@@ -22,7 +23,7 @@ export class GamePage implements OnInit, OnDestroy {
 
   characterValues!: CharacterValuesDefinition;
 
-  inventory!: KeyValueDescriptionDefinition[];
+  inventory: ActionableItemDefinition[];
 
   constructor(
     private readonly gameManagerService: GameManagerService,
@@ -30,6 +31,8 @@ export class GamePage implements OnInit, OnDestroy {
     private readonly converterHelper: ConverterHelper
   ) {
     this.gameLogs = [];
+
+    this.inventory = [];
   }
 
   ngOnDestroy(): void {
@@ -60,13 +63,7 @@ export class GamePage implements OnInit, OnDestroy {
 
     this.withSubscriptionHelper.addSubscription(
       this.gameManagerService.events.playerInventory$.subscribe((inventory) => {
-        this.inventory = inventory.items.map((i) => {
-          return new KeyValueDescriptionDefinition(
-            i.item.name,
-            i.item.label,
-            i.item.description
-          );
-        });
+        this.inventory = inventory.items;
       })
     );
   }

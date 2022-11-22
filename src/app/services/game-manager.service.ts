@@ -10,8 +10,14 @@ import { RandomIntService } from './random-int.service';
 import { ActionableEvent } from '../events/actionable.event';
 import { ArrayView } from '../views/array.view';
 import { InventoryService } from './inventory.service';
-import { ItemStorageDefinition } from '../definitions/item-storage.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
+import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
+import {
+  ActionableDefinition,
+  createActionableDefinition,
+} from '../definitions/actionable.definition';
+import { GameItemLiteral } from '../literals/game-item.literal';
+import { ConsumableDefinition } from '../definitions/consumable.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +25,9 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 export class GameManagerService {
   private readonly gameLog: Subject<string>;
 
-  private readonly playerInventory: Subject<ArrayView<ItemStorageDefinition>>;
+  private readonly playerInventory: Subject<
+    ArrayView<ActionableItemDefinition>
+  >;
 
   public readonly events: GameEventsDefinition;
 
@@ -31,7 +39,7 @@ export class GameManagerService {
   ) {
     this.gameLog = new Subject<string>();
 
-    this.playerInventory = new Subject<ArrayView<ItemStorageDefinition>>();
+    this.playerInventory = new Subject<ArrayView<ActionableItemDefinition>>();
 
     this.events = new GameEventsDefinition(
       this.narrativeService.sceneChanged$,
@@ -52,12 +60,12 @@ export class GameManagerService {
 
     this.inventoryService.store(
       'upperShelf',
-      new WeaponDefinition('firstAid', 'First Aid Kit', 'Use to recover HP')
+      new ConsumableDefinition('firstAid', 'First Aid Kit', 'Use to recover HP')
     );
 
     this.inventoryService.store(
       'upperShelf',
-      new WeaponDefinition('firstAid', 'First Aid Kit', 'Use to recover HP')
+      new ConsumableDefinition('firstAid', 'First Aid Kit', 'Use to recover HP')
     );
   }
 
@@ -84,7 +92,32 @@ export class GameManagerService {
 
       this.inventoryService.store('player', item);
 
-      this.playerInventory.next(this.inventoryService.check('player'));
+      let inventoryView: ActionableItemDefinition[] = [];
+
+      const playerItems = this.inventoryService.check('player');
+
+      const items = playerItems.items.reduce((acc, itemStorage) => {
+        for (let index = 0; index < itemStorage.quantity; index++) {
+          acc.push(
+            new ActionableItemDefinition(
+              itemStorage.item,
+              this.itemAction(itemStorage.item.category)
+            )
+          );
+        }
+
+        return acc;
+      }, inventoryView);
+
+      this.playerInventory.next(new ArrayView([...items]));
+    } else if (action.actionableDefinition.actionable === 'EQUIP') {
+      console.log(action.actionableDefinition, action.interactiveId);
+
+      return;
+    } else if (action.actionableDefinition.actionable === 'USE') {
+      console.log(action.actionableDefinition, action.interactiveId);
+
+      return;
     }
 
     const interactive = this.narrativeService.run(action, result);
@@ -92,5 +125,13 @@ export class GameManagerService {
     this.gameLog.next(
       `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`
     );
+  }
+
+  private itemAction(category: GameItemLiteral): ActionableDefinition {
+    if (category === 'WEAPON') {
+      return createActionableDefinition('EQUIP', 'equip', 'Equip');
+    }
+
+    return createActionableDefinition('USE', 'use', 'Use');
   }
 }

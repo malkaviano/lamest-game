@@ -22,7 +22,7 @@ import { GameEventsDefinition } from '../../definitions/game-events.definition';
 import { createActionableDefinition } from '../../definitions/actionable.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { WeaponDefinition } from '../../definitions/weapon.definition';
-import { ItemStorageDefinition } from '../../definitions/item-storage.definition';
+import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 
 describe('GamePage', () => {
   let component: GamePage;
@@ -54,8 +54,8 @@ describe('GamePage', () => {
     when(mockedGameEventsService.playerInventory$).thenReturn(
       of(
         new ArrayView([
-          new ItemStorageDefinition(weapon1, 1),
-          new ItemStorageDefinition(weapon2, 2),
+          new ActionableItemDefinition(weapon1, askAction),
+          new ActionableItemDefinition(weapon2, askAction),
         ])
       )
     );

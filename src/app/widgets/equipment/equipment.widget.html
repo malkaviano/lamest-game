@@ -1,0 +1,17 @@
+<div class="card-box" matTooltip="{{ equipment.item.description }}">
+  <div class="label">
+    <span attr.data-testid="equip-label-{{ equipment.item.name }}"
+      >{{ equipment.item.label }}</span
+    >
+  </div>
+  <div class="action">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="actionSelected(equipment.action)"
+      attr.data-testid="equip-action-{{ equipment.action.name }}"
+    >
+      {{ equipment.action.label }}
+    </button>
+  </div>
+</div>

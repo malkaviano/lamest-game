@@ -11,6 +11,7 @@ import { KeyValuePanel } from './panels/key-value/key-value.panel';
 import { CharacterPage } from './pages/character/character.page';
 import { TextAreaWindow } from './windows/text-area/text-area.window';
 import { KeyValueWindow } from './windows/key-value/key-value.window';
+import { EquipmentWidget } from './widgets/equipment/equipment.widget';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { KeyValueWindow } from './windows/key-value/key-value.window';
     KeyValuePanel,
     CharacterPage,
     KeyValueWindow,
+    EquipmentWidget,
   ],
   imports: [
     BrowserModule,

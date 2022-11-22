@@ -81,10 +81,11 @@
       </div>
       <div class="half-box vertical-scrollable">
         <div data-testid="inventory">
-          <app-key-value-window
-            *ngFor="let keyValue of inventory"
-            [keyValue]="keyValue"
-          ></app-key-value-window>
+          <app-equipment-widget
+            *ngFor="let equipment of inventory"
+            [equipment]="equipment"
+            (onActionSelected)="actionSelected($event)"
+          ></app-equipment-widget>
         </div>
       </div>
     </div>

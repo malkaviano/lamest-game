@@ -4,4 +4,6 @@ export type ActionableLiteral =
   | 'PICK'
   | 'ASK'
   | 'SCENE'
-  | 'SKILL';
+  | 'SKILL'
+  | 'EQUIP'
+  | 'USE';
