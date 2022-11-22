@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 
-import { ActionableDefinition } from './actionable.definition';
 import { SceneDefinition } from './scene.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { ActionableEvent } from '../events/actionable.event';

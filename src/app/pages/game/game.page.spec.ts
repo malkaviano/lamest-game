@@ -20,6 +20,7 @@ import { SimpleState } from '../../states/simple.state';
 import { GameManagerService } from '../../services/game-manager.service';
 import { GameEventsDefinition } from '../../definitions/game-events.definition';
 import { createActionableDefinition } from '../../definitions/actionable.definition';
+import { ActionableEvent } from '../../events/actionable.event';
 
 describe('GamePage', () => {
   let component: GamePage;
@@ -37,6 +38,20 @@ describe('GamePage', () => {
         },
       ],
     }).compileComponents();
+
+    when(mockedGameManagerService.events).thenReturn(
+      instance(mockedGameEventsService)
+    );
+
+    when(mockedGameEventsService.characterChanged$).thenReturn(
+      of(characterEntity)
+    );
+
+    when(mockedGameEventsService.sceneChanged$).thenReturn(of(scene));
+
+    when(mockedGameEventsService.actionLogged$).thenReturn(
+      of('OMG', 'This is not happening', 'GG')
+    );
 
     fixture = TestBed.createComponent(GamePage);
 
@@ -118,6 +133,24 @@ describe('GamePage', () => {
 
     expect(component.logs.items.length).toEqual(3);
   });
+
+  describe('actionSelected', () => {
+    it('should send an ActionableEvent', () => {
+      const event = new ActionableEvent(askAction, 'id1');
+
+      let result: ActionableEvent | null = null;
+
+      when(mockedGameEventsService.registerActionableTaken).thenReturn(
+        (actionableEvent: ActionableEvent) => {
+          result = actionableEvent;
+        }
+      );
+
+      component.actionSelected(event);
+
+      expect(result).not.toBeNull();
+    });
+  });
 });
 
 const characterEntity = new CharacterEntity(
@@ -145,6 +178,8 @@ const characterEntity = new CharacterEntity(
   ])
 );
 
+const askAction = createActionableDefinition('ASK', 'action1', 'Got action?');
+
 const scene = new SceneDefinition(
   new ArrayView(['this is a test', 'okay okay']),
   new ArrayView([
@@ -152,24 +187,10 @@ const scene = new SceneDefinition(
       'id1',
       'props1',
       'This is props1',
-      new SimpleState([
-        createActionableDefinition('ASK', 'action1', 'Got action?'),
-      ])
+      new SimpleState([askAction])
     ),
   ])
 );
 
 const mockedGameManagerService = mock(GameManagerService);
 const mockedGameEventsService = mock(GameEventsDefinition);
-
-when(mockedGameManagerService.events).thenReturn(
-  instance(mockedGameEventsService)
-);
-
-when(mockedGameEventsService.characterChanged$).thenReturn(of(characterEntity));
-
-when(mockedGameEventsService.sceneChanged$).thenReturn(of(scene));
-
-when(mockedGameEventsService.actionLogged$).thenReturn(
-  of('OMG', 'This is not happening', 'GG')
-);
