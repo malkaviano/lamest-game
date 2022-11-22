@@ -11,6 +11,7 @@ import { ArrayView } from '../../views/array.view';
 
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { ActionableEvent } from '../../events/actionable.event';
 
 @Component({
   selector: 'app-interactive-widget',
@@ -20,11 +21,11 @@ import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 })
 export class InteractiveWidget implements OnInit, OnDestroy {
   @Input() interactive!: InteractiveEntity;
-  @Output() onActionSelected: EventEmitter<ActionableDefinition>;
+  @Output() onActionSelected: EventEmitter<ActionableEvent>;
   actions: ArrayView<ActionableDefinition>;
 
   constructor(private readonly withSubscriptionHelper: WithSubscriptionHelper) {
-    this.onActionSelected = new EventEmitter<ActionableDefinition>();
+    this.onActionSelected = new EventEmitter<ActionableEvent>();
     this.actions = new ArrayView([]);
   }
 
@@ -41,6 +42,8 @@ export class InteractiveWidget implements OnInit, OnDestroy {
   }
 
   actionSelected(action: ActionableDefinition): void {
-    this.onActionSelected.emit(action);
+    this.onActionSelected.emit(
+      new ActionableEvent(action, this.interactive.id)
+    );
   }
 }

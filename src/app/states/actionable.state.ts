@@ -6,7 +6,6 @@ import { ResultLiteral } from '../literals/result.literal';
 
 export abstract class ActionableState {
   constructor(
-    public readonly entityId: string,
     public readonly name: StateLiteral,
     protected stateActions: ActionableDefinition[]
   ) {}

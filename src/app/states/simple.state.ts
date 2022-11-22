@@ -3,8 +3,8 @@ import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
 
 export class SimpleState extends ActionableState {
-  constructor(entityId: string, stateActions: ActionableDefinition[]) {
-    super(entityId, 'SimpleState', stateActions);
+  constructor(stateActions: ActionableDefinition[]) {
+    super('SimpleState', stateActions);
   }
 
   protected override stateResult(

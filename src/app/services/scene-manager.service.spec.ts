@@ -5,6 +5,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { SceneEntity } from '../entities/scene.entity';
+import { ActionableEvent } from '../events/actionable.event';
 import { SimpleState } from '../states/simple.state';
 import { InteractiveStore } from '../stores/interactive.store';
 import { SceneStore } from '../stores/scene.store';
@@ -52,13 +53,16 @@ describe('SceneManagerService', () => {
           expect(scene).toEqual(entity2);
         });
 
-        service.run(exitDoor, 'NONE');
+        service.run(new ActionableEvent(exitDoor, 'sceneExitDoor'), 'NONE');
 
         done();
       });
 
       it('return scene trigger interactive', () => {
-        const result = service.run(exitDoor, 'NONE');
+        const result = service.run(
+          new ActionableEvent(exitDoor, 'sceneExitDoor'),
+          'NONE'
+        );
 
         expect(result).toEqual(sceneInteractive);
       });
@@ -66,7 +70,10 @@ describe('SceneManagerService', () => {
 
     describe('when a NON SCENE is received', () => {
       it('return interactive with state change', () => {
-        const result = service.run(skill, 'SUCCESS');
+        const result = service.run(
+          new ActionableEvent(skill, 'athleticism'),
+          'SUCCESS'
+        );
 
         expect(result.id).toEqual('athleticism');
       });
@@ -78,12 +85,7 @@ const mockedSceneStore = mock(SceneStore);
 
 const mockedInteractiveStore = mock(InteractiveStore);
 
-const exitDoor = createActionableDefinition(
-  'SCENE',
-  'sceneExitDoor',
-  'exit',
-  'Exit'
-);
+const exitDoor = createActionableDefinition('SCENE', 'exit', 'Exit');
 
 const skill = createActionableDefinition('SKILL', 'athleticism', 'Athleticism');
 
@@ -91,14 +93,14 @@ const sceneInteractive = new InteractiveEntity(
   'sceneExitDoor',
   'exit',
   'leaving',
-  new SimpleState('sceneExitDoor', [exitDoor])
+  new SimpleState([exitDoor])
 );
 
 const skillInteractive = new InteractiveEntity(
   'athleticism',
   'Jumping',
   'Jump outside the window',
-  new SimpleState('jump', [skill])
+  new SimpleState([skill])
 );
 
 const entity1 = new SceneEntity(

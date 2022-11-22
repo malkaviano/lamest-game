@@ -8,6 +8,7 @@ import { GameEventsDefinition } from '../definitions/game-events.definition';
 import { ResultLiteral } from '../literals/result.literal';
 import { SceneManagerService } from './scene-manager.service';
 import { RandomIntService } from './random-int.service';
+import { ActionableEvent } from '../events/actionable.event';
 
 @Injectable({
   providedIn: 'root',
@@ -28,17 +29,23 @@ export class GameManagerService {
       this.sceneManagerService.sceneChanged$,
       this.gameLog.asObservable(),
       this.characterManagerService.characterChanged$,
-      (action: ActionableDefinition) => this.actionableReceived(action)
+      (action: ActionableEvent) => this.actionableReceived(action)
     );
   }
 
-  private actionableReceived(action: ActionableDefinition): void {
+  private actionableReceived(action: ActionableEvent): void {
     let result: ResultLiteral = 'NONE';
 
-    if (action.actionable === 'SKILL') {
-      const skillName = action.name;
+    if (action.actionableDefinition.actionable === 'SKILL') {
+      const skillName = action.actionableDefinition.name;
       const skillValue =
         this.characterManagerService.currentCharacter.skills[skillName];
+
+      console.log(
+        skillName,
+        skillValue,
+        this.characterManagerService.currentCharacter.skills
+      );
 
       if (skillValue) {
         const roll = this.rngService.getRandomInterval(1, 100);
@@ -51,6 +58,8 @@ export class GameManagerService {
 
     const interactive = this.sceneManagerService.run(action, result);
 
-    this.gameLog.next(`selected: ${interactive.name} -> ${action.label}`);
+    this.gameLog.next(
+      `selected: ${interactive.name} -> ${action.actionableDefinition.label}`
+    );
   }
 }

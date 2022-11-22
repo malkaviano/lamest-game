@@ -17,22 +17,16 @@ export class ConversationState extends ActionableState {
   };
 
   constructor(
-    entityId: string,
     protected readonly messageMap: ConversationMessageMap,
     protected readonly currentMap: string
   ) {
     const currentMessages = messageMap[currentMap];
 
     const actions = Object.keys(currentMessages).map((topic) =>
-      createActionableDefinition(
-        'ASK',
-        entityId,
-        topic,
-        currentMessages[topic].label
-      )
+      createActionableDefinition('ASK', topic, currentMessages[topic].label)
     );
 
-    super(entityId, 'ConversationState', actions);
+    super('ConversationState', actions);
 
     this.currentMessages = currentMessages;
   }
@@ -44,7 +38,6 @@ export class ConversationState extends ActionableState {
     const response = this.currentMessages[action.name];
 
     return new ConversationState(
-      this.entityId,
       this.messageMap,
       response.change ?? this.currentMap
     );

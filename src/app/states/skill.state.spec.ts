@@ -52,16 +52,15 @@ describe('SkillState', () => {
 
 const pickAction = createActionableDefinition(
   'PICK',
-  'basic1',
   'pickBubbleGum',
   'Get bubble gum'
 );
 
-const successState = new SimpleState('basic1', [
-  createActionableDefinition('ASK', 'ask1', 'askMeSecret', 'Whats the secret?'),
+const successState = new SimpleState([
+  createActionableDefinition('ASK', 'askMeSecret', 'Whats the secret?'),
 ]);
 
 const state1: () => ActionableState = () =>
-  new SkillState('basic1', pickAction, successState, 2);
+  new SkillState(pickAction, successState, 2);
 
-const state2 = () => new SkillState('basic1', pickAction, successState, 1);
+const state2 = () => new SkillState(pickAction, successState, 1);

@@ -10,11 +10,9 @@ import { first, of } from 'rxjs';
 import { InteractiveWidget } from './interactive.widget';
 import { MaterialModule } from '../../../material/material.module';
 import { InteractiveEntity } from '../../entities/interactive.entity';
-import {
-  ActionableDefinition,
-  createActionableDefinition,
-} from '../../definitions/actionable.definition';
+import { createActionableDefinition } from '../../definitions/actionable.definition';
 import { ArrayView } from '../../views/array.view';
+import { ActionableEvent } from '../../events/actionable.event';
 
 describe('InteractiveWidget', () => {
   let fixture: ComponentFixture<InteractiveWidget>;
@@ -32,13 +30,14 @@ describe('InteractiveWidget', () => {
     loader = TestbedHarnessEnvironment.loader(fixture);
 
     when(mockedInteractive.actionsChanged$).thenReturn(of());
+    when(mockedInteractive.id).thenReturn('id1');
     when(mockedInteractive.name).thenReturn('Ornate Chest');
     when(mockedInteractive.description).thenReturn('A brilliant chest');
     when(mockedInteractive.actionsChanged$).thenReturn(
       of(
         new ArrayView([
-          expected,
-          new ActionableDefinition('PICK', 'pick', 'Pick', 'id1'),
+          createActionableDefinition('CLOSE', 'close', 'Close'),
+          createActionableDefinition('PICK', 'pick', 'Pick'),
         ])
       )
     );
@@ -73,11 +72,11 @@ describe('InteractiveWidget', () => {
     it('return the the actionable name and interactive id', async () => {
       const button = await loader.getHarness(MatButtonHarness);
 
-      let result: ActionableDefinition | undefined;
+      let result: ActionableEvent | undefined;
 
       fixture.componentInstance.onActionSelected
         .pipe(first())
-        .subscribe((action: ActionableDefinition) => {
+        .subscribe((action: ActionableEvent) => {
           result = action;
 
           expect(result).toEqual(expected);
@@ -94,4 +93,7 @@ let loader: HarnessLoader;
 
 const mockedInteractive = mock(InteractiveEntity);
 
-const expected = createActionableDefinition('CLOSE', 'id1', 'close', 'Close');
+const expected = new ActionableEvent(
+  createActionableDefinition('CLOSE', 'close', 'Close'),
+  'id1'
+);

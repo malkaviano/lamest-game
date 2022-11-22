@@ -4,6 +4,7 @@ import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
+import { ActionableEvent } from '../../events/actionable.event';
 import { ConverterHelper } from '../../helpers/converter.helper';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameManagerService } from '../../services/game-manager.service';
@@ -260,7 +261,7 @@ export class GamePage implements OnInit, OnDestroy {
     );
   }
 
-  actionSelected(action: ActionableDefinition): void {
+  actionSelected(action: ActionableEvent): void {
     this.gameManagerService.events.registerActionableTaken(action);
   }
 

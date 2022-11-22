@@ -6,6 +6,7 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { SceneEntity } from '../entities/scene.entity';
+import { ActionableEvent } from '../events/actionable.event';
 import { ResultLiteral } from '../literals/result.literal';
 import { SceneStore } from '../stores/scene.store';
 
@@ -28,10 +29,10 @@ export class SceneManagerService {
   }
 
   public run(
-    action: ActionableDefinition,
+    action: ActionableEvent,
     result: ResultLiteral
   ): InteractiveEntity {
-    if (action.actionable === 'SCENE') {
+    if (action.actionableDefinition.actionable === 'SCENE') {
       const nextSceneName = this.currentScene.transitions[action.interactiveId];
 
       this.currentScene = this.sceneStore.scenes[nextSceneName];

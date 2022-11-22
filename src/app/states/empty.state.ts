@@ -2,7 +2,7 @@ import { ActionableState } from './actionable.state';
 
 class EmptyState extends ActionableState {
   constructor() {
-    super('emptyState', 'EmptyState', []);
+    super('EmptyState', []);
   }
 
   // Unreachable code

@@ -4,6 +4,7 @@ import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 import { errorMessages } from '../definitions/error-messages.definition';
+import { ActionableEvent } from '../events/actionable.event';
 
 export class SceneEntity {
   constructor(
@@ -17,7 +18,7 @@ export class SceneEntity {
   }
 
   public run(
-    action: ActionableDefinition,
+    action: ActionableEvent,
     result: ResultLiteral
   ): InteractiveEntity {
     const interactive = this.interactives.items.find(
@@ -28,7 +29,7 @@ export class SceneEntity {
       throw new Error(errorMessages['SHOULD-NOT-HAPPEN']);
     }
 
-    interactive.actionSelected(action, result);
+    interactive.actionSelected(action.actionableDefinition, result);
 
     return interactive;
   }

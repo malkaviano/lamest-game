@@ -18,7 +18,6 @@ export class InteractiveStore {
         'NPC',
         'Demo Conversation Interactable',
         new ConversationState(
-          'npc1',
           {
             map1: {
               strange: {
@@ -50,8 +49,8 @@ export class InteractiveStore {
         'sceneExitDoor',
         'Exit Door',
         'Demo Simple Interactable',
-        new SimpleState('sceneExitDoor', [
-          createActionableDefinition('SCENE', 'sceneExitDoor', 'exit', 'Exit'),
+        new SimpleState([
+          createActionableDefinition('SCENE', 'sceneExitDoor', 'exit'),
         ])
       ),
       athleticism: new InteractiveEntity(
@@ -59,15 +58,9 @@ export class InteractiveStore {
         'Athleticism skill',
         'Demo failing a skill with 2 tries',
         new SkillState(
-          'athleticism',
-          createActionableDefinition('SKILL', 'athleticism', 'Athleticism'),
-          new SimpleState('athleticism', [
-            createActionableDefinition(
-              'PICK',
-              'athleticism',
-              'secretItem',
-              'Item'
-            ),
+          createActionableDefinition('SKILL', 'Athleticism'),
+          new SimpleState([
+            createActionableDefinition('PICK', 'athleticism', 'secretItem'),
           ]),
           2
         )
@@ -76,22 +69,15 @@ export class InteractiveStore {
         'enterSceneDoor',
         'Enter room',
         'Change to another scene',
-        new SimpleState('enterSceneDoor', [
-          createActionableDefinition(
-            'SCENE',
-            'enterSceneDoor',
-            'enter',
-            'Enter'
-          ),
+        new SimpleState([
+          createActionableDefinition('SCENE', 'enterSceneDoor', 'enter'),
         ])
       ),
       strangeBush: new InteractiveEntity(
         'strangeBush',
         'A weird bush',
         'Try to spot something',
-        new SimpleState('', [
-          createActionableDefinition('SKILL', 'strangeBush', 'Spot'),
-        ])
+        new SimpleState([createActionableDefinition('SKILL', 'Spot')])
       ),
     };
   }

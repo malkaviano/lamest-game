@@ -5,12 +5,11 @@ import { emptyState } from './empty.state';
 
 export class SkillState extends ActionableState {
   constructor(
-    entityId: string,
     stateAction: ActionableDefinition,
     private readonly successState: ActionableState,
     private readonly maximumTries: number
   ) {
-    super(entityId, 'SkillState', [stateAction]);
+    super('SkillState', [stateAction]);
   }
 
   protected override stateResult(
@@ -31,7 +30,6 @@ export class SkillState extends ActionableState {
 
   private clone(maximumTries: number): SkillState {
     return new SkillState(
-      this.entityId,
       this.stateActions[0],
       this.successState,
       maximumTries

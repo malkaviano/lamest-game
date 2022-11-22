@@ -6,10 +6,7 @@ describe('EmptyState', () => {
   describe('when invoking stateResult', () => {
     it('throws', () => {
       expect(() =>
-        emptyState.onResult(
-          new ActionableDefinition('ASK', 'gg', 'GG', 'someId'),
-          'NONE'
-        )
+        emptyState.onResult(new ActionableDefinition('ASK', 'gg', 'GG'), 'NONE')
       ).toThrowError(errorMessages['WRONG-ACTION']);
     });
   });

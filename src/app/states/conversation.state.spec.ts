@@ -5,32 +5,6 @@ import {
 } from './conversation.state';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 
-const messageMap: ConversationMessageMap = {
-  map1: {
-    hello: {
-      label: 'Hello',
-      answer: 'Hi, how are you?',
-    },
-    die: {
-      label: 'Die',
-      answer: 'Nooooooooo',
-      change: 'map2',
-    },
-  },
-  map2: {
-    sorry: {
-      label: 'Sorry',
-      answer: 'Plz do not kill me',
-    },
-  },
-};
-
-const helloAction = createActionableDefinition('ASK', 'id1', 'hello', 'Hello');
-const dieAction = createActionableDefinition('ASK', 'id1', 'die', 'Die');
-const sorryAction = createActionableDefinition('ASK', 'id1', 'sorry', 'Sorry');
-
-const state = new ConversationState('id1', messageMap, 'map1');
-
 describe('ConversationState', () => {
   it('should have action Hello', () => {
     expect(state.actions).toEqual(new ArrayView([helloAction, dieAction]));
@@ -54,3 +28,29 @@ describe('ConversationState', () => {
     });
   });
 });
+
+const messageMap: ConversationMessageMap = {
+  map1: {
+    hello: {
+      label: 'Hello',
+      answer: 'Hi, how are you?',
+    },
+    die: {
+      label: 'Die',
+      answer: 'Nooooooooo',
+      change: 'map2',
+    },
+  },
+  map2: {
+    sorry: {
+      label: 'Sorry',
+      answer: 'Plz do not kill me',
+    },
+  },
+};
+
+const helloAction = createActionableDefinition('ASK', 'hello', 'Hello');
+const dieAction = createActionableDefinition('ASK', 'die', 'Die');
+const sorryAction = createActionableDefinition('ASK', 'sorry', 'Sorry');
+
+const state = new ConversationState(messageMap, 'map1');
