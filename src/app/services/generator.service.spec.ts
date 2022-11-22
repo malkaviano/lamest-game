@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+
 import { anyNumber, instance, mock, when } from 'ts-mockito';
+
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
@@ -9,7 +11,6 @@ import { genders } from '../literals/gender.literal';
 import { heights } from '../literals/height.literal';
 import { races } from '../literals/race.literal';
 import { weights } from '../literals/weight.literal';
-
 import { GeneratorService } from './generator.service';
 import { RandomIntService } from './random-int.service';
 

@@ -7,7 +7,6 @@ import { CharacteristicDefinition } from '../definitions/characteristic.definiti
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
-
 import { CharacterManagerService } from './character-manager.service';
 import { RandomCharacterService } from './random-character.service';
 

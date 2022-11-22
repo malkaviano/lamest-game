@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { BehaviorSubject, Observable } from 'rxjs';
+
 import { CharacterEntity } from '../entities/character.entity';
 import { RandomCharacterService } from './random-character.service';
 

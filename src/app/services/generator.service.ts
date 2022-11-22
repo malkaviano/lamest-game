@@ -5,7 +5,6 @@ import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { professions } from '../definitions/profession.definition';
-
 import { AgeLiteral, ages } from '../literals/age.literal';
 import { GenderLiteral, genders } from '../literals/gender.literal';
 import { HeightLiteral, heights } from '../literals/height.literal';

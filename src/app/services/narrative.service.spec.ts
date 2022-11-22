@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import { last, take } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -11,10 +12,10 @@ import { InteractiveStore } from '../stores/interactive.store';
 import { SceneStore } from '../stores/scene.store';
 import { ArrayView } from '../views/array.view';
 
-import { SceneManagerService } from './scene-manager.service';
+import { NarrativeService } from './narrative.service';
 
-describe('SceneManagerService', () => {
-  let service: SceneManagerService;
+describe('NarrativeService', () => {
+  let service: NarrativeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -39,7 +40,7 @@ describe('SceneManagerService', () => {
       sceneExitDoor: sceneInteractive,
     });
 
-    service = TestBed.inject(SceneManagerService);
+    service = TestBed.inject(NarrativeService);
   });
 
   it('should be created', () => {

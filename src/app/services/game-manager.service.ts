@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
-import { ActionableDefinition } from '../definitions/actionable.definition';
 import { CharacterManagerService } from '../services/character-manager.service';
 import { GameEventsDefinition } from '../definitions/game-events.definition';
 import { ResultLiteral } from '../literals/result.literal';
-import { SceneManagerService } from './scene-manager.service';
+import { NarrativeService } from './narrative.service';
 import { RandomIntService } from './random-int.service';
 import { ActionableEvent } from '../events/actionable.event';
 
@@ -20,7 +19,7 @@ export class GameManagerService {
 
   constructor(
     private readonly characterManagerService: CharacterManagerService,
-    private readonly sceneManagerService: SceneManagerService,
+    private readonly sceneManagerService: NarrativeService,
     private readonly rngService: RandomIntService
   ) {
     this.gameLog = new Subject<string>();

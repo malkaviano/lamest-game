@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { ActionableDefinition } from '../definitions/actionable.definition';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { SceneEntity } from '../entities/scene.entity';
@@ -13,7 +12,7 @@ import { SceneStore } from '../stores/scene.store';
 @Injectable({
   providedIn: 'root',
 })
-export class SceneManagerService {
+export class NarrativeService {
   private currentScene: SceneEntity;
 
   private readonly sceneChanged: BehaviorSubject<SceneDefinition>;
