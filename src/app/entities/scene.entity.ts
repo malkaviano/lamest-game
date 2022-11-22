@@ -13,10 +13,6 @@ export class SceneEntity {
     public readonly transitions: { readonly [key: string]: string }
   ) {}
 
-  public get definition(): SceneDefinition {
-    return new SceneDefinition(this.description, this.interactives);
-  }
-
   public run(
     action: ActionableEvent,
     result: ResultLiteral
