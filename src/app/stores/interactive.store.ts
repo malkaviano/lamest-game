@@ -68,6 +68,7 @@ export class InteractiveStore {
             createActionableDefinition('PICK', 'knife', 'Hunting Knife'),
             createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
             createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
+            createActionableDefinition('PICK', 'halberd', 'Halberd'),
           ]),
           2
         ),
@@ -93,6 +94,7 @@ export class InteractiveStore {
       upperShelf: {
         knife: 1,
         firstAid: 2,
+        halberd: 1,
       },
     };
   }

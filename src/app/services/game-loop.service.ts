@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { ResultLiteral } from '../literals/result.literal';
+import { ItemStore } from '../stores/item.store';
 import { CharacterManagerService } from './character-manager.service';
 import { InventoryService } from './inventory.service';
 import { NarrativeService } from './narrative.service';
@@ -21,6 +23,7 @@ export class GameLoopService {
     private readonly characterManagerService: CharacterManagerService,
     private readonly narrativeService: NarrativeService,
     private readonly inventoryService: InventoryService,
+    private readonly itemStore: ItemStore,
     private readonly rngService: RandomIntService
   ) {
     this.gameLog = new Subject<string>();
@@ -51,9 +54,20 @@ export class GameLoopService {
 
       this.inventoryService.store('player', item);
     } else if (action.actionableDefinition.actionable === 'EQUIP') {
-      this.inventoryService.equip(action.eventId);
+      const skillName = this.itemStore.itemSkill(action.eventId);
 
-      this.gameLog.next(`equipped: ${this.inventoryService.equipped?.label}`);
+      if (
+        skillName &&
+        this.characterManagerService.currentCharacter.skills[skillName] > 0
+      ) {
+        this.inventoryService.equip(action.eventId);
+
+        this.gameLog.next(`equipped: ${this.inventoryService.equipped?.label}`);
+      } else {
+        this.gameLog.next(
+          `error: ${skillName} is required to equip ${action.eventId}`
+        );
+      }
     } else if (action.actionableDefinition.actionable === 'USE') {
       console.log(action.actionableDefinition, action.eventId);
     } else if (action.actionableDefinition.actionable === 'UNEQUIP') {
