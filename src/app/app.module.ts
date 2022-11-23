@@ -12,6 +12,7 @@ import { CharacterPage } from './pages/character/character.page';
 import { TextAreaWindow } from './windows/text-area/text-area.window';
 import { KeyValueWindow } from './windows/key-value/key-value.window';
 import { EquipmentWidget } from './widgets/equipment/equipment.widget';
+import { EquippedWidget } from './widgets/equipped/equipped.widget';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { EquipmentWidget } from './widgets/equipment/equipment.widget';
     CharacterPage,
     KeyValueWindow,
     EquipmentWidget,
+    EquippedWidget,
   ],
   imports: [
     BrowserModule,

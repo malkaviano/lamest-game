@@ -6,4 +6,5 @@ export type ActionableLiteral =
   | 'SCENE'
   | 'SKILL'
   | 'EQUIP'
+  | 'UNEQUIP'
   | 'USE';

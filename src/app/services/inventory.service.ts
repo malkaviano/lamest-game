@@ -1,17 +1,37 @@
 import { Injectable } from '@angular/core';
+
+import { Observable, Subject } from 'rxjs';
+
 import { errorMessages } from '../definitions/error-messages.definition';
 import { GameItemDefinition } from '../definitions/game-item.definition';
 import { ItemStorageDefinition } from '../definitions/item-storage.definition';
+import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InventoryService {
+  private readonly inventoryChanged: Subject<InventoryEvent>;
+
   private storage: Map<string, { [key: string]: ItemStorageDefinition }>;
+
+  private currentEquipped: GameItemDefinition | null;
+
+  public readonly inventoryChanged$: Observable<InventoryEvent>;
 
   constructor() {
     this.storage = new Map<string, { [key: string]: ItemStorageDefinition }>();
+
+    this.currentEquipped = null;
+
+    this.inventoryChanged = new Subject<InventoryEvent>();
+
+    this.inventoryChanged$ = this.inventoryChanged.asObservable();
+  }
+
+  public get equipped(): GameItemDefinition | null {
+    return this.currentEquipped;
   }
 
   public store(key: string, item: GameItemDefinition): number {
@@ -26,6 +46,8 @@ export class InventoryService {
     storage[item.name] = itemStorage;
 
     this.storage.set(key, storage);
+
+    this.inventoryChanged.next(new InventoryEvent('STORE', key, item));
 
     return quantity;
   }
@@ -47,6 +69,10 @@ export class InventoryService {
       delete storage[name];
     }
 
+    this.inventoryChanged.next(
+      new InventoryEvent('TAKE', key, itemStored.item)
+    );
+
     return itemStored.item;
   }
 
@@ -62,6 +88,32 @@ export class InventoryService {
     }, result);
 
     return new ArrayView(a);
+  }
+
+  public equip(name: string): void {
+    const item = this.take('player', name);
+
+    if (item.category !== 'WEAPON') {
+      throw new Error(errorMessages['WRONG-ITEM']);
+    }
+
+    this.currentEquipped = item;
+
+    this.inventoryChanged.next(new InventoryEvent('EQUIP', 'player', item));
+  }
+
+  public unequip(): void {
+    if (!this.equipped) {
+      throw new Error(errorMessages['INVALID-OPERATION']);
+    }
+
+    const item = this.equipped;
+
+    this.store('player', item);
+
+    this.currentEquipped = null;
+
+    this.inventoryChanged.next(new InventoryEvent('UNEQUIP', 'player', item));
   }
 
   private getStorage(key: string): {

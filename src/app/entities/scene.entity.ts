@@ -17,7 +17,7 @@ export class SceneEntity {
     result: ResultLiteral
   ): InteractiveEntity {
     const interactive = this.interactives.items.find(
-      (i) => i.id === action.interactiveId
+      (i) => i.id === action.eventId
     );
 
     if (!interactive) {

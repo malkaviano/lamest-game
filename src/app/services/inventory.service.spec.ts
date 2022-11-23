@@ -1,7 +1,11 @@
 import { TestBed } from '@angular/core/testing';
+import { take } from 'rxjs';
+import { when } from 'ts-mockito';
+import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { ItemStorageDefinition } from '../definitions/item-storage.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
+import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 
 import { InventoryService } from './inventory.service';
@@ -16,6 +20,70 @@ describe('InventoryService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  describe('equipped', () => {
+    describe('when created', () => {
+      it('return equipped null', () => {
+        expect(service.equipped).toBeNull();
+      });
+    });
+
+    describe('when equipping an item', () => {
+      describe('when item is in inventory', () => {
+        it('should equip the item', () => {
+          service.store('player', weapon1);
+
+          service.equip(weapon1.name);
+
+          expect(service.equipped).toEqual(weapon1);
+        });
+
+        it('should push equip InventoryEvent', (done) => {
+          let result: InventoryEvent | undefined;
+
+          const expected = new InventoryEvent('EQUIP', 'player', weapon1);
+
+          service.inventoryChanged$.pipe(take(10)).subscribe((event) => {
+            result = event;
+          });
+
+          service.store('player', weapon1);
+
+          service.equip(weapon1.name);
+
+          done();
+
+          expect(result).toEqual(expected);
+        });
+
+        it('should remove the item from player inventory', () => {
+          service.store('player', weapon1);
+
+          service.equip(weapon1.name);
+
+          expect(service.check('player')).toEqual(new ArrayView([]));
+        });
+      });
+
+      describe('when item is not in inventory', () => {
+        it('throw INVALID-OPERATION', () => {
+          expect(() => service.equip(weapon1.name)).toThrowError(
+            errorMessages['INVALID-OPERATION']
+          );
+        });
+      });
+
+      describe('when item is not a weapon', () => {
+        it('throw WRONG-ITEM', () => {
+          service.store('player', bubbleGum);
+
+          expect(() => service.equip(bubbleGum.name)).toThrowError(
+            errorMessages['WRONG-ITEM']
+          );
+        });
+      });
+    });
   });
 
   describe('storing an item', () => {
@@ -47,6 +115,22 @@ describe('InventoryService', () => {
 
         expect(result2).toEqual(1);
       });
+    });
+
+    it('should push store InventoryEvent', (done) => {
+      let result: InventoryEvent | undefined;
+
+      const expected = new InventoryEvent('STORE', 'storeEvent', weapon2);
+
+      service.inventoryChanged$.pipe(take(10)).subscribe((event) => {
+        result = event;
+      });
+
+      service.store('storeEvent', weapon2);
+
+      done();
+
+      expect(result).toEqual(expected);
     });
   });
 
@@ -109,6 +193,24 @@ describe('InventoryService', () => {
           expect(result).toEqual(expected);
         });
       });
+
+      it('should push take InventoryEvent', (done) => {
+        let result: InventoryEvent | undefined;
+
+        const expected = new InventoryEvent('TAKE', 'takeEvent', bubbleGum);
+
+        service.inventoryChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        service.store('takeEvent', bubbleGum);
+
+        service.take('takeEvent', bubbleGum.name);
+
+        done();
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
@@ -142,6 +244,60 @@ describe('InventoryService', () => {
       });
     });
   });
+
+  describe('unequip', () => {
+    describe('when no item was equipped', () => {
+      it('throw INVALID-OPERATION', () => {
+        expect(() => service.unequip()).toThrowError(
+          errorMessages['INVALID-OPERATION']
+        );
+      });
+    });
+
+    describe('when an item was equipped', () => {
+      it('should unequip', () => {
+        service.store('player', weapon1);
+
+        service.equip(weapon1.name);
+
+        service.unequip();
+
+        expect(service.equipped).toBeNull();
+      });
+
+      it('should store the item back in player inventory', () => {
+        service.store('player', weapon1);
+
+        service.equip(weapon1.name);
+
+        service.unequip();
+
+        expect(service.check('player')).toEqual(
+          new ArrayView([new ItemStorageDefinition(weapon1, 1)])
+        );
+      });
+
+      it('should push unequip InventoryEvent', (done) => {
+        let result: InventoryEvent | undefined;
+
+        const expected = new InventoryEvent('UNEQUIP', 'player', weapon1);
+
+        service.inventoryChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        service.store('player', weapon1);
+
+        service.equip(weapon1.name);
+
+        service.unequip();
+
+        done();
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
 });
 
 const weapon1 = new WeaponDefinition(
@@ -154,4 +310,10 @@ const weapon2 = new WeaponDefinition(
   'sword2',
   'Decent Sword',
   'A good sword, not exceptional'
+);
+
+const bubbleGum = new ConsumableDefinition(
+  'bubbleGum',
+  'Bubble Gum',
+  'Refreshing'
 );

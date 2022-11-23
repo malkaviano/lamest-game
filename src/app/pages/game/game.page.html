@@ -35,7 +35,7 @@
   <div class="section text-box-width">
     <div class="title-border">
       <mat-toolbar>
-        <span class="title-text">Description</span>
+        <span class="title-text">Scene Description</span>
       </mat-toolbar>
     </div>
     <div class="main-box vertical-scrollable">
@@ -48,7 +48,7 @@
   <div class="section">
     <div class="title-border">
       <mat-toolbar>
-        <span class="title-text">Interactables</span>
+        <span class="title-text">Scene objects</span>
       </mat-toolbar>
     </div>
     <div class="main-box vertical-scrollable">
@@ -64,7 +64,7 @@
   <div class="section text-box-width base-margin-right">
     <div class="title-border">
       <mat-toolbar>
-        <span class="title-text">Action Log</span>
+        <span class="title-text">What happened?</span>
       </mat-toolbar>
     </div>
     <div class="main-box">
@@ -81,6 +81,10 @@
       </div>
       <div class="half-box vertical-scrollable">
         <div data-testid="inventory">
+          <app-equipped-widget
+            [equipped]="equipped"
+            (onActionSelected)="actionSelected($event)"
+          ></app-equipped-widget>
           <app-equipment-widget
             *ngFor="let equipment of inventory"
             [equipment]="equipment"

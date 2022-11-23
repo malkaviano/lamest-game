@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TransitionCheckState } from '@angular/material/checkbox';
 import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 
 import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
+import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
@@ -25,6 +27,8 @@ export class GamePage implements OnInit, OnDestroy {
 
   inventory: ActionableItemDefinition[];
 
+  equipped: GameItemDefinition | null;
+
   constructor(
     private readonly gameManagerService: GameManagerService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
@@ -33,6 +37,8 @@ export class GamePage implements OnInit, OnDestroy {
     this.gameLogs = [];
 
     this.inventory = [];
+
+    this.equipped = null;
   }
 
   ngOnDestroy(): void {
@@ -63,7 +69,8 @@ export class GamePage implements OnInit, OnDestroy {
 
     this.withSubscriptionHelper.addSubscription(
       this.gameManagerService.events.playerInventory$.subscribe((inventory) => {
-        this.inventory = inventory.items;
+        this.inventory = inventory.items.items;
+        this.equipped = inventory.equipped;
       })
     );
   }

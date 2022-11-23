@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Subject } from 'rxjs';
+import { filter, map, Observable, Subject } from 'rxjs';
 
 import { CharacterManagerService } from '../services/character-manager.service';
 import { GameEventsDefinition } from '../definitions/game-events.definition';
@@ -18,6 +18,7 @@ import {
 } from '../definitions/actionable.definition';
 import { GameItemLiteral } from '../literals/game-item.literal';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
+import { GameItemDefinition } from '../definitions/game-item.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +26,10 @@ import { ConsumableDefinition } from '../definitions/consumable.definition';
 export class GameManagerService {
   private readonly gameLog: Subject<string>;
 
-  private readonly playerInventory: Subject<
-    ArrayView<ActionableItemDefinition>
-  >;
+  public readonly playerInventory$: Observable<{
+    items: ArrayView<ActionableItemDefinition>;
+    equipped: GameItemDefinition | null;
+  }>;
 
   public readonly events: GameEventsDefinition;
 
@@ -39,13 +41,22 @@ export class GameManagerService {
   ) {
     this.gameLog = new Subject<string>();
 
-    this.playerInventory = new Subject<ArrayView<ActionableItemDefinition>>();
+    this.playerInventory$ = this.inventoryService.inventoryChanged$.pipe(
+      filter((event) => event.storageName === 'player'),
+      map((_) => {
+        const equipped = this.inventoryService.equipped;
+
+        const items = this.refreshInventory();
+
+        return { items, equipped };
+      })
+    );
 
     this.events = new GameEventsDefinition(
       this.narrativeService.sceneChanged$,
       this.gameLog.asObservable(),
       this.characterManagerService.characterChanged$,
-      this.playerInventory.asObservable(),
+      this.playerInventory$,
       (action: ActionableEvent) => this.actionableReceived(action)
     );
 
@@ -86,45 +97,55 @@ export class GameManagerService {
       }
     } else if (action.actionableDefinition.actionable === 'PICK') {
       const item = this.inventoryService.take(
-        action.interactiveId,
+        action.eventId,
         action.actionableDefinition.name
       );
 
       this.inventoryService.store('player', item);
-
-      let inventoryView: ActionableItemDefinition[] = [];
-
-      const playerItems = this.inventoryService.check('player');
-
-      const items = playerItems.items.reduce((acc, itemStorage) => {
-        for (let index = 0; index < itemStorage.quantity; index++) {
-          acc.push(
-            new ActionableItemDefinition(
-              itemStorage.item,
-              this.itemAction(itemStorage.item.category)
-            )
-          );
-        }
-
-        return acc;
-      }, inventoryView);
-
-      this.playerInventory.next(new ArrayView([...items]));
     } else if (action.actionableDefinition.actionable === 'EQUIP') {
-      console.log(action.actionableDefinition, action.interactiveId);
+      this.inventoryService.equip(action.eventId);
 
-      return;
+      this.gameLog.next(`equipped: ${this.inventoryService.equipped?.label}`);
     } else if (action.actionableDefinition.actionable === 'USE') {
-      console.log(action.actionableDefinition, action.interactiveId);
+      console.log(action.actionableDefinition, action.eventId);
+    } else if (action.actionableDefinition.actionable === 'UNEQUIP') {
+      this.inventoryService.unequip();
 
-      return;
+      this.gameLog.next(`unequipped: ${action.actionableDefinition.label}`);
     }
 
-    const interactive = this.narrativeService.run(action, result);
+    if (
+      !['UNEQUIP', 'EQUIP', 'USE'].includes(
+        action.actionableDefinition.actionable
+      )
+    ) {
+      const interactive = this.narrativeService.run(action, result);
 
-    this.gameLog.next(
-      `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`
-    );
+      this.gameLog.next(
+        `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`
+      );
+    }
+  }
+
+  private refreshInventory(): ArrayView<ActionableItemDefinition> {
+    const playerItems = this.inventoryService.check('player');
+
+    const inventoryView: ActionableItemDefinition[] = [];
+
+    const items = playerItems.items.reduce((acc, itemStorage) => {
+      for (let index = 0; index < itemStorage.quantity; index++) {
+        acc.push(
+          new ActionableItemDefinition(
+            itemStorage.item,
+            this.itemAction(itemStorage.item.category)
+          )
+        );
+      }
+
+      return acc;
+    }, inventoryView);
+
+    return new ArrayView([...items]);
   }
 
   private itemAction(category: GameItemLiteral): ActionableDefinition {

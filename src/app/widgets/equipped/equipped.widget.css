@@ -1,0 +1,16 @@
+.card-box {
+  margin: 5px 5px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.action {
+  display: inline-block;
+}
