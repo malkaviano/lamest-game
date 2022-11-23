@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { SceneEntity } from '../entities/scene.entity';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { InventoryService } from '../services/inventory.service';
 import { ArrayView } from '../views/array.view';
 import { DescriptionStore } from './description.store';
 import { InteractiveStore } from './interactive.store';
+import { ItemStore } from './item.store';
 
 @Injectable({
   providedIn: 'root',

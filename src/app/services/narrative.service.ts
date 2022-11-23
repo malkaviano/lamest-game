@@ -7,7 +7,9 @@ import { InteractiveEntity } from '../entities/interactive.entity';
 import { SceneEntity } from '../entities/scene.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { ResultLiteral } from '../literals/result.literal';
+import { ItemStore } from '../stores/item.store';
 import { SceneStore } from '../stores/scene.store';
+import { InventoryService } from './inventory.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +21,26 @@ export class NarrativeService {
 
   public readonly sceneChanged$: Observable<SceneDefinition>;
 
-  constructor(private readonly sceneStore: SceneStore) {
+  constructor(
+    itemStore: ItemStore,
+    inventoryService: InventoryService,
+    private readonly sceneStore: SceneStore
+  ) {
     this.currentScene = this.sceneStore.scenes['scene1'];
 
     this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
 
     this.sceneChanged$ = this.sceneChanged.asObservable();
+
+    Object.entries(sceneStore.interactiveStore.usedItems).forEach(
+      ([storage, info]) => {
+        Object.entries(info).forEach(([name, quantity]) => {
+          for (let index = 0; index < quantity; index++) {
+            inventoryService.store(storage, itemStore.items[name]);
+          }
+        });
+      }
+    );
   }
 
   public run(

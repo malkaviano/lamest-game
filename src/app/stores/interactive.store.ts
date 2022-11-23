@@ -14,6 +14,8 @@ import { SkillState } from '../states/skill.state';
 export class InteractiveStore {
   public readonly interactives: KeyValueInterface<InteractiveEntity>;
 
+  public readonly usedItems: KeyValueInterface<KeyValueInterface<number>>;
+
   constructor() {
     this.interactives = {
       npc1: new InteractiveEntity(
@@ -85,6 +87,13 @@ export class InteractiveStore {
         'Try to spot something',
         new SimpleState([createActionableDefinition('SKILL', 'Spot')])
       ),
+    };
+
+    this.usedItems = {
+      upperShelf: {
+        knife: 1,
+        firstAid: 2,
+      },
     };
   }
 }

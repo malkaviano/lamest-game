@@ -10,14 +10,12 @@ import { RandomIntService } from './random-int.service';
 import { ActionableEvent } from '../events/actionable.event';
 import { ArrayView } from '../views/array.view';
 import { InventoryService } from './inventory.service';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
 import {
   ActionableDefinition,
   createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { GameItemLiteral } from '../literals/game-item.literal';
-import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { GameItemDefinition } from '../definitions/game-item.definition';
 
 @Injectable({
@@ -58,25 +56,6 @@ export class GameManagerService {
       this.characterManagerService.characterChanged$,
       this.playerInventory$,
       (action: ActionableEvent) => this.actionableReceived(action)
-    );
-
-    this.inventoryService.store(
-      'upperShelf',
-      new WeaponDefinition(
-        'knife',
-        'Hunting Knife',
-        'A knife used by hunters mostly'
-      )
-    );
-
-    this.inventoryService.store(
-      'upperShelf',
-      new ConsumableDefinition('firstAid', 'First Aid Kit', 'Use to recover HP')
-    );
-
-    this.inventoryService.store(
-      'upperShelf',
-      new ConsumableDefinition('firstAid', 'First Aid Kit', 'Use to recover HP')
     );
   }
 

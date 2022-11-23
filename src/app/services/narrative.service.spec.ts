@@ -40,6 +40,8 @@ describe('NarrativeService', () => {
       sceneExitDoor: sceneInteractive,
     });
 
+    when(mockedInteractiveStore.usedItems).thenReturn({});
+
     service = TestBed.inject(NarrativeService);
   });
 
