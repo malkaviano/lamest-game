@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { filter, map, Observable, Subject } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 
 import { CharacterManagerService } from '../services/character-manager.service';
 import { GameEventsDefinition } from '../definitions/game-events.definition';
-import { ResultLiteral } from '../literals/result.literal';
 import { NarrativeService } from './narrative.service';
-import { RandomIntService } from './random-int.service';
 import { ActionableEvent } from '../events/actionable.event';
 import { ArrayView } from '../views/array.view';
 import { InventoryService } from './inventory.service';
@@ -17,14 +15,13 @@ import {
 } from '../definitions/actionable.definition';
 import { GameItemLiteral } from '../literals/game-item.literal';
 import { GameItemDefinition } from '../definitions/game-item.definition';
+import { GameLoopService } from './game-loop.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameManagerService {
-  private readonly gameLog: Subject<string>;
-
-  public readonly playerInventory$: Observable<{
+  private readonly playerInventory$: Observable<{
     items: ArrayView<ActionableItemDefinition>;
     equipped: GameItemDefinition | null;
   }>;
@@ -32,13 +29,11 @@ export class GameManagerService {
   public readonly events: GameEventsDefinition;
 
   constructor(
+    private readonly gameLoopService: GameLoopService,
     private readonly characterManagerService: CharacterManagerService,
     private readonly narrativeService: NarrativeService,
-    private readonly inventoryService: InventoryService,
-    private readonly rngService: RandomIntService
+    private readonly inventoryService: InventoryService
   ) {
-    this.gameLog = new Subject<string>();
-
     this.playerInventory$ = this.inventoryService.inventoryChanged$.pipe(
       filter((event) => event.storageName === 'player'),
       map((_) => {
@@ -52,7 +47,7 @@ export class GameManagerService {
 
     this.events = new GameEventsDefinition(
       this.narrativeService.sceneChanged$,
-      this.gameLog.asObservable(),
+      this.gameLoopService.gameLog$,
       this.characterManagerService.characterChanged$,
       this.playerInventory$,
       (action: ActionableEvent) => this.actionableReceived(action)
@@ -60,50 +55,7 @@ export class GameManagerService {
   }
 
   private actionableReceived(action: ActionableEvent): void {
-    let result: ResultLiteral = 'NONE';
-
-    if (action.actionableDefinition.actionable === 'SKILL') {
-      const skillName = action.actionableDefinition.name;
-      const skillValue =
-        this.characterManagerService.currentCharacter.skills[skillName];
-
-      if (skillValue) {
-        const roll = this.rngService.getRandomInterval(1, 100);
-
-        result = roll <= skillValue ? 'SUCCESS' : 'FAILURE';
-
-        this.gameLog.next(`rolled: ${skillName} -> ${roll} -> ${result}`);
-      }
-    } else if (action.actionableDefinition.actionable === 'PICK') {
-      const item = this.inventoryService.take(
-        action.eventId,
-        action.actionableDefinition.name
-      );
-
-      this.inventoryService.store('player', item);
-    } else if (action.actionableDefinition.actionable === 'EQUIP') {
-      this.inventoryService.equip(action.eventId);
-
-      this.gameLog.next(`equipped: ${this.inventoryService.equipped?.label}`);
-    } else if (action.actionableDefinition.actionable === 'USE') {
-      console.log(action.actionableDefinition, action.eventId);
-    } else if (action.actionableDefinition.actionable === 'UNEQUIP') {
-      this.inventoryService.unequip();
-
-      this.gameLog.next(`unequipped: ${action.actionableDefinition.label}`);
-    }
-
-    if (
-      !['UNEQUIP', 'EQUIP', 'USE'].includes(
-        action.actionableDefinition.actionable
-      )
-    ) {
-      const interactive = this.narrativeService.run(action, result);
-
-      this.gameLog.next(
-        `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`
-      );
-    }
+    this.gameLoopService.run(action);
   }
 
   private playerInventory(): ArrayView<ActionableItemDefinition> {
