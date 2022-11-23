@@ -116,7 +116,7 @@ export class GameManagerService {
         acc.push(
           new ActionableItemDefinition(
             itemStorage.item,
-            this.itemAction(itemStorage.item.category)
+            this.inventoryAction(itemStorage.item.category)
           )
         );
       }
@@ -127,7 +127,7 @@ export class GameManagerService {
     return new ArrayView([...items]);
   }
 
-  private itemAction(category: GameItemLiteral): ActionableDefinition {
+  private inventoryAction(category: GameItemLiteral): ActionableDefinition {
     if (category === 'WEAPON') {
       return createActionableDefinition('EQUIP', 'equip', 'Equip');
     }
