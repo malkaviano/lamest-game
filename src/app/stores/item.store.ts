@@ -16,7 +16,8 @@ export class ItemStore {
       knife: new WeaponDefinition(
         'knife',
         'Hunting Knife',
-        'A knife used by hunters mostly'
+        'A knife used by hunters mostly',
+        'Melee Weapon (Simple)'
       ),
       firstAid: new ConsumableDefinition(
         'firstAid',

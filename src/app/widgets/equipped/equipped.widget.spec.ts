@@ -64,9 +64,14 @@ describe('EquippedWidgetComponent', () => {
 const unequipAction = createActionableDefinition(
   'UNEQUIP',
   'unequip',
-  'Bastard Sword'
+  'Long Sword'
 );
 
-const item = new WeaponDefinition('sword', 'Bastard Sword', 'Some big sword');
+const item = new WeaponDefinition(
+  'sword',
+  'Long Sword',
+  'Some big sword',
+  'Melee Weapon (Simple)'
+);
 
 const actionableItem = new ActionableItemDefinition(item, unequipAction);

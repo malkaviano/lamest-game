@@ -220,11 +220,13 @@ const mockedGameEventsService = mock(GameEventsDefinition);
 const weapon1 = new WeaponDefinition(
   'sword1',
   'Rusted Sword',
-  'Old sword full of rust'
+  'Old sword full of rust',
+  'Melee Weapon (Simple)'
 );
 
 const weapon2 = new WeaponDefinition(
   'sword2',
   'Decent Sword',
-  'A good sword, not exceptional'
+  'A good sword, not exceptional',
+  'Melee Weapon (Simple)'
 );

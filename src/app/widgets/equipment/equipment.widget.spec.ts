@@ -62,6 +62,11 @@ describe('EquipmentWidget', () => {
 const equipAction = createActionableDefinition('EQUIP', 'equip', 'Equip');
 
 const actionableItem = new ActionableItemDefinition(
-  new WeaponDefinition('sword', 'Bastard Sword', 'Some big sword'),
+  new WeaponDefinition(
+    'sword',
+    'Long Sword',
+    'Some big sword',
+    'Melee Weapon (Simple)'
+  ),
   equipAction
 );

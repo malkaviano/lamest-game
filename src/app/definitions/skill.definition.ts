@@ -243,8 +243,8 @@ export const skillDefinitions: {
     true,
     justStr
   ),
-  'Melee Weapon (Exotic)': new SkillDefinition(
-    'Melee Weapon (Exotic)',
+  'Melee Weapon (Great)': new SkillDefinition(
+    'Melee Weapon (Great)',
     '',
     'TRAINED',
     true,

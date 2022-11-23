@@ -32,7 +32,7 @@ export type SkillNameLiteral =
   | 'Knowledge (Strategy)'
   | 'Listen'
   | 'Melee Weapon (Simple)'
-  | 'Melee Weapon (Exotic)'
+  | 'Melee Weapon (Great)'
   | 'Missile Weapon (String)'
   | 'Missile Weapon (Throw)'
   | 'Navigate'
