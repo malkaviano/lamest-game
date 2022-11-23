@@ -44,7 +44,7 @@ export class GameManagerService {
       map((_) => {
         const equipped = this.inventoryService.equipped;
 
-        const items = this.refreshInventory();
+        const items = this.playerInventory();
 
         return { items, equipped };
       })
@@ -106,7 +106,7 @@ export class GameManagerService {
     }
   }
 
-  private refreshInventory(): ArrayView<ActionableItemDefinition> {
+  private playerInventory(): ArrayView<ActionableItemDefinition> {
     const playerItems = this.inventoryService.check('player');
 
     const inventoryView: ActionableItemDefinition[] = [];
