@@ -64,6 +64,34 @@ describe('InventoryService', () => {
 
           expect(service.check('player')).toEqual(new ArrayView([]));
         });
+
+        describe('when another item is equipped', () => {
+          it('should equip new item', () => {
+            service.store('player', weapon1);
+
+            service.store('player', weapon2);
+
+            service.equip(weapon1.name);
+
+            service.equip(weapon2.name);
+
+            expect(service.equipped).toEqual(weapon2);
+          });
+
+          it('should store previous equipped item', () => {
+            service.store('player', weapon1);
+
+            service.store('player', weapon2);
+
+            service.equip(weapon1.name);
+
+            service.equip(weapon2.name);
+
+            expect(service.check('player')).toEqual(
+              new ArrayView([new ItemStorageDefinition(weapon1, 1)])
+            );
+          });
+        });
       });
 
       describe('when item is not in inventory', () => {

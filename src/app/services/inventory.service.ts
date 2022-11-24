@@ -97,6 +97,10 @@ export class InventoryService {
       throw new Error(errorMessages['WRONG-ITEM']);
     }
 
+    if (this.equipped) {
+      this.unequip();
+    }
+
     this.currentEquipped = item;
 
     this.inventoryChanged.next(new InventoryEvent('EQUIP', 'player', item));
