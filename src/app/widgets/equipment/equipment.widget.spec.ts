@@ -8,6 +8,8 @@ import { first } from 'rxjs';
 import { MaterialModule } from '../../../material/material.module';
 import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 import { createActionableDefinition } from '../../definitions/actionable.definition';
+import { DamageDefinition } from '../../definitions/damage.definition';
+import { createDiceRoll } from '../../definitions/dice-roll.definition';
 import { WeaponDefinition } from '../../definitions/weapon.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { EquipmentWidget } from './equipment.widget';
@@ -66,7 +68,8 @@ const actionableItem = new ActionableItemDefinition(
     'sword',
     'Long Sword',
     'Some big sword',
-    'Melee Weapon (Simple)'
+    'Melee Weapon (Simple)',
+    new DamageDefinition(createDiceRoll({ D8: 1 }), 0)
   ),
   equipAction
 );

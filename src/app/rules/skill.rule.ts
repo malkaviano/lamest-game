@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { createDiceRoll } from '../definitions/dice-roll.definition';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
@@ -27,7 +28,7 @@ export class SkillRule implements RuleInterface {
     let result: ResultLiteral = 'NONE';
 
     if (skillValue) {
-      const roll = this.rngService.getRandomInterval(1, 100);
+      const roll = this.rngService.roll(createDiceRoll({ D100: 1 }));
 
       result = roll <= skillValue ? 'SUCCESS' : 'FAILURE';
 

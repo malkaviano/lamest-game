@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { ConsumableDefinition } from '../definitions/consumable.definition';
+import { DamageDefinition } from '../definitions/damage.definition';
+import { createDiceRoll } from '../definitions/dice-roll.definition';
 import { GameItemDefinition } from '../definitions/game-item.definition';
 import { SkillItemDefinition } from '../definitions/skill-item.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
@@ -19,13 +21,15 @@ export class ItemStore {
         'knife',
         'Hunting Knife',
         'A knife used by hunters mostly',
-        'Melee Weapon (Simple)'
+        'Melee Weapon (Simple)',
+        new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
       ),
       halberd: new WeaponDefinition(
         'halberd',
         'Halberd',
         'A big weapon',
-        'Melee Weapon (Great)'
+        'Melee Weapon (Great)',
+        new DamageDefinition(createDiceRoll({ D10: 1 }), 0)
       ),
       firstAid: new ConsumableDefinition(
         'firstAid',

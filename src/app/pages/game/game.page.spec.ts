@@ -23,6 +23,8 @@ import { createActionableDefinition } from '../../definitions/actionable.definit
 import { ActionableEvent } from '../../events/actionable.event';
 import { WeaponDefinition } from '../../definitions/weapon.definition';
 import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
+import { DamageDefinition } from '../../definitions/damage.definition';
+import { createDiceRoll } from '../../definitions/dice-roll.definition';
 
 describe('GamePage', () => {
   let component: GamePage;
@@ -218,12 +220,14 @@ const weapon1 = new WeaponDefinition(
   'sword1',
   'Rusted Sword',
   'Old sword full of rust',
-  'Melee Weapon (Simple)'
+  'Melee Weapon (Simple)',
+  new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
 );
 
 const weapon2 = new WeaponDefinition(
   'sword2',
   'Decent Sword',
   'A good sword, not exceptional',
-  'Melee Weapon (Simple)'
+  'Melee Weapon (Simple)',
+  new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
 );

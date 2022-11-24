@@ -14,21 +14,40 @@ describe('RandomIntService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should generate numbers between 0 and 100', () => {
-    const results: any = {};
+  describe('getRandomInterval', () => {
+    it('should generate numbers between 0 and 100', () => {
+      const results: any = {};
 
-    for (let index = 0; index < 500; index++) {
-      const element = service.getRandomInterval(0, 100);
+      for (let index = 0; index < 500; index++) {
+        const element = service.getRandomInterval(0, 100);
 
-      results[element] = true;
-    }
+        results[element] = true;
+      }
 
-    let final = true;
+      let final = true;
 
-    for (const key in results) {
-      final = final && (results[key] ?? false);
-    }
+      for (const key in results) {
+        final = final && (results[key] ?? false);
+      }
 
-    expect(final).toBe(true);
+      expect(final).toBe(true);
+    });
+  });
+
+  describe('roll', () => {
+    it('return summed result', () => {
+      const result = service.roll({
+        D4: 1,
+        D6: 1,
+        D8: 1,
+        D10: 1,
+        D12: 1,
+        D20: 1,
+        D100: 1,
+      });
+
+      expect(result).toBeGreaterThan(7);
+      expect(result).toBeLessThanOrEqual(160);
+    });
   });
 });

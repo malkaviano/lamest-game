@@ -15,12 +15,15 @@ import { InventoryService } from './inventory.service';
 import { GameLoopService } from './game-loop.service';
 import { ItemStorageDefinition } from '../definitions/item-storage.definition';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
+import { createDiceRoll } from '../definitions/dice-roll.definition';
+import { DamageDefinition } from '../definitions/damage.definition';
 
 const sword = new WeaponDefinition(
   'sword',
   'Sword',
   'That is a sword',
-  'Melee Weapon (Simple)'
+  'Melee Weapon (Simple)',
+  new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
 );
 
 const bubbleGum = new ConsumableDefinition(

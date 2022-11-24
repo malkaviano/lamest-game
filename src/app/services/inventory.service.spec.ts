@@ -1,7 +1,10 @@
 import { TestBed } from '@angular/core/testing';
+
 import { take } from 'rxjs';
-import { when } from 'ts-mockito';
+
 import { ConsumableDefinition } from '../definitions/consumable.definition';
+import { DamageDefinition } from '../definitions/damage.definition';
+import { createDiceRoll } from '../definitions/dice-roll.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { ItemStorageDefinition } from '../definitions/item-storage.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
@@ -332,14 +335,16 @@ const weapon1 = new WeaponDefinition(
   'sword1',
   'Rusted Sword',
   'Old sword full of rust',
-  'Melee Weapon (Simple)'
+  'Melee Weapon (Simple)',
+  new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
 );
 
 const weapon2 = new WeaponDefinition(
   'sword2',
   'Decent Sword',
   'A good sword, not exceptional',
-  'Melee Weapon (Simple)'
+  'Melee Weapon (Simple)',
+  new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
 );
 
 const bubbleGum = new ConsumableDefinition(

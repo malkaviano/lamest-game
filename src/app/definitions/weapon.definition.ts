@@ -1,4 +1,5 @@
 import { SkillNameLiteral } from '../literals/skill-name.literal';
+import { DamageDefinition } from './damage.definition';
 import { SkillItemDefinition } from './skill-item.definition';
 
 export class WeaponDefinition extends SkillItemDefinition {
@@ -6,7 +7,8 @@ export class WeaponDefinition extends SkillItemDefinition {
     name: string,
     label: string,
     description: string,
-    skillName: SkillNameLiteral
+    skillName: SkillNameLiteral,
+    public readonly damage: DamageDefinition
   ) {
     super('WEAPON', name, label, description, skillName);
   }
