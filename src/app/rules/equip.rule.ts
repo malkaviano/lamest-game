@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
+import { RuleInterface } from '../interfaces/rule.interface';
 import { CharacterManagerService } from '../services/character-manager.service';
 import { InventoryService } from '../services/inventory.service';
 import { LoggingService } from '../services/logging.service';
@@ -9,7 +10,7 @@ import { ItemStore } from '../stores/item.store';
 @Injectable({
   providedIn: 'root',
 })
-export class EquipRule {
+export class EquipRule implements RuleInterface {
   constructor(
     private readonly characterManagerService: CharacterManagerService,
     private readonly inventoryService: InventoryService,

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
+import { RuleInterface } from '../interfaces/rule.interface';
 import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SceneRule {
+export class SceneRule implements RuleInterface {
   constructor(
     private readonly narrativeService: NarrativeService,
     private readonly loggingService: LoggingService

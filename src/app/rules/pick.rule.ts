@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
+import { RuleInterface } from '../interfaces/rule.interface';
 import { InventoryService } from '../services/inventory.service';
 import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
@@ -8,7 +9,7 @@ import { NarrativeService } from '../services/narrative.service';
 @Injectable({
   providedIn: 'root',
 })
-export class PickRule {
+export class PickRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly narrativeService: NarrativeService,

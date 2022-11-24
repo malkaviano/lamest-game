@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
+import { RuleInterface } from '../interfaces/rule.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { CharacterManagerService } from '../services/character-manager.service';
 import { LoggingService } from '../services/logging.service';
@@ -10,7 +11,7 @@ import { RandomIntService } from '../services/random-int.service';
 @Injectable({
   providedIn: 'root',
 })
-export class SkillRule {
+export class SkillRule implements RuleInterface {
   constructor(
     private readonly characterManagerService: CharacterManagerService,
     private readonly rngService: RandomIntService,

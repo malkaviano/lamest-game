@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
+import { RuleInterface } from '../interfaces/rule.interface';
 import { EquipRule } from '../rules/equip.rule';
 import { PickRule } from '../rules/pick.rule';
 import { SceneRule } from '../rules/scene.rule';
@@ -12,7 +13,7 @@ import { UnequipRule } from '../rules/unequip.rule';
 })
 export class GameLoopService {
   private readonly dispatcher: {
-    [key: string]: (actionableEvent: ActionableEvent) => void;
+    [key: string]: RuleInterface;
   };
 
   constructor(
@@ -22,19 +23,17 @@ export class GameLoopService {
     unequipRule: UnequipRule,
     sceneRule: SceneRule
   ) {
+    console.log('GG');
     this.dispatcher = {
-      SKILL: skillRule.execute,
-      PICK: pickRule.execute,
-      EQUIP: equipRule.execute,
-      USE: (action: ActionableEvent): void => {
-        console.log(action.actionableDefinition, action.eventId);
-      },
-      UNEQUIP: unequipRule.execute,
-      SCENE: sceneRule.execute,
+      SKILL: skillRule,
+      PICK: pickRule,
+      EQUIP: equipRule,
+      UNEQUIP: unequipRule,
+      SCENE: sceneRule,
     };
   }
 
   public run(action: ActionableEvent): void {
-    this.dispatcher[action.actionableDefinition.actionable](action);
+    this.dispatcher[action.actionableDefinition.actionable].execute(action);
   }
 }
