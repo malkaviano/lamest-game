@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
-import { createDiceRoll } from '../definitions/dice-roll.definition';
+import { createDice } from '../definitions/dice.definition';
 import { GameItemDefinition } from '../definitions/game-item.definition';
 import { SkillItemDefinition } from '../definitions/skill-item.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
@@ -22,19 +22,26 @@ export class ItemStore {
         'Hunting Knife',
         'A knife used by hunters mostly',
         'Melee Weapon (Simple)',
-        new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
+        new DamageDefinition(createDice({ D6: 1 }), 1)
       ),
       halberd: new WeaponDefinition(
         'halberd',
         'Halberd',
         'A big weapon',
         'Melee Weapon (Great)',
-        new DamageDefinition(createDiceRoll({ D10: 1 }), 0)
+        new DamageDefinition(createDice({ D10: 1 }), 0)
       ),
       firstAid: new ConsumableDefinition(
         'firstAid',
         'First Aid Kit',
         'Use to recover HP'
+      ),
+      club: new WeaponDefinition(
+        'club',
+        'Wood stick',
+        'Some rustic weapon',
+        'Melee Weapon (Simple)',
+        new DamageDefinition(createDice({ D4: 1 }), 0)
       ),
     };
   }

@@ -82,11 +82,13 @@ export class InteractiveStore {
           createActionableDefinition('SCENE', 'enterSceneDoor', 'enter'),
         ])
       ),
-      strangeBush: new InteractiveEntity(
-        'strangeBush',
-        'A weird bush',
-        'Try to spot something',
-        new SimpleState([createActionableDefinition('SKILL', 'Spot')])
+      trainingDummy: new InteractiveEntity(
+        'trainingDummy',
+        'Training Dummy',
+        'Try some attack moves here',
+        new SimpleState([
+          createActionableDefinition('ATTACK', 'attack', 'Attack'),
+        ])
       ),
     };
 

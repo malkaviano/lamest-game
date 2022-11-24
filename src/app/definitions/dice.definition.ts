@@ -1,10 +1,10 @@
 import { DiceLiteral } from '../literals/dice.literal';
 
-export type DiceRoll = {
+export type Dice = {
   readonly [key in DiceLiteral]: number;
 };
 
-export const createDiceRoll = (dice: {
+export const createDice = (dice: {
   D4?: number;
   D6?: number;
   D8?: number;

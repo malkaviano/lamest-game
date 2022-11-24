@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { DiceRoll } from '../definitions/dice-roll.definition';
+import { createDice, Dice } from '../definitions/dice.definition';
+import { RollDefinition } from '../definitions/roll.definition';
 import { DiceLiteral } from '../literals/dice.literal';
+import { ResultLiteral } from '../literals/result.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +31,7 @@ export class RandomIntService {
     return Math.trunc(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
   }
 
-  public roll(roll: DiceRoll): number {
+  public roll(roll: Dice): number {
     let acc = 0;
 
     for (const key in roll) {
@@ -47,5 +49,17 @@ export class RandomIntService {
     }
 
     return acc;
+  }
+
+  public checkSkill(skillValue: number): RollDefinition {
+    if (skillValue) {
+      const roll = this.roll(createDice({ D100: 1 }));
+
+      const result = roll <= skillValue ? 'SUCCESS' : 'FAILURE';
+
+      return new RollDefinition(result, roll);
+    }
+
+    return new RollDefinition('FAILURE');
   }
 }

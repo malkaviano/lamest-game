@@ -1,8 +1,5 @@
-import { DiceRoll } from './dice-roll.definition';
+import { Dice } from './dice.definition';
 
 export class DamageDefinition {
-  constructor(
-    public readonly diceRoll: DiceRoll,
-    public readonly fixed: number
-  ) {}
+  constructor(public readonly diceRoll: Dice, public readonly fixed: number) {}
 }

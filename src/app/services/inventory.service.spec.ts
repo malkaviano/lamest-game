@@ -4,7 +4,7 @@ import { take } from 'rxjs';
 
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
-import { createDiceRoll } from '../definitions/dice-roll.definition';
+import { createDice } from '../definitions/dice.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { ItemStorageDefinition } from '../definitions/item-storage.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
@@ -336,7 +336,7 @@ const weapon1 = new WeaponDefinition(
   'Rusted Sword',
   'Old sword full of rust',
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
+  new DamageDefinition(createDice({ D6: 1 }), 0)
 );
 
 const weapon2 = new WeaponDefinition(
@@ -344,7 +344,7 @@ const weapon2 = new WeaponDefinition(
   'Decent Sword',
   'A good sword, not exceptional',
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDiceRoll({ D6: 1 }), 0)
+  new DamageDefinition(createDice({ D6: 1 }), 0)
 );
 
 const bubbleGum = new ConsumableDefinition(

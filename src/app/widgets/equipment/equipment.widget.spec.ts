@@ -9,7 +9,7 @@ import { MaterialModule } from '../../../material/material.module';
 import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 import { createActionableDefinition } from '../../definitions/actionable.definition';
 import { DamageDefinition } from '../../definitions/damage.definition';
-import { createDiceRoll } from '../../definitions/dice-roll.definition';
+import { createDice } from '../../definitions/dice.definition';
 import { WeaponDefinition } from '../../definitions/weapon.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { EquipmentWidget } from './equipment.widget';
@@ -69,7 +69,7 @@ const actionableItem = new ActionableItemDefinition(
     'Long Sword',
     'Some big sword',
     'Melee Weapon (Simple)',
-    new DamageDefinition(createDiceRoll({ D8: 1 }), 0)
+    new DamageDefinition(createDice({ D8: 1 }), 0)
   ),
   equipAction
 );

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { CombatRule } from '../rules/combat.rule';
 import { EquipRule } from '../rules/equip.rule';
 import { PickRule } from '../rules/pick.rule';
 import { SceneRule } from '../rules/scene.rule';
@@ -21,15 +22,16 @@ export class GameLoopService {
     pickRule: PickRule,
     equipRule: EquipRule,
     unequipRule: UnequipRule,
-    sceneRule: SceneRule
+    sceneRule: SceneRule,
+    combatRule: CombatRule
   ) {
-    console.log('GG');
     this.dispatcher = {
       SKILL: skillRule,
       PICK: pickRule,
       EQUIP: equipRule,
       UNEQUIP: unequipRule,
       SCENE: sceneRule,
+      ATTACK: combatRule,
     };
   }
 

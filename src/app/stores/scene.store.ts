@@ -32,7 +32,7 @@ export class SceneStore {
         this.descriptionsStore.descriptions['scene2'],
         new ArrayView([
           this.interactiveStore.interactives['enterSceneDoor'],
-          this.interactiveStore.interactives['strangeBush'],
+          this.interactiveStore.interactives['trainingDummy'],
         ]),
         { enterSceneDoor: 'scene1' }
       ),
