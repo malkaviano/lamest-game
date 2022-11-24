@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { filter, map, Observable } from 'rxjs';
+import { filter, map } from 'rxjs';
 
 import { CharacterManagerService } from '../services/character-manager.service';
 import { GameEventsDefinition } from '../definitions/game-events.definition';
@@ -14,18 +14,12 @@ import {
   createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { GameItemLiteral } from '../literals/game-item.literal';
-import { GameItemDefinition } from '../definitions/game-item.definition';
 import { GameLoopService } from './game-loop.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameManagerService {
-  private readonly playerInventory$: Observable<{
-    items: ArrayView<ActionableItemDefinition>;
-    equipped: GameItemDefinition | null;
-  }>;
-
   public readonly events: GameEventsDefinition;
 
   constructor(
@@ -34,7 +28,7 @@ export class GameManagerService {
     private readonly narrativeService: NarrativeService,
     private readonly inventoryService: InventoryService
   ) {
-    this.playerInventory$ = this.inventoryService.inventoryChanged$.pipe(
+    const observable = this.inventoryService.inventoryChanged$.pipe(
       filter((event) => event.storageName === 'player'),
       map((_) => {
         const equipped = this.inventoryService.equipped;
@@ -49,12 +43,11 @@ export class GameManagerService {
       this.narrativeService.sceneChanged$,
       this.gameLoopService.gameLog$,
       this.characterManagerService.characterChanged$,
-      this.playerInventory$,
-      (action: ActionableEvent) => this.actionableReceived(action)
+      observable
     );
   }
 
-  private actionableReceived(action: ActionableEvent): void {
+  public actionableReceived(action: ActionableEvent): void {
     this.gameLoopService.run(action);
   }
 

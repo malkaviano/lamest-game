@@ -76,7 +76,7 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   actionSelected(action: ActionableEvent): void {
-    this.gameManagerService.events.registerActionableTaken(action);
+    this.gameManagerService.actionableReceived(action);
   }
 
   public get logs(): ArrayView<string> {

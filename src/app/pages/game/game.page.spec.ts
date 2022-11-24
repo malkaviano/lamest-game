@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { instance, mock, when } from 'ts-mockito';
+import { anything, instance, mock, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePage } from './game.page';
@@ -160,17 +160,14 @@ describe('GamePage', () => {
     it('should send an ActionableEvent', () => {
       const event = new ActionableEvent(askAction, 'id1');
 
-      let result: ActionableEvent | null = null;
-
-      when(mockedGameEventsService.registerActionableTaken).thenReturn(
-        (actionableEvent: ActionableEvent) => {
-          result = actionableEvent;
-        }
+      const spy = spyOn(
+        instance(mockedGameManagerService),
+        'actionableReceived'
       );
 
       component.actionSelected(event);
 
-      expect(result).not.toBeNull();
+      expect(spy).toHaveBeenCalled();
     });
   });
 });

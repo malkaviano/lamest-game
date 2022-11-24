@@ -15,7 +15,6 @@ export class GameEventsDefinition {
     public readonly playerInventory$: Observable<{
       items: ArrayView<ActionableItemDefinition>;
       equipped: GameItemDefinition | null;
-    }>,
-    public readonly registerActionableTaken: (action: ActionableEvent) => void
+    }>
   ) {}
 }
