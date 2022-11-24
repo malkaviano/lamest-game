@@ -15,6 +15,7 @@ import {
 } from '../definitions/actionable.definition';
 import { GameItemLiteral } from '../literals/game-item.literal';
 import { GameLoopService } from './game-loop.service';
+import { LoggingService } from './logging.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,8 @@ export class GameManagerService {
     private readonly gameLoopService: GameLoopService,
     private readonly characterManagerService: CharacterManagerService,
     private readonly narrativeService: NarrativeService,
-    private readonly inventoryService: InventoryService
+    private readonly inventoryService: InventoryService,
+    private readonly loggingService: LoggingService
   ) {
     const observable = this.inventoryService.inventoryChanged$.pipe(
       filter((event) => event.storageName === 'player'),
@@ -41,7 +43,7 @@ export class GameManagerService {
 
     this.events = new GameEventsDefinition(
       this.narrativeService.sceneChanged$,
-      this.gameLoopService.gameLog$,
+      this.loggingService.gameLog$,
       this.characterManagerService.characterChanged$,
       observable
     );
