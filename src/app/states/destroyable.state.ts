@@ -5,14 +5,15 @@ import { ActionableState } from './actionable.state';
 export class DestroyableState extends ActionableState {
   constructor(
     stateActions: ActionableDefinition[],
-    private readonly destroyedState: ActionableState,
+    protected readonly destroyedState: ActionableState,
     public readonly hitPoints: number
   ) {
     super('DestroyableState', stateActions);
   }
+
   protected override stateResult(
-    action: ActionableDefinition,
-    result: ResultLiteral,
+    _1: ActionableDefinition,
+    _2: ResultLiteral,
     damageTaken?: number
   ): ActionableState {
     const hp = this.hitPoints - (damageTaken ?? 0);

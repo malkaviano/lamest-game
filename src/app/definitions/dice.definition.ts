@@ -4,15 +4,17 @@ export type Dice = {
   readonly [key in DiceLiteral]: number;
 };
 
-export const createDice = (dice: {
-  D4?: number;
-  D6?: number;
-  D8?: number;
-  D10?: number;
-  D12?: number;
-  D20?: number;
-  D100?: number;
-}) => {
+export const createDice = (
+  dice: {
+    D4?: number;
+    D6?: number;
+    D8?: number;
+    D10?: number;
+    D12?: number;
+    D20?: number;
+    D100?: number;
+  } = {}
+) => {
   return {
     D4: dice['D4'] ?? 0,
     D6: dice['D6'] ?? 0,

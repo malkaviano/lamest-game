@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { DamageDefinition } from '../definitions/damage.definition';
+import { createDice } from '../definitions/dice.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ConversationState } from '../states/conversation.state';
 import { DestroyableState } from '../states/destroyable.state';
 import { DiscardState } from '../states/discard.state';
+import { emptyState } from '../states/empty.state';
+import { EnemyState } from '../states/enemy.state';
 import { SimpleState } from '../states/simple.state';
 import { SkillState } from '../states/skill.state';
 
@@ -87,9 +91,13 @@ export class InteractiveStore {
         'trainingDummy',
         'Training Dummy',
         'Try some attack moves here',
-        new SimpleState([
-          createActionableDefinition('ATTACK', 'attack', 'Attack'),
-        ])
+        new EnemyState(
+          [createActionableDefinition('ATTACK', 'attack', 'Attack')],
+          emptyState,
+          6,
+          new DamageDefinition(createDice(), 1)
+        ),
+        false
       ),
       woodBox: new InteractiveEntity(
         'woodBox',

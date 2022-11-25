@@ -6,4 +6,5 @@ export type StateLiteral =
   | 'SkillState'
   | 'EmptyState'
   | 'DiscardState'
-  | 'DestroyableState';
+  | 'DestroyableState'
+  | 'EnemyState';
