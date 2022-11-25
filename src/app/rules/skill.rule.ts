@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { CharacterManagerService } from '../services/character-manager.service';
+import { CharacterService } from '../services/character.service';
 import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
@@ -12,7 +12,7 @@ import { RandomIntService } from '../services/random-int.service';
 })
 export class SkillRule implements RuleInterface {
   constructor(
-    private readonly characterManagerService: CharacterManagerService,
+    private readonly characterManagerService: CharacterService,
     private readonly rngService: RandomIntService,
     private readonly narrativeService: NarrativeService,
     private readonly loggingService: LoggingService

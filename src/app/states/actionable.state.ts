@@ -16,17 +16,19 @@ export abstract class ActionableState {
 
   public onResult(
     action: ActionableDefinition,
-    result: ResultLiteral
+    result: ResultLiteral,
+    damageTaken?: number
   ): ActionableState {
     if (!this.stateActions.some((a) => a.equals(action))) {
       throw new Error(errorMessages['WRONG-ACTION']);
     }
 
-    return this.stateResult(action, result);
+    return this.stateResult(action, result, damageTaken);
   }
 
   protected abstract stateResult(
     action: ActionableDefinition,
-    result: ResultLiteral
+    result: ResultLiteral,
+    damageTaken?: number
   ): ActionableState;
 }

@@ -32,13 +32,16 @@ export class InteractiveEntity {
 
   public actionSelected(
     selected: ActionableDefinition,
-    result: ResultLiteral
+    result: ResultLiteral,
+    damageTaken?: number
   ): void {
     const oldActions = this.currentState.actions;
 
-    const state = this.currentState.onResult(selected, result);
-
-    this.currentState = state;
+    this.currentState = this.currentState.onResult(
+      selected,
+      result,
+      damageTaken
+    );
 
     const currentActions = this.currentState.actions;
 

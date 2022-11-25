@@ -33,7 +33,9 @@ describe('InteractiveEntity', () => {
 
   describe('when interactive state changes', () => {
     it('push an actionsChanged notification', (done) => {
-      when(mockedState1.onResult(anything(), anyString())).thenReturn(state2);
+      when(
+        mockedState1.onResult(anything(), anyString(), anything())
+      ).thenReturn(state2);
 
       const entity = fakeEntity();
 
@@ -54,7 +56,9 @@ describe('InteractiveEntity', () => {
   describe('when reset is invoked', () => {
     describe('when interactive is resettable', () => {
       it('push an actionsChanged notification with initial action', (done) => {
-        when(mockedState1.onResult(anything(), anyString())).thenReturn(state2);
+        when(
+          mockedState1.onResult(anything(), anyString(), anything())
+        ).thenReturn(state2);
 
         const entity = fakeEntity();
 
@@ -76,7 +80,9 @@ describe('InteractiveEntity', () => {
 
     describe('when interactive is not resettable', () => {
       it('keep current state', (done) => {
-        when(mockedState1.onResult(anything(), anyString())).thenReturn(state2);
+        when(
+          mockedState1.onResult(anything(), anyString(), anything())
+        ).thenReturn(state2);
 
         const entity = fakeEntity(false);
 

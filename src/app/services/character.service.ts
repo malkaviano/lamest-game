@@ -8,7 +8,7 @@ import { RandomCharacterService } from './random-character.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterManagerService {
+export class CharacterService {
   private character: CharacterEntity | null;
 
   private readonly characterChanged: BehaviorSubject<CharacterEntity>;

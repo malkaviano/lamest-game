@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { filter, map } from 'rxjs';
 
-import { CharacterManagerService } from '../services/character-manager.service';
+import { CharacterService } from './character.service';
 import { GameEventsDefinition } from '../definitions/game-events.definition';
 import { NarrativeService } from './narrative.service';
 import { ActionableEvent } from '../events/actionable.event';
@@ -25,7 +25,7 @@ export class GameManagerService {
 
   constructor(
     private readonly gameLoopService: GameLoopService,
-    private readonly characterManagerService: CharacterManagerService,
+    private readonly characterManagerService: CharacterService,
     private readonly narrativeService: NarrativeService,
     private readonly inventoryService: InventoryService,
     private readonly loggingService: LoggingService

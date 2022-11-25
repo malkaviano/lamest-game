@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArrayView } from '../../views/array.view';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 import { ConverterHelper } from '../../helpers/converter.helper';
-import { CharacterManagerService } from '../../services/character-manager.service';
+import { CharacterService } from '../../services/character.service';
 
 @Component({
   selector: 'app-character-page',
@@ -17,7 +17,7 @@ export class CharacterPage implements OnInit {
   public skillsView!: ArrayView<KeyValueDescriptionDefinition>;
 
   constructor(
-    private readonly characterManagerService: CharacterManagerService,
+    private readonly characterManagerService: CharacterService,
     private readonly converterHelper: ConverterHelper
   ) {}
 

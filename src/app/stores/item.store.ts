@@ -38,7 +38,7 @@ export class ItemStore {
       ),
       club: new WeaponDefinition(
         'club',
-        'Wood stick',
+        'Wood Stick',
         'Some rustic weapon',
         'Melee Weapon (Simple)',
         new DamageDefinition(createDice({ D4: 1 }), 0)

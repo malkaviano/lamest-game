@@ -4,10 +4,10 @@ import { ActionableState } from './actionable.state';
 
 export class DiscardState extends ActionableState {
   constructor(stateActions: ActionableDefinition[]) {
-    super('Discard', stateActions);
+    super('DiscardState', stateActions);
   }
 
-  protected stateResult(
+  protected override stateResult(
     action: ActionableDefinition,
     _: ResultLiteral
   ): ActionableState {

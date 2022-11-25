@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { CharacterManagerService } from '../services/character-manager.service';
+import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { LoggingService } from '../services/logging.service';
 import { ItemStore } from '../stores/item.store';
@@ -12,7 +12,7 @@ import { ItemStore } from '../stores/item.store';
 })
 export class EquipRule implements RuleInterface {
   constructor(
-    private readonly characterManagerService: CharacterManagerService,
+    private readonly characterManagerService: CharacterService,
     private readonly inventoryService: InventoryService,
     private readonly itemStore: ItemStore,
     private readonly loggingService: LoggingService

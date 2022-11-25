@@ -7,11 +7,11 @@ import { CharacteristicDefinition } from '../definitions/characteristic.definiti
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
-import { CharacterManagerService } from './character-manager.service';
+import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
 
-describe('CharacterManagerService', () => {
-  let service: CharacterManagerService;
+describe('CharacterService', () => {
+  let service: CharacterService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,7 +29,7 @@ describe('CharacterManagerService', () => {
       .thenReturn(expected)
       .thenReturn(random);
 
-    service = TestBed.inject(CharacterManagerService);
+    service = TestBed.inject(CharacterService);
   });
 
   it('should be created', () => {

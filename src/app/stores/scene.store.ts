@@ -25,6 +25,7 @@ export class SceneStore {
           this.interactiveStore.interactives['npc1'],
           this.interactiveStore.interactives['sceneExitDoor'],
           this.interactiveStore.interactives['upperShelf'],
+          this.interactiveStore.interactives['woodBox'],
         ]),
         { sceneExitDoor: 'scene2' }
       ),

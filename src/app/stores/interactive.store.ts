@@ -4,6 +4,7 @@ import { createActionableDefinition } from '../definitions/actionable.definition
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ConversationState } from '../states/conversation.state';
+import { DestroyableState } from '../states/destroyable.state';
 import { DiscardState } from '../states/discard.state';
 import { SimpleState } from '../states/simple.state';
 import { SkillState } from '../states/skill.state';
@@ -90,6 +91,18 @@ export class InteractiveStore {
           createActionableDefinition('ATTACK', 'attack', 'Attack'),
         ])
       ),
+      woodBox: new InteractiveEntity(
+        'woodBox',
+        'Wood Box',
+        'Old Wood Box',
+        new DestroyableState(
+          [createActionableDefinition('ATTACK', 'attack', 'Attack')],
+          new DiscardState([
+            createActionableDefinition('PICK', 'club', 'Wood Stick'),
+          ]),
+          5
+        )
+      ),
     };
 
     this.usedItems = {
@@ -97,6 +110,9 @@ export class InteractiveStore {
         knife: 1,
         firstAid: 2,
         halberd: 1,
+      },
+      woodBox: {
+        club: 1,
       },
     };
   }

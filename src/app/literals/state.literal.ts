@@ -5,4 +5,5 @@ export type StateLiteral =
   | 'ConversationState'
   | 'SkillState'
   | 'EmptyState'
-  | 'Discard';
+  | 'DiscardState'
+  | 'DestroyableState';

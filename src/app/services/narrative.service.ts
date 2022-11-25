@@ -45,7 +45,8 @@ export class NarrativeService {
 
   public run(
     action: ActionableEvent,
-    result: ResultLiteral
+    result: ResultLiteral,
+    damage?: number
   ): InteractiveEntity {
     if (action.actionableDefinition.actionable === 'SCENE') {
       const nextSceneName = this.currentScene.transitions[action.eventId];
@@ -59,6 +60,6 @@ export class NarrativeService {
       return this.sceneStore.interactiveStore.interactives[action.eventId];
     }
 
-    return this.currentScene.run(action, result);
+    return this.currentScene.run(action, result, damage);
   }
 }

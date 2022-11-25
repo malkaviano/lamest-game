@@ -14,7 +14,8 @@ export class SceneEntity {
 
   public run(
     action: ActionableEvent,
-    result: ResultLiteral
+    result: ResultLiteral,
+    damage?: number
   ): InteractiveEntity {
     const interactive = this.interactives.items.find(
       (i) => i.id === action.eventId
@@ -24,7 +25,7 @@ export class SceneEntity {
       throw new Error(errorMessages['SHOULD-NOT-HAPPEN']);
     }
 
-    interactive.actionSelected(action.actionableDefinition, result);
+    interactive.actionSelected(action.actionableDefinition, result, damage);
 
     return interactive;
   }
