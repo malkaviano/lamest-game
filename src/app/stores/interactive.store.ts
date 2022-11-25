@@ -56,7 +56,7 @@ export class InteractiveStore {
         'Exit Door',
         'Demo Simple Interactable',
         new SimpleState([
-          createActionableDefinition('SCENE', 'sceneExitDoor', 'exit'),
+          createActionableDefinition('SCENE', 'sceneExitDoor', 'Exit'),
         ])
       ),
       upperShelf: new InteractiveEntity(
@@ -80,7 +80,7 @@ export class InteractiveStore {
         'Enter room',
         'Change to another scene',
         new SimpleState([
-          createActionableDefinition('SCENE', 'enterSceneDoor', 'enter'),
+          createActionableDefinition('SCENE', 'enterSceneDoor', 'Enter'),
         ])
       ),
       trainingDummy: new InteractiveEntity(
