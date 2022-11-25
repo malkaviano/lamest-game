@@ -15,7 +15,9 @@ export class SceneRule implements RuleInterface {
   ) {}
 
   public execute(action: ActionableEvent): void {
-    const interactive = this.narrativeService.run(action, 'NONE');
+    const interactive = this.narrativeService.interatives[action.eventId];
+
+    this.narrativeService.changeScene(action);
 
     this.loggingService.log(
       `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`

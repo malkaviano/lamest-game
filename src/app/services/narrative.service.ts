@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
+import { errorMessages } from '../definitions/error-messages.definition';
 
 import { SceneDefinition } from '../definitions/scene.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { SceneEntity } from '../entities/scene.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { ResultLiteral } from '../literals/result.literal';
+import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ItemStore } from '../stores/item.store';
 import { SceneStore } from '../stores/scene.store';
 import { InventoryService } from './inventory.service';
@@ -43,23 +44,27 @@ export class NarrativeService {
     );
   }
 
-  public run(
-    action: ActionableEvent,
-    result: ResultLiteral,
-    damage?: number
-  ): InteractiveEntity {
-    if (action.actionableDefinition.actionable === 'SCENE') {
-      const nextSceneName = this.currentScene.transitions[action.eventId];
+  public get interatives(): KeyValueInterface<InteractiveEntity> {
+    let result: { [key: string]: InteractiveEntity } = {};
 
-      this.currentScene = this.sceneStore.scenes[nextSceneName];
+    return this.currentScene.interactives.items.reduce((acc, i) => {
+      acc[i.id] = i;
 
-      this.currentScene.reset();
+      return acc;
+    }, result);
+  }
 
-      this.sceneChanged.next(this.currentScene);
-
-      return this.sceneStore.interactiveStore.interactives[action.eventId];
+  public changeScene(action: ActionableEvent): void {
+    if (action.actionableDefinition.actionable !== 'SCENE') {
+      throw new Error(errorMessages['INVALID-OPERATION']);
     }
 
-    return this.currentScene.run(action, result, damage);
+    const nextSceneName = this.currentScene.transitions[action.eventId];
+
+    this.currentScene = this.sceneStore.scenes[nextSceneName];
+
+    this.currentScene.reset();
+
+    this.sceneChanged.next(this.currentScene);
   }
 }

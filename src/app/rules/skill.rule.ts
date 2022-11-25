@@ -25,7 +25,9 @@ export class SkillRule implements RuleInterface {
 
     const { roll, result } = this.rngService.checkSkill(skillValue);
 
-    const interactive = this.narrativeService.run(action, result);
+    const interactive = this.narrativeService.interatives[action.eventId];
+
+    interactive.actionSelected(action.actionableDefinition, result);
 
     this.loggingService.log(
       `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`

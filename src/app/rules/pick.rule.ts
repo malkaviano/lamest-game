@@ -24,7 +24,9 @@ export class PickRule implements RuleInterface {
 
     this.inventoryService.store('player', item);
 
-    const interactive = this.narrativeService.run(action, 'NONE');
+    const interactive = this.narrativeService.interatives[action.eventId];
+
+    interactive.actionSelected(action.actionableDefinition, 'NONE');
 
     this.loggingService.log(
       `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`

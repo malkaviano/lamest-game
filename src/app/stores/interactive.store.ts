@@ -101,7 +101,8 @@ export class InteractiveStore {
             createActionableDefinition('PICK', 'club', 'Wood Stick'),
           ]),
           5
-        )
+        ),
+        false
       ),
     };
 

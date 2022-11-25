@@ -37,7 +37,9 @@ export class CombatRule implements RuleInterface {
       damage = this.rngService.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
     }
 
-    const interactive = this.narrativeService.run(action, result, damage);
+    const interactive = this.narrativeService.interatives[action.eventId];
+
+    interactive.actionSelected(action.actionableDefinition, result, damage);
 
     this.loggingService.log(
       `attack: ${interactive.name} USING ${weapon.label}`

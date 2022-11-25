@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { last, take } from 'rxjs';
+import { take } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { errorMessages } from '../definitions/error-messages.definition';
+import { SceneDefinition } from '../definitions/scene.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { SceneEntity } from '../entities/scene.entity';
 import { ActionableEvent } from '../events/actionable.event';
@@ -49,36 +51,39 @@ describe('NarrativeService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('Action received', () => {
+  describe('changeScene', () => {
     describe('when a SCENE is received', () => {
       it('change the current scene', (done) => {
-        service.sceneChanged$.pipe(take(2), last()).subscribe((scene) => {
-          expect(scene).toEqual(entity2);
+        let result: SceneDefinition | undefined;
+
+        service.sceneChanged$.pipe(take(10)).subscribe((scene) => {
+          result = scene;
         });
 
-        service.run(new ActionableEvent(exitDoor, 'sceneExitDoor'), 'NONE');
+        service.changeScene(new ActionableEvent(exitDoor, 'sceneExitDoor'));
 
         done();
-      });
 
-      it('return scene trigger interactive', () => {
-        const result = service.run(
-          new ActionableEvent(exitDoor, 'sceneExitDoor'),
-          'NONE'
-        );
-
-        expect(result).toEqual(sceneInteractive);
+        expect(result).toEqual(entity2);
       });
     });
 
     describe('when a NON SCENE is received', () => {
-      it('return interactive with state change', () => {
-        const result = service.run(
-          new ActionableEvent(skill, 'athleticism'),
-          'SUCCESS'
-        );
+      it('throw INVALID OPERATION', () => {
+        expect(() =>
+          service.changeScene(new ActionableEvent(skill, 'athleticism'))
+        ).toThrowError(errorMessages['INVALID-OPERATION']);
+      });
+    });
+  });
 
-        expect(result.id).toEqual('athleticism');
+  describe('interatives', () => {
+    it('return interactives from current scene', () => {
+      const result = service.interatives;
+
+      expect(result).toEqual({
+        sceneExitDoor: sceneInteractive,
+        athleticism: skillInteractive,
       });
     });
   });

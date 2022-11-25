@@ -12,24 +12,6 @@ export class SceneEntity {
     public readonly transitions: KeyValueInterface<string>
   ) {}
 
-  public run(
-    action: ActionableEvent,
-    result: ResultLiteral,
-    damage?: number
-  ): InteractiveEntity {
-    const interactive = this.interactives.items.find(
-      (i) => i.id === action.eventId
-    );
-
-    if (!interactive) {
-      throw new Error(errorMessages['SHOULD-NOT-HAPPEN']);
-    }
-
-    interactive.actionSelected(action.actionableDefinition, result, damage);
-
-    return interactive;
-  }
-
   public reset(): void {
     this.interactives.items.forEach((i) => i.reset());
   }
