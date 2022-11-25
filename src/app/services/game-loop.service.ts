@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { CombatRule } from '../rules/combat.rule';
+import { AttackRule } from '../rules/attack.rule';
+import { DefenseRule } from '../rules/defense.rule';
 import { EquipRule } from '../rules/equip.rule';
 import { PickRule } from '../rules/pick.rule';
 import { SceneRule } from '../rules/scene.rule';
 import { SkillRule } from '../rules/skill.rule';
 import { UnequipRule } from '../rules/unequip.rule';
+import { NarrativeService } from './narrative.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +25,8 @@ export class GameLoopService {
     equipRule: EquipRule,
     unequipRule: UnequipRule,
     sceneRule: SceneRule,
-    combatRule: CombatRule
+    combatRule: AttackRule,
+    private readonly defenseRule: DefenseRule
   ) {
     this.dispatcher = {
       SKILL: skillRule,
@@ -37,5 +40,7 @@ export class GameLoopService {
 
   public run(action: ActionableEvent): void {
     this.dispatcher[action.actionableDefinition.actionable].execute(action);
+
+    this.defenseRule.execute(action);
   }
 }

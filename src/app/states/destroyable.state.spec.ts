@@ -18,6 +18,14 @@ describe('DestroyableState', () => {
       expect(result).toEqual(state2);
     });
   });
+
+  describe('when no damage is taken', () => {
+    it('return DestroyableState with same HP', () => {
+      const result = state.onResult(attackAction, 'SUCCESS');
+
+      expect(result).toEqual(state);
+    });
+  });
 });
 
 const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');

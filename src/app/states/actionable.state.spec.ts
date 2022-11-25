@@ -3,6 +3,7 @@ import {
   createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
+import { ActionableEvent } from '../events/actionable.event';
 import { ActionableState } from './actionable.state';
 
 const askAction1 = createActionableDefinition('ASK', 'ask1', 'May I help?');
@@ -29,6 +30,12 @@ describe('ActionableState', () => {
           errorMessages['WRONG-ACTION']
         );
       });
+    });
+  });
+
+  describe('damage', () => {
+    it('return null', () => {
+      expect(state.damage(new ActionableEvent(askAction1, 'id1'))).toBeNull();
     });
   });
 });

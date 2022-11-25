@@ -12,7 +12,7 @@ import { RandomIntService } from '../services/random-int.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CombatRule implements RuleInterface {
+export class AttackRule implements RuleInterface {
   constructor(
     private readonly characterManagerService: CharacterService,
     private readonly inventoryService: InventoryService,

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CombatRule } from './combat.rule';
+import { DefenseRule } from './defense.rule';
 
-describe('CombatRule', () => {
-  let service: CombatRule;
+describe('DefenseRule', () => {
+  let service: DefenseRule;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CombatRule);
+    service = TestBed.inject(DefenseRule);
   });
 
   it('should be created', () => {

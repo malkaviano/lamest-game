@@ -3,6 +3,8 @@ import { ArrayView } from '../views/array.view';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
 import { ResultLiteral } from '../literals/result.literal';
+import { DamageDefinition } from '../definitions/damage.definition';
+import { ActionableEvent } from '../events/actionable.event';
 
 export abstract class ActionableState {
   constructor(
@@ -24,6 +26,10 @@ export abstract class ActionableState {
     }
 
     return this.stateResult(action, result, damageTaken);
+  }
+
+  public damage(_: ActionableEvent): DamageDefinition | null {
+    return null;
   }
 
   protected abstract stateResult(

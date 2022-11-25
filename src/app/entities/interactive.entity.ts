@@ -4,6 +4,8 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { ResultLiteral } from '../literals/result.literal';
+import { DamageDefinition } from '../definitions/damage.definition';
+import { ActionableEvent } from '../events/actionable.event';
 
 export class InteractiveEntity {
   private readonly initialState: ActionableState;
@@ -56,5 +58,9 @@ export class InteractiveEntity {
 
       this.actionsChanged.next(this.currentState.actions);
     }
+  }
+
+  public damagePlayer(playerAction: ActionableEvent): DamageDefinition | null {
+    return this.currentState.damage(playerAction);
   }
 }

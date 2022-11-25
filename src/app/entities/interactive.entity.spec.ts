@@ -5,6 +5,9 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
+import { ActionableEvent } from '../events/actionable.event';
+import { DamageDefinition } from '../definitions/damage.definition';
+import { createDice } from '../definitions/dice.definition';
 
 beforeEach(() => {
   reset(mockedState1);
@@ -14,6 +17,10 @@ beforeEach(() => {
   when(mockedState1.actions).thenReturn(new ArrayView([action]));
 
   when(mockedState2.actions).thenReturn(new ArrayView([pick]));
+
+  when(mockedState3.actions).thenReturn(new ArrayView([action, pick]));
+
+  when(mockedState3.damage(anything())).thenReturn(damage);
 });
 
 describe('InteractiveEntity', () => {
@@ -102,6 +109,28 @@ describe('InteractiveEntity', () => {
       });
     });
   });
+
+  describe('damagePlayer', () => {
+    describe('when state do not produce damage', () => {
+      it('return null', () => {
+        const result = fakeEntity().damagePlayer(
+          new ActionableEvent(action, 'id1')
+        );
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe('when state produces damage', () => {
+      it('return DamageDefinition', () => {
+        const result = fakeEntity(false, state3).damagePlayer(
+          new ActionableEvent(action, 'id1')
+        );
+
+        expect(result).toEqual(damage);
+      });
+    });
+  });
 });
 
 const pick = new ActionableDefinition('PICK', 'name1', 'label1');
@@ -112,15 +141,24 @@ const mockedState1 = mock<ActionableState>();
 
 const mockedState2 = mock<ActionableState>();
 
+const mockedState3 = mock<ActionableState>();
+
 const state1 = instance(mockedState1);
 
 const state2 = instance(mockedState2);
 
-const fakeEntity = (resettable: boolean = true) =>
+const state3 = instance(mockedState3);
+
+const fakeEntity = (
+  resettable: boolean = true,
+  state: ActionableState = state1
+) =>
   new InteractiveEntity(
     'id1',
     'SomeEntity',
     'Testing Entity',
-    state1,
+    state,
     resettable
   );
+
+const damage = new DamageDefinition(createDice({}), 10);
