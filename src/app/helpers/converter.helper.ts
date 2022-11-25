@@ -55,13 +55,15 @@ export class ConverterHelper {
     );
 
     const skills = new ArrayView(
-      Object.entries(character.skills).map(([key, value]) => {
-        return new KeyValueDescriptionDefinition(
-          key,
-          value.toString(),
-          skillDefinitions[key as SkillNameLiteral].description
-        );
-      })
+      Object.entries(character.skills)
+        .map(([key, value]) => {
+          return new KeyValueDescriptionDefinition(
+            key,
+            value.toString(),
+            skillDefinitions[key as SkillNameLiteral].description
+          );
+        })
+        .sort((a, b) => (a.key < b.key ? -1 : 1))
     );
 
     return new CharacterValuesDefinition(

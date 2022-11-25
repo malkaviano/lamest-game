@@ -98,7 +98,7 @@ const expected = new CharacterValuesDefinition(
     new KeyValueDescriptionDefinition('First Aid', '47', ''),
     new KeyValueDescriptionDefinition('Listen', '32', ''),
     new KeyValueDescriptionDefinition('Persuade', '72', ''),
-    new KeyValueDescriptionDefinition('Spot', '52', ''),
     new KeyValueDescriptionDefinition('Research', '47', ''),
+    new KeyValueDescriptionDefinition('Spot', '52', ''),
   ])
 );
