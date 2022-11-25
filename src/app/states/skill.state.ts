@@ -15,16 +15,19 @@ export class SkillState extends ActionableState {
   protected override stateResult(
     _1: ActionableDefinition,
     result: ResultLiteral
-  ): ActionableState {
+  ): { state: ActionableState; log?: string } {
     switch (result) {
       case 'SUCCESS':
-        return this.successState;
+        return { state: this.successState };
       case 'FAILURE':
-        return this.maximumTries - 1 > 0
-          ? this.clone(this.maximumTries - 1)
-          : emptyState;
+        return {
+          state:
+            this.maximumTries - 1 > 0
+              ? this.clone(this.maximumTries - 1)
+              : emptyState,
+        };
       default:
-        return this;
+        return { state: this };
     }
   }
 

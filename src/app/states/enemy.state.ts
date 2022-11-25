@@ -41,21 +41,28 @@ export class EnemyState extends ActionableState {
     action: ActionableDefinition,
     result: ResultLiteral,
     damageTaken?: number | undefined
-  ): ActionableState {
-    this.destroyableState = this.destroyableState.onResult(
+  ): { state: ActionableState; log?: string } {
+    const { state, log } = this.destroyableState.onResult(
       action,
       result,
       damageTaken
-    ) as DestroyableState;
+    );
 
-    return this.hitPoints > 0
-      ? new EnemyState(
+    this.destroyableState = state as DestroyableState;
+
+    if (this.hitPoints > 0) {
+      return {
+        state: new EnemyState(
           this.actions.items,
           this.killedState,
           this.hitPoints,
           this.damage,
           this.attackSkillValue
-        )
-      : this.destroyableState;
+        ),
+        log,
+      };
+    }
+
+    return { state: this.destroyableState, log };
   }
 }

@@ -43,7 +43,7 @@ describe('InteractiveEntity', () => {
     it('push an actionsChanged notification', (done) => {
       when(
         mockedState1.onResult(anything(), anyString(), anything())
-      ).thenReturn(state2);
+      ).thenReturn({ state: state2 });
 
       const entity = fakeEntity();
 
@@ -66,7 +66,7 @@ describe('InteractiveEntity', () => {
       it('push an actionsChanged notification with initial action', (done) => {
         when(
           mockedState1.onResult(anything(), anyString(), anything())
-        ).thenReturn(state2);
+        ).thenReturn({ state: state2 });
 
         const entity = fakeEntity();
 
@@ -90,7 +90,7 @@ describe('InteractiveEntity', () => {
       it('keep current state', (done) => {
         when(
           mockedState1.onResult(anything(), anyString(), anything())
-        ).thenReturn(state2);
+        ).thenReturn({ state: state2 });
 
         const entity = fakeEntity(false);
 

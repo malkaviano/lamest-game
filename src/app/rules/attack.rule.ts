@@ -27,32 +27,39 @@ export class AttackRule implements RuleInterface {
     const skillValue =
       this.characterManagerService.currentCharacter.skills[weapon.skillName];
 
-    const { roll, result } = this.rngService.checkSkill(skillValue);
+    if (skillValue) {
+      const { roll, result } = this.rngService.checkSkill(skillValue);
 
-    let damage: number | undefined;
+      const interactive = this.narrativeService.interatives[action.eventId];
 
-    if (result === 'SUCCESS') {
-      const weaponDamage = weapon.damage;
+      this.loggingService.log(
+        `attack: ${interactive.name} USING ${weapon.label}`
+      );
 
-      damage = this.rngService.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
-    }
+      this.loggingService.log(
+        `rolled: ${weapon.skillName} -> ${roll} -> ${result}`
+      );
 
-    const interactive = this.narrativeService.interatives[action.eventId];
+      let damage: number | undefined;
 
-    interactive.actionSelected(action.actionableDefinition, result, damage);
+      if (result === 'SUCCESS') {
+        const weaponDamage = weapon.damage;
 
-    this.loggingService.log(
-      `attack: ${interactive.name} USING ${weapon.label}`
-    );
+        damage =
+          this.rngService.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
 
-    const rollLog = roll
-      ? `rolled: ${weapon.skillName} -> ${roll} -> ${result}`
-      : 'automatic failure, not skill points';
+        this.loggingService.log(`attack: ${weapon.label} for ${damage} damage`);
+      }
 
-    this.loggingService.log(rollLog);
+      const log = interactive.actionSelected(
+        action.actionableDefinition,
+        result,
+        damage
+      );
 
-    if (damage) {
-      this.loggingService.log(`attack: ${weapon.label} did ${damage} damage`);
+      if (log) {
+        this.loggingService.log(`${interactive.name}: ${log}`);
+      }
     }
   }
 }

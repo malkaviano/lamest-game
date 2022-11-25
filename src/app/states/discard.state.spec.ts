@@ -8,7 +8,7 @@ describe('DiscardState', () => {
 
       const expected = new DiscardState([knifeAction, firstAidAction]);
 
-      expect(result).toEqual(expected);
+      expect(result).toEqual({ state: expected });
     });
   });
 });

@@ -23,7 +23,7 @@ export abstract class ActionableState {
     action: ActionableDefinition,
     result: ResultLiteral,
     damageTaken?: number
-  ): ActionableState {
+  ): { state: ActionableState; log?: string } {
     if (!this.stateActions.some((a) => a.equals(action))) {
       throw new Error(errorMessages['WRONG-ACTION']);
     }
@@ -35,5 +35,5 @@ export abstract class ActionableState {
     action: ActionableDefinition,
     result: ResultLiteral,
     damageTaken?: number
-  ): ActionableState;
+  ): { state: ActionableState; log?: string };
 }

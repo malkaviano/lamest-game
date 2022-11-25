@@ -35,12 +35,14 @@ export class ConversationState extends ActionableState {
   protected override stateResult(
     action: ActionableDefinition,
     result: ResultLiteral
-  ): ActionableState {
+  ): { state: ActionableState; log?: string } {
     const response = this.currentMessages[action.name];
 
-    return new ConversationState(
-      this.messageMap,
-      response.change ?? this.currentMap
-    );
+    return {
+      state: new ConversationState(
+        this.messageMap,
+        response.change ?? this.currentMap
+      ),
+    };
   }
 }

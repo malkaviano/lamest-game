@@ -10,7 +10,7 @@ export class SimpleState extends ActionableState {
   protected override stateResult(
     _1: ActionableDefinition,
     _2: ResultLiteral
-  ): ActionableState {
-    return this;
+  ): { state: ActionableState; log?: string } {
+    return { state: this };
   }
 }

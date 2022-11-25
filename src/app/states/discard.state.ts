@@ -10,11 +10,11 @@ export class DiscardState extends ActionableState {
   protected override stateResult(
     action: ActionableDefinition,
     _: ResultLiteral
-  ): ActionableState {
+  ): { state: ActionableState; log?: string } {
     const actions = this.actions.items;
 
     const index = actions.indexOf(action);
 
-    return new DiscardState(actions.filter((_, i) => i !== index));
+    return { state: new DiscardState(actions.filter((_, i) => i !== index)) };
   }
 }

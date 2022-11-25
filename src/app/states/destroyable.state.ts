@@ -15,13 +15,21 @@ export class DestroyableState extends ActionableState {
     _1: ActionableDefinition,
     _2: ResultLiteral,
     damageTaken?: number
-  ): ActionableState {
-    const hp = this.hitPoints - (damageTaken ?? 0);
+  ): { state: ActionableState; log?: string } {
+    const dmg = damageTaken ?? 0;
+
+    const hp = this.hitPoints - dmg;
 
     if (hp > 0) {
-      return new DestroyableState(this.stateActions, this.destroyedState, hp);
+      return {
+        state: new DestroyableState(this.stateActions, this.destroyedState, hp),
+        log: `received ${dmg} damage`,
+      };
     }
 
-    return this.destroyedState;
+    return {
+      state: this.destroyedState,
+      log: `received ${dmg} damage, it is destroyed`,
+    };
   }
 }

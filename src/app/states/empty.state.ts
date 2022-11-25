@@ -7,8 +7,8 @@ class EmptyState extends ActionableState {
 
   // Unreachable code
   /* istanbul ignore next */
-  protected override stateResult(): ActionableState {
-    return this;
+  protected override stateResult(): { state: ActionableState; log?: string } {
+    return { state: this };
   }
 }
 

@@ -7,7 +7,7 @@ describe('SimpleState', () => {
       it('return same state"', () => {
         const result = state.onResult(pickAction, 'FAILURE');
 
-        expect(result).toEqual(state);
+        expect(result).toEqual({ state });
       });
     });
   });

@@ -39,20 +39,24 @@ export class InteractiveEntity {
     selected: ActionableDefinition,
     result: ResultLiteral,
     damageTaken?: number
-  ): void {
+  ): string | undefined {
     const oldActions = this.currentState.actions;
 
-    this.currentState = this.currentState.onResult(
+    const { state, log } = this.currentState.onResult(
       selected,
       result,
       damageTaken
     );
+
+    this.currentState = state;
 
     const currentActions = this.currentState.actions;
 
     if (!oldActions.equals(currentActions)) {
       this.actionsChanged.next(currentActions);
     }
+
+    return log;
   }
 
   public reset(): void {

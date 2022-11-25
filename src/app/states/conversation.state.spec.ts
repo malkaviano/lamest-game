@@ -15,7 +15,9 @@ describe('ConversationState', () => {
       it('keep context', () => {
         const result = state.onResult(helloAction, 'NONE');
 
-        expect(result.actions).toEqual(new ArrayView([helloAction, dieAction]));
+        expect(result.state.actions).toEqual(
+          new ArrayView([helloAction, dieAction])
+        );
       });
     });
 
@@ -23,7 +25,7 @@ describe('ConversationState', () => {
       it('change context', () => {
         const result = state.onResult(dieAction, 'NONE');
 
-        expect(result.actions).toEqual(new ArrayView([sorryAction]));
+        expect(result.state.actions).toEqual(new ArrayView([sorryAction]));
       });
     });
   });

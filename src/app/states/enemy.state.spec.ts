@@ -10,7 +10,10 @@ describe('EnemyState', () => {
       it('return empty state', () => {
         const result = state().onResult(attackAction, 'SUCCESS', 12);
 
-        expect(result).toEqual(emptyState);
+        expect(result).toEqual({
+          state: emptyState,
+          log: 'received 12 damage, it is destroyed',
+        });
       });
     });
 
@@ -18,7 +21,7 @@ describe('EnemyState', () => {
       it('return EnemyState with remaining HP', () => {
         const result = state().onResult(attackAction, 'SUCCESS', 6);
 
-        expect(result).toEqual(state2());
+        expect(result).toEqual({ state: state2(), log: 'received 6 damage' });
       });
     });
 
@@ -26,7 +29,7 @@ describe('EnemyState', () => {
       it('return EnemyState with same HP', () => {
         const result = state().onResult(attackAction, 'SUCCESS');
 
-        expect(result).toEqual(state());
+        expect(result).toEqual({ state: state(), log: 'received 0 damage' });
       });
     });
   });

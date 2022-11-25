@@ -3,6 +3,7 @@ import {
   createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
+import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
 
 describe('ActionableState', () => {
@@ -34,7 +35,11 @@ const pickAction = createActionableDefinition(
 const unknownAction = createActionableDefinition('CLOSE', 'error', 'unknown');
 
 const state = new (class extends ActionableState {
-  protected stateResult(_: ActionableDefinition): ActionableState {
+  protected override stateResult(
+    _1: ActionableDefinition,
+    _2: ResultLiteral,
+    _3?: number
+  ): { state: ActionableState; log?: string } {
     throw new Error('SHOULD NOT HAPPEN');
   }
 })('SimpleState', [askAction1, askAction2, pickAction]);

@@ -7,11 +7,9 @@ import { SkillState } from './skill.state';
 describe('SkillState', () => {
   describe('when action succeeds', () => {
     it('return an empty state"', () => {
-      const state = state1();
+      const { state } = state1().onResult(pickAction, 'SUCCESS');
 
-      const result = state.onResult(pickAction, 'SUCCESS');
-
-      expect(result).toEqual(successState);
+      expect(state).toEqual(successState);
     });
   });
 
@@ -22,7 +20,7 @@ describe('SkillState', () => {
 
         const result = state.onResult(pickAction, 'FAILURE');
 
-        expect(result).toEqual(state2());
+        expect(result.state).toEqual(state2());
       });
     });
 
@@ -30,9 +28,9 @@ describe('SkillState', () => {
       it('return an empty state"', () => {
         let state = state1();
 
-        state = state.onResult(pickAction, 'FAILURE');
+        state = state.onResult(pickAction, 'FAILURE').state;
 
-        state = state.onResult(pickAction, 'FAILURE');
+        state = state.onResult(pickAction, 'FAILURE').state;
 
         expect(state).toEqual(emptyState);
       });
@@ -45,7 +43,7 @@ describe('SkillState', () => {
 
       const result = state.onResult(pickAction, 'NONE');
 
-      expect(result).toEqual(state);
+      expect(result).toEqual({ state });
     });
   });
 });
