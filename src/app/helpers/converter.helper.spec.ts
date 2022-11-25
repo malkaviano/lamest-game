@@ -24,7 +24,6 @@ const character = new CharacterEntity(
   new IdentityDefinition(
     'name',
     'Hunter',
-    'FEMALE',
     'ADULT',
     'HUMAN',
     'AVERAGE',
@@ -57,7 +56,6 @@ const expected = new CharacterValuesDefinition(
       'Hunter',
       'Character profession'
     ),
-    new KeyValueDescriptionDefinition('GENDER', 'FEMALE', 'Character gender'),
     new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
     new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
     new KeyValueDescriptionDefinition('HEIGHT', 'AVERAGE', 'Character height'),

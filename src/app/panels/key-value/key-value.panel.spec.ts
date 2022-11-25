@@ -25,6 +25,8 @@ describe('KeyValuePanel', () => {
 
     fixture.componentInstance.items = new ArrayView(characteristics());
 
+    fixture.componentInstance.tag = 'test';
+
     fixture.detectChanges();
   });
 
@@ -34,7 +36,7 @@ describe('KeyValuePanel', () => {
 
   it(`should have panel with key values`, () => {
     const widget = fixture.debugElement.query(
-      By.css(`[data-testid="key-value-panel"]`)
+      By.css(`[data-testid="key-value-panel-test"]`)
     );
 
     expect(widget.children.length).toEqual(7);

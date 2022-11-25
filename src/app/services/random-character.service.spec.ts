@@ -77,7 +77,6 @@ const prepareMock = () => {
 const fakeIdentity = new IdentityDefinition(
   'Some Name',
   'Police Detective',
-  'MALE',
   'YOUNG',
   'HUMAN',
   'SHORT',

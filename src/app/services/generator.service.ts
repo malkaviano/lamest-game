@@ -6,7 +6,6 @@ import { CharacteristicDefinition } from '../definitions/characteristic.definiti
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { professions } from '../definitions/profession.definition';
 import { AgeLiteral, ages } from '../literals/age.literal';
-import { GenderLiteral, genders } from '../literals/gender.literal';
 import { HeightLiteral, heights } from '../literals/height.literal';
 import { ProfessionLiteral } from '../literals/profession.literal';
 import { RaceLiteral, races } from '../literals/race.literal';
@@ -35,7 +34,6 @@ export class GeneratorService {
     return new IdentityDefinition(
       this.name(),
       this.profession(),
-      this.gender(),
       this.age(),
       this.race(),
       this.height(),
@@ -65,15 +63,6 @@ export class GeneratorService {
     const index = this.randomIntService.getRandomInterval(0, ages.length - 1);
 
     return ages[index];
-  }
-
-  private gender(): GenderLiteral {
-    const index = this.randomIntService.getRandomInterval(
-      0,
-      genders.length - 1
-    );
-
-    return genders[index];
   }
 
   private race(): RaceLiteral {

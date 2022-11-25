@@ -30,7 +30,7 @@ describe('CharacterPage', () => {
   });
 
   it('should have identity', () => {
-    expect(component.identityView.items.length).toBe(7);
+    expect(component.identityView.items.length).toBe(6);
   });
 
   it('should have attributes', () => {

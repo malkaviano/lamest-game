@@ -7,7 +7,6 @@ import { CharacteristicDefinition } from '../definitions/characteristic.definiti
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { professions } from '../definitions/profession.definition';
 import { ages } from '../literals/age.literal';
-import { genders } from '../literals/gender.literal';
 import { heights } from '../literals/height.literal';
 import { races } from '../literals/race.literal';
 import { weights } from '../literals/weight.literal';
@@ -69,7 +68,6 @@ describe('GeneratorService', () => {
 
       expect(identity.profession).toEqual(expectedIdentity.profession);
       expect(identity.age).toEqual(expectedIdentity.age);
-      expect(identity.gender).toEqual(expectedIdentity.gender);
       expect(identity.race).toEqual(expectedIdentity.race);
       expect(identity.height).toEqual(expectedIdentity.height);
       expect(identity.weight).toEqual(expectedIdentity.weight);
@@ -91,7 +89,6 @@ const expectedCharacteristics = new CharacteristicsDefinition(
 const expectedIdentity = new IdentityDefinition(
   'Alice Shields',
   professions.items[0],
-  genders[0],
   ages[0],
   races[0],
   heights[0],

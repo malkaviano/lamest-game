@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { anything, instance, mock, when } from 'ts-mockito';
+import { instance, mock, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePage } from './game.page';
@@ -34,6 +34,7 @@ describe('GamePage', () => {
     await TestBed.configureTestingModule({
       imports: [MatSnackBarModule, NoopAnimationsModule],
       declarations: [GamePage],
+      // Unit Test page, child won't be rendered
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -78,48 +79,37 @@ describe('GamePage', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have identity values`, () => {
-    const widget = fixture.debugElement.query(
-      By.css(`[data-testid="character"]`)
-    );
+  it(`should have identity values panel`, () => {
+    const result = fixture.debugElement
+      .query(By.css(`[data-testid="identity"]`))
+      .query(By.css(`app-key-value-panel`));
 
-    const result = widget.query(By.css(`[data-testid="identity"]`)).children
-      .length;
-
-    expect(result).toEqual(7);
+    expect(result).toBeDefined();
   });
 
-  it(`should have characteristic values`, () => {
-    const widget = fixture.debugElement.query(
-      By.css(`[data-testid="character"]`)
-    );
+  it(`should have characteristic values panel`, () => {
+    const result = fixture.debugElement
+      .query(By.css(`[data-testid="characteristics"]`))
+      .query(By.css(`app-key-value-panel`));
 
-    const result = widget.query(By.css(`[data-testid="characteristics"]`))
-      .children.length;
-
-    expect(result).toEqual(7);
+    expect(result).toBeDefined();
   });
 
-  it(`should have derived attributes values`, () => {
-    const widget = fixture.debugElement.query(
-      By.css(`[data-testid="character"]`)
-    );
+  it(`should have derived attributes values panel`, () => {
+    const result = fixture.debugElement
+      .query(By.css(`[data-testid="derived-attributes"]`))
+      .query(By.css(`app-key-value-panel`));
 
-    const result = widget.query(By.css(`[data-testid="derived-attributes"]`))
-      .children.length;
-
-    expect(result).toEqual(3);
+    expect(result).toBeDefined();
   });
 
   it(`should have skills values`, () => {
-    const widget = fixture.debugElement.query(
-      By.css(`[data-testid="character"]`)
-    );
+    const result = fixture.debugElement
+      .query(By.css(`[data-testid="character"]`))
+      .query(By.css(`[data-testid="skills"]`))
+      .query(By.css(`app-key-value-panel`));
 
-    const result = widget.query(By.css(`[data-testid="skills"]`)).children
-      .length;
-
-    expect(result).toEqual(2);
+    expect(result).toBeDefined();
   });
 
   it(`should have description`, () => {
@@ -178,7 +168,6 @@ const characterEntity = new CharacterEntity(
   new IdentityDefinition(
     'name',
     'Hunter',
-    'FEMALE',
     'ADULT',
     'HUMAN',
     'AVERAGE',

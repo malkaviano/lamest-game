@@ -37,7 +37,6 @@ describe('CharacterEntity', () => {
         const identity = new IdentityDefinition(
           'Some Name',
           'Police Detective',
-          'FEMALE',
           'VETERAN',
           'HUMAN',
           'TALL',
@@ -110,7 +109,6 @@ describe('CharacterEntity', () => {
 const fakeIdentity = new IdentityDefinition(
   'Some Name',
   'Police Detective',
-  'MALE',
   'YOUNG',
   'HUMAN',
   'SHORT',

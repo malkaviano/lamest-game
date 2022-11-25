@@ -71,7 +71,6 @@ const expected = new CharacterEntity(
   new IdentityDefinition(
     'name',
     'Hunter',
-    'FEMALE',
     'ADULT',
     'HUMAN',
     'AVERAGE',
@@ -118,7 +117,6 @@ const random = new CharacterEntity(
   new IdentityDefinition(
     'name',
     'Doctor',
-    'MALE',
     'ADULT',
     'HUMAN',
     'AVERAGE',
