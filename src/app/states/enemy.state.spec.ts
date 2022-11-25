@@ -1,7 +1,6 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { emptyState } from './empty.state';
 import { EnemyState } from './enemy.state';
 
@@ -32,11 +31,9 @@ describe('EnemyState', () => {
     });
   });
 
-  describe('damage', () => {
-    it('return damage with fixed value 1', () => {
-      expect(state().damage(new ActionableEvent(attackAction, 'id1'))).toEqual(
-        damage
-      );
+  describe('attack', () => {
+    it('return attack with skill value 25 and damage 1', () => {
+      expect(state().attack).toEqual(expected);
     });
   });
 });
@@ -45,6 +42,11 @@ const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');
 
 const damage = new DamageDefinition(createDice(), 1);
 
-const state = () => new EnemyState([attackAction], emptyState, 10, damage);
+const expected = {
+  skillValue: 25,
+  damage,
+};
 
-const state2 = () => new EnemyState([attackAction], emptyState, 4, damage);
+const state = () => new EnemyState([attackAction], emptyState, 10, damage, 25);
+
+const state2 = () => new EnemyState([attackAction], emptyState, 4, damage, 25);

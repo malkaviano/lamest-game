@@ -95,7 +95,8 @@ export class InteractiveStore {
           [createActionableDefinition('ATTACK', 'attack', 'Attack')],
           emptyState,
           6,
-          new DamageDefinition(createDice(), 1)
+          new DamageDefinition(createDice(), 1),
+          30
         ),
         false
       ),

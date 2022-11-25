@@ -5,7 +5,6 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
-import { ActionableEvent } from '../events/actionable.event';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 
@@ -20,7 +19,9 @@ beforeEach(() => {
 
   when(mockedState3.actions).thenReturn(new ArrayView([action, pick]));
 
-  when(mockedState3.damage(anything())).thenReturn(damage);
+  when(mockedState1.attack).thenReturn(null);
+
+  when(mockedState3.attack).thenReturn({ skillValue: 15, damage });
 });
 
 describe('InteractiveEntity', () => {
@@ -113,9 +114,7 @@ describe('InteractiveEntity', () => {
   describe('damagePlayer', () => {
     describe('when state do not produce damage', () => {
       it('return null', () => {
-        const result = fakeEntity().damagePlayer(
-          new ActionableEvent(action, 'id1')
-        );
+        const result = fakeEntity().attack;
 
         expect(result).toBeNull();
       });
@@ -123,11 +122,9 @@ describe('InteractiveEntity', () => {
 
     describe('when state produces damage', () => {
       it('return DamageDefinition', () => {
-        const result = fakeEntity(false, state3).damagePlayer(
-          new ActionableEvent(action, 'id1')
-        );
+        const result = fakeEntity(false, state3).attack;
 
-        expect(result).toEqual(damage);
+        expect(result).toEqual({ skillValue: 15, damage });
       });
     });
   });

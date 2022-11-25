@@ -21,26 +21,36 @@ export class DefenseRule implements RuleInterface {
   public execute(action: ActionableEvent): void {
     Object.entries(this.narrativeService.interatives).forEach(
       ([_, interactive]) => {
-        const damage = interactive.damagePlayer(action);
+        const attack = interactive.attack;
 
-        const { result } = this.rngService.checkSkill(
-          this.characterService.currentCharacter.skills['Dodge']
-        );
+        if (attack) {
+          const { skillValue, damage } = attack;
 
-        if (damage) {
-          this.loggingService.log(`${interactive.name} attacks Player`);
+          let { result: enemyResult } = this.rngService.checkSkill(skillValue);
 
-          if (result === 'FAILURE') {
-            const damageAmount =
-              this.rngService.roll(damage.diceRoll) + damage.fixed;
+          const enemyLog = enemyResult === 'SUCCESS' ? 'hit' : 'missed';
 
-            this.loggingService.log(
-              `${interactive.name} did ${damageAmount} damage to Player`
+          this.loggingService.log(
+            `${interactive.name} attacks Player: ${enemyLog}`
+          );
+
+          if (enemyResult === 'SUCCESS') {
+            const { result } = this.rngService.checkSkill(
+              this.characterService.currentCharacter.skills['Dodge']
             );
-          } else {
-            this.loggingService.log(
-              `dodge: Player avoided ${interactive.name} attack`
-            );
+
+            if (result === 'FAILURE') {
+              const damageAmount =
+                this.rngService.roll(damage.diceRoll) + damage.fixed;
+
+              this.loggingService.log(
+                `${interactive.name} did ${damageAmount} damage to Player`
+              );
+            } else {
+              this.loggingService.log(
+                `dodge: Player avoided ${interactive.name} attack`
+              );
+            }
           }
         }
       }

@@ -1,6 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
 import { DestroyableState } from './destroyable.state';
@@ -12,7 +11,8 @@ export class EnemyState extends ActionableState {
     stateActions: ActionableDefinition[],
     protected readonly killedState: ActionableState,
     hitPoints: number,
-    protected readonly damageDefinition: DamageDefinition
+    protected readonly damage: DamageDefinition,
+    protected readonly attackSkillValue: number
   ) {
     super('EnemyState', stateActions);
 
@@ -25,6 +25,16 @@ export class EnemyState extends ActionableState {
 
   public get hitPoints(): number {
     return this.destroyableState.hitPoints;
+  }
+
+  public override get attack(): {
+    skillValue: number;
+    damage: DamageDefinition;
+  } | null {
+    return {
+      skillValue: this.attackSkillValue,
+      damage: this.damage,
+    };
   }
 
   public override stateResult(
@@ -43,12 +53,9 @@ export class EnemyState extends ActionableState {
           this.actions.items,
           this.killedState,
           this.hitPoints,
-          this.damageDefinition
+          this.damage,
+          this.attackSkillValue
         )
       : this.destroyableState;
-  }
-
-  public override damage(_: ActionableEvent): DamageDefinition | null {
-    return this.damageDefinition;
   }
 }
