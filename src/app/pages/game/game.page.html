@@ -7,28 +7,24 @@
     </div>
     <div class="main-box vertical-scrollable" data-testid="character">
       <div data-testid="identity">
-        <app-key-value-window
-          *ngFor="let keyValue of characterValues.identity.items"
-          [keyValue]="keyValue"
-        ></app-key-value-window>
+        <app-key-value-panel
+          [items]="characterValues.identity"
+        ></app-key-value-panel>
       </div>
       <div data-testid="characteristics">
-        <app-key-value-window
-          *ngFor="let keyValue of characterValues.characteristics.items"
-          [keyValue]="keyValue"
-        ></app-key-value-window>
+        <app-key-value-panel
+          [items]="characterValues.characteristics"
+        ></app-key-value-panel>
       </div>
       <div data-testid="derived-attributes">
-        <app-key-value-window
-          *ngFor="let keyValue of characterValues.derivedAttributes.items"
-          [keyValue]="keyValue"
-        ></app-key-value-window>
+        <app-key-value-panel
+          [items]="characterValues.derivedAttributes"
+        ></app-key-value-panel>
       </div>
       <div data-testid="skills">
-        <app-key-value-window
-          *ngFor="let keyValue of characterValues.skills.items"
-          [keyValue]="keyValue"
-        ></app-key-value-window>
+        <app-key-value-panel
+          [items]="characterValues.skills"
+        ></app-key-value-panel>
       </div>
     </div>
   </div>
