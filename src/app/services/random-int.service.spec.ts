@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RollDefinition } from '../definitions/roll.definition';
+import { ResultLiteral } from '../literals/result.literal';
 
 import { RandomIntService } from './random-int.service';
 
@@ -64,9 +65,18 @@ describe('RandomIntService', () => {
     describe('when skill value was above 0', () => {
       describe('when roll is superior skill value', () => {
         it('return result and roll value', () => {
-          const result = service.checkSkill(10);
+          const result = new Set<ResultLiteral>();
 
-          expect(result.roll).toBeDefined();
+          for (let index = 0; index < 10; index++) {
+            result.add(service.checkSkill(50).result);
+          }
+
+          const expected = new Set<ResultLiteral>();
+
+          expected.add('FAILURE');
+          expected.add('SUCCESS');
+
+          expect(result).toEqual(expected);
         });
       });
     });
