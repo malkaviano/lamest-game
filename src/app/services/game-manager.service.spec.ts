@@ -29,12 +29,13 @@ const sword = new WeaponDefinition(
 const bubbleGum = new ConsumableDefinition(
   'bubbleGum',
   'Bubble Gum',
-  'That is a bubble gum'
+  'That is a bubble gum',
+  1
 );
 
 const actionEquip = createActionableDefinition('EQUIP', 'equip', 'Equip');
 
-const actionUse = createActionableDefinition('USE', 'use', 'Use');
+const actionUse = createActionableDefinition('CONSUME', 'consume', 'Consume');
 
 describe('GameManagerService', () => {
   let service: GameManagerService;
@@ -69,7 +70,7 @@ describe('GameManagerService', () => {
   describe('when player inventory changes', () => {
     [
       {
-        invEvent: new InventoryEvent('USE', 'player', bubbleGum),
+        invEvent: new InventoryEvent('CONSUME', 'player', bubbleGum),
         expected: new ActionableItemDefinition(bubbleGum, actionUse),
         item: bubbleGum,
       },

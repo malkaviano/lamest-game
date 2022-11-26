@@ -152,6 +152,44 @@ describe('CharacterEntity', () => {
 
       done();
 
+      expect(result).toEqual(-6);
+    });
+  });
+
+  describe('healing player', () => {
+    describe('when heal received goes over maximum HP', () => {
+      it('return healed 4 Hit Points and become full health', () => {
+        const result = character().healed(4);
+
+        expect(result).toEqual('healed 4 Hit Points and become full health');
+      });
+
+      it('return HP equal maximum HP', () => {
+        const char = character();
+
+        char.damaged(2);
+
+        char.healed(4);
+
+        expect(char.derivedAttributes.hp.value).toEqual(9);
+      });
+    });
+
+    it('should emit an event', (done) => {
+      let result: number | undefined;
+
+      const char = character();
+
+      char.hpChanged$.pipe(take(10)).subscribe((event) => {
+        result = event;
+      });
+
+      char.damaged(3);
+
+      char.healed(5);
+
+      done();
+
       expect(result).toEqual(3);
     });
   });

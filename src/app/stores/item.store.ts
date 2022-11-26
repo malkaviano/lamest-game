@@ -34,7 +34,9 @@ export class ItemStore {
       firstAid: new ConsumableDefinition(
         'firstAid',
         'First Aid Kit',
-        'Use to recover HP'
+        'Use to recover HP',
+        4,
+        'First Aid'
       ),
       club: new WeaponDefinition(
         'club',
@@ -43,16 +45,18 @@ export class ItemStore {
         'Melee Weapon (Simple)',
         new DamageDefinition(createDice({ D4: 1 }), 0)
       ),
+      bubbleGum: new ConsumableDefinition(
+        'bubbleGum',
+        'Bubble Gum',
+        'Use to recover HP',
+        1
+      ),
     };
   }
 
   public itemSkill(itemName: string): SkillNameLiteral | null {
     const item = this.items[itemName];
 
-    if (item.hasOwnProperty('skillName')) {
-      return (item as SkillItemDefinition).skillName;
-    }
-
-    return null;
+    return (item as SkillItemDefinition).skillName ?? null;
   }
 }

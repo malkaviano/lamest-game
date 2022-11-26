@@ -350,5 +350,6 @@ const weapon2 = new WeaponDefinition(
 const bubbleGum = new ConsumableDefinition(
   'bubbleGum',
   'Bubble Gum',
-  'Refreshing'
+  'Refreshing',
+  1
 );

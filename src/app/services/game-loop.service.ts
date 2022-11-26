@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { AttackRule } from '../rules/attack.rule';
+import { ConsumeRule } from '../rules/consume.rule';
 import { DefenseRule } from '../rules/defense.rule';
 import { EquipRule } from '../rules/equip.rule';
 import { PickRule } from '../rules/pick.rule';
@@ -27,6 +28,7 @@ export class GameLoopService {
     unequipRule: UnequipRule,
     sceneRule: SceneRule,
     combatRule: AttackRule,
+    consumableRule: ConsumeRule,
     private readonly defenseRule: DefenseRule,
     private readonly characterService: CharacterService
   ) {
@@ -37,6 +39,7 @@ export class GameLoopService {
       UNEQUIP: unequipRule,
       SCENE: sceneRule,
       ATTACK: combatRule,
+      CONSUME: consumableRule,
     };
   }
 

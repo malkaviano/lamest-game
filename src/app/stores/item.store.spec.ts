@@ -24,7 +24,7 @@ describe('ItemStore', () => {
 
     describe('when item did not have skill requirement', () => {
       it('return skill name', () => {
-        const result = service.itemSkill('firstAid');
+        const result = service.itemSkill('bubbleGum');
 
         expect(result).toBeNull();
       });

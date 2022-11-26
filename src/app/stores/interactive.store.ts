@@ -73,7 +73,6 @@ export class InteractiveStore {
             createActionableDefinition('PICK', 'knife', 'Hunting Knife'),
             createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
             createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
-            createActionableDefinition('PICK', 'halberd', 'Halberd'),
           ]),
           2
         ),
@@ -134,16 +133,28 @@ export class InteractiveStore {
           createActionableDefinition('SCENE', 'corridorDoor', 'Enter'),
         ])
       ),
+      table: new InteractiveEntity(
+        'table',
+        'Table',
+        'Common table',
+        new DiscardState([
+          createActionableDefinition('PICK', 'halberd', 'Halberd'),
+          createActionableDefinition('PICK', 'bubbleGum', 'Bubble Gum'),
+        ])
+      ),
     };
 
     this.usedItems = {
       upperShelf: {
         knife: 1,
         firstAid: 2,
-        halberd: 1,
       },
       woodBox: {
         club: 1,
+      },
+      table: {
+        halberd: 1,
+        bubbleGum: 1,
       },
     };
   }

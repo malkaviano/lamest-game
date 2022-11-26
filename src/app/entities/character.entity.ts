@@ -73,11 +73,7 @@ export class CharacterEntity {
   }
 
   public damaged(damage: number): string {
-    const oldHP = this.currentHP;
-
-    this.currentHP -= damage;
-
-    this.currentHP = this.clamp(this.currentHP, 0, this.maximumHP);
+    this.modifyHealth(-damage);
 
     let log = `received ${damage} damage`;
 
@@ -85,11 +81,31 @@ export class CharacterEntity {
       log += ' and was killed';
     }
 
-    if (oldHP !== this.currentHP) {
-      this.hpChanged.next(this.currentHP);
+    return log;
+  }
+
+  public healed(healed: number): string {
+    this.modifyHealth(healed);
+
+    let log = `healed ${healed} Hit Points`;
+
+    if (this.currentHP === this.maximumHP) {
+      log += ' and become full health';
     }
 
     return log;
+  }
+
+  private modifyHealth(modified: number): void {
+    const oldHP = this.currentHP;
+
+    this.currentHP += modified;
+
+    this.currentHP = this.clamp(this.currentHP, 0, this.maximumHP);
+
+    if (oldHP !== this.currentHP) {
+      this.hpChanged.next(this.currentHP - oldHP);
+    }
   }
 
   // TODO: Move this to helper

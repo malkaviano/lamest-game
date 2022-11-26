@@ -1,1 +1,6 @@
-export type InventoryLiteral = 'TAKE' | 'STORE' | 'EQUIP' | 'UNEQUIP' | 'USE';
+export type InventoryLiteral =
+  | 'TAKE'
+  | 'STORE'
+  | 'EQUIP'
+  | 'UNEQUIP'
+  | 'CONSUME';

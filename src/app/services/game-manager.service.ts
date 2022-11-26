@@ -79,6 +79,6 @@ export class GameManagerService {
       return createActionableDefinition('EQUIP', 'equip', 'Equip');
     }
 
-    return createActionableDefinition('USE', 'use', 'Use');
+    return createActionableDefinition('CONSUME', 'consume', 'Consume');
   }
 }
