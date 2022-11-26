@@ -29,7 +29,7 @@ export class DestroyableState extends ActionableState {
 
     return {
       state: this.destroyedState,
-      log: `received ${dmg} damage, it is destroyed`,
+      log: `received ${dmg} damage and was destroyed`,
     };
   }
 }
