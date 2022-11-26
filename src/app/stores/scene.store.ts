@@ -24,14 +24,23 @@ export class SceneStore {
           this.interactiveStore.interactives['sceneExitDoor'],
           this.interactiveStore.interactives['upperShelf'],
           this.interactiveStore.interactives['woodBox'],
+          this.interactiveStore.interactives['corridorDoor'],
         ]),
-        { sceneExitDoor: 'scene2' }
+        { sceneExitDoor: 'scene2', corridorDoor: 'scene3' }
       ),
       scene2: new SceneEntity(
         this.descriptionsStore.descriptions['scene2'],
         new ArrayView([
           this.interactiveStore.interactives['enterSceneDoor'],
           this.interactiveStore.interactives['trainingDummy'],
+        ]),
+        { enterSceneDoor: 'scene1' }
+      ),
+      scene3: new SceneEntity(
+        this.descriptionsStore.descriptions['scene3'],
+        new ArrayView([
+          this.interactiveStore.interactives['enterSceneDoor'],
+          this.interactiveStore.interactives['zombie'],
         ]),
         { enterSceneDoor: 'scene1' }
       ),

@@ -9,6 +9,7 @@ import { PickRule } from '../rules/pick.rule';
 import { SceneRule } from '../rules/scene.rule';
 import { SkillRule } from '../rules/skill.rule';
 import { UnequipRule } from '../rules/unequip.rule';
+import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
 
 @Injectable({
@@ -26,7 +27,8 @@ export class GameLoopService {
     unequipRule: UnequipRule,
     sceneRule: SceneRule,
     combatRule: AttackRule,
-    private readonly defenseRule: DefenseRule
+    private readonly defenseRule: DefenseRule,
+    private readonly characterService: CharacterService
   ) {
     this.dispatcher = {
       SKILL: skillRule,
@@ -39,8 +41,10 @@ export class GameLoopService {
   }
 
   public run(action: ActionableEvent): void {
-    this.dispatcher[action.actionableDefinition.actionable].execute(action);
+    if (this.characterService.currentCharacter.derivedAttributes.hp.value > 0) {
+      this.dispatcher[action.actionableDefinition.actionable].execute(action);
 
-    this.defenseRule.execute(action);
+      this.defenseRule.execute(action);
+    }
   }
 }

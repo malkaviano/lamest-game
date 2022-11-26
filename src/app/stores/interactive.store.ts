@@ -57,16 +57,16 @@ export class InteractiveStore {
       ),
       sceneExitDoor: new InteractiveEntity(
         'sceneExitDoor',
-        'Exit Door',
-        'Demo Simple Interactable',
+        'Outside Door',
+        'Need some fresh air?',
         new SimpleState([
           createActionableDefinition('SCENE', 'sceneExitDoor', 'Exit'),
         ])
       ),
       upperShelf: new InteractiveEntity(
         'upperShelf',
-        'Upper Shelf',
-        'Demo failing a skill with 2 tries',
+        'Shelf',
+        'Very high on the wall',
         new SkillState(
           createActionableDefinition('SKILL', 'Athleticism'),
           new DiscardState([
@@ -82,7 +82,7 @@ export class InteractiveStore {
       enterSceneDoor: new InteractiveEntity(
         'enterSceneDoor',
         'Enter room',
-        'Change to another scene',
+        'Change to main room',
         new SimpleState([
           createActionableDefinition('SCENE', 'enterSceneDoor', 'Enter'),
         ])
@@ -112,6 +112,27 @@ export class InteractiveStore {
           5
         ),
         false
+      ),
+      zombie: new InteractiveEntity(
+        'zombie',
+        'Nasty Zombie',
+        'What the frack is that?',
+        new EnemyState(
+          [createActionableDefinition('ATTACK', 'attack', 'Attack')],
+          emptyState,
+          10,
+          new DamageDefinition(createDice({ D6: 1 }), 1),
+          45
+        ),
+        false
+      ),
+      corridorDoor: new InteractiveEntity(
+        'corridorDoor',
+        'Corridor',
+        'Change to corridor',
+        new SimpleState([
+          createActionableDefinition('SCENE', 'corridorDoor', 'Enter'),
+        ])
       ),
     };
 
