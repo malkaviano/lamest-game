@@ -43,9 +43,14 @@ export class DefenseRule implements RuleInterface {
               const damageAmount =
                 this.rngService.roll(damage.diceRoll) + damage.fixed;
 
+              const log =
+                this.characterService.currentCharacter.damaged(damageAmount);
+
               this.loggingService.log(
                 `${interactive.name} did ${damageAmount} damage to Player`
               );
+
+              this.loggingService.log(`player: ${log}`);
             } else {
               this.loggingService.log(
                 `dodge: Player avoided ${interactive.name} attack`

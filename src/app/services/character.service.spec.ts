@@ -9,6 +9,7 @@ import { CharacterEntity } from '../entities/character.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
+import { take } from 'rxjs';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -32,8 +33,36 @@ describe('CharacterService', () => {
     service = TestBed.inject(CharacterService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  describe('character changed events', () => {
+    describe('on creation', () => {
+      it('should emit and event', (done) => {
+        let result: CharacterEntity | undefined;
+
+        service.characterChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        done();
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when character takes damage', () => {
+      it('should emit and event', (done) => {
+        let result: CharacterEntity | undefined;
+
+        service.characterChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        service.currentCharacter.damaged(4);
+
+        done();
+
+        expect(result?.derivedAttributes.hp.value).toEqual(8);
+      });
+    });
   });
 
   describe('when generating a random character', () => {

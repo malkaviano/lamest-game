@@ -5,17 +5,18 @@ import { CharacteristicDefinition } from '../definitions/characteristic.definiti
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { CharacterEntity } from './character.entity';
+import { take } from 'rxjs';
 
 describe('CharacterEntity', () => {
   describe('Calculating Derived Attributes', () => {
     it('return HP 9, PP 13, MOV 10', () => {
-      expect(character.derivedAttributes).toEqual(expectedDerivedAttributes);
+      expect(character().derivedAttributes).toEqual(expectedDerivedAttributes);
     });
   });
 
   describe('Applying characteristic value to related skill', () => {
     it('return Appraise 12 and Dodge 32', () => {
-      expect(character.skills).toEqual(expectedSkills);
+      expect(character().skills).toEqual(expectedSkills);
     });
   });
 
@@ -28,7 +29,7 @@ describe('CharacterEntity', () => {
           fakeSkills
         );
 
-        expect(character.copy()).toEqual(copied);
+        expect(character().copy()).toEqual(copied);
       });
     });
 
@@ -49,7 +50,7 @@ describe('CharacterEntity', () => {
           fakeSkills
         );
 
-        expect(character.copy({ identity })).toEqual(copied);
+        expect(character().copy({ identity })).toEqual(copied);
       });
     });
 
@@ -71,7 +72,7 @@ describe('CharacterEntity', () => {
           fakeSkills
         );
 
-        expect(character.copy({ characteristics })).toEqual(copied);
+        expect(character().copy({ characteristics })).toEqual(copied);
       });
     });
 
@@ -89,19 +90,69 @@ describe('CharacterEntity', () => {
           skills
         );
 
-        expect(character.copy({ skills })).toEqual(copied);
+        expect(character().copy({ skills })).toEqual(copied);
       });
     });
   });
 
   describe('All skills', () => {
     it('return all skills with characteristics applied', () => {
-      const result = character.skills;
+      const result = character().skills;
 
       expect(result).toEqual({
         Appraise: 12,
         Dodge: 32,
       });
+    });
+  });
+
+  describe('taking damage', () => {
+    describe('when damage is equal or higher than HP', () => {
+      it('return received 12 damage and was killed', () => {
+        const result = character().damaged(12);
+
+        expect(result).toEqual('received 12 damage and was killed');
+      });
+
+      it('return HP = 0', () => {
+        const char = character();
+
+        char.damaged(12);
+
+        expect(char.derivedAttributes.hp.value).toEqual(0);
+      });
+    });
+
+    describe('when damage is lesser than HP', () => {
+      it('return received 6 damage', () => {
+        const result = character().damaged(6);
+
+        expect(result).toEqual('received 6 damage');
+      });
+
+      it('return HP = 3', () => {
+        const char = character();
+
+        char.damaged(6);
+
+        expect(char.derivedAttributes.hp.value).toEqual(3);
+      });
+    });
+
+    it('should emit an event', (done) => {
+      let result: number | undefined;
+
+      const char = character();
+
+      char.hpChanged$.pipe(take(10)).subscribe((event) => {
+        result = event;
+      });
+
+      char.damaged(6);
+
+      done();
+
+      expect(result).toEqual(3);
     });
   });
 });
@@ -136,11 +187,8 @@ const expectedDerivedAttributes = new DerivedAttributesDefinition(
   new DerivedAttributeDefinition('MOV', 10)
 );
 
-const character = new CharacterEntity(
-  fakeIdentity,
-  fakeCharacteristics,
-  fakeSkills
-);
+const character = () =>
+  new CharacterEntity(fakeIdentity, fakeCharacteristics, fakeSkills);
 
 const expectedSkills = {
   Appraise: 12,

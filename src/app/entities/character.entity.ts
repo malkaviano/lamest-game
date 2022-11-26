@@ -5,24 +5,45 @@ import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { skillDefinitions } from '../definitions/skill.definition';
 import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
+import { Observable, Subject } from 'rxjs';
 
 export class CharacterEntity {
+  private readonly maximumHP: number;
+
+  private readonly maximumPP: number;
+
+  private currentHP: number;
+
+  private currentPP: number;
+
+  private readonly hpChanged: Subject<number>;
+
+  public readonly hpChanged$: Observable<number>;
+
   constructor(
     public readonly identity: IdentityDefinition,
     public readonly characteristics: CharacteristicsDefinition,
     private readonly mSkills: Map<SkillNameLiteral, number>
-  ) {}
-
-  public get derivedAttributes(): DerivedAttributesDefinition {
-    const hp = Math.trunc(
+  ) {
+    this.maximumHP = Math.trunc(
       (this.characteristics.con.value + this.characteristics.siz.value) / 2
     );
 
-    const pp = this.characteristics.pow.value;
+    this.maximumPP = this.characteristics.pow.value;
 
+    this.currentHP = this.maximumHP;
+
+    this.currentPP = this.maximumPP;
+
+    this.hpChanged = new Subject();
+
+    this.hpChanged$ = this.hpChanged.asObservable();
+  }
+
+  public get derivedAttributes(): DerivedAttributesDefinition {
     return new DerivedAttributesDefinition(
-      new DerivedAttributeDefinition('HP', hp),
-      new DerivedAttributeDefinition('PP', pp),
+      new DerivedAttributeDefinition('HP', this.currentHP),
+      new DerivedAttributeDefinition('PP', this.currentPP),
       new DerivedAttributeDefinition('MOV', 10)
     );
   }
@@ -49,5 +70,30 @@ export class CharacterEntity {
       values.characteristics ?? this.characteristics,
       values.skills ?? this.mSkills
     );
+  }
+
+  public damaged(damage: number): string {
+    const oldHP = this.currentHP;
+
+    this.currentHP -= damage;
+
+    this.currentHP = this.clamp(this.currentHP, 0, this.maximumHP);
+
+    let log = `received ${damage} damage`;
+
+    if (this.currentHP === 0) {
+      log += ' and was killed';
+    }
+
+    if (oldHP !== this.currentHP) {
+      this.hpChanged.next(this.currentHP);
+    }
+
+    return log;
+  }
+
+  // TODO: Move this to helper
+  private clamp(num: number, min: number, max: number): number {
+    return Math.min(Math.max(num, min), max);
   }
 }
