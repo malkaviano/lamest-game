@@ -9,7 +9,7 @@ describe('DestroyableState', () => {
 
       expect(result).toEqual({
         state: discardedState,
-        log: 'received 12 damage, it is destroyed',
+        log: 'received 12 damage and was destroyed',
       });
     });
   });

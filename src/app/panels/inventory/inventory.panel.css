@@ -1,0 +1,14 @@
+.border-pink {
+  border: 2px dotted rgb(216, 112, 207);
+}
+
+.flex-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.panel-item {
+  padding: 5px 5px;
+  margin: 2px 2px;
+}

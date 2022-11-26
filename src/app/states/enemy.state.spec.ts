@@ -12,7 +12,7 @@ describe('EnemyState', () => {
 
         expect(result).toEqual({
           state: emptyState,
-          log: 'received 12 damage, it is destroyed',
+          log: 'received 12 damage and was destroyed',
         });
       });
     });

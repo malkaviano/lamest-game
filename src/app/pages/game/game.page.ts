@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TransitionCheckState } from '@angular/material/checkbox';
-import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 
+import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
 import { GameItemDefinition } from '../../definitions/game-item.definition';
-import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { ConverterHelper } from '../../helpers/converter.helper';
@@ -21,13 +19,13 @@ import { ArrayView } from '../../views/array.view';
 export class GamePage implements OnInit, OnDestroy {
   private readonly gameLogs: string[];
 
-  scene!: SceneDefinition;
+  public scene: SceneDefinition;
 
-  characterValues!: CharacterValuesDefinition;
+  public characterValues: CharacterValuesDefinition;
 
-  inventory: ActionableItemDefinition[];
+  public inventory: ActionableItemDefinition[];
 
-  equipped: GameItemDefinition | null;
+  public equipped: GameItemDefinition | null;
 
   constructor(
     private readonly gameManagerService: GameManagerService,
@@ -39,6 +37,15 @@ export class GamePage implements OnInit, OnDestroy {
     this.inventory = [];
 
     this.equipped = null;
+
+    this.characterValues = new CharacterValuesDefinition(
+      new ArrayView([]),
+      new ArrayView([]),
+      new ArrayView([]),
+      new ArrayView([])
+    );
+
+    this.scene = new SceneDefinition(new ArrayView([]), new ArrayView([]));
   }
 
   ngOnDestroy(): void {
@@ -75,7 +82,7 @@ export class GamePage implements OnInit, OnDestroy {
     );
   }
 
-  actionSelected(action: ActionableEvent): void {
+  informActionSelected(action: ActionableEvent): void {
     this.gameManagerService.actionableReceived(action);
   }
 

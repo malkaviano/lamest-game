@@ -1,0 +1,11 @@
+<div class="border-pink">
+  <app-equipped-widget
+    [equipped]="equipped"
+    (onActionSelected)="actionSelected.emit($event)"
+  ></app-equipped-widget>
+</div>
+<app-equipment-widget
+  *ngFor="let equipment of inventory"
+  [equipment]="equipment"
+  (onActionSelected)="actionSelected.emit($event)"
+></app-equipment-widget>

@@ -13,6 +13,9 @@ import { TextAreaWindow } from './windows/text-area/text-area.window';
 import { KeyValueWindow } from './windows/key-value/key-value.window';
 import { EquipmentWidget } from './widgets/equipment/equipment.widget';
 import { EquippedWidget } from './widgets/equipped/equipped.widget';
+import { GameLayout } from './layouts/game/game.layout';
+import { InteractivePanelComponent } from './panels/interactive/interactive.panel';
+import { InventoryPanel } from './panels/inventory/inventory.panel';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { EquippedWidget } from './widgets/equipped/equipped.widget';
     KeyValueWindow,
     EquipmentWidget,
     EquippedWidget,
+    GameLayout,
+    InteractivePanelComponent,
+    InventoryPanel,
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { By } from '@angular/platform-browser';
 
 import { instance, mock, when } from 'ts-mockito';
 import { of } from 'rxjs';
@@ -19,7 +18,10 @@ import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
 import { GameManagerService } from '../../services/game-manager.service';
 import { GameEventsDefinition } from '../../definitions/game-events.definition';
-import { createActionableDefinition } from '../../definitions/actionable.definition';
+import {
+  ActionableDefinition,
+  createActionableDefinition,
+} from '../../definitions/actionable.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { WeaponDefinition } from '../../definitions/weapon.definition';
 import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
@@ -80,14 +82,8 @@ describe('GamePage', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have identity values panel`, () => {
-    const result = fixture.debugElement
-      .query(By.css(`[data-testid="identity"]`))
-      .query(By.css(`app-key-value-panel`));
-
-    expect(result.properties['panelName']).toEqual('identity');
-
-    expect(result.properties['items']).toEqual(
+  it(`should have identity values`, () => {
+    expect(component.characterValues.identity).toEqual(
       new ArrayView([
         new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
         new KeyValueDescriptionDefinition(
@@ -111,14 +107,8 @@ describe('GamePage', () => {
     );
   });
 
-  it(`should have characteristic values panel`, () => {
-    const result = fixture.debugElement
-      .query(By.css(`[data-testid="characteristics"]`))
-      .query(By.css(`app-key-value-panel`));
-
-    expect(result.properties['panelName']).toEqual('characteristics');
-
-    expect(result.properties['items']).toEqual(
+  it(`should have characteristic values`, () => {
+    expect(component.characterValues.characteristics).toEqual(
       new ArrayView([
         new KeyValueDescriptionDefinition(
           'STR',
@@ -151,14 +141,8 @@ describe('GamePage', () => {
     );
   });
 
-  it(`should have derived attributes values panel`, () => {
-    const result = fixture.debugElement
-      .query(By.css(`[data-testid="derived-attributes"]`))
-      .query(By.css(`app-key-value-panel`));
-
-    expect(result.properties['panelName']).toEqual('derived-attributes');
-
-    expect(result.properties['items']).toEqual(
+  it(`should have derived attributes values`, () => {
+    expect(component.characterValues.derivedAttributes).toEqual(
       new ArrayView([
         new KeyValueDescriptionDefinition(
           'HP',
@@ -180,14 +164,7 @@ describe('GamePage', () => {
   });
 
   it(`should have skills values`, () => {
-    const result = fixture.debugElement
-      .query(By.css(`[data-testid="character"]`))
-      .query(By.css(`[data-testid="skills"]`))
-      .query(By.css(`app-key-value-panel`));
-
-    expect(result.properties['panelName']).toEqual('skills');
-
-    expect(result.properties['items']).toEqual(
+    expect(component.characterValues.skills).toEqual(
       new ArrayView([
         new KeyValueDescriptionDefinition('Appraise', '12', ''),
         new KeyValueDescriptionDefinition(
@@ -200,39 +177,59 @@ describe('GamePage', () => {
   });
 
   it(`should have description`, () => {
-    const result = fixture.debugElement.query(
-      By.css('[data-testid="description"]')
+    expect(component.scene.description).toEqual(
+      new ArrayView(['this is a test', 'okay okay'])
     );
-
-    expect(result).not.toBeNull();
-
-    expect(component.scene.description.items.length).toEqual(2);
   });
 
-  it(`should have interactibles`, () => {
-    const result = fixture.debugElement.query(
-      By.css('[data-testid="interactables"]')
+  it(`should have interactives`, () => {
+    expect(component.scene.interactives).toEqual(
+      new ArrayView([
+        new InteractiveEntity(
+          'id1',
+          'props1',
+          'This is props1',
+          new SimpleState([askAction])
+        ),
+      ])
     );
-
-    expect(result.children.length).toEqual(1);
   });
 
   it(`should have action log`, () => {
-    const result = fixture.debugElement.query(By.css('[data-testid="log"]'));
-
-    expect(result).not.toBeNull();
-
-    expect(component.logs.items.length).toEqual(3);
+    expect(component.logs).toEqual(
+      new ArrayView(['GG', 'This is not happening', 'OMG'])
+    );
   });
 
   it(`should have inventory`, () => {
-    const result = fixture.debugElement.query(
-      By.css('[data-testid="inventory"]')
-    );
-
-    expect(result).not.toBeNull();
-
-    expect(component.inventory.length).toEqual(2);
+    expect(component.inventory).toEqual([
+      new ActionableItemDefinition(
+        new WeaponDefinition(
+          'sword1',
+          'Rusted Sword',
+          'Old sword full of rust',
+          'Melee Weapon (Simple)',
+          new DamageDefinition(
+            { D4: 0, D6: 1, D8: 0, D10: 0, D12: 0, D20: 0, D100: 0 },
+            0
+          )
+        ),
+        new ActionableDefinition('ASK', 'action1', 'Got action?')
+      ),
+      new ActionableItemDefinition(
+        new WeaponDefinition(
+          'sword2',
+          'Decent Sword',
+          'A good sword, not exceptional',
+          'Melee Weapon (Simple)',
+          new DamageDefinition(
+            { D4: 0, D6: 1, D8: 0, D10: 0, D12: 0, D20: 0, D100: 0 },
+            0
+          )
+        ),
+        new ActionableDefinition('ASK', 'action1', 'Got action?')
+      ),
+    ]);
   });
 
   describe('actionSelected', () => {
@@ -244,7 +241,7 @@ describe('GamePage', () => {
         'actionableReceived'
       );
 
-      component.actionSelected(event);
+      component.informActionSelected(event);
 
       expect(spy).toHaveBeenCalled();
     });

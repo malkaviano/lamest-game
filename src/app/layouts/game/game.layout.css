@@ -1,0 +1,49 @@
+.flex-panel {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: space-around;
+}
+
+.vertical-scrollable {
+  overflow-y: auto;
+}
+
+.section {
+  padding: 10px 10px;
+}
+
+.main-box {
+  min-height: 200px;
+  max-height: 550px;
+}
+
+.half-box {
+  min-height: 150px;
+  max-height: 220px;
+}
+
+.text-box-width {
+  min-width: 200px;
+  max-width: 400px;
+}
+
+.border-blue {
+  border: 3px solid blue;
+}
+
+.border-violet {
+  border: 3px solid palevioletred;
+}
+
+.border-aqua {
+  border: 3px solid rgb(112, 216, 187);
+}
+
+.border-yellow {
+  border: 3px solid rgb(213, 216, 112);
+}
+
+.border-orange {
+  border: 1px solid rgb(216, 174, 112);
+}
