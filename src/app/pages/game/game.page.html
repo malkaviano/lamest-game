@@ -8,25 +8,25 @@
     <div class="main-box vertical-scrollable" data-testid="character">
       <div data-testid="identity">
         <app-key-value-panel
-          tag="identity"
+          [panelName]="'identity'"
           [items]="characterValues.identity"
         ></app-key-value-panel>
       </div>
       <div data-testid="characteristics">
         <app-key-value-panel
-          tag="characteristics"
+          [panelName]="'characteristics'"
           [items]="characterValues.characteristics"
         ></app-key-value-panel>
       </div>
       <div data-testid="derived-attributes">
         <app-key-value-panel
-          tag="derived-attributes"
+          [panelName]="'derived-attributes'"
           [items]="characterValues.derivedAttributes"
         ></app-key-value-panel>
       </div>
       <div data-testid="skills">
         <app-key-value-panel
-          tag="skills"
+          [panelName]="'skills'"
           [items]="characterValues.skills"
         ></app-key-value-panel>
       </div>

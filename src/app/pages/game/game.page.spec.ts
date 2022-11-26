@@ -25,6 +25,7 @@ import { WeaponDefinition } from '../../definitions/weapon.definition';
 import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 import { DamageDefinition } from '../../definitions/damage.definition';
 import { createDice } from '../../definitions/dice.definition';
+import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 
 describe('GamePage', () => {
   let component: GamePage;
@@ -84,7 +85,30 @@ describe('GamePage', () => {
       .query(By.css(`[data-testid="identity"]`))
       .query(By.css(`app-key-value-panel`));
 
-    expect(result).toBeDefined();
+    expect(result.properties['panelName']).toEqual('identity');
+
+    expect(result.properties['items']).toEqual(
+      new ArrayView([
+        new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
+        new KeyValueDescriptionDefinition(
+          'PROFESSION',
+          'Hunter',
+          'Character profession'
+        ),
+        new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
+        new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
+        new KeyValueDescriptionDefinition(
+          'HEIGHT',
+          'AVERAGE',
+          'Character height'
+        ),
+        new KeyValueDescriptionDefinition(
+          'WEIGHT',
+          'AVERAGE',
+          'Character weight'
+        ),
+      ])
+    );
   });
 
   it(`should have characteristic values panel`, () => {
@@ -92,7 +116,39 @@ describe('GamePage', () => {
       .query(By.css(`[data-testid="characteristics"]`))
       .query(By.css(`app-key-value-panel`));
 
-    expect(result).toBeDefined();
+    expect(result.properties['panelName']).toEqual('characteristics');
+
+    expect(result.properties['items']).toEqual(
+      new ArrayView([
+        new KeyValueDescriptionDefinition(
+          'STR',
+          '8',
+          'The character physical force'
+        ),
+        new KeyValueDescriptionDefinition(
+          'CON',
+          '9',
+          'The character body constitution'
+        ),
+        new KeyValueDescriptionDefinition(
+          'SIZ',
+          '10',
+          'The character body shape'
+        ),
+        new KeyValueDescriptionDefinition('DEX', '11', 'The character agility'),
+        new KeyValueDescriptionDefinition(
+          'INT',
+          '12',
+          'The character intelligence'
+        ),
+        new KeyValueDescriptionDefinition(
+          'POW',
+          '13',
+          'The character mental strength'
+        ),
+        new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
+      ])
+    );
   });
 
   it(`should have derived attributes values panel`, () => {
@@ -100,7 +156,27 @@ describe('GamePage', () => {
       .query(By.css(`[data-testid="derived-attributes"]`))
       .query(By.css(`app-key-value-panel`));
 
-    expect(result).toBeDefined();
+    expect(result.properties['panelName']).toEqual('derived-attributes');
+
+    expect(result.properties['items']).toEqual(
+      new ArrayView([
+        new KeyValueDescriptionDefinition(
+          'HP',
+          '9',
+          'The character hit points'
+        ),
+        new KeyValueDescriptionDefinition(
+          'PP',
+          '13',
+          'The character power points'
+        ),
+        new KeyValueDescriptionDefinition(
+          'MOV',
+          '10',
+          'The character movement'
+        ),
+      ])
+    );
   });
 
   it(`should have skills values`, () => {
@@ -109,7 +185,18 @@ describe('GamePage', () => {
       .query(By.css(`[data-testid="skills"]`))
       .query(By.css(`app-key-value-panel`));
 
-    expect(result).toBeDefined();
+    expect(result.properties['panelName']).toEqual('skills');
+
+    expect(result.properties['items']).toEqual(
+      new ArrayView([
+        new KeyValueDescriptionDefinition('Appraise', '12', ''),
+        new KeyValueDescriptionDefinition(
+          'Dodge',
+          '32',
+          'Ability to avoid being hit'
+        ),
+      ])
+    );
   });
 
   it(`should have description`, () => {

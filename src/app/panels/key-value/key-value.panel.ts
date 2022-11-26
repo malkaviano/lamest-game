@@ -9,7 +9,7 @@ import { ArrayView } from '../../views/array.view';
   styleUrls: ['./key-value.panel.css'],
 })
 export class KeyValuePanel {
-  @Input() public tag!: string;
+  @Input() public panelName!: string;
   @Input() public items: ArrayView<KeyValueDescriptionDefinition>;
 
   constructor() {

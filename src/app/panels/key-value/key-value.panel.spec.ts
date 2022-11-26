@@ -25,7 +25,7 @@ describe('KeyValuePanel', () => {
 
     fixture.componentInstance.items = new ArrayView(characteristics());
 
-    fixture.componentInstance.tag = 'test';
+    fixture.componentInstance.panelName = 'test';
 
     fixture.detectChanges();
   });
