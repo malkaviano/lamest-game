@@ -1,5 +1,5 @@
 <div class="flex-panel">
-  <div class="section text-box-width base-margin-left">
+  <div class="section text-box-width base-margin-left border-blue">
     <div class="title-border">
       <mat-toolbar>
         <span class="title-text">Character</span>
@@ -32,7 +32,7 @@
       </div>
     </div>
   </div>
-  <div class="section text-box-width">
+  <div class="section text-box-width border-violet">
     <div class="title-border">
       <mat-toolbar>
         <span class="title-text">Scene Description</span>
@@ -45,7 +45,7 @@
       ></app-text-area-window>
     </div>
   </div>
-  <div class="section">
+  <div class="section border-aqua">
     <div class="title-border">
       <mat-toolbar>
         <span class="title-text">Scene objects</span>
@@ -61,7 +61,7 @@
       </div>
     </div>
   </div>
-  <div class="section text-box-width base-margin-right">
+  <div class="section text-box-width base-margin-right border-yellow">
     <div class="title-border">
       <mat-toolbar>
         <span class="title-text">What happened?</span>
@@ -81,10 +81,12 @@
       </div>
       <div class="half-box vertical-scrollable">
         <div data-testid="inventory">
-          <app-equipped-widget
-            [equipped]="equipped"
-            (onActionSelected)="actionSelected($event)"
-          ></app-equipped-widget>
+          <div class="border-pink">
+            <app-equipped-widget
+              [equipped]="equipped"
+              (onActionSelected)="actionSelected($event)"
+            ></app-equipped-widget>
+          </div>
           <app-equipment-widget
             *ngFor="let equipment of inventory"
             [equipment]="equipment"
