@@ -43,6 +43,7 @@ export class ConversationState extends ActionableState {
         this.messageMap,
         response.change ?? this.currentMap
       ),
+      log: response.answer,
     };
   }
 }

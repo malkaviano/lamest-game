@@ -4,6 +4,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { AttackRule } from '../rules/attack.rule';
 import { ConsumeRule } from '../rules/consume.rule';
+import { ConversationRule } from '../rules/conversation.rule';
 import { DefenseRule } from '../rules/defense.rule';
 import { EquipRule } from '../rules/equip.rule';
 import { PickRule } from '../rules/pick.rule';
@@ -29,6 +30,7 @@ export class GameLoopService {
     sceneRule: SceneRule,
     combatRule: AttackRule,
     consumableRule: ConsumeRule,
+    conversationRule: ConversationRule,
     private readonly defenseRule: DefenseRule,
     private readonly characterService: CharacterService
   ) {
@@ -40,6 +42,7 @@ export class GameLoopService {
       SCENE: sceneRule,
       ATTACK: combatRule,
       CONSUME: consumableRule,
+      ASK: conversationRule,
     };
   }
 
