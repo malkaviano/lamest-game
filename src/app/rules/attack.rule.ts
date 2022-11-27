@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { unarmed } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { RuleResult } from '../results/rule.result';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
-import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
 
@@ -17,11 +17,12 @@ export class AttackRule implements RuleInterface {
     private readonly characterManagerService: CharacterService,
     private readonly inventoryService: InventoryService,
     private readonly rngService: RandomIntService,
-    private readonly narrativeService: NarrativeService,
-    private readonly loggingService: LoggingService
+    private readonly narrativeService: NarrativeService
   ) {}
 
-  public execute(action: ActionableEvent): void {
+  public execute(action: ActionableEvent): RuleResult {
+    const logs: string[] = [];
+
     const weapon = this.inventoryService.equipped ?? unarmed;
 
     const skillValue =
@@ -32,13 +33,9 @@ export class AttackRule implements RuleInterface {
 
       const interactive = this.narrativeService.interatives[action.eventId];
 
-      this.loggingService.log(
-        `attack: ${interactive.name} USING ${weapon.label}`
-      );
+      logs.push(`attack: ${interactive.name} USING ${weapon.label}`);
 
-      this.loggingService.log(
-        `rolled: ${weapon.skillName} -> ${roll} -> ${result}`
-      );
+      logs.push(`rolled: ${weapon.skillName} -> ${roll} -> ${result}`);
 
       let damage: number | undefined;
 
@@ -48,7 +45,7 @@ export class AttackRule implements RuleInterface {
         damage =
           this.rngService.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
 
-        this.loggingService.log(`attack: ${weapon.label} for ${damage} damage`);
+        logs.push(`attack: ${weapon.label} for ${damage} damage`);
       }
 
       const log = interactive.actionSelected(
@@ -58,8 +55,10 @@ export class AttackRule implements RuleInterface {
       );
 
       if (log) {
-        this.loggingService.log(`${interactive.name}: ${log}`);
+        logs.push(`${interactive.name}: ${log}`);
       }
     }
+
+    return { logs };
   }
 }

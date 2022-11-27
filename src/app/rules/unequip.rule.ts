@@ -2,21 +2,22 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { RuleResult } from '../results/rule.result';
 import { InventoryService } from '../services/inventory.service';
-import { LoggingService } from '../services/logging.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UnequipRule implements RuleInterface {
-  constructor(
-    private readonly inventoryService: InventoryService,
-    private readonly loggingService: LoggingService
-  ) {}
+  constructor(private readonly inventoryService: InventoryService) {}
 
-  public execute(action: ActionableEvent): void {
+  public execute(action: ActionableEvent): RuleResult {
+    const logs: string[] = [];
+
     this.inventoryService.unequip();
 
-    this.loggingService.log(`unequipped: ${action.actionableDefinition.label}`);
+    logs.push(`unequipped: ${action.actionableDefinition.label}`);
+
+    return { logs };
   }
 }

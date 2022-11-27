@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActionableEvent } from '../events/actionable.event';
 
 import { RuleInterface } from '../interfaces/rule.interface';
+import { RuleResult } from '../results/rule.result';
 import { CharacterService } from '../services/character.service';
-import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
 
@@ -14,11 +14,12 @@ export class DefenseRule implements RuleInterface {
   constructor(
     private readonly rngService: RandomIntService,
     private readonly characterService: CharacterService,
-    private readonly narrativeService: NarrativeService,
-    private readonly loggingService: LoggingService
+    private readonly narrativeService: NarrativeService
   ) {}
 
-  public execute(action: ActionableEvent): void {
+  public execute(action: ActionableEvent): RuleResult {
+    const logs: string[] = [];
+
     Object.entries(this.narrativeService.interatives).forEach(
       ([_, interactive]) => {
         const attack = interactive.attack;
@@ -30,9 +31,7 @@ export class DefenseRule implements RuleInterface {
 
           const enemyLog = enemyResult === 'SUCCESS' ? 'hit' : 'missed';
 
-          this.loggingService.log(
-            `${interactive.name} attacks Player: ${enemyLog}`
-          );
+          logs.push(`${interactive.name} attacks Player: ${enemyLog}`);
 
           if (enemyResult === 'SUCCESS') {
             const { result } = this.rngService.checkSkill(
@@ -46,19 +45,19 @@ export class DefenseRule implements RuleInterface {
               const log =
                 this.characterService.currentCharacter.damaged(damageAmount);
 
-              this.loggingService.log(
+              logs.push(
                 `${interactive.name} did ${damageAmount} damage to Player`
               );
 
-              this.loggingService.log(`player: ${log}`);
+              logs.push(`player: ${log}`);
             } else {
-              this.loggingService.log(
-                `dodge: Player avoided ${interactive.name} attack`
-              );
+              logs.push(`dodge: Player avoided ${interactive.name} attack`);
             }
           }
         }
       }
     );
+
+    return { logs };
   }
 }

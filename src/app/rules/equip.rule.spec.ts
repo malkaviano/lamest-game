@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { instance, mock, verify, when } from 'ts-mockito';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
@@ -22,10 +22,6 @@ describe('EquipRule', () => {
         {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: LoggingService,
-          useValue: instance(mockedLoggingService),
         },
         {
           provide: CharacterService,
@@ -54,16 +50,6 @@ describe('EquipRule', () => {
   describe('execute', () => {
     describe('when skill value is above 0', () => {
       it('should call inventory equip', () => {
-        let result: string[] = [];
-
-        when(mockedInventoryService.equip('sword')).thenCall(() =>
-          result.push('ok')
-        );
-
-        when(mockedLoggingService.log('equipped: Sword')).thenCall(() =>
-          result.push('ok')
-        );
-
         when(mockedInventoryService.equipped).thenReturn(
           new WeaponDefinition(
             'sword',
@@ -78,22 +64,18 @@ describe('EquipRule', () => {
           'Artillery (War)'
         );
 
-        service.execute(event);
+        const result = service.execute(event);
 
-        expect(result).toEqual(['ok', 'ok']);
+        verify(mockedInventoryService.equip('sword')).once();
+
+        expect(result).toEqual({
+          logs: ['equipped: Sword'],
+        });
       });
     });
 
     describe('when skill value is 0', () => {
       it('should log unable to equip', () => {
-        let result: string[] = [];
-
-        when(
-          mockedLoggingService.log(
-            'error: Artillery (Siege) is required to equip Sword'
-          )
-        ).thenCall(() => result.push('ok'));
-
         when(mockedInventoryService.equipped).thenReturn(
           new WeaponDefinition(
             'sword',
@@ -110,9 +92,11 @@ describe('EquipRule', () => {
 
         when(mockedItemStore.itemLabel(event.eventId)).thenReturn('Sword');
 
-        service.execute(event);
+        const result = service.execute(event);
 
-        expect(result).toEqual(['ok']);
+        expect(result).toEqual({
+          logs: ['error: Artillery (Siege) is required to equip Sword'],
+        });
       });
     });
   });
@@ -128,7 +112,5 @@ const mockedCharacterService = mock(CharacterService);
 const mockedInventoryService = mock(InventoryService);
 
 const mockedItemStore = mock(ItemStore);
-
-const mockedLoggingService = mock(LoggingService);
 
 const mockedCharacterEntity = mock(CharacterEntity);

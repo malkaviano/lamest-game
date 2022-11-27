@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { RuleResult } from '../results/rule.result';
 import { CharacterService } from '../services/character.service';
-import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
 
@@ -14,12 +14,14 @@ export class SkillRule implements RuleInterface {
   constructor(
     private readonly characterManagerService: CharacterService,
     private readonly rngService: RandomIntService,
-    private readonly narrativeService: NarrativeService,
-    private readonly loggingService: LoggingService
+    private readonly narrativeService: NarrativeService
   ) {}
 
-  public execute(action: ActionableEvent): void {
+  public execute(action: ActionableEvent): RuleResult {
+    const logs: string[] = [];
+
     const skillName = action.actionableDefinition.name;
+
     const skillValue =
       this.characterManagerService.currentCharacter.skills[skillName];
 
@@ -29,12 +31,14 @@ export class SkillRule implements RuleInterface {
 
     interactive.actionSelected(action.actionableDefinition, result);
 
-    this.loggingService.log(
+    logs.push(
       `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`
     );
 
     if (roll) {
-      this.loggingService.log(`rolled: ${skillName} -> ${roll} -> ${result}`);
+      logs.push(`rolled: ${skillName} -> ${roll} -> ${result}`);
     }
+
+    return { logs };
   }
 }

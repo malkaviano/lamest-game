@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { instance, mock, verify, when } from 'ts-mockito';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
@@ -10,7 +10,6 @@ import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 
 import { InventoryService } from '../services/inventory.service';
-import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 import { DiscardState } from '../states/discard.state';
 import { PickRule } from './pick.rule';
@@ -24,10 +23,6 @@ describe('PickRule', () => {
         {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
-        },
-        {
-          provide: LoggingService,
-          useValue: instance(mockedLoggingService),
         },
         {
           provide: InventoryService,
@@ -47,21 +42,15 @@ describe('PickRule', () => {
 
   describe('execute', () => {
     it('should call inventory store', () => {
-      let result: string[] = [];
-
       when(mockedInventoryService.take('i1', 'sword')).thenReturn(item);
 
-      when(mockedInventoryService.store('player', item)).thenCall(() =>
-        result.push('ok')
-      );
+      const result = service.execute(event);
 
-      when(mockedLoggingService.log('player: took Sword from test')).thenCall(
-        () => result.push('ok')
-      );
+      verify(mockedInventoryService.store('player', item)).once();
 
-      service.execute(event);
-
-      expect(result).toEqual(['ok', 'ok']);
+      expect(result).toEqual({
+        logs: ['player: took Sword from test'],
+      });
     });
   });
 });
@@ -69,8 +58,6 @@ describe('PickRule', () => {
 const mockedInventoryService = mock(InventoryService);
 
 const mockedNarrativeService = mock(NarrativeService);
-
-const mockedLoggingService = mock(LoggingService);
 
 const item = new WeaponDefinition(
   'sword',

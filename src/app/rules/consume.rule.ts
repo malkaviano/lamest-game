@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
+
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
-
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { RuleResult } from '../results/rule.result';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
-import { LoggingService } from '../services/logging.service';
 import { RandomIntService } from '../services/random-int.service';
 
 @Injectable({
@@ -16,11 +16,12 @@ export class ConsumeRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly characterService: CharacterService,
-    private readonly rngService: RandomIntService,
-    private readonly loggingService: LoggingService
+    private readonly rngService: RandomIntService
   ) {}
 
-  public execute(action: ActionableEvent): void {
+  public execute(action: ActionableEvent): RuleResult {
+    const logs: string[] = [];
+
     const consumable = this.inventoryService.take(
       'player',
       action.eventId
@@ -30,7 +31,7 @@ export class ConsumeRule implements RuleInterface {
       throw new Error(errorMessages['WRONG-ITEM']);
     }
 
-    this.loggingService.log(`player: consumed ${consumable.label}`);
+    logs.push(`player: consumed ${consumable.label}`);
 
     let hp = consumable.hp;
 
@@ -41,7 +42,7 @@ export class ConsumeRule implements RuleInterface {
       const { result, roll } = this.rngService.checkSkill(skillValue);
 
       if (roll) {
-        this.loggingService.log(
+        logs.push(
           `player: rolled ${roll} in ${consumable.skillName} and resulted in ${result}`
         );
       }
@@ -49,8 +50,10 @@ export class ConsumeRule implements RuleInterface {
       if (result === 'SUCCESS') {
         const log = this.characterService.currentCharacter.healed(hp);
 
-        this.loggingService.log(`player: ${log}`);
+        logs.push(`player: ${log}`);
       }
     }
+
+    return { logs };
   }
 }

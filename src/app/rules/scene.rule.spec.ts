@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { instance, mock, verify, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 import { SimpleState } from '../states/simple.state';
 import { SceneRule } from './scene.rule';
@@ -20,10 +19,6 @@ describe('SceneRule', () => {
         {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
-        },
-        {
-          provide: LoggingService,
-          useValue: instance(mockedLoggingService),
         },
       ],
     });
@@ -39,25 +34,18 @@ describe('SceneRule', () => {
 
   describe('execute', () => {
     it('should call change scene', () => {
-      let result: string[] = [];
+      const result = service.execute(event);
 
-      when(mockedNarrativeService.changeScene(event)).thenCall(() =>
-        result.push('ok')
-      );
+      verify(mockedNarrativeService.changeScene(event)).once();
 
-      when(mockedLoggingService.log('selected: test -> Exit')).thenCall(() =>
-        result.push('ok')
-      );
-
-      service.execute(event);
-
-      expect(result).toEqual(['ok', 'ok']);
+      expect(result).toEqual({
+        logs: ['selected: test -> Exit'],
+      });
     });
   });
 });
 
 const mockedNarrativeService = mock(NarrativeService);
-const mockedLoggingService = mock(LoggingService);
 
 const action = createActionableDefinition('SCENE', 'exit', 'Exit');
 

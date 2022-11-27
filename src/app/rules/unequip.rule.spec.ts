@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { instance, mock, verify } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
-import { LoggingService } from '../services/logging.service';
 import { UnequipRule } from './unequip.rule';
 
 describe('UnequipRule', () => {
@@ -17,10 +16,6 @@ describe('UnequipRule', () => {
         {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: LoggingService,
-          useValue: instance(mockedLoggingService),
         },
       ],
     });
@@ -34,26 +29,20 @@ describe('UnequipRule', () => {
 
   describe('execute', () => {
     it('should call inventory unequip', () => {
-      let result: string[] = [];
-
-      when(mockedInventoryService.unequip()).thenCall(() => result.push('ok'));
-
-      when(mockedLoggingService.log('unequipped: Sword')).thenCall(() =>
-        result.push('ok')
-      );
-
-      service.execute(
+      const logs = service.execute(
         new ActionableEvent(
           createActionableDefinition('UNEQUIP', 'unequip', 'Sword'),
           'someId'
         )
       );
 
-      expect(result).toEqual(['ok', 'ok']);
+      verify(mockedInventoryService.unequip()).once();
+
+      expect(logs).toEqual({
+        logs: ['unequipped: Sword'],
+      });
     });
   });
 });
 
 const mockedInventoryService = mock(InventoryService);
-
-const mockedLoggingService = mock(LoggingService);

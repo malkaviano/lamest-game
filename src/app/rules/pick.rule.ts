@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { RuleResult } from '../results/rule.result';
 import { InventoryService } from '../services/inventory.service';
-import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 
 @Injectable({
@@ -12,11 +12,12 @@ import { NarrativeService } from '../services/narrative.service';
 export class PickRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly narrativeService: NarrativeService,
-    private readonly loggingService: LoggingService
+    private readonly narrativeService: NarrativeService
   ) {}
 
-  public execute(action: ActionableEvent): void {
+  public execute(action: ActionableEvent): RuleResult {
+    const logs: string[] = [];
+
     const item = this.inventoryService.take(
       action.eventId,
       action.actionableDefinition.name
@@ -26,10 +27,12 @@ export class PickRule implements RuleInterface {
 
     const interactive = this.narrativeService.interatives[action.eventId];
 
-    interactive.actionSelected(action.actionableDefinition, 'NONE');
+    const log = interactive.actionSelected(action.actionableDefinition, 'NONE');
 
-    this.loggingService.log(
-      `player: took ${item.label} from ${interactive.name}`
-    );
+    if (log) {
+      logs.push(`player: took ${log} from ${interactive.name}`);
+    }
+
+    return { logs };
   }
 }

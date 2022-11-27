@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { instance, mock, when } from 'ts-mockito';
+
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-
 import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 import { ConversationState } from '../states/conversation.state';
@@ -39,21 +39,13 @@ describe('ConversationRule', () => {
 
   describe('execute', () => {
     it('logs answer', () => {
-      let result: string[] = [];
-
-      when(mockedLoggingService.log('player: Hi')).thenCall(() =>
-        result.push('ok')
-      );
-
-      when(mockedLoggingService.log('test: Hello')).thenCall(() =>
-        result.push('ok')
-      );
-
-      service.execute(
+      const result = service.execute(
         new ActionableEvent(createActionableDefinition('ASK', 'hi', 'Hi'), 'i1')
       );
 
-      expect(result).toEqual(['ok', 'ok']);
+      expect(result).toEqual({
+        logs: ['player: Hi', 'test: Hello'],
+      });
     });
   });
 });

@@ -12,7 +12,6 @@ import { CharacterEntity } from '../entities/character.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
-import { LoggingService } from '../services/logging.service';
 import { RandomIntService } from '../services/random-int.service';
 
 import { ConsumeRule } from './consume.rule';
@@ -26,10 +25,6 @@ describe('ConsumeRule', () => {
         {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: LoggingService,
-          useValue: instance(mockedLoggingService),
         },
         {
           provide: CharacterService,
@@ -77,8 +72,6 @@ describe('ConsumeRule', () => {
     describe('when consumable has skill requirement', () => {
       describe('when skill check passes', () => {
         it('should heal player', () => {
-          let result: string[] = [];
-
           when(mockedInventoryService.take('player', 'firstAid')).thenReturn(
             consumable
           );
@@ -88,29 +81,19 @@ describe('ConsumeRule', () => {
             roll: 10,
           });
 
-          when(
-            mockedLoggingService.log('player: consumed First Aid Kit')
-          ).thenCall(() => result.push('ok'));
-
-          when(
-            mockedLoggingService.log(
-              'player: rolled 10 in First Aid and resulted in SUCCESS'
-            )
-          ).thenCall(() => result.push('ok'));
-
-          when(
-            mockedLoggingService.log(
-              'player: healed 5 Hit Points and become full health'
-            )
-          ).thenCall(() => result.push('ok'));
-
           when(mockedCharacterEntity.healed(5)).thenReturn(
             'healed 5 Hit Points and become full health'
           );
 
-          service.execute(event);
+          const result = service.execute(event);
 
-          expect(result).toEqual(['ok', 'ok', 'ok']);
+          expect(result).toEqual({
+            logs: [
+              'player: consumed First Aid Kit',
+              'player: rolled 10 in First Aid and resulted in SUCCESS',
+              'player: healed 5 Hit Points and become full health',
+            ],
+          });
         });
       });
     });
@@ -132,8 +115,6 @@ const event = new ActionableEvent(action, 'firstAid');
 const mockedCharacterService = mock(CharacterService);
 
 const mockedInventoryService = mock(InventoryService);
-
-const mockedLoggingService = mock(LoggingService);
 
 const mockedRngService = mock(RandomIntService);
 

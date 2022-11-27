@@ -12,7 +12,7 @@ import { SceneRule } from '../rules/scene.rule';
 import { SkillRule } from '../rules/skill.rule';
 import { UnequipRule } from '../rules/unequip.rule';
 import { CharacterService } from './character.service';
-import { NarrativeService } from './narrative.service';
+import { LoggingService } from './logging.service';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +32,8 @@ export class GameLoopService {
     consumableRule: ConsumeRule,
     conversationRule: ConversationRule,
     private readonly defenseRule: DefenseRule,
-    private readonly characterService: CharacterService
+    private readonly characterService: CharacterService,
+    private readonly loggingService: LoggingService
   ) {
     this.dispatcher = {
       SKILL: skillRule,
@@ -48,9 +49,14 @@ export class GameLoopService {
 
   public run(action: ActionableEvent): void {
     if (this.characterService.currentCharacter.derivedAttributes.hp.value > 0) {
-      this.dispatcher[action.actionableDefinition.actionable].execute(action);
+      let { logs: playerLogs } =
+        this.dispatcher[action.actionableDefinition.actionable].execute(action);
 
-      this.defenseRule.execute(action);
+      playerLogs.forEach((log) => this.loggingService.log(log));
+
+      const { logs: npcLogs } = this.defenseRule.execute(action);
+
+      npcLogs.forEach((log) => this.loggingService.log(log));
     }
   }
 }
