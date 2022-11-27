@@ -17,12 +17,12 @@ export class CharacterPage implements OnInit {
   public skillsView!: ArrayView<KeyValueDescriptionDefinition>;
 
   constructor(
-    private readonly characterManagerService: CharacterService,
+    private readonly characterService: CharacterService,
     private readonly converterHelper: ConverterHelper
   ) {}
 
   ngOnInit(): void {
-    const character = this.characterManagerService.randomCharacter;
+    const character = this.characterService.randomCharacter;
 
     const characterValues =
       this.converterHelper.characterToKeyValueDescription(character);

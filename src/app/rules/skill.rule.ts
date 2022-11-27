@@ -12,7 +12,7 @@ import { RandomIntService } from '../services/random-int.service';
 })
 export class SkillRule implements RuleInterface {
   constructor(
-    private readonly characterManagerService: CharacterService,
+    private readonly characterService: CharacterService,
     private readonly rngService: RandomIntService,
     private readonly narrativeService: NarrativeService
   ) {}
@@ -22,8 +22,7 @@ export class SkillRule implements RuleInterface {
 
     const skillName = action.actionableDefinition.name;
 
-    const skillValue =
-      this.characterManagerService.currentCharacter.skills[skillName];
+    const skillValue = this.characterService.currentCharacter.skills[skillName];
 
     const { roll, result } = this.rngService.checkSkill(skillValue);
 

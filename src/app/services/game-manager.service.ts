@@ -25,7 +25,7 @@ export class GameManagerService {
 
   constructor(
     private readonly gameLoopService: GameLoopService,
-    private readonly characterManagerService: CharacterService,
+    private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
     private readonly inventoryService: InventoryService,
     private readonly loggingService: LoggingService
@@ -44,7 +44,7 @@ export class GameManagerService {
     this.events = new GameEventsDefinition(
       this.narrativeService.sceneChanged$,
       this.loggingService.gameLog$,
-      this.characterManagerService.characterChanged$,
+      this.characterService.characterChanged$,
       observable
     );
   }

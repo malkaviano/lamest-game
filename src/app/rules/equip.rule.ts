@@ -12,7 +12,7 @@ import { ItemStore } from '../stores/item.store';
 })
 export class EquipRule implements RuleInterface {
   constructor(
-    private readonly characterManagerService: CharacterService,
+    private readonly characterService: CharacterService,
     private readonly inventoryService: InventoryService,
     private readonly itemStore: ItemStore
   ) {}
@@ -24,7 +24,7 @@ export class EquipRule implements RuleInterface {
 
     if (
       skillName &&
-      this.characterManagerService.currentCharacter.skills[skillName] > 0
+      this.characterService.currentCharacter.skills[skillName] > 0
     ) {
       this.inventoryService.equip(action.eventId);
 

@@ -14,7 +14,7 @@ import { RandomIntService } from '../services/random-int.service';
 })
 export class AttackRule implements RuleInterface {
   constructor(
-    private readonly characterManagerService: CharacterService,
+    private readonly characterService: CharacterService,
     private readonly inventoryService: InventoryService,
     private readonly rngService: RandomIntService,
     private readonly narrativeService: NarrativeService
@@ -26,16 +26,18 @@ export class AttackRule implements RuleInterface {
     const weapon = this.inventoryService.equipped ?? unarmed;
 
     const skillValue =
-      this.characterManagerService.currentCharacter.skills[weapon.skillName];
+      this.characterService.currentCharacter.skills[weapon.skillName];
 
     if (skillValue) {
       const { roll, result } = this.rngService.checkSkill(skillValue);
 
       const interactive = this.narrativeService.interatives[action.eventId];
 
-      logs.push(`attack: ${interactive.name} USING ${weapon.label}`);
+      logs.push(`player: attacked ${interactive.name} USING ${weapon.label}`);
 
-      logs.push(`rolled: ${weapon.skillName} -> ${roll} -> ${result}`);
+      logs.push(
+        `player: used ${weapon.skillName} and rolled ${roll} -> ${result}`
+      );
 
       let damage: number | undefined;
 
@@ -45,7 +47,7 @@ export class AttackRule implements RuleInterface {
         damage =
           this.rngService.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
 
-        logs.push(`attack: ${weapon.label} for ${damage} damage`);
+        logs.push(`player: did ${damage} damage with ${weapon.label}`);
       }
 
       const log = interactive.actionSelected(

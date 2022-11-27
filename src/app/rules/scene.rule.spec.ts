@@ -7,7 +7,6 @@ import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { NarrativeService } from '../services/narrative.service';
-import { SimpleState } from '../states/simple.state';
 import { SceneRule } from './scene.rule';
 
 describe('SceneRule', () => {
@@ -24,6 +23,10 @@ describe('SceneRule', () => {
     });
 
     when(mockedNarrativeService.interatives).thenReturn(interactives);
+
+    when(mockedInteractiveEntity.id).thenReturn('id1');
+
+    when(mockedInteractiveEntity.name).thenReturn('test');
 
     service = TestBed.inject(SceneRule);
   });
@@ -49,8 +52,10 @@ const mockedNarrativeService = mock(NarrativeService);
 
 const action = createActionableDefinition('SCENE', 'exit', 'Exit');
 
-const event = new ActionableEvent(action, 'i1');
+const event = new ActionableEvent(action, 'id1');
+
+const mockedInteractiveEntity = mock(InteractiveEntity);
 
 const interactives: KeyValueInterface<InteractiveEntity> = {
-  i1: new InteractiveEntity('i1', 'test', 'test', new SimpleState([action])),
+  id1: instance(mockedInteractiveEntity),
 };
