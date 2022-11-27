@@ -30,4 +30,12 @@ describe('ItemStore', () => {
       });
     });
   });
+
+  describe('itemLabel', () => {
+    it('return item label', () => {
+      const result = service.itemLabel('knife');
+
+      expect(result).toEqual('Hunting Knife');
+    });
+  });
 });

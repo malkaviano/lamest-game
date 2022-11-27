@@ -20,7 +20,7 @@ export class SceneRule implements RuleInterface {
     this.narrativeService.changeScene(action);
 
     this.loggingService.log(
-      `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`
+      `selected: ${interactive.name} -> ${action.actionableDefinition.label}`
     );
   }
 }

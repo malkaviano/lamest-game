@@ -32,7 +32,9 @@ export class EquipRule implements RuleInterface {
       );
     } else {
       this.loggingService.log(
-        `error: ${skillName} is required to equip ${action.eventId}`
+        `error: ${skillName} is required to equip ${this.itemStore.itemLabel(
+          action.eventId
+        )}`
       );
     }
   }

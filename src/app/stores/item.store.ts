@@ -54,6 +54,10 @@ export class ItemStore {
     };
   }
 
+  public itemLabel(itemName: string): string {
+    return this.items[itemName].label;
+  }
+
   public itemSkill(itemName: string): SkillNameLiteral | null {
     const item = this.items[itemName];
 

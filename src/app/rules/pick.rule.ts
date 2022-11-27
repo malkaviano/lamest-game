@@ -29,7 +29,7 @@ export class PickRule implements RuleInterface {
     interactive.actionSelected(action.actionableDefinition, 'NONE');
 
     this.loggingService.log(
-      `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`
+      `player: took ${item.label} from ${interactive.name}`
     );
   }
 }

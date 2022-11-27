@@ -42,17 +42,15 @@ export class ConsumeRule implements RuleInterface {
 
       if (roll) {
         this.loggingService.log(
-          `rolled: ${consumable.skillName} -> ${roll} -> ${result}`
+          `player: rolled ${roll} in ${consumable.skillName} and resulted in ${result}`
         );
       }
 
-      if (result === 'FAILURE') {
-        hp = 0;
+      if (result === 'SUCCESS') {
+        const log = this.characterService.currentCharacter.healed(hp);
+
+        this.loggingService.log(`player: ${log}`);
       }
     }
-
-    const log = this.characterService.currentCharacter.healed(hp);
-
-    this.loggingService.log(log);
   }
 }

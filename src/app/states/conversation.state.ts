@@ -26,7 +26,6 @@ export class ConversationState extends ActionableState {
     const actions = Object.keys(currentMessages).map((topic) =>
       createActionableDefinition('ASK', topic, currentMessages[topic].label)
     );
-
     super('ConversationState', actions);
 
     this.currentMessages = currentMessages;
