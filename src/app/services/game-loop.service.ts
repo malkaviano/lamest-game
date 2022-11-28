@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { RuleResult } from '../results/rule.result';
 import { AttackRule } from '../rules/attack.rule';
 import { ConsumeRule } from '../rules/consume.rule';
 import { ConversationRule } from '../rules/conversation.rule';
@@ -32,8 +33,7 @@ export class GameLoopService {
     consumableRule: ConsumeRule,
     conversationRule: ConversationRule,
     private readonly defenseRule: DefenseRule,
-    private readonly characterService: CharacterService,
-    private readonly loggingService: LoggingService
+    private readonly characterService: CharacterService
   ) {
     this.dispatcher = {
       SKILL: skillRule,
@@ -47,16 +47,20 @@ export class GameLoopService {
     };
   }
 
-  public run(action: ActionableEvent): void {
+  public run(action: ActionableEvent): RuleResult {
+    let logs: string[] = [];
+
     if (this.characterService.currentCharacter.derivedAttributes.hp.value > 0) {
-      let { logs: playerLogs } =
+      const playerResult =
         this.dispatcher[action.actionableDefinition.actionable].execute(action);
 
-      playerLogs.forEach((log) => this.loggingService.log(log));
+      const defenseResult = this.defenseRule.execute(action);
 
-      const { logs: npcLogs } = this.defenseRule.execute(action);
-
-      npcLogs.forEach((log) => this.loggingService.log(log));
+      logs = playerResult.logs.concat(defenseResult.logs);
     }
+
+    return {
+      logs,
+    };
   }
 }

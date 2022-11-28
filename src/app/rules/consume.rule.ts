@@ -4,6 +4,7 @@ import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { ResultLiteral } from '../literals/result.literal';
 import { RuleResult } from '../results/rule.result';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
@@ -35,6 +36,8 @@ export class ConsumeRule implements RuleInterface {
 
     let hp = consumable.hp;
 
+    let passed: ResultLiteral = 'NONE';
+
     if (consumable.skillName) {
       const skillValue =
         this.characterService.currentCharacter.skills[consumable.skillName];
@@ -47,11 +50,13 @@ export class ConsumeRule implements RuleInterface {
         );
       }
 
-      if (result === 'SUCCESS') {
-        const log = this.characterService.currentCharacter.healed(hp);
+      passed = result;
+    }
 
-        logs.push(`player: ${log}`);
-      }
+    if (passed === 'SUCCESS' || passed === 'NONE') {
+      const log = this.characterService.currentCharacter.healed(hp);
+
+      logs.push(`player: ${log}`);
     }
 
     return { logs };

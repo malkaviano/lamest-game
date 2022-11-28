@@ -50,7 +50,9 @@ export class GameManagerService {
   }
 
   public actionableReceived(action: ActionableEvent): void {
-    this.gameLoopService.run(action);
+    const result = this.gameLoopService.run(action);
+
+    result.logs.forEach((log) => this.loggingService.log(log));
   }
 
   private playerInventory(): ArrayView<ActionableItemDefinition> {

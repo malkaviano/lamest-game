@@ -97,6 +97,27 @@ describe('ConsumeRule', () => {
         });
       });
     });
+
+    describe('when consumable has no skill requirement', () => {
+      it('should heal player', () => {
+        when(mockedInventoryService.take('player', 'sandwich')).thenReturn(
+          consumable2
+        );
+
+        when(mockedCharacterEntity.healed(2)).thenReturn(
+          'healed 2 Hit Points and become full health'
+        );
+
+        const result = service.execute(event2);
+
+        expect(result).toEqual({
+          logs: [
+            'player: consumed Cheeseburger',
+            'player: healed 2 Hit Points and become full health',
+          ],
+        });
+      });
+    });
   });
 });
 
@@ -108,9 +129,18 @@ const consumable = new ConsumableDefinition(
   'First Aid'
 );
 
+const consumable2 = new ConsumableDefinition(
+  'sandwich',
+  'Cheeseburger',
+  'Delicious',
+  2
+);
+
 const action = createActionableDefinition('CONSUME', '', '');
 
 const event = new ActionableEvent(action, 'firstAid');
+
+const event2 = new ActionableEvent(action, 'sandwich');
 
 const mockedCharacterService = mock(CharacterService);
 
