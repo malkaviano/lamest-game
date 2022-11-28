@@ -31,11 +31,11 @@ export class SkillRule implements RuleInterface {
     interactive.actionSelected(action.actionableDefinition, result);
 
     logs.push(
-      `selected: ${interactive.name} -> ${action.actionableDefinition.actionable} -> ${action.actionableDefinition.label}`
+      `player: used ${action.actionableDefinition.label} on ${interactive.name}`
     );
 
     if (roll) {
-      logs.push(`rolled: ${skillName} -> ${roll} -> ${result}`);
+      logs.push(`player: rolled ${roll} -> ${result}`);
     }
 
     return { logs };

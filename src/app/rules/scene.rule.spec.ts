@@ -36,7 +36,7 @@ describe('SceneRule', () => {
   });
 
   describe('execute', () => {
-    it('should call change scene', () => {
+    it('return logs', () => {
       const result = service.execute(event);
 
       verify(mockedNarrativeService.changeScene(event)).once();

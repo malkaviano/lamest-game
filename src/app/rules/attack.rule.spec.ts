@@ -62,7 +62,7 @@ describe('AttackRule', () => {
 
   describe('execute', () => {
     describe('when attack misses', () => {
-      it('return log without damage', () => {
+      it('return logs', () => {
         when(mockedRngService.checkSkill(45)).thenReturn({
           result: 'SUCCESS',
           roll: 10,

@@ -28,7 +28,7 @@ describe('UnequipRule', () => {
   });
 
   describe('execute', () => {
-    it('should call inventory unequip', () => {
+    it('return logss', () => {
       const logs = service.execute(
         new ActionableEvent(
           createActionableDefinition('UNEQUIP', 'unequip', 'Sword'),

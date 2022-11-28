@@ -29,11 +29,9 @@ export class DefenseRule implements RuleInterface {
 
           let { result: enemyResult } = this.rngService.checkSkill(skillValue);
 
-          const enemyLog = enemyResult === 'SUCCESS' ? 'hit' : 'missed';
-
-          logs.push(`${interactive.name} attacks Player: ${enemyLog}`);
-
           if (enemyResult === 'SUCCESS') {
+            logs.push(`${interactive.name}: attacked player`);
+
             const { result } = this.rngService.checkSkill(
               this.characterService.currentCharacter.skills['Dodge']
             );
@@ -45,14 +43,12 @@ export class DefenseRule implements RuleInterface {
               const log =
                 this.characterService.currentCharacter.damaged(damageAmount);
 
-              logs.push(
-                `${interactive.name} did ${damageAmount} damage to Player`
-              );
-
-              logs.push(`player: ${log}`);
+              logs.push(`${log}`);
             } else {
-              logs.push(`dodge: Player avoided ${interactive.name} attack`);
+              logs.push(`player: dodged ${interactive.name} attack`);
             }
+          } else {
+            logs.push(`${interactive.name}: attacked player but missed`);
           }
         }
       }

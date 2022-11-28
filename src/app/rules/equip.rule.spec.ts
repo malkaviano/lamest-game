@@ -49,7 +49,7 @@ describe('EquipRule', () => {
 
   describe('execute', () => {
     describe('when skill value is above 0', () => {
-      it('should call inventory equip', () => {
+      it('return logs', () => {
         when(mockedInventoryService.equipped).thenReturn(
           new WeaponDefinition(
             'sword',
@@ -75,7 +75,7 @@ describe('EquipRule', () => {
     });
 
     describe('when skill value is 0', () => {
-      it('should log unable to equip', () => {
+      it('return logs', () => {
         when(mockedInventoryService.equipped).thenReturn(
           new WeaponDefinition(
             'sword',

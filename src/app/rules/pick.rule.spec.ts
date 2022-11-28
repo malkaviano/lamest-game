@@ -44,7 +44,7 @@ describe('PickRule', () => {
   });
 
   describe('execute', () => {
-    it('should call inventory store', () => {
+    it('return logs', () => {
       when(mockedInventoryService.take('id1', 'sword')).thenReturn(item);
 
       when(

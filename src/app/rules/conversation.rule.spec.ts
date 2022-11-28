@@ -41,7 +41,7 @@ describe('ConversationRule', () => {
   });
 
   describe('execute', () => {
-    it('logs answer', () => {
+    it('return logs', () => {
       when(
         mockedInteractiveEntity.actionSelected(anything(), 'NONE')
       ).thenReturn('Hello');
