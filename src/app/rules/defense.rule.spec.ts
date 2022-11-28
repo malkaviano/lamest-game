@@ -92,7 +92,7 @@ describe('DefenseRule', () => {
             });
 
           when(mockedCharacterEntity.damaged(4)).thenReturn(
-            'player: received 4 damage'
+            'received 4 damage'
           );
 
           const result = service.execute(event);

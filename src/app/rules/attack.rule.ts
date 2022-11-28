@@ -47,17 +47,15 @@ export class AttackRule implements RuleInterface {
         damage =
           this.rngService.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
 
-        logs.push(`player: did ${damage} damage with ${weapon.label}`);
-      }
+        const log = interactive.actionSelected(
+          action.actionableDefinition,
+          result,
+          damage
+        );
 
-      const log = interactive.actionSelected(
-        action.actionableDefinition,
-        result,
-        damage
-      );
-
-      if (log) {
-        logs.push(`${interactive.name}: ${log}`);
+        if (log) {
+          logs.push(`${interactive.name}: ${log} from player ${weapon.label}`);
+        }
       }
     }
 

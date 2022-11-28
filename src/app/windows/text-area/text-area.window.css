@@ -1,4 +1,5 @@
 div.text-area {
   overflow-y: auto;
   text-align: justify;
+  padding: 10px;
 }

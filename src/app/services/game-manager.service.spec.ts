@@ -109,16 +109,20 @@ describe('GameManagerService', () => {
   });
 
   describe('actionableReceived', () => {
-    it('should invoke GameLoopService run', () => {
-      let result: ActionableEvent | undefined;
+    it('should invoke GameLoopService run', (done) => {
+      let result: string | undefined;
 
-      when(mockedGameLoopService.run(anything())).thenCall(() => {
-        result = actionableEvent;
+      when(mockedGameLoopService.run(anything())).thenReturn({ logs: ['GG'] });
+
+      service.events.actionLogged$.pipe(take(10)).subscribe((event) => {
+        result = event;
       });
 
       service.actionableReceived(actionableEvent);
 
-      expect(result).toEqual(actionableEvent);
+      done();
+
+      expect(result).toEqual('GG');
     });
   });
 });

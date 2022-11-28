@@ -43,7 +43,7 @@ export class DefenseRule implements RuleInterface {
               const log =
                 this.characterService.currentCharacter.damaged(damageAmount);
 
-              logs.push(`${log}`);
+              logs.push(`player: ${log}`);
             } else {
               logs.push(`player: dodged ${interactive.name} attack`);
             }

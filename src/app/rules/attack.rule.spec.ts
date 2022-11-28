@@ -61,31 +61,28 @@ describe('AttackRule', () => {
   });
 
   describe('execute', () => {
-    describe('when attack misses', () => {
-      it('return logs', () => {
-        when(mockedRngService.checkSkill(45)).thenReturn({
-          result: 'SUCCESS',
-          roll: 10,
-        });
+    it('return logs', () => {
+      when(mockedRngService.checkSkill(45)).thenReturn({
+        result: 'SUCCESS',
+        roll: 10,
+      });
 
-        when(mockedRngService.roll(unarmed.damage.diceRoll)).thenReturn(
-          1 + unarmed.damage.fixed
-        );
+      when(mockedRngService.roll(unarmed.damage.diceRoll)).thenReturn(
+        1 + unarmed.damage.fixed
+      );
 
-        when(
-          mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 1)
-        ).thenReturn('GG');
+      when(
+        mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 1)
+      ).thenReturn('received 1 damage');
 
-        const result = service.execute(event);
+      const result = service.execute(event);
 
-        expect(result).toEqual({
-          logs: [
-            'player: attacked test USING Bare hands',
-            'player: used Brawl and rolled 10 -> SUCCESS',
-            'player: did 1 damage with Bare hands',
-            'test: GG',
-          ],
-        });
+      expect(result).toEqual({
+        logs: [
+          'player: attacked test USING Bare hands',
+          'player: used Brawl and rolled 10 -> SUCCESS',
+          'test: received 1 damage from player Bare hands',
+        ],
       });
     });
   });
