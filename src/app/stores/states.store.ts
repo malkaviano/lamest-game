@@ -72,7 +72,7 @@ export class StatesStore {
       'shelfJump',
       new SkillState(
         createActionableDefinition('SKILL', 'Athleticism'),
-        this.states['shelfStore'],
+        this.states['shelfLoot'],
         2
       )
     );

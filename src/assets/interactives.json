@@ -1,0 +1,104 @@
+{
+  "interactives": [
+    {
+      "id": "npc1",
+      "name": "NPC",
+      "description": "Some random person",
+      "state": "npcConversation",
+      "resettable": true
+    },
+    {
+      "id": "sceneExitDoor",
+      "name": "Outside Door",
+      "description": "Need some fresh air?",
+      "state": "exitDoor",
+      "resettable": true
+    },
+    {
+      "id": "upperShelf",
+      "name": "Shelf",
+      "description": "Very high on the wall",
+      "state": "shelfJump",
+      "resettable": false
+    },
+    {
+      "id": "enterSceneDoor",
+      "name": "Enter room",
+      "description": "Change to main room",
+      "state": "enterDoor",
+      "resettable": true
+    },
+    {
+      "id": "trainingDummy",
+      "name": "Training Dummy",
+      "description": "Try some attack moves here",
+      "state": "trainingDummy",
+      "resettable": false
+    },
+    {
+      "id": "woodBox",
+      "name": "Wood Box",
+      "description": "Old Wood Box",
+      "state": "woodBox",
+      "resettable": false
+    },
+    {
+      "id": "zombie",
+      "name": "Nasty Zombie",
+      "description": "What the frack is that?",
+      "state": "zombie",
+      "resettable": false
+    },
+    {
+      "id": "corridorDoor",
+      "name": "Corridor",
+      "description": "Change to corridor",
+      "state": "corridorDoor",
+      "resettable": true
+    },
+    {
+      "id": "table",
+      "name": "Table",
+      "description": "Common table",
+      "state": "tableLoot",
+      "resettable": true
+    }
+  ],
+  "usedItems": [
+    {
+      "id": "upperShelf",
+      "items": [
+        {
+          "name": "knife",
+          "quantity": 1
+        },
+        {
+          "name": "firstAid",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "woodBox",
+      "items": [
+        {
+          "name": "club",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "table",
+      "items": [
+        {
+          "name": "halberd",
+          "quantity": 1
+        },
+        {
+          "name": "bubbleGum",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}
