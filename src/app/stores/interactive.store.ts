@@ -1,17 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
-import { DamageDefinition } from '../definitions/damage.definition';
-import { createDice } from '../definitions/dice.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ConversationState } from '../states/conversation.state';
-import { DestroyableState } from '../states/destroyable.state';
-import { DiscardState } from '../states/discard.state';
-import { emptyState } from '../states/empty.state';
-import { EnemyState } from '../states/enemy.state';
-import { SimpleState } from '../states/simple.state';
-import { SkillState } from '../states/skill.state';
+import { StatesStore } from './states.store';
 
 @Injectable({
   providedIn: 'root',
@@ -21,126 +12,65 @@ export class InteractiveStore {
 
   public readonly usedItems: KeyValueInterface<KeyValueInterface<number>>;
 
-  constructor() {
+  constructor(private readonly stateStore: StatesStore) {
     this.interactives = {
       npc1: new InteractiveEntity(
         'npc1',
         'NPC',
-        'Demo Conversation Interactable',
-        new ConversationState(
-          {
-            map1: {
-              strange: {
-                label: 'Strange sights',
-                answer: 'I did see nothing',
-              },
-              things: {
-                label: 'How are things',
-                answer: 'So so, day by day',
-              },
-              bar: {
-                label: 'Next bar',
-                answer: 'Around the corner',
-                change: 'map2',
-              },
-            },
-            map2: {
-              drink: {
-                label: 'Want a drink?',
-                answer: 'Fuck off',
-                change: 'map1',
-              },
-            },
-          },
-          'map1'
-        )
+        'Some random person',
+        this.stateStore.states['npcConversation']
       ),
       sceneExitDoor: new InteractiveEntity(
         'sceneExitDoor',
         'Outside Door',
         'Need some fresh air?',
-        new SimpleState([
-          createActionableDefinition('SCENE', 'sceneExitDoor', 'Exit'),
-        ])
+        this.stateStore.states['exitDoor']
       ),
       upperShelf: new InteractiveEntity(
         'upperShelf',
         'Shelf',
         'Very high on the wall',
-        new SkillState(
-          createActionableDefinition('SKILL', 'Athleticism'),
-          new DiscardState([
-            createActionableDefinition('PICK', 'knife', 'Hunting Knife'),
-            createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
-            createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
-          ]),
-          2
-        ),
+        this.stateStore.states['shelfJump'],
         false
       ),
       enterSceneDoor: new InteractiveEntity(
         'enterSceneDoor',
         'Enter room',
         'Change to main room',
-        new SimpleState([
-          createActionableDefinition('SCENE', 'enterSceneDoor', 'Enter'),
-        ])
+        this.stateStore.states['enterDoor']
       ),
       trainingDummy: new InteractiveEntity(
         'trainingDummy',
         'Training Dummy',
         'Try some attack moves here',
-        new EnemyState(
-          [createActionableDefinition('ATTACK', 'attack', 'Attack')],
-          emptyState,
-          6,
-          new DamageDefinition(createDice(), 1),
-          30
-        ),
+        this.stateStore.states['trainingDummy'],
         false
       ),
       woodBox: new InteractiveEntity(
         'woodBox',
         'Wood Box',
         'Old Wood Box',
-        new DestroyableState(
-          [createActionableDefinition('ATTACK', 'attack', 'Attack')],
-          new DiscardState([
-            createActionableDefinition('PICK', 'club', 'Wood Stick'),
-          ]),
-          5
-        ),
+        this.stateStore.states['woodBox'],
         false
       ),
       zombie: new InteractiveEntity(
         'zombie',
         'Nasty Zombie',
         'What the frack is that?',
-        new EnemyState(
-          [createActionableDefinition('ATTACK', 'attack', 'Attack')],
-          emptyState,
-          10,
-          new DamageDefinition(createDice({ D6: 1 }), 1),
-          45
-        ),
+        this.stateStore.states['zombie'],
         false
       ),
       corridorDoor: new InteractiveEntity(
         'corridorDoor',
         'Corridor',
         'Change to corridor',
-        new SimpleState([
-          createActionableDefinition('SCENE', 'corridorDoor', 'Enter'),
-        ])
+        this.stateStore.states['corridorDoor']
       ),
       table: new InteractiveEntity(
         'table',
         'Table',
         'Common table',
-        new DiscardState([
-          createActionableDefinition('PICK', 'halberd', 'Halberd'),
-          createActionableDefinition('PICK', 'bubbleGum', 'Bubble Gum'),
-        ])
+        this.stateStore.states['tableLoot']
       ),
     };
 
