@@ -1,0 +1,17 @@
+{
+  "consumables": [
+    {
+      "name": "firstAid",
+      "label": "First Aid Kit",
+      "description": "Use to recover HP",
+      "hp": 4,
+      "skillName": "First Aid"
+    },
+    {
+      "name": "bubbleGum",
+      "label": "Bubble Gum",
+      "description": "Use to recover HP",
+      "hp": 1
+    }
+  ]
+}

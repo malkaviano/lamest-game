@@ -9,49 +9,51 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 
+import weaponStore from '../../assets/weapons.json';
+import consumableStore from '../../assets/consumables.json';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ItemStore {
-  public readonly items: KeyValueInterface<GameItemDefinition>;
+  public readonly store: Map<string, GameItemDefinition>;
 
   constructor() {
-    this.items = {
-      knife: new WeaponDefinition(
-        'knife',
-        'Hunting Knife',
-        'A knife used by hunters mostly',
-        'Melee Weapon (Simple)',
-        new DamageDefinition(createDice({ D6: 1 }), 1)
-      ),
-      halberd: new WeaponDefinition(
-        'halberd',
-        'Halberd',
-        'A big weapon',
-        'Melee Weapon (Great)',
-        new DamageDefinition(createDice({ D10: 1 }), 0)
-      ),
-      firstAid: new ConsumableDefinition(
-        'firstAid',
-        'First Aid Kit',
-        'Use to recover HP',
-        4,
-        'First Aid'
-      ),
-      club: new WeaponDefinition(
-        'club',
-        'Wood Stick',
-        'Some rustic weapon',
-        'Melee Weapon (Simple)',
-        new DamageDefinition(createDice({ D4: 1 }), 0)
-      ),
-      bubbleGum: new ConsumableDefinition(
-        'bubbleGum',
-        'Bubble Gum',
-        'Use to recover HP',
-        1
-      ),
-    };
+    this.store = new Map<string, GameItemDefinition>();
+
+    weaponStore.weapons.forEach((item) => {
+      this.store.set(
+        item.name,
+        new WeaponDefinition(
+          item.name,
+          item.label,
+          item.description,
+          item.skillName as SkillNameLiteral,
+          new DamageDefinition(createDice(item.damage?.dice), item.damage.fixed)
+        )
+      );
+    });
+
+    consumableStore.consumables.forEach((item) => {
+      this.store.set(
+        item.name,
+        new ConsumableDefinition(
+          item.name,
+          item.label,
+          item.description,
+          item.hp,
+          item.skillName as SkillNameLiteral
+        )
+      );
+    });
+  }
+
+  public get items(): KeyValueInterface<GameItemDefinition> {
+    return Array.from(this.store.entries()).reduce((acc: any, [k, v]) => {
+      acc[k] = v;
+
+      return acc;
+    }, {});
   }
 
   public itemLabel(itemName: string): string {
