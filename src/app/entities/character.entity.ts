@@ -6,6 +6,7 @@ import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { skillDefinitions } from '../definitions/skill.definition';
 import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
 import { Observable, Subject } from 'rxjs';
+import { HitPointsEvent } from '../events/hitpoints.event';
 
 export class CharacterEntity {
   private readonly maximumHP: number;
@@ -16,9 +17,9 @@ export class CharacterEntity {
 
   private currentPP: number;
 
-  private readonly hpChanged: Subject<number>;
+  private readonly hpChanged: Subject<HitPointsEvent>;
 
-  public readonly hpChanged$: Observable<number>;
+  public readonly hpChanged$: Observable<HitPointsEvent>;
 
   constructor(
     public readonly identity: IdentityDefinition,
@@ -97,14 +98,14 @@ export class CharacterEntity {
   }
 
   private modifyHealth(modified: number): void {
-    const oldHP = this.currentHP;
+    const previousHP = this.currentHP;
 
     this.currentHP += modified;
 
     this.currentHP = this.clamp(this.currentHP, 0, this.maximumHP);
 
-    if (oldHP !== this.currentHP) {
-      this.hpChanged.next(this.currentHP - oldHP);
+    if (previousHP !== this.currentHP) {
+      this.hpChanged.next(new HitPointsEvent(previousHP, this.currentHP));
     }
   }
 

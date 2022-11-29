@@ -6,6 +6,7 @@ import { CharacteristicsDefinition } from '../definitions/characteristics.defini
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { CharacterEntity } from './character.entity';
 import { take } from 'rxjs';
+import { HitPointsEvent } from '../events/hitpoints.event';
 
 describe('CharacterEntity', () => {
   describe('Calculating Derived Attributes', () => {
@@ -140,7 +141,7 @@ describe('CharacterEntity', () => {
     });
 
     it('should emit an event', (done) => {
-      let result: number | undefined;
+      let result: HitPointsEvent | undefined;
 
       const char = character();
 
@@ -152,7 +153,7 @@ describe('CharacterEntity', () => {
 
       done();
 
-      expect(result).toEqual(-6);
+      expect(result).toEqual(new HitPointsEvent(9, 3));
     });
   });
 
@@ -176,7 +177,7 @@ describe('CharacterEntity', () => {
     });
 
     it('should emit an event', (done) => {
-      let result: number | undefined;
+      let result: HitPointsEvent | undefined;
 
       const char = character();
 
@@ -190,7 +191,7 @@ describe('CharacterEntity', () => {
 
       done();
 
-      expect(result).toEqual(3);
+      expect(result).toEqual(new HitPointsEvent(6, 9));
     });
   });
 });
