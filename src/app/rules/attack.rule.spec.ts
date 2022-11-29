@@ -81,7 +81,7 @@ describe('AttackRule', () => {
         logs: [
           'player: attacked test USING Bare hands',
           'player: used Brawl and rolled 10 -> SUCCESS',
-          'test: received 1 damage from player Bare hands',
+          'test: received 1 damage by player Bare hands',
         ],
       });
     });

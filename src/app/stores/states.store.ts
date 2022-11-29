@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
@@ -13,66 +12,44 @@ import { emptyState } from '../states/empty.state';
 import { EnemyState } from '../states/enemy.state';
 import { SimpleState } from '../states/simple.state';
 import { SkillState } from '../states/skill.state';
+import { ActionableStore } from './actionable.store';
+import { MessageStore } from './message.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
-  constructor(private readonly converterHelper: ConverterHelper) {
+  constructor(
+    private readonly converterHelper: ConverterHelper,
+    private readonly messageStore: MessageStore,
+    private readonly actionableStore: ActionableStore
+  ) {
     this.store = new Map<string, ActionableState>();
 
     this.store.set(
       'npcConversation',
-      new ConversationState(
-        {
-          map1: {
-            strange: {
-              label: 'Strange sights',
-              answer: 'I did see nothing',
-            },
-            things: {
-              label: 'How are things',
-              answer: 'So so, day by day',
-            },
-            bar: {
-              label: 'Next bar',
-              answer: 'Around the corner',
-              change: 'map2',
-            },
-          },
-          map2: {
-            drink: {
-              label: 'Want a drink?',
-              answer: 'Fuck off',
-              change: 'map1',
-            },
-          },
-        },
-        'map1'
-      )
+      new ConversationState(this.messageStore.store, 'map1')
     );
 
     this.store.set(
       'exitDoor',
-      new SimpleState([
-        createActionableDefinition('SCENE', 'sceneExitDoor', 'Exit'),
-      ])
+      new SimpleState([this.actionableStore.actionables['sceneExitDoor']])
     );
 
     this.store.set(
       'shelfLoot',
       new DiscardState([
-        createActionableDefinition('PICK', 'knife', 'Hunting Knife'),
-        createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
-        createActionableDefinition('PICK', 'firstAid', 'First Aid Kit'),
+        this.actionableStore.actionables['knife'],
+        this.actionableStore.actionables['firstAid'],
+        this.actionableStore.actionables['firstAid'],
       ])
     );
 
     this.store.set(
       'shelfJump',
       new SkillState(
-        createActionableDefinition('SKILL', 'Athleticism'),
+        this.actionableStore.actionables['Athleticism'],
         this.states['shelfLoot'],
         2
       )
@@ -80,15 +57,13 @@ export class StatesStore {
 
     this.store.set(
       'enterDoor',
-      new SimpleState([
-        createActionableDefinition('SCENE', 'enterSceneDoor', 'Enter'),
-      ])
+      new SimpleState([this.actionableStore.actionables['enterSceneDoor']])
     );
 
     this.store.set(
       'trainingDummy',
       new EnemyState(
-        [createActionableDefinition('ATTACK', 'attack', 'Attack')],
+        [this.actionableStore.actionables['attack']],
         emptyState,
         6,
         new DamageDefinition(createDice(), 1),
@@ -98,15 +73,13 @@ export class StatesStore {
 
     this.store.set(
       'lootWoodBox',
-      new DiscardState([
-        createActionableDefinition('PICK', 'club', 'Wood Stick'),
-      ])
+      new DiscardState([this.actionableStore.actionables['club']])
     );
 
     this.store.set(
       'woodBox',
       new DestroyableState(
-        [createActionableDefinition('ATTACK', 'attack', 'Attack')],
+        [this.actionableStore.actionables['attack']],
         this.states['lootWoodBox'],
         5
       )
@@ -115,7 +88,7 @@ export class StatesStore {
     this.store.set(
       'zombie',
       new EnemyState(
-        [createActionableDefinition('ATTACK', 'attack', 'Attack')],
+        [this.actionableStore.actionables['attack']],
         emptyState,
         10,
         new DamageDefinition(createDice({ D6: 1 }), 1),
@@ -125,16 +98,14 @@ export class StatesStore {
 
     this.store.set(
       'corridorDoor',
-      new SimpleState([
-        createActionableDefinition('SCENE', 'corridorDoor', 'Enter'),
-      ])
+      new SimpleState([this.actionableStore.actionables['corridorDoor']])
     );
 
     this.store.set(
       'tableLoot',
       new DiscardState([
-        createActionableDefinition('PICK', 'halberd', 'Halberd'),
-        createActionableDefinition('PICK', 'bubbleGum', 'Bubble Gum'),
+        this.actionableStore.actionables['halberd'],
+        this.actionableStore.actionables['bubbleGum'],
       ])
     );
   }

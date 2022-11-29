@@ -54,7 +54,7 @@ export class AttackRule implements RuleInterface {
         );
 
         if (log) {
-          logs.push(`${interactive.name}: ${log} from player ${weapon.label}`);
+          logs.push(`${interactive.name}: ${log} by player ${weapon.label}`);
         }
       }
     }

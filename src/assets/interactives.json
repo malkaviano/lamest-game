@@ -61,7 +61,7 @@
       "name": "Table",
       "description": "Common table",
       "state": "tableLoot",
-      "resettable": true
+      "resettable": false
     }
   ],
   "usedItems": [
