@@ -1,6 +1,7 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { ResultLiteral } from '../literals/result.literal';
+import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 import { DestroyableState } from './destroyable.state';
 
@@ -8,8 +9,8 @@ export class EnemyState extends ActionableState {
   private destroyableState: DestroyableState;
 
   constructor(
-    stateActions: ActionableDefinition[],
-    protected readonly killedState: ActionableState,
+    stateActions: ArrayView<ActionableDefinition>,
+    protected readonly killedState: () => ActionableState,
     hitPoints: number,
     protected readonly damage: DamageDefinition,
     protected readonly attackSkillValue: number
@@ -53,7 +54,7 @@ export class EnemyState extends ActionableState {
     if (this.hitPoints > 0) {
       return {
         state: new EnemyState(
-          this.actions.items,
+          this.actions,
           this.killedState,
           this.hitPoints,
           this.damage,

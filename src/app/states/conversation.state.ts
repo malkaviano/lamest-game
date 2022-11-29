@@ -6,6 +6,7 @@ import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { MessageMapDefinition } from '../definitions/message-map.definition';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
+import { ArrayView } from '../views/array.view';
 
 export class ConversationState extends ActionableState {
   protected readonly currentMessages: KeyValueInterface<{
@@ -23,7 +24,7 @@ export class ConversationState extends ActionableState {
     const actions = Object.keys(currentMessages).map((topic) =>
       createActionableDefinition('ASK', topic, currentMessages[topic].label)
     );
-    super('ConversationState', actions);
+    super('ConversationState', new ArrayView(actions));
 
     this.currentMessages = currentMessages;
   }

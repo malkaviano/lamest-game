@@ -189,7 +189,7 @@ describe('GamePage', () => {
           'id1',
           'props1',
           'This is props1',
-          new SimpleState([askAction])
+          new SimpleState(new ArrayView([askAction]))
         ),
       ])
     );
@@ -281,7 +281,7 @@ const scene = new SceneDefinition(
       'id1',
       'props1',
       'This is props1',
-      new SimpleState([askAction])
+      new SimpleState(new ArrayView([askAction]))
     ),
   ])
 );

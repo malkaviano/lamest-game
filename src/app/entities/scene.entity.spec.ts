@@ -25,7 +25,7 @@ const interactive = new InteractiveEntity(
   'id1',
   'inter1',
   'GG',
-  new SimpleState([])
+  new SimpleState(new ArrayView([]))
 );
 
 const entity = new SceneEntity(descriptions, new ArrayView([interactive]), {});

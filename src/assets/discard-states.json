@@ -1,0 +1,16 @@
+{
+  "states": [
+    {
+      "interactiveId": "shelfLoot",
+      "actionables": ["knife", "firstAid", "firstAid"]
+    },
+    {
+      "interactiveId": "lootWoodBox",
+      "actionables": ["club"]
+    },
+    {
+      "interactiveId": "tableLoot",
+      "actionables": ["halberd", "bubbleGum"]
+    }
+  ]
+}

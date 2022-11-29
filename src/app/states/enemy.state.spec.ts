@@ -1,6 +1,7 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
+import { ArrayView } from '../views/array.view';
 import { emptyState } from './empty.state';
 import { EnemyState } from './enemy.state';
 
@@ -50,6 +51,10 @@ const expected = {
   damage,
 };
 
-const state = () => new EnemyState([attackAction], emptyState, 10, damage, 25);
+const f = () => emptyState;
 
-const state2 = () => new EnemyState([attackAction], emptyState, 4, damage, 25);
+const state = () =>
+  new EnemyState(new ArrayView([attackAction]), f, 10, damage, 25);
+
+const state2 = () =>
+  new EnemyState(new ArrayView([attackAction]), f, 4, damage, 25);

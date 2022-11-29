@@ -14,6 +14,14 @@ import { SimpleState } from '../states/simple.state';
 import { SkillState } from '../states/skill.state';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
+import { ArrayView } from '../views/array.view';
+
+import skillStateStore from '../../assets/skill-states.json';
+import discardStateStore from '../../assets/discard-states.json';
+import simpleStateStore from '../../assets/simple-states.json';
+import conversationStateStore from '../../assets/conversation-states.json';
+import destroyableStateStore from '../../assets/destroyable-states.json';
+import enemyStateStore from '../../assets/enemy-states.json';
 
 @Injectable({
   providedIn: 'root',
@@ -27,90 +35,86 @@ export class StatesStore {
   ) {
     this.store = new Map<string, ActionableState>();
 
-    this.store.set(
-      'npcConversation',
-      new ConversationState(this.messageStore.store, 'map1')
-    );
+    this.store.set('emptyState', emptyState);
 
-    this.store.set(
-      'exitDoor',
-      new SimpleState([this.actionableStore.actionables['sceneExitDoor']])
-    );
+    skillStateStore.states.forEach((state) => {
+      this.store.set(
+        state.interactiveId,
+        new SkillState(
+          this.actionableStore.actionables[state.actionable],
+          () => this.states[state.successState],
+          state.maximumTries
+        )
+      );
+    });
 
-    this.store.set(
-      'shelfLoot',
-      new DiscardState([
-        this.actionableStore.actionables['knife'],
-        this.actionableStore.actionables['firstAid'],
-        this.actionableStore.actionables['firstAid'],
-      ])
-    );
+    discardStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(state);
 
-    this.store.set(
-      'shelfJump',
-      new SkillState(
-        this.actionableStore.actionables['Athleticism'],
-        this.states['shelfLoot'],
-        2
-      )
-    );
+      this.store.set(state.interactiveId, new DiscardState(actionables));
+    });
 
-    this.store.set(
-      'enterDoor',
-      new SimpleState([this.actionableStore.actionables['enterSceneDoor']])
-    );
+    simpleStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(state);
 
-    this.store.set(
-      'trainingDummy',
-      new EnemyState(
-        [this.actionableStore.actionables['attack']],
-        emptyState,
-        6,
-        new DamageDefinition(createDice(), 1),
-        30
-      )
-    );
+      this.store.set(state.interactiveId, new SimpleState(actionables));
+    });
 
-    this.store.set(
-      'lootWoodBox',
-      new DiscardState([this.actionableStore.actionables['club']])
-    );
+    conversationStateStore.states.forEach((state) => {
+      const map = state.maps.reduce((map: { [key: string]: any }, mapName) => {
+        map[mapName] = this.messageStore.store[mapName];
 
-    this.store.set(
-      'woodBox',
-      new DestroyableState(
-        [this.actionableStore.actionables['attack']],
-        this.states['lootWoodBox'],
-        5
-      )
-    );
+        return map;
+      }, {});
 
-    this.store.set(
-      'zombie',
-      new EnemyState(
-        [this.actionableStore.actionables['attack']],
-        emptyState,
-        10,
-        new DamageDefinition(createDice({ D6: 1 }), 1),
-        45
-      )
-    );
+      this.store.set(
+        state.interactiveId,
+        new ConversationState(map, state.initialMap)
+      );
+    });
 
-    this.store.set(
-      'corridorDoor',
-      new SimpleState([this.actionableStore.actionables['corridorDoor']])
-    );
+    destroyableStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(state);
 
-    this.store.set(
-      'tableLoot',
-      new DiscardState([
-        this.actionableStore.actionables['halberd'],
-        this.actionableStore.actionables['bubbleGum'],
-      ])
-    );
+      this.store.set(
+        state.interactiveId,
+        new DestroyableState(
+          actionables,
+          () => this.states[state.destroyedState],
+          state.hitpoints
+        )
+      );
+    });
+
+    enemyStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(state);
+
+      this.store.set(
+        state.interactiveId,
+        new EnemyState(
+          actionables,
+          () => this.states[state.killedState],
+          state.hitpoints,
+          new DamageDefinition(
+            createDice(state.damage.dice),
+            state.damage.fixed
+          ),
+          state.attackSkillValue
+        )
+      );
+    });
   }
 
   public get states(): KeyValueInterface<ActionableState> {
     return this.converterHelper.mapToKeyValueInterface(this.store);
+  }
+
+  private getActionables(state: {
+    interactiveId: string;
+    actionables: string[];
+  }) {
+    return new ArrayView(
+      state.actionables.map((a) => this.actionableStore.actionables[a])
+    );
   }
 }

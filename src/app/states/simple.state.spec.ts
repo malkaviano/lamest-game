@@ -1,4 +1,5 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ArrayView } from '../views/array.view';
 import { SimpleState } from './simple.state';
 
 describe('SimpleState', () => {
@@ -21,4 +22,6 @@ const pickAction = createActionableDefinition(
   'Get bubble gum'
 );
 
-const state = new SimpleState([askAction1, askAction2, pickAction]);
+const state = new SimpleState(
+  new ArrayView([askAction1, askAction2, pickAction])
+);

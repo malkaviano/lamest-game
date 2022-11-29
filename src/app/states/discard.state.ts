@@ -1,9 +1,10 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ResultLiteral } from '../literals/result.literal';
+import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
 export class DiscardState extends ActionableState {
-  constructor(stateActions: ActionableDefinition[]) {
+  constructor(stateActions: ArrayView<ActionableDefinition>) {
     super('DiscardState', stateActions);
   }
 
@@ -18,7 +19,9 @@ export class DiscardState extends ActionableState {
     const discarded = actions[index];
 
     return {
-      state: new DiscardState(actions.filter((_, i) => i !== index)),
+      state: new DiscardState(
+        new ArrayView(actions.filter((_, i) => i !== index))
+      ),
       log: discarded.label,
     };
   }

@@ -1,9 +1,10 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ResultLiteral } from '../literals/result.literal';
+import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
 export class SimpleState extends ActionableState {
-  constructor(stateActions: ActionableDefinition[]) {
+  constructor(stateActions: ArrayView<ActionableDefinition>) {
     super('SimpleState', stateActions);
   }
 

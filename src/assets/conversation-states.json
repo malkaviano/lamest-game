@@ -1,0 +1,9 @@
+{
+  "states": [
+    {
+      "interactiveId": "npcConversation",
+      "maps": ["map1", "map2"],
+      "initialMap": "map1"
+    }
+  ]
+}

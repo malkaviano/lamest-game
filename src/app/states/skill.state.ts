@@ -1,15 +1,16 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ResultLiteral } from '../literals/result.literal';
+import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 
 export class SkillState extends ActionableState {
   constructor(
     stateAction: ActionableDefinition,
-    private readonly successState: ActionableState,
+    private readonly successState: () => ActionableState,
     private readonly maximumTries: number
   ) {
-    super('SkillState', [stateAction]);
+    super('SkillState', new ArrayView([stateAction]));
   }
 
   protected override stateResult(
@@ -18,7 +19,7 @@ export class SkillState extends ActionableState {
   ): { state: ActionableState; log?: string } {
     switch (result) {
       case 'SUCCESS':
-        return { state: this.successState };
+        return { state: this.successState() };
       case 'FAILURE':
         return {
           state:
@@ -33,7 +34,7 @@ export class SkillState extends ActionableState {
 
   private clone(maximumTries: number): SkillState {
     return new SkillState(
-      this.stateActions[0],
+      this.stateActions.items[0],
       this.successState,
       maximumTries
     );

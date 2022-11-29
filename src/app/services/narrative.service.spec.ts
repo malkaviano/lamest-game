@@ -101,14 +101,14 @@ const sceneInteractive = new InteractiveEntity(
   'sceneExitDoor',
   'exit',
   'leaving',
-  new SimpleState([exitDoor])
+  new SimpleState(new ArrayView([exitDoor]))
 );
 
 const skillInteractive = new InteractiveEntity(
   'athleticism',
   'Jumping',
   'Jump outside the window',
-  new SimpleState([skill])
+  new SimpleState(new ArrayView([skill]))
 );
 
 const entity1 = new SceneEntity(

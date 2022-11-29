@@ -1,0 +1,10 @@
+{
+  "states": [
+    {
+      "interactiveId": "woodBox",
+      "actionables": ["attack"],
+      "destroyedState": "lootWoodBox",
+      "hitpoints": 5
+    }
+  ]
+}

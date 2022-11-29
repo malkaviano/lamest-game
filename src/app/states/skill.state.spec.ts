@@ -1,4 +1,5 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 import { SimpleState } from './simple.state';
@@ -54,11 +55,14 @@ const pickAction = createActionableDefinition(
   'Get bubble gum'
 );
 
-const successState = new SimpleState([
-  createActionableDefinition('ASK', 'askMeSecret', 'Whats the secret?'),
-]);
+const successState = new SimpleState(
+  new ArrayView([
+    createActionableDefinition('ASK', 'askMeSecret', 'Whats the secret?'),
+  ])
+);
 
-const state1: () => ActionableState = () =>
-  new SkillState(pickAction, successState, 2);
+const f = () => successState;
 
-const state2 = () => new SkillState(pickAction, successState, 1);
+const state1: () => ActionableState = () => new SkillState(pickAction, f, 2);
+
+const state2: () => ActionableState = () => new SkillState(pickAction, f, 1);

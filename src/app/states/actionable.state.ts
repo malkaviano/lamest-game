@@ -8,11 +8,11 @@ import { DamageDefinition } from '../definitions/damage.definition';
 export abstract class ActionableState {
   constructor(
     public readonly name: StateLiteral,
-    protected stateActions: ActionableDefinition[]
+    protected stateActions: ArrayView<ActionableDefinition>
   ) {}
 
   public get actions(): ArrayView<ActionableDefinition> {
-    return new ArrayView(this.stateActions);
+    return this.stateActions;
   }
 
   public get attack(): { skillValue: number; damage: DamageDefinition } | null {
@@ -24,7 +24,7 @@ export abstract class ActionableState {
     result: ResultLiteral,
     damageTaken?: number
   ): { state: ActionableState; log?: string } {
-    if (!this.stateActions.some((a) => a.equals(action))) {
+    if (!this.stateActions.items.some((a) => a.equals(action))) {
       throw new Error(errorMessages['WRONG-ACTION']);
     }
 

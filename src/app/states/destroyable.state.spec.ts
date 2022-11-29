@@ -1,4 +1,5 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ArrayView } from '../views/array.view';
 import { DestroyableState } from './destroyable.state';
 import { DiscardState } from './discard.state';
 
@@ -39,12 +40,10 @@ const knifeAction = createActionableDefinition(
   'Hunting Knife'
 );
 
-const discardedState = new DiscardState([knifeAction]);
+const discardedState = new DiscardState(new ArrayView([knifeAction]));
 
-const state = new DestroyableState([attackAction], discardedState, 10);
+const f = () => discardedState;
 
-const state2 = new DestroyableState(
-  [attackAction],
-  new DiscardState([knifeAction]),
-  4
-);
+const state = new DestroyableState(new ArrayView([attackAction]), f, 10);
+
+const state2 = new DestroyableState(new ArrayView([attackAction]), f, 4);

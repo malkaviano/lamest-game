@@ -1,0 +1,10 @@
+{
+  "states": [
+    {
+      "interactiveId": "shelfJump",
+      "actionable": "Athleticism",
+      "maximumTries": 2,
+      "successState": "shelfLoot"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import {
 } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { ResultLiteral } from '../literals/result.literal';
+import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
 describe('ActionableState', () => {
@@ -42,4 +43,4 @@ const state = new (class extends ActionableState {
   ): { state: ActionableState; log?: string } {
     throw new Error('SHOULD NOT HAPPEN');
   }
-})('SimpleState', [askAction1, askAction2, pickAction]);
+})('SimpleState', new ArrayView([askAction1, askAction2, pickAction]));

@@ -1,4 +1,5 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ArrayView } from '../views/array.view';
 import { DiscardState } from './discard.state';
 
 describe('DiscardState', () => {
@@ -6,7 +7,9 @@ describe('DiscardState', () => {
     it('return state without the action', () => {
       const result = state.onResult(knifeAction, 'NONE');
 
-      const expected = new DiscardState([knifeAction, firstAidAction]);
+      const expected = new DiscardState(
+        new ArrayView([knifeAction, firstAidAction])
+      );
 
       expect(result).toEqual({ state: expected, log: knifeAction.label });
     });
@@ -25,4 +28,6 @@ const firstAidAction = createActionableDefinition(
   'First Aid Kit'
 );
 
-const state = new DiscardState([knifeAction, knifeAction, firstAidAction]);
+const state = new DiscardState(
+  new ArrayView([knifeAction, knifeAction, firstAidAction])
+);
