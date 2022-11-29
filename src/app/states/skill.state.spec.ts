@@ -1,4 +1,5 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
@@ -63,6 +64,8 @@ const successState = new SimpleState(
 
 const f = () => successState;
 
-const state1: () => ActionableState = () => new SkillState(pickAction, f, 2);
+const state1: () => ActionableState = () =>
+  new SkillState(pickAction, new LazyHelper(f), 2);
 
-const state2: () => ActionableState = () => new SkillState(pickAction, f, 1);
+const state2: () => ActionableState = () =>
+  new SkillState(pickAction, new LazyHelper(f), 1);

@@ -22,6 +22,7 @@ import simpleStateStore from '../../assets/simple-states.json';
 import conversationStateStore from '../../assets/conversation-states.json';
 import destroyableStateStore from '../../assets/destroyable-states.json';
 import enemyStateStore from '../../assets/enemy-states.json';
+import { LazyHelper } from '../helpers/lazy.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +43,7 @@ export class StatesStore {
         state.interactiveId,
         new SkillState(
           this.actionableStore.actionables[state.actionable],
-          () => this.states[state.successState],
+          new LazyHelper(() => this.states[state.successState]),
           state.maximumTries
         )
       );
@@ -80,7 +81,7 @@ export class StatesStore {
         state.interactiveId,
         new DestroyableState(
           actionables,
-          () => this.states[state.destroyedState],
+          new LazyHelper(() => this.states[state.destroyedState]),
           state.hitpoints
         )
       );
@@ -93,7 +94,7 @@ export class StatesStore {
         state.interactiveId,
         new EnemyState(
           actionables,
-          () => this.states[state.killedState],
+          new LazyHelper(() => this.states[state.killedState]),
           state.hitpoints,
           new DamageDefinition(
             createDice(state.damage.dice),

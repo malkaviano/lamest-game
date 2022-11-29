@@ -1,6 +1,7 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../views/array.view';
 import { emptyState } from './empty.state';
 import { EnemyState } from './enemy.state';
@@ -53,8 +54,10 @@ const expected = {
 
 const f = () => emptyState;
 
+const lazy = new LazyHelper(f);
+
 const state = () =>
-  new EnemyState(new ArrayView([attackAction]), f, 10, damage, 25);
+  new EnemyState(new ArrayView([attackAction]), lazy, 10, damage, 25);
 
 const state2 = () =>
-  new EnemyState(new ArrayView([attackAction]), f, 4, damage, 25);
+  new EnemyState(new ArrayView([attackAction]), lazy, 4, damage, 25);

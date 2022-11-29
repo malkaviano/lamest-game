@@ -1,4 +1,5 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../views/array.view';
 import { DestroyableState } from './destroyable.state';
 import { DiscardState } from './discard.state';
@@ -44,6 +45,8 @@ const discardedState = new DiscardState(new ArrayView([knifeAction]));
 
 const f = () => discardedState;
 
-const state = new DestroyableState(new ArrayView([attackAction]), f, 10);
+const lazy = new LazyHelper(f);
 
-const state2 = new DestroyableState(new ArrayView([attackAction]), f, 4);
+const state = new DestroyableState(new ArrayView([attackAction]), lazy, 10);
+
+const state2 = new DestroyableState(new ArrayView([attackAction]), lazy, 4);

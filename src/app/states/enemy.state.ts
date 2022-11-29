@@ -1,5 +1,6 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -10,7 +11,7 @@ export class EnemyState extends ActionableState {
 
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
-    protected readonly killedState: () => ActionableState,
+    protected readonly killedState: LazyHelper<ActionableState>,
     hitPoints: number,
     protected readonly damage: DamageDefinition,
     protected readonly attackSkillValue: number

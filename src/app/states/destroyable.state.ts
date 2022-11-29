@@ -1,4 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -6,7 +7,7 @@ import { ActionableState } from './actionable.state';
 export class DestroyableState extends ActionableState {
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
-    protected readonly destroyedState: () => ActionableState,
+    protected readonly destroyedState: LazyHelper<ActionableState>,
     public readonly hitPoints: number
   ) {
     super('DestroyableState', stateActions);
@@ -29,7 +30,7 @@ export class DestroyableState extends ActionableState {
     }
 
     return {
-      state: this.destroyedState(),
+      state: this.destroyedState.value,
       log: `received ${dmg} damage and was destroyed`,
     };
   }

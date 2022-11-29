@@ -1,4 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -7,7 +8,7 @@ import { emptyState } from './empty.state';
 export class SkillState extends ActionableState {
   constructor(
     stateAction: ActionableDefinition,
-    private readonly successState: () => ActionableState,
+    private readonly successState: LazyHelper<ActionableState>,
     private readonly maximumTries: number
   ) {
     super('SkillState', new ArrayView([stateAction]));
@@ -19,7 +20,7 @@ export class SkillState extends ActionableState {
   ): { state: ActionableState; log?: string } {
     switch (result) {
       case 'SUCCESS':
-        return { state: this.successState() };
+        return { state: this.successState.value };
       case 'FAILURE':
         return {
           state:
