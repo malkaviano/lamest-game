@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { RuleResult } from '../results/rule.result';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { NarrativeService } from '../services/narrative.service';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { NarrativeService } from '../services/narrative.service';
 export class SceneRule implements RuleInterface {
   constructor(private readonly narrativeService: NarrativeService) {}
 
-  public execute(action: ActionableEvent): RuleResult {
+  public execute(action: ActionableEvent): RuleResultInterface {
     const logs: string[] = [];
 
     const interactive = this.narrativeService.interatives[action.eventId];

@@ -5,7 +5,7 @@ import { errorMessages } from '../definitions/error-messages.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { ResultLiteral } from '../literals/result.literal';
-import { RuleResult } from '../results/rule.result';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { RandomIntService } from '../services/random-int.service';
@@ -20,7 +20,7 @@ export class ConsumeRule implements RuleInterface {
     private readonly rngService: RandomIntService
   ) {}
 
-  public execute(action: ActionableEvent): RuleResult {
+  public execute(action: ActionableEvent): RuleResultInterface {
     const logs: string[] = [];
 
     const consumable = this.inventoryService.take(

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { unarmed } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { RuleResult } from '../results/rule.result';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
@@ -20,7 +20,7 @@ export class AttackRule implements RuleInterface {
     private readonly narrativeService: NarrativeService
   ) {}
 
-  public execute(action: ActionableEvent): RuleResult {
+  public execute(action: ActionableEvent): RuleResultInterface {
     const logs: string[] = [];
 
     const weapon = this.inventoryService.equipped ?? unarmed;

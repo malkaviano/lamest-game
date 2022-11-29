@@ -1,9 +1,7 @@
 import { ArrayView } from '../views/array.view';
-import {
-  ConversationMessageMap,
-  ConversationState,
-} from './conversation.state';
+import { ConversationState } from './conversation.state';
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { MessageMapDefinition } from '../definitions/message-map.definition';
 
 describe('ConversationState', () => {
   it('should have action Hello', () => {
@@ -31,7 +29,7 @@ describe('ConversationState', () => {
   });
 });
 
-const messageMap: ConversationMessageMap = {
+const messageMap: MessageMapDefinition = {
   map1: {
     hello: {
       label: 'Hello',

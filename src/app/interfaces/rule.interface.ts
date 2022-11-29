@@ -1,6 +1,6 @@
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleResult } from '../results/rule.result';
+import { RuleResultInterface } from './rule-result.interface';
 
 export interface RuleInterface {
-  execute(action: ActionableEvent): RuleResult;
+  execute(action: ActionableEvent): RuleResultInterface;
 }

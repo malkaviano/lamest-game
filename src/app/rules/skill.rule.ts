@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { RuleResult } from '../results/rule.result';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
@@ -17,7 +17,7 @@ export class SkillRule implements RuleInterface {
     private readonly narrativeService: NarrativeService
   ) {}
 
-  public execute(action: ActionableEvent): RuleResult {
+  public execute(action: ActionableEvent): RuleResultInterface {
     const logs: string[] = [];
 
     const skillName = action.actionableDefinition.name;

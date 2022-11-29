@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { RuleResult } from '../results/rule.result';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from '../stores/item.store';
@@ -17,7 +17,7 @@ export class EquipRule implements RuleInterface {
     private readonly itemStore: ItemStore
   ) {}
 
-  public execute(action: ActionableEvent): RuleResult {
+  public execute(action: ActionableEvent): RuleResultInterface {
     const logs: string[] = [];
 
     const skillName = this.itemStore.itemSkill(action.eventId);

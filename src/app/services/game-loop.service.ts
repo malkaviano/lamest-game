@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActionableEvent } from '../events/actionable.event';
 import { RulesHelper } from '../helpers/rules.helper';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { RuleResult } from '../results/rule.result';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from './character.service';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class GameLoopService {
     };
   }
 
-  public run(action: ActionableEvent): RuleResult {
+  public run(action: ActionableEvent): RuleResultInterface {
     let logs: string[] = [];
 
     if (this.characterService.currentCharacter.derivedAttributes.hp.value > 0) {

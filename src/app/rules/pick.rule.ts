@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { RuleResult } from '../results/rule.result';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
 
@@ -15,7 +15,7 @@ export class PickRule implements RuleInterface {
     private readonly narrativeService: NarrativeService
   ) {}
 
-  public execute(action: ActionableEvent): RuleResult {
+  public execute(action: ActionableEvent): RuleResultInterface {
     const logs: string[] = [];
 
     const item = this.inventoryService.take(
