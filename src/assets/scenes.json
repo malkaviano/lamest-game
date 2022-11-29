@@ -1,0 +1,48 @@
+{
+  "scenes": [
+    {
+      "name": "scene1",
+      "description": "scene1",
+      "interactives": [
+        "npc1",
+        "sceneExitDoor",
+        "upperShelf",
+        "woodBox",
+        "corridorDoor",
+        "table"
+      ],
+      "transitions": [
+        {
+          "name": "sceneExitDoor",
+          "scene": "scene2"
+        },
+        {
+          "name": "corridorDoor",
+          "scene": "scene3"
+        }
+      ]
+    },
+    {
+      "name": "scene2",
+      "description": "scene2",
+      "interactives": ["enterSceneDoor", "trainingDummy"],
+      "transitions": [
+        {
+          "name": "enterSceneDoor",
+          "scene": "scene1"
+        }
+      ]
+    },
+    {
+      "name": "scene3",
+      "description": "scene3",
+      "interactives": ["enterSceneDoor", "zombie"],
+      "transitions": [
+        {
+          "name": "enterSceneDoor",
+          "scene": "scene1"
+        }
+      ]
+    }
+  ]
+}
