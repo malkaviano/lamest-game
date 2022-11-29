@@ -1,5 +1,6 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
+import { ActionableEvent } from '../events/actionable.event';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
@@ -11,10 +12,11 @@ export class EnemyState extends ActionableState {
 
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
-    protected readonly killedState: LazyHelper<ActionableState>,
+    private readonly killedState: LazyHelper<ActionableState>,
     hitPoints: number,
-    protected readonly damage: DamageDefinition,
-    protected readonly attackSkillValue: number
+    private readonly damage: DamageDefinition,
+    private readonly attackSkillValue: number,
+    private readonly onlyReact: boolean
   ) {
     super('EnemyState', stateActions);
 
@@ -29,10 +31,14 @@ export class EnemyState extends ActionableState {
     return this.destroyableState.hitPoints;
   }
 
-  public override get attack(): {
+  public override attack(action: ActionableDefinition): {
     skillValue: number;
     damage: DamageDefinition;
   } | null {
+    if (this.onlyReact && action.actionable !== 'ATTACK') {
+      return null;
+    }
+
     return {
       skillValue: this.attackSkillValue,
       damage: this.damage,
@@ -59,7 +65,8 @@ export class EnemyState extends ActionableState {
           this.killedState,
           this.hitPoints,
           this.damage,
-          this.attackSkillValue
+          this.attackSkillValue,
+          this.onlyReact
         ),
         log,
       };

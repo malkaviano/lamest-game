@@ -15,7 +15,9 @@ export abstract class ActionableState {
     return this.stateActions;
   }
 
-  public get attack(): { skillValue: number; damage: DamageDefinition } | null {
+  public attack(
+    _: ActionableDefinition
+  ): { skillValue: number; damage: DamageDefinition } | null {
     return null;
   }
 

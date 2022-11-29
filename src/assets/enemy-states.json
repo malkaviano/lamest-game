@@ -9,7 +9,8 @@
       "damage": {
         "dice": {},
         "fixed": 1
-      }
+      },
+      "onlyReact": true
     },
     {
       "interactiveId": "zombie",
@@ -20,7 +21,8 @@
       "damage": {
         "dice": { "D6": 1 },
         "fixed": 1
-      }
+      },
+      "onlyReact": false
     }
   ]
 }

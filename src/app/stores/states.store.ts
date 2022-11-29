@@ -100,7 +100,8 @@ export class StatesStore {
             createDice(state.damage.dice),
             state.damage.fixed
           ),
-          state.attackSkillValue
+          state.attackSkillValue,
+          state.onlyReact
         )
       );
     });

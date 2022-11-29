@@ -37,13 +37,37 @@ describe('EnemyState', () => {
   });
 
   describe('attack', () => {
-    it('return attack with skill value 25 and damage 1', () => {
-      expect(state().attack).toEqual(expected);
+    describe('onlyReact', () => {
+      describe('when false', () => {
+        it('return attack with skill value 25 and damage 1', () => {
+          expect(state().attack(consumeAction)).toEqual(expected);
+        });
+      });
+
+      describe('when true', () => {
+        describe('when not attacked', () => {
+          it('should not attack', () => {
+            expect(state(true).attack(consumeAction)).toEqual(null);
+          });
+        });
+
+        describe('when attacked', () => {
+          it('should attack', () => {
+            expect(state(true).attack(attackAction)).toEqual(expected);
+          });
+        });
+      });
     });
   });
 });
 
 const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');
+
+const consumeAction = createActionableDefinition(
+  'CONSUME',
+  'consume',
+  'Consume'
+);
 
 const damage = new DamageDefinition(createDice(), 1);
 
@@ -56,8 +80,15 @@ const f = () => emptyState;
 
 const lazy = new LazyHelper(f);
 
-const state = () =>
-  new EnemyState(new ArrayView([attackAction]), lazy, 10, damage, 25);
+const state = (onlyReact: boolean = false) =>
+  new EnemyState(
+    new ArrayView([attackAction]),
+    lazy,
+    10,
+    damage,
+    25,
+    onlyReact
+  );
 
 const state2 = () =>
-  new EnemyState(new ArrayView([attackAction]), lazy, 4, damage, 25);
+  new EnemyState(new ArrayView([attackAction]), lazy, 4, damage, 25, false);

@@ -22,7 +22,7 @@ export class DefenseRule implements RuleInterface {
 
     Object.entries(this.narrativeService.interatives).forEach(
       ([_, interactive]) => {
-        const attack = interactive.attack;
+        const attack = interactive.attack(action.actionableDefinition);
 
         if (attack) {
           const { skillValue, damage } = attack;

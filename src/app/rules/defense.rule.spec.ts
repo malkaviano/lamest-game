@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, reset, when } from 'ts-mockito';
+import { anything, instance, mock, reset, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
@@ -50,7 +50,7 @@ describe('DefenseRule', () => {
 
     when(mockedInteractiveEntity.name).thenReturn('test');
 
-    when(mockedInteractiveEntity.attack).thenReturn({
+    when(mockedInteractiveEntity.attack(action)).thenReturn({
       skillValue: 45,
       damage: new DamageDefinition(createDice(), 4),
     });

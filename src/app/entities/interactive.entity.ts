@@ -31,8 +31,10 @@ export class InteractiveEntity {
     this.actionsChanged$ = this.actionsChanged.asObservable();
   }
 
-  public get attack(): { skillValue: number; damage: DamageDefinition } | null {
-    return this.currentState.attack;
+  public attack(
+    action: ActionableDefinition
+  ): { skillValue: number; damage: DamageDefinition } | null {
+    return this.currentState.attack(action);
   }
 
   public actionSelected(
