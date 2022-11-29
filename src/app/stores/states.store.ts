@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
+import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActionableState } from '../states/actionable.state';
 import { ConversationState } from '../states/conversation.state';
@@ -18,7 +19,7 @@ import { SkillState } from '../states/skill.state';
 })
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
-  constructor() {
+  constructor(private readonly converterHelper: ConverterHelper) {
     this.store = new Map<string, ActionableState>();
 
     this.store.set(
@@ -139,10 +140,6 @@ export class StatesStore {
   }
 
   public get states(): KeyValueInterface<ActionableState> {
-    return Array.from(this.store.entries()).reduce((acc: any, [k, v]) => {
-      acc[k] = v;
-
-      return acc;
-    }, {});
+    return this.converterHelper.mapToKeyValueInterface(this.store);
   }
 }

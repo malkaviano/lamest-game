@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ArrayView } from '../views/array.view';
+import { ConverterHelper } from '../helpers/converter.helper';
 
 import descriptionStore from '../../assets/descriptions.json';
 
@@ -9,21 +10,17 @@ import descriptionStore from '../../assets/descriptions.json';
   providedIn: 'root',
 })
 export class DescriptionStore {
-  private readonly store: Map<string, string[]>;
+  private readonly store: Map<string, ArrayView<string>>;
 
-  constructor() {
-    this.store = new Map<string, string[]>();
+  constructor(private readonly converterHelper: ConverterHelper) {
+    this.store = new Map<string, ArrayView<string>>();
 
     descriptionStore.descriptions.forEach((item) => {
-      this.store.set(item.sceneName, item.paragraphs);
+      this.store.set(item.sceneName, new ArrayView(item.paragraphs));
     });
   }
 
   public get descriptions(): KeyValueInterface<ArrayView<string>> {
-    return Array.from(this.store.entries()).reduce((acc: any, [k, v]) => {
-      acc[k] = new ArrayView(v);
-
-      return acc;
-    }, {});
+    return this.converterHelper.mapToKeyValueInterface(this.store);
   }
 }

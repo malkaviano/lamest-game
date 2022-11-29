@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { StatesStore } from './states.store';
+import { ConverterHelper } from '../helpers/converter.helper';
 
 import interactiveStore from '../../assets/interactives.json';
 
@@ -14,7 +15,10 @@ export class InteractiveStore {
 
   private readonly interactiveItems: Map<string, KeyValueInterface<number>>;
 
-  constructor(private readonly stateStore: StatesStore) {
+  constructor(
+    private readonly stateStore: StatesStore,
+    private readonly converterHelper: ConverterHelper
+  ) {
     this.store = new Map<string, InteractiveEntity>();
 
     interactiveStore.interactives.forEach(
@@ -46,21 +50,10 @@ export class InteractiveStore {
   }
 
   public get interactives(): KeyValueInterface<InteractiveEntity> {
-    return Array.from(this.store.entries()).reduce((acc: any, [k, v]) => {
-      acc[k] = v;
-
-      return acc;
-    }, {});
+    return this.converterHelper.mapToKeyValueInterface(this.store);
   }
 
   public get usedItems(): KeyValueInterface<KeyValueInterface<number>> {
-    return Array.from(this.interactiveItems.entries()).reduce(
-      (acc: any, [k, v]) => {
-        acc[k] = v;
-
-        return acc;
-      },
-      {}
-    );
+    return this.converterHelper.mapToKeyValueInterface(this.interactiveItems);
   }
 }

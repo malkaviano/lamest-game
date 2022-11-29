@@ -12,6 +12,7 @@ import { skillDefinitions } from '../definitions/skill.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { IdentityLiteral } from '../literals/identity.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
+import { KeyValueInterface } from '../interfaces/key-value.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -72,5 +73,15 @@ export class ConverterHelper {
       derivedAttributes,
       skills
     );
+  }
+
+  public mapToKeyValueInterface<Value>(
+    obj: Map<string, Value>
+  ): KeyValueInterface<Value> {
+    return Array.from(obj.entries()).reduce((acc: any, [k, v]) => {
+      acc[k] = v;
+
+      return acc;
+    }, {});
   }
 }

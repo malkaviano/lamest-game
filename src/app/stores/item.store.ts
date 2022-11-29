@@ -8,6 +8,7 @@ import { SkillItemDefinition } from '../definitions/skill-item.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
+import { ConverterHelper } from '../helpers/converter.helper';
 
 import weaponStore from '../../assets/weapons.json';
 import consumableStore from '../../assets/consumables.json';
@@ -18,7 +19,7 @@ import consumableStore from '../../assets/consumables.json';
 export class ItemStore {
   public readonly store: Map<string, GameItemDefinition>;
 
-  constructor() {
+  constructor(private readonly converterHelper: ConverterHelper) {
     this.store = new Map<string, GameItemDefinition>();
 
     weaponStore.weapons.forEach((item) => {
@@ -49,11 +50,7 @@ export class ItemStore {
   }
 
   public get items(): KeyValueInterface<GameItemDefinition> {
-    return Array.from(this.store.entries()).reduce((acc: any, [k, v]) => {
-      acc[k] = v;
-
-      return acc;
-    }, {});
+    return this.converterHelper.mapToKeyValueInterface(this.store);
   }
 
   public itemLabel(itemName: string): string {
