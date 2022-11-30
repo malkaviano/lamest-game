@@ -56,8 +56,6 @@ export class EnemyState extends ActionableState {
     result: ResultLiteral,
     damageTaken?: number | undefined
   ): { state: ActionableState; log?: string } {
-    this.wasAttacked = true;
-
     const { state, log } = this.destroyableState.onResult(
       action,
       result,
@@ -66,16 +64,11 @@ export class EnemyState extends ActionableState {
 
     this.destroyableState = state as DestroyableState;
 
+    this.wasAttacked = true;
+
     if (this.hitPoints > 0) {
       return {
-        state: new EnemyState(
-          this.actions,
-          this.killedState,
-          this.hitPoints,
-          this.weapon,
-          this.attackSkillValue,
-          this.behavior
-        ),
+        state: this,
         log,
       };
     }

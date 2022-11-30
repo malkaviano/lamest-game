@@ -12,7 +12,7 @@ describe('EnemyState', () => {
   describe('stateResult', () => {
     describe('when HP <= 0', () => {
       it('return empty state', () => {
-        const result = state().onResult(attackAction, 'SUCCESS', 12);
+        const result = createState().onResult(attackAction, 'SUCCESS', 12);
 
         expect(result).toEqual({
           state: emptyState,
@@ -23,20 +23,9 @@ describe('EnemyState', () => {
 
     describe('when HP > 0', () => {
       it('return EnemyState with remaining HP', () => {
-        const result = state().onResult(attackAction, 'SUCCESS', 6);
+        const { state } = createState().onResult(attackAction, 'SUCCESS', 6);
 
-        expect(result).toEqual({
-          state: state('AGGRESSIVE', 4),
-          log: 'received 6 damage',
-        });
-      });
-    });
-
-    describe('when no damage is taken', () => {
-      it('return EnemyState with same HP', () => {
-        const result = state().onResult(attackAction, 'SUCCESS');
-
-        expect(result).toEqual({ state: state(), log: 'received 0 damage' });
+        expect((state as EnemyState).hitPoints).toEqual(4);
       });
     });
   });
@@ -45,7 +34,7 @@ describe('EnemyState', () => {
     describe('when RETALIATE', () => {
       describe('when not attacked', () => {
         it('return null', () => {
-          const enemy = state('RETALIATE');
+          const enemy = createState('RETALIATE');
 
           expect(enemy.attack).toBeNull();
         });
@@ -53,7 +42,7 @@ describe('EnemyState', () => {
 
       describe('when attacked', () => {
         it('return attack', () => {
-          const enemy = state('RETALIATE');
+          const enemy = createState('RETALIATE');
 
           enemy.onResult(attackAction, 'SUCCESS', 1);
 
@@ -67,7 +56,7 @@ describe('EnemyState', () => {
     describe('when AGGRESSIVE', () => {
       describe('always attack', () => {
         it('should attack', () => {
-          const enemy = state('AGGRESSIVE');
+          const enemy = createState('AGGRESSIVE');
 
           expect(enemy.attack).toEqual(expectedAttack);
         });
@@ -77,12 +66,6 @@ describe('EnemyState', () => {
 });
 
 const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');
-
-const consumeAction = createActionableDefinition(
-  'CONSUME',
-  'consume',
-  'Consume'
-);
 
 const damage = new DamageDefinition(createDice(), 1);
 
@@ -99,5 +82,8 @@ const f = () => emptyState;
 
 const lazy = new LazyHelper(f);
 
-const state = (behavior: BehaviorLiteral = 'AGGRESSIVE', hp: number = 10) =>
+const createState = (
+  behavior: BehaviorLiteral = 'AGGRESSIVE',
+  hp: number = 10
+) =>
   new EnemyState(new ArrayView([attackAction]), lazy, hp, weapon, 25, behavior);
