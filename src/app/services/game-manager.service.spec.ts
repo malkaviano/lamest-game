@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Subject, take } from 'rxjs';
+import { of, Subject, take } from 'rxjs';
 import { anyString, anything, instance, mock, reset, when } from 'ts-mockito';
 
 import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
@@ -17,6 +17,9 @@ import { ItemStorageDefinition } from '../definitions/item-storage.definition';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { createDice } from '../definitions/dice.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
+import { CharacterService } from './character.service';
+import { NarrativeService } from './narrative.service';
+import { LoggingService } from './logging.service';
 
 const sword = new WeaponDefinition(
   'sword',
@@ -52,14 +55,28 @@ describe('GameManagerService', () => {
           provide: GameLoopService,
           useValue: instance(mockedGameLoopService),
         },
+        {
+          provide: CharacterService,
+          useValue: instance(mockedCharacterService),
+        },
+        {
+          provide: NarrativeService,
+          useValue: instance(mockedNarrativeService),
+        },
+        {
+          provide: LoggingService,
+          useValue: instance(mockedLoggingService),
+        },
       ],
     });
 
     reset(mockedInventoryService);
 
     when(mockedInventoryService.inventoryChanged$).thenReturn(
-      subject.asObservable()
+      inventoryEventSubject
     );
+
+    when(mockedLoggingService.gameLog$).thenReturn(of('GG'));
 
     service = TestBed.inject(GameManagerService);
   });
@@ -97,7 +114,7 @@ describe('GameManagerService', () => {
           result = event;
         });
 
-        subject.next(invEvent);
+        inventoryEventSubject.next(invEvent);
 
         done();
 
@@ -134,4 +151,10 @@ const mockedGameLoopService = mock(GameLoopService);
 
 const actionableEvent = new ActionableEvent(actionEquip, 'gg');
 
-const subject = new Subject<InventoryEvent>();
+const inventoryEventSubject = new Subject<InventoryEvent>();
+
+const mockedCharacterService = mock(CharacterService);
+
+const mockedNarrativeService = mock(NarrativeService);
+
+const mockedLoggingService = mock(LoggingService);

@@ -30,7 +30,7 @@ export class GameManagerService {
     private readonly inventoryService: InventoryService,
     private readonly loggingService: LoggingService
   ) {
-    const observable = this.inventoryService.inventoryChanged$.pipe(
+    const inventoryChanged = this.inventoryService.inventoryChanged$.pipe(
       filter((event) => event.storageName === 'player'),
       map((_) => {
         const equipped = this.inventoryService.equipped;
@@ -45,7 +45,7 @@ export class GameManagerService {
       this.narrativeService.sceneChanged$,
       this.loggingService.gameLog$,
       this.characterService.characterChanged$,
-      observable
+      inventoryChanged
     );
   }
 
