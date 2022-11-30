@@ -15,7 +15,7 @@ export class EnemyState extends ActionableState {
 
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
-    private readonly killedState: LazyHelper<ActionableState>,
+    killedState: LazyHelper<ActionableState>,
     hitPoints: number,
     private readonly weapon: WeaponDefinition,
     private readonly attackSkillValue: number,
