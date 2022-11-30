@@ -13,7 +13,6 @@ import { SimpleState } from '../states/simple.state';
 import { InteractiveStore } from '../stores/interactive.store';
 import { SceneStore } from '../stores/scene.store';
 import { ArrayView } from '../views/array.view';
-
 import { NarrativeService } from './narrative.service';
 
 describe('NarrativeService', () => {
@@ -34,15 +33,9 @@ describe('NarrativeService', () => {
       scene2: entity2,
     });
 
-    when(mockedSceneStore.interactiveStore).thenReturn(
-      instance(mockedInteractiveStore)
-    );
-
     when(mockedInteractiveStore.interactives).thenReturn({
       sceneExitDoor: sceneInteractive,
     });
-
-    when(mockedInteractiveStore.usedItems).thenReturn({});
 
     service = TestBed.inject(NarrativeService);
   });

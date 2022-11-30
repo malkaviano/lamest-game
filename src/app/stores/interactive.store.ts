@@ -4,8 +4,9 @@ import { InteractiveEntity } from '../entities/interactive.entity';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { StatesStore } from './states.store';
 import { ConverterHelper } from '../helpers/converter.helper';
-
-import interactiveStore from '../../assets/interactives.json';
+import { ResourcesStore } from './resources.store';
+import { InventoryService } from '../services/inventory.service';
+import { ItemStore } from './item.store';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +14,16 @@ import interactiveStore from '../../assets/interactives.json';
 export class InteractiveStore {
   private readonly store: Map<string, InteractiveEntity>;
 
-  private readonly interactiveItems: Map<string, KeyValueInterface<number>>;
-
   constructor(
-    private readonly stateStore: StatesStore,
-    private readonly converterHelper: ConverterHelper
+    private readonly converterHelper: ConverterHelper,
+    inventoryService: InventoryService,
+    stateStore: StatesStore,
+    itemStore: ItemStore,
+    resourcesStore: ResourcesStore
   ) {
     this.store = new Map<string, InteractiveEntity>();
 
-    interactiveStore.interactives.forEach(
+    resourcesStore.interactiveStore.interactives.forEach(
       ({ id, name, description, state, resettable }) => {
         this.store.set(
           id,
@@ -29,31 +31,23 @@ export class InteractiveStore {
             id,
             name,
             description,
-            this.stateStore.states[state],
+            stateStore.states[state],
             resettable
           )
         );
       }
     );
 
-    this.interactiveItems = new Map<string, KeyValueInterface<number>>();
-
-    interactiveStore.usedItems.forEach((usedItem) => {
-      const r = usedItem.items.reduce((obj: any, item) => {
-        obj[item.name] = item.quantity;
-
-        return obj;
-      }, {});
-
-      this.interactiveItems.set(usedItem.id, r);
+    resourcesStore.interactiveStore.usedItems.forEach(({ id, items }) => {
+      items.forEach(({ name, quantity }) => {
+        for (let index = 0; index < quantity; index++) {
+          inventoryService.store(id, itemStore.items[name]);
+        }
+      });
     });
   }
 
   public get interactives(): KeyValueInterface<InteractiveEntity> {
     return this.converterHelper.mapToKeyValueInterface(this.store);
-  }
-
-  public get usedItems(): KeyValueInterface<KeyValueInterface<number>> {
-    return this.converterHelper.mapToKeyValueInterface(this.interactiveItems);
   }
 }

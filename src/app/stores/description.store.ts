@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ArrayView } from '../views/array.view';
 import { ConverterHelper } from '../helpers/converter.helper';
-
-import descriptionStore from '../../assets/descriptions.json';
+import { ResourcesStore } from './resources.store';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +11,13 @@ import descriptionStore from '../../assets/descriptions.json';
 export class DescriptionStore {
   private readonly store: Map<string, ArrayView<string>>;
 
-  constructor(private readonly converterHelper: ConverterHelper) {
+  constructor(
+    private readonly converterHelper: ConverterHelper,
+    resourcesStore: ResourcesStore
+  ) {
     this.store = new Map<string, ArrayView<string>>();
 
-    descriptionStore.descriptions.forEach((item) => {
+    resourcesStore.descriptionStore.descriptions.forEach((item) => {
       this.store.set(item.sceneName, new ArrayView(item.paragraphs));
     });
   }

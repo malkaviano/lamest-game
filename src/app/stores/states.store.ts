@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { DamageDefinition } from '../definitions/damage.definition';
-import { createDice } from '../definitions/dice.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActionableState } from '../states/actionable.state';
@@ -15,59 +13,55 @@ import { SkillState } from '../states/skill.state';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ArrayView } from '../views/array.view';
-
-import skillStateStore from '../../assets/skill-states.json';
-import discardStateStore from '../../assets/discard-states.json';
-import simpleStateStore from '../../assets/simple-states.json';
-import conversationStateStore from '../../assets/conversation-states.json';
-import destroyableStateStore from '../../assets/destroyable-states.json';
-import enemyStateStore from '../../assets/enemy-states.json';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ItemStore } from './item.store';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { BehaviorLiteral } from '../literals/behavior.literal';
+import { ResourcesStore } from './resources.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
+
   constructor(
     private readonly converterHelper: ConverterHelper,
-    private readonly messageStore: MessageStore,
-    private readonly actionableStore: ActionableStore,
-    private readonly itemStore: ItemStore
+    messageStore: MessageStore,
+    actionableStore: ActionableStore,
+    resourcesStore: ResourcesStore,
+    itemStore: ItemStore
   ) {
     this.store = new Map<string, ActionableState>();
 
     this.store.set('emptyState', emptyState);
 
-    skillStateStore.states.forEach((state) => {
+    resourcesStore.skillStateStore.states.forEach((state) => {
       this.store.set(
         state.interactiveId,
         new SkillState(
-          this.actionableStore.actionables[state.actionable],
+          actionableStore.actionables[state.actionable],
           new LazyHelper(() => this.states[state.successState]),
           state.maximumTries
         )
       );
     });
 
-    discardStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(state);
+    resourcesStore.discardStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(actionableStore, state);
 
       this.store.set(state.interactiveId, new DiscardState(actionables));
     });
 
-    simpleStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(state);
+    resourcesStore.simpleStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(actionableStore, state);
 
       this.store.set(state.interactiveId, new SimpleState(actionables));
     });
 
-    conversationStateStore.states.forEach((state) => {
+    resourcesStore.conversationStateStore.states.forEach((state) => {
       const map = state.maps.reduce((map: { [key: string]: any }, mapName) => {
-        map[mapName] = this.messageStore.store[mapName];
+        map[mapName] = messageStore.messages[mapName];
 
         return map;
       }, {});
@@ -78,8 +72,8 @@ export class StatesStore {
       );
     });
 
-    destroyableStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(state);
+    resourcesStore.destroyableStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(actionableStore, state);
 
       this.store.set(
         state.interactiveId,
@@ -91,8 +85,8 @@ export class StatesStore {
       );
     });
 
-    enemyStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(state);
+    resourcesStore.enemyStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(actionableStore, state);
 
       this.store.set(
         state.interactiveId,
@@ -102,7 +96,7 @@ export class StatesStore {
           state.hitpoints,
           itemStore.items[state.weaponName] as WeaponDefinition,
           state.attackSkillValue,
-          state.behavior as BehaviorLiteral
+          state.behavior
         )
       );
     });
@@ -112,12 +106,15 @@ export class StatesStore {
     return this.converterHelper.mapToKeyValueInterface(this.store);
   }
 
-  private getActionables(state: {
-    interactiveId: string;
-    actionables: string[];
-  }) {
+  private getActionables(
+    actionableStore: ActionableStore,
+    state: {
+      interactiveId: string;
+      actionables: string[];
+    }
+  ) {
     return new ArrayView(
-      state.actionables.map((a) => this.actionableStore.actionables[a])
+      state.actionables.map((a) => actionableStore.actionables[a])
     );
   }
 }

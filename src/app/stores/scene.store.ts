@@ -6,8 +6,7 @@ import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ArrayView } from '../views/array.view';
 import { DescriptionStore } from './description.store';
 import { InteractiveStore } from './interactive.store';
-
-import sceneStore from '../../assets/scenes.json';
+import { ResourcesStore } from './resources.store';
 
 @Injectable({
   providedIn: 'root',
@@ -16,15 +15,16 @@ export class SceneStore {
   private readonly store: Map<string, SceneEntity>;
 
   constructor(
-    public readonly descriptionsStore: DescriptionStore,
-    public readonly interactiveStore: InteractiveStore,
+    descriptionsStore: DescriptionStore,
+    interactiveStore: InteractiveStore,
+    resourcesStore: ResourcesStore,
     private readonly converterHelper: ConverterHelper
   ) {
     this.store = new Map<string, SceneEntity>();
 
-    sceneStore.scenes.forEach((scene) => {
+    resourcesStore.sceneStore.scenes.forEach((scene) => {
       const interactives = scene.interactives.map((id) => {
-        return this.interactiveStore.interactives[id];
+        return interactiveStore.interactives[id];
       });
 
       const transitions = scene.transitions.reduce(
@@ -38,7 +38,7 @@ export class SceneStore {
       this.store.set(
         scene.name,
         new SceneEntity(
-          this.descriptionsStore.descriptions[scene.description],
+          descriptionsStore.descriptions[scene.description],
           new ArrayView(interactives),
           transitions
         )

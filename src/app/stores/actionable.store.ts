@@ -6,9 +6,7 @@ import {
 } from '../definitions/actionable.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ActionableLiteral } from '../literals/actionable.literal';
-
-import actionableStore from '../../assets/actionables.json';
+import { ResourcesStore } from './resources.store';
 
 @Injectable({
   providedIn: 'root',
@@ -16,14 +14,17 @@ import actionableStore from '../../assets/actionables.json';
 export class ActionableStore {
   private readonly store: Map<string, ActionableDefinition>;
 
-  constructor(private readonly converterHelper: ConverterHelper) {
+  constructor(
+    private readonly converterHelper: ConverterHelper,
+    resourcesStore: ResourcesStore
+  ) {
     this.store = new Map<string, ActionableDefinition>();
 
-    actionableStore.actionables.forEach((actionable) => {
+    resourcesStore.actionableStore.actionables.forEach((actionable) => {
       this.store.set(
         actionable.name,
         createActionableDefinition(
-          actionable.actionable as ActionableLiteral,
+          actionable.actionable,
           actionable.name,
           actionable.label
         )

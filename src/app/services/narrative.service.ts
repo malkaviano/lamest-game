@@ -32,16 +32,6 @@ export class NarrativeService {
     this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
 
     this.sceneChanged$ = this.sceneChanged.asObservable();
-
-    Object.entries(sceneStore.interactiveStore.usedItems).forEach(
-      ([storage, info]) => {
-        Object.entries(info).forEach(([name, quantity]) => {
-          for (let index = 0; index < quantity; index++) {
-            inventoryService.store(storage, itemStore.items[name]);
-          }
-        });
-      }
-    );
   }
 
   public get interatives(): KeyValueInterface<InteractiveEntity> {

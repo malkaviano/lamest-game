@@ -9,9 +9,7 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { ConverterHelper } from '../helpers/converter.helper';
-
-import weaponStore from '../../assets/weapons.json';
-import consumableStore from '../../assets/consumables.json';
+import { ResourcesStore } from './resources.store';
 
 @Injectable({
   providedIn: 'root',
@@ -19,17 +17,20 @@ import consumableStore from '../../assets/consumables.json';
 export class ItemStore {
   private readonly store: Map<string, GameItemDefinition>;
 
-  constructor(private readonly converterHelper: ConverterHelper) {
+  constructor(
+    private readonly converterHelper: ConverterHelper,
+    resourcesStore: ResourcesStore
+  ) {
     this.store = new Map<string, GameItemDefinition>();
 
-    weaponStore.weapons.forEach((item) => {
+    resourcesStore.weaponStore.weapons.forEach((item) => {
       this.store.set(
         item.name,
         new WeaponDefinition(
           item.name,
           item.label,
           item.description,
-          item.skillName as SkillNameLiteral,
+          item.skillName,
           new DamageDefinition(
             createDice(item.damage?.dice),
             item.damage.fixed
@@ -39,7 +40,7 @@ export class ItemStore {
       );
     });
 
-    consumableStore.consumables.forEach((item) => {
+    resourcesStore.consumableStore.consumables.forEach((item) => {
       this.store.set(
         item.name,
         new ConsumableDefinition(
@@ -47,7 +48,7 @@ export class ItemStore {
           item.label,
           item.description,
           item.hp,
-          item.skillName as SkillNameLiteral
+          item.skillName
         )
       );
     });
