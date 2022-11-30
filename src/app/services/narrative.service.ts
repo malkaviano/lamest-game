@@ -35,7 +35,7 @@ export class NarrativeService {
   }
 
   public get interatives(): KeyValueInterface<InteractiveEntity> {
-    let result: { [key: string]: InteractiveEntity } = {};
+    const result: { [key: string]: InteractiveEntity } = {};
 
     return this.currentScene.interactives.items.reduce((acc, i) => {
       acc[i.id] = i;

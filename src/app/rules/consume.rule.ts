@@ -40,7 +40,7 @@ export class ConsumeRule implements RuleInterface {
 
     logs.push(createConsumedLogMessage('player', consumable.label));
 
-    let hp = consumable.hp;
+    const hp = consumable.hp;
 
     let passed: ResultLiteral = 'NONE';
 

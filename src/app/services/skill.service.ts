@@ -13,7 +13,7 @@ export class SkillService {
   public newSkillSetFor(
     skillNames: ArrayView<SkillNameLiteral>
   ): Map<SkillNameLiteral, number> {
-    let skills = new Map<SkillNameLiteral, number>();
+    const skills = new Map<SkillNameLiteral, number>();
 
     return skillNames.items.reduce((acc, skillName) => {
       acc.set(skillName, 0);

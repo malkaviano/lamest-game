@@ -84,6 +84,6 @@ const lazy = new LazyHelper(f);
 
 const createState = (
   behavior: BehaviorLiteral = 'AGGRESSIVE',
-  hp: number = 10
+  hp = 10
 ) =>
   new EnemyState(new ArrayView([attackAction]), lazy, hp, weapon, 25, behavior);

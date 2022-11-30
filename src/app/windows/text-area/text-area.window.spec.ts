@@ -8,7 +8,7 @@ import { ArrayView } from '../../views/array.view';
 describe('TextBoxComponent', () => {
   let component: TextAreaWindow;
   let fixture: ComponentFixture<TextAreaWindow>;
-  let paragraphs = new ArrayView(['p1', 'p2', 'p3', 'p4']);
+  const paragraphs = new ArrayView(['p1', 'p2', 'p3', 'p4']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

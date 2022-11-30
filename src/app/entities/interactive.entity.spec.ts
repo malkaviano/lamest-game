@@ -157,7 +157,7 @@ const state2 = instance(mockedState2);
 const state3 = instance(mockedState3);
 
 const fakeEntity = (
-  resettable: boolean = true,
+  resettable = true,
   state: ActionableState = state1
 ) =>
   new InteractiveEntity(

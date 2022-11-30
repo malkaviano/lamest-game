@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --browsers ChromeHeadless --code-coverage",
     "test-ci": "ng test --watch=false --browsers ChromeHeadless",
-    "playwright": "playwright test"
+    "playwright": "playwright test",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -30,10 +31,18 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.2",
+    "@angular-eslint/builder": "15.1.0",
+    "@angular-eslint/eslint-plugin": "15.1.0",
+    "@angular-eslint/eslint-plugin-template": "15.1.0",
+    "@angular-eslint/schematics": "15.1.0",
+    "@angular-eslint/template-parser": "15.1.0",
     "@angular/cli": "~15.0.2",
     "@angular/compiler-cli": "^15.0.2",
     "@playwright/test": "^1.23.1",
     "@types/jasmine": "~4.0.0",
+    "@typescript-eslint/eslint-plugin": "5.44.0",
+    "@typescript-eslint/parser": "5.44.0",
+    "eslint": "^8.28.0",
     "fast-check": "^3.3.0",
     "jasmine-core": "~4.1.0",
     "karma": "~6.3.0",
