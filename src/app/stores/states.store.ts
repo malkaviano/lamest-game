@@ -16,7 +16,6 @@ import { ArrayView } from '../views/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ItemStore } from './item.store';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { BehaviorLiteral } from '../literals/behavior.literal';
 import { ResourcesStore } from './resources.store';
 
 @Injectable({
@@ -41,7 +40,7 @@ export class StatesStore {
         state.interactiveId,
         new SkillState(
           actionableStore.actionables[state.actionable],
-          new LazyHelper(() => this.states[state.successState]),
+          this.lazyState(state.successState),
           state.maximumTries
         )
       );
@@ -79,7 +78,7 @@ export class StatesStore {
         state.interactiveId,
         new DestroyableState(
           actionables,
-          new LazyHelper(() => this.states[state.destroyedState]),
+          this.lazyState(state.destroyedState),
           state.hitpoints
         )
       );
@@ -92,7 +91,7 @@ export class StatesStore {
         state.interactiveId,
         new EnemyState(
           actionables,
-          new LazyHelper(() => this.states[state.killedState]),
+          this.lazyState(state.killedState),
           state.hitpoints,
           itemStore.items[state.weaponName] as WeaponDefinition,
           state.attackSkillValue,
@@ -104,6 +103,10 @@ export class StatesStore {
 
   public get states(): KeyValueInterface<ActionableState> {
     return this.converterHelper.mapToKeyValueInterface(this.store);
+  }
+
+  public lazyState(stateName: string): LazyHelper<ActionableState> {
+    return new LazyHelper(() => this.states[stateName]);
   }
 
   private getActionables(

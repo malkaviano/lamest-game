@@ -1,12 +1,56 @@
 import { TestBed } from '@angular/core/testing';
 
+import { anything, instance, mock, when } from 'ts-mockito';
+
+import { createDice } from '../definitions/dice.definition';
+import { ConverterHelper } from '../helpers/converter.helper';
 import { ItemStore } from './item.store';
+import { ResourcesStore } from './resources.store';
 
 describe('ItemStore', () => {
   let service: ItemStore;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: ConverterHelper,
+          useValue: instance(mockedConverterHelper),
+        },
+        {
+          provide: ResourcesStore,
+          useValue: instance(mockedResourcesStore),
+        },
+      ],
+    });
+
+    when(mockedResourcesStore.weaponStore).thenReturn({
+      weapons: [],
+    });
+
+    when(mockedResourcesStore.consumableStore).thenReturn({
+      consumables: [],
+    });
+
+    when(mockedConverterHelper.mapToKeyValueInterface(anything())).thenReturn({
+      knife: {
+        name: 'knife',
+        label: 'Hunting Knife',
+        description: 'gg',
+        dodgeable: true,
+        skillName: 'Melee Weapon (Simple)',
+        damage: {
+          dice: createDice(),
+          fixed: 1,
+        },
+      },
+      bubbleGum: {
+        name: 'bubbleGum',
+        label: 'Bubble Gum',
+        description: 'gg',
+      },
+    });
+
     service = TestBed.inject(ItemStore);
   });
 
@@ -40,3 +84,7 @@ describe('ItemStore', () => {
     });
   });
 });
+
+const mockedConverterHelper = mock(ConverterHelper);
+
+const mockedResourcesStore = mock(ResourcesStore);
