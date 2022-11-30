@@ -1,6 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { DamageDefinition } from '../definitions/damage.definition';
-import { ActionableEvent } from '../events/actionable.event';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { EnemyAttack } from '../interfaces/enemy-attack.interface';
 import { ResultLiteral } from '../literals/result.literal';
@@ -15,7 +14,7 @@ export class EnemyState extends ActionableState {
     stateActions: ArrayView<ActionableDefinition>,
     private readonly killedState: LazyHelper<ActionableState>,
     hitPoints: number,
-    private readonly damage: DamageDefinition,
+    private readonly weapon: WeaponDefinition,
     private readonly attackSkillValue: number,
     private readonly onlyReact: boolean
   ) {
@@ -39,8 +38,9 @@ export class EnemyState extends ActionableState {
 
     return {
       skillValue: this.attackSkillValue,
-      damage: this.damage,
-      dodgeable: true, // FIXME: use the right stuff
+      damage: this.weapon.damage,
+      dodgeable: this.weapon.dodgeable,
+      weaponName: this.weapon.label,
     };
   }
 
@@ -63,7 +63,7 @@ export class EnemyState extends ActionableState {
           this.actions,
           this.killedState,
           this.hitPoints,
-          this.damage,
+          this.weapon,
           this.attackSkillValue,
           this.onlyReact
         ),

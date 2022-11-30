@@ -25,6 +25,7 @@ beforeEach(() => {
     skillValue: 15,
     damage,
     dodgeable: true,
+    weaponName: 'claw',
   });
 });
 
@@ -128,7 +129,12 @@ describe('InteractiveEntity', () => {
       it('return DamageDefinition', () => {
         const result = fakeEntity(false, state3).attack(pick);
 
-        expect(result).toEqual({ skillValue: 15, damage, dodgeable: true });
+        expect(result).toEqual({
+          skillValue: 15,
+          damage,
+          dodgeable: true,
+          weaponName: 'claw',
+        });
       });
     });
   });

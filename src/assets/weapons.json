@@ -34,6 +34,28 @@
         "fixed": 0
       },
       "dodgeable": true
+    },
+    {
+      "name": "bambooSword",
+      "label": "Bamboo Sword",
+      "description": "Training weapon",
+      "skillName": "Melee Weapon (Simple)",
+      "damage": {
+        "dice": {},
+        "fixed": 1
+      },
+      "dodgeable": true
+    },
+    {
+      "name": "claw",
+      "label": "Claws",
+      "description": "Nasty Claws",
+      "skillName": "Brawl",
+      "damage": {
+        "dice": { "D6": 1 },
+        "fixed": 1
+      },
+      "dodgeable": true
     }
   ]
 }

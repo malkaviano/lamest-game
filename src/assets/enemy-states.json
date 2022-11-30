@@ -6,10 +6,7 @@
       "killedState": "emptyState",
       "hitpoints": 6,
       "attackSkillValue": 30,
-      "damage": {
-        "dice": {},
-        "fixed": 1
-      },
+      "weaponName": "bambooSword",
       "onlyReact": true
     },
     {
@@ -18,10 +15,7 @@
       "killedState": "emptyState",
       "hitpoints": 10,
       "attackSkillValue": 45,
-      "damage": {
-        "dice": { "D6": 1 },
-        "fixed": 1
-      },
+      "weaponName": "claw",
       "onlyReact": false
     }
   ]

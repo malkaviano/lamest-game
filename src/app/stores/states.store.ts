@@ -23,6 +23,8 @@ import conversationStateStore from '../../assets/conversation-states.json';
 import destroyableStateStore from '../../assets/destroyable-states.json';
 import enemyStateStore from '../../assets/enemy-states.json';
 import { LazyHelper } from '../helpers/lazy.helper';
+import { ItemStore } from './item.store';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +34,8 @@ export class StatesStore {
   constructor(
     private readonly converterHelper: ConverterHelper,
     private readonly messageStore: MessageStore,
-    private readonly actionableStore: ActionableStore
+    private readonly actionableStore: ActionableStore,
+    private readonly itemStore: ItemStore
   ) {
     this.store = new Map<string, ActionableState>();
 
@@ -96,10 +99,7 @@ export class StatesStore {
           actionables,
           new LazyHelper(() => this.states[state.killedState]),
           state.hitpoints,
-          new DamageDefinition(
-            createDice(state.damage.dice),
-            state.damage.fixed
-          ),
+          itemStore.items[state.weaponName] as WeaponDefinition,
           state.attackSkillValue,
           state.onlyReact
         )

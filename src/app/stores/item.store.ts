@@ -17,7 +17,7 @@ import consumableStore from '../../assets/consumables.json';
   providedIn: 'root',
 })
 export class ItemStore {
-  public readonly store: Map<string, GameItemDefinition>;
+  private readonly store: Map<string, GameItemDefinition>;
 
   constructor(private readonly converterHelper: ConverterHelper) {
     this.store = new Map<string, GameItemDefinition>();

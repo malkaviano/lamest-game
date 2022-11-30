@@ -54,7 +54,11 @@ export class AttackRule implements RuleInterface {
         );
 
         if (log) {
-          logs.push(`${interactive.name}: ${log} by player ${weapon.label}`);
+          const preposition = log.includes('destroyed') ? 'by' : 'from';
+
+          logs.push(
+            `${interactive.name}: ${log} ${preposition} player ${weapon.label}`
+          );
         }
       }
     }

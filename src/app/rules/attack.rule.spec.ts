@@ -61,6 +61,33 @@ describe('AttackRule', () => {
   });
 
   describe('execute', () => {
+    describe('when object got destroyed', () => {
+      it('return logs', () => {
+        when(mockedRngService.checkSkill(45)).thenReturn({
+          result: 'SUCCESS',
+          roll: 10,
+        });
+
+        when(mockedRngService.roll(unarmed.damage.diceRoll)).thenReturn(
+          1 + unarmed.damage.fixed
+        );
+
+        when(
+          mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 1)
+        ).thenReturn('received 1 damage and was destroyed');
+
+        const result = service.execute(event);
+
+        expect(result).toEqual({
+          logs: [
+            'player: attacked test USING Bare hands',
+            'player: used Brawl and rolled 10 -> SUCCESS',
+            'test: received 1 damage and was destroyed by player Bare hands',
+          ],
+        });
+      });
+    });
+
     it('return logs', () => {
       when(mockedRngService.checkSkill(45)).thenReturn({
         result: 'SUCCESS',
@@ -81,7 +108,7 @@ describe('AttackRule', () => {
         logs: [
           'player: attacked test USING Bare hands',
           'player: used Brawl and rolled 10 -> SUCCESS',
-          'test: received 1 damage by player Bare hands',
+          'test: received 1 damage from player Bare hands',
         ],
       });
     });

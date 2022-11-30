@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActionableEvent } from '../events/actionable.event';
 
+import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
@@ -25,7 +25,7 @@ export class DefenseRule implements RuleInterface {
         const attack = interactive.attack(action.actionableDefinition);
 
         if (attack) {
-          const { skillValue, damage } = attack;
+          const { skillValue, damage, dodgeable, weaponName } = attack;
 
           let { result: enemyResult } = this.rngService.checkSkill(skillValue);
 
@@ -36,14 +36,18 @@ export class DefenseRule implements RuleInterface {
               this.characterService.currentCharacter.skills['Dodge']
             );
 
-            if (result === 'FAILURE') {
+            if (!dodgeable || result === 'FAILURE') {
               const damageAmount =
                 this.rngService.roll(damage.diceRoll) + damage.fixed;
 
               const log =
                 this.characterService.currentCharacter.damaged(damageAmount);
 
-              logs.push(`player: ${log}`);
+              const preposition = log.includes('killed') ? 'by' : 'from';
+
+              logs.push(
+                `player: ${log} ${preposition} ${interactive.name} ${weaponName}`
+              );
             } else {
               logs.push(`player: dodged ${interactive.name} attack`);
             }

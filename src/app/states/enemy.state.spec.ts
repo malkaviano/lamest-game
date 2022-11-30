@@ -1,6 +1,7 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../views/array.view';
 import { emptyState } from './empty.state';
@@ -71,10 +72,13 @@ const consumeAction = createActionableDefinition(
 
 const damage = new DamageDefinition(createDice(), 1);
 
+const weapon = new WeaponDefinition('gg', 'claw', '', 'Brawl', damage, true);
+
 const expected = {
   skillValue: 25,
   damage,
   dodgeable: true,
+  weaponName: 'claw',
 };
 
 const f = () => emptyState;
@@ -86,10 +90,10 @@ const state = (onlyReact: boolean = false) =>
     new ArrayView([attackAction]),
     lazy,
     10,
-    damage,
+    weapon,
     25,
     onlyReact
   );
 
 const state2 = () =>
-  new EnemyState(new ArrayView([attackAction]), lazy, 4, damage, 25, false);
+  new EnemyState(new ArrayView([attackAction]), lazy, 4, weapon, 25, false);

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, instance, mock, reset, when } from 'ts-mockito';
+import { instance, mock, reset, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
@@ -54,6 +54,7 @@ describe('DefenseRule', () => {
       skillValue: 45,
       damage: new DamageDefinition(createDice(), 4),
       dodgeable: true,
+      weaponName: 'claw',
     });
 
     service = TestBed.inject(DefenseRule);
@@ -65,17 +66,19 @@ describe('DefenseRule', () => {
 
   describe('execute', () => {
     describe('when attack hit', () => {
-      describe('when played dodge', () => {
-        it('return logs', () => {
-          when(mockedRngService.checkSkill(45)).thenReturn({
-            result: 'SUCCESS',
-            roll: 10,
-          });
+      describe('when attack is dodgeable', () => {
+        describe('when played dodge', () => {
+          it('return logs', () => {
+            when(mockedRngService.checkSkill(45)).thenReturn({
+              result: 'SUCCESS',
+              roll: 10,
+            });
 
-          const result = service.execute(event);
+            const result = service.execute(event);
 
-          expect(result).toEqual({
-            logs: ['test: attacked player', 'player: dodged test attack'],
+            expect(result).toEqual({
+              logs: ['test: attacked player', 'player: dodged test attack'],
+            });
           });
         });
       });
@@ -99,7 +102,37 @@ describe('DefenseRule', () => {
           const result = service.execute(event);
 
           expect(result).toEqual({
-            logs: ['test: attacked player', 'player: received 4 damage'],
+            logs: [
+              'test: attacked player',
+              'player: received 4 damage from test claw',
+            ],
+          });
+        });
+
+        describe('when player dies', () => {
+          it('return logs', () => {
+            when(mockedRngService.checkSkill(45))
+              .thenReturn({
+                result: 'SUCCESS',
+                roll: 10,
+              })
+              .thenReturn({
+                result: 'FAILURE',
+                roll: 90,
+              });
+
+            when(mockedCharacterEntity.damaged(4)).thenReturn(
+              'received 4 damage and was killed'
+            );
+
+            const result = service.execute(event);
+
+            expect(result).toEqual({
+              logs: [
+                'test: attacked player',
+                'player: received 4 damage and was killed by test claw',
+              ],
+            });
           });
         });
       });
