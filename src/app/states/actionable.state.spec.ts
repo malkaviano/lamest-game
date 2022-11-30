@@ -20,7 +20,7 @@ describe('ActionableState', () => {
 
   describe('damage', () => {
     it('return null', () => {
-      expect(state.attack(askAction1)).toBeNull();
+      expect(state.attack).toBeNull();
     });
   });
 });

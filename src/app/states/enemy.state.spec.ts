@@ -3,6 +3,7 @@ import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
+import { BehaviorLiteral } from '../literals/behavior.literal';
 import { ArrayView } from '../views/array.view';
 import { emptyState } from './empty.state';
 import { EnemyState } from './enemy.state';
@@ -24,7 +25,10 @@ describe('EnemyState', () => {
       it('return EnemyState with remaining HP', () => {
         const result = state().onResult(attackAction, 'SUCCESS', 6);
 
-        expect(result).toEqual({ state: state2(), log: 'received 6 damage' });
+        expect(result).toEqual({
+          state: state('AGGRESSIVE', 4),
+          log: 'received 6 damage',
+        });
       });
     });
 
@@ -37,25 +41,35 @@ describe('EnemyState', () => {
     });
   });
 
-  describe('attack', () => {
-    describe('onlyReact', () => {
-      describe('when false', () => {
-        it('return attack with skill value 25 and damage 1', () => {
-          expect(state().attack(consumeAction)).toEqual(expected);
+  describe('attack behavior', () => {
+    describe('when RETALIATE', () => {
+      describe('when not attacked', () => {
+        it('return null', () => {
+          const enemy = state('RETALIATE');
+
+          expect(enemy.attack).toBeNull();
         });
       });
 
-      describe('when true', () => {
-        describe('when not attacked', () => {
-          it('should not attack', () => {
-            expect(state(true).attack(consumeAction)).toEqual(null);
-          });
-        });
+      describe('when attacked', () => {
+        it('return attack', () => {
+          const enemy = state('RETALIATE');
 
-        describe('when attacked', () => {
-          it('should attack', () => {
-            expect(state(true).attack(attackAction)).toEqual(expected);
-          });
+          enemy.onResult(attackAction, 'SUCCESS', 1);
+
+          expect(enemy.attack).toEqual(expectedAttack);
+
+          expect(enemy.attack).toBeNull();
+        });
+      });
+    });
+
+    describe('when AGGRESSIVE', () => {
+      describe('always attack', () => {
+        it('should attack', () => {
+          const enemy = state('AGGRESSIVE');
+
+          expect(enemy.attack).toEqual(expectedAttack);
         });
       });
     });
@@ -74,7 +88,7 @@ const damage = new DamageDefinition(createDice(), 1);
 
 const weapon = new WeaponDefinition('gg', 'claw', '', 'Brawl', damage, true);
 
-const expected = {
+const expectedAttack = {
   skillValue: 25,
   damage,
   dodgeable: true,
@@ -85,15 +99,5 @@ const f = () => emptyState;
 
 const lazy = new LazyHelper(f);
 
-const state = (onlyReact: boolean = false) =>
-  new EnemyState(
-    new ArrayView([attackAction]),
-    lazy,
-    10,
-    weapon,
-    25,
-    onlyReact
-  );
-
-const state2 = () =>
-  new EnemyState(new ArrayView([attackAction]), lazy, 4, weapon, 25, false);
+const state = (behavior: BehaviorLiteral = 'AGGRESSIVE', hp: number = 10) =>
+  new EnemyState(new ArrayView([attackAction]), lazy, hp, weapon, 25, behavior);

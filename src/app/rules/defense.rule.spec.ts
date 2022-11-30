@@ -50,7 +50,7 @@ describe('DefenseRule', () => {
 
     when(mockedInteractiveEntity.name).thenReturn('test');
 
-    when(mockedInteractiveEntity.attack(action)).thenReturn({
+    when(mockedInteractiveEntity.attack).thenReturn({
       skillValue: 45,
       damage: new DamageDefinition(createDice(), 4),
       dodgeable: true,

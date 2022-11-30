@@ -15,7 +15,7 @@ export abstract class ActionableState {
     return this.stateActions;
   }
 
-  public attack(_: ActionableDefinition): EnemyAttack | null {
+  public get attack(): EnemyAttack | null {
     return null;
   }
 

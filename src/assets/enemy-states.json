@@ -7,7 +7,7 @@
       "hitpoints": 6,
       "attackSkillValue": 30,
       "weaponName": "bambooSword",
-      "onlyReact": true
+      "behavior": "RETALIATE"
     },
     {
       "interactiveId": "zombie",
@@ -16,7 +16,7 @@
       "hitpoints": 10,
       "attackSkillValue": 45,
       "weaponName": "claw",
-      "onlyReact": false
+      "behavior": "AGGRESSIVE"
     }
   ]
 }

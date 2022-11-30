@@ -2,6 +2,7 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { EnemyAttack } from '../interfaces/enemy-attack.interface';
+import { BehaviorLiteral } from '../literals/behavior.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -10,13 +11,15 @@ import { DestroyableState } from './destroyable.state';
 export class EnemyState extends ActionableState {
   private destroyableState: DestroyableState;
 
+  private wasAttacked: boolean;
+
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
     private readonly killedState: LazyHelper<ActionableState>,
     hitPoints: number,
     private readonly weapon: WeaponDefinition,
     private readonly attackSkillValue: number,
-    private readonly onlyReact: boolean
+    private readonly behavior: BehaviorLiteral
   ) {
     super('EnemyState', stateActions);
 
@@ -25,16 +28,20 @@ export class EnemyState extends ActionableState {
       killedState,
       hitPoints
     );
+
+    this.wasAttacked = false;
   }
 
   public get hitPoints(): number {
     return this.destroyableState.hitPoints;
   }
 
-  public override attack(action: ActionableDefinition): EnemyAttack | null {
-    if (this.onlyReact && action.actionable !== 'ATTACK') {
+  public override get attack(): EnemyAttack | null {
+    if (this.behavior === 'RETALIATE' && !this.wasAttacked) {
       return null;
     }
+
+    this.wasAttacked = false;
 
     return {
       skillValue: this.attackSkillValue,
@@ -44,11 +51,13 @@ export class EnemyState extends ActionableState {
     };
   }
 
-  public override stateResult(
+  protected override stateResult(
     action: ActionableDefinition,
     result: ResultLiteral,
     damageTaken?: number | undefined
   ): { state: ActionableState; log?: string } {
+    this.wasAttacked = true;
+
     const { state, log } = this.destroyableState.onResult(
       action,
       result,
@@ -65,7 +74,7 @@ export class EnemyState extends ActionableState {
           this.hitPoints,
           this.weapon,
           this.attackSkillValue,
-          this.onlyReact
+          this.behavior
         ),
         log,
       };

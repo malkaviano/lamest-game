@@ -25,6 +25,7 @@ import enemyStateStore from '../../assets/enemy-states.json';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ItemStore } from './item.store';
 import { WeaponDefinition } from '../definitions/weapon.definition';
+import { BehaviorLiteral } from '../literals/behavior.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -101,7 +102,7 @@ export class StatesStore {
           state.hitpoints,
           itemStore.items[state.weaponName] as WeaponDefinition,
           state.attackSkillValue,
-          state.onlyReact
+          state.behavior as BehaviorLiteral
         )
       );
     });

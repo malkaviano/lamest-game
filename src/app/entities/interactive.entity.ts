@@ -32,8 +32,8 @@ export class InteractiveEntity {
     this.actionsChanged$ = this.actionsChanged.asObservable();
   }
 
-  public attack(action: ActionableDefinition): EnemyAttack | null {
-    return this.currentState.attack(action);
+  public get attack(): EnemyAttack | null {
+    return this.currentState.attack;
   }
 
   public actionSelected(

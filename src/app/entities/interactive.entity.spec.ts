@@ -19,9 +19,9 @@ beforeEach(() => {
 
   when(mockedState3.actions).thenReturn(new ArrayView([action, pick]));
 
-  when(mockedState1.attack(action)).thenReturn(null);
+  when(mockedState1.attack).thenReturn(null);
 
-  when(mockedState3.attack(pick)).thenReturn({
+  when(mockedState3.attack).thenReturn({
     skillValue: 15,
     damage,
     dodgeable: true,
@@ -119,7 +119,7 @@ describe('InteractiveEntity', () => {
   describe('damagePlayer', () => {
     describe('when state do not produce damage', () => {
       it('return null', () => {
-        const result = fakeEntity().attack(action);
+        const result = fakeEntity().attack;
 
         expect(result).toBeNull();
       });
@@ -127,7 +127,7 @@ describe('InteractiveEntity', () => {
 
     describe('when state produces damage', () => {
       it('return DamageDefinition', () => {
-        const result = fakeEntity(false, state3).attack(pick);
+        const result = fakeEntity(false, state3).attack;
 
         expect(result).toEqual({
           skillValue: 15,
