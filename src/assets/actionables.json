@@ -1,0 +1,53 @@
+{
+  "actionables": [
+    {
+      "name": "sceneExitDoor",
+      "actionable": "SCENE",
+      "label": "Exit"
+    },
+    {
+      "name": "Athleticism",
+      "actionable": "SKILL"
+    },
+    {
+      "name": "attack",
+      "actionable": "ATTACK",
+      "label": "Attack"
+    },
+    {
+      "name": "knife",
+      "actionable": "PICK",
+      "label": "Hunting Knife"
+    },
+    {
+      "name": "firstAid",
+      "actionable": "PICK",
+      "label": "First Aid Kit"
+    },
+    {
+      "name": "enterSceneDoor",
+      "actionable": "SCENE",
+      "label": "Enter"
+    },
+    {
+      "name": "club",
+      "actionable": "PICK",
+      "label": "Wood Stick"
+    },
+    {
+      "name": "corridorDoor",
+      "actionable": "SCENE",
+      "label": "Enter"
+    },
+    {
+      "name": "halberd",
+      "actionable": "PICK",
+      "label": "Halberd"
+    },
+    {
+      "name": "bubbleGum",
+      "actionable": "PICK",
+      "label": "Bubble Gum"
+    }
+  ]
+}

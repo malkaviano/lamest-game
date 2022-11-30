@@ -7,6 +7,9 @@ import {
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 
+import actionableStore from '../../assets/actionables.json';
+import { ActionableLiteral } from '../literals/actionable.literal';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,55 +19,16 @@ export class ActionableStore {
   constructor(private readonly converterHelper: ConverterHelper) {
     this.store = new Map<string, ActionableDefinition>();
 
-    this.store.set(
-      'sceneExitDoor',
-      createActionableDefinition('SCENE', 'sceneExitDoor', 'Exit')
-    );
-
-    this.store.set(
-      'knife',
-      createActionableDefinition('PICK', 'knife', 'Hunting Knife')
-    );
-
-    this.store.set(
-      'firstAid',
-      createActionableDefinition('PICK', 'firstAid', 'First Aid Kit')
-    );
-
-    this.store.set(
-      'Athleticism',
-      createActionableDefinition('SKILL', 'Athleticism')
-    );
-
-    this.store.set(
-      'enterSceneDoor',
-      createActionableDefinition('SCENE', 'enterSceneDoor', 'Enter')
-    );
-
-    this.store.set(
-      'attack',
-      createActionableDefinition('ATTACK', 'attack', 'Attack')
-    );
-
-    this.store.set(
-      'club',
-      createActionableDefinition('PICK', 'club', 'Wood Stick')
-    );
-
-    this.store.set(
-      'corridorDoor',
-      createActionableDefinition('SCENE', 'corridorDoor', 'Enter')
-    );
-
-    this.store.set(
-      'halberd',
-      createActionableDefinition('PICK', 'halberd', 'Halberd')
-    );
-
-    this.store.set(
-      'bubbleGum',
-      createActionableDefinition('PICK', 'bubbleGum', 'Bubble Gum')
-    );
+    actionableStore.actionables.forEach((actionable) => {
+      this.store.set(
+        actionable.name,
+        createActionableDefinition(
+          actionable.actionable as ActionableLiteral,
+          actionable.name,
+          actionable.label
+        )
+      );
+    });
   }
 
   public get actionables(): KeyValueInterface<ActionableDefinition> {
