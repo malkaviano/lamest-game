@@ -5,6 +5,10 @@ import { instance, mock, verify, when } from 'ts-mockito';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
+import {
+  createTookLogMessage,
+  LogMessageDefinition,
+} from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
@@ -59,7 +63,7 @@ describe('PickRule', () => {
       verify(mockedInventoryService.store('player', item)).once();
 
       expect(result).toEqual({
-        logs: ['player: took Sword from test'],
+        logs: [log],
       });
     });
   });
@@ -87,3 +91,5 @@ const mockedInteractiveEntity = mock(InteractiveEntity);
 const interactives: KeyValueInterface<InteractiveEntity> = {
   id1: instance(mockedInteractiveEntity),
 };
+
+const log = createTookLogMessage('player', 'test', 'Sword');

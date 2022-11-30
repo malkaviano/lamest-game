@@ -8,6 +8,11 @@ import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
+import {
+  createCheckLogMessage,
+  createFreeLogMessage,
+  LogMessageDefinition,
+} from '../definitions/log-message.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +26,7 @@ export class AttackRule implements RuleInterface {
   ) {}
 
   public execute(action: ActionableEvent): RuleResultInterface {
-    const logs: string[] = [];
+    const logs: LogMessageDefinition[] = [];
 
     const weapon = this.inventoryService.equipped ?? unarmed;
 
@@ -33,18 +38,14 @@ export class AttackRule implements RuleInterface {
 
       const interactive = this.narrativeService.interatives[action.eventId];
 
-      logs.push(`player: attacked ${interactive.name} USING ${weapon.label}`);
-
       logs.push(
-        `player: used ${weapon.skillName} and rolled ${roll} -> ${result}`
+        createCheckLogMessage('player', weapon.skillName, roll, result)
       );
-
-      let damage: number | undefined;
 
       if (result === 'SUCCESS') {
         const weaponDamage = weapon.damage;
 
-        damage =
+        const damage =
           this.rngService.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
 
         const log = interactive.actionSelected(
@@ -54,11 +55,7 @@ export class AttackRule implements RuleInterface {
         );
 
         if (log) {
-          const preposition = log.includes('destroyed') ? 'by' : 'from';
-
-          logs.push(
-            `${interactive.name}: ${log} ${preposition} player ${weapon.label}`
-          );
+          logs.push(createFreeLogMessage(interactive.name, log));
         }
       }
     }

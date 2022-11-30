@@ -70,7 +70,7 @@ export class GamePage implements OnInit, OnDestroy {
 
     this.withSubscriptionHelper.addSubscription(
       this.gameManagerService.events.actionLogged$.subscribe((log) => {
-        this.gameLogs.unshift(log);
+        this.gameLogs.unshift(log.toString());
       })
     );
 

@@ -9,6 +9,12 @@ import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { RandomIntService } from '../services/random-int.service';
+import {
+  createCheckLogMessage,
+  createConsumedLogMessage,
+  createHealedLogMessage,
+  LogMessageDefinition,
+} from '../definitions/log-message.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +27,7 @@ export class ConsumeRule implements RuleInterface {
   ) {}
 
   public execute(action: ActionableEvent): RuleResultInterface {
-    const logs: string[] = [];
+    const logs: LogMessageDefinition[] = [];
 
     const consumable = this.inventoryService.take(
       'player',
@@ -32,7 +38,7 @@ export class ConsumeRule implements RuleInterface {
       throw new Error(errorMessages['WRONG-ITEM']);
     }
 
-    logs.push(`player: consumed ${consumable.label}`);
+    logs.push(createConsumedLogMessage('player', consumable.label));
 
     let hp = consumable.hp;
 
@@ -46,7 +52,7 @@ export class ConsumeRule implements RuleInterface {
 
       if (roll) {
         logs.push(
-          `player: rolled ${roll} in ${consumable.skillName} and resulted in ${result}`
+          createCheckLogMessage('player', consumable.skillName, roll, result)
         );
       }
 
@@ -54,9 +60,9 @@ export class ConsumeRule implements RuleInterface {
     }
 
     if (passed === 'SUCCESS' || passed === 'NONE') {
-      const log = this.characterService.currentCharacter.healed(hp);
+      const healed = this.characterService.currentCharacter.healed(hp);
 
-      logs.push(`player: ${log}`);
+      logs.push(createHealedLogMessage('player', healed));
     }
 
     return { logs };

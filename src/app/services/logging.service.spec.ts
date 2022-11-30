@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import { LoggingService } from './logging.service';
 
@@ -16,17 +17,19 @@ describe('LoggingService', () => {
 
   describe('when message is logged', () => {
     it('emit an event', (done) => {
-      let result: string | undefined;
+      let result: LogMessageDefinition | undefined;
 
       service.gameLog$.subscribe((event) => {
         result = event;
       });
 
-      service.log('GG');
+      service.log(log);
 
       done();
 
-      expect(result).toEqual('GG');
+      expect(result).toEqual(log);
     });
   });
 });
+
+const log = new LogMessageDefinition('FREE', 'me', 'GG');

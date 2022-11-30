@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { instance, mock, verify } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { createUnEquippedLogMessage } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { UnequipRule } from './unequip.rule';
@@ -28,7 +29,7 @@ describe('UnequipRule', () => {
   });
 
   describe('execute', () => {
-    it('return logss', () => {
+    it('return logs', () => {
       const logs = service.execute(
         new ActionableEvent(
           createActionableDefinition('UNEQUIP', 'unequip', 'Sword'),
@@ -39,10 +40,12 @@ describe('UnequipRule', () => {
       verify(mockedInventoryService.unequip()).once();
 
       expect(logs).toEqual({
-        logs: ['unequipped: Sword'],
+        logs: [log],
       });
     });
   });
 });
 
 const mockedInventoryService = mock(InventoryService);
+
+const log = createUnEquippedLogMessage('player', 'Sword');

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { RollDefinition } from '../definitions/roll.definition';
-import { ResultLiteral } from '../literals/result.literal';
 
+import { errorMessages } from '../definitions/error-messages.definition';
+import { ResultLiteral } from '../literals/result.literal';
 import { RandomIntService } from './random-int.service';
 
 describe('RandomIntService', () => {
@@ -55,10 +55,10 @@ describe('RandomIntService', () => {
 
   describe('checkSkill', () => {
     describe('when skill value was 0', () => {
-      it('return failure without roll value', () => {
-        const result = service.checkSkill(0);
-
-        expect(result).toEqual(new RollDefinition('FAILURE'));
+      it('throws Action should not happen', () => {
+        expect(() => service.checkSkill(0)).toThrowError(
+          errorMessages['SHOULD-NOT-HAPPEN']
+        );
       });
     });
 

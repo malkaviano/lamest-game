@@ -3,6 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import {
+  createCheckLogMessage,
+  createDamagedMessage,
+  createFreeLogMessage,
+} from '../definitions/log-message.definition';
 import { unarmed } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
@@ -61,33 +66,6 @@ describe('AttackRule', () => {
   });
 
   describe('execute', () => {
-    describe('when object got destroyed', () => {
-      it('return logs', () => {
-        when(mockedRngService.checkSkill(45)).thenReturn({
-          result: 'SUCCESS',
-          roll: 10,
-        });
-
-        when(mockedRngService.roll(unarmed.damage.diceRoll)).thenReturn(
-          1 + unarmed.damage.fixed
-        );
-
-        when(
-          mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 1)
-        ).thenReturn('received 1 damage and was destroyed');
-
-        const result = service.execute(event);
-
-        expect(result).toEqual({
-          logs: [
-            'player: attacked test USING Bare hands',
-            'player: used Brawl and rolled 10 -> SUCCESS',
-            'test: received 1 damage and was destroyed by player Bare hands',
-          ],
-        });
-      });
-    });
-
     it('return logs', () => {
       when(mockedRngService.checkSkill(45)).thenReturn({
         result: 'SUCCESS',
@@ -105,11 +83,7 @@ describe('AttackRule', () => {
       const result = service.execute(event);
 
       expect(result).toEqual({
-        logs: [
-          'player: attacked test USING Bare hands',
-          'player: used Brawl and rolled 10 -> SUCCESS',
-          'test: received 1 damage from player Bare hands',
-        ],
+        logs: [log1, log2],
       });
     });
   });
@@ -134,3 +108,7 @@ const mockedCharacterEntity = mock(CharacterEntity);
 const interactives: KeyValueInterface<InteractiveEntity> = {
   id1: instance(mockedInteractiveEntity),
 };
+
+const log1 = createCheckLogMessage('player', 'Brawl', 10, 'SUCCESS');
+
+const log2 = createFreeLogMessage('test', createDamagedMessage(1));

@@ -7,6 +7,11 @@ import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
+import {
+  createCheckLogMessage,
+  createConsumedLogMessage,
+  createHealedLogMessage,
+} from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { ActionableEvent } from '../events/actionable.event';
@@ -74,7 +79,7 @@ describe('ConsumeRule', () => {
       describe('when skill check passes', () => {
         it('should heal player', () => {
           when(mockedInventoryService.take('player', 'firstAid')).thenReturn(
-            consumable
+            consumableFirstAid
           );
 
           when(mockedRngService.checkSkill(45)).thenReturn({
@@ -82,18 +87,12 @@ describe('ConsumeRule', () => {
             roll: 10,
           });
 
-          when(mockedCharacterEntity.healed(5)).thenReturn(
-            'healed 5 Hit Points and become full health'
-          );
+          when(mockedCharacterEntity.healed(5)).thenReturn(5);
 
           const result = service.execute(event);
 
           expect(result).toEqual({
-            logs: [
-              'player: consumed First Aid Kit',
-              'player: rolled 10 in First Aid and resulted in SUCCESS',
-              'player: healed 5 Hit Points and become full health',
-            ],
+            logs: [logFirstAid1, logFirstAid2, logFirstAid3],
           });
         });
       });
@@ -102,27 +101,22 @@ describe('ConsumeRule', () => {
     describe('when consumable has no skill requirement', () => {
       it('should heal player', () => {
         when(mockedInventoryService.take('player', 'sandwich')).thenReturn(
-          consumable2
+          consumableChesseBurger
         );
 
-        when(mockedCharacterEntity.healed(2)).thenReturn(
-          'healed 2 Hit Points and become full health'
-        );
+        when(mockedCharacterEntity.healed(2)).thenReturn(2);
 
         const result = service.execute(event2);
 
         expect(result).toEqual({
-          logs: [
-            'player: consumed Cheeseburger',
-            'player: healed 2 Hit Points and become full health',
-          ],
+          logs: [logCheeseBurger1, logCheeseBurger2],
         });
       });
     });
   });
 });
 
-const consumable = new ConsumableDefinition(
+const consumableFirstAid = new ConsumableDefinition(
   'firstAid',
   'First Aid Kit',
   'Very simple First Aid',
@@ -130,7 +124,7 @@ const consumable = new ConsumableDefinition(
   'First Aid'
 );
 
-const consumable2 = new ConsumableDefinition(
+const consumableChesseBurger = new ConsumableDefinition(
   'sandwich',
   'Cheeseburger',
   'Delicious',
@@ -150,3 +144,18 @@ const mockedInventoryService = mock(InventoryService);
 const mockedRngService = mock(RandomIntService);
 
 const mockedCharacterEntity = mock(CharacterEntity);
+
+const logCheeseBurger1 = createConsumedLogMessage('player', 'Cheeseburger');
+
+const logCheeseBurger2 = createHealedLogMessage('player', 2);
+
+const logFirstAid1 = createConsumedLogMessage('player', 'First Aid Kit');
+
+const logFirstAid2 = createCheckLogMessage(
+  'player',
+  'First Aid',
+  10,
+  'SUCCESS'
+);
+
+const logFirstAid3 = createHealedLogMessage('player', 5);

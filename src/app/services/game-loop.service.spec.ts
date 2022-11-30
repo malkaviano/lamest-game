@@ -1,9 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { EMPTY, Observable, of, Subject } from 'rxjs';
 
+import { Subject } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import {
+  createActorDiedMessage,
+  createFreeLogMessage,
+} from '../definitions/log-message.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { HitPointsEvent } from '../events/hitpoints.event';
@@ -35,11 +39,11 @@ describe('GameLoopService', () => {
     when(mockedRulesHelper.defenseRule).thenReturn(instance(mockedDefenseRule));
 
     when(mockedAttackRule.execute(anything())).thenReturn({
-      logs: ['GG brah'],
+      logs: [log1],
     });
 
     when(mockedDefenseRule.execute(anything())).thenReturn({
-      logs: ['Sure, took a while'],
+      logs: [log2],
     });
 
     when(mockedCharacterService.currentCharacter).thenReturn(
@@ -59,18 +63,18 @@ describe('GameLoopService', () => {
     it('return logs', () => {
       const result = service.run(event);
 
-      expect(result).toEqual({ logs: ['GG brah', 'Sure, took a while'] });
+      expect(result).toEqual({ logs: [log1, log2] });
     });
 
     describe('when player HP reaches 0', () => {
-      it('should stop running', (done) => {
+      it('should log player died', (done) => {
         subject.next(new HitPointsEvent(10, 0));
 
         done();
 
         const result = service.run(event);
 
-        expect(result).toEqual({ logs: [] });
+        expect(result).toEqual({ logs: [logDied] });
       });
     });
   });
@@ -91,3 +95,9 @@ const mockedCharacterService = mock(CharacterService);
 const mockedCharacterEntity = mock(CharacterEntity);
 
 const subject = new Subject<HitPointsEvent>();
+
+const log1 = createFreeLogMessage('me', 'GG brah');
+
+const log2 = createFreeLogMessage('me', 'Sure, took a while');
+
+const logDied = createActorDiedMessage('player');

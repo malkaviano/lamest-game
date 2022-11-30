@@ -28,6 +28,7 @@ import { ActionableItemDefinition } from '../../definitions/actionable-item.defi
 import { DamageDefinition } from '../../definitions/damage.definition';
 import { createDice } from '../../definitions/dice.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
+import { createTookLogMessage } from '../../definitions/log-message.definition';
 
 describe('GamePage', () => {
   let component: GamePage;
@@ -67,9 +68,7 @@ describe('GamePage', () => {
       })
     );
 
-    when(mockedGameEventsService.actionLogged$).thenReturn(
-      of('OMG', 'This is not happening', 'GG')
-    );
+    when(mockedGameEventsService.actionLogged$).thenReturn(of(log));
 
     fixture = TestBed.createComponent(GamePage);
 
@@ -196,9 +195,7 @@ describe('GamePage', () => {
   });
 
   it(`should have action log`, () => {
-    expect(component.logs).toEqual(
-      new ArrayView(['GG', 'This is not happening', 'OMG'])
-    );
+    expect(component.logs).toEqual(new ArrayView([log.toString()]));
   });
 
   it(`should have inventory`, () => {
@@ -308,3 +305,5 @@ const weapon2 = new WeaponDefinition(
   new DamageDefinition(createDice({ D6: 1 }), 0),
   true
 );
+
+const log = createTookLogMessage('player', 'test', 'Sword');

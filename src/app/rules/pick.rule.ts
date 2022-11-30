@@ -5,6 +5,10 @@ import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
+import {
+  createTookLogMessage,
+  LogMessageDefinition,
+} from '../definitions/log-message.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +20,7 @@ export class PickRule implements RuleInterface {
   ) {}
 
   public execute(action: ActionableEvent): RuleResultInterface {
-    const logs: string[] = [];
+    const logs: LogMessageDefinition[] = [];
 
     const item = this.inventoryService.take(
       action.eventId,
@@ -30,7 +34,7 @@ export class PickRule implements RuleInterface {
     const log = interactive.actionSelected(action.actionableDefinition, 'NONE');
 
     if (log) {
-      logs.push(`player: took ${log} from ${interactive.name}`);
+      logs.push(createTookLogMessage('player', interactive.name, log));
     }
 
     return { logs };

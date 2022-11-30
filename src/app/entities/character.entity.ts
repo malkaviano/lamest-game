@@ -73,31 +73,15 @@ export class CharacterEntity {
     );
   }
 
-  public damaged(damage: number): string {
-    this.modifyHealth(-damage);
-
-    let log = `received ${damage} damage`;
-
-    if (this.currentHP === 0) {
-      log += ' and was killed';
-    }
-
-    return log;
+  public damaged(damage: number): number {
+    return this.modifyHealth(-damage);
   }
 
-  public healed(healed: number): string {
-    this.modifyHealth(healed);
-
-    let log = `healed ${healed} Hit Points`;
-
-    if (this.currentHP === this.maximumHP) {
-      log += ' and become full health';
-    }
-
-    return log;
+  public healed(healed: number): number {
+    return this.modifyHealth(healed);
   }
 
-  private modifyHealth(modified: number): void {
+  private modifyHealth(modified: number): number {
     const previousHP = this.currentHP;
 
     this.currentHP += modified;
@@ -107,6 +91,8 @@ export class CharacterEntity {
     if (previousHP !== this.currentHP) {
       this.hpChanged.next(new HitPointsEvent(previousHP, this.currentHP));
     }
+
+    return Math.abs(previousHP - this.currentHP);
   }
 
   // TODO: Move this to helper

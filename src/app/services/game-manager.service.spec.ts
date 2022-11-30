@@ -20,6 +20,7 @@ import { DamageDefinition } from '../definitions/damage.definition';
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 const sword = new WeaponDefinition(
   'sword',
@@ -76,7 +77,7 @@ describe('GameManagerService', () => {
       inventoryEventSubject
     );
 
-    when(mockedLoggingService.gameLog$).thenReturn(of('GG'));
+    when(mockedLoggingService.gameLog$).thenReturn(of(log));
 
     service = TestBed.inject(GameManagerService);
   });
@@ -128,9 +129,9 @@ describe('GameManagerService', () => {
 
   describe('actionableReceived', () => {
     it('should invoke GameLoopService run', (done) => {
-      let result: string | undefined;
+      let result: LogMessageDefinition | undefined;
 
-      when(mockedGameLoopService.run(anything())).thenReturn({ logs: ['GG'] });
+      when(mockedGameLoopService.run(anything())).thenReturn({ logs: [log] });
 
       service.events.actionLogged$.pipe(take(10)).subscribe((event) => {
         result = event;
@@ -140,7 +141,7 @@ describe('GameManagerService', () => {
 
       done();
 
-      expect(result).toEqual('GG');
+      expect(result).toEqual(log);
     });
   });
 });
@@ -158,3 +159,5 @@ const mockedCharacterService = mock(CharacterService);
 const mockedNarrativeService = mock(NarrativeService);
 
 const mockedLoggingService = mock(LoggingService);
+
+const log = new LogMessageDefinition('FREE', 'me', 'GG');

@@ -6,6 +6,15 @@ import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
+import {
+  createFreeLogMessage,
+  createAttackedLogMessage,
+  createDamagedMessage,
+  LogMessageDefinition,
+  createMissedAttackLogMessage,
+  createDodgedLogMessage as createDodgedAttackLogMessage,
+  createCheckLogMessage,
+} from '../definitions/log-message.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +27,7 @@ export class DefenseRule implements RuleInterface {
   ) {}
 
   public execute(action: ActionableEvent): RuleResultInterface {
-    const logs: string[] = [];
+    const logs: LogMessageDefinition[] = [];
 
     Object.entries(this.narrativeService.interatives).forEach(
       ([_, interactive]) => {
@@ -30,7 +39,9 @@ export class DefenseRule implements RuleInterface {
           let { result: enemyResult } = this.rngService.checkSkill(skillValue);
 
           if (enemyResult === 'SUCCESS') {
-            logs.push(`${interactive.name}: attacked player`);
+            logs.push(
+              createAttackedLogMessage(interactive.name, 'player', weaponName)
+            );
 
             const { result } = this.rngService.checkSkill(
               this.characterService.currentCharacter.skills['Dodge']
@@ -40,19 +51,19 @@ export class DefenseRule implements RuleInterface {
               const damageAmount =
                 this.rngService.roll(damage.diceRoll) + damage.fixed;
 
-              const log =
+              const damaged =
                 this.characterService.currentCharacter.damaged(damageAmount);
 
-              const preposition = log.includes('killed') ? 'by' : 'from';
-
               logs.push(
-                `player: ${log} ${preposition} ${interactive.name} ${weaponName}`
+                createFreeLogMessage('player', createDamagedMessage(damaged))
               );
             } else {
-              logs.push(`player: dodged ${interactive.name} attack`);
+              logs.push(
+                createDodgedAttackLogMessage('player', interactive.name)
+              );
             }
           } else {
-            logs.push(`${interactive.name}: attacked player but missed`);
+            logs.push(createMissedAttackLogMessage(interactive.name, 'player'));
           }
         }
       }

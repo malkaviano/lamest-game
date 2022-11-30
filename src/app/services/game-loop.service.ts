@@ -5,6 +5,10 @@ import { RulesHelper } from '../helpers/rules.helper';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from './character.service';
+import {
+  createActorDiedMessage,
+  LogMessageDefinition,
+} from '../definitions/log-message.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +18,7 @@ export class GameLoopService {
     [key: string]: RuleInterface;
   };
 
-  private running: boolean;
+  private isPlayerAlive: boolean;
 
   constructor(
     private readonly rulesHelper: RulesHelper,
@@ -31,23 +35,27 @@ export class GameLoopService {
       ASK: this.rulesHelper.conversationRule,
     };
 
-    this.running = true;
+    this.isPlayerAlive = true;
 
     this.characterService.currentCharacter.hpChanged$.subscribe((event) => {
-      this.running = event.current > 0;
+      this.isPlayerAlive = event.current > 0;
     });
   }
 
   public run(action: ActionableEvent): RuleResultInterface {
-    let logs: string[] = [];
+    let logs: LogMessageDefinition[] = [];
 
-    if (this.running) {
+    if (this.isPlayerAlive) {
       const playerResult =
         this.dispatcher[action.actionableDefinition.actionable].execute(action);
 
       const defenseResult = this.rulesHelper.defenseRule.execute(action);
 
       logs = playerResult.logs.concat(defenseResult.logs);
+    }
+
+    if (!this.isPlayerAlive) {
+      logs.push(createActorDiedMessage('player'));
     }
 
     return {

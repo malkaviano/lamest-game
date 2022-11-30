@@ -5,6 +5,13 @@ import { instance, mock, reset, when } from 'ts-mockito';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
+import {
+  createAttackedLogMessage,
+  createDamagedMessage,
+  createDodgedLogMessage,
+  createFreeLogMessage,
+  createMissedAttackLogMessage,
+} from '../definitions/log-message.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
@@ -67,7 +74,7 @@ describe('DefenseRule', () => {
   describe('execute', () => {
     describe('when attack hit', () => {
       describe('when attack is dodgeable', () => {
-        describe('when played dodge', () => {
+        describe('when player dodges', () => {
           it('return logs', () => {
             when(mockedRngService.checkSkill(45)).thenReturn({
               result: 'SUCCESS',
@@ -77,39 +84,12 @@ describe('DefenseRule', () => {
             const result = service.execute(event);
 
             expect(result).toEqual({
-              logs: ['test: attacked player', 'player: dodged test attack'],
+              logs: [logAttacked1, logDodged],
             });
           });
         });
-      });
 
-      describe('when dodge fails', () => {
-        it('return logs', () => {
-          when(mockedRngService.checkSkill(45))
-            .thenReturn({
-              result: 'SUCCESS',
-              roll: 10,
-            })
-            .thenReturn({
-              result: 'FAILURE',
-              roll: 90,
-            });
-
-          when(mockedCharacterEntity.damaged(4)).thenReturn(
-            'received 4 damage'
-          );
-
-          const result = service.execute(event);
-
-          expect(result).toEqual({
-            logs: [
-              'test: attacked player',
-              'player: received 4 damage from test claw',
-            ],
-          });
-        });
-
-        describe('when player dies', () => {
+        describe('when dodge fails', () => {
           it('return logs', () => {
             when(mockedRngService.checkSkill(45))
               .thenReturn({
@@ -121,17 +101,12 @@ describe('DefenseRule', () => {
                 roll: 90,
               });
 
-            when(mockedCharacterEntity.damaged(4)).thenReturn(
-              'received 4 damage and was killed'
-            );
+            when(mockedCharacterEntity.damaged(4)).thenReturn(4);
 
             const result = service.execute(event);
 
             expect(result).toEqual({
-              logs: [
-                'test: attacked player',
-                'player: received 4 damage and was killed by test claw',
-              ],
+              logs: [logAttacked1, logAttacked2],
             });
           });
         });
@@ -148,7 +123,7 @@ describe('DefenseRule', () => {
         const result = service.execute(event);
 
         expect(result).toEqual({
-          logs: ['test: attacked player but missed'],
+          logs: [logMissed],
         });
       });
     });
@@ -172,3 +147,11 @@ const mockedCharacterEntity = mock(CharacterEntity);
 const action = createActionableDefinition('SKILL', 'Brawl');
 
 const event = new ActionableEvent(action, 'id1');
+
+const logMissed = createMissedAttackLogMessage('test', 'player');
+
+const logDodged = createDodgedLogMessage('player', 'test');
+
+const logAttacked1 = createAttackedLogMessage('test', 'player', 'claw');
+
+const logAttacked2 = createFreeLogMessage('player', createDamagedMessage(4));

@@ -6,6 +6,11 @@ import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
+import {
+  createCheckLogMessage,
+  LogMessageDefinition,
+} from '../definitions/log-message.definition';
+import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +23,9 @@ export class SkillRule implements RuleInterface {
   ) {}
 
   public execute(action: ActionableEvent): RuleResultInterface {
-    const logs: string[] = [];
+    const logs: LogMessageDefinition[] = [];
 
-    const skillName = action.actionableDefinition.name;
+    const skillName = action.actionableDefinition.name as SkillNameLiteral;
 
     const skillValue = this.characterService.currentCharacter.skills[skillName];
 
@@ -30,12 +35,8 @@ export class SkillRule implements RuleInterface {
 
     interactive.actionSelected(action.actionableDefinition, result);
 
-    logs.push(
-      `player: used ${action.actionableDefinition.label} on ${interactive.name}`
-    );
-
     if (roll) {
-      logs.push(`player: rolled ${roll} -> ${result}`);
+      logs.push(createCheckLogMessage('player', skillName, roll, result));
     }
 
     return { logs };

@@ -1,4 +1,8 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
+import {
+  createDamagedMessage,
+  createDestroyedMessage,
+} from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
@@ -25,13 +29,13 @@ export class DestroyableState extends ActionableState {
     if (hp > 0) {
       return {
         state: new DestroyableState(this.stateActions, this.destroyedState, hp),
-        log: `received ${dmg} damage`,
+        log: createDamagedMessage(dmg),
       };
     }
 
     return {
       state: this.destroyedState.value,
-      log: `received ${dmg} damage and was destroyed`,
+      log: createDestroyedMessage(dmg),
     };
   }
 }

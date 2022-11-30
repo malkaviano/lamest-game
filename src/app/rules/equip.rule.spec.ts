@@ -4,12 +4,15 @@ import { instance, mock, verify, when } from 'ts-mockito';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
+import {
+  createEquipErrorLogMessage,
+  createEquippedLogMessage,
+} from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
-import { LoggingService } from '../services/logging.service';
 import { ItemStore } from '../stores/item.store';
 import { EquipRule } from './equip.rule';
 
@@ -70,7 +73,7 @@ describe('EquipRule', () => {
         verify(mockedInventoryService.equip('sword')).once();
 
         expect(result).toEqual({
-          logs: ['equipped: Sword'],
+          logs: [log],
         });
       });
     });
@@ -97,7 +100,7 @@ describe('EquipRule', () => {
         const result = service.execute(event);
 
         expect(result).toEqual({
-          logs: ['error: Artillery (Siege) is required to equip Sword'],
+          logs: [logError],
         });
       });
     });
@@ -116,3 +119,11 @@ const mockedInventoryService = mock(InventoryService);
 const mockedItemStore = mock(ItemStore);
 
 const mockedCharacterEntity = mock(CharacterEntity);
+
+const log = createEquippedLogMessage('player', 'Sword');
+
+const logError = createEquipErrorLogMessage(
+  'player',
+  'Artillery (Siege)',
+  'Sword'
+);

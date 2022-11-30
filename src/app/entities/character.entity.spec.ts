@@ -1,3 +1,5 @@
+import { take } from 'rxjs';
+
 import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
 import { DerivedAttributesDefinition } from '../definitions/attributes.definition';
 import { IdentityDefinition } from '../definitions/identity.definition';
@@ -5,7 +7,6 @@ import { CharacteristicDefinition } from '../definitions/characteristic.definiti
 import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { CharacterEntity } from './character.entity';
-import { take } from 'rxjs';
 import { HitPointsEvent } from '../events/hitpoints.event';
 
 describe('CharacterEntity', () => {
@@ -109,10 +110,10 @@ describe('CharacterEntity', () => {
 
   describe('taking damage', () => {
     describe('when damage is equal or higher than HP', () => {
-      it('return received 12 damage and was killed', () => {
+      it('return 9', () => {
         const result = character().damaged(12);
 
-        expect(result).toEqual('received 12 damage and was killed');
+        expect(result).toEqual(9);
       });
 
       it('return HP = 0', () => {
@@ -125,10 +126,10 @@ describe('CharacterEntity', () => {
     });
 
     describe('when damage is lesser than HP', () => {
-      it('return received 6 damage', () => {
+      it('return 6', () => {
         const result = character().damaged(6);
 
-        expect(result).toEqual('received 6 damage');
+        expect(result).toEqual(6);
       });
 
       it('return HP = 3', () => {
@@ -159,10 +160,14 @@ describe('CharacterEntity', () => {
 
   describe('healing player', () => {
     describe('when heal received goes over maximum HP', () => {
-      it('return healed 4 Hit Points and become full health', () => {
-        const result = character().healed(4);
+      it('return 2', () => {
+        const char = character();
 
-        expect(result).toEqual('healed 4 Hit Points and become full health');
+        char.damaged(2);
+
+        const result = char.healed(4);
+
+        expect(result).toEqual(2);
       });
 
       it('return HP equal maximum HP', () => {

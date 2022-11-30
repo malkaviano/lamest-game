@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { instance, mock, verify, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { createSceneLogMessage } from '../definitions/log-message.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -42,7 +43,7 @@ describe('SceneRule', () => {
       verify(mockedNarrativeService.changeScene(event)).once();
 
       expect(result).toEqual({
-        logs: ['selected: test -> Exit'],
+        logs: [log],
       });
     });
   });
@@ -59,3 +60,5 @@ const mockedInteractiveEntity = mock(InteractiveEntity);
 const interactives: KeyValueInterface<InteractiveEntity> = {
   id1: instance(mockedInteractiveEntity),
 };
+
+const log = createSceneLogMessage('player', 'test', 'Exit');

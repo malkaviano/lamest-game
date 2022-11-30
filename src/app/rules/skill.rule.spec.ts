@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { createCheckLogMessage } from '../definitions/log-message.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
@@ -64,7 +65,7 @@ describe('SkillRule', () => {
       const result = service.execute(event);
 
       expect(result).toEqual({
-        logs: ['player: used Brawl on test', 'player: rolled 10 -> SUCCESS'],
+        logs: [log1],
       });
     });
   });
@@ -87,3 +88,5 @@ const mockedCharacterEntity = mock(CharacterEntity);
 const action = createActionableDefinition('SKILL', 'Brawl');
 
 const event = new ActionableEvent(action, 'id1');
+
+const log1 = createCheckLogMessage('player', 'Brawl', 10, 'SUCCESS');

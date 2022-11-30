@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { createFreeLogMessage } from '../definitions/log-message.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -49,7 +50,7 @@ describe('ConversationRule', () => {
       );
 
       expect(result).toEqual({
-        logs: ['player: Hi', 'test: Hello'],
+        logs: [log1, log2],
       });
     });
   });
@@ -62,3 +63,7 @@ const mockedInteractiveEntity = mock(InteractiveEntity);
 const interactives: KeyValueInterface<InteractiveEntity> = {
   id1: instance(mockedInteractiveEntity),
 };
+
+const log1 = createFreeLogMessage('player', 'Hi');
+
+const log2 = createFreeLogMessage('test', 'Hello');

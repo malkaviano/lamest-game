@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { createDice, Dice } from '../definitions/dice.definition';
+import { errorMessages } from '../definitions/error-messages.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 import { DiceLiteral } from '../literals/dice.literal';
 import { ResultLiteral } from '../literals/result.literal';
@@ -52,14 +53,14 @@ export class RandomIntService {
   }
 
   public checkSkill(skillValue: number): RollDefinition {
-    if (skillValue) {
-      const roll = this.roll(createDice({ D100: 1 }));
-
-      const result = roll <= skillValue ? 'SUCCESS' : 'FAILURE';
-
-      return new RollDefinition(result, roll);
+    if (skillValue <= 0) {
+      throw new Error(errorMessages['SHOULD-NOT-HAPPEN']);
     }
 
-    return new RollDefinition('FAILURE');
+    const roll = this.roll(createDice({ D100: 1 }));
+
+    const result = roll <= skillValue ? 'SUCCESS' : 'FAILURE';
+
+    return new RollDefinition(result, roll);
   }
 }
