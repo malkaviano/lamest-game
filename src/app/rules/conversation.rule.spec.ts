@@ -6,7 +6,6 @@ import { createActionableDefinition } from '../definitions/actionable.definition
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { LoggingService } from '../services/logging.service';
 import { NarrativeService } from '../services/narrative.service';
 import { ConversationRule } from './conversation.rule';
 
@@ -19,10 +18,6 @@ describe('ConversationRule', () => {
         {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
-        },
-        {
-          provide: LoggingService,
-          useValue: instance(mockedLoggingService),
         },
       ],
     });
@@ -61,8 +56,6 @@ describe('ConversationRule', () => {
 });
 
 const mockedNarrativeService = mock(NarrativeService);
-
-const mockedLoggingService = mock(LoggingService);
 
 const mockedInteractiveEntity = mock(InteractiveEntity);
 

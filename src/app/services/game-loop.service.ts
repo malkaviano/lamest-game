@@ -14,6 +14,8 @@ export class GameLoopService {
     [key: string]: RuleInterface;
   };
 
+  private running: boolean;
+
   constructor(
     private readonly rulesHelper: RulesHelper,
     private readonly characterService: CharacterService
@@ -28,12 +30,18 @@ export class GameLoopService {
       CONSUME: this.rulesHelper.consumableRule,
       ASK: this.rulesHelper.conversationRule,
     };
+
+    this.running = true;
+
+    this.characterService.currentCharacter.hpChanged$.subscribe((event) => {
+      this.running = event.current > 0;
+    });
   }
 
   public run(action: ActionableEvent): RuleResultInterface {
     let logs: string[] = [];
 
-    if (this.characterService.currentCharacter.derivedAttributes.hp.value > 0) {
+    if (this.running) {
       const playerResult =
         this.dispatcher[action.actionableDefinition.actionable].execute(action);
 
