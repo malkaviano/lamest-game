@@ -74,6 +74,7 @@ const damage = new DamageDefinition(createDice(), 1);
 const expected = {
   skillValue: 25,
   damage,
+  dodgeable: true,
 };
 
 const f = () => emptyState;

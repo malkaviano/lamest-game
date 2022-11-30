@@ -21,7 +21,11 @@ beforeEach(() => {
 
   when(mockedState1.attack(action)).thenReturn(null);
 
-  when(mockedState3.attack(pick)).thenReturn({ skillValue: 15, damage });
+  when(mockedState3.attack(pick)).thenReturn({
+    skillValue: 15,
+    damage,
+    dodgeable: true,
+  });
 });
 
 describe('InteractiveEntity', () => {
@@ -124,7 +128,7 @@ describe('InteractiveEntity', () => {
       it('return DamageDefinition', () => {
         const result = fakeEntity(false, state3).attack(pick);
 
-        expect(result).toEqual({ skillValue: 15, damage });
+        expect(result).toEqual({ skillValue: 15, damage, dodgeable: true });
       });
     });
   });

@@ -212,7 +212,8 @@ describe('GamePage', () => {
           new DamageDefinition(
             { D4: 0, D6: 1, D8: 0, D10: 0, D12: 0, D20: 0, D100: 0 },
             0
-          )
+          ),
+          true
         ),
         new ActionableDefinition('ASK', 'action1', 'Got action?')
       ),
@@ -225,7 +226,8 @@ describe('GamePage', () => {
           new DamageDefinition(
             { D4: 0, D6: 1, D8: 0, D10: 0, D12: 0, D20: 0, D100: 0 },
             0
-          )
+          ),
+          true
         ),
         new ActionableDefinition('ASK', 'action1', 'Got action?')
       ),
@@ -294,7 +296,8 @@ const weapon1 = new WeaponDefinition(
   'Rusted Sword',
   'Old sword full of rust',
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0)
+  new DamageDefinition(createDice({ D6: 1 }), 0),
+  true
 );
 
 const weapon2 = new WeaponDefinition(
@@ -302,5 +305,6 @@ const weapon2 = new WeaponDefinition(
   'Decent Sword',
   'A good sword, not exceptional',
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0)
+  new DamageDefinition(createDice({ D6: 1 }), 0),
+  true
 );

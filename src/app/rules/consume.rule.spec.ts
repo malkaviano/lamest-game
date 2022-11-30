@@ -59,7 +59,8 @@ describe('ConsumeRule', () => {
             'Gun',
             '',
             'Firearm (Handgun)',
-            new DamageDefinition(createDice(), 0)
+            new DamageDefinition(createDice(), 0),
+            true
           )
         );
 

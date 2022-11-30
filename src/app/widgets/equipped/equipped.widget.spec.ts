@@ -74,7 +74,8 @@ const item = new WeaponDefinition(
   'Long Sword',
   'Some big sword',
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0)
+  new DamageDefinition(createDice({ D6: 1 }), 0),
+  true
 );
 
 const actionableItem = new ActionableItemDefinition(item, unequipAction);

@@ -9,7 +9,8 @@ export class WeaponDefinition extends SkillItemDefinition {
     label: string,
     description: string,
     skillName: SkillNameLiteral,
-    public readonly damage: DamageDefinition
+    public readonly damage: DamageDefinition,
+    public readonly dodgeable: boolean
   ) {
     super('WEAPON', name, label, description, skillName);
   }
@@ -20,5 +21,6 @@ export const unarmed = new WeaponDefinition(
   'Bare hands',
   'Unarmed combat',
   'Brawl',
-  new DamageDefinition(createDice({ D4: 1 }), 0)
+  new DamageDefinition(createDice({ D4: 1 }), 0),
+  true
 );

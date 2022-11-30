@@ -336,7 +336,8 @@ const weapon1 = new WeaponDefinition(
   'Rusted Sword',
   'Old sword full of rust',
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0)
+  new DamageDefinition(createDice({ D6: 1 }), 0),
+  true
 );
 
 const weapon2 = new WeaponDefinition(
@@ -344,7 +345,8 @@ const weapon2 = new WeaponDefinition(
   'Decent Sword',
   'A good sword, not exceptional',
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0)
+  new DamageDefinition(createDice({ D6: 1 }), 0),
+  true
 );
 
 const bubbleGum = new ConsumableDefinition(

@@ -5,6 +5,7 @@ import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { ResultLiteral } from '../literals/result.literal';
 import { DamageDefinition } from '../definitions/damage.definition';
+import { EnemyAttack } from '../interfaces/enemy-attack.interface';
 
 export class InteractiveEntity {
   private readonly initialState: ActionableState;
@@ -31,9 +32,7 @@ export class InteractiveEntity {
     this.actionsChanged$ = this.actionsChanged.asObservable();
   }
 
-  public attack(
-    action: ActionableDefinition
-  ): { skillValue: number; damage: DamageDefinition } | null {
+  public attack(action: ActionableDefinition): EnemyAttack | null {
     return this.currentState.attack(action);
   }
 

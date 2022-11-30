@@ -2,6 +2,7 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { LazyHelper } from '../helpers/lazy.helper';
+import { EnemyAttack } from '../interfaces/enemy-attack.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -31,10 +32,7 @@ export class EnemyState extends ActionableState {
     return this.destroyableState.hitPoints;
   }
 
-  public override attack(action: ActionableDefinition): {
-    skillValue: number;
-    damage: DamageDefinition;
-  } | null {
+  public override attack(action: ActionableDefinition): EnemyAttack | null {
     if (this.onlyReact && action.actionable !== 'ATTACK') {
       return null;
     }
@@ -42,6 +40,7 @@ export class EnemyState extends ActionableState {
     return {
       skillValue: this.attackSkillValue,
       damage: this.damage,
+      dodgeable: true, // FIXME: use the right stuff
     };
   }
 

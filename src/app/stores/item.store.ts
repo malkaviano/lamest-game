@@ -30,7 +30,11 @@ export class ItemStore {
           item.label,
           item.description,
           item.skillName as SkillNameLiteral,
-          new DamageDefinition(createDice(item.damage?.dice), item.damage.fixed)
+          new DamageDefinition(
+            createDice(item.damage?.dice),
+            item.damage.fixed
+          ),
+          item.dodgeable
         )
       );
     });

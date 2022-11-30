@@ -3,7 +3,7 @@ import { ArrayView } from '../views/array.view';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
 import { ResultLiteral } from '../literals/result.literal';
-import { DamageDefinition } from '../definitions/damage.definition';
+import { EnemyAttack } from '../interfaces/enemy-attack.interface';
 
 export abstract class ActionableState {
   constructor(
@@ -15,9 +15,7 @@ export abstract class ActionableState {
     return this.stateActions;
   }
 
-  public attack(
-    _: ActionableDefinition
-  ): { skillValue: number; damage: DamageDefinition } | null {
+  public attack(_: ActionableDefinition): EnemyAttack | null {
     return null;
   }
 

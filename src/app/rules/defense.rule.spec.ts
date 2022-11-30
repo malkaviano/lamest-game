@@ -53,6 +53,7 @@ describe('DefenseRule', () => {
     when(mockedInteractiveEntity.attack(action)).thenReturn({
       skillValue: 45,
       damage: new DamageDefinition(createDice(), 4),
+      dodgeable: true,
     });
 
     service = TestBed.inject(DefenseRule);

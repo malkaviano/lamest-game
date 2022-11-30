@@ -69,7 +69,8 @@ const actionableItem = new ActionableItemDefinition(
     'Long Sword',
     'Some big sword',
     'Melee Weapon (Simple)',
-    new DamageDefinition(createDice({ D8: 1 }), 0)
+    new DamageDefinition(createDice({ D8: 1 }), 0),
+    true
   ),
   equipAction
 );

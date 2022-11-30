@@ -56,7 +56,8 @@ describe('EquipRule', () => {
             'Sword',
             'some sword',
             'Artillery (War)',
-            new DamageDefinition(createDice(), 2)
+            new DamageDefinition(createDice(), 2),
+            true
           )
         );
 
@@ -82,7 +83,8 @@ describe('EquipRule', () => {
             'Sword',
             'some sword',
             'Artillery (Siege)',
-            new DamageDefinition(createDice(), 2)
+            new DamageDefinition(createDice(), 2),
+            true
           )
         );
 
