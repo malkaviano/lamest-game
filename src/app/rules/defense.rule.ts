@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
@@ -13,7 +12,6 @@ import {
   LogMessageDefinition,
   createMissedAttackLogMessage,
   createDodgedLogMessage as createDodgedAttackLogMessage,
-  createCheckLogMessage,
 } from '../definitions/log-message.definition';
 
 @Injectable({
@@ -26,17 +24,18 @@ export class DefenseRule implements RuleInterface {
     private readonly narrativeService: NarrativeService
   ) {}
 
-  public execute(action: ActionableEvent): RuleResultInterface {
+  public execute(): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
 
     Object.entries(this.narrativeService.interatives).forEach(
-      ([_, interactive]) => {
+      ([, interactive]) => {
         const attack = interactive.attack;
 
         if (attack) {
           const { skillValue, damage, dodgeable, weaponName } = attack;
 
-          const { result: enemyResult } = this.rngService.checkSkill(skillValue);
+          const { result: enemyResult } =
+            this.rngService.checkSkill(skillValue);
 
           if (enemyResult === 'SUCCESS') {
             logs.push(

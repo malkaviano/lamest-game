@@ -18,7 +18,7 @@ describe('RandomIntService', () => {
 
   describe('getRandomInterval', () => {
     it('should generate numbers between 0 and 100', () => {
-      const results: any = {};
+      const results: { [key: number]: boolean } = {};
 
       for (let index = 0; index < 500; index++) {
         const element = service.getRandomInterval(0, 100);

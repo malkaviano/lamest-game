@@ -1,0 +1,20 @@
+<div class="card-box">
+  <mat-card attr.data-testid="interactive-{{ interactive.id }}">
+    <mat-card-title>{{ interactive.name }}</mat-card-title>
+    <mat-card-content>{{ interactive.description }}</mat-card-content>
+    <mat-card-actions>
+      <ng-template ngFor let-action [ngForOf]="actions.items">
+        <div class="action">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="onActionSelected(action)"
+            attr.data-testid="actionable-{{ action.name }}"
+          >
+            {{ action.label }}
+          </button>
+        </div>
+      </ng-template>
+    </mat-card-actions>
+  </mat-card>
+</div>

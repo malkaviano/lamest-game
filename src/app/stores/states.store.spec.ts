@@ -3,9 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { InteractiveEntity } from '../entities/interactive.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
-import { LazyHelper } from '../helpers/lazy.helper';
 import { SimpleState } from '../states/simple.state';
 import { ArrayView } from '../views/array.view';
 import { ActionableStore } from './actionable.store';

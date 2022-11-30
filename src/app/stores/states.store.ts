@@ -59,11 +59,25 @@ export class StatesStore {
     });
 
     resourcesStore.conversationStateStore.states.forEach((state) => {
-      const map = state.maps.reduce((map: { [key: string]: any }, mapName) => {
-        map[mapName] = messageStore.messages[mapName];
+      const map = state.maps.reduce(
+        (
+          map: {
+            [key: string]: {
+              [key: string]: {
+                label: string;
+                answer: string;
+                change?: string;
+              };
+            };
+          },
+          mapName
+        ) => {
+          map[mapName] = messageStore.messages[mapName];
 
-        return map;
-      }, {});
+          return map;
+        },
+        {}
+      );
 
       this.store.set(
         state.interactiveId,

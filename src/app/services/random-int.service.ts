@@ -4,7 +4,6 @@ import { createDice, Dice } from '../definitions/dice.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 import { DiceLiteral } from '../literals/dice.literal';
-import { ResultLiteral } from '../literals/result.literal';
 
 @Injectable({
   providedIn: 'root',

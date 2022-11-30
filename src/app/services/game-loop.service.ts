@@ -49,7 +49,7 @@ export class GameLoopService {
       const playerResult =
         this.dispatcher[action.actionableDefinition.actionable].execute(action);
 
-      const defenseResult = this.rulesHelper.defenseRule.execute(action);
+      const defenseResult = this.rulesHelper.defenseRule.execute();
 
       logs = playerResult.logs.concat(defenseResult.logs);
     }

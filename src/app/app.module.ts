@@ -5,32 +5,32 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from '../material/material.module';
-import { InteractiveWidget } from './widgets/interactive/interactive.widget';
-import { GamePage } from './pages/game/game.page';
-import { KeyValuePanel } from './panels/key-value/key-value.panel';
-import { CharacterPage } from './pages/character/character.page';
-import { TextAreaWindow } from './windows/text-area/text-area.window';
-import { KeyValueWindow } from './windows/key-value/key-value.window';
-import { EquipmentWidget } from './widgets/equipment/equipment.widget';
-import { EquippedWidget } from './widgets/equipped/equipped.widget';
-import { GameLayout } from './layouts/game/game.layout';
-import { InteractivePanelComponent } from './panels/interactive/interactive.panel';
-import { InventoryPanel } from './panels/inventory/inventory.panel';
+import { InteractiveWidgetComponent } from './widgets/interactive/interactive.widget.component';
+import { GamePageComponent } from './pages/game/game.page.component';
+import { KeyValueDescriptionPanelComponent } from './panels/key-value-description/key-value-description.panel.component';
+import { CharacterPageComponent } from './pages/character/character.page.component';
+import { TextAreaPanelComponent } from './panels/text-area/text-area.panel.component';
+import { WindowPanelComponent } from './panels/window/window.panel.component';
+import { EquipmentWidgetComponent } from './widgets/equipment/equipment.widget.component';
+import { EquippedWidgetComponent } from './widgets/equipped/equipped.widget.component';
+import { GameLayoutComponent } from './layouts/game/game.layout.component';
+import { InteractivePanelComponent } from './panels/interactive/interactive.panel.component';
+import { InventoryPanelComponent } from './panels/inventory/inventory.panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InteractiveWidget,
-    TextAreaWindow,
-    GamePage,
-    KeyValuePanel,
-    CharacterPage,
-    KeyValueWindow,
-    EquipmentWidget,
-    EquippedWidget,
-    GameLayout,
+    InteractiveWidgetComponent,
+    TextAreaPanelComponent,
+    GamePageComponent,
+    KeyValueDescriptionPanelComponent,
+    CharacterPageComponent,
+    WindowPanelComponent,
+    EquipmentWidgetComponent,
+    EquippedWidgetComponent,
+    GameLayoutComponent,
     InteractivePanelComponent,
-    InventoryPanel,
+    InventoryPanelComponent,
   ],
   imports: [
     BrowserModule,

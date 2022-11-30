@@ -42,7 +42,7 @@ describe('GameLoopService', () => {
       logs: [log1],
     });
 
-    when(mockedDefenseRule.execute(anything())).thenReturn({
+    when(mockedDefenseRule.execute()).thenReturn({
       logs: [log2],
     });
 

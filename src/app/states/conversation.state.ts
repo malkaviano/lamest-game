@@ -4,7 +4,6 @@ import {
 } from '../definitions/actionable.definition';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { MessageMapDefinition } from '../definitions/message-map.definition';
-import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
 import { ArrayView } from '../views/array.view';
 
@@ -29,10 +28,10 @@ export class ConversationState extends ActionableState {
     this.currentMessages = currentMessages;
   }
 
-  protected override stateResult(
-    action: ActionableDefinition,
-    result: ResultLiteral
-  ): { state: ActionableState; log?: string } {
+  protected override stateResult(action: ActionableDefinition): {
+    state: ActionableState;
+    log?: string;
+  } {
     const response = this.currentMessages[action.name];
 
     return {

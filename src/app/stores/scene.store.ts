@@ -28,7 +28,7 @@ export class SceneStore {
       });
 
       const transitions = scene.transitions.reduce(
-        (obj: any, { name, scene }) => {
+        (obj: { [key: string]: string }, { name, scene }) => {
           obj[name] = scene;
 
           return obj;

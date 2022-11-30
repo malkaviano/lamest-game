@@ -29,7 +29,7 @@ export class SkillService {
     let spent = 0;
 
     while (spent < points) {
-      characterSkills.forEach((v, k, m) => {
+      characterSkills.forEach((v, k) => {
         if (spent < points) {
           const roll = this.randomIntService.getRandomInterval(0, 1);
 

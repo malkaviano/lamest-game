@@ -340,6 +340,6 @@ export const skillDefinitions: {
 export const commonSkillDefinitions: ArrayView<SkillNameLiteral> =
   new ArrayView(
     Object.entries(skillDefinitions)
-      .filter(([_, value]) => value.category === 'COMMON')
+      .filter(([, value]) => value.category === 'COMMON')
       .map((kv) => kv[0] as SkillNameLiteral)
   );

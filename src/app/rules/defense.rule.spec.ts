@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, mock, reset, when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import {
@@ -14,7 +13,6 @@ import {
 } from '../definitions/log-message.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
-import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
@@ -81,7 +79,7 @@ describe('DefenseRule', () => {
               roll: 10,
             });
 
-            const result = service.execute(event);
+            const result = service.execute();
 
             expect(result).toEqual({
               logs: [logAttacked1, logDodged],
@@ -103,7 +101,7 @@ describe('DefenseRule', () => {
 
             when(mockedCharacterEntity.damaged(4)).thenReturn(4);
 
-            const result = service.execute(event);
+            const result = service.execute();
 
             expect(result).toEqual({
               logs: [logAttacked1, logAttacked2],
@@ -120,7 +118,7 @@ describe('DefenseRule', () => {
           roll: 100,
         });
 
-        const result = service.execute(event);
+        const result = service.execute();
 
         expect(result).toEqual({
           logs: [logMissed],
@@ -143,10 +141,6 @@ const interactives: KeyValueInterface<InteractiveEntity> = {
 };
 
 const mockedCharacterEntity = mock(CharacterEntity);
-
-const action = createActionableDefinition('SKILL', 'Brawl');
-
-const event = new ActionableEvent(action, 'id1');
 
 const logMissed = createMissedAttackLogMessage('test', 'player');
 

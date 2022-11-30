@@ -1,9 +1,5 @@
-import {
-  ActionableDefinition,
-  createActionableDefinition,
-} from '../definitions/actionable.definition';
+import { createActionableDefinition } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
-import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
@@ -36,11 +32,7 @@ const pickAction = createActionableDefinition(
 const unknownAction = createActionableDefinition('CLOSE', 'error', 'unknown');
 
 const state = new (class extends ActionableState {
-  protected override stateResult(
-    _1: ActionableDefinition,
-    _2: ResultLiteral,
-    _3?: number
-  ): { state: ActionableState; log?: string } {
+  protected override stateResult(): { state: ActionableState; log?: string } {
     throw new Error('SHOULD NOT HAPPEN');
   }
 })('SimpleState', new ArrayView([askAction1, askAction2, pickAction]));

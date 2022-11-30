@@ -82,7 +82,7 @@ export class InventoryService {
 
     const result: ItemStorageDefinition[] = [];
 
-    const a = Object.entries(storage).reduce((acc, [_, item]) => {
+    const a = Object.entries(storage).reduce((acc, [, item]) => {
       acc.push(item);
 
       return acc;

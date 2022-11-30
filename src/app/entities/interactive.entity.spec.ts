@@ -52,7 +52,7 @@ describe('InteractiveEntity', () => {
 
       const entity = fakeEntity();
 
-      let result: any;
+      let result: ArrayView<ActionableDefinition> | undefined;
 
       entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
         result = event;
@@ -75,7 +75,7 @@ describe('InteractiveEntity', () => {
 
         const entity = fakeEntity();
 
-        let result: any;
+        let result: ArrayView<ActionableDefinition> | undefined;
 
         entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
           result = event;
@@ -99,7 +99,7 @@ describe('InteractiveEntity', () => {
 
         const entity = fakeEntity(false);
 
-        let result: any;
+        let result: ArrayView<ActionableDefinition> | undefined;
 
         entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
           result = event;
@@ -156,10 +156,7 @@ const state2 = instance(mockedState2);
 
 const state3 = instance(mockedState3);
 
-const fakeEntity = (
-  resettable = true,
-  state: ActionableState = state1
-) =>
+const fakeEntity = (resettable = true, state: ActionableState = state1) =>
   new InteractiveEntity(
     'id1',
     'SomeEntity',

@@ -50,13 +50,16 @@ export class CharacterEntity {
   }
 
   public get skills(): KeyValueInterface<number> {
-    return Array.from(this.mSkills.entries()).reduce((acc: any, [k, v]) => {
-      const base = skillDefinitions[k].base(this.characteristics);
+    return Array.from(this.mSkills.entries()).reduce(
+      (acc: { [key: string]: number }, [k, v]) => {
+        const base = skillDefinitions[k].base(this.characteristics);
 
-      acc[k] = v + base;
+        acc[k] = v + base;
 
-      return acc;
-    }, {});
+        return acc;
+      },
+      {}
+    );
   }
 
   public copy(

@@ -32,7 +32,7 @@ export class GameManagerService {
   ) {
     const inventoryChanged = this.inventoryService.inventoryChanged$.pipe(
       filter((event) => event.storageName === 'player'),
-      map((_) => {
+      map(() => {
         const equipped = this.inventoryService.equipped;
 
         const items = this.playerInventory();

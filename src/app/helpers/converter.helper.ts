@@ -78,10 +78,13 @@ export class ConverterHelper {
   public mapToKeyValueInterface<Value>(
     obj: Map<string, Value>
   ): KeyValueInterface<Value> {
-    return Array.from(obj.entries()).reduce((acc: any, [k, v]) => {
-      acc[k] = v;
+    return Array.from(obj.entries()).reduce(
+      (acc: { [key: string]: Value }, [k, v]) => {
+        acc[k] = v;
 
-      return acc;
-    }, {});
+        return acc;
+      },
+      {}
+    );
   }
 }

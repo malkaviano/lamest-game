@@ -1,0 +1,7 @@
+<div class="flex-panel" attr.data-testid="key-value-panel-{{ panelName }}">
+  <app-window-panel
+    class="panel-item"
+    *ngFor="let keyValue of items.items"
+    [keyValue]="keyValue"
+  ></app-window-panel>
+</div>

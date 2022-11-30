@@ -22,9 +22,9 @@ describe('LazyHelper', () => {
 
         const service = new LazyHelper<string>(f);
 
-        let _ = service.value;
-        _ = service.value;
-        _ = service.value;
+        (() => service.value)();
+        (() => service.value)();
+        (() => service.value)();
 
         expect(invoked).toEqual(1);
 
