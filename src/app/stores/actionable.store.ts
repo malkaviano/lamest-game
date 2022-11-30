@@ -6,9 +6,9 @@ import {
 } from '../definitions/actionable.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { ActionableLiteral } from '../literals/actionable.literal';
 
 import actionableStore from '../../assets/actionables.json';
-import { ActionableLiteral } from '../literals/actionable.literal';
 
 @Injectable({
   providedIn: 'root',
