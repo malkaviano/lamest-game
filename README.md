@@ -2,7 +2,7 @@
 
 A very lame game in Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.4.
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=malkaviano_lamest-game&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=malkaviano_lamest-game)
 
 ## Development server
 
