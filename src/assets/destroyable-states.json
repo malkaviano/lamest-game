@@ -2,7 +2,7 @@
   "states": [
     {
       "interactiveId": "woodBox",
-      "actionables": ["attack", "Survival"],
+      "actionables": ["attack", "woodbox-survival"],
       "destroyedState": "lootWoodBox",
       "hitpoints": 5
     }

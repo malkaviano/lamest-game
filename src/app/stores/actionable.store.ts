@@ -22,10 +22,10 @@ export class ActionableStore {
 
     resourcesStore.actionableStore.actionables.forEach((actionable) => {
       this.store.set(
-        actionable.name,
+        actionable.key,
         createActionableDefinition(
           actionable.actionable,
-          actionable.name,
+          actionable.name ?? actionable.key,
           actionable.label
         )
       );

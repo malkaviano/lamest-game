@@ -1,55 +1,56 @@
 {
   "actionables": [
     {
-      "name": "sceneExitDoor",
+      "key": "sceneExitDoor",
       "actionable": "SCENE",
       "label": "Exit"
     },
     {
-      "name": "Athleticism",
+      "key": "Athleticism",
       "actionable": "SKILL"
     },
     {
-      "name": "attack",
+      "key": "attack",
       "actionable": "ATTACK",
       "label": "Attack"
     },
     {
-      "name": "knife",
+      "key": "knife",
       "actionable": "PICK",
       "label": "Hunting Knife"
     },
     {
-      "name": "firstAid",
+      "key": "firstAid",
       "actionable": "PICK",
       "label": "First Aid Kit"
     },
     {
-      "name": "enterSceneDoor",
+      "key": "enterSceneDoor",
       "actionable": "SCENE",
       "label": "Enter"
     },
     {
-      "name": "club",
+      "key": "club",
       "actionable": "PICK",
       "label": "Wood Stick"
     },
     {
-      "name": "corridorDoor",
+      "key": "corridorDoor",
       "actionable": "SCENE",
       "label": "Enter"
     },
     {
-      "name": "halberd",
+      "key": "halberd",
       "actionable": "PICK",
       "label": "Halberd"
     },
     {
-      "name": "bubbleGum",
+      "key": "bubbleGum",
       "actionable": "PICK",
       "label": "Bubble Gum"
     },
     {
+      "key": "woodbox-survival",
       "name": "Survival",
       "actionable": "SKILL",
       "label": "Chop Chop"

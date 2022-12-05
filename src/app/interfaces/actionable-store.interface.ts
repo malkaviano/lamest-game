@@ -2,7 +2,8 @@ import { ActionableLiteral } from '../literals/actionable.literal';
 
 export interface ActionableStoreInterface {
   actionables: {
-    name: string;
+    key: string;
+    name?: string;
     actionable: ActionableLiteral;
     label?: string;
   }[];

@@ -123,6 +123,7 @@ export class ResourcesStore {
 
     const actionables = actionableStore.actionables.map((a) => {
       return {
+        key: a.key,
         name: a.name,
         actionable: a.actionable as ActionableLiteral,
         label: a.label,
