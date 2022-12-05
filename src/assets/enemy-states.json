@@ -4,19 +4,45 @@
       "interactiveId": "trainingDummy",
       "actionables": ["attack"],
       "killedState": "emptyState",
-      "hitpoints": 6,
-      "attackSkillValue": 30,
       "weaponName": "bambooSword",
-      "behavior": "RETALIATE"
+      "behavior": "RETALIATE",
+      "characteristics": {
+        "STR": 5,
+        "CON": 5,
+        "SIZ": 5,
+        "DEX": 5,
+        "INT": 0,
+        "POW": 0,
+        "APP": 0
+      },
+      "skills": [
+        {
+          "name": "Melee Weapon (Simple)",
+          "value": 30
+        }
+      ]
     },
     {
       "interactiveId": "zombie",
       "actionables": ["attack"],
       "killedState": "emptyState",
-      "hitpoints": 10,
-      "attackSkillValue": 45,
       "weaponName": "claw",
-      "behavior": "AGGRESSIVE"
+      "behavior": "AGGRESSIVE",
+      "characteristics": {
+        "STR": 10,
+        "CON": 10,
+        "SIZ": 10,
+        "DEX": 10,
+        "INT": 3,
+        "POW": 3,
+        "APP": 1
+      },
+      "skills": [
+        {
+          "name": "Brawl",
+          "value": 45
+        }
+      ]
     }
   ]
 }

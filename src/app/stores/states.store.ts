@@ -17,6 +17,7 @@ import { LazyHelper } from '../helpers/lazy.helper';
 import { ItemStore } from './item.store';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ResourcesStore } from './resources.store';
+import { ActorBehavior } from '../behaviors/actor.behavior';
 
 @Injectable({
   providedIn: 'root',
@@ -106,10 +107,9 @@ export class StatesStore {
         new EnemyState(
           actionables,
           this.lazyState(state.killedState),
-          state.hitpoints,
           itemStore.items[state.weaponName] as WeaponDefinition,
-          state.attackSkillValue,
-          state.behavior
+          state.behavior,
+          new ActorBehavior(state.characteristics, state.skills)
         )
       );
     });

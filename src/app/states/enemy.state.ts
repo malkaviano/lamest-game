@@ -1,4 +1,9 @@
+import { ActorBehavior } from '../behaviors/actor.behavior';
 import { ActionableDefinition } from '../definitions/actionable.definition';
+import {
+  createDamagedMessage,
+  createKilledByDamageMessage,
+} from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { EnemyAttack } from '../interfaces/enemy-attack.interface';
@@ -6,48 +11,36 @@ import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
-import { DestroyableState } from './destroyable.state';
 
 export class EnemyState extends ActionableState {
-  private destroyableState: DestroyableState;
-
   private wasAttacked: boolean;
 
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
-    killedState: LazyHelper<ActionableState>,
-    hitPoints: number,
+    private readonly killedState: LazyHelper<ActionableState>,
     private readonly weapon: WeaponDefinition,
-    private readonly attackSkillValue: number,
-    private readonly behavior: EnemyBehaviorLiteral
+    private readonly enemyBehavior: EnemyBehaviorLiteral,
+    private readonly actorBehavior: ActorBehavior
   ) {
     super('EnemyState', stateActions);
-
-    this.destroyableState = new DestroyableState(
-      stateActions,
-      killedState,
-      hitPoints
-    );
 
     this.wasAttacked = false;
   }
 
   public get hitPoints(): number {
-    return this.destroyableState.hitPoints;
+    return this.actorBehavior.derivedAttributes.HP.value;
   }
 
   public override get attack(): EnemyAttack | null {
-    if (this.behavior === 'RETALIATE' && !this.wasAttacked) {
+    if (this.enemyBehavior === 'RETALIATE' && !this.wasAttacked) {
       return null;
     }
 
     this.wasAttacked = false;
 
     return {
-      skillValue: this.attackSkillValue,
-      damage: this.weapon.damage,
-      dodgeable: this.weapon.dodgeable,
-      weaponName: this.weapon.label,
+      skillValue: this.actorBehavior.skills[this.weapon.skillName],
+      weapon: this.weapon,
     };
   }
 
@@ -56,23 +49,25 @@ export class EnemyState extends ActionableState {
     result: ResultLiteral,
     damageTaken?: number | undefined
   ): { state: ActionableState; log?: string } {
-    const { state, log } = this.destroyableState.onResult(
-      action,
-      result,
-      damageTaken
-    );
+    let log: string | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let state: ActionableState = this;
 
-    this.destroyableState = state as DestroyableState;
+    if (action.actionable === 'ATTACK') {
+      this.wasAttacked = true;
 
-    this.wasAttacked = true;
+      if (result === 'SUCCESS' && damageTaken) {
+        const { current, effective } = this.actorBehavior.damaged(damageTaken);
 
-    if (this.hitPoints > 0) {
-      return {
-        state: this,
-        log,
-      };
+        if (current === 0) {
+          log = createKilledByDamageMessage(effective);
+          state = this.killedState.value;
+        } else {
+          log = createDamagedMessage(effective);
+        }
+      }
     }
 
-    return { state: this.destroyableState, log };
+    return { state, log };
   }
 }

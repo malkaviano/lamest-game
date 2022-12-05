@@ -7,6 +7,7 @@ import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 beforeEach(() => {
   reset(mockedState1);
@@ -23,9 +24,7 @@ beforeEach(() => {
 
   when(mockedState3.attack).thenReturn({
     skillValue: 15,
-    damage,
-    dodgeable: true,
-    weaponName: 'claw',
+    weapon,
   });
 });
 
@@ -131,9 +130,7 @@ describe('InteractiveEntity', () => {
 
         expect(result).toEqual({
           skillValue: 15,
-          damage,
-          dodgeable: true,
-          weaponName: 'claw',
+          weapon,
         });
       });
     });
@@ -166,3 +163,5 @@ const fakeEntity = (resettable = true, state: ActionableState = state1) =>
   );
 
 const damage = new DamageDefinition(createDice({}), 10);
+
+const weapon = new WeaponDefinition('gg', 'claw', '', 'Brawl', damage, true);

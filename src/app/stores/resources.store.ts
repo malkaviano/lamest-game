@@ -31,6 +31,8 @@ import descriptionStore from '../../assets/descriptions.json';
 import actionableStore from '../../assets/actionables.json';
 import messageStore from '../../assets/messages.json';
 import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
+import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
+import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -76,14 +78,30 @@ export class ResourcesStore {
     this.destroyableStateStore = destroyableStateStore;
 
     const states = enemyStateStore.states.map((s) => {
+      const characteristics: CharacteristicSetDefinition = {
+        STR: new CharacteristicDefinition('STR', s.characteristics.STR),
+        CON: new CharacteristicDefinition('CON', s.characteristics.CON),
+        SIZ: new CharacteristicDefinition('SIZ', s.characteristics.SIZ),
+        DEX: new CharacteristicDefinition('DEX', s.characteristics.DEX),
+        INT: new CharacteristicDefinition('INT', s.characteristics.INT),
+        POW: new CharacteristicDefinition('POW', s.characteristics.POW),
+        APP: new CharacteristicDefinition('APP', s.characteristics.APP),
+      };
+
+      const skills = new Map<SkillNameLiteral, number>();
+
+      s.skills.forEach((s) => {
+        skills.set(s.name as SkillNameLiteral, s.value);
+      });
+
       return {
         interactiveId: s.interactiveId,
         actionables: s.actionables,
         killedState: s.killedState,
-        hitpoints: s.hitpoints,
-        attackSkillValue: s.attackSkillValue,
         weaponName: s.weaponName,
         behavior: s.behavior as EnemyBehaviorLiteral,
+        characteristics,
+        skills,
       };
     });
 

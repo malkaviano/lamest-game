@@ -32,7 +32,10 @@ export class DefenseRule implements RuleInterface {
         const attack = interactive.attack;
 
         if (attack) {
-          const { skillValue, damage, dodgeable, weaponName } = attack;
+          const {
+            skillValue,
+            weapon: { dodgeable, damage, label: weaponName },
+          } = attack;
 
           const { result: enemyResult } =
             this.rngService.checkSkill(skillValue);

@@ -11,6 +11,7 @@ import {
   createFreeLogMessage,
   createMissedAttackLogMessage,
 } from '../definitions/log-message.definition';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { HitPointsEvent } from '../events/hitpoints.event';
@@ -58,9 +59,7 @@ describe('DefenseRule', () => {
 
     when(mockedInteractiveEntity.attack).thenReturn({
       skillValue: 45,
-      damage: new DamageDefinition(createDice(), 4),
-      dodgeable: true,
-      weaponName: 'claw',
+      weapon,
     });
 
     service = TestBed.inject(DefenseRule);
@@ -152,3 +151,12 @@ const logDodged = createDodgedLogMessage('player', 'test');
 const logAttacked1 = createAttackedLogMessage('test', 'player', 'claw');
 
 const logAttacked2 = createFreeLogMessage('player', createDamagedMessage(4));
+
+const weapon = new WeaponDefinition(
+  'gg',
+  'claw',
+  '',
+  'Brawl',
+  new DamageDefinition(createDice(), 4),
+  true
+);

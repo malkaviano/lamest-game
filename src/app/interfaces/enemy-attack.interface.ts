@@ -1,8 +1,6 @@
-import { DamageDefinition } from '../definitions/damage.definition';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 export interface EnemyAttack {
   readonly skillValue: number;
-  readonly damage: DamageDefinition;
-  readonly dodgeable: boolean;
-  readonly weaponName: string;
+  readonly weapon: WeaponDefinition;
 }
