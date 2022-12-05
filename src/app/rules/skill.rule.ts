@@ -7,6 +7,7 @@ import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
 import { RandomIntService } from '../services/random-int.service';
 import {
+  createCannotCheckLogMessage,
   createCheckLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
@@ -29,14 +30,18 @@ export class SkillRule implements RuleInterface {
 
     const skillValue = this.characterService.currentCharacter.skills[skillName];
 
-    const { roll, result } = this.rngService.checkSkill(skillValue);
+    if (skillValue) {
+      const { roll, result } = this.rngService.checkSkill(skillValue);
 
-    const interactive = this.narrativeService.interatives[action.eventId];
+      const interactive = this.narrativeService.interatives[action.eventId];
 
-    interactive.actionSelected(action.actionableDefinition, result);
+      interactive.actionSelected(action.actionableDefinition, result);
 
-    if (roll) {
-      logs.push(createCheckLogMessage('player', skillName, roll, result));
+      if (roll) {
+        logs.push(createCheckLogMessage('player', skillName, roll, result));
+      }
+    } else {
+      logs.push(createCannotCheckLogMessage('player', skillName));
     }
 
     return { logs };

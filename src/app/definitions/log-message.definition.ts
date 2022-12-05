@@ -17,8 +17,11 @@ export class LogMessageDefinition {
 export const createDamagedMessage = (damage: number) =>
   `received ${damage} damage`;
 
-export const createDestroyedMessage = (damage: number) =>
+export const createDestroyedByDamageMessage = (damage: number) =>
   `received ${damage} damage and was destroyed`;
+
+export const createDestroyedByActionMessage = (name: string, label: string) =>
+  `destroyed by ${label} using ${name}`;
 
 export const createActorDiedMessage = (actor: string) =>
   new LogMessageDefinition('DIED', actor, 'died');
@@ -33,6 +36,16 @@ export const createCheckLogMessage = (
     'CHECK',
     actor,
     `${skill} skill checked and rolled ${roll}, it was a ${result}`
+  );
+
+export const createCannotCheckLogMessage = (
+  actor: string,
+  skill: SkillNameLiteral
+) =>
+  new LogMessageDefinition(
+    'CHECK',
+    actor,
+    `${skill} skill cannot be checked because it's value is zero`
   );
 
 export const createEquippedLogMessage = (actor: string, equipment: string) =>

@@ -48,6 +48,11 @@
       "name": "bubbleGum",
       "actionable": "PICK",
       "label": "Bubble Gum"
+    },
+    {
+      "name": "Survival",
+      "actionable": "SKILL",
+      "label": "Chop Chop"
     }
   ]
 }

@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { errorMessages } from '../definitions/error-messages.definition';
 import { ResultLiteral } from '../literals/result.literal';
 import { RandomIntService } from './random-int.service';
 
@@ -54,31 +53,19 @@ describe('RandomIntService', () => {
   });
 
   describe('checkSkill', () => {
-    describe('when skill value was 0', () => {
-      it('throws Action should not happen', () => {
-        expect(() => service.checkSkill(0)).toThrowError(
-          errorMessages['SHOULD-NOT-HAPPEN']
-        );
-      });
-    });
+    it('return result and roll value', () => {
+      const result = new Set<ResultLiteral>();
 
-    describe('when skill value was above 0', () => {
-      describe('when roll is superior skill value', () => {
-        it('return result and roll value', () => {
-          const result = new Set<ResultLiteral>();
+      for (let index = 0; index < 10; index++) {
+        result.add(service.checkSkill(50).result);
+      }
 
-          for (let index = 0; index < 10; index++) {
-            result.add(service.checkSkill(50).result);
-          }
+      const expected = new Set<ResultLiteral>();
 
-          const expected = new Set<ResultLiteral>();
+      expected.add('FAILURE');
+      expected.add('SUCCESS');
 
-          expected.add('FAILURE');
-          expected.add('SUCCESS');
-
-          expect(result).toEqual(expected);
-        });
-      });
+      expect(result).toEqual(expected);
     });
   });
 });

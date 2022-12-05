@@ -3,7 +3,10 @@ import { TestBed } from '@angular/core/testing';
 import { instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { createCheckLogMessage } from '../definitions/log-message.definition';
+import {
+  createCannotCheckLogMessage,
+  createCheckLogMessage,
+} from '../definitions/log-message.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
@@ -38,8 +41,6 @@ describe('SkillRule', () => {
       instance(mockedCharacterEntity)
     );
 
-    when(mockedCharacterEntity.skills).thenReturn({ Brawl: 45 });
-
     when(mockedNarrativeService.interatives).thenReturn(interactives);
 
     when(mockedInteractiveEntity.id).thenReturn('id1');
@@ -54,6 +55,18 @@ describe('SkillRule', () => {
   });
 
   describe('execute', () => {
+    describe('when skill has no value', () => {
+      it('return SKILL CANNOT BE ROLLED', () => {
+        when(mockedCharacterEntity.skills).thenReturn({});
+
+        const result = service.execute(event);
+
+        expect(result).toEqual({
+          logs: [log2],
+        });
+      });
+    });
+
     it('return logs', () => {
       when(mockedCharacterEntity.skills).thenReturn({ Brawl: 45 });
 
@@ -90,3 +103,5 @@ const action = createActionableDefinition('SKILL', 'Brawl');
 const event = new ActionableEvent(action, 'id1');
 
 const log1 = createCheckLogMessage('player', 'Brawl', 10, 'SUCCESS');
+
+const log2 = createCannotCheckLogMessage('player', 'Brawl');
