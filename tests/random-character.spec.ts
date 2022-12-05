@@ -1,13 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-import { characteristicsDefinitions } from '../src/app/definitions/characteristics.definition';
 import { characterIdentityDefinitions } from '../src/app/definitions/identity.definition';
-import { derivedAttributeDefinitions } from '../src/app/definitions/attributes.definition';
 import { commonSkillDefinitions } from '../src/app/definitions/skill.definition';
 import { professionSkillDefinitions } from '../src/app/definitions/profession.definition';
 import { ProfessionLiteral } from '../src/app/literals/profession.literal';
-
-const url = process.env['PLAYWRIGHT_TEST_BASE_URL'] ?? 'http://localhost:4200';
+import { characteristicsDefinitions } from '../src/app/definitions/characteristic.definition';
+import { derivedAttributeDefinitions } from '../src/app/definitions/derived-attribute.definition';
 
 const endpoint = 'random-character-generation';
 
