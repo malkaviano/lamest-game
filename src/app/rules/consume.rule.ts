@@ -62,7 +62,7 @@ export class ConsumeRule implements RuleInterface {
     if (passed === 'SUCCESS' || passed === 'NONE') {
       const healed = this.characterService.currentCharacter.healed(hp);
 
-      logs.push(createHealedLogMessage('player', healed));
+      logs.push(createHealedLogMessage('player', healed.effective));
     }
 
     return { logs };

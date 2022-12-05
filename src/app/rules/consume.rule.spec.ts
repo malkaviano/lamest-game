@@ -15,6 +15,7 @@ import {
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { ActionableEvent } from '../events/actionable.event';
+import { HitPointsEvent } from '../events/hitpoints.event';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { RandomIntService } from '../services/random-int.service';
@@ -87,7 +88,9 @@ describe('ConsumeRule', () => {
             roll: 10,
           });
 
-          when(mockedCharacterEntity.healed(5)).thenReturn(5);
+          when(mockedCharacterEntity.healed(5)).thenReturn(
+            new HitPointsEvent(5, 10)
+          );
 
           const result = service.execute(event);
 
@@ -104,7 +107,9 @@ describe('ConsumeRule', () => {
           consumableChesseBurger
         );
 
-        when(mockedCharacterEntity.healed(2)).thenReturn(2);
+        when(mockedCharacterEntity.healed(2)).thenReturn(
+          new HitPointsEvent(8, 10)
+        );
 
         const result = service.execute(event2);
 

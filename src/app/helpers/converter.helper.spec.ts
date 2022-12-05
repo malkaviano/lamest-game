@@ -1,16 +1,30 @@
+import { instance, mock, when } from 'ts-mockito';
+
 import { ArrayView } from '../views/array.view';
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { KeyValueDescriptionDefinition } from '../definitions/key-value-description.definition';
 import { CharacterEntity } from '../entities/character.entity';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { ConverterHelper } from './converter.helper';
+import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 
 describe('ConverterHelper', () => {
   describe('converting a character to keyValues', () => {
     it('return keyvalue array', () => {
-      const result = helper.characterToKeyValueDescription(character);
+      when(mockedCharacterEntity.identity).thenReturn(identity);
+
+      when(mockedCharacterEntity.characteristics).thenReturn(characteristics);
+
+      when(mockedCharacterEntity.derivedAttributes).thenReturn(
+        derivedAttributes
+      );
+
+      when(mockedCharacterEntity.skills).thenReturn(skills);
+
+      const result = helper.characterToKeyValueDescription(
+        instance(mockedCharacterEntity)
+      );
 
       expect(result).toEqual(expected);
     });
@@ -35,33 +49,39 @@ describe('ConverterHelper', () => {
 
 const helper = new ConverterHelper();
 
-const character = new CharacterEntity(
-  new IdentityDefinition(
-    'name',
-    'Hunter',
-    'ADULT',
-    'HUMAN',
-    'AVERAGE',
-    'AVERAGE'
-  ),
-  {
-    STR: new CharacteristicDefinition('STR', 12),
-    CON: new CharacteristicDefinition('CON', 12),
-    SIZ: new CharacteristicDefinition('SIZ', 12),
-    DEX: new CharacteristicDefinition('DEX', 12),
-    INT: new CharacteristicDefinition('INT', 12),
-    POW: new CharacteristicDefinition('POW', 12),
-    APP: new CharacteristicDefinition('APP', 12),
-  },
-  new Map<SkillNameLiteral, number>([
-    ['Firearm (Handgun)', 50],
-    ['First Aid', 35],
-    ['Listen', 20],
-    ['Persuade', 60],
-    ['Spot', 40],
-    ['Research', 35],
-  ])
+const identity = new IdentityDefinition(
+  'name',
+  'Hunter',
+  'ADULT',
+  'HUMAN',
+  'AVERAGE',
+  'AVERAGE'
 );
+
+const characteristics = {
+  STR: new CharacteristicDefinition('STR', 12),
+  CON: new CharacteristicDefinition('CON', 12),
+  SIZ: new CharacteristicDefinition('SIZ', 12),
+  DEX: new CharacteristicDefinition('DEX', 12),
+  INT: new CharacteristicDefinition('INT', 12),
+  POW: new CharacteristicDefinition('POW', 12),
+  APP: new CharacteristicDefinition('APP', 12),
+};
+
+const derivedAttributes = {
+  HP: new DerivedAttributeDefinition('HP', 12),
+  PP: new DerivedAttributeDefinition('PP', 12),
+  MOV: new DerivedAttributeDefinition('MOV', 10),
+};
+
+const skills = {
+  'Firearm (Handgun)': 62,
+  'First Aid': 47,
+  Listen: 32,
+  Persuade: 72,
+  Spot: 52,
+  Research: 47,
+};
 
 const expected = new CharacterValuesDefinition(
   new ArrayView([
@@ -115,3 +135,5 @@ const expected = new CharacterValuesDefinition(
     new KeyValueDescriptionDefinition('Spot', '52', ''),
   ])
 );
+
+const mockedCharacterEntity = mock(CharacterEntity);

@@ -13,6 +13,7 @@ import {
 } from '../definitions/log-message.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
+import { HitPointsEvent } from '../events/hitpoints.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
@@ -99,7 +100,9 @@ describe('DefenseRule', () => {
                 roll: 90,
               });
 
-            when(mockedCharacterEntity.damaged(4)).thenReturn(4);
+            when(mockedCharacterEntity.damaged(4)).thenReturn(
+              new HitPointsEvent(10, 6)
+            );
 
             const result = service.execute();
 

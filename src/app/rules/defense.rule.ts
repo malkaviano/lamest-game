@@ -54,7 +54,10 @@ export class DefenseRule implements RuleInterface {
                 this.characterService.currentCharacter.damaged(damageAmount);
 
               logs.push(
-                createFreeLogMessage('player', createDamagedMessage(damaged))
+                createFreeLogMessage(
+                  'player',
+                  createDamagedMessage(damaged.effective)
+                )
               );
             } else {
               logs.push(

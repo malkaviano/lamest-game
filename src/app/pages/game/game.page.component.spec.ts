@@ -11,7 +11,6 @@ import { ArrayView } from '../../views/array.view';
 import { CharacterEntity } from '../../entities/character.entity';
 import { IdentityDefinition } from '../../definitions/identity.definition';
 import { CharacteristicDefinition } from '../../definitions/characteristic.definition';
-import { SkillNameLiteral } from '../../literals/skill-name.literal';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
@@ -28,6 +27,10 @@ import { DamageDefinition } from '../../definitions/damage.definition';
 import { createDice } from '../../definitions/dice.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
 import { createTookLogMessage } from '../../definitions/log-message.definition';
+import { DerivedAttributeDefinition } from '../../definitions/derived-attribute.definition';
+import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { ConverterHelper } from '../../helpers/converter.helper';
+import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;
@@ -44,6 +47,14 @@ describe('GamePageComponent', () => {
           provide: GameManagerService,
           useValue: instance(mockedGameManagerService),
         },
+        {
+          provide: WithSubscriptionHelper,
+          useValue: instance(mockedWithSubscriptionHelper),
+        },
+        {
+          provide: ConverterHelper,
+          useValue: instance(mockedConverterHelper),
+        },
       ],
     }).compileComponents();
 
@@ -52,7 +63,7 @@ describe('GamePageComponent', () => {
     );
 
     when(mockedGameEventsService.characterChanged$).thenReturn(
-      of(characterEntity)
+      of(instance(mockedCharacterEntity))
     );
 
     when(mockedGameEventsService.sceneChanged$).thenReturn(of(scene));
@@ -69,6 +80,46 @@ describe('GamePageComponent', () => {
 
     when(mockedGameEventsService.actionLogged$).thenReturn(of(log));
 
+    when(mockedCharacterEntity.characteristics).thenReturn({
+      STR: new CharacteristicDefinition('STR', 8),
+      CON: new CharacteristicDefinition('CON', 9),
+      SIZ: new CharacteristicDefinition('SIZ', 10),
+      DEX: new CharacteristicDefinition('DEX', 11),
+      INT: new CharacteristicDefinition('INT', 12),
+      POW: new CharacteristicDefinition('POW', 13),
+      APP: new CharacteristicDefinition('APP', 14),
+    });
+
+    when(mockedCharacterEntity.identity).thenReturn(
+      new IdentityDefinition(
+        'name',
+        'Hunter',
+        'ADULT',
+        'HUMAN',
+        'AVERAGE',
+        'AVERAGE'
+      )
+    );
+
+    when(mockedCharacterEntity.derivedAttributes).thenReturn({
+      HP: new DerivedAttributeDefinition('HP', 9),
+      PP: new DerivedAttributeDefinition('PP', 13),
+      MOV: new DerivedAttributeDefinition('MOV', 10),
+    });
+
+    when(
+      mockedConverterHelper.characterToKeyValueDescription(
+        instance(mockedCharacterEntity)
+      )
+    ).thenReturn(
+      new CharacterValuesDefinition(
+        identityValues,
+        characteristicValues,
+        derivedAttributeValues,
+        skillValues
+      )
+    );
+
     fixture = TestBed.createComponent(GamePageComponent);
 
     component = fixture.componentInstance;
@@ -81,97 +132,23 @@ describe('GamePageComponent', () => {
   });
 
   it(`should have identity values`, () => {
-    expect(component.characterValues.identity).toEqual(
-      new ArrayView([
-        new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
-        new KeyValueDescriptionDefinition(
-          'PROFESSION',
-          'Hunter',
-          'Character profession'
-        ),
-        new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
-        new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
-        new KeyValueDescriptionDefinition(
-          'HEIGHT',
-          'AVERAGE',
-          'Character height'
-        ),
-        new KeyValueDescriptionDefinition(
-          'WEIGHT',
-          'AVERAGE',
-          'Character weight'
-        ),
-      ])
-    );
+    expect(component.characterValues.identity).toEqual(identityValues);
   });
 
   it(`should have characteristic values`, () => {
     expect(component.characterValues.characteristics).toEqual(
-      new ArrayView([
-        new KeyValueDescriptionDefinition(
-          'STR',
-          '8',
-          'The character physical force'
-        ),
-        new KeyValueDescriptionDefinition(
-          'CON',
-          '9',
-          'The character body constitution'
-        ),
-        new KeyValueDescriptionDefinition(
-          'SIZ',
-          '10',
-          'The character body shape'
-        ),
-        new KeyValueDescriptionDefinition('DEX', '11', 'The character agility'),
-        new KeyValueDescriptionDefinition(
-          'INT',
-          '12',
-          'The character intelligence'
-        ),
-        new KeyValueDescriptionDefinition(
-          'POW',
-          '13',
-          'The character mental strength'
-        ),
-        new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
-      ])
+      characteristicValues
     );
   });
 
   it(`should have derived attributes values`, () => {
     expect(component.characterValues.derivedAttributes).toEqual(
-      new ArrayView([
-        new KeyValueDescriptionDefinition(
-          'HP',
-          '9',
-          'The character hit points'
-        ),
-        new KeyValueDescriptionDefinition(
-          'PP',
-          '13',
-          'The character power points'
-        ),
-        new KeyValueDescriptionDefinition(
-          'MOV',
-          '10',
-          'The character movement'
-        ),
-      ])
+      derivedAttributeValues
     );
   });
 
   it(`should have skills values`, () => {
-    expect(component.characterValues.skills).toEqual(
-      new ArrayView([
-        new KeyValueDescriptionDefinition('Appraise', '12', ''),
-        new KeyValueDescriptionDefinition(
-          'Dodge',
-          '32',
-          'Ability to avoid being hit'
-        ),
-      ])
-    );
+    expect(component.characterValues.skills).toEqual(skillValues);
   });
 
   it(`should have description`, () => {
@@ -246,29 +223,7 @@ describe('GamePageComponent', () => {
   });
 });
 
-const characterEntity = new CharacterEntity(
-  new IdentityDefinition(
-    'name',
-    'Hunter',
-    'ADULT',
-    'HUMAN',
-    'AVERAGE',
-    'AVERAGE'
-  ),
-  {
-    STR: new CharacteristicDefinition('STR', 8),
-    CON: new CharacteristicDefinition('CON', 9),
-    SIZ: new CharacteristicDefinition('SIZ', 10),
-    DEX: new CharacteristicDefinition('DEX', 11),
-    INT: new CharacteristicDefinition('INT', 12),
-    POW: new CharacteristicDefinition('POW', 13),
-    APP: new CharacteristicDefinition('APP', 14),
-  },
-  new Map<SkillNameLiteral, number>([
-    ['Appraise', 0],
-    ['Dodge', 10],
-  ])
-);
+const mockedCharacterEntity = mock(CharacterEntity);
 
 const askAction = createActionableDefinition('ASK', 'action1', 'Got action?');
 
@@ -285,6 +240,7 @@ const scene = new SceneDefinition(
 );
 
 const mockedGameManagerService = mock(GameManagerService);
+
 const mockedGameEventsService = mock(GameEventsDefinition);
 
 const weapon1 = new WeaponDefinition(
@@ -306,3 +262,53 @@ const weapon2 = new WeaponDefinition(
 );
 
 const log = createTookLogMessage('player', 'test', 'Sword');
+
+const mockedWithSubscriptionHelper = mock(WithSubscriptionHelper);
+
+const mockedConverterHelper = mock(ConverterHelper);
+
+const identityValues = new ArrayView([
+  new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
+  new KeyValueDescriptionDefinition(
+    'PROFESSION',
+    'Hunter',
+    'Character profession'
+  ),
+  new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
+  new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
+  new KeyValueDescriptionDefinition('HEIGHT', 'AVERAGE', 'Character height'),
+  new KeyValueDescriptionDefinition('WEIGHT', 'AVERAGE', 'Character weight'),
+]);
+
+const characteristicValues = new ArrayView([
+  new KeyValueDescriptionDefinition('STR', '8', 'The character physical force'),
+  new KeyValueDescriptionDefinition(
+    'CON',
+    '9',
+    'The character body constitution'
+  ),
+  new KeyValueDescriptionDefinition('SIZ', '10', 'The character body shape'),
+  new KeyValueDescriptionDefinition('DEX', '11', 'The character agility'),
+  new KeyValueDescriptionDefinition('INT', '12', 'The character intelligence'),
+  new KeyValueDescriptionDefinition(
+    'POW',
+    '13',
+    'The character mental strength'
+  ),
+  new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
+]);
+
+const derivedAttributeValues = new ArrayView([
+  new KeyValueDescriptionDefinition('HP', '9', 'The character hit points'),
+  new KeyValueDescriptionDefinition('PP', '13', 'The character power points'),
+  new KeyValueDescriptionDefinition('MOV', '10', 'The character movement'),
+]);
+
+const skillValues = new ArrayView([
+  new KeyValueDescriptionDefinition('Appraise', '12', ''),
+  new KeyValueDescriptionDefinition(
+    'Dodge',
+    '32',
+    'Ability to avoid being hit'
+  ),
+]);
