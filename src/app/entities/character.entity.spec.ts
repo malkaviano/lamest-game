@@ -1,13 +1,12 @@
 import { take } from 'rxjs';
 
-import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
-import { DerivedAttributesDefinition } from '../definitions/attributes.definition';
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { CharacterEntity } from './character.entity';
 import { HitPointsEvent } from '../events/hitpoints.event';
+import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
+import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 
 describe('CharacterEntity', () => {
   describe('Calculating Derived Attributes', () => {
@@ -58,16 +57,15 @@ describe('CharacterEntity', () => {
 
     describe('when making a copy with different characteristics', () => {
       it('return entity with new characteristics', () => {
-        const characteristics = new CharacteristicsDefinition(
-          new CharacteristicDefinition('STR', 11),
-          new CharacteristicDefinition('CON', 11),
-          new CharacteristicDefinition('SIZ', 11),
-          new CharacteristicDefinition('DEX', 11),
-          new CharacteristicDefinition('INT', 11),
-          new CharacteristicDefinition('POW', 11),
-          new CharacteristicDefinition('APP', 11)
-        );
-
+        const characteristics = {
+          STR: new CharacteristicDefinition('STR', 11),
+          CON: new CharacteristicDefinition('CON', 11),
+          SIZ: new CharacteristicDefinition('SIZ', 11),
+          DEX: new CharacteristicDefinition('DEX', 11),
+          INT: new CharacteristicDefinition('INT', 11),
+          POW: new CharacteristicDefinition('POW', 11),
+          APP: new CharacteristicDefinition('APP', 11),
+        };
         const copied = new CharacterEntity(
           fakeIdentity,
           characteristics,
@@ -121,7 +119,7 @@ describe('CharacterEntity', () => {
 
         char.damaged(12);
 
-        expect(char.derivedAttributes.hp.value).toEqual(0);
+        expect(char.derivedAttributes['HP'].value).toEqual(0);
       });
     });
 
@@ -137,7 +135,7 @@ describe('CharacterEntity', () => {
 
         char.damaged(6);
 
-        expect(char.derivedAttributes.hp.value).toEqual(3);
+        expect(char.derivedAttributes['HP'].value).toEqual(3);
       });
     });
 
@@ -177,7 +175,7 @@ describe('CharacterEntity', () => {
 
         char.healed(4);
 
-        expect(char.derivedAttributes.hp.value).toEqual(9);
+        expect(char.derivedAttributes['HP'].value).toEqual(9);
       });
     });
 
@@ -210,26 +208,26 @@ const fakeIdentity = new IdentityDefinition(
   'LIGHT'
 );
 
-const fakeCharacteristics = new CharacteristicsDefinition(
-  new CharacteristicDefinition('STR', 8),
-  new CharacteristicDefinition('CON', 9),
-  new CharacteristicDefinition('SIZ', 10),
-  new CharacteristicDefinition('DEX', 11),
-  new CharacteristicDefinition('INT', 12),
-  new CharacteristicDefinition('POW', 13),
-  new CharacteristicDefinition('APP', 14)
-);
+const fakeCharacteristics = {
+  STR: new CharacteristicDefinition('STR', 8),
+  CON: new CharacteristicDefinition('CON', 9),
+  SIZ: new CharacteristicDefinition('SIZ', 10),
+  DEX: new CharacteristicDefinition('DEX', 11),
+  INT: new CharacteristicDefinition('INT', 12),
+  POW: new CharacteristicDefinition('POW', 13),
+  APP: new CharacteristicDefinition('APP', 14),
+};
 
 const fakeSkills = new Map<SkillNameLiteral, number>([
   ['Appraise', 0],
   ['Dodge', 10],
 ]);
 
-const expectedDerivedAttributes = new DerivedAttributesDefinition(
-  new DerivedAttributeDefinition('HP', 9),
-  new DerivedAttributeDefinition('PP', 13),
-  new DerivedAttributeDefinition('MOV', 10)
-);
+const expectedDerivedAttributes: DerivedAttributeSetDefinition = {
+  HP: new DerivedAttributeDefinition('HP', 9),
+  PP: new DerivedAttributeDefinition('PP', 13),
+  MOV: new DerivedAttributeDefinition('MOV', 10),
+};
 
 const character = () =>
   new CharacterEntity(fakeIdentity, fakeCharacteristics, fakeSkills);

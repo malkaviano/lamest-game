@@ -1,7 +1,7 @@
+import { CharacteristicSetDefinition } from './characteristic-set.definition';
 import { SkillCategoryLiteral } from '../literals/skill-category.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { ArrayView } from '../views/array.view';
-import { CharacteristicsDefinition } from './characteristics.definition';
 
 export class SkillDefinition {
   constructor(
@@ -10,42 +10,42 @@ export class SkillDefinition {
     public readonly category: SkillCategoryLiteral,
     public readonly combat: boolean,
     private readonly baseGenerator: (
-      characteristics: CharacteristicsDefinition
+      characteristics: CharacteristicSetDefinition
     ) => number
   ) {}
 
-  public base(characteristics: CharacteristicsDefinition): number {
+  public base(characteristics: CharacteristicSetDefinition): number {
     return this.baseGenerator(characteristics);
   }
 }
 
-const justStr = (characteristics: CharacteristicsDefinition) =>
-  characteristics.str.value;
+const justStr = (characteristics: CharacteristicSetDefinition) =>
+  characteristics['STR'].value;
 
-const justDex = (characteristics: CharacteristicsDefinition) =>
-  characteristics.dex.value;
+const justDex = (characteristics: CharacteristicSetDefinition) =>
+  characteristics['DEX'].value;
 
-const justInt = (characteristics: CharacteristicsDefinition) =>
-  characteristics.int.value;
+const justInt = (characteristics: CharacteristicSetDefinition) =>
+  characteristics['INT'].value;
 
-const justPow = (characteristics: CharacteristicsDefinition) =>
-  characteristics.pow.value;
+const justPow = (characteristics: CharacteristicSetDefinition) =>
+  characteristics['POW'].value;
 
-const justApp = (characteristics: CharacteristicsDefinition) =>
-  characteristics.app.value;
+const justApp = (characteristics: CharacteristicSetDefinition) =>
+  characteristics['APP'].value;
 
-const strPlusConPlusDex = (characteristics: CharacteristicsDefinition) =>
-  characteristics.str.value +
-  characteristics.con.value +
-  characteristics.dex.value;
+const strPlusConPlusDex = (characteristics: CharacteristicSetDefinition) =>
+  characteristics['STR'].value +
+  characteristics['CON'].value +
+  characteristics['DEX'].value;
 
-const strPlusDex = (characteristics: CharacteristicsDefinition) =>
+const strPlusDex = (characteristics: CharacteristicSetDefinition) =>
   justStr(characteristics) + justDex(characteristics);
 
-const doubleDex = (characteristics: CharacteristicsDefinition) =>
+const doubleDex = (characteristics: CharacteristicSetDefinition) =>
   justDex(characteristics) * 2;
 
-const intPlusPow = (characteristics: CharacteristicsDefinition) =>
+const intPlusPow = (characteristics: CharacteristicSetDefinition) =>
   justInt(characteristics) + justPow(characteristics);
 
 export const skillDefinitions: {

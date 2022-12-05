@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { professions } from '../definitions/profession.definition';
 import { AgeLiteral, ages } from '../literals/age.literal';
 import { HeightLiteral, heights } from '../literals/height.literal';
@@ -11,6 +10,7 @@ import { ProfessionLiteral } from '../literals/profession.literal';
 import { RaceLiteral, races } from '../literals/race.literal';
 import { WeightLiteral, weights } from '../literals/weight.literal';
 import { RandomIntService } from './random-int.service';
+import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +18,16 @@ import { RandomIntService } from './random-int.service';
 export class GeneratorService {
   constructor(private readonly randomIntService: RandomIntService) {}
 
-  public characteristics(): CharacteristicsDefinition {
-    return new CharacteristicsDefinition(
-      new CharacteristicDefinition('STR', this.twoD6Plus6()),
-      new CharacteristicDefinition('CON', this.twoD6Plus6()),
-      new CharacteristicDefinition('SIZ', this.twoD6Plus6()),
-      new CharacteristicDefinition('DEX', this.twoD6Plus6()),
-      new CharacteristicDefinition('INT', this.twoD6Plus6()),
-      new CharacteristicDefinition('POW', this.twoD6Plus6()),
-      new CharacteristicDefinition('APP', this.twoD6Plus6())
-    );
+  public characteristics(): CharacteristicSetDefinition {
+    return {
+      STR: new CharacteristicDefinition('STR', this.twoD6Plus6()),
+      CON: new CharacteristicDefinition('CON', this.twoD6Plus6()),
+      SIZ: new CharacteristicDefinition('SIZ', this.twoD6Plus6()),
+      DEX: new CharacteristicDefinition('DEX', this.twoD6Plus6()),
+      INT: new CharacteristicDefinition('INT', this.twoD6Plus6()),
+      POW: new CharacteristicDefinition('POW', this.twoD6Plus6()),
+      APP: new CharacteristicDefinition('APP', this.twoD6Plus6()),
+    };
   }
 
   public identity(): IdentityDefinition {

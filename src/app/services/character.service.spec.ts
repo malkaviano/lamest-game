@@ -1,15 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
+import { take } from 'rxjs';
 import { instance, mock, reset, when } from 'ts-mockito';
 
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
-import { take } from 'rxjs';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -60,7 +59,7 @@ describe('CharacterService', () => {
 
         done();
 
-        expect(result?.derivedAttributes.hp.value).toEqual(8);
+        expect(result?.derivedAttributes['HP'].value).toEqual(8);
       });
     });
   });
@@ -105,15 +104,15 @@ const expected = new CharacterEntity(
     'AVERAGE',
     'AVERAGE'
   ),
-  new CharacteristicsDefinition(
-    new CharacteristicDefinition('STR', 12),
-    new CharacteristicDefinition('CON', 12),
-    new CharacteristicDefinition('SIZ', 12),
-    new CharacteristicDefinition('DEX', 12),
-    new CharacteristicDefinition('INT', 12),
-    new CharacteristicDefinition('POW', 12),
-    new CharacteristicDefinition('APP', 12)
-  ),
+  {
+    STR: new CharacteristicDefinition('STR', 12),
+    CON: new CharacteristicDefinition('CON', 12),
+    SIZ: new CharacteristicDefinition('SIZ', 12),
+    DEX: new CharacteristicDefinition('DEX', 12),
+    INT: new CharacteristicDefinition('INT', 12),
+    POW: new CharacteristicDefinition('POW', 12),
+    APP: new CharacteristicDefinition('APP', 12),
+  },
   new Map<SkillNameLiteral, number>([
     ['Firearm (Handgun)', 50],
     ['First Aid', 35],
@@ -151,15 +150,15 @@ const random = new CharacterEntity(
     'AVERAGE',
     'AVERAGE'
   ),
-  new CharacteristicsDefinition(
-    new CharacteristicDefinition('STR', 12),
-    new CharacteristicDefinition('CON', 12),
-    new CharacteristicDefinition('SIZ', 12),
-    new CharacteristicDefinition('DEX', 12),
-    new CharacteristicDefinition('INT', 12),
-    new CharacteristicDefinition('POW', 12),
-    new CharacteristicDefinition('APP', 12)
-  ),
+  {
+    STR: new CharacteristicDefinition('STR', 12),
+    CON: new CharacteristicDefinition('CON', 12),
+    SIZ: new CharacteristicDefinition('SIZ', 12),
+    DEX: new CharacteristicDefinition('DEX', 12),
+    INT: new CharacteristicDefinition('INT', 12),
+    POW: new CharacteristicDefinition('POW', 12),
+    APP: new CharacteristicDefinition('APP', 12),
+  },
   new Map<SkillNameLiteral, number>([
     ['Firearm (Handgun)', 50],
     ['First Aid', 35],

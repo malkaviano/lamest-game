@@ -10,7 +10,6 @@ import { GamePageComponent } from './game.page.component';
 import { ArrayView } from '../../views/array.view';
 import { CharacterEntity } from '../../entities/character.entity';
 import { IdentityDefinition } from '../../definitions/identity.definition';
-import { CharacteristicsDefinition } from '../../definitions/characteristics.definition';
 import { CharacteristicDefinition } from '../../definitions/characteristic.definition';
 import { SkillNameLiteral } from '../../literals/skill-name.literal';
 import { SceneDefinition } from '../../definitions/scene.definition';
@@ -256,15 +255,15 @@ const characterEntity = new CharacterEntity(
     'AVERAGE',
     'AVERAGE'
   ),
-  new CharacteristicsDefinition(
-    new CharacteristicDefinition('STR', 8),
-    new CharacteristicDefinition('CON', 9),
-    new CharacteristicDefinition('SIZ', 10),
-    new CharacteristicDefinition('DEX', 11),
-    new CharacteristicDefinition('INT', 12),
-    new CharacteristicDefinition('POW', 13),
-    new CharacteristicDefinition('APP', 14)
-  ),
+  {
+    STR: new CharacteristicDefinition('STR', 8),
+    CON: new CharacteristicDefinition('CON', 9),
+    SIZ: new CharacteristicDefinition('SIZ', 10),
+    DEX: new CharacteristicDefinition('DEX', 11),
+    INT: new CharacteristicDefinition('INT', 12),
+    POW: new CharacteristicDefinition('POW', 13),
+    APP: new CharacteristicDefinition('APP', 14),
+  },
   new Map<SkillNameLiteral, number>([
     ['Appraise', 0],
     ['Dodge', 10],

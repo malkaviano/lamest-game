@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { ArrayView } from '../views/array.view';
-import { DerivedAttributeDefinition } from '../definitions/attribute.definition';
-import { derivedAttributeDefinitions } from '../definitions/attributes.definition';
+import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
+import { derivedAttributeDefinitions } from '../definitions/derived-attribute.definition';
 import { characterIdentityDefinitions } from '../definitions/identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
-import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { characteristicsDefinitions } from '../definitions/characteristics.definition';
+import {
+  CharacteristicDefinition,
+  characteristicsDefinitions,
+} from '../definitions/characteristic.definition';
 import { KeyValueDescriptionDefinition } from '../definitions/key-value-description.definition';
 import { skillDefinitions } from '../definitions/skill.definition';
 import { CharacterEntity } from '../entities/character.entity';

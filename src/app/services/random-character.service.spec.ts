@@ -5,7 +5,6 @@ import { anyNumber, anything, instance, mock, when } from 'ts-mockito';
 import { RandomCharacterService } from './random-character.service';
 import { GeneratorService } from './generator.service';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
@@ -83,15 +82,15 @@ const fakeIdentity = new IdentityDefinition(
   'LIGHT'
 );
 
-const fakeCharacteristics = new CharacteristicsDefinition(
-  new CharacteristicDefinition('STR', 8),
-  new CharacteristicDefinition('CON', 9),
-  new CharacteristicDefinition('SIZ', 10),
-  new CharacteristicDefinition('DEX', 11),
-  new CharacteristicDefinition('INT', 12),
-  new CharacteristicDefinition('POW', 13),
-  new CharacteristicDefinition('APP', 14)
-);
+const fakeCharacteristics = {
+  STR: new CharacteristicDefinition('STR', 8),
+  CON: new CharacteristicDefinition('CON', 9),
+  SIZ: new CharacteristicDefinition('SIZ', 10),
+  DEX: new CharacteristicDefinition('DEX', 11),
+  INT: new CharacteristicDefinition('INT', 12),
+  POW: new CharacteristicDefinition('POW', 13),
+  APP: new CharacteristicDefinition('APP', 14),
+};
 
 const fakeSkills = new Map<SkillNameLiteral, number>([
   ['Firearm (Handgun)', 35],

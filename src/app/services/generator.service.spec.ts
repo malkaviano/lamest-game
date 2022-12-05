@@ -4,7 +4,6 @@ import { anyNumber, instance, mock, when } from 'ts-mockito';
 
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { professions } from '../definitions/profession.definition';
 import { ages } from '../literals/age.literal';
 import { heights } from '../literals/height.literal';
@@ -76,15 +75,15 @@ describe('GeneratorService', () => {
   });
 });
 
-const expectedCharacteristics = new CharacteristicsDefinition(
-  new CharacteristicDefinition('STR', 10),
-  new CharacteristicDefinition('CON', 12),
-  new CharacteristicDefinition('SIZ', 11),
-  new CharacteristicDefinition('DEX', 14),
-  new CharacteristicDefinition('INT', 13),
-  new CharacteristicDefinition('POW', 8),
-  new CharacteristicDefinition('APP', 9)
-);
+const expectedCharacteristics = {
+  STR: new CharacteristicDefinition('STR', 10),
+  CON: new CharacteristicDefinition('CON', 12),
+  SIZ: new CharacteristicDefinition('SIZ', 11),
+  DEX: new CharacteristicDefinition('DEX', 14),
+  INT: new CharacteristicDefinition('INT', 13),
+  POW: new CharacteristicDefinition('POW', 8),
+  APP: new CharacteristicDefinition('APP', 9),
+};
 
 const expectedIdentity = new IdentityDefinition(
   'Alice Shields',

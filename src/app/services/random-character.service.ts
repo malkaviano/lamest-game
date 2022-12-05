@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { GeneratorService } from './generator.service';
-import { CharacteristicsDefinition } from '../definitions/characteristics.definition';
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { SkillService } from './skill.service';
 import { professionSkillDefinitions } from '../definitions/profession.definition';
@@ -9,6 +8,7 @@ import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { commonSkillDefinitions } from '../definitions/skill.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { ProfessionLiteral } from '../literals/profession.literal';
+import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class RandomCharacterService {
     return new CharacterEntity(
       identity,
       characteristics,
-      this.skills(identity.profession, characteristics.int.value)
+      this.skills(identity.profession, characteristics['INT'].value)
     );
   }
 
@@ -34,7 +34,7 @@ export class RandomCharacterService {
     return this.generator.identity();
   }
 
-  private characteristics(): CharacteristicsDefinition {
+  private characteristics(): CharacteristicSetDefinition {
     return this.generator.characteristics();
   }
 
