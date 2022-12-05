@@ -24,8 +24,8 @@ export class DestroyableState extends ActionableState {
     damageTaken?: number
   ): { state: ActionableState; log?: string } {
     if (result === 'SUCCESS') {
-      if (action.actionable === 'ATTACK') {
-        const dmg = damageTaken ?? 0;
+      if (action.actionable === 'ATTACK' && damageTaken) {
+        const dmg = damageTaken;
 
         const hp = this.hitPoints - dmg;
 

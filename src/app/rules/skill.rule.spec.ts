@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { anything, instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import {
   createCannotCheckLogMessage,
   createCheckLogMessage,
+  createFreeLogMessage,
 } from '../definitions/log-message.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
@@ -47,6 +48,10 @@ describe('SkillRule', () => {
 
     when(mockedInteractiveEntity.name).thenReturn('test');
 
+    when(
+      mockedInteractiveEntity.actionSelected(anything(), anything())
+    ).thenReturn('destroyed by xpto');
+
     service = TestBed.inject(SkillRule);
   });
 
@@ -78,7 +83,7 @@ describe('SkillRule', () => {
       const result = service.execute(event);
 
       expect(result).toEqual({
-        logs: [log1],
+        logs: [log1, log3],
       });
     });
   });
@@ -105,3 +110,5 @@ const event = new ActionableEvent(action, 'id1');
 const log1 = createCheckLogMessage('player', 'Brawl', 10, 'SUCCESS');
 
 const log2 = createCannotCheckLogMessage('player', 'Brawl');
+
+const log3 = createFreeLogMessage('test', 'destroyed by xpto');

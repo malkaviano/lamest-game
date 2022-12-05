@@ -9,6 +9,7 @@ import { RandomIntService } from '../services/random-int.service';
 import {
   createCannotCheckLogMessage,
   createCheckLogMessage,
+  createFreeLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
@@ -33,12 +34,19 @@ export class SkillRule implements RuleInterface {
     if (skillValue) {
       const { roll, result } = this.rngService.checkSkill(skillValue);
 
-      const interactive = this.narrativeService.interatives[action.eventId];
-
-      interactive.actionSelected(action.actionableDefinition, result);
-
       if (roll) {
         logs.push(createCheckLogMessage('player', skillName, roll, result));
+      }
+
+      const interactive = this.narrativeService.interatives[action.eventId];
+
+      const log = interactive.actionSelected(
+        action.actionableDefinition,
+        result
+      );
+
+      if (log) {
+        logs.push(createFreeLogMessage(interactive.name, log));
       }
     } else {
       logs.push(createCannotCheckLogMessage('player', skillName));
