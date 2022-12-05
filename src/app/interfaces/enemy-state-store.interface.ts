@@ -1,4 +1,4 @@
-import { BehaviorLiteral } from '../literals/behavior.literal';
+import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
 
 export interface EnemyStateStoreInterface {
   readonly states: {
@@ -8,6 +8,6 @@ export interface EnemyStateStoreInterface {
     hitpoints: number;
     attackSkillValue: number;
     weaponName: string;
-    behavior: BehaviorLiteral;
+    behavior: EnemyBehaviorLiteral;
   }[];
 }

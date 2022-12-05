@@ -3,7 +3,7 @@ import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
-import { BehaviorLiteral } from '../literals/behavior.literal';
+import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
 import { ArrayView } from '../views/array.view';
 import { emptyState } from './empty.state';
 import { EnemyState } from './enemy.state';
@@ -82,8 +82,5 @@ const f = () => emptyState;
 
 const lazy = new LazyHelper(f);
 
-const createState = (
-  behavior: BehaviorLiteral = 'AGGRESSIVE',
-  hp = 10
-) =>
+const createState = (behavior: EnemyBehaviorLiteral = 'AGGRESSIVE', hp = 10) =>
   new EnemyState(new ArrayView([attackAction]), lazy, hp, weapon, 25, behavior);

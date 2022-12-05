@@ -2,7 +2,7 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { EnemyAttack } from '../interfaces/enemy-attack.interface';
-import { BehaviorLiteral } from '../literals/behavior.literal';
+import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -19,7 +19,7 @@ export class EnemyState extends ActionableState {
     hitPoints: number,
     private readonly weapon: WeaponDefinition,
     private readonly attackSkillValue: number,
-    private readonly behavior: BehaviorLiteral
+    private readonly behavior: EnemyBehaviorLiteral
   ) {
     super('EnemyState', stateActions);
 

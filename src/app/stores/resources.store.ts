@@ -30,7 +30,7 @@ import interactiveStore from '../../assets/interactives.json';
 import descriptionStore from '../../assets/descriptions.json';
 import actionableStore from '../../assets/actionables.json';
 import messageStore from '../../assets/messages.json';
-import { BehaviorLiteral } from '../literals/behavior.literal';
+import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -83,7 +83,7 @@ export class ResourcesStore {
         hitpoints: s.hitpoints,
         attackSkillValue: s.attackSkillValue,
         weaponName: s.weaponName,
-        behavior: s.behavior as BehaviorLiteral,
+        behavior: s.behavior as EnemyBehaviorLiteral,
       };
     });
 
