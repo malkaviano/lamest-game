@@ -18,6 +18,7 @@ describe('InventoryService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
+
     service = TestBed.inject(InventoryService);
   });
 
@@ -329,6 +330,56 @@ describe('InventoryService', () => {
       });
     });
   });
+
+  describe('dispose', () => {
+    describe('when no weapon was equipped', () => {
+      it('throws Invalid operation ocurred', () => {
+        expect(() => service.dispose()).toThrowError(
+          errorMessages['INVALID-OPERATION']
+        );
+      });
+    });
+
+    describe('when no disposable weapon was equipped', () => {
+      it('throws Invalid operation ocurred', () => {
+        service.store('player', weapon1);
+
+        service.equip(weapon1.name);
+
+        expect(() => service.dispose()).toThrowError(
+          errorMessages['INVALID-OPERATION']
+        );
+      });
+    });
+
+    describe('when a disposable weapon was equipped', () => {
+      it('should dispose the weapon', () => {
+        disposeScenario(service);
+
+        expect(service.equipped).toBeNull();
+      });
+
+      it('should emit event', (done) => {
+        let result: InventoryEvent | undefined;
+
+        const expected = new InventoryEvent(
+          'DISPOSE',
+          'player',
+          disposableWeapon
+        );
+
+        service.inventoryChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        disposeScenario(service);
+
+        done();
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
 });
 
 const weapon1 = new WeaponDefinition(
@@ -337,7 +388,8 @@ const weapon1 = new WeaponDefinition(
   'Old sword full of rust',
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice({ D6: 1 }), 0),
-  true
+  true,
+  'PERMANENT'
 );
 
 const weapon2 = new WeaponDefinition(
@@ -346,7 +398,8 @@ const weapon2 = new WeaponDefinition(
   'A good sword, not exceptional',
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice({ D6: 1 }), 0),
-  true
+  true,
+  'PERMANENT'
 );
 
 const bubbleGum = new ConsumableDefinition(
@@ -355,3 +408,21 @@ const bubbleGum = new ConsumableDefinition(
   'Refreshing',
   1
 );
+
+const disposableWeapon = new WeaponDefinition(
+  'molotov',
+  'Molotov',
+  'Home made bomb',
+  'Ranged Weapon (Throw)',
+  new DamageDefinition(createDice({ D6: 1 }), 3),
+  false,
+  'DISPOSABLE'
+);
+
+const disposeScenario = (service: InventoryService): void => {
+  service.store('player', disposableWeapon);
+
+  service.equip(disposableWeapon.name);
+
+  service.dispose();
+};

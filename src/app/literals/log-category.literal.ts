@@ -12,4 +12,5 @@ export type LogCategoryLiteral =
   | 'TOOK'
   | 'SCENE'
   | 'MISSED'
-  | 'DIED';
+  | 'DIED'
+  | 'LOST';

@@ -11,6 +11,7 @@ import { RandomIntService } from '../services/random-int.service';
 import {
   createCheckLogMessage,
   createFreeLogMessage,
+  createLostLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
 
@@ -41,6 +42,12 @@ export class AttackRule implements RuleInterface {
       logs.push(
         createCheckLogMessage('player', weapon.skillName, roll, result)
       );
+
+      if (weapon.usability === 'DISPOSABLE') {
+        this.inventoryService.dispose();
+
+        logs.push(createLostLogMessage('player', weapon.label));
+      }
 
       if (result === 'SUCCESS') {
         const weaponDamage = weapon.damage;

@@ -3,16 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import { instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { DamageDefinition } from '../definitions/damage.definition';
+import { createDice } from '../definitions/dice.definition';
 import {
   createCheckLogMessage,
   createDamagedMessage,
   createFreeLogMessage,
+  createLostLogMessage,
 } from '../definitions/log-message.definition';
-import { unarmed } from '../definitions/weapon.definition';
+import { unarmed, WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
@@ -48,9 +52,10 @@ describe('AttackRule', () => {
       instance(mockedCharacterEntity)
     );
 
-    when(mockedCharacterEntity.skills).thenReturn({ Brawl: 45 });
-
-    when(mockedInventoryService.equipped).thenReturn(null);
+    when(mockedCharacterEntity.skills).thenReturn({
+      Brawl: 45,
+      'Ranged Weapon (Throw)': 50,
+    });
 
     when(mockedNarrativeService.interatives).thenReturn(interactives);
 
@@ -80,10 +85,34 @@ describe('AttackRule', () => {
         mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 1)
       ).thenReturn('received 1 damage');
 
+      when(mockedInventoryService.equipped).thenReturn(null);
+
       const result = service.execute(event);
 
       expect(result).toEqual({
         logs: [log1, log2],
+      });
+    });
+
+    describe('when weapon is DISPOSABLE', () => {
+      it('return logs with disposed weapon', () => {
+        const result = disposableScenario(service);
+
+        expect(result).toEqual({
+          logs: [log3, logDiscarded, log4],
+        });
+      });
+
+      it('should dispose weapon', () => {
+        let disposed = false;
+
+        when(mockedInventoryService.dispose()).thenCall(
+          () => (disposed = true)
+        );
+
+        disposableScenario(service);
+
+        expect(disposed).toEqual(true);
       });
     });
   });
@@ -112,3 +141,41 @@ const interactives: KeyValueInterface<InteractiveEntity> = {
 const log1 = createCheckLogMessage('player', 'Brawl', 10, 'SUCCESS');
 
 const log2 = createFreeLogMessage('test', createDamagedMessage(1));
+
+const log3 = createCheckLogMessage(
+  'player',
+  'Ranged Weapon (Throw)',
+  15,
+  'SUCCESS'
+);
+
+const log4 = createFreeLogMessage('test', createDamagedMessage(5));
+
+const disposableWeapon = new WeaponDefinition(
+  'molotov',
+  'Molotov',
+  'Home made bomb',
+  'Ranged Weapon (Throw)',
+  new DamageDefinition(createDice({ D6: 1 }), 3),
+  false,
+  'DISPOSABLE'
+);
+
+const logDiscarded = createLostLogMessage('player', disposableWeapon.label);
+
+const disposableScenario = (service: AttackRule): RuleResultInterface => {
+  when(mockedRngService.checkSkill(50)).thenReturn({
+    result: 'SUCCESS',
+    roll: 15,
+  });
+
+  when(mockedRngService.roll(disposableWeapon.damage.diceRoll)).thenReturn(2);
+
+  when(mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 5)).thenReturn(
+    'received 5 damage'
+  );
+
+  when(mockedInventoryService.equipped).thenReturn(disposableWeapon);
+
+  return service.execute(event);
+};

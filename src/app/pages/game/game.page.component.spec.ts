@@ -186,7 +186,8 @@ describe('GamePageComponent', () => {
             { D4: 0, D6: 1, D8: 0, D10: 0, D12: 0, D20: 0, D100: 0 },
             0
           ),
-          true
+          true,
+          'PERMANENT'
         ),
         new ActionableDefinition('ASK', 'action1', 'Got action?')
       ),
@@ -200,7 +201,8 @@ describe('GamePageComponent', () => {
             { D4: 0, D6: 1, D8: 0, D10: 0, D12: 0, D20: 0, D100: 0 },
             0
           ),
-          true
+          true,
+          'PERMANENT'
         ),
         new ActionableDefinition('ASK', 'action1', 'Got action?')
       ),
@@ -249,7 +251,8 @@ const weapon1 = new WeaponDefinition(
   'Old sword full of rust',
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice({ D6: 1 }), 0),
-  true
+  true,
+  'PERMANENT'
 );
 
 const weapon2 = new WeaponDefinition(
@@ -258,7 +261,8 @@ const weapon2 = new WeaponDefinition(
   'A good sword, not exceptional',
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice({ D6: 1 }), 0),
-  true
+  true,
+  'PERMANENT'
 );
 
 const log = createTookLogMessage('player', 'test', 'Sword');

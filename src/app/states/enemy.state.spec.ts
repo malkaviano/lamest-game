@@ -111,7 +111,15 @@ const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');
 
 const damage = new DamageDefinition(createDice(), 1);
 
-const weapon = new WeaponDefinition('gg', 'claw', '', 'Brawl', damage, true);
+const weapon = new WeaponDefinition(
+  'gg',
+  'claw',
+  '',
+  'Brawl',
+  damage,
+  true,
+  'PERMANENT'
+);
 
 const expectedAttack = {
   skillValue: 25,

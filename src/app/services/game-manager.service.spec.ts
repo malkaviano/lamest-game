@@ -28,7 +28,8 @@ const sword = new WeaponDefinition(
   'That is a sword',
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice({ D6: 1 }), 0),
-  true
+  true,
+  'PERMANENT'
 );
 
 const bubbleGum = new ConsumableDefinition(

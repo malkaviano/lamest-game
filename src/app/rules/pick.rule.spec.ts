@@ -76,7 +76,8 @@ const item = new WeaponDefinition(
   'some sword',
   'Artillery (Siege)',
   new DamageDefinition(createDice(), 2),
-  true
+  true,
+  'PERMANENT'
 );
 
 const action = createActionableDefinition('PICK', 'sword', 'Sword');

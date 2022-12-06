@@ -158,5 +158,6 @@ const weapon = new WeaponDefinition(
   '',
   'Brawl',
   new DamageDefinition(createDice(), 4),
-  true
+  true,
+  'PERMANENT'
 );

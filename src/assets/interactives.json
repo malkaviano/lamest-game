@@ -97,6 +97,10 @@
         {
           "name": "bubbleGum",
           "quantity": 1
+        },
+        {
+          "name": "molotov",
+          "quantity": 1
         }
       ]
     }

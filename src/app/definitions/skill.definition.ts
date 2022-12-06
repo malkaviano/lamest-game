@@ -250,15 +250,15 @@ export const skillDefinitions: {
     true,
     justStr
   ),
-  'Missile Weapon (Throw)': new SkillDefinition(
-    'Missile Weapon (Throw)',
+  'Ranged Weapon (Throw)': new SkillDefinition(
+    'Ranged Weapon (Throw)',
     '',
     'COMMON',
     true,
     justDex
   ),
-  'Missile Weapon (String)': new SkillDefinition(
-    'Missile Weapon (String)',
+  'Ranged Weapon (Bow)': new SkillDefinition(
+    'Ranged Weapon (Bow)',
     '',
     'TRAINED',
     true,

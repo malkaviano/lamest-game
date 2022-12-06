@@ -10,7 +10,7 @@
     },
     {
       "interactiveId": "tableLoot",
-      "actionables": ["halberd", "bubbleGum"]
+      "actionables": ["halberd", "bubbleGum", "molotov"]
     }
   ]
 }

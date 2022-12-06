@@ -66,7 +66,8 @@ describe('ConsumeRule', () => {
             '',
             'Firearm (Handgun)',
             new DamageDefinition(createDice(), 0),
-            true
+            true,
+            'PERMANENT'
           )
         );
 

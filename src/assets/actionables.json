@@ -54,6 +54,11 @@
       "name": "Survival",
       "actionable": "SKILL",
       "label": "Chop Chop"
+    },
+    {
+      "key": "molotov",
+      "actionable": "PICK",
+      "label": "Molotov"
     }
   ]
 }

@@ -60,7 +60,8 @@ describe('EquipRule', () => {
             'some sword',
             'Artillery (War)',
             new DamageDefinition(createDice(), 2),
-            true
+            true,
+            'PERMANENT'
           )
         );
 
@@ -87,7 +88,8 @@ describe('EquipRule', () => {
             'some sword',
             'Artillery (Siege)',
             new DamageDefinition(createDice(), 2),
-            true
+            true,
+            'PERMANENT'
           )
         );
 

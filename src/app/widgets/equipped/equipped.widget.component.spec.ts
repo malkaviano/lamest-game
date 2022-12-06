@@ -74,5 +74,6 @@ const item = new WeaponDefinition(
   'Some big sword',
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice({ D6: 1 }), 0),
-  true
+  true,
+  'PERMANENT'
 );

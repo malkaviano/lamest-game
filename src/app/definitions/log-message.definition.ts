@@ -110,3 +110,6 @@ export const createMissedAttackLogMessage = (actor: string, target: string) =>
 
 export const createDodgedLogMessage = (actor: string, attacker: string) =>
   new LogMessageDefinition('MISSED', actor, `dodged ${attacker}'s attack`);
+
+export const createLostLogMessage = (actor: string, item: string) =>
+  new LogMessageDefinition('LOST', actor, `lost ${item}`);

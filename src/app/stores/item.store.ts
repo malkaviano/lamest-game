@@ -35,7 +35,8 @@ export class ItemStore {
             createDice(item.damage?.dice),
             item.damage.fixed
           ),
-          item.dodgeable
+          item.dodgeable,
+          item.usability
         )
       );
     });

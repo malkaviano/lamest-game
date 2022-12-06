@@ -70,7 +70,8 @@ const actionableItem = new ActionableItemDefinition(
     'Some big sword',
     'Melee Weapon (Simple)',
     new DamageDefinition(createDice({ D8: 1 }), 0),
-    true
+    true,
+    'PERMANENT'
   ),
   equipAction
 );

@@ -33,6 +33,7 @@ import messageStore from '../../assets/messages.json';
 import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
+import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
 
 @Injectable({
   providedIn: 'root',
@@ -118,6 +119,7 @@ export class ResourcesStore {
           fixed: w.damage.fixed,
         },
         dodgeable: w.dodgeable,
+        usability: w.usability as WeaponUsabilityLiteral,
       };
     });
 

@@ -337,7 +337,8 @@ const weapon1 = new WeaponDefinition(
   'Old sword full of rust',
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice({ D6: 1 }), 0),
-  true
+  true,
+  'PERMANENT'
 );
 
 const weapon2 = new WeaponDefinition(
@@ -346,5 +347,6 @@ const weapon2 = new WeaponDefinition(
   'A good sword, not exceptional',
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice({ D6: 1 }), 0),
-  true
+  true,
+  'PERMANENT'
 );

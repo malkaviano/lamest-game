@@ -121,6 +121,18 @@ export class InventoryService {
     this.inventoryChanged.next(new InventoryEvent('UNEQUIP', 'player', item));
   }
 
+  public dispose(): void {
+    if (this.equipped?.usability !== 'DISPOSABLE') {
+      throw new Error(errorMessages['INVALID-OPERATION']);
+    }
+
+    const item = this.equipped;
+
+    this.currentEquipped = null;
+
+    this.inventoryChanged.next(new InventoryEvent('DISPOSE', 'player', item));
+  }
+
   private getStorage(key: string): {
     [key: string]: ItemStorageDefinition;
   } {

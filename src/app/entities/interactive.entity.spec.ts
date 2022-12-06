@@ -164,4 +164,12 @@ const fakeEntity = (resettable = true, state: ActionableState = state1) =>
 
 const damage = new DamageDefinition(createDice({}), 10);
 
-const weapon = new WeaponDefinition('gg', 'claw', '', 'Brawl', damage, true);
+const weapon = new WeaponDefinition(
+  'gg',
+  'claw',
+  '',
+  'Brawl',
+  damage,
+  true,
+  'PERMANENT'
+);

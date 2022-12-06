@@ -1,5 +1,6 @@
 import { Dice } from '../definitions/dice.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
+import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
 
 export interface WeaponStoreInterface {
   readonly weapons: {
@@ -12,5 +13,6 @@ export interface WeaponStoreInterface {
       fixed: number;
     };
     dodgeable: boolean;
+    usability: WeaponUsabilityLiteral;
   }[];
 }
