@@ -8,7 +8,7 @@ import { EquipRule } from '../rules/equip.rule';
 import { PickRule } from '../rules/pick.rule';
 import { SceneRule } from '../rules/scene.rule';
 import { SkillRule } from '../rules/skill.rule';
-import { UnequipRule } from '../rules/unequip.rule';
+import { UnEquipRule } from '../rules/unequip.rule';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class RulesHelper {
     public readonly skillRule: SkillRule,
     public readonly pickRule: PickRule,
     public readonly equipRule: EquipRule,
-    public readonly unequipRule: UnequipRule,
+    public readonly unequipRule: UnEquipRule,
     public readonly sceneRule: SceneRule,
     public readonly attackRule: AttackRule,
     public readonly consumableRule: ConsumeRule,

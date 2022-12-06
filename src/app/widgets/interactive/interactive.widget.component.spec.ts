@@ -34,12 +34,7 @@ describe('InteractiveWidgetComponent', () => {
     when(mockedInteractive.name).thenReturn('Ornate Chest');
     when(mockedInteractive.description).thenReturn('A brilliant chest');
     when(mockedInteractive.actionsChanged$).thenReturn(
-      of(
-        new ArrayView([
-          createActionableDefinition('CLOSE', 'close', 'Close'),
-          createActionableDefinition('PICK', 'pick', 'Pick'),
-        ])
-      )
+      of(new ArrayView([consumeAction, pickAction]))
     );
   });
 
@@ -64,7 +59,7 @@ describe('InteractiveWidgetComponent', () => {
 
     const text = await card.getText();
 
-    expect(text).toContain('Close');
+    expect(text).toContain('Consume');
     expect(text).toContain('Pick');
   });
 
@@ -93,7 +88,12 @@ let loader: HarnessLoader;
 
 const mockedInteractive = mock(InteractiveEntity);
 
-const expected = new ActionableEvent(
-  createActionableDefinition('CLOSE', 'close', 'Close'),
-  'id1'
+const consumeAction = createActionableDefinition(
+  'CONSUME',
+  'consume',
+  'Consume'
 );
+
+const pickAction = createActionableDefinition('PICK', 'pick', 'Pick');
+
+const expected = new ActionableEvent(consumeAction, 'id1');

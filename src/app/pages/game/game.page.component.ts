@@ -25,7 +25,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public inventory: ActionableItemDefinition[];
 
-  public equipped: GameItemDefinition | null;
+  public equipped!: GameItemDefinition;
 
   constructor(
     private readonly gameManagerService: GameManagerService,
@@ -35,8 +35,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.gameLogs = [];
 
     this.inventory = [];
-
-    this.equipped = null;
 
     this.characterValues = new CharacterValuesDefinition(
       new ArrayView([]),
@@ -58,6 +56,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         (character) => {
           this.characterValues =
             this.converterHelper.characterToKeyValueDescription(character);
+          this.equipped = character.weaponEquipped;
         }
       )
     );
@@ -76,8 +75,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     this.withSubscriptionHelper.addSubscription(
       this.gameManagerService.events.playerInventory$.subscribe((inventory) => {
-        this.inventory = inventory.items.items;
-        this.equipped = inventory.equipped;
+        this.inventory = inventory.items;
       })
     );
   }

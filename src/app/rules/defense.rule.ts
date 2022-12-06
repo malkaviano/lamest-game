@@ -7,13 +7,13 @@ import { NarrativeService } from '../services/narrative.service';
 import {
   createFreeLogMessage,
   createAttackedLogMessage,
-  createDamagedMessage,
   LogMessageDefinition,
   createMissedAttackLogMessage,
-  createDodgedLogMessage as createDodgedAttackLogMessage,
+  createDodgedMessage,
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { NpcEntity } from '../entities/npc.entity';
+import { createActionableDefinition } from '../definitions/actionable.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -47,27 +47,27 @@ export class DefenseRule implements RuleInterface {
                 createAttackedLogMessage(interactive.name, 'player', weaponName)
               );
 
-              const { result } = this.rollRule.actorSkillCheck(
+              const { result: dodgeResult } = this.rollRule.actorSkillCheck(
                 this.characterService.currentCharacter,
                 'Dodge'
               );
 
-              if (!dodgeable || result === 'FAILURE') {
+              if (!dodgeable || dodgeResult === 'FAILURE') {
                 const damageAmount =
                   this.rollRule.roll(damage.diceRoll) + damage.fixed;
 
-                const damaged =
-                  this.characterService.currentCharacter.damaged(damageAmount);
-
-                logs.push(
-                  createFreeLogMessage(
-                    'player',
-                    createDamagedMessage(damaged.effective)
-                  )
+                const log = this.characterService.currentCharacter.reactTo(
+                  createActionableDefinition('ATTACK', 'attack', 'Attack'),
+                  enemyResult,
+                  damageAmount
                 );
+
+                if (log) {
+                  logs.push(createFreeLogMessage('player', log));
+                }
               } else {
                 logs.push(
-                  createDodgedAttackLogMessage('player', interactive.name)
+                  createFreeLogMessage('player', createDodgedMessage())
                 );
               }
             } else {

@@ -22,7 +22,10 @@ export class CharacterService {
 
     this.characterChanged$ = merge(
       this.characterChanged.asObservable(),
-      this.currentCharacter.hpChanged$.pipe(map(() => this.currentCharacter))
+      this.currentCharacter.hpChanged$.pipe(map(() => this.currentCharacter)),
+      this.currentCharacter.weaponEquippedChanged$.pipe(
+        map(() => this.currentCharacter)
+      )
     );
   }
 

@@ -13,14 +13,16 @@ import {
   createLostLogMessage,
 } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
-import { unarmed, WeaponDefinition } from '../definitions/weapon.definition';
+import {
+  unarmedWeapon,
+  WeaponDefinition,
+} from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
-import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
 import { AttackRule } from './attack.rule';
 import { RollService } from '../services/roll.service';
@@ -34,10 +36,6 @@ describe('AttackRule', () => {
         {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
-        },
-        {
-          provide: InventoryService,
-          useValue: instance(mockedInventoryService),
         },
         {
           provide: RollService,
@@ -87,15 +85,15 @@ describe('AttackRule', () => {
 
   describe('execute', () => {
     it('return logs', () => {
-      when(mockedRollRule.roll(unarmed.damage.diceRoll)).thenReturn(
-        1 + unarmed.damage.fixed
+      when(mockedRollRule.roll(unarmedWeapon.damage.diceRoll)).thenReturn(
+        1 + unarmedWeapon.damage.fixed
       );
 
       when(mockedInteractiveEntity.reactTo(action, 'SUCCESS', 1)).thenReturn(
         'received 1 damage'
       );
 
-      when(mockedInventoryService.equipped).thenReturn(null);
+      when(mockedCharacterEntity.weaponEquipped).thenReturn(unarmedWeapon);
 
       const result = service.execute(event);
 
@@ -116,9 +114,7 @@ describe('AttackRule', () => {
       it('should dispose weapon', () => {
         let disposed = false;
 
-        when(mockedInventoryService.dispose()).thenCall(
-          () => (disposed = true)
-        );
+        when(mockedCharacterEntity.unEquip()).thenCall(() => (disposed = true));
 
         disposableScenario(service);
 
@@ -128,7 +124,7 @@ describe('AttackRule', () => {
 
     describe('when skill value is zero', () => {
       it('should log cannot skill check', () => {
-        when(mockedInventoryService.equipped).thenReturn(impossibleWeapon);
+        when(mockedCharacterEntity.weaponEquipped).thenReturn(impossibleWeapon);
 
         const result = service.execute(event);
 
@@ -141,8 +137,6 @@ describe('AttackRule', () => {
 });
 
 const mockedRollRule = mock(RollService);
-
-const mockedInventoryService = mock(InventoryService);
 
 const mockedNarrativeService = mock(NarrativeService);
 
@@ -188,7 +182,7 @@ const disposableScenario = (service: AttackRule): RuleResultInterface => {
     'received 5 damage'
   );
 
-  when(mockedInventoryService.equipped).thenReturn(disposableWeapon);
+  when(mockedCharacterEntity.weaponEquipped).thenReturn(disposableWeapon);
 
   return service.execute(event);
 };

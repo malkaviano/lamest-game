@@ -14,14 +14,12 @@ export class InventoryPanelComponent {
 
   @Input() inventory: ActionableItemDefinition[];
 
-  @Input() equipped: GameItemDefinition | null;
+  @Input() equipped!: GameItemDefinition;
 
   @Input() panelName: string;
 
   constructor() {
     this.panelName = '';
-
-    this.equipped = null;
 
     this.inventory = [];
 

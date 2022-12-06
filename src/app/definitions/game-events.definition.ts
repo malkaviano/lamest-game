@@ -4,7 +4,6 @@ import { SceneDefinition } from './scene.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { ArrayView } from '../views/array.view';
 import { ActionableItemDefinition } from './actionable-item.definition';
-import { GameItemDefinition } from './game-item.definition';
 import { LogMessageDefinition } from './log-message.definition';
 
 export class GameEventsDefinition {
@@ -12,9 +11,8 @@ export class GameEventsDefinition {
     public readonly sceneChanged$: Observable<SceneDefinition>,
     public readonly actionLogged$: Observable<LogMessageDefinition>,
     public readonly characterChanged$: Observable<CharacterEntity>,
-    public readonly playerInventory$: Observable<{
-      items: ArrayView<ActionableItemDefinition>;
-      equipped: GameItemDefinition | null;
-    }>
+    public readonly playerInventory$: Observable<
+      ArrayView<ActionableItemDefinition>
+    >
   ) {}
 }

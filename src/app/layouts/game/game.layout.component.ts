@@ -23,7 +23,7 @@ export class GameLayoutComponent {
 
   @Input() inventory!: ActionableItemDefinition[];
 
-  @Input() equipped!: GameItemDefinition | null;
+  @Input() equipped!: GameItemDefinition;
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();

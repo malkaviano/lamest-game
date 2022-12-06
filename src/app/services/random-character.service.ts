@@ -10,6 +10,7 @@ import { CharacterEntity } from '../entities/character.entity';
 import { ProfessionLiteral } from '../literals/profession.literal';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { ActorBehavior } from '../behaviors/actor.behavior';
+import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,8 @@ export class RandomCharacterService {
       new ActorBehavior(
         characteristics,
         this.skills(identity.profession, characteristics['INT'].value)
-      )
+      ),
+      new EquipmentBehavior()
     );
   }
 

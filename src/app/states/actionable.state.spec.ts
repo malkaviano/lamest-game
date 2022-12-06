@@ -29,7 +29,7 @@ const pickAction = createActionableDefinition(
   'Get bubble gum'
 );
 
-const unknownAction = createActionableDefinition('CLOSE', 'error', 'unknown');
+const unknownAction = createActionableDefinition('CONSUME', 'error', 'unknown');
 
 const state = new (class extends ActionableState {
   protected override stateResult(): { state: ActionableState; log?: string } {

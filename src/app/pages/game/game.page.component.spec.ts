@@ -69,13 +69,12 @@ describe('GamePageComponent', () => {
     when(mockedGameEventsService.sceneChanged$).thenReturn(of(scene));
 
     when(mockedGameEventsService.playerInventory$).thenReturn(
-      of({
-        items: new ArrayView([
+      of(
+        new ArrayView([
           new ActionableItemDefinition(weapon1, askAction),
           new ActionableItemDefinition(weapon2, askAction),
-        ]),
-        equipped: null,
-      })
+        ])
+      )
     );
 
     when(mockedGameEventsService.actionLogged$).thenReturn(of(log));

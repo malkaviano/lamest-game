@@ -31,10 +31,6 @@ export class InventoryService {
     this.inventoryChanged$ = this.inventoryChanged.asObservable();
   }
 
-  public get equipped(): WeaponDefinition | null {
-    return this.currentEquipped;
-  }
-
   public store(key: string, item: GameItemDefinition): number {
     const storage = this.getStorage(key);
 
@@ -89,48 +85,6 @@ export class InventoryService {
     }, result);
 
     return new ArrayView(a);
-  }
-
-  public equip(name: string): void {
-    const item = this.take('player', name);
-
-    if (item.category !== 'WEAPON') {
-      throw new Error(errorMessages['WRONG-ITEM']);
-    }
-
-    if (this.equipped) {
-      this.unequip();
-    }
-
-    this.currentEquipped = item as WeaponDefinition;
-
-    this.inventoryChanged.next(new InventoryEvent('EQUIP', 'player', item));
-  }
-
-  public unequip(): void {
-    if (!this.equipped) {
-      throw new Error(errorMessages['INVALID-OPERATION']);
-    }
-
-    const item = this.equipped;
-
-    this.store('player', item);
-
-    this.currentEquipped = null;
-
-    this.inventoryChanged.next(new InventoryEvent('UNEQUIP', 'player', item));
-  }
-
-  public dispose(): void {
-    if (this.equipped?.usability !== 'DISPOSABLE') {
-      throw new Error(errorMessages['INVALID-OPERATION']);
-    }
-
-    const item = this.equipped;
-
-    this.currentEquipped = null;
-
-    this.inventoryChanged.next(new InventoryEvent('DISPOSE', 'player', item));
   }
 
   private getStorage(key: string): {

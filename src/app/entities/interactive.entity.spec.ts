@@ -108,7 +108,7 @@ describe('InteractiveEntity', () => {
 
 const pick = new ActionableDefinition('PICK', 'name1', 'label1');
 
-const action = new ActionableDefinition('OPEN', 'name1', 'label1');
+const action = new ActionableDefinition('CONSUME', 'name1', 'label1');
 
 const mockedState1 = mock<ActionableState>();
 

@@ -7,6 +7,9 @@ import { CharacterEntity } from '../entities/character.entity';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
 import { HitPointsEvent } from '../events/hitpoints.event';
+import { WeaponDefinition } from '../definitions/weapon.definition';
+import { DamageDefinition } from '../definitions/damage.definition';
+import { createDice } from '../definitions/dice.definition';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -27,7 +30,11 @@ describe('CharacterService', () => {
       instance(mockedCharacterEntity)
     );
 
-    when(mockedCharacterEntity.hpChanged$).thenReturn(subject);
+    when(mockedCharacterEntity.hpChanged$).thenReturn(subjectHP);
+
+    when(mockedCharacterEntity.weaponEquippedChanged$).thenReturn(
+      subjectWeapon
+    );
 
     service = TestBed.inject(CharacterService);
   });
@@ -55,7 +62,23 @@ describe('CharacterService', () => {
           result = event;
         });
 
-        subject.next(new HitPointsEvent(12, 8));
+        subjectHP.next(new HitPointsEvent(12, 8));
+
+        done();
+
+        expect(result).toEqual(instance(mockedCharacterEntity));
+      });
+    });
+
+    describe('when character equips a Weapon', () => {
+      it('should emit and event', (done) => {
+        let result: CharacterEntity | undefined;
+
+        service.characterChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        subjectWeapon.next(weapon1);
 
         done();
 
@@ -97,4 +120,16 @@ const mockedRandomCharacterService = mock(RandomCharacterService);
 
 const mockedCharacterEntity = mock(CharacterEntity);
 
-const subject = new Subject<HitPointsEvent>();
+const subjectHP = new Subject<HitPointsEvent>();
+
+const subjectWeapon = new Subject<WeaponDefinition>();
+
+const weapon1 = new WeaponDefinition(
+  'sword1',
+  'Rusted Sword',
+  'Old sword full of rust',
+  'Melee Weapon (Simple)',
+  new DamageDefinition(createDice({ D6: 1 }), 0),
+  true,
+  'PERMANENT'
+);

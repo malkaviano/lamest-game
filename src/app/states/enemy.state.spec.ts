@@ -1,6 +1,6 @@
 import { instance, mock, when } from 'ts-mockito';
-
 import { ActorBehavior } from '../behaviors/actor.behavior';
+
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';

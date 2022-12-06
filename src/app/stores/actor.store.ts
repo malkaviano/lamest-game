@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ActorBehavior } from '../behaviors/actor.behavior';
 
+import { ActorBehavior } from '../behaviors/actor.behavior';
+import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { NpcEntity } from '../entities/npc.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -38,7 +39,8 @@ export class ActorStore {
             description,
             stateStore.states[state],
             resettable,
-            new ActorBehavior(characteristics, skills)
+            new ActorBehavior(characteristics, skills),
+            new EquipmentBehavior()
           )
         );
       }

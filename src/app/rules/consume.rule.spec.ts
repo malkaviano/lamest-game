@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { deepEqual, instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
@@ -11,12 +11,12 @@ import {
   createCannotCheckLogMessage,
   createCheckLogMessage,
   createConsumedLogMessage,
-  createHealedLogMessage,
+  createFreeLogMessage,
+  createHealedMessage,
 } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { HitPointsEvent } from '../events/hitpoints.event';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
@@ -72,14 +72,14 @@ describe('ConsumeRule', () => {
         );
 
         expect(() =>
-          service.execute(new ActionableEvent(action, 'gun'))
+          service.execute(new ActionableEvent(consumeAction, 'gun'))
         ).toThrowError(errorMessages['WRONG-ITEM']);
       });
     });
 
     describe('when consumable has skill requirement', () => {
       describe('when skill check fails', () => {
-        it('should heal player', () => {
+        it('should not heal player', () => {
           when(mockedInventoryService.take('player', 'firstAid')).thenReturn(
             consumableFirstAid
           );
@@ -93,10 +93,6 @@ describe('ConsumeRule', () => {
             result: 'FAILURE',
             roll: 100,
           });
-
-          when(mockedCharacterEntity.healed(5)).thenReturn(
-            new HitPointsEvent(5, 10)
-          );
 
           const result = service.execute(event);
 
@@ -122,9 +118,9 @@ describe('ConsumeRule', () => {
             roll: 10,
           });
 
-          when(mockedCharacterEntity.healed(5)).thenReturn(
-            new HitPointsEvent(5, 10)
-          );
+          when(
+            mockedCharacterEntity.reactTo(deepEqual(healAction), 'SUCCESS', 5)
+          ).thenReturn(logHeal5);
 
           const result = service.execute(event);
 
@@ -167,9 +163,9 @@ describe('ConsumeRule', () => {
           consumableChesseBurger
         );
 
-        when(mockedCharacterEntity.healed(2)).thenReturn(
-          new HitPointsEvent(8, 10)
-        );
+        when(
+          mockedCharacterEntity.reactTo(deepEqual(healAction), 'NONE', 2)
+        ).thenReturn(logHeal2);
 
         const result = service.execute(event2);
 
@@ -196,11 +192,17 @@ const consumableChesseBurger = new ConsumableDefinition(
   2
 );
 
-const action = createActionableDefinition('CONSUME', '', '');
+const consumeAction = createActionableDefinition(
+  'CONSUME',
+  'firstAid',
+  'First Aid Kit'
+);
 
-const event = new ActionableEvent(action, 'firstAid');
+const healAction = createActionableDefinition('HEAL', 'heal', 'Heal');
 
-const event2 = new ActionableEvent(action, 'sandwich');
+const event = new ActionableEvent(consumeAction, 'firstAid');
+
+const event2 = new ActionableEvent(consumeAction, 'sandwich');
 
 const mockedCharacterService = mock(CharacterService);
 
@@ -212,7 +214,9 @@ const mockedCharacterEntity = mock(CharacterEntity);
 
 const logCheeseBurger1 = createConsumedLogMessage('player', 'Cheeseburger');
 
-const logCheeseBurger2 = createHealedLogMessage('player', 2);
+const logHeal2 = createHealedMessage(2);
+
+const logCheeseBurger2 = createFreeLogMessage('player', logHeal2);
 
 const logFirstAid1 = createConsumedLogMessage('player', 'First Aid Kit');
 
@@ -223,7 +227,9 @@ const logFirstAidSuccess = createCheckLogMessage(
   'SUCCESS'
 );
 
-const logFirstAid3 = createHealedLogMessage('player', 5);
+const logHeal5 = createHealedMessage(5);
+
+const logFirstAid3 = createFreeLogMessage('player', logHeal5);
 
 const logFirstAidFailure = createCheckLogMessage(
   'player',

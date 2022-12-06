@@ -18,10 +18,10 @@ export class WeaponDefinition extends SkillItemDefinition {
   }
 }
 
-export const unarmed = new WeaponDefinition(
+export const unarmedWeapon = new WeaponDefinition(
   'unarmed',
-  'Bare hands',
-  'Unarmed combat',
+  'Unarmed',
+  'Actor Natural Weapon',
   'Brawl',
   new DamageDefinition(createDice({ D4: 1 }), 0),
   true,

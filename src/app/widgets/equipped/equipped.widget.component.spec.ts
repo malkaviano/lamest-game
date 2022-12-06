@@ -9,7 +9,10 @@ import { MaterialModule } from '../../../material/material.module';
 import { createActionableDefinition } from '../../definitions/actionable.definition';
 import { DamageDefinition } from '../../definitions/damage.definition';
 import { createDice } from '../../definitions/dice.definition';
-import { WeaponDefinition } from '../../definitions/weapon.definition';
+import {
+  unarmedWeapon,
+  WeaponDefinition,
+} from '../../definitions/weapon.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { EquippedWidgetComponent } from './equipped.widget.component';
 
@@ -27,6 +30,8 @@ describe('EquippedWidgetComponent', () => {
     fixture = TestBed.createComponent(EquippedWidgetComponent);
 
     component = fixture.componentInstance;
+
+    component.equipped = unarmedWeapon;
 
     loader = TestbedHarnessEnvironment.loader(fixture);
 

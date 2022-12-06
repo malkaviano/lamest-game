@@ -3,11 +3,10 @@ import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 import { skillDefinitions } from '../definitions/skill.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
-import { ActorInterface } from '../interfaces/actor.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 
-export class ActorBehavior implements ActorInterface {
+export class ActorBehavior {
   private readonly maximumHP: number;
 
   private readonly maximumPP: number;

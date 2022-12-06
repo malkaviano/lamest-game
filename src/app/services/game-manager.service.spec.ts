@@ -5,7 +5,6 @@ import { anyString, anything, instance, mock, reset, when } from 'ts-mockito';
 
 import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { GameItemDefinition } from '../definitions/game-item.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryEvent } from '../events/inventory.event';
@@ -101,12 +100,7 @@ describe('GameManagerService', () => {
       },
     ].forEach(({ invEvent, expected, item }) => {
       it(`should emit event ${invEvent.eventName}`, (done) => {
-        let result:
-          | {
-              items: ArrayView<ActionableItemDefinition>;
-              equipped: GameItemDefinition | null;
-            }
-          | undefined;
+        let result: ArrayView<ActionableItemDefinition> | undefined;
 
         when(mockedInventoryService.check(anyString())).thenReturn(
           new ArrayView([new ItemStorageDefinition(item, 1)])
@@ -120,10 +114,7 @@ describe('GameManagerService', () => {
 
         done();
 
-        expect(result).toEqual({
-          items: new ArrayView([expected]),
-          equipped: null,
-        });
+        expect(result).toEqual(new ArrayView([expected]));
       });
     });
   });

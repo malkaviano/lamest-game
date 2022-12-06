@@ -9,8 +9,10 @@ import { ItemStore } from '../stores/item.store';
 import {
   createEquipErrorLogMessage,
   createEquippedLogMessage,
+  createUnEquippedLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -29,11 +31,20 @@ export class EquipRule implements RuleInterface {
 
     if (skillName) {
       if (this.characterService.currentCharacter.skills[skillName] > 0) {
-        this.inventoryService.equip(action.eventId);
+        const weapon = this.inventoryService.take('player', action.eventId);
 
-        const equipped = this.inventoryService.equipped;
-        if (equipped) {
-          logs.push(createEquippedLogMessage('player', equipped.label));
+        if (weapon.category === 'WEAPON') {
+          const previous = this.characterService.currentCharacter.equip(
+            weapon as WeaponDefinition
+          );
+
+          if (previous) {
+            this.inventoryService.store('player', previous);
+
+            logs.push(createUnEquippedLogMessage('player', previous.label));
+          }
+
+          logs.push(createEquippedLogMessage('player', weapon.label));
         }
       } else {
         logs.push(

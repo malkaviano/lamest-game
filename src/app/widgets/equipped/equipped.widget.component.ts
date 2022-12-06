@@ -9,12 +9,10 @@ import { ActionableEvent } from '../../events/actionable.event';
   styleUrls: ['./equipped.widget.component.css'],
 })
 export class EquippedWidgetComponent {
-  @Input() equipped: GameItemDefinition | null;
+  @Input() equipped!: GameItemDefinition;
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
   constructor() {
-    this.equipped = null;
-
     this.actionSelected = new EventEmitter<ActionableEvent>();
   }
 

@@ -1,6 +1,7 @@
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { ActorBehavior } from '../behaviors/actor.behavior';
+import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
@@ -82,22 +83,6 @@ describe('NpcEntity', () => {
       expect(fakeEntity().characteristics).toEqual(fakeCharacteristics);
     });
   });
-
-  describe('damaged', () => {
-    it('return HitPointsEvent', () => {
-      const result = fakeEntity().damaged(4);
-
-      expect(result).toEqual(new HitPointsEvent(9, 5));
-    });
-  });
-
-  describe('healed', () => {
-    it('return HitPointsEvent', () => {
-      const result = fakeEntity().healed(4);
-
-      expect(result).toEqual(new HitPointsEvent(9, 9));
-    });
-  });
 });
 
 const mockedState = mock<ActionableState>();
@@ -118,6 +103,8 @@ const weapon = new WeaponDefinition(
 
 const mockedActorBehavior = mock(ActorBehavior);
 
+const mockedEquipmentBehavior = mock(EquipmentBehavior);
+
 const fakeEntity = (resettable = false, state: ActionableState = someState) =>
   new NpcEntity(
     'id1',
@@ -125,12 +112,13 @@ const fakeEntity = (resettable = false, state: ActionableState = someState) =>
     'Testing Entity',
     state,
     resettable,
-    instance(mockedActorBehavior)
+    instance(mockedActorBehavior),
+    instance(mockedEquipmentBehavior)
   );
 
 const attack = new ActionableDefinition('ATTACK', 'attack', 'Attack');
 
-const action = new ActionableDefinition('OPEN', 'name1', 'label1');
+const action = new ActionableDefinition('CONSUME', 'name1', 'label1');
 
 const fakeCharacteristics = {
   STR: new CharacteristicDefinition('STR', 8),

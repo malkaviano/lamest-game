@@ -14,6 +14,8 @@ export class LogMessageDefinition {
   }
 }
 
+export const createHealedMessage = (heal: number) => `healed ${heal} hp`;
+
 export const createDamagedMessage = (damage: number) =>
   `received ${damage} damage`;
 
@@ -56,9 +58,6 @@ export const createUnEquippedLogMessage = (actor: string, equipment: string) =>
 
 export const createConsumedLogMessage = (actor: string, consumable: string) =>
   new LogMessageDefinition('CONSUMED', actor, `consumed ${consumable}`);
-
-export const createHealedLogMessage = (actor: string, heal: number) =>
-  new LogMessageDefinition('HEALED', actor, `healed ${heal} hp`);
 
 export const createAttackedLogMessage = (
   actor: string,
@@ -105,8 +104,7 @@ export const createSceneLogMessage = (
 export const createMissedAttackLogMessage = (actor: string, target: string) =>
   new LogMessageDefinition('MISSED', actor, `attacked ${target} but missed`);
 
-export const createDodgedLogMessage = (actor: string, attacker: string) =>
-  new LogMessageDefinition('MISSED', actor, `dodged ${attacker}'s attack`);
+export const createDodgedMessage = () => 'dodged the attack';
 
 export const createLostLogMessage = (actor: string, item: string) =>
   new LogMessageDefinition('LOST', actor, `lost ${item}`);

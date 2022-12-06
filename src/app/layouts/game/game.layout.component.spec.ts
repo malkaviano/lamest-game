@@ -9,7 +9,10 @@ import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
 import { createActionableDefinition } from '../../definitions/actionable.definition';
-import { WeaponDefinition } from '../../definitions/weapon.definition';
+import {
+  unarmedWeapon,
+  WeaponDefinition,
+} from '../../definitions/weapon.definition';
 import { DamageDefinition } from '../../definitions/damage.definition';
 import { createDice } from '../../definitions/dice.definition';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
@@ -44,7 +47,7 @@ describe('GameLayoutComponent', () => {
       new ActionableItemDefinition(weapon2, askAction),
     ];
 
-    component.equipped = null;
+    component.equipped = unarmedWeapon;
 
     fixture.detectChanges();
   });
@@ -222,7 +225,7 @@ describe('GameLayoutComponent', () => {
         new ActionableItemDefinition(weapon2, askAction),
       ]);
 
-      expect(result.properties['equipped']).toBeNull();
+      expect(result.properties['equipped']).toEqual(unarmedWeapon);
     });
 
     it('should send an ActionableEvent', (done) => {

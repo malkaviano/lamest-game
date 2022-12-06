@@ -8,21 +8,29 @@ import {
   createUnEquippedLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
+import { CharacterService } from '../services/character.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UnequipRule implements RuleInterface {
-  constructor(private readonly inventoryService: InventoryService) {}
+export class UnEquipRule implements RuleInterface {
+  constructor(
+    private readonly inventoryService: InventoryService,
+    private readonly characterService: CharacterService
+  ) {}
 
   public execute(action: ActionableEvent): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
 
-    this.inventoryService.unequip();
+    const weapon = this.characterService.currentCharacter.unEquip();
 
-    logs.push(
-      createUnEquippedLogMessage('player', action.actionableDefinition.label)
-    );
+    if (weapon) {
+      this.inventoryService.store('player', weapon);
+
+      logs.push(
+        createUnEquippedLogMessage('player', action.actionableDefinition.label)
+      );
+    }
 
     return { logs };
   }

@@ -1,26 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, reset, when } from 'ts-mockito';
+import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import {
   createAttackedLogMessage,
   createDamagedMessage,
-  createDodgedLogMessage,
+  createDodgedMessage,
   createFreeLogMessage,
   createMissedAttackLogMessage,
 } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
-import { HitPointsEvent } from '../events/hitpoints.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
 import { DefenseRule } from './defense.rule';
 import { RollService } from '../services/roll.service';
 import { NpcEntity } from '../entities/npc.entity';
+import { createActionableDefinition } from '../definitions/actionable.definition';
 
 describe('DefenseRule', () => {
   let service: DefenseRule;
@@ -106,9 +106,13 @@ describe('DefenseRule', () => {
               new RollDefinition('SUCCESS', 10)
             );
 
-            when(mockedCharacterEntity.damaged(4)).thenReturn(
-              new HitPointsEvent(10, 6)
-            );
+            when(
+              mockedCharacterEntity.reactTo(
+                deepEqual(attackAction),
+                'SUCCESS',
+                4
+              )
+            ).thenReturn(damageLog);
 
             const result = service.execute();
 
@@ -153,11 +157,17 @@ const mockedCharacterEntity = mock(CharacterEntity);
 
 const logMissed = createMissedAttackLogMessage('test', 'player');
 
-const logDodged = createDodgedLogMessage('player', 'test');
+const dodged = createDodgedMessage();
+
+const logDodged = createFreeLogMessage('player', dodged);
 
 const logAttacked1 = createAttackedLogMessage('test', 'player', 'claw');
 
-const logAttacked2 = createFreeLogMessage('player', createDamagedMessage(4));
+const damageLog = createDamagedMessage(4);
+
+const logAttacked2 = createFreeLogMessage('player', damageLog);
+
+const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');
 
 const weapon = new WeaponDefinition(
   'gg',

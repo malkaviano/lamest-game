@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { unarmed } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
 import {
   createCannotCheckLogMessage,
@@ -23,14 +21,13 @@ export class AttackRule implements RuleInterface {
   constructor(
     private readonly rollRule: RollService,
     private readonly characterService: CharacterService,
-    private readonly inventoryService: InventoryService,
     private readonly narrativeService: NarrativeService
   ) {}
 
   public execute(action: ActionableEvent): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
 
-    const weapon = this.inventoryService.equipped ?? unarmed;
+    const weapon = this.characterService.currentCharacter.weaponEquipped;
 
     const { roll, result } = this.rollRule.actorSkillCheck(
       this.characterService.currentCharacter,
@@ -45,7 +42,7 @@ export class AttackRule implements RuleInterface {
       );
 
       if (weapon.usability === 'DISPOSABLE') {
-        this.inventoryService.dispose();
+        this.characterService.currentCharacter.unEquip();
 
         logs.push(createLostLogMessage('player', weapon.label));
       }

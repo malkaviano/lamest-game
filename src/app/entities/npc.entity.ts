@@ -1,7 +1,8 @@
 import { ActorBehavior } from '../behaviors/actor.behavior';
+import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
-import { HitPointsEvent } from '../events/hitpoints.event';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EnemyAttack } from '../interfaces/enemy-attack.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -15,9 +16,14 @@ export class NpcEntity extends InteractiveEntity implements ActorInterface {
     description: string,
     currentState: ActionableState,
     resettable: boolean,
-    private readonly actorBehavior: ActorBehavior
+    private readonly actorBehavior: ActorBehavior,
+    private readonly equipmentBehavior: EquipmentBehavior
   ) {
     super(id, name, description, currentState, resettable);
+  }
+
+  public get weaponEquipped(): WeaponDefinition {
+    throw new Error('Method not implemented.');
   }
 
   public get characteristics(): CharacteristicSetDefinition {
@@ -32,15 +38,15 @@ export class NpcEntity extends InteractiveEntity implements ActorInterface {
     return this.actorBehavior.skills;
   }
 
-  public damaged(damage: number): HitPointsEvent {
-    return this.actorBehavior.damaged(damage);
-  }
-
-  public healed(heal: number): HitPointsEvent {
-    return this.actorBehavior.healed(heal);
-  }
-
   public get attack(): EnemyAttack | null {
     return this.currentState.attack;
+  }
+
+  public equip(weapon: WeaponDefinition): WeaponDefinition | null {
+    throw new Error('Method not implemented.');
+  }
+
+  public unEquip(): WeaponDefinition | null {
+    throw new Error('Method not implemented.');
   }
 }

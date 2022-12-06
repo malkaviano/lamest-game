@@ -1,12 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, verify, when } from 'ts-mockito';
+import { instance, mock, reset, when } from 'ts-mockito';
+
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import {
   createEquipErrorLogMessage,
   createEquippedLogMessage,
+  createUnEquippedLogMessage,
 } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
@@ -37,11 +39,17 @@ describe('EquipRule', () => {
       ],
     });
 
+    reset(mockedInventoryService);
+    reset(mockedCharacterService);
+    reset(mockedItemStore);
+
     when(mockedCharacterService.currentCharacter).thenReturn(
       instance(mockedCharacterEntity)
     );
 
     when(mockedCharacterEntity.skills).thenReturn({ 'Artillery (War)': 45 });
+
+    when(mockedCharacterEntity.equip(weapon)).thenReturn(weapon2);
 
     service = TestBed.inject(EquipRule);
   });
@@ -53,17 +61,9 @@ describe('EquipRule', () => {
   describe('execute', () => {
     describe('when skill value is above 0', () => {
       it('return logs', () => {
-        when(mockedInventoryService.equipped).thenReturn(
-          new WeaponDefinition(
-            'sword',
-            'Sword',
-            'some sword',
-            'Artillery (War)',
-            new DamageDefinition(createDice(), 2),
-            true,
-            'PERMANENT'
-          )
-        );
+        when(mockedCharacterEntity.equip(weapon)).thenReturn(null);
+
+        when(mockedInventoryService.take('player', 'sword')).thenReturn(weapon);
 
         when(mockedItemStore.itemSkill(event.eventId)).thenReturn(
           'Artillery (War)'
@@ -71,28 +71,48 @@ describe('EquipRule', () => {
 
         const result = service.execute(event);
 
-        verify(mockedInventoryService.equip('sword')).once();
-
         expect(result).toEqual({
           logs: [log],
         });
       });
     });
 
-    describe('when skill value is 0', () => {
+    describe('when a previous weapon was equipped', () => {
       it('return logs', () => {
-        when(mockedInventoryService.equipped).thenReturn(
-          new WeaponDefinition(
-            'sword',
-            'Sword',
-            'some sword',
-            'Artillery (Siege)',
-            new DamageDefinition(createDice(), 2),
-            true,
-            'PERMANENT'
-          )
+        when(mockedInventoryService.take('player', 'sword')).thenReturn(weapon);
+
+        when(mockedItemStore.itemSkill(event.eventId)).thenReturn(
+          'Artillery (War)'
         );
 
+        const result = service.execute(event);
+
+        expect(result).toEqual({
+          logs: [log2, log],
+        });
+      });
+
+      it('should store previous weapon', () => {
+        let result = 0;
+
+        when(mockedInventoryService.take('player', 'sword')).thenReturn(weapon);
+
+        when(mockedInventoryService.store('player', weapon2)).thenCall(
+          () => (result = 1)
+        );
+
+        when(mockedItemStore.itemSkill(event.eventId)).thenReturn(
+          'Artillery (War)'
+        );
+
+        service.execute(event);
+
+        expect(result).toEqual(1);
+      });
+    });
+
+    describe('when skill value is 0', () => {
+      it('return logs', () => {
         when(mockedItemStore.itemSkill(event.eventId)).thenReturn(
           'Artillery (Siege)'
         );
@@ -124,8 +144,30 @@ const mockedCharacterEntity = mock(CharacterEntity);
 
 const log = createEquippedLogMessage('player', 'Sword');
 
+const log2 = createUnEquippedLogMessage('player', 'Sword 2');
+
 const logError = createEquipErrorLogMessage(
   'player',
   'Artillery (Siege)',
   'Sword'
+);
+
+const weapon = new WeaponDefinition(
+  'sword',
+  'Sword',
+  'some sword',
+  'Artillery (War)',
+  new DamageDefinition(createDice(), 2),
+  true,
+  'PERMANENT'
+);
+
+const weapon2 = new WeaponDefinition(
+  'sword2',
+  'Sword 2',
+  'some sword 2',
+  'Artillery (War)',
+  new DamageDefinition(createDice(), 2),
+  true,
+  'PERMANENT'
 );

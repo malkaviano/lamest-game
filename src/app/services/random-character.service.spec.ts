@@ -10,6 +10,7 @@ import { CharacterEntity } from '../entities/character.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { SkillService } from './skill.service';
 import { ActorBehavior } from '../behaviors/actor.behavior';
+import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 
 const mockedGeneratorService = mock(GeneratorService);
 const mockedSkillService = mock(SkillService);
@@ -121,5 +122,6 @@ const fakeSkills = new Map<SkillNameLiteral, number>([
 
 const expectedCharacter = new CharacterEntity(
   fakeIdentity,
-  new ActorBehavior(fakeCharacteristics, fakeSkills)
+  new ActorBehavior(fakeCharacteristics, fakeSkills),
+  new EquipmentBehavior()
 );

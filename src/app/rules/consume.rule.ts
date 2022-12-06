@@ -11,11 +11,12 @@ import {
   createCannotCheckLogMessage,
   createCheckLogMessage,
   createConsumedLogMessage,
-  createHealedLogMessage,
+  createFreeLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
+import { createActionableDefinition } from '../definitions/actionable.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -27,12 +28,14 @@ export class ConsumeRule implements RuleInterface {
     private readonly rollRule: RollService
   ) {}
 
-  public execute(action: ActionableEvent): RuleResultInterface {
+  public execute(event: ActionableEvent): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
+
+    const { eventId } = event;
 
     const consumable = this.inventoryService.take(
       'player',
-      action.eventId
+      eventId
     ) as ConsumableDefinition;
 
     if (consumable.category !== 'CONSUMABLE') {
@@ -64,13 +67,14 @@ export class ConsumeRule implements RuleInterface {
         );
       }
 
-      if (
-        rollDefinition.result === 'SUCCESS' ||
-        rollDefinition.result === 'NONE'
-      ) {
-        const healed = this.characterService.currentCharacter.healed(hp);
+      const log = this.characterService.currentCharacter.reactTo(
+        createActionableDefinition('HEAL', 'heal', 'Heal'),
+        rollDefinition.result,
+        hp
+      );
 
-        logs.push(createHealedLogMessage('player', healed.effective));
+      if (log) {
+        logs.push(createFreeLogMessage('player', log));
       }
     } else if (consumable.skillName) {
       logs.push(createCannotCheckLogMessage('player', consumable.skillName));
