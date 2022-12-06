@@ -48,9 +48,9 @@ describe('SkillRule', () => {
 
     when(mockedInteractiveEntity.name).thenReturn('test');
 
-    when(
-      mockedInteractiveEntity.actionSelected(anything(), anything())
-    ).thenReturn('destroyed by xpto');
+    when(mockedInteractiveEntity.reactTo(anything(), anything())).thenReturn(
+      'destroyed by xpto'
+    );
 
     service = TestBed.inject(SkillRule);
   });

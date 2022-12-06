@@ -13,7 +13,7 @@ import {
   createDodgedLogMessage as createDodgedAttackLogMessage,
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
-import { ActorEntity } from '../entities/actor.entity';
+import { NpcEntity } from '../entities/npc.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class DefenseRule implements RuleInterface {
 
     Object.entries(this.narrativeService.interatives).forEach(
       ([, interactive]) => {
-        if (interactive instanceof ActorEntity) {
+        if (interactive instanceof NpcEntity) {
           const attack = interactive.attack;
 
           if (attack) {

@@ -22,7 +22,7 @@ export class ConversationRule implements RuleInterface {
 
     const interactive = this.narrativeService.interatives[eventId];
 
-    const log = interactive.actionSelected(actionableDefinition, 'NONE');
+    const log = interactive.reactTo(actionableDefinition, 'NONE');
 
     logs.push(createFreeLogMessage('player', actionableDefinition.label));
 

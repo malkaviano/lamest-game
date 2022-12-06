@@ -31,7 +31,7 @@ export class PickRule implements RuleInterface {
 
     const interactive = this.narrativeService.interatives[action.eventId];
 
-    const log = interactive.actionSelected(action.actionableDefinition, 'NONE');
+    const log = interactive.reactTo(action.actionableDefinition, 'NONE');
 
     if (log) {
       logs.push(createTookLogMessage('player', interactive.name, log));

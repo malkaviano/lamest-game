@@ -20,7 +20,7 @@ import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
 import { DefenseRule } from './defense.rule';
 import { RollService } from '../services/roll.service';
-import { ActorEntity } from '../entities/actor.entity';
+import { NpcEntity } from '../entities/npc.entity';
 
 describe('DefenseRule', () => {
   let service: DefenseRule;
@@ -60,7 +60,7 @@ describe('DefenseRule', () => {
       weapon,
     });
 
-    Object.setPrototypeOf(instance(mockedActorEntity), ActorEntity.prototype);
+    Object.setPrototypeOf(instance(mockedActorEntity), NpcEntity.prototype);
 
     service = TestBed.inject(DefenseRule);
   });
@@ -143,9 +143,9 @@ const mockedRollRule = mock(RollService);
 
 const mockedNarrativeService = mock(NarrativeService);
 
-const mockedActorEntity = mock(ActorEntity);
+const mockedActorEntity = mock(NpcEntity);
 
-const interactives: KeyValueInterface<ActorEntity> = {
+const interactives: KeyValueInterface<NpcEntity> = {
   id1: instance(mockedActorEntity),
 };
 

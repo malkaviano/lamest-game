@@ -47,7 +47,7 @@ describe('InteractiveEntity', () => {
         result = event;
       });
 
-      entity.actionSelected(pick, 'NONE');
+      entity.reactTo(pick, 'NONE');
 
       done();
 
@@ -70,7 +70,7 @@ describe('InteractiveEntity', () => {
           result = event;
         });
 
-        entity.actionSelected(pick, 'NONE');
+        entity.reactTo(pick, 'NONE');
 
         entity.reset();
 
@@ -94,7 +94,7 @@ describe('InteractiveEntity', () => {
           result = event;
         });
 
-        entity.actionSelected(pick, 'NONE');
+        entity.reactTo(pick, 'NONE');
 
         entity.reset();
 

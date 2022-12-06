@@ -5,14 +5,44 @@
       "name": "Training Dummy",
       "description": "Try some attack moves here",
       "state": "trainingDummy",
-      "resettable": false
+      "resettable": false,
+      "characteristics": {
+        "STR": 5,
+        "CON": 5,
+        "SIZ": 5,
+        "DEX": 5,
+        "INT": 0,
+        "POW": 0,
+        "APP": 0
+      },
+      "skills": [
+        {
+          "name": "Melee Weapon (Simple)",
+          "value": 30
+        }
+      ]
     },
     {
       "id": "zombie",
       "name": "Nasty Zombie",
       "description": "What the frack is that?",
       "state": "zombie",
-      "resettable": false
+      "resettable": false,
+      "characteristics": {
+        "STR": 10,
+        "CON": 10,
+        "SIZ": 10,
+        "DEX": 10,
+        "INT": 3,
+        "POW": 3,
+        "APP": 1
+      },
+      "skills": [
+        {
+          "name": "Brawl",
+          "value": 45
+        }
+      ]
     }
   ]
 }

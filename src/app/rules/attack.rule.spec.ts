@@ -91,9 +91,9 @@ describe('AttackRule', () => {
         1 + unarmed.damage.fixed
       );
 
-      when(
-        mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 1)
-      ).thenReturn('received 1 damage');
+      when(mockedInteractiveEntity.reactTo(action, 'SUCCESS', 1)).thenReturn(
+        'received 1 damage'
+      );
 
       when(mockedInventoryService.equipped).thenReturn(null);
 
@@ -184,7 +184,7 @@ const logDiscarded = createLostLogMessage('player', disposableWeapon.label);
 const disposableScenario = (service: AttackRule): RuleResultInterface => {
   when(mockedRollRule.roll(disposableWeapon.damage.diceRoll)).thenReturn(2);
 
-  when(mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 5)).thenReturn(
+  when(mockedInteractiveEntity.reactTo(action, 'SUCCESS', 5)).thenReturn(
     'received 5 damage'
   );
 

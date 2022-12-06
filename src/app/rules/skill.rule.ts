@@ -39,10 +39,7 @@ export class SkillRule implements RuleInterface {
 
       const interactive = this.narrativeService.interatives[action.eventId];
 
-      const log = interactive.actionSelected(
-        action.actionableDefinition,
-        result
-      );
+      const log = interactive.reactTo(action.actionableDefinition, result);
 
       if (log) {
         logs.push(createFreeLogMessage(interactive.name, log));

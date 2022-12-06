@@ -56,7 +56,7 @@ export class AttackRule implements RuleInterface {
         const damage =
           this.rollRule.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
 
-        const log = interactive.actionSelected(
+        const log = interactive.reactTo(
           action.actionableDefinition,
           result,
           damage

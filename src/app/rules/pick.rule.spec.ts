@@ -49,10 +49,7 @@ describe('PickRule', () => {
       when(mockedInventoryService.take('id1', 'sword')).thenReturn(item);
 
       when(
-        mockedInteractiveEntity.actionSelected(
-          event.actionableDefinition,
-          'NONE'
-        )
+        mockedInteractiveEntity.reactTo(event.actionableDefinition, 'NONE')
       ).thenReturn('Sword');
 
       const result = service.execute(event);

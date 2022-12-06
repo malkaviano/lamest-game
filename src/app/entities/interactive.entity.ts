@@ -30,7 +30,7 @@ export class InteractiveEntity {
     this.actionsChanged$ = this.actionsChanged.asObservable();
   }
 
-  public actionSelected(
+  public reactTo(
     selected: ActionableDefinition,
     result: ResultLiteral,
     damageTaken?: number

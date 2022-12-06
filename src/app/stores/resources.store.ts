@@ -158,6 +158,34 @@ export class ResourcesStore {
 
     this.messageStore = messageStore;
 
-    this.actorStore = actorStore;
+    const actors = actorStore.actors.map((a) => {
+      const characteristics: CharacteristicSetDefinition = {
+        STR: new CharacteristicDefinition('STR', a.characteristics.STR),
+        CON: new CharacteristicDefinition('CON', a.characteristics.CON),
+        SIZ: new CharacteristicDefinition('SIZ', a.characteristics.SIZ),
+        DEX: new CharacteristicDefinition('DEX', a.characteristics.DEX),
+        INT: new CharacteristicDefinition('INT', a.characteristics.INT),
+        POW: new CharacteristicDefinition('POW', a.characteristics.POW),
+        APP: new CharacteristicDefinition('APP', a.characteristics.APP),
+      };
+
+      const skills = new Map<SkillNameLiteral, number>();
+
+      a.skills.forEach((s) => {
+        skills.set(s.name as SkillNameLiteral, s.value);
+      });
+
+      return {
+        id: a.id,
+        name: a.name,
+        description: a.description,
+        state: a.state,
+        resettable: a.resettable,
+        characteristics: characteristics,
+        skills: skills,
+      };
+    });
+
+    this.actorStore = { actors };
   }
 }

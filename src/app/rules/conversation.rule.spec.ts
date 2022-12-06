@@ -38,9 +38,9 @@ describe('ConversationRule', () => {
 
   describe('execute', () => {
     it('return logs', () => {
-      when(
-        mockedInteractiveEntity.actionSelected(anything(), 'NONE')
-      ).thenReturn('Hello');
+      when(mockedInteractiveEntity.reactTo(anything(), 'NONE')).thenReturn(
+        'Hello'
+      );
 
       const result = service.execute(
         new ActionableEvent(
