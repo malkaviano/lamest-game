@@ -4,25 +4,26 @@ import { unarmed } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
-import { RandomIntService } from '../services/random-int.service';
 import {
+  createCannotCheckLogMessage,
   createCheckLogMessage,
   createFreeLogMessage,
   createLostLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
+import { RollService } from '../services/roll.service';
+import { CharacterService } from '../services/character.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AttackRule implements RuleInterface {
   constructor(
+    private readonly rollRule: RollService,
     private readonly characterService: CharacterService,
     private readonly inventoryService: InventoryService,
-    private readonly rngService: RandomIntService,
     private readonly narrativeService: NarrativeService
   ) {}
 
@@ -31,12 +32,12 @@ export class AttackRule implements RuleInterface {
 
     const weapon = this.inventoryService.equipped ?? unarmed;
 
-    const skillValue =
-      this.characterService.currentCharacter.skills[weapon.skillName];
+    const { roll, result } = this.rollRule.actorSkillCheck(
+      this.characterService.currentCharacter,
+      weapon.skillName
+    );
 
-    if (skillValue) {
-      const { roll, result } = this.rngService.checkSkill(skillValue);
-
+    if (result !== 'IMPOSSIBLE') {
       const interactive = this.narrativeService.interatives[action.eventId];
 
       logs.push(
@@ -53,7 +54,7 @@ export class AttackRule implements RuleInterface {
         const weaponDamage = weapon.damage;
 
         const damage =
-          this.rngService.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
+          this.rollRule.roll(weaponDamage.diceRoll) + weaponDamage.fixed;
 
         const log = interactive.actionSelected(
           action.actionableDefinition,
@@ -65,6 +66,8 @@ export class AttackRule implements RuleInterface {
           logs.push(createFreeLogMessage(interactive.name, log));
         }
       }
+    } else {
+      logs.push(createCannotCheckLogMessage('player', weapon.skillName));
     }
 
     return { logs };

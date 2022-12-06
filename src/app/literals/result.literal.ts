@@ -1,1 +1,1 @@
-export type ResultLiteral = 'SUCCESS' | 'FAILURE' | 'NONE';
+export type ResultLiteral = 'SUCCESS' | 'FAILURE' | 'NONE' | 'IMPOSSIBLE';

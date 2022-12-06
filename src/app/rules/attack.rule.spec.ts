@@ -6,11 +6,13 @@ import { createActionableDefinition } from '../definitions/actionable.definition
 import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import {
+  createCannotCheckLogMessage,
   createCheckLogMessage,
   createDamagedMessage,
   createFreeLogMessage,
   createLostLogMessage,
 } from '../definitions/log-message.definition';
+import { RollDefinition } from '../definitions/roll.definition';
 import { unarmed, WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
@@ -20,8 +22,8 @@ import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { NarrativeService } from '../services/narrative.service';
-import { RandomIntService } from '../services/random-int.service';
 import { AttackRule } from './attack.rule';
+import { RollService } from '../services/roll.service';
 
 describe('AttackRule', () => {
   let service: AttackRule;
@@ -38,12 +40,12 @@ describe('AttackRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: CharacterService,
-          useValue: instance(mockedCharacterService),
+          provide: RollService,
+          useValue: instance(mockedRollRule),
         },
         {
-          provide: RandomIntService,
-          useValue: instance(mockedRngService),
+          provide: CharacterService,
+          useValue: instance(mockedCharacterService),
         },
       ],
     });
@@ -52,10 +54,23 @@ describe('AttackRule', () => {
       instance(mockedCharacterEntity)
     );
 
-    when(mockedCharacterEntity.skills).thenReturn({
-      Brawl: 45,
-      'Ranged Weapon (Throw)': 50,
-    });
+    when(
+      mockedRollRule.actorSkillCheck(instance(mockedCharacterEntity), 'Brawl')
+    ).thenReturn(new RollDefinition('SUCCESS', 10));
+
+    when(
+      mockedRollRule.actorSkillCheck(
+        instance(mockedCharacterEntity),
+        'Ranged Weapon (Throw)'
+      )
+    ).thenReturn(new RollDefinition('SUCCESS', 15));
+
+    when(
+      mockedRollRule.actorSkillCheck(
+        instance(mockedCharacterEntity),
+        'Artillery (War)'
+      )
+    ).thenReturn(new RollDefinition('IMPOSSIBLE', 0));
 
     when(mockedNarrativeService.interatives).thenReturn(interactives);
 
@@ -72,12 +87,7 @@ describe('AttackRule', () => {
 
   describe('execute', () => {
     it('return logs', () => {
-      when(mockedRngService.checkSkill(45)).thenReturn({
-        result: 'SUCCESS',
-        roll: 10,
-      });
-
-      when(mockedRngService.roll(unarmed.damage.diceRoll)).thenReturn(
+      when(mockedRollRule.roll(unarmed.damage.diceRoll)).thenReturn(
         1 + unarmed.damage.fixed
       );
 
@@ -115,14 +125,24 @@ describe('AttackRule', () => {
         expect(disposed).toEqual(true);
       });
     });
+
+    describe('when skill value is zero', () => {
+      it('should log cannot skill check', () => {
+        when(mockedInventoryService.equipped).thenReturn(impossibleWeapon);
+
+        const result = service.execute(event);
+
+        expect(result).toEqual({
+          logs: [impossibleLog],
+        });
+      });
+    });
   });
 });
 
-const mockedCharacterService = mock(CharacterService);
+const mockedRollRule = mock(RollService);
 
 const mockedInventoryService = mock(InventoryService);
-
-const mockedRngService = mock(RandomIntService);
 
 const mockedNarrativeService = mock(NarrativeService);
 
@@ -131,8 +151,6 @@ const mockedInteractiveEntity = mock(InteractiveEntity);
 const action = createActionableDefinition('ATTACK', 'attack', 'Attack');
 
 const event = new ActionableEvent(action, 'id1');
-
-const mockedCharacterEntity = mock(CharacterEntity);
 
 const interactives: KeyValueInterface<InteractiveEntity> = {
   id1: instance(mockedInteractiveEntity),
@@ -164,12 +182,7 @@ const disposableWeapon = new WeaponDefinition(
 const logDiscarded = createLostLogMessage('player', disposableWeapon.label);
 
 const disposableScenario = (service: AttackRule): RuleResultInterface => {
-  when(mockedRngService.checkSkill(50)).thenReturn({
-    result: 'SUCCESS',
-    roll: 15,
-  });
-
-  when(mockedRngService.roll(disposableWeapon.damage.diceRoll)).thenReturn(2);
+  when(mockedRollRule.roll(disposableWeapon.damage.diceRoll)).thenReturn(2);
 
   when(mockedInteractiveEntity.actionSelected(action, 'SUCCESS', 5)).thenReturn(
     'received 5 damage'
@@ -179,3 +192,22 @@ const disposableScenario = (service: AttackRule): RuleResultInterface => {
 
   return service.execute(event);
 };
+
+const impossibleWeapon = new WeaponDefinition(
+  'caliber50',
+  '.50',
+  'Anti tank weapon',
+  'Artillery (War)',
+  new DamageDefinition(createDice({ D6: 1 }), 3),
+  false,
+  'PERMANENT'
+);
+
+const impossibleLog = createCannotCheckLogMessage(
+  'player',
+  impossibleWeapon.skillName
+);
+
+const mockedCharacterService = mock(CharacterService);
+
+const mockedCharacterEntity = mock(CharacterEntity);

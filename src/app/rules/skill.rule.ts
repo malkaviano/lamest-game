@@ -5,7 +5,6 @@ import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
-import { RandomIntService } from '../services/random-int.service';
 import {
   createCannotCheckLogMessage,
   createCheckLogMessage,
@@ -13,6 +12,7 @@ import {
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
+import { RollService } from '../services/roll.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ import { SkillNameLiteral } from '../literals/skill-name.literal';
 export class SkillRule implements RuleInterface {
   constructor(
     private readonly characterService: CharacterService,
-    private readonly rngService: RandomIntService,
+    private readonly rollRule: RollService,
     private readonly narrativeService: NarrativeService
   ) {}
 
@@ -29,14 +29,13 @@ export class SkillRule implements RuleInterface {
 
     const skillName = action.actionableDefinition.name as SkillNameLiteral;
 
-    const skillValue = this.characterService.currentCharacter.skills[skillName];
+    const { roll, result } = this.rollRule.actorSkillCheck(
+      this.characterService.currentCharacter,
+      skillName
+    );
 
-    if (skillValue) {
-      const { roll, result } = this.rngService.checkSkill(skillValue);
-
-      if (roll) {
-        logs.push(createCheckLogMessage('player', skillName, roll, result));
-      }
+    if (result !== 'IMPOSSIBLE') {
+      logs.push(createCheckLogMessage('player', skillName, roll, result));
 
       const interactive = this.narrativeService.interatives[action.eventId];
 

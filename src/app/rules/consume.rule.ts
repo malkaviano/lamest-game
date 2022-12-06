@@ -4,17 +4,18 @@ import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { ResultLiteral } from '../literals/result.literal';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
-import { RandomIntService } from '../services/random-int.service';
 import {
+  createCannotCheckLogMessage,
   createCheckLogMessage,
   createConsumedLogMessage,
   createHealedLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
+import { RollService } from '../services/roll.service';
+import { RollDefinition } from '../definitions/roll.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class ConsumeRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly characterService: CharacterService,
-    private readonly rngService: RandomIntService
+    private readonly rollRule: RollService
   ) {}
 
   public execute(action: ActionableEvent): RuleResultInterface {
@@ -38,31 +39,41 @@ export class ConsumeRule implements RuleInterface {
       throw new Error(errorMessages['WRONG-ITEM']);
     }
 
-    logs.push(createConsumedLogMessage('player', consumable.label));
-
     const hp = consumable.hp;
 
-    let passed: ResultLiteral = 'NONE';
+    let rollDefinition: RollDefinition = new RollDefinition('NONE', 0);
 
     if (consumable.skillName) {
-      const skillValue =
-        this.characterService.currentCharacter.skills[consumable.skillName];
+      rollDefinition = this.rollRule.actorSkillCheck(
+        this.characterService.currentCharacter,
+        consumable.skillName
+      );
+    }
 
-      const { result, roll } = this.rngService.checkSkill(skillValue);
+    if (rollDefinition.result !== 'IMPOSSIBLE') {
+      logs.push(createConsumedLogMessage('player', consumable.label));
 
-      if (roll) {
+      if (rollDefinition.result !== 'NONE' && consumable.skillName) {
         logs.push(
-          createCheckLogMessage('player', consumable.skillName, roll, result)
+          createCheckLogMessage(
+            'player',
+            consumable.skillName,
+            rollDefinition.roll,
+            rollDefinition.result
+          )
         );
       }
 
-      passed = result;
-    }
+      if (
+        rollDefinition.result === 'SUCCESS' ||
+        rollDefinition.result === 'NONE'
+      ) {
+        const healed = this.characterService.currentCharacter.healed(hp);
 
-    if (passed === 'SUCCESS' || passed === 'NONE') {
-      const healed = this.characterService.currentCharacter.healed(hp);
-
-      logs.push(createHealedLogMessage('player', healed.effective));
+        logs.push(createHealedLogMessage('player', healed.effective));
+      }
+    } else if (consumable.skillName) {
+      logs.push(createCannotCheckLogMessage('player', consumable.skillName));
     }
 
     return { logs };

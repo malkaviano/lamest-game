@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ResultLiteral } from '../literals/result.literal';
 import { RandomIntService } from './random-int.service';
 
 describe('RandomIntService', () => {
@@ -32,40 +31,6 @@ describe('RandomIntService', () => {
       }
 
       expect(final).toBe(true);
-    });
-  });
-
-  describe('roll', () => {
-    it('return summed result', () => {
-      const result = service.roll({
-        D4: 1,
-        D6: 1,
-        D8: 1,
-        D10: 1,
-        D12: 1,
-        D20: 1,
-        D100: 1,
-      });
-
-      expect(result).toBeGreaterThan(7);
-      expect(result).toBeLessThanOrEqual(160);
-    });
-  });
-
-  describe('checkSkill', () => {
-    it('return result and roll value', () => {
-      const result = new Set<ResultLiteral>();
-
-      for (let index = 0; index < 10; index++) {
-        result.add(service.checkSkill(50).result);
-      }
-
-      const expected = new Set<ResultLiteral>();
-
-      expected.add('FAILURE');
-      expected.add('SUCCESS');
-
-      expect(result).toEqual(expected);
     });
   });
 });

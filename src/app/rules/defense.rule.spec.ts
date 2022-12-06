@@ -11,6 +11,7 @@ import {
   createFreeLogMessage,
   createMissedAttackLogMessage,
 } from '../definitions/log-message.definition';
+import { RollDefinition } from '../definitions/roll.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
@@ -18,9 +19,9 @@ import { HitPointsEvent } from '../events/hitpoints.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
-import { RandomIntService } from '../services/random-int.service';
 
 import { DefenseRule } from './defense.rule';
+import { RollService } from '../services/roll.service';
 
 describe('DefenseRule', () => {
   let service: DefenseRule;
@@ -37,19 +38,17 @@ describe('DefenseRule', () => {
           useValue: instance(mockedCharacterService),
         },
         {
-          provide: RandomIntService,
-          useValue: instance(mockedRngService),
+          provide: RollService,
+          useValue: instance(mockedRollRule),
         },
       ],
     });
 
-    reset(mockedRngService);
+    reset(mockedRollRule);
 
     when(mockedCharacterService.currentCharacter).thenReturn(
       instance(mockedCharacterEntity)
     );
-
-    when(mockedCharacterEntity.skills).thenReturn({ Dodge: 45 });
 
     when(mockedNarrativeService.interatives).thenReturn(interactives);
 
@@ -74,10 +73,16 @@ describe('DefenseRule', () => {
       describe('when attack is dodgeable', () => {
         describe('when player dodges', () => {
           it('return logs', () => {
-            when(mockedRngService.checkSkill(45)).thenReturn({
-              result: 'SUCCESS',
-              roll: 10,
-            });
+            when(
+              mockedRollRule.actorSkillCheck(
+                instance(mockedCharacterEntity),
+                'Dodge'
+              )
+            ).thenReturn(new RollDefinition('SUCCESS', 10));
+
+            when(mockedRollRule.skillCheck(45)).thenReturn(
+              new RollDefinition('SUCCESS', 10)
+            );
 
             const result = service.execute();
 
@@ -89,15 +94,16 @@ describe('DefenseRule', () => {
 
         describe('when dodge fails', () => {
           it('return logs', () => {
-            when(mockedRngService.checkSkill(45))
-              .thenReturn({
-                result: 'SUCCESS',
-                roll: 10,
-              })
-              .thenReturn({
-                result: 'FAILURE',
-                roll: 90,
-              });
+            when(
+              mockedRollRule.actorSkillCheck(
+                instance(mockedCharacterEntity),
+                'Dodge'
+              )
+            ).thenReturn(new RollDefinition('FAILURE', 90));
+
+            when(mockedRollRule.skillCheck(45)).thenReturn(
+              new RollDefinition('SUCCESS', 10)
+            );
 
             when(mockedCharacterEntity.damaged(4)).thenReturn(
               new HitPointsEvent(10, 6)
@@ -115,7 +121,7 @@ describe('DefenseRule', () => {
 
     describe('when attack miss', () => {
       it('return logs', () => {
-        when(mockedRngService.checkSkill(45)).thenReturn({
+        when(mockedRollRule.skillCheck(45)).thenReturn({
           result: 'FAILURE',
           roll: 100,
         });
@@ -132,7 +138,7 @@ describe('DefenseRule', () => {
 
 const mockedCharacterService = mock(CharacterService);
 
-const mockedRngService = mock(RandomIntService);
+const mockedRollRule = mock(RollService);
 
 const mockedNarrativeService = mock(NarrativeService);
 

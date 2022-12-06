@@ -45,7 +45,7 @@ export const createCannotCheckLogMessage = (
   new LogMessageDefinition(
     'CHECK',
     actor,
-    `${skill} skill cannot be checked because it's value is zero`
+    `${skill} skill couldn't be checked because it's value is zero`
   );
 
 export const createEquippedLogMessage = (actor: string, equipment: string) =>

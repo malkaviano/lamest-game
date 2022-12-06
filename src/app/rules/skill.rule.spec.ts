@@ -14,7 +14,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
-import { RandomIntService } from '../services/random-int.service';
+import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 
 describe('SkillRule', () => {
@@ -32,8 +32,8 @@ describe('SkillRule', () => {
           useValue: instance(mockedCharacterService),
         },
         {
-          provide: RandomIntService,
-          useValue: instance(mockedRngService),
+          provide: RollService,
+          useValue: instance(mockedRollRule),
         },
       ],
     });
@@ -64,6 +64,16 @@ describe('SkillRule', () => {
       it('return SKILL CANNOT BE ROLLED', () => {
         when(mockedCharacterEntity.skills).thenReturn({});
 
+        when(
+          mockedRollRule.actorSkillCheck(
+            instance(mockedCharacterEntity),
+            'Brawl'
+          )
+        ).thenReturn({
+          result: 'IMPOSSIBLE',
+          roll: 0,
+        });
+
         const result = service.execute(event);
 
         expect(result).toEqual({
@@ -75,7 +85,9 @@ describe('SkillRule', () => {
     it('return logs', () => {
       when(mockedCharacterEntity.skills).thenReturn({ Brawl: 45 });
 
-      when(mockedRngService.checkSkill(45)).thenReturn({
+      when(
+        mockedRollRule.actorSkillCheck(instance(mockedCharacterEntity), 'Brawl')
+      ).thenReturn({
         result: 'SUCCESS',
         roll: 10,
       });
@@ -91,7 +103,7 @@ describe('SkillRule', () => {
 
 const mockedCharacterService = mock(CharacterService);
 
-const mockedRngService = mock(RandomIntService);
+const mockedRollRule = mock(RollService);
 
 const mockedNarrativeService = mock(NarrativeService);
 

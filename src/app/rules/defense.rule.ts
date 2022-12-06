@@ -4,7 +4,6 @@ import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
-import { RandomIntService } from '../services/random-int.service';
 import {
   createFreeLogMessage,
   createAttackedLogMessage,
@@ -13,13 +12,14 @@ import {
   createMissedAttackLogMessage,
   createDodgedLogMessage as createDodgedAttackLogMessage,
 } from '../definitions/log-message.definition';
+import { RollService } from '../services/roll.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DefenseRule implements RuleInterface {
   constructor(
-    private readonly rngService: RandomIntService,
+    private readonly rollRule: RollService,
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService
   ) {}
@@ -37,21 +37,21 @@ export class DefenseRule implements RuleInterface {
             weapon: { dodgeable, damage, label: weaponName },
           } = attack;
 
-          const { result: enemyResult } =
-            this.rngService.checkSkill(skillValue);
+          const { result: enemyResult } = this.rollRule.skillCheck(skillValue);
 
           if (enemyResult === 'SUCCESS') {
             logs.push(
               createAttackedLogMessage(interactive.name, 'player', weaponName)
             );
 
-            const { result } = this.rngService.checkSkill(
-              this.characterService.currentCharacter.skills['Dodge']
+            const { result } = this.rollRule.actorSkillCheck(
+              this.characterService.currentCharacter,
+              'Dodge'
             );
 
             if (!dodgeable || result === 'FAILURE') {
               const damageAmount =
-                this.rngService.roll(damage.diceRoll) + damage.fixed;
+                this.rollRule.roll(damage.diceRoll) + damage.fixed;
 
               const damaged =
                 this.characterService.currentCharacter.damaged(damageAmount);
