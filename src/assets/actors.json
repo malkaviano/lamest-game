@@ -1,0 +1,18 @@
+{
+  "actors": [
+    {
+      "id": "trainingDummy",
+      "name": "Training Dummy",
+      "description": "Try some attack moves here",
+      "state": "trainingDummy",
+      "resettable": false
+    },
+    {
+      "id": "zombie",
+      "name": "Nasty Zombie",
+      "description": "What the frack is that?",
+      "state": "zombie",
+      "resettable": false
+    }
+  ]
+}

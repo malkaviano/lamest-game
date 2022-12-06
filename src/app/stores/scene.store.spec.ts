@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ConverterHelper } from '../helpers/converter.helper';
+import { ActorStore } from './actor.store';
 import { DescriptionStore } from './description.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';
@@ -30,6 +31,10 @@ describe('SceneStore', () => {
           provide: InteractiveStore,
           useValue: instance(mockedInteractiveStore),
         },
+        {
+          provide: ActorStore,
+          useValue: instance(mockedActorStore),
+        },
       ],
     });
 
@@ -56,3 +61,5 @@ const mockedResourcesStore = mock(ResourcesStore);
 const mockedDescriptionStore = mock(DescriptionStore);
 
 const mockedInteractiveStore = mock(InteractiveStore);
+
+const mockedActorStore = mock(ActorStore);

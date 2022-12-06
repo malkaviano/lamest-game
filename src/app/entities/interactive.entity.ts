@@ -4,7 +4,6 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { ResultLiteral } from '../literals/result.literal';
-import { EnemyAttack } from '../interfaces/enemy-attack.interface';
 
 export class InteractiveEntity {
   private readonly initialState: ActionableState;
@@ -19,8 +18,8 @@ export class InteractiveEntity {
     public readonly id: string,
     public readonly name: string,
     public readonly description: string,
-    private currentState: ActionableState,
-    private readonly resettable: boolean = true
+    protected currentState: ActionableState,
+    protected readonly resettable: boolean = true
   ) {
     this.initialState = this.currentState;
 
@@ -29,10 +28,6 @@ export class InteractiveEntity {
     );
 
     this.actionsChanged$ = this.actionsChanged.asObservable();
-  }
-
-  public get attack(): EnemyAttack | null {
-    return this.currentState.attack;
   }
 
   public actionSelected(

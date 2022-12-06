@@ -14,14 +14,13 @@ import {
 import { RollDefinition } from '../definitions/roll.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CharacterEntity } from '../entities/character.entity';
-import { InteractiveEntity } from '../entities/interactive.entity';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { CharacterService } from '../services/character.service';
 import { NarrativeService } from '../services/narrative.service';
-
 import { DefenseRule } from './defense.rule';
 import { RollService } from '../services/roll.service';
+import { ActorEntity } from '../entities/actor.entity';
 
 describe('DefenseRule', () => {
   let service: DefenseRule;
@@ -52,14 +51,16 @@ describe('DefenseRule', () => {
 
     when(mockedNarrativeService.interatives).thenReturn(interactives);
 
-    when(mockedInteractiveEntity.id).thenReturn('id1');
+    when(mockedActorEntity.id).thenReturn('id1');
 
-    when(mockedInteractiveEntity.name).thenReturn('test');
+    when(mockedActorEntity.name).thenReturn('test');
 
-    when(mockedInteractiveEntity.attack).thenReturn({
+    when(mockedActorEntity.attack).thenReturn({
       skillValue: 45,
       weapon,
     });
+
+    Object.setPrototypeOf(instance(mockedActorEntity), ActorEntity.prototype);
 
     service = TestBed.inject(DefenseRule);
   });
@@ -142,10 +143,10 @@ const mockedRollRule = mock(RollService);
 
 const mockedNarrativeService = mock(NarrativeService);
 
-const mockedInteractiveEntity = mock(InteractiveEntity);
+const mockedActorEntity = mock(ActorEntity);
 
-const interactives: KeyValueInterface<InteractiveEntity> = {
-  id1: instance(mockedInteractiveEntity),
+const interactives: KeyValueInterface<ActorEntity> = {
+  id1: instance(mockedActorEntity),
 };
 
 const mockedCharacterEntity = mock(CharacterEntity);

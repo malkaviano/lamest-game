@@ -4,6 +4,7 @@ import { SceneEntity } from '../entities/scene.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ArrayView } from '../views/array.view';
+import { ActorStore } from './actor.store';
 import { DescriptionStore } from './description.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';
@@ -17,6 +18,7 @@ export class SceneStore {
   constructor(
     descriptionsStore: DescriptionStore,
     interactiveStore: InteractiveStore,
+    actorStore: ActorStore,
     resourcesStore: ResourcesStore,
     private readonly converterHelper: ConverterHelper
   ) {
@@ -24,7 +26,7 @@ export class SceneStore {
 
     resourcesStore.sceneStore.scenes.forEach((scene) => {
       const interactives = scene.interactives.map((id) => {
-        return interactiveStore.interactives[id];
+        return interactiveStore.interactives[id] ?? actorStore.actors[id];
       });
 
       const transitions = scene.transitions.reduce(

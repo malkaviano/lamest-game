@@ -5,9 +5,6 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
-import { DamageDefinition } from '../definitions/damage.definition';
-import { createDice } from '../definitions/dice.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 
 beforeEach(() => {
   reset(mockedState1);
@@ -18,14 +15,7 @@ beforeEach(() => {
 
   when(mockedState2.actions).thenReturn(new ArrayView([pick]));
 
-  when(mockedState3.actions).thenReturn(new ArrayView([action, pick]));
-
   when(mockedState1.attack).thenReturn(null);
-
-  when(mockedState3.attack).thenReturn({
-    skillValue: 15,
-    weapon,
-  });
 });
 
 describe('InteractiveEntity', () => {
@@ -114,27 +104,6 @@ describe('InteractiveEntity', () => {
       });
     });
   });
-
-  describe('damagePlayer', () => {
-    describe('when state do not produce damage', () => {
-      it('return null', () => {
-        const result = fakeEntity().attack;
-
-        expect(result).toBeNull();
-      });
-    });
-
-    describe('when state produces damage', () => {
-      it('return DamageDefinition', () => {
-        const result = fakeEntity(false, state3).attack;
-
-        expect(result).toEqual({
-          skillValue: 15,
-          weapon,
-        });
-      });
-    });
-  });
 });
 
 const pick = new ActionableDefinition('PICK', 'name1', 'label1');
@@ -145,13 +114,9 @@ const mockedState1 = mock<ActionableState>();
 
 const mockedState2 = mock<ActionableState>();
 
-const mockedState3 = mock<ActionableState>();
-
 const state1 = instance(mockedState1);
 
 const state2 = instance(mockedState2);
-
-const state3 = instance(mockedState3);
 
 const fakeEntity = (resettable = true, state: ActionableState = state1) =>
   new InteractiveEntity(
@@ -161,15 +126,3 @@ const fakeEntity = (resettable = true, state: ActionableState = state1) =>
     state,
     resettable
   );
-
-const damage = new DamageDefinition(createDice({}), 10);
-
-const weapon = new WeaponDefinition(
-  'gg',
-  'claw',
-  '',
-  'Brawl',
-  damage,
-  true,
-  'PERMANENT'
-);

@@ -16,6 +16,11 @@ import { DescriptionStoreInterface } from '../interfaces/description-store.inter
 import { ActionableStoreInterface } from '../interfaces/actionable-store.interface';
 import { ActionableLiteral } from '../literals/actionable.literal';
 import { MessageStoreInterface } from '../interfaces/message-store.interface';
+import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
+import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
+import { CharacteristicDefinition } from '../definitions/characteristic.definition';
+import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
+import { ActorStoreInterface } from '../interfaces/actor-store.interface';
 
 import sceneStore from '../../assets/scenes.json';
 import skillStateStore from '../../assets/skill-states.json';
@@ -30,10 +35,7 @@ import interactiveStore from '../../assets/interactives.json';
 import descriptionStore from '../../assets/descriptions.json';
 import actionableStore from '../../assets/actionables.json';
 import messageStore from '../../assets/messages.json';
-import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
+import actorStore from '../../assets/actors.json';
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +60,8 @@ export class ResourcesStore {
   public readonly consumableStore: ConsumableStoreInterface;
 
   public readonly interactiveStore: InteractiveStoreInterface;
+
+  public readonly actorStore: ActorStoreInterface;
 
   public readonly descriptionStore: DescriptionStoreInterface;
 
@@ -153,5 +157,7 @@ export class ResourcesStore {
     this.actionableStore = { actionables };
 
     this.messageStore = messageStore;
+
+    this.actorStore = actorStore;
   }
 }

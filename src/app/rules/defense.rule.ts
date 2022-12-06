@@ -13,6 +13,7 @@ import {
   createDodgedLogMessage as createDodgedAttackLogMessage,
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
+import { ActorEntity } from '../entities/actor.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -29,46 +30,51 @@ export class DefenseRule implements RuleInterface {
 
     Object.entries(this.narrativeService.interatives).forEach(
       ([, interactive]) => {
-        const attack = interactive.attack;
+        if (interactive instanceof ActorEntity) {
+          const attack = interactive.attack;
 
-        if (attack) {
-          const {
-            skillValue,
-            weapon: { dodgeable, damage, label: weaponName },
-          } = attack;
+          if (attack) {
+            const {
+              skillValue,
+              weapon: { dodgeable, damage, label: weaponName },
+            } = attack;
 
-          const { result: enemyResult } = this.rollRule.skillCheck(skillValue);
+            const { result: enemyResult } =
+              this.rollRule.skillCheck(skillValue);
 
-          if (enemyResult === 'SUCCESS') {
-            logs.push(
-              createAttackedLogMessage(interactive.name, 'player', weaponName)
-            );
-
-            const { result } = this.rollRule.actorSkillCheck(
-              this.characterService.currentCharacter,
-              'Dodge'
-            );
-
-            if (!dodgeable || result === 'FAILURE') {
-              const damageAmount =
-                this.rollRule.roll(damage.diceRoll) + damage.fixed;
-
-              const damaged =
-                this.characterService.currentCharacter.damaged(damageAmount);
-
+            if (enemyResult === 'SUCCESS') {
               logs.push(
-                createFreeLogMessage(
-                  'player',
-                  createDamagedMessage(damaged.effective)
-                )
+                createAttackedLogMessage(interactive.name, 'player', weaponName)
               );
+
+              const { result } = this.rollRule.actorSkillCheck(
+                this.characterService.currentCharacter,
+                'Dodge'
+              );
+
+              if (!dodgeable || result === 'FAILURE') {
+                const damageAmount =
+                  this.rollRule.roll(damage.diceRoll) + damage.fixed;
+
+                const damaged =
+                  this.characterService.currentCharacter.damaged(damageAmount);
+
+                logs.push(
+                  createFreeLogMessage(
+                    'player',
+                    createDamagedMessage(damaged.effective)
+                  )
+                );
+              } else {
+                logs.push(
+                  createDodgedAttackLogMessage('player', interactive.name)
+                );
+              }
             } else {
               logs.push(
-                createDodgedAttackLogMessage('player', interactive.name)
+                createMissedAttackLogMessage(interactive.name, 'player')
               );
             }
-          } else {
-            logs.push(createMissedAttackLogMessage(interactive.name, 'player'));
           }
         }
       }
