@@ -1,7 +1,6 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import {
   createDamagedMessage,
-  createDestroyedByActionMessage,
   createDestroyedByDamageMessage,
 } from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
@@ -23,33 +22,26 @@ export class DestroyableState extends ActionableState {
     result: ResultLiteral,
     damageTaken?: number
   ): { state: ActionableState; log?: string } {
-    if (result === 'SUCCESS') {
-      if (action.actionable === 'ATTACK' && damageTaken) {
-        const dmg = damageTaken;
+    if (action.actionable === 'ATTACK' && result === 'SUCCESS' && damageTaken) {
+      const dmg = damageTaken;
 
-        const hp = this.hitPoints - dmg;
+      const hp = this.hitPoints - dmg;
 
-        if (hp > 0) {
-          return {
-            state: new DestroyableState(
-              this.stateActions,
-              this.destroyedState,
-              hp
-            ),
-            log: createDamagedMessage(dmg),
-          };
-        }
-
+      if (hp > 0) {
         return {
-          state: this.destroyedState.value,
-          log: createDestroyedByDamageMessage(dmg),
-        };
-      } else if (this.stateActions.items.some((a) => a.equals(action))) {
-        return {
-          state: this.destroyedState.value,
-          log: createDestroyedByActionMessage(action.name, action.label),
+          state: new DestroyableState(
+            this.stateActions,
+            this.destroyedState,
+            hp
+          ),
+          log: createDamagedMessage(dmg),
         };
       }
+
+      return {
+        state: this.destroyedState.value,
+        log: createDestroyedByDamageMessage(dmg),
+      };
     }
 
     return { state: this };

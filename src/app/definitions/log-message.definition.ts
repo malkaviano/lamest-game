@@ -20,9 +20,6 @@ export const createDamagedMessage = (damage: number) =>
 export const createDestroyedByDamageMessage = (damage: number) =>
   `received ${damage} damage and was destroyed`;
 
-export const createDestroyedByActionMessage = (name: string, label: string) =>
-  `destroyed by ${label} using ${name}`;
-
 export const createKilledByDamageMessage = (damage: number) =>
   `received ${damage} damage and was killed`;
 

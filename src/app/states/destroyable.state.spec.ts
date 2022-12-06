@@ -31,19 +31,6 @@ describe('DestroyableState', () => {
       expect(result).toEqual({ state });
     });
   });
-
-  describe('when skill action is received', () => {
-    describe('when it was a SUCCESS', () => {
-      it('return DiscardState', () => {
-        const result = state.onResult(dismantleAction, 'SUCCESS');
-
-        expect(result).toEqual({
-          state: discardedState,
-          log: 'destroyed by Dismantle using Engineering (Mechanical)',
-        });
-      });
-    });
-  });
 });
 
 const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');
@@ -54,26 +41,12 @@ const knifeAction = createActionableDefinition(
   'Hunting Knife'
 );
 
-const dismantleAction = createActionableDefinition(
-  'SKILL',
-  'Engineering (Mechanical)',
-  'Dismantle'
-);
-
 const discardedState = new DiscardState(new ArrayView([knifeAction]));
 
 const f = () => discardedState;
 
 const lazy = new LazyHelper(f);
 
-const state = new DestroyableState(
-  new ArrayView([attackAction, dismantleAction]),
-  lazy,
-  10
-);
+const state = new DestroyableState(new ArrayView([attackAction]), lazy, 10);
 
-const state2 = new DestroyableState(
-  new ArrayView([attackAction, dismantleAction]),
-  lazy,
-  4
-);
+const state2 = new DestroyableState(new ArrayView([attackAction]), lazy, 4);

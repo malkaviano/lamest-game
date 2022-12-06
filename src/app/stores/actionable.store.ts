@@ -25,7 +25,7 @@ export class ActionableStore {
         actionable.key,
         createActionableDefinition(
           actionable.actionable,
-          actionable.name ?? actionable.key,
+          actionable.name,
           actionable.label
         )
       );

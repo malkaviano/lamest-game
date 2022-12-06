@@ -2,7 +2,7 @@
   "states": [
     {
       "interactiveId": "shelfJump",
-      "actionable": "Athleticism",
+      "actionable": "athleticism",
       "maximumTries": 2,
       "successState": "shelfLoot"
     }
