@@ -101,7 +101,7 @@ const vagabond: ArrayView<SkillNameLiteral> = new ArrayView([
   'Persuade',
   'Sleight of Hand',
   'Hide',
-  'Throw',
+  'Ranged Weapon (Throw)',
 ]);
 
 const scholar: ArrayView<SkillNameLiteral> = new ArrayView([

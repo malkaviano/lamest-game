@@ -117,7 +117,6 @@ const fakeSkills = new Map<SkillNameLiteral, number>([
   ['Performance', 5],
   ['Sleight of Hand', 5],
   ['Survival', 5],
-  ['Throw', 0],
 ]);
 
 const expectedCharacter = new CharacterEntity(

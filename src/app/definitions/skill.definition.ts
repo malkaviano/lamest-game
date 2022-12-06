@@ -333,7 +333,6 @@ export const skillDefinitions: {
   ),
   Spot: new SkillDefinition('Spot', '', 'COMMON', false, justPow),
   Survival: new SkillDefinition('Survival', '', 'COMMON', false, justInt),
-  Throw: new SkillDefinition('Throw', '', 'COMMON', false, justDex),
   Track: new SkillDefinition('Track', '', 'TRAINED', false, justInt),
 };
 

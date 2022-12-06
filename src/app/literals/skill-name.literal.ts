@@ -53,5 +53,4 @@ export type SkillNameLiteral =
   | 'Engineering (Computer)'
   | 'Engineering (Electrical)'
   | 'Engineering (Mechanical)'
-  | 'Throw'
   | 'Track';
