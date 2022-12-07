@@ -1,14 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, verify, when } from 'ts-mockito';
+import { instance, verify } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createSceneLogMessage } from '../definitions/log-message.definition';
-import { PlayerEntity } from '../entities/player.entity';
-import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
+
+import {
+  mockedInteractiveEntity,
+  mockedNarrativeService,
+  mockedPlayerEntity,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('SceneRule', () => {
   let service: SceneRule;
@@ -23,9 +28,7 @@ describe('SceneRule', () => {
       ],
     });
 
-    when(mockedInteractiveEntity.id).thenReturn('id1');
-
-    when(mockedInteractiveEntity.name).thenReturn('test');
+    setupMocks();
 
     service = TestBed.inject(SceneRule);
   });
@@ -37,7 +40,7 @@ describe('SceneRule', () => {
   describe('execute', () => {
     it('return logs', () => {
       const result = service.execute(
-        instance(mockedCharacterEntity),
+        instance(mockedPlayerEntity),
         event,
         instance(mockedInteractiveEntity)
       );
@@ -51,14 +54,8 @@ describe('SceneRule', () => {
   });
 });
 
-const mockedNarrativeService = mock(NarrativeService);
-
 const action = createActionableDefinition('SCENE', 'exit', 'Exit');
 
 const event = new ActionableEvent(action, 'id1');
-
-const mockedInteractiveEntity = mock(InteractiveEntity);
-
-const mockedCharacterEntity = mock(PlayerEntity);
 
 const log = createSceneLogMessage('player', 'test', 'Exit');

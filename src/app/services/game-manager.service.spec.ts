@@ -1,11 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { of, Subject, take } from 'rxjs';
-import { anyString, anything, instance, mock, reset, when } from 'ts-mockito';
+import { anyString, anything, instance, when } from 'ts-mockito';
 
 import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
-import { createActionableDefinition } from '../definitions/actionable.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
@@ -13,34 +11,25 @@ import { GameManagerService } from './game-manager.service';
 import { InventoryService } from './inventory.service';
 import { GameLoopService } from './game-loop.service';
 import { ItemStorageDefinition } from '../definitions/item-storage.definition';
-import { ConsumableDefinition } from '../definitions/consumable.definition';
-import { createDice } from '../definitions/dice.definition';
-import { DamageDefinition } from '../definitions/damage.definition';
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
-const sword = new WeaponDefinition(
-  'sword',
-  'Sword',
-  'That is a sword',
-  'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0),
-  true,
-  'PERMANENT'
-);
-
-const bubbleGum = new ConsumableDefinition(
-  'bubbleGum',
-  'Bubble Gum',
-  'That is a bubble gum',
-  1
-);
-
-const actionEquip = createActionableDefinition('EQUIP', 'equip', 'Equip');
-
-const actionUse = createActionableDefinition('CONSUME', 'consume', 'Consume');
+import {
+  mockedCharacterService,
+  mockedGameLoopService,
+  mockedInventoryService,
+  mockedLoggingService,
+  mockedNarrativeService,
+  setupMocks,
+} from '../../../tests/mocks';
+import {
+  actionEquip,
+  actionConsume,
+  bubbleGum,
+  unDodgeableAxe,
+} from '../../../tests/fakes';
 
 describe('GameManagerService', () => {
   let service: GameManagerService;
@@ -71,7 +60,7 @@ describe('GameManagerService', () => {
       ],
     });
 
-    reset(mockedInventoryService);
+    setupMocks();
 
     when(mockedInventoryService.inventoryChanged$).thenReturn(
       inventoryEventSubject
@@ -90,13 +79,13 @@ describe('GameManagerService', () => {
     [
       {
         invEvent: new InventoryEvent('CONSUME', 'player', bubbleGum),
-        expected: new ActionableItemDefinition(bubbleGum, actionUse),
+        expected: new ActionableItemDefinition(bubbleGum, actionConsume),
         item: bubbleGum,
       },
       {
-        invEvent: new InventoryEvent('EQUIP', 'player', sword),
-        expected: new ActionableItemDefinition(sword, actionEquip),
-        item: sword,
+        invEvent: new InventoryEvent('EQUIP', 'player', unDodgeableAxe),
+        expected: new ActionableItemDefinition(unDodgeableAxe, actionEquip),
+        item: unDodgeableAxe,
       },
     ].forEach(({ invEvent, expected, item }) => {
       it(`should emit event ${invEvent.eventName}`, (done) => {
@@ -138,18 +127,8 @@ describe('GameManagerService', () => {
   });
 });
 
-const mockedInventoryService = mock(InventoryService);
-
-const mockedGameLoopService = mock(GameLoopService);
-
-const actionableEvent = new ActionableEvent(actionEquip, 'gg');
+const actionableEvent = new ActionableEvent(actionEquip, unDodgeableAxe.name);
 
 const inventoryEventSubject = new Subject<InventoryEvent>();
 
-const mockedCharacterService = mock(CharacterService);
-
-const mockedNarrativeService = mock(NarrativeService);
-
-const mockedLoggingService = mock(LoggingService);
-
-const log = new LogMessageDefinition('FREE', 'me', 'GG');
+const log = new LogMessageDefinition('FREE', 'player', unDodgeableAxe.label);

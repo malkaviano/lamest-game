@@ -37,23 +37,30 @@ export class InteractiveEntity implements ActionReactive {
   }
 
   public reactTo(
-    selected: ActionableDefinition,
+    action: ActionableDefinition,
     result: ResultLiteral,
     value?: number
   ): string | undefined {
     const oldActions = this.currentState.actions;
 
-    const { state, log } = this.currentState.onResult(selected, result, value);
+    const { state, log } = this.currentState.onResult(action, result, value);
 
     this.currentState = state;
 
     const currentActions = this.currentState.actions;
 
+    this.publish(oldActions, currentActions);
+
+    return log;
+  }
+
+  protected publish(
+    oldActions: ArrayView<ActionableDefinition>,
+    currentActions: ArrayView<ActionableDefinition>
+  ) {
     if (!oldActions.equals(currentActions)) {
       this.actionsChanged.next(currentActions);
     }
-
-    return log;
   }
 
   public reset(): void {

@@ -27,14 +27,12 @@ describe('CharacterService', () => {
     reset(mockedRandomCharacterService);
 
     when(mockedRandomCharacterService.character()).thenReturn(
-      instance(mockedCharacterEntity)
+      instance(mockedPlayerEntity)
     );
 
-    when(mockedCharacterEntity.hpChanged$).thenReturn(subjectHP);
+    when(mockedPlayerEntity.hpChanged$).thenReturn(subjectHP);
 
-    when(mockedCharacterEntity.weaponEquippedChanged$).thenReturn(
-      subjectWeapon
-    );
+    when(mockedPlayerEntity.weaponEquippedChanged$).thenReturn(subjectWeapon);
 
     service = TestBed.inject(CharacterService);
   });
@@ -50,7 +48,7 @@ describe('CharacterService', () => {
 
         done();
 
-        expect(result).toEqual(instance(mockedCharacterEntity));
+        expect(result).toEqual(instance(mockedPlayerEntity));
       });
     });
 
@@ -66,7 +64,7 @@ describe('CharacterService', () => {
 
         done();
 
-        expect(result).toEqual(instance(mockedCharacterEntity));
+        expect(result).toEqual(instance(mockedPlayerEntity));
       });
     });
 
@@ -82,7 +80,7 @@ describe('CharacterService', () => {
 
         done();
 
-        expect(result).toEqual(instance(mockedCharacterEntity));
+        expect(result).toEqual(instance(mockedPlayerEntity));
       });
     });
   });
@@ -91,7 +89,7 @@ describe('CharacterService', () => {
     it('return a random character', () => {
       const result = service.randomCharacter;
 
-      expect(result).toEqual(instance(mockedCharacterEntity));
+      expect(result).toEqual(instance(mockedPlayerEntity));
     });
   });
 
@@ -110,7 +108,7 @@ describe('CharacterService', () => {
       it('return a random generated character', () => {
         const character = service.currentCharacter;
 
-        expect(character).toEqual(instance(mockedCharacterEntity));
+        expect(character).toEqual(instance(mockedPlayerEntity));
       });
     });
   });
@@ -118,7 +116,7 @@ describe('CharacterService', () => {
 
 const mockedRandomCharacterService = mock(RandomCharacterService);
 
-const mockedCharacterEntity = mock(PlayerEntity);
+const mockedPlayerEntity = mock(PlayerEntity);
 
 const subjectHP = new Subject<HitPointsEvent>();
 

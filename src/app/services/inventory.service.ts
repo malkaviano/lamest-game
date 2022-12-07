@@ -5,7 +5,6 @@ import { Observable, Subject } from 'rxjs';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { GameItemDefinition } from '../definitions/game-item.definition';
 import { ItemStorageDefinition } from '../definitions/item-storage.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 
@@ -17,14 +16,10 @@ export class InventoryService {
 
   private storage: Map<string, { [key: string]: ItemStorageDefinition }>;
 
-  private currentEquipped: WeaponDefinition | null;
-
   public readonly inventoryChanged$: Observable<InventoryEvent>;
 
   constructor() {
     this.storage = new Map<string, { [key: string]: ItemStorageDefinition }>();
-
-    this.currentEquipped = null;
 
     this.inventoryChanged = new Subject<InventoryEvent>();
 

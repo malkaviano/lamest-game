@@ -3,7 +3,6 @@ import { ArrayView } from '../views/array.view';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
 import { ResultLiteral } from '../literals/result.literal';
-import { EnemyAttack } from '../interfaces/enemy-attack.interface';
 
 export abstract class ActionableState {
   constructor(
@@ -13,10 +12,6 @@ export abstract class ActionableState {
 
   public get actions(): ArrayView<ActionableDefinition> {
     return this.stateActions;
-  }
-
-  public get attack(): EnemyAttack | null {
-    return null;
   }
 
   public onResult(

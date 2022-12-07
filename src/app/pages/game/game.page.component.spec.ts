@@ -63,7 +63,7 @@ describe('GamePageComponent', () => {
     );
 
     when(mockedGameEventsService.characterChanged$).thenReturn(
-      of(instance(mockedCharacterEntity))
+      of(instance(mockedPlayerEntity))
     );
 
     when(mockedGameEventsService.sceneChanged$).thenReturn(of(scene));
@@ -79,7 +79,7 @@ describe('GamePageComponent', () => {
 
     when(mockedGameEventsService.actionLogged$).thenReturn(of(log));
 
-    when(mockedCharacterEntity.characteristics).thenReturn({
+    when(mockedPlayerEntity.characteristics).thenReturn({
       STR: new CharacteristicDefinition('STR', 8),
       CON: new CharacteristicDefinition('CON', 9),
       SIZ: new CharacteristicDefinition('SIZ', 10),
@@ -89,7 +89,7 @@ describe('GamePageComponent', () => {
       APP: new CharacteristicDefinition('APP', 14),
     });
 
-    when(mockedCharacterEntity.identity).thenReturn(
+    when(mockedPlayerEntity.identity).thenReturn(
       new IdentityDefinition(
         'name',
         'Hunter',
@@ -100,7 +100,7 @@ describe('GamePageComponent', () => {
       )
     );
 
-    when(mockedCharacterEntity.derivedAttributes).thenReturn({
+    when(mockedPlayerEntity.derivedAttributes).thenReturn({
       HP: new DerivedAttributeDefinition('HP', 9),
       PP: new DerivedAttributeDefinition('PP', 13),
       MOV: new DerivedAttributeDefinition('MOV', 10),
@@ -108,7 +108,7 @@ describe('GamePageComponent', () => {
 
     when(
       mockedConverterHelper.characterToKeyValueDescription(
-        instance(mockedCharacterEntity)
+        instance(mockedPlayerEntity)
       )
     ).thenReturn(
       new CharacterValuesDefinition(
@@ -224,7 +224,7 @@ describe('GamePageComponent', () => {
   });
 });
 
-const mockedCharacterEntity = mock(PlayerEntity);
+const mockedPlayerEntity = mock(PlayerEntity);
 
 const askAction = createActionableDefinition('ASK', 'action1', 'Got action?');
 

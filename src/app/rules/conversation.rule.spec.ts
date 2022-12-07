@@ -1,13 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, instance, mock, when } from 'ts-mockito';
+import { anything, instance, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createFreeLogMessage } from '../definitions/log-message.definition';
-import { PlayerEntity } from '../entities/player.entity';
-import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { ConversationRule } from './conversation.rule';
+
+import {
+  mockedInteractiveEntity,
+  mockedPlayerEntity,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('ConversationRule', () => {
   let service: ConversationRule;
@@ -15,11 +19,7 @@ describe('ConversationRule', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
 
-    when(mockedInteractiveEntity.id).thenReturn('id1');
-
-    when(mockedInteractiveEntity.name).thenReturn('test');
-
-    when(mockedCharacterEntity.name).thenReturn('player');
+    setupMocks();
 
     service = TestBed.inject(ConversationRule);
   });
@@ -35,7 +35,7 @@ describe('ConversationRule', () => {
       );
 
       const result = service.execute(
-        instance(mockedCharacterEntity),
+        instance(mockedPlayerEntity),
         new ActionableEvent(
           createActionableDefinition('ASK', 'hi', 'Hi'),
           'id1'
@@ -49,10 +49,6 @@ describe('ConversationRule', () => {
     });
   });
 });
-
-const mockedCharacterEntity = mock(PlayerEntity);
-
-const mockedInteractiveEntity = mock(InteractiveEntity);
 
 const log1 = createFreeLogMessage('player', 'Hi');
 

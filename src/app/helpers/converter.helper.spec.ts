@@ -12,18 +12,16 @@ import { DerivedAttributeDefinition } from '../definitions/derived-attribute.def
 describe('ConverterHelper', () => {
   describe('converting a character to keyValues', () => {
     it('return keyvalue array', () => {
-      when(mockedCharacterEntity.identity).thenReturn(identity);
+      when(mockedPlayerEntity.identity).thenReturn(identity);
 
-      when(mockedCharacterEntity.characteristics).thenReturn(characteristics);
+      when(mockedPlayerEntity.characteristics).thenReturn(characteristics);
 
-      when(mockedCharacterEntity.derivedAttributes).thenReturn(
-        derivedAttributes
-      );
+      when(mockedPlayerEntity.derivedAttributes).thenReturn(derivedAttributes);
 
-      when(mockedCharacterEntity.skills).thenReturn(skills);
+      when(mockedPlayerEntity.skills).thenReturn(skills);
 
       const result = helper.characterToKeyValueDescription(
-        instance(mockedCharacterEntity)
+        instance(mockedPlayerEntity)
       );
 
       expect(result).toEqual(expected);
@@ -136,4 +134,4 @@ const expected = new CharacterValuesDefinition(
   ])
 );
 
-const mockedCharacterEntity = mock(PlayerEntity);
+const mockedPlayerEntity = mock(PlayerEntity);

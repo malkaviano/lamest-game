@@ -6,7 +6,7 @@ import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from './character.service';
 import {
-  createActorDiedMessage,
+  createActorIsDeadMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
 import { NarrativeService } from './narrative.service';
@@ -82,7 +82,7 @@ export class GameLoopService {
       logs = logs.concat(playerResult.logs);
 
       this.actors.items.forEach((actor) => {
-        if (actor.action) {
+        if (actor.action && actor.situation === 'ALIVE') {
           const resultLogs = this.dispatcher[actor.action.actionable].execute(
             actor,
             action,
@@ -95,7 +95,7 @@ export class GameLoopService {
     }
 
     if (!this.isPlayerAlive) {
-      logs.push(createActorDiedMessage(this.player.name));
+      logs.push(createActorIsDeadMessage(this.player.name));
     }
 
     return {

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { take } from 'rxjs';
-import { instance, mock, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
@@ -10,10 +10,18 @@ import { InteractiveEntity } from '../entities/interactive.entity';
 import { SceneEntity } from '../entities/scene.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { SimpleState } from '../states/simple.state';
-import { InteractiveStore } from '../stores/interactive.store';
 import { SceneStore } from '../stores/scene.store';
 import { ArrayView } from '../views/array.view';
 import { NarrativeService } from './narrative.service';
+import { InventoryService } from './inventory.service';
+import { ItemStore } from '../stores/item.store';
+
+import {
+  mockedInteractiveStore,
+  mockedInventoryService,
+  mockedItemStore,
+  mockedSceneStore,
+} from '../../../tests/mocks';
 
 describe('NarrativeService', () => {
   let service: NarrativeService;
@@ -24,6 +32,14 @@ describe('NarrativeService', () => {
         {
           provide: SceneStore,
           useValue: instance(mockedSceneStore),
+        },
+        {
+          provide: InventoryService,
+          useValue: instance(mockedInventoryService),
+        },
+        {
+          provide: ItemStore,
+          useValue: instance(mockedItemStore),
         },
       ],
     });
@@ -81,10 +97,6 @@ describe('NarrativeService', () => {
     });
   });
 });
-
-const mockedSceneStore = mock(SceneStore);
-
-const mockedInteractiveStore = mock(InteractiveStore);
 
 const exitDoor = createActionableDefinition('SCENE', 'exit', 'Exit');
 

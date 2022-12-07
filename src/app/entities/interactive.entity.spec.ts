@@ -6,22 +6,24 @@ import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 
+import { actionConsume, actionPick } from '../../../tests/fakes';
+
 beforeEach(() => {
-  reset(mockedState1);
+  reset(mockedActionableState);
 
-  reset(mockedState2);
+  reset(mockedActionableState2);
 
-  when(mockedState1.actions).thenReturn(new ArrayView([action]));
+  when(mockedActionableState.actions).thenReturn(
+    new ArrayView([actionConsume])
+  );
 
-  when(mockedState2.actions).thenReturn(new ArrayView([pick]));
-
-  when(mockedState1.attack).thenReturn(null);
+  when(mockedActionableState2.actions).thenReturn(new ArrayView([actionPick]));
 });
 
 describe('InteractiveEntity', () => {
   describe('initial state', () => {
     it('push an actionsChanged notification', (done) => {
-      const expected = new ArrayView([action]);
+      const expected = new ArrayView([actionConsume]);
 
       const entity = fakeEntity();
 
@@ -36,7 +38,7 @@ describe('InteractiveEntity', () => {
   describe('when interactive state changes', () => {
     it('push an actionsChanged notification', (done) => {
       when(
-        mockedState1.onResult(anything(), anyString(), anything())
+        mockedActionableState.onResult(anything(), anyString(), anything())
       ).thenReturn({ state: state2 });
 
       const entity = fakeEntity();
@@ -47,11 +49,11 @@ describe('InteractiveEntity', () => {
         result = event;
       });
 
-      entity.reactTo(pick, 'NONE');
+      entity.reactTo(actionPick, 'NONE');
 
       done();
 
-      expect(result).toEqual(new ArrayView([pick]));
+      expect(result).toEqual(new ArrayView([actionPick]));
     });
   });
 
@@ -59,7 +61,7 @@ describe('InteractiveEntity', () => {
     describe('when interactive is resettable', () => {
       it('push an actionsChanged notification with initial action', (done) => {
         when(
-          mockedState1.onResult(anything(), anyString(), anything())
+          mockedActionableState.onResult(anything(), anyString(), anything())
         ).thenReturn({ state: state2 });
 
         const entity = fakeEntity();
@@ -70,20 +72,20 @@ describe('InteractiveEntity', () => {
           result = event;
         });
 
-        entity.reactTo(pick, 'NONE');
+        entity.reactTo(actionPick, 'NONE');
 
         entity.reset();
 
         done();
 
-        expect(result).toEqual(new ArrayView([action]));
+        expect(result).toEqual(new ArrayView([actionConsume]));
       });
     });
 
     describe('when interactive is not resettable', () => {
       it('keep current state', (done) => {
         when(
-          mockedState1.onResult(anything(), anyString(), anything())
+          mockedActionableState.onResult(anything(), anyString(), anything())
         ).thenReturn({ state: state2 });
 
         const entity = fakeEntity(false);
@@ -94,29 +96,31 @@ describe('InteractiveEntity', () => {
           result = event;
         });
 
-        entity.reactTo(pick, 'NONE');
+        entity.reactTo(actionPick, 'NONE');
 
         entity.reset();
 
         done();
 
-        expect(result).toEqual(new ArrayView([pick]));
+        expect(result).toEqual(new ArrayView([actionPick]));
       });
+    });
+  });
+
+  describe('classification', () => {
+    it('return REACTIVE', () => {
+      expect(fakeEntity().classification).toEqual('REACTIVE');
     });
   });
 });
 
-const pick = new ActionableDefinition('PICK', 'name1', 'label1');
+const mockedActionableState = mock<ActionableState>();
 
-const action = new ActionableDefinition('CONSUME', 'name1', 'label1');
+const mockedActionableState2 = mock<ActionableState>();
 
-const mockedState1 = mock<ActionableState>();
+const state1 = instance(mockedActionableState);
 
-const mockedState2 = mock<ActionableState>();
-
-const state1 = instance(mockedState1);
-
-const state2 = instance(mockedState2);
+const state2 = instance(mockedActionableState2);
 
 const fakeEntity = (resettable = true, state: ActionableState = state1) =>
   new InteractiveEntity(

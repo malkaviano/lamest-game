@@ -1,17 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, verify, when } from 'ts-mockito';
+import { instance, verify, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { DamageDefinition } from '../definitions/damage.definition';
-import { createDice } from '../definitions/dice.definition';
 import { createTookLogMessage } from '../definitions/log-message.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
-import { PlayerEntity } from '../entities/player.entity';
-import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
+
+import {
+  mockedInteractiveEntity,
+  mockedInventoryService,
+  mockedPlayerEntity,
+  setupMocks,
+} from '../../../tests/mocks';
+import { simpleSword } from '../../../tests/fakes';
 
 describe('PickRule', () => {
   let service: PickRule;
@@ -25,9 +28,8 @@ describe('PickRule', () => {
         },
       ],
     });
-    when(mockedInteractiveEntity.id).thenReturn('id1');
 
-    when(mockedInteractiveEntity.name).thenReturn('test');
+    setupMocks();
 
     service = TestBed.inject(PickRule);
   });
@@ -38,19 +40,19 @@ describe('PickRule', () => {
 
   describe('execute', () => {
     it('return logs', () => {
-      when(mockedInventoryService.take('id1', 'sword')).thenReturn(item);
+      when(mockedInventoryService.take('id1', 'sword')).thenReturn(simpleSword);
 
       when(
         mockedInteractiveEntity.reactTo(event.actionableDefinition, 'NONE')
       ).thenReturn('Sword');
 
       const result = service.execute(
-        instance(mockedCharacterEntity),
+        instance(mockedPlayerEntity),
         event,
         instance(mockedInteractiveEntity)
       );
 
-      verify(mockedInventoryService.store('player', item)).once();
+      verify(mockedInventoryService.store('player', simpleSword)).once();
 
       expect(result).toEqual({
         logs: [log],
@@ -59,24 +61,8 @@ describe('PickRule', () => {
   });
 });
 
-const mockedInventoryService = mock(InventoryService);
-
-const mockedCharacterEntity = mock(PlayerEntity);
-
-const item = new WeaponDefinition(
-  'sword',
-  'Sword',
-  'some sword',
-  'Artillery (Siege)',
-  new DamageDefinition(createDice(), 2),
-  true,
-  'PERMANENT'
-);
-
 const action = createActionableDefinition('PICK', 'sword', 'Sword');
 
 const event = new ActionableEvent(action, 'id1');
-
-const mockedInteractiveEntity = mock(InteractiveEntity);
 
 const log = createTookLogMessage('player', 'test', 'Sword');

@@ -1,142 +1,298 @@
-import { anything, instance, mock, when } from 'ts-mockito';
+import { take } from 'rxjs';
+import { instance, when } from 'ts-mockito';
 
-import { ActorBehavior } from '../behaviors/actor.behavior';
-import { EquipmentBehavior } from '../behaviors/equipment.behavior';
-import { ActionableDefinition } from '../definitions/actionable.definition';
-import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { DamageDefinition } from '../definitions/damage.definition';
-import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
-import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
-import { createDice } from '../definitions/dice.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
-import { ActionableState } from '../states/actionable.state';
-import { ArrayView } from '../views/array.view';
+import {
+  ActionableDefinition,
+  createActionableDefinition,
+} from '../definitions/actionable.definition';
+import {
+  createDamagedMessage,
+  createHealedMessage,
+} from '../definitions/log-message.definition';
+import { ResultLiteral } from '../literals/result.literal';
+import {
+  unarmedWeapon,
+  WeaponDefinition,
+} from '../definitions/weapon.definition';
 import { ActorEntity } from './actor.entity';
+import { emptyState } from '../states/empty.state';
 
-beforeEach(() => {
-  when(mockedState.actions).thenReturn(new ArrayView([action, attack]));
-
-  when(mockedActorBehavior.damaged(4)).thenReturn(new HitPointsEvent(9, 5));
-
-  when(mockedActorBehavior.healed(4)).thenReturn(new HitPointsEvent(9, 9));
-
-  when(mockedActorBehavior.damaged(20)).thenReturn(new HitPointsEvent(9, 0));
-
-  when(mockedState.onResult(anything(), anything(), anything())).thenReturn({
-    state: someState,
-    log: 'it passed thru',
-  });
-});
+import {
+  actionAttack,
+  fakeCharacteristics,
+  fakeDerivedAttributes,
+  fakeSkills,
+  simpleSword,
+} from '../../../tests/fakes';
+import {
+  mockedActorBehavior,
+  mockedEquipmentBehavior,
+  setupMocks,
+} from '../../../tests/mocks';
+import { ArrayView } from '../views/array.view';
 
 describe('ActorEntity', () => {
-  describe('attack', () => {
-    describe('when state do not produce damage', () => {
-      it('return null', () => {
-        when(mockedState.attack).thenReturn(null);
+  beforeEach(() => {
+    setupMocks();
 
-        const result = fakeEntity().attack;
-
-        expect(result).toBeNull();
-      });
-    });
-
-    describe('when state produces damage', () => {
-      it('return DamageDefinition', () => {
-        when(mockedState.attack).thenReturn({
-          skillValue: 15,
-          weapon,
-        });
-
-        const result = fakeEntity(false).attack;
-
-        expect(result).toEqual({
-          skillValue: 15,
-          weapon,
-        });
-      });
-    });
+    when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
   });
 
   describe('derivedAttributes', () => {
     it('return HP 9, PP 13, MOV 10', () => {
-      when(mockedActorBehavior.derivedAttributes).thenReturn(
-        expectedDerivedAttributes
-      );
-
-      expect(fakeEntity().derivedAttributes).toEqual(expectedDerivedAttributes);
+      expect(fakeActor().derivedAttributes).toEqual(fakeDerivedAttributes);
     });
   });
 
   describe('skill', () => {
-    it('return Appraise 12 and Dodge 32', () => {
-      when(mockedActorBehavior.skills).thenReturn(expectedSkills);
-
-      expect(fakeEntity().skills).toEqual(expectedSkills);
+    it('return skills', () => {
+      expect(fakeActor().skills).toEqual(fakeSkills);
     });
   });
 
   describe('characteristics', () => {
     it('return characteristics', () => {
-      when(mockedActorBehavior.characteristics).thenReturn(fakeCharacteristics);
+      expect(fakeActor().characteristics).toEqual(fakeCharacteristics);
+    });
+  });
 
-      expect(fakeEntity().characteristics).toEqual(fakeCharacteristics);
+  describe('classification', () => {
+    it('return ACTOR', () => {
+      expect(fakeActor().classification).toEqual('ACTOR');
+    });
+  });
+
+  describe('reactTo', () => {
+    describe('when ALIVE', () => {
+      describe('when damage taken', () => {
+        describe('attack was SUCCESS', () => {
+          it('return damage taken', () => {
+            when(mockedActorBehavior.damaged(10)).thenReturn(
+              new HitPointsEvent(9, 0)
+            );
+
+            const result = fakeActor().reactTo(attackAction, 'SUCCESS', 10);
+
+            expect(result).toEqual(logAttacked);
+          });
+
+          it('should emit an event', (done) => {
+            let result: HitPointsEvent | undefined;
+
+            when(mockedActorBehavior.damaged(6)).thenReturn(
+              new HitPointsEvent(9, 3)
+            );
+
+            const char = fakeActor();
+
+            char.hpChanged$.pipe(take(10)).subscribe((event) => {
+              result = event;
+            });
+
+            char.reactTo(attackAction, 'SUCCESS', 6);
+
+            done();
+
+            expect(result).toEqual(new HitPointsEvent(9, 3));
+          });
+        });
+
+        ['FAILURE', 'NONE', 'IMPOSSIBLE'].forEach((result) => {
+          describe(`attack was ${result}`, () => {
+            it('return nothing', () => {
+              const log = fakeActor().reactTo(
+                attackAction,
+                result as ResultLiteral,
+                1
+              );
+
+              expect(log).not.toBeDefined();
+            });
+          });
+        });
+      });
+    });
+
+    describe('when DEAD', () => {
+      it('should emit actions changed event', (done) => {
+        when(mockedActorBehavior.situation).thenReturn('DEAD');
+
+        let result: ArrayView<ActionableDefinition> | undefined;
+
+        const char = fakeActor();
+
+        char.actionsChanged$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        char.reactTo(attackAction, 'SUCCESS', 6);
+
+        done();
+
+        expect(result).toEqual(new ArrayView([]));
+      });
+    });
+
+    describe('when heal received', () => {
+      ['SUCCESS', 'NONE'].forEach((result) => {
+        describe(`heal was ${result}`, () => {
+          it('return heal received', () => {
+            when(mockedActorBehavior.healed(10)).thenReturn(
+              new HitPointsEvent(4, 9)
+            );
+
+            const log = fakeActor().reactTo(
+              healAction,
+              result as ResultLiteral,
+              10
+            );
+
+            expect(log).toEqual(logHealed);
+          });
+        });
+
+        it('should emit an event', (done) => {
+          let hpResult: HitPointsEvent | undefined;
+
+          when(mockedActorBehavior.healed(5)).thenReturn(
+            new HitPointsEvent(6, 9)
+          );
+
+          const char = fakeActor();
+
+          char.hpChanged$.pipe(take(10)).subscribe((event) => {
+            hpResult = event;
+          });
+
+          char.reactTo(healAction, result as ResultLiteral, 5);
+
+          done();
+
+          expect(hpResult).toEqual(new HitPointsEvent(6, 9));
+        });
+      });
+
+      ['IMPOSSIBLE', 'FAILURE'].forEach((result) => {
+        describe(`heal was ${result}`, () => {
+          it('return nothing', () => {
+            const log = fakeActor().reactTo(
+              healAction,
+              result as ResultLiteral,
+              1
+            );
+
+            expect(log).not.toBeDefined();
+          });
+        });
+      });
+    });
+  });
+
+  describe('weaponEquipped', () => {
+    it('return current weapon', () => {
+      when(mockedEquipmentBehavior.weaponEquipped).thenReturn(unarmedWeapon);
+
+      expect(fakeActor().weaponEquipped).toEqual(unarmedWeapon);
+    });
+  });
+
+  describe('equip', () => {
+    it('should equip new weapon', () => {
+      when(mockedEquipmentBehavior.weaponEquipped).thenReturn(simpleSword);
+
+      const char = fakeActor();
+
+      equipActorScenario(char, simpleSword);
+
+      expect(char.weaponEquipped).toEqual(simpleSword);
+    });
+
+    it('should emit event', (done) => {
+      let result: WeaponDefinition | undefined;
+
+      const char = fakeActor();
+
+      char.weaponEquippedChanged$.pipe(take(10)).subscribe((event) => {
+        result = event;
+      });
+
+      equipActorScenario(char, simpleSword);
+
+      done();
+
+      expect(result).toEqual(simpleSword);
+    });
+  });
+
+  describe('unEquip', () => {
+    it('should un-equip current weapon', () => {
+      when(mockedEquipmentBehavior.unEquip()).thenReturn(simpleSword);
+
+      const char = fakeActor();
+
+      const result = unEquipActorScenario(char);
+
+      expect(result).toEqual(simpleSword);
+    });
+
+    it('should emit event', (done) => {
+      when(mockedEquipmentBehavior.unEquip()).thenReturn(simpleSword);
+
+      let result: WeaponDefinition | undefined;
+
+      const char = fakeActor();
+
+      char.weaponEquippedChanged$.pipe(take(10)).subscribe((event) => {
+        result = event;
+      });
+
+      unEquipActorScenario(char);
+
+      done();
+
+      expect(result).toEqual(simpleSword);
+    });
+  });
+
+  describe('action', () => {
+    it('return action attack', () => {
+      expect(fakeActor().action).toEqual(actionAttack);
     });
   });
 });
 
-const mockedState = mock<ActionableState>();
-
-const someState = instance(mockedState);
-
-const damage = new DamageDefinition(createDice({}), 10);
-
-const weapon = new WeaponDefinition(
-  'gg',
-  'claw',
-  '',
-  'Brawl',
-  damage,
-  true,
-  'PERMANENT'
-);
-
-const mockedActorBehavior = mock(ActorBehavior);
-
-const mockedEquipmentBehavior = mock(EquipmentBehavior);
-
-const fakeEntity = (resettable = false, state: ActionableState = someState) =>
+const fakeActor = () =>
   new ActorEntity(
     'id1',
-    'SomeEntity',
-    'Testing Entity',
-    state,
-    resettable,
+    'actor',
+    'Some Actor',
+    emptyState,
+    false,
     instance(mockedActorBehavior),
-    instance(mockedEquipmentBehavior)
+    instance(mockedEquipmentBehavior),
+    emptyState
   );
 
-const attack = new ActionableDefinition('ATTACK', 'attack', 'Attack');
+const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');
 
-const action = new ActionableDefinition('CONSUME', 'name1', 'label1');
+const healAction = createActionableDefinition('HEAL', 'heal', 'Heal');
 
-const fakeCharacteristics = {
-  STR: new CharacteristicDefinition('STR', 8),
-  CON: new CharacteristicDefinition('CON', 9),
-  SIZ: new CharacteristicDefinition('SIZ', 10),
-  DEX: new CharacteristicDefinition('DEX', 11),
-  INT: new CharacteristicDefinition('INT', 12),
-  POW: new CharacteristicDefinition('POW', 13),
-  APP: new CharacteristicDefinition('APP', 14),
+const logAttacked = createDamagedMessage(9);
+
+const logHealed = createHealedMessage(5);
+
+const equipActorScenario = (
+  character: ActorEntity,
+  weapon: WeaponDefinition
+): WeaponDefinition | null => {
+  const previous = character.equip(weapon);
+
+  return previous;
 };
 
-const expectedDerivedAttributes: DerivedAttributeSetDefinition = {
-  HP: new DerivedAttributeDefinition('HP', 9),
-  PP: new DerivedAttributeDefinition('PP', 13),
-  MOV: new DerivedAttributeDefinition('MOV', 10),
-};
-
-const expectedSkills = {
-  Appraise: 12,
-  Dodge: 32,
+const unEquipActorScenario = (
+  character: ActorEntity
+): WeaponDefinition | null => {
+  return character.unEquip();
 };

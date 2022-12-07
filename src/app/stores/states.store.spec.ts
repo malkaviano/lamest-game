@@ -54,10 +54,6 @@ describe('StatesStore', () => {
       states: [],
     });
 
-    when(mockedResourcesStore.enemyStateStore).thenReturn({
-      states: [],
-    });
-
     when(mockedResourcesStore.destroyableStateStore).thenReturn({
       states: [],
     });

@@ -13,12 +13,6 @@ describe('ActionableState', () => {
       });
     });
   });
-
-  describe('damage', () => {
-    it('return null', () => {
-      expect(state.attack).toBeNull();
-    });
-  });
 });
 
 const askAction1 = createActionableDefinition('ASK', 'ask1', 'May I help?');

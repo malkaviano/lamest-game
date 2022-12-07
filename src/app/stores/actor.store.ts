@@ -29,20 +29,22 @@ export class ActorStore {
         id,
         name,
         description,
-        state,
         resettable,
         characteristics,
         skills,
         equippedWeapon,
+        killedState,
+        behaviorState,
       }) => {
         const actor = new ActorEntity(
           id,
           name,
           description,
-          stateStore.states[state],
+          stateStore.states[behaviorState],
           resettable,
           new ActorBehavior(characteristics, skills),
-          new EquipmentBehavior()
+          new EquipmentBehavior(),
+          stateStore.states[killedState]
         );
 
         actor.equip(itemStore.items[equippedWeapon] as WeaponDefinition);

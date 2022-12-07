@@ -6,7 +6,6 @@ import { DiscardStateStoreInterface } from '../interfaces/discard-state-store.in
 import { SimpleStateStoreInterface } from '../interfaces/simple-state-store.interface';
 import { ConversationStateStoreInterface } from '../interfaces/conversation-state-store.interface';
 import { DestroyableStateStoreInterface } from '../interfaces/destroyable-state-store.interface';
-import { EnemyStateStoreInterface } from '../interfaces/enemy-state-store.interface';
 import { WeaponStoreInterface } from '../interfaces/weapon-store.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { createDice } from '../definitions/dice.definition';
@@ -16,7 +15,6 @@ import { DescriptionStoreInterface } from '../interfaces/description-store.inter
 import { ActionableStoreInterface } from '../interfaces/actionable-store.interface';
 import { ActionableLiteral } from '../literals/actionable.literal';
 import { MessageStoreInterface } from '../interfaces/message-store.interface';
-import { EnemyBehaviorLiteral } from '../literals/enemy-behavior.literal';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
@@ -28,7 +26,6 @@ import discardStateStore from '../../assets/discard-states.json';
 import simpleStateStore from '../../assets/simple-states.json';
 import conversationStateStore from '../../assets/conversation-states.json';
 import destroyableStateStore from '../../assets/destroyable-states.json';
-import enemyStateStore from '../../assets/enemy-states.json';
 import weaponStore from '../../assets/weapons.json';
 import consumableStore from '../../assets/consumables.json';
 import interactiveStore from '../../assets/interactives.json';
@@ -52,8 +49,6 @@ export class ResourcesStore {
   public readonly conversationStateStore: ConversationStateStoreInterface;
 
   public readonly destroyableStateStore: DestroyableStateStoreInterface;
-
-  public readonly enemyStateStore: EnemyStateStoreInterface;
 
   public readonly weaponStore: WeaponStoreInterface;
 
@@ -81,36 +76,6 @@ export class ResourcesStore {
     this.conversationStateStore = conversationStateStore;
 
     this.destroyableStateStore = destroyableStateStore;
-
-    const states = enemyStateStore.states.map((s) => {
-      const characteristics: CharacteristicSetDefinition = {
-        STR: new CharacteristicDefinition('STR', s.characteristics.STR),
-        CON: new CharacteristicDefinition('CON', s.characteristics.CON),
-        SIZ: new CharacteristicDefinition('SIZ', s.characteristics.SIZ),
-        DEX: new CharacteristicDefinition('DEX', s.characteristics.DEX),
-        INT: new CharacteristicDefinition('INT', s.characteristics.INT),
-        POW: new CharacteristicDefinition('POW', s.characteristics.POW),
-        APP: new CharacteristicDefinition('APP', s.characteristics.APP),
-      };
-
-      const skills = new Map<SkillNameLiteral, number>();
-
-      s.skills.forEach((s) => {
-        skills.set(s.name as SkillNameLiteral, s.value);
-      });
-
-      return {
-        interactiveId: s.interactiveId,
-        actionables: s.actionables,
-        killedState: s.killedState,
-        weaponName: s.weaponName,
-        behavior: s.behavior as EnemyBehaviorLiteral,
-        characteristics,
-        skills,
-      };
-    });
-
-    this.enemyStateStore = { states };
 
     const weapons = weaponStore.weapons.map((w) => {
       return {
@@ -179,11 +144,12 @@ export class ResourcesStore {
         id: a.id,
         name: a.name,
         description: a.description,
-        state: a.state,
         resettable: a.resettable,
         characteristics: characteristics,
         skills: skills,
         equippedWeapon: a.equippedWeapon,
+        killedState: a.killedState,
+        behaviorState: a.behaviorState,
       };
     });
 

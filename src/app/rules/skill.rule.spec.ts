@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, instance, mock, when } from 'ts-mockito';
+import { anything, instance, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import {
@@ -8,11 +8,16 @@ import {
   createCheckLogMessage,
   createFreeLogMessage,
 } from '../definitions/log-message.definition';
-import { PlayerEntity } from '../entities/player.entity';
-import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
+
+import {
+  mockedPlayerEntity,
+  mockedInteractiveEntity,
+  mockedRollService,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('SkillRule', () => {
   let service: SkillRule;
@@ -22,14 +27,12 @@ describe('SkillRule', () => {
       providers: [
         {
           provide: RollService,
-          useValue: instance(mockedRollRule),
+          useValue: instance(mockedRollService),
         },
       ],
     });
 
-    when(mockedInteractiveEntity.id).thenReturn('id1');
-
-    when(mockedInteractiveEntity.name).thenReturn('test');
+    setupMocks();
 
     when(mockedInteractiveEntity.reactTo(anything(), anything())).thenReturn(
       'destroyed by xpto'
@@ -45,11 +48,11 @@ describe('SkillRule', () => {
   describe('execute', () => {
     describe('when skill has no value', () => {
       it('return SKILL CANNOT BE ROLLED', () => {
-        when(mockedCharacterEntity.skills).thenReturn({});
+        when(mockedPlayerEntity.skills).thenReturn({});
 
         when(
-          mockedRollRule.actorSkillCheck(
-            instance(mockedCharacterEntity),
+          mockedRollService.actorSkillCheck(
+            instance(mockedPlayerEntity),
             'Brawl'
           )
         ).thenReturn({
@@ -58,7 +61,7 @@ describe('SkillRule', () => {
         });
 
         const result = service.execute(
-          instance(mockedCharacterEntity),
+          instance(mockedPlayerEntity),
           event,
           instance(mockedInteractiveEntity)
         );
@@ -70,17 +73,17 @@ describe('SkillRule', () => {
     });
 
     it('return logs', () => {
-      when(mockedCharacterEntity.skills).thenReturn({ Brawl: 45 });
+      when(mockedPlayerEntity.skills).thenReturn({ Brawl: 45 });
 
       when(
-        mockedRollRule.actorSkillCheck(instance(mockedCharacterEntity), 'Brawl')
+        mockedRollService.actorSkillCheck(instance(mockedPlayerEntity), 'Brawl')
       ).thenReturn({
         result: 'SUCCESS',
         roll: 10,
       });
 
       const result = service.execute(
-        instance(mockedCharacterEntity),
+        instance(mockedPlayerEntity),
         event,
         instance(mockedInteractiveEntity)
       );
@@ -91,12 +94,6 @@ describe('SkillRule', () => {
     });
   });
 });
-
-const mockedRollRule = mock(RollService);
-
-const mockedInteractiveEntity = mock(InteractiveEntity);
-
-const mockedCharacterEntity = mock(PlayerEntity);
 
 const action = createActionableDefinition('SKILL', 'Brawl');
 

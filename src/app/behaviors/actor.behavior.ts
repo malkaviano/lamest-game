@@ -4,6 +4,7 @@ import { DerivedAttributeDefinition } from '../definitions/derived-attribute.def
 import { skillDefinitions } from '../definitions/skill.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { ActorSituation } from '../literals/actor-situation.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 export class ActorBehavior {
@@ -31,11 +32,11 @@ export class ActorBehavior {
     this.currentPP = this.maximumPP;
   }
 
-  get characteristics(): CharacteristicSetDefinition {
+  public get characteristics(): CharacteristicSetDefinition {
     return Object.assign({}, this.mCharacteristics);
   }
 
-  get derivedAttributes(): DerivedAttributeSetDefinition {
+  public get derivedAttributes(): DerivedAttributeSetDefinition {
     return {
       HP: new DerivedAttributeDefinition('HP', this.currentHP),
       PP: new DerivedAttributeDefinition('PP', this.currentPP),
@@ -43,7 +44,7 @@ export class ActorBehavior {
     };
   }
 
-  get skills(): KeyValueInterface<number> {
+  public get skills(): KeyValueInterface<number> {
     return Array.from(this.mSkills.entries()).reduce(
       (acc: { [key: string]: number }, [k, v]) => {
         const base = skillDefinitions[k].base(this.characteristics);
@@ -54,6 +55,10 @@ export class ActorBehavior {
       },
       {}
     );
+  }
+
+  public get situation(): ActorSituation {
+    return this.currentHP > 0 ? 'ALIVE' : 'DEAD';
   }
 
   public damaged(damage: number): HitPointsEvent {

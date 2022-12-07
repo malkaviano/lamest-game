@@ -31,30 +31,28 @@ export class EquipRule implements RuleInterface {
 
     const skillName = this.itemStore.itemSkill(action.eventId);
 
-    if (skillName) {
-      if (actor.skills[skillName] > 0) {
-        const weapon = this.inventoryService.take(actor.name, action.eventId);
+    if (skillName && actor.skills[skillName] > 0) {
+      const weapon = this.inventoryService.take(actor.name, action.eventId);
 
-        if (weapon.category === 'WEAPON') {
-          const previous = actor.equip(weapon as WeaponDefinition);
+      if (weapon.category === 'WEAPON') {
+        const previous = actor.equip(weapon as WeaponDefinition);
 
-          if (previous) {
-            this.inventoryService.store(actor.name, previous);
+        if (previous) {
+          this.inventoryService.store(actor.name, previous);
 
-            logs.push(createUnEquippedLogMessage(actor.name, previous.label));
-          }
-
-          logs.push(createEquippedLogMessage(actor.name, weapon.label));
+          logs.push(createUnEquippedLogMessage(actor.name, previous.label));
         }
-      } else {
-        logs.push(
-          createEquipErrorLogMessage(
-            actor.name,
-            skillName,
-            this.itemStore.itemLabel(action.eventId)
-          )
-        );
+
+        logs.push(createEquippedLogMessage(actor.name, weapon.label));
       }
+    } else if (skillName) {
+      logs.push(
+        createEquipErrorLogMessage(
+          actor.name,
+          skillName,
+          this.itemStore.itemLabel(action.eventId)
+        )
+      );
     }
 
     return { logs };

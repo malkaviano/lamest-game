@@ -4,7 +4,6 @@
       "id": "trainingDummy",
       "name": "Training Dummy",
       "description": "Try some attack moves here",
-      "state": "trainingDummy",
       "resettable": false,
       "characteristics": {
         "STR": 5,
@@ -21,13 +20,14 @@
           "value": 30
         }
       ],
-      "equippedWeapon": "bambooSword"
+      "equippedWeapon": "bambooSword",
+      "killedState": "emptyState",
+      "behaviorState": "trainingDummy"
     },
     {
       "id": "zombie",
       "name": "Nasty Zombie",
       "description": "What the frack is that?",
-      "state": "zombie",
       "resettable": false,
       "characteristics": {
         "STR": 10,
@@ -44,7 +44,9 @@
           "value": 45
         }
       ],
-      "equippedWeapon": "claw"
+      "equippedWeapon": "claw",
+      "killedState": "emptyState",
+      "behaviorState": "zombie"
     }
   ]
 }

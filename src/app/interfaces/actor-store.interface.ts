@@ -6,10 +6,11 @@ export interface ActorStoreInterface {
     readonly id: string;
     readonly name: string;
     readonly description: string;
-    readonly state: string;
     readonly resettable: boolean;
     readonly characteristics: CharacteristicSetDefinition;
     readonly skills: Map<SkillNameLiteral, number>;
     readonly equippedWeapon: string;
+    readonly killedState: string;
+    readonly behaviorState: string;
   }[];
 }

@@ -8,12 +8,15 @@ import {
   LogMessageDefinition,
   createCheckLogMessage,
   createCannotCheckLogMessage,
+  createUnDodgeableAttackLogMessage,
+  createLostLogMessage,
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActionReactive } from '../interfaces/action-reactive.interface';
+import { DamageDefinition } from '../definitions/damage.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -30,21 +33,22 @@ export class CombatRule implements RuleInterface {
 
     let targetHit = true;
 
-    const { dodgeable, damage, skillName, label } = actor.weaponEquipped;
+    const { dodgeable, damage, skillName, label, usability } =
+      actor.weaponEquipped;
 
-    if (target.classification === 'ACTOR') {
+    if (['ACTOR', 'PLAYER'].includes(target.classification)) {
       const targetActor = target as ActorInterface;
 
-      const { result: enemyResult, roll: enemyRoll } =
+      const { result: actorResult, roll: actorRoll } =
         this.rollRule.actorSkillCheck(actor, skillName);
 
       logs.push(createAttackedLogMessage(actor.name, targetActor.name, label));
 
       logs.push(
-        createCheckLogMessage(actor.name, skillName, enemyRoll, enemyResult)
+        createCheckLogMessage(actor.name, skillName, actorRoll, actorResult)
       );
 
-      targetHit = enemyResult === 'SUCCESS';
+      targetHit = actorResult === 'SUCCESS';
 
       if (targetHit) {
         if (dodgeable) {
@@ -69,25 +73,39 @@ export class CombatRule implements RuleInterface {
               break;
           }
         } else {
-          createFreeLogMessage(targetActor.name, 'Attack is not dodgeable');
+          logs.push(createUnDodgeableAttackLogMessage(targetActor.name));
         }
       }
     }
 
+    if (usability === 'DISPOSABLE') {
+      actor.unEquip();
+
+      logs.push(createLostLogMessage(actor.name, label));
+    }
+
     if (targetHit) {
-      const damageAmount = this.rollRule.roll(damage.diceRoll) + damage.fixed;
-
-      const log = target.reactTo(
-        createActionableDefinition('ATTACK', 'attack', 'Attack'),
-        'SUCCESS',
-        damageAmount
-      );
-
-      if (log) {
-        logs.push(createFreeLogMessage(target.name, log));
-      }
+      this.applyDamage(damage, target, logs);
     }
 
     return { logs };
+  }
+
+  private applyDamage(
+    damage: DamageDefinition,
+    target: ActionReactive,
+    logs: LogMessageDefinition[]
+  ) {
+    const damageAmount = this.rollRule.roll(damage.diceRoll) + damage.fixed;
+
+    const log = target.reactTo(
+      createActionableDefinition('ATTACK', 'attack', 'Attack'),
+      'SUCCESS',
+      damageAmount
+    );
+
+    if (log) {
+      logs.push(createFreeLogMessage(target.name, log));
+    }
   }
 }

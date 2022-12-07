@@ -11,6 +11,14 @@
     {
       "interactiveId": "corridorDoor",
       "actionables": ["corridorDoor"]
+    },
+    {
+      "interactiveId": "trainingDummy",
+      "actionables": ["attack"]
+    },
+    {
+      "interactiveId": "zombie",
+      "actionables": ["attack"]
     }
   ]
 }

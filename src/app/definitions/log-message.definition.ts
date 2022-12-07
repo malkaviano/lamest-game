@@ -22,12 +22,8 @@ export const createDamagedMessage = (damage: number) =>
 export const createDestroyedByDamageMessage = (damage: number) =>
   `received ${damage} damage and was destroyed`;
 
-// TODO: Remove this
-export const createKilledByDamageMessage = (damage: number) =>
-  `received ${damage} damage and was killed`;
-
-export const createActorDiedMessage = (actor: string) =>
-  new LogMessageDefinition('DIED', actor, 'died');
+export const createActorIsDeadMessage = (actor: string) =>
+  new LogMessageDefinition('DIED', actor, 'is dead');
 
 export const createCheckLogMessage = (
   actor: string,
@@ -102,8 +98,8 @@ export const createSceneLogMessage = (
     `selected ${selection} from ${from}`
   );
 
-export const createMissedAttackLogMessage = (actor: string, target: string) =>
-  new LogMessageDefinition('MISSED', actor, `attacked ${target} but missed`);
-
 export const createLostLogMessage = (actor: string, item: string) =>
   new LogMessageDefinition('LOST', actor, `lost ${item}`);
+
+export const createUnDodgeableAttackLogMessage = (target: string) =>
+  new LogMessageDefinition('ATTACKED', target, `Attack is not dodgeable`);

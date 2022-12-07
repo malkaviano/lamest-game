@@ -1,30 +1,34 @@
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
-import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { ActorBehavior } from './actor.behavior';
+
+import {
+  fakeCharacteristics,
+  fakeDerivedAttributes,
+  fakeMapSkills,
+} from '../../../tests/fakes';
 
 describe('ActorBehavior', () => {
   describe('characteristics', () => {
     it('return characteristics', () => {
-      expect(behavior().characteristics).toEqual(expectedCharacteristics);
+      expect(behavior().characteristics).toEqual(fakeCharacteristics);
     });
   });
 
   describe('derived attributes', () => {
     it('return derived attributes', () => {
-      expect(behavior().derivedAttributes).toEqual(expectedDerivedAttributes);
+      expect(behavior().derivedAttributes).toEqual(fakeDerivedAttributes);
     });
   });
 
   describe('skills', () => {
     it('return skills with characteristics applied', () => {
-      expect(behavior().skills).toEqual({
-        Appraise: 12,
-        Dodge: 32,
-      });
+      const expectedSkills = {
+        'First Aid': 57,
+        'Melee Weapon (Simple)': 53,
+        Brawl: 64,
+      };
+
+      expect(behavior().skills).toEqual(expectedSkills);
     });
   });
 
@@ -47,28 +51,24 @@ describe('ActorBehavior', () => {
       expect(result).toEqual(new HitPointsEvent(7, 9));
     });
   });
+
+  describe('situation', () => {
+    describe('when HP is above 0', () => {
+      it('return ALIVE', () => {
+        expect(behavior().situation).toEqual('ALIVE');
+      });
+    });
+
+    describe('when HP is 0', () => {
+      it('return DEAD', () => {
+        const b = behavior();
+
+        b.damaged(100);
+
+        expect(b.situation).toEqual('DEAD');
+      });
+    });
+  });
 });
 
-const expectedCharacteristics: CharacteristicSetDefinition = {
-  STR: new CharacteristicDefinition('STR', 8),
-  CON: new CharacteristicDefinition('CON', 9),
-  SIZ: new CharacteristicDefinition('SIZ', 10),
-  DEX: new CharacteristicDefinition('DEX', 11),
-  INT: new CharacteristicDefinition('INT', 12),
-  POW: new CharacteristicDefinition('POW', 13),
-  APP: new CharacteristicDefinition('APP', 14),
-};
-
-const expectedDerivedAttributes: DerivedAttributeSetDefinition = {
-  HP: new DerivedAttributeDefinition('HP', 9),
-  PP: new DerivedAttributeDefinition('PP', 13),
-  MOV: new DerivedAttributeDefinition('MOV', 10),
-};
-
-const expectedSkills = new Map<SkillNameLiteral, number>([
-  ['Appraise', 0],
-  ['Dodge', 10],
-]);
-
-const behavior = () =>
-  new ActorBehavior(expectedCharacteristics, expectedSkills);
+const behavior = () => new ActorBehavior(fakeCharacteristics, fakeMapSkills);
