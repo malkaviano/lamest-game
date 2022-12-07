@@ -3,7 +3,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { CharacterEntity } from './character.entity';
+import { PlayerEntity } from './player.entity';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
@@ -22,7 +22,7 @@ import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 
-describe('CharacterEntity', () => {
+describe('PlayerEntity', () => {
   describe('derivedAttributes', () => {
     it('return HP 9, PP 13, MOV 10', () => {
       expect(character().derivedAttributes).toEqual(expectedDerivedAttributes);
@@ -242,7 +242,7 @@ const mockedActorBehavior = mock(ActorBehavior);
 const mockedEquipmentBehavior = mock(EquipmentBehavior);
 
 const character = () =>
-  new CharacterEntity(
+  new PlayerEntity(
     fakeIdentity,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior)
@@ -282,7 +282,7 @@ const weapon1 = new WeaponDefinition(
 when(mockedEquipmentBehavior.equip(weapon1)).thenReturn(null);
 
 const equipCharacter = (
-  character: CharacterEntity,
+  character: PlayerEntity,
   weapon: WeaponDefinition
 ): WeaponDefinition | null => {
   const previous = character.equip(weapon);
@@ -290,8 +290,6 @@ const equipCharacter = (
   return previous;
 };
 
-const unEquipCharacter = (
-  character: CharacterEntity
-): WeaponDefinition | null => {
+const unEquipCharacter = (character: PlayerEntity): WeaponDefinition | null => {
   return character.unEquip();
 };

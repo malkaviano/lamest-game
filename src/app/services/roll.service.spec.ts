@@ -31,44 +31,6 @@ describe('RollService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('skillCheck', () => {
-    describe('when skill value is zero', () => {
-      it('return IMPOSSIBLE and 0', () => {
-        const result = service.skillCheck(0);
-
-        const expected = new RollDefinition('IMPOSSIBLE', 0);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when skill value is above zero', () => {
-      describe('when rolled number is inferior or equal skill value', () => {
-        it('return SUCCESS and 10', () => {
-          when(mockedRngService.getRandomInterval(1, 100)).thenReturn(10);
-
-          const result = service.skillCheck(40);
-
-          const expected = new RollDefinition('SUCCESS', 10);
-
-          expect(result).toEqual(expected);
-        });
-      });
-
-      describe('when rolled number is superior to skill value', () => {
-        it('return SUCCESS and 10', () => {
-          when(mockedRngService.getRandomInterval(1, 100)).thenReturn(80);
-
-          const result = service.skillCheck(40);
-
-          const expected = new RollDefinition('FAILURE', 80);
-
-          expect(result).toEqual(expected);
-        });
-      });
-    });
-  });
-
   describe('actorSkillCheck', () => {
     describe('when skill value is undefined or zero', () => {
       it('return IMPOSSIBLE and 0', () => {

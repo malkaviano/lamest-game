@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Subject, take } from 'rxjs';
 import { instance, mock, reset, when } from 'ts-mockito';
 
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
 import { HitPointsEvent } from '../events/hitpoints.event';
@@ -42,7 +42,7 @@ describe('CharacterService', () => {
   describe('character changed events', () => {
     describe('on creation', () => {
       it('should emit and event', (done) => {
-        let result: CharacterEntity | undefined;
+        let result: PlayerEntity | undefined;
 
         service.characterChanged$.pipe(take(10)).subscribe((event) => {
           result = event;
@@ -56,7 +56,7 @@ describe('CharacterService', () => {
 
     describe('when character takes damage', () => {
       it('should emit and event', (done) => {
-        let result: CharacterEntity | undefined;
+        let result: PlayerEntity | undefined;
 
         service.characterChanged$.pipe(take(10)).subscribe((event) => {
           result = event;
@@ -72,7 +72,7 @@ describe('CharacterService', () => {
 
     describe('when character equips a Weapon', () => {
       it('should emit and event', (done) => {
-        let result: CharacterEntity | undefined;
+        let result: PlayerEntity | undefined;
 
         service.characterChanged$.pipe(take(10)).subscribe((event) => {
           result = event;
@@ -118,7 +118,7 @@ describe('CharacterService', () => {
 
 const mockedRandomCharacterService = mock(RandomCharacterService);
 
-const mockedCharacterEntity = mock(CharacterEntity);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const subjectHP = new Subject<HitPointsEvent>();
 

@@ -20,7 +20,8 @@
           "name": "Melee Weapon (Simple)",
           "value": 30
         }
-      ]
+      ],
+      "equippedWeapon": "bambooSword"
     },
     {
       "id": "zombie",
@@ -42,7 +43,8 @@
           "name": "Brawl",
           "value": 45
         }
-      ]
+      ],
+      "equippedWeapon": "claw"
     }
   ]
 }

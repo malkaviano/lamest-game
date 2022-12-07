@@ -5,7 +5,7 @@ import { IdentityDefinition } from '../definitions/identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { KeyValueDescriptionDefinition } from '../definitions/key-value-description.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { ConverterHelper } from './converter.helper';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 
@@ -136,4 +136,4 @@ const expected = new CharacterValuesDefinition(
   ])
 );
 
-const mockedCharacterEntity = mock(CharacterEntity);
+const mockedCharacterEntity = mock(PlayerEntity);

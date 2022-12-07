@@ -11,9 +11,8 @@ import {
   createUnEquippedLogMessage,
 } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from '../stores/item.store';
 import { EquipRule } from './equip.rule';
@@ -29,10 +28,6 @@ describe('EquipRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: CharacterService,
-          useValue: instance(mockedCharacterService),
-        },
-        {
           provide: ItemStore,
           useValue: instance(mockedItemStore),
         },
@@ -40,12 +35,8 @@ describe('EquipRule', () => {
     });
 
     reset(mockedInventoryService);
-    reset(mockedCharacterService);
-    reset(mockedItemStore);
 
-    when(mockedCharacterService.currentCharacter).thenReturn(
-      instance(mockedCharacterEntity)
-    );
+    reset(mockedItemStore);
 
     when(mockedCharacterEntity.skills).thenReturn({ 'Artillery (War)': 45 });
 
@@ -69,7 +60,7 @@ describe('EquipRule', () => {
           'Artillery (War)'
         );
 
-        const result = service.execute(event);
+        const result = service.execute(instance(mockedCharacterEntity), event);
 
         expect(result).toEqual({
           logs: [log],
@@ -85,7 +76,7 @@ describe('EquipRule', () => {
           'Artillery (War)'
         );
 
-        const result = service.execute(event);
+        const result = service.execute(instance(mockedCharacterEntity), event);
 
         expect(result).toEqual({
           logs: [log2, log],
@@ -105,7 +96,7 @@ describe('EquipRule', () => {
           'Artillery (War)'
         );
 
-        service.execute(event);
+        service.execute(instance(mockedCharacterEntity), event);
 
         expect(result).toEqual(1);
       });
@@ -119,7 +110,7 @@ describe('EquipRule', () => {
 
         when(mockedItemStore.itemLabel(event.eventId)).thenReturn('Sword');
 
-        const result = service.execute(event);
+        const result = service.execute(instance(mockedCharacterEntity), event);
 
         expect(result).toEqual({
           logs: [logError],
@@ -134,13 +125,11 @@ const event = new ActionableEvent(
   'sword'
 );
 
-const mockedCharacterService = mock(CharacterService);
-
 const mockedInventoryService = mock(InventoryService);
 
 const mockedItemStore = mock(ItemStore);
 
-const mockedCharacterEntity = mock(CharacterEntity);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const log = createEquippedLogMessage('player', 'Sword');
 

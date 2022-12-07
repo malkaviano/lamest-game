@@ -5,7 +5,6 @@ import { errorMessages } from '../definitions/error-messages.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import {
   createCannotCheckLogMessage,
@@ -17,6 +16,7 @@ import {
 import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
 import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ActorInterface } from '../interfaces/actor.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,17 +24,19 @@ import { createActionableDefinition } from '../definitions/actionable.definition
 export class ConsumeRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly characterService: CharacterService,
     private readonly rollRule: RollService
   ) {}
 
-  public execute(event: ActionableEvent): RuleResultInterface {
+  public execute(
+    actor: ActorInterface,
+    event: ActionableEvent
+  ): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
 
     const { eventId } = event;
 
     const consumable = this.inventoryService.take(
-      'player',
+      actor.name,
       eventId
     ) as ConsumableDefinition;
 
@@ -48,18 +50,18 @@ export class ConsumeRule implements RuleInterface {
 
     if (consumable.skillName) {
       rollDefinition = this.rollRule.actorSkillCheck(
-        this.characterService.currentCharacter,
+        actor,
         consumable.skillName
       );
     }
 
     if (rollDefinition.result !== 'IMPOSSIBLE') {
-      logs.push(createConsumedLogMessage('player', consumable.label));
+      logs.push(createConsumedLogMessage(actor.name, consumable.label));
 
       if (rollDefinition.result !== 'NONE' && consumable.skillName) {
         logs.push(
           createCheckLogMessage(
-            'player',
+            actor.name,
             consumable.skillName,
             rollDefinition.roll,
             rollDefinition.result
@@ -67,17 +69,17 @@ export class ConsumeRule implements RuleInterface {
         );
       }
 
-      const log = this.characterService.currentCharacter.reactTo(
+      const log = actor.reactTo(
         createActionableDefinition('HEAL', 'heal', 'Heal'),
         rollDefinition.result,
         hp
       );
 
       if (log) {
-        logs.push(createFreeLogMessage('player', log));
+        logs.push(createFreeLogMessage(actor.name, log));
       }
     } else if (consumable.skillName) {
-      logs.push(createCannotCheckLogMessage('player', consumable.skillName));
+      logs.push(createCannotCheckLogMessage(actor.name, consumable.skillName));
     }
 
     return { logs };

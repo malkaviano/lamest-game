@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
 import { ArrayView } from '../../views/array.view';
-import { CharacterEntity } from '../../entities/character.entity';
+import { PlayerEntity } from '../../entities/player.entity';
 import { IdentityDefinition } from '../../definitions/identity.definition';
 import { CharacteristicDefinition } from '../../definitions/characteristic.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
@@ -224,7 +224,7 @@ describe('GamePageComponent', () => {
   });
 });
 
-const mockedCharacterEntity = mock(CharacterEntity);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const askAction = createActionableDefinition('ASK', 'action1', 'Got action?');
 

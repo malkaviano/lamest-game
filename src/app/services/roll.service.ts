@@ -36,18 +36,6 @@ export class RollService {
     return this.skillCheck(skillValue);
   }
 
-  public skillCheck(skillValue: number): RollDefinition {
-    if (skillValue > 0) {
-      const rolled = this.rngService.getRandomInterval(1, 100);
-
-      const result = rolled <= skillValue ? 'SUCCESS' : 'FAILURE';
-
-      return new RollDefinition(result, rolled);
-    }
-
-    return new RollDefinition('IMPOSSIBLE', 0);
-  }
-
   public roll(roll: Dice): number {
     let acc = 0;
 
@@ -66,5 +54,17 @@ export class RollService {
     }
 
     return acc;
+  }
+
+  private skillCheck(skillValue: number): RollDefinition {
+    if (skillValue > 0) {
+      const rolled = this.rngService.getRandomInterval(1, 100);
+
+      const result = rolled <= skillValue ? 'SUCCESS' : 'FAILURE';
+
+      return new RollDefinition(result, rolled);
+    }
+
+    return new RollDefinition('IMPOSSIBLE', 0);
   }
 }

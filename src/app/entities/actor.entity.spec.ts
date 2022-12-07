@@ -12,7 +12,7 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { ActionableState } from '../states/actionable.state';
 import { ArrayView } from '../views/array.view';
-import { NpcEntity } from './npc.entity';
+import { ActorEntity } from './actor.entity';
 
 beforeEach(() => {
   when(mockedState.actions).thenReturn(new ArrayView([action, attack]));
@@ -29,7 +29,7 @@ beforeEach(() => {
   });
 });
 
-describe('NpcEntity', () => {
+describe('ActorEntity', () => {
   describe('attack', () => {
     describe('when state do not produce damage', () => {
       it('return null', () => {
@@ -106,7 +106,7 @@ const mockedActorBehavior = mock(ActorBehavior);
 const mockedEquipmentBehavior = mock(EquipmentBehavior);
 
 const fakeEntity = (resettable = false, state: ActionableState = someState) =>
-  new NpcEntity(
+  new ActorEntity(
     'id1',
     'SomeEntity',
     'Testing Entity',

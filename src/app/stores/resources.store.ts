@@ -183,6 +183,7 @@ export class ResourcesStore {
         resettable: a.resettable,
         characteristics: characteristics,
         skills: skills,
+        equippedWeapon: a.equippedWeapon,
       };
     });
 

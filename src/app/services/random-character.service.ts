@@ -6,7 +6,7 @@ import { SkillService } from './skill.service';
 import { professionSkillDefinitions } from '../definitions/profession.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { commonSkillDefinitions } from '../definitions/skill.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { ProfessionLiteral } from '../literals/profession.literal';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { ActorBehavior } from '../behaviors/actor.behavior';
@@ -21,11 +21,11 @@ export class RandomCharacterService {
     private readonly skillService: SkillService
   ) {}
 
-  public character(): CharacterEntity {
+  public character(): PlayerEntity {
     const identity = this.identity();
     const characteristics = this.characteristics();
 
-    return new CharacterEntity(
+    return new PlayerEntity(
       identity,
       new ActorBehavior(
         characteristics,

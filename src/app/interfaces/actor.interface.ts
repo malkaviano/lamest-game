@@ -1,4 +1,5 @@
-import { ReactAction } from './react-action.interface';
+import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ActionReactive } from './action-reactive.interface';
 import { WeaponEquipped } from './weapon-equipped.interface';
 import { WithCharacteristicsInterface } from './with-characteristics.interface';
 import { WithDerivedAttibutesInterface } from './with-derived-attributes.interface';
@@ -9,4 +10,6 @@ export interface ActorInterface
     WithDerivedAttibutesInterface,
     WithSkillsInterface,
     WeaponEquipped,
-    ReactAction {}
+    ActionReactive {
+  get action(): ActionableDefinition | null;
+}

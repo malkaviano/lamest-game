@@ -7,11 +7,10 @@ import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import { createTookLogMessage } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
+import { PlayerEntity } from '../entities/player.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { InventoryService } from '../services/inventory.service';
-import { NarrativeService } from '../services/narrative.service';
 import { PickRule } from './pick.rule';
 
 describe('PickRule', () => {
@@ -21,18 +20,11 @@ describe('PickRule', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: NarrativeService,
-          useValue: instance(mockedNarrativeService),
-        },
-        {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
         },
       ],
     });
-
-    when(mockedNarrativeService.interatives).thenReturn(interactives);
-
     when(mockedInteractiveEntity.id).thenReturn('id1');
 
     when(mockedInteractiveEntity.name).thenReturn('test');
@@ -52,7 +44,11 @@ describe('PickRule', () => {
         mockedInteractiveEntity.reactTo(event.actionableDefinition, 'NONE')
       ).thenReturn('Sword');
 
-      const result = service.execute(event);
+      const result = service.execute(
+        instance(mockedCharacterEntity),
+        event,
+        instance(mockedInteractiveEntity)
+      );
 
       verify(mockedInventoryService.store('player', item)).once();
 
@@ -65,7 +61,7 @@ describe('PickRule', () => {
 
 const mockedInventoryService = mock(InventoryService);
 
-const mockedNarrativeService = mock(NarrativeService);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const item = new WeaponDefinition(
   'sword',
@@ -82,9 +78,5 @@ const action = createActionableDefinition('PICK', 'sword', 'Sword');
 const event = new ActionableEvent(action, 'id1');
 
 const mockedInteractiveEntity = mock(InteractiveEntity);
-
-const interactives: KeyValueInterface<InteractiveEntity> = {
-  id1: instance(mockedInteractiveEntity),
-};
 
 const log = createTookLogMessage('player', 'test', 'Sword');

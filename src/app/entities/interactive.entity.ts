@@ -4,8 +4,10 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { ResultLiteral } from '../literals/result.literal';
+import { ActionReactive } from '../interfaces/action-reactive.interface';
+import { ClassificationLiteral } from '../literals/classification.literal';
 
-export class InteractiveEntity {
+export class InteractiveEntity implements ActionReactive {
   private readonly initialState: ActionableState;
 
   private readonly actionsChanged: BehaviorSubject<
@@ -30,18 +32,18 @@ export class InteractiveEntity {
     this.actionsChanged$ = this.actionsChanged.asObservable();
   }
 
+  public get classification(): ClassificationLiteral {
+    return 'REACTIVE';
+  }
+
   public reactTo(
     selected: ActionableDefinition,
     result: ResultLiteral,
-    damageTaken?: number
+    value?: number
   ): string | undefined {
     const oldActions = this.currentState.actions;
 
-    const { state, log } = this.currentState.onResult(
-      selected,
-      result,
-      damageTaken
-    );
+    const { state, log } = this.currentState.onResult(selected, result, value);
 
     this.currentState = state;
 

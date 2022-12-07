@@ -3,12 +3,13 @@ import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 export interface ActorStoreInterface {
   readonly actors: {
-    id: string;
-    name: string;
-    description: string;
-    state: string;
-    resettable: boolean;
-    characteristics: CharacteristicSetDefinition;
-    skills: Map<SkillNameLiteral, number>;
+    readonly id: string;
+    readonly name: string;
+    readonly description: string;
+    readonly state: string;
+    readonly resettable: boolean;
+    readonly characteristics: CharacteristicSetDefinition;
+    readonly skills: Map<SkillNameLiteral, number>;
+    readonly equippedWeapon: string;
   }[];
 }

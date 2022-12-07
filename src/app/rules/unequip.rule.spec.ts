@@ -7,9 +7,8 @@ import { DamageDefinition } from '../definitions/damage.definition';
 import { createDice } from '../definitions/dice.definition';
 import { createUnEquippedLogMessage } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { UnEquipRule } from './unequip.rule';
 
@@ -22,10 +21,6 @@ describe('UnEquipRule', () => {
         {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: CharacterService,
-          useValue: instance(mockedCharacterService),
         },
       ],
     });
@@ -41,13 +36,10 @@ describe('UnEquipRule', () => {
     it('return logs', () => {
       when(mockedInventoryService.store('player', weapon)).thenReturn(1);
 
-      when(mockedCharacterService.currentCharacter).thenReturn(
-        instance(mockedCharacter)
-      );
-
-      when(mockedCharacter.unEquip()).thenReturn(weapon);
+      when(mockedCharacterEntity.unEquip()).thenReturn(weapon);
 
       const logs = service.execute(
+        instance(mockedCharacterEntity),
         new ActionableEvent(
           createActionableDefinition('UNEQUIP', 'unequip', 'Sword'),
           'someId'
@@ -63,9 +55,7 @@ describe('UnEquipRule', () => {
 
 const mockedInventoryService = mock(InventoryService);
 
-const mockedCharacterService = mock(CharacterService);
-
-const mockedCharacter = mock(CharacterEntity);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const log = createUnEquippedLogMessage('player', 'Sword');
 

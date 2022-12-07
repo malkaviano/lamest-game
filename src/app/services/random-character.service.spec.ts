@@ -6,7 +6,7 @@ import { RandomCharacterService } from './random-character.service';
 import { GeneratorService } from './generator.service';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { IdentityDefinition } from '../definitions/identity.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { SkillService } from './skill.service';
 import { ActorBehavior } from '../behaviors/actor.behavior';
@@ -120,7 +120,7 @@ const fakeSkills = new Map<SkillNameLiteral, number>([
   ['Survival', 5],
 ]);
 
-const expectedCharacter = new CharacterEntity(
+const expectedCharacter = new PlayerEntity(
   fakeIdentity,
   new ActorBehavior(fakeCharacteristics, fakeSkills),
   new EquipmentBehavior()

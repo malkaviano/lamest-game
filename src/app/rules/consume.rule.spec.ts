@@ -15,9 +15,8 @@ import {
   createHealedMessage,
 } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { CharacterService } from '../services/character.service';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
 import { RollService } from '../services/roll.service';
@@ -33,19 +32,11 @@ describe('ConsumeRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: CharacterService,
-          useValue: instance(mockedCharacterService),
-        },
-        {
           provide: RollService,
           useValue: instance(mockedRollRule),
         },
       ],
     });
-
-    when(mockedCharacterService.currentCharacter).thenReturn(
-      instance(mockedCharacterEntity)
-    );
 
     when(mockedCharacterEntity.skills).thenReturn({ 'First Aid': 45 });
 
@@ -72,7 +63,10 @@ describe('ConsumeRule', () => {
         );
 
         expect(() =>
-          service.execute(new ActionableEvent(consumeAction, 'gun'))
+          service.execute(
+            instance(mockedCharacterEntity),
+            new ActionableEvent(consumeAction, 'gun')
+          )
         ).toThrowError(errorMessages['WRONG-ITEM']);
       });
     });
@@ -94,7 +88,10 @@ describe('ConsumeRule', () => {
             roll: 100,
           });
 
-          const result = service.execute(event);
+          const result = service.execute(
+            instance(mockedCharacterEntity),
+            event
+          );
 
           expect(result).toEqual({
             logs: [logFirstAid1, logFirstAidFailure],
@@ -122,7 +119,10 @@ describe('ConsumeRule', () => {
             mockedCharacterEntity.reactTo(deepEqual(healAction), 'SUCCESS', 5)
           ).thenReturn(logHeal5);
 
-          const result = service.execute(event);
+          const result = service.execute(
+            instance(mockedCharacterEntity),
+            event
+          );
 
           expect(result).toEqual({
             logs: [logFirstAid1, logFirstAidSuccess, logFirstAid3],
@@ -148,7 +148,10 @@ describe('ConsumeRule', () => {
             roll: 0,
           });
 
-          const result = service.execute(event);
+          const result = service.execute(
+            instance(mockedCharacterEntity),
+            event
+          );
 
           expect(result).toEqual({
             logs: [logError],
@@ -167,7 +170,7 @@ describe('ConsumeRule', () => {
           mockedCharacterEntity.reactTo(deepEqual(healAction), 'NONE', 2)
         ).thenReturn(logHeal2);
 
-        const result = service.execute(event2);
+        const result = service.execute(instance(mockedCharacterEntity), event2);
 
         expect(result).toEqual({
           logs: [logCheeseBurger1, logCheeseBurger2],
@@ -204,13 +207,11 @@ const event = new ActionableEvent(consumeAction, 'firstAid');
 
 const event2 = new ActionableEvent(consumeAction, 'sandwich');
 
-const mockedCharacterService = mock(CharacterService);
-
 const mockedInventoryService = mock(InventoryService);
 
 const mockedRollRule = mock(RollService);
 
-const mockedCharacterEntity = mock(CharacterEntity);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const logCheeseBurger1 = createConsumedLogMessage('player', 'Cheeseburger');
 

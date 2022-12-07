@@ -21,6 +21,8 @@ import { LoggingService } from './logging.service';
   providedIn: 'root',
 })
 export class GameManagerService {
+  public readonly playerName: string;
+
   public readonly events: GameEventsDefinition;
 
   constructor(
@@ -30,8 +32,10 @@ export class GameManagerService {
     private readonly inventoryService: InventoryService,
     private readonly loggingService: LoggingService
   ) {
+    this.playerName = this.characterService.currentCharacter.name;
+
     const inventoryChanged = this.inventoryService.inventoryChanged$.pipe(
-      filter((event) => event.storageName === 'player'),
+      filter((event) => event.storageName === this.playerName),
       map(() => {
         const items = this.playerInventory();
 
@@ -54,7 +58,7 @@ export class GameManagerService {
   }
 
   private playerInventory(): ArrayView<ActionableItemDefinition> {
-    const playerItems = this.inventoryService.check('player');
+    const playerItems = this.inventoryService.check(this.playerName);
 
     const inventoryView: ActionableItemDefinition[] = [];
 

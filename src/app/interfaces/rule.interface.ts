@@ -1,6 +1,12 @@
 import { ActionableEvent } from '../events/actionable.event';
+import { ActionReactive } from './action-reactive.interface';
+import { ActorInterface } from './actor.interface';
 import { RuleResultInterface } from './rule-result.interface';
 
 export interface RuleInterface {
-  execute(action: ActionableEvent): RuleResultInterface;
+  execute(
+    actor: ActorInterface,
+    action: ActionableEvent,
+    target?: ActionReactive
+  ): RuleResultInterface;
 }

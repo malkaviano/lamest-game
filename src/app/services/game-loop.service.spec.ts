@@ -8,12 +8,11 @@ import {
   createActorDiedMessage,
   createFreeLogMessage,
 } from '../definitions/log-message.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { RulesHelper } from '../helpers/rules.helper';
-import { AttackRule } from '../rules/attack.rule';
-import { DefenseRule } from '../rules/defense.rule';
+import { CombatRule } from '../rules/combat.rule';
 import { CharacterService } from './character.service';
 import { GameLoopService } from './game-loop.service';
 
@@ -34,16 +33,12 @@ describe('GameLoopService', () => {
       ],
     });
 
-    when(mockedRulesHelper.attackRule).thenReturn(instance(mockedAttackRule));
+    when(mockedRulesHelper.combatRule).thenReturn(instance(mockedCombatRule));
 
-    when(mockedRulesHelper.defenseRule).thenReturn(instance(mockedDefenseRule));
-
-    when(mockedAttackRule.execute(anything())).thenReturn({
+    when(
+      mockedCombatRule.execute(anything(), anything(), anything())
+    ).thenReturn({
       logs: [log1],
-    });
-
-    when(mockedDefenseRule.execute()).thenReturn({
-      logs: [log2],
     });
 
     when(mockedCharacterService.currentCharacter).thenReturn(
@@ -86,13 +81,11 @@ const event = new ActionableEvent(action, 'id1');
 
 const mockedRulesHelper = mock(RulesHelper);
 
-const mockedAttackRule = mock(AttackRule);
-
-const mockedDefenseRule = mock(DefenseRule);
+const mockedCombatRule = mock(CombatRule);
 
 const mockedCharacterService = mock(CharacterService);
 
-const mockedCharacterEntity = mock(CharacterEntity);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const subject = new Subject<HitPointsEvent>();
 

@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { CharacterService } from '../services/character.service';
-import { NarrativeService } from '../services/narrative.service';
 import {
   createCannotCheckLogMessage,
   createCheckLogMessage,
@@ -13,39 +11,36 @@ import {
 } from '../definitions/log-message.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RollService } from '../services/roll.service';
+import { ActorInterface } from '../interfaces/actor.interface';
+import { ActionReactive } from '../interfaces/action-reactive.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillRule implements RuleInterface {
-  constructor(
-    private readonly characterService: CharacterService,
-    private readonly rollRule: RollService,
-    private readonly narrativeService: NarrativeService
-  ) {}
+  constructor(private readonly rollRule: RollService) {}
 
-  public execute(action: ActionableEvent): RuleResultInterface {
+  public execute(
+    actor: ActorInterface,
+    action: ActionableEvent,
+    target: ActionReactive
+  ): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
 
     const skillName = action.actionableDefinition.name as SkillNameLiteral;
 
-    const { roll, result } = this.rollRule.actorSkillCheck(
-      this.characterService.currentCharacter,
-      skillName
-    );
+    const { roll, result } = this.rollRule.actorSkillCheck(actor, skillName);
 
     if (result !== 'IMPOSSIBLE') {
-      logs.push(createCheckLogMessage('player', skillName, roll, result));
+      logs.push(createCheckLogMessage(actor.name, skillName, roll, result));
 
-      const interactive = this.narrativeService.interatives[action.eventId];
-
-      const log = interactive.reactTo(action.actionableDefinition, result);
+      const log = target.reactTo(action.actionableDefinition, result);
 
       if (log) {
-        logs.push(createFreeLogMessage(interactive.name, log));
+        logs.push(createFreeLogMessage(target.name, log));
       }
     } else {
-      logs.push(createCannotCheckLogMessage('player', skillName));
+      logs.push(createCannotCheckLogMessage(actor.name, skillName));
     }
 
     return { logs };

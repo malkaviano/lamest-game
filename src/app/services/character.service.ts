@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, map, merge, Observable } from 'rxjs';
 
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { RandomCharacterService } from './random-character.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CharacterService {
-  private readonly character: CharacterEntity;
+  private readonly character: PlayerEntity;
 
-  private readonly characterChanged: BehaviorSubject<CharacterEntity>;
+  private readonly characterChanged: BehaviorSubject<PlayerEntity>;
 
-  public readonly characterChanged$: Observable<CharacterEntity>;
+  public readonly characterChanged$: Observable<PlayerEntity>;
 
   constructor(private readonly randomCharacterService: RandomCharacterService) {
     this.character = this.randomCharacter;
@@ -29,11 +29,11 @@ export class CharacterService {
     );
   }
 
-  public get currentCharacter(): CharacterEntity {
+  public get currentCharacter(): PlayerEntity {
     return this.character;
   }
 
-  public get randomCharacter(): CharacterEntity {
+  public get randomCharacter(): PlayerEntity {
     return this.randomCharacterService.character();
   }
 }

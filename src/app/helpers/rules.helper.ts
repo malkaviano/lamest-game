@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { AttackRule } from '../rules/attack.rule';
 import { ConsumeRule } from '../rules/consume.rule';
 import { ConversationRule } from '../rules/conversation.rule';
-import { DefenseRule } from '../rules/defense.rule';
+import { CombatRule } from '../rules/combat.rule';
 import { EquipRule } from '../rules/equip.rule';
 import { PickRule } from '../rules/pick.rule';
 import { SceneRule } from '../rules/scene.rule';
@@ -20,9 +19,8 @@ export class RulesHelper {
     public readonly equipRule: EquipRule,
     public readonly unequipRule: UnEquipRule,
     public readonly sceneRule: SceneRule,
-    public readonly attackRule: AttackRule,
+    public readonly combatRule: CombatRule,
     public readonly consumableRule: ConsumeRule,
-    public readonly conversationRule: ConversationRule,
-    public readonly defenseRule: DefenseRule
+    public readonly conversationRule: ConversationRule
   ) {}
 }

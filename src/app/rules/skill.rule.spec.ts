@@ -8,12 +8,9 @@ import {
   createCheckLogMessage,
   createFreeLogMessage,
 } from '../definitions/log-message.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { CharacterService } from '../services/character.service';
-import { NarrativeService } from '../services/narrative.service';
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 
@@ -24,25 +21,11 @@ describe('SkillRule', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: NarrativeService,
-          useValue: instance(mockedNarrativeService),
-        },
-        {
-          provide: CharacterService,
-          useValue: instance(mockedCharacterService),
-        },
-        {
           provide: RollService,
           useValue: instance(mockedRollRule),
         },
       ],
     });
-
-    when(mockedCharacterService.currentCharacter).thenReturn(
-      instance(mockedCharacterEntity)
-    );
-
-    when(mockedNarrativeService.interatives).thenReturn(interactives);
 
     when(mockedInteractiveEntity.id).thenReturn('id1');
 
@@ -74,7 +57,11 @@ describe('SkillRule', () => {
           roll: 0,
         });
 
-        const result = service.execute(event);
+        const result = service.execute(
+          instance(mockedCharacterEntity),
+          event,
+          instance(mockedInteractiveEntity)
+        );
 
         expect(result).toEqual({
           logs: [log2],
@@ -92,7 +79,11 @@ describe('SkillRule', () => {
         roll: 10,
       });
 
-      const result = service.execute(event);
+      const result = service.execute(
+        instance(mockedCharacterEntity),
+        event,
+        instance(mockedInteractiveEntity)
+      );
 
       expect(result).toEqual({
         logs: [log1, log3],
@@ -101,19 +92,11 @@ describe('SkillRule', () => {
   });
 });
 
-const mockedCharacterService = mock(CharacterService);
-
 const mockedRollRule = mock(RollService);
-
-const mockedNarrativeService = mock(NarrativeService);
 
 const mockedInteractiveEntity = mock(InteractiveEntity);
 
-const interactives: KeyValueInterface<InteractiveEntity> = {
-  id1: instance(mockedInteractiveEntity),
-};
-
-const mockedCharacterEntity = mock(CharacterEntity);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const action = createActionableDefinition('SKILL', 'Brawl');
 

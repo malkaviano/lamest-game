@@ -4,30 +4,22 @@ import { anything, instance, mock, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createFreeLogMessage } from '../definitions/log-message.definition';
+import { PlayerEntity } from '../entities/player.entity';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { NarrativeService } from '../services/narrative.service';
 import { ConversationRule } from './conversation.rule';
 
 describe('ConversationRule', () => {
   let service: ConversationRule;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: NarrativeService,
-          useValue: instance(mockedNarrativeService),
-        },
-      ],
-    });
-
-    when(mockedNarrativeService.interatives).thenReturn(interactives);
+    TestBed.configureTestingModule({});
 
     when(mockedInteractiveEntity.id).thenReturn('id1');
 
     when(mockedInteractiveEntity.name).thenReturn('test');
+
+    when(mockedCharacterEntity.name).thenReturn('player');
 
     service = TestBed.inject(ConversationRule);
   });
@@ -43,10 +35,12 @@ describe('ConversationRule', () => {
       );
 
       const result = service.execute(
+        instance(mockedCharacterEntity),
         new ActionableEvent(
           createActionableDefinition('ASK', 'hi', 'Hi'),
           'id1'
-        )
+        ),
+        instance(mockedInteractiveEntity)
       );
 
       expect(result).toEqual({
@@ -56,13 +50,9 @@ describe('ConversationRule', () => {
   });
 });
 
-const mockedNarrativeService = mock(NarrativeService);
+const mockedCharacterEntity = mock(PlayerEntity);
 
 const mockedInteractiveEntity = mock(InteractiveEntity);
-
-const interactives: KeyValueInterface<InteractiveEntity> = {
-  id1: instance(mockedInteractiveEntity),
-};
 
 const log1 = createFreeLogMessage('player', 'Hi');
 

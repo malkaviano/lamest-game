@@ -8,27 +8,30 @@ import {
   createUnEquippedLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
-import { CharacterService } from '../services/character.service';
+import { ActorInterface } from '../interfaces/actor.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UnEquipRule implements RuleInterface {
-  constructor(
-    private readonly inventoryService: InventoryService,
-    private readonly characterService: CharacterService
-  ) {}
+  constructor(private readonly inventoryService: InventoryService) {}
 
-  public execute(action: ActionableEvent): RuleResultInterface {
+  public execute(
+    actor: ActorInterface,
+    action: ActionableEvent
+  ): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
 
-    const weapon = this.characterService.currentCharacter.unEquip();
+    const weapon = actor.unEquip();
 
     if (weapon) {
-      this.inventoryService.store('player', weapon);
+      this.inventoryService.store(actor.name, weapon);
 
       logs.push(
-        createUnEquippedLogMessage('player', action.actionableDefinition.label)
+        createUnEquippedLogMessage(
+          actor.name,
+          action.actionableDefinition.label
+        )
       );
     }
 

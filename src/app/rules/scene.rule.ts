@@ -8,6 +8,8 @@ import {
   createSceneLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
+import { ActorInterface } from '../interfaces/actor.interface';
+import { ActionReactive } from '../interfaces/action-reactive.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,17 +17,19 @@ import {
 export class SceneRule implements RuleInterface {
   constructor(private readonly narrativeService: NarrativeService) {}
 
-  public execute(action: ActionableEvent): RuleResultInterface {
+  public execute(
+    actor: ActorInterface,
+    action: ActionableEvent,
+    target: ActionReactive
+  ): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
-
-    const interactive = this.narrativeService.interatives[action.eventId];
 
     this.narrativeService.changeScene(action);
 
     logs.push(
       createSceneLogMessage(
-        'player',
-        interactive.name,
+        actor.name,
+        target.name,
         action.actionableDefinition.label
       )
     );

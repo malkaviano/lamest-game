@@ -1,11 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 
 import { IdentityDefinition } from '../definitions/identity.definition';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { HitPointsEvent } from '../events/hitpoints.event';
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
-import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ResultLiteral } from '../literals/result.literal';
@@ -15,8 +11,11 @@ import {
   createHealedMessage,
 } from '../definitions/log-message.definition';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
+import { ClassificationLiteral } from '../literals/classification.literal';
+import { emptyState } from '../states/empty.state';
+import { ActorEntity } from './actor.entity';
 
-export class CharacterEntity implements ActorInterface {
+export class PlayerEntity extends ActorEntity {
   private readonly hpChanged: Subject<HitPointsEvent>;
 
   public readonly hpChanged$: Observable<HitPointsEvent>;
@@ -27,9 +26,19 @@ export class CharacterEntity implements ActorInterface {
 
   constructor(
     public readonly identity: IdentityDefinition,
-    private readonly actorBehavior: ActorBehavior,
-    private readonly equipmentBehavior: EquipmentBehavior
+    actorBehavior: ActorBehavior,
+    equipmentBehavior: EquipmentBehavior
   ) {
+    super(
+      identity.name,
+      identity.name,
+      '',
+      emptyState,
+      false,
+      actorBehavior,
+      equipmentBehavior
+    );
+
     this.hpChanged = new Subject();
 
     this.hpChanged$ = this.hpChanged.asObservable();
@@ -39,23 +48,11 @@ export class CharacterEntity implements ActorInterface {
     this.weaponEquippedChanged$ = this.weaponEquippedChanged.asObservable();
   }
 
-  public get weaponEquipped(): WeaponDefinition {
-    return this.equipmentBehavior.weaponEquipped;
+  public override get classification(): ClassificationLiteral {
+    return 'PLAYER';
   }
 
-  public get characteristics(): CharacteristicSetDefinition {
-    return this.actorBehavior.characteristics;
-  }
-
-  public get derivedAttributes(): DerivedAttributeSetDefinition {
-    return this.actorBehavior.derivedAttributes;
-  }
-
-  public get skills(): KeyValueInterface<number> {
-    return this.actorBehavior.skills;
-  }
-
-  public reactTo(
+  public override reactTo(
     action: ActionableDefinition,
     result: ResultLiteral,
     value?: number | undefined
@@ -79,24 +76,6 @@ export class CharacterEntity implements ActorInterface {
     }
 
     return resultLog;
-  }
-
-  public equip(weapon: WeaponDefinition): WeaponDefinition | null {
-    const previous = this.equipmentBehavior.equip(weapon);
-
-    this.weaponEquippedChanged.next(weapon);
-
-    return previous;
-  }
-
-  public unEquip(): WeaponDefinition | null {
-    const weapon = this.equipmentBehavior.unEquip();
-
-    if (weapon) {
-      this.weaponEquippedChanged.next(weapon);
-    }
-
-    return weapon;
   }
 
   private damaged(damage: number): HitPointsEvent {

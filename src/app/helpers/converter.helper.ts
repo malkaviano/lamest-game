@@ -11,7 +11,7 @@ import {
 } from '../definitions/characteristic.definition';
 import { KeyValueDescriptionDefinition } from '../definitions/key-value-description.definition';
 import { skillDefinitions } from '../definitions/skill.definition';
-import { CharacterEntity } from '../entities/character.entity';
+import { PlayerEntity } from '../entities/player.entity';
 import { IdentityLiteral } from '../literals/identity.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -21,7 +21,7 @@ import { KeyValueInterface } from '../interfaces/key-value.interface';
 })
 export class ConverterHelper {
   public characterToKeyValueDescription(
-    character: CharacterEntity
+    character: PlayerEntity
   ): CharacterValuesDefinition {
     const identity = new ArrayView(
       Object.entries(character.identity).map(([key, value]) => {
