@@ -30,7 +30,7 @@ export class GameManagerService {
     characterService: CharacterService,
     narrativeService: NarrativeService,
     inventoryService: InventoryService,
-    private readonly loggingService: LoggingService
+    loggingService: LoggingService
   ) {
     this.playerName = characterService.currentCharacter.name;
 
@@ -45,16 +45,14 @@ export class GameManagerService {
 
     this.events = new GameEventsDefinition(
       narrativeService.sceneChanged$,
-      this.loggingService.gameLog$,
+      loggingService.gameLog$,
       characterService.characterChanged$,
       inventoryChanged
     );
   }
 
   public actionableReceived(action: ActionableEvent): void {
-    const result = this.gameLoopService.run(action);
-
-    result.logs.forEach((log) => this.loggingService.log(log));
+    this.gameLoopService.run(action);
   }
 
   private playerInventory(

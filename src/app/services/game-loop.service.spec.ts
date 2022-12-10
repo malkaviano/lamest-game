@@ -1,23 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Subject } from 'rxjs';
-import { anything, instance, when } from 'ts-mockito';
+import { anything, deepEqual, instance, when } from 'ts-mockito';
 
 import {
   createActorIsDeadMessage,
   createFreeLogMessage,
+  LogMessageDefinition,
 } from '../definitions/log-message.definition';
-import { HitPointsEvent } from '../events/hitpoints.event';
 import { RulesHelper } from '../helpers/rules.helper';
 import { CharacterService } from './character.service';
 import { GameLoopService } from './game-loop.service';
 import { NarrativeService } from './narrative.service';
+import { LoggingService } from './logging.service';
 
 import { actionAttack, attackEvent } from '../../../tests/fakes';
 import {
   mockedActorEntity,
   mockedCharacterService,
   mockedCombatRule,
+  mockedLoggingService,
   mockedNarrativeService,
   mockedPlayerEntity,
   mockedRulesHelper,
@@ -42,26 +43,16 @@ describe('GameLoopService', () => {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
         },
+        {
+          provide: LoggingService,
+          useValue: instance(mockedLoggingService),
+        },
       ],
     });
 
     setupMocks();
 
     when(mockedRulesHelper.combatRule).thenReturn(instance(mockedCombatRule));
-
-    when(mockedCombatRule.execute(anything(), anything(), anything()))
-      .thenReturn({
-        logs: [log1],
-      })
-      .thenReturn({
-        logs: [log2],
-      });
-
-    when(mockedCharacterService.currentCharacter).thenReturn(
-      instance(mockedPlayerEntity)
-    );
-
-    when(mockedPlayerEntity.hpChanged$).thenReturn(subject);
 
     service = TestBed.inject(GameLoopService);
   });
@@ -76,31 +67,65 @@ describe('GameLoopService', () => {
 
       when(mockedActorEntity.situation).thenReturn('ALIVE');
 
-      const result = service.run(attackEvent);
+      when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
-      expect(result).toEqual({ logs: [log1, log2] });
+      when(mockedCombatRule.execute(anything(), anything(), anything()))
+        .thenReturn({
+          logs: [log1],
+        })
+        .thenReturn({
+          logs: [log2],
+        });
+
+      const result: LogMessageDefinition[] = [];
+
+      when(mockedLoggingService.log(deepEqual(log1))).thenCall(() => {
+        result.push(log1);
+      });
+
+      when(mockedLoggingService.log(deepEqual(log2))).thenCall(() => {
+        result.push(log2);
+      });
+
+      service.run(attackEvent);
+
+      expect(result).toEqual([log1, log2]);
     });
 
     describe('when player HP reaches 0', () => {
-      it('should log player died', (done) => {
-        subject.next(new HitPointsEvent(10, 0));
+      it('should log player died', () => {
+        when(mockedActorEntity.action).thenReturn(actionAttack);
 
-        when(mockedActorEntity.situation).thenReturn('DEAD');
+        when(mockedActorEntity.situation).thenReturn('ALIVE');
 
-        done();
+        when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
-        const result = service.run(attackEvent);
+        when(mockedCombatRule.execute(anything(), anything(), anything()))
+          .thenReturn({ logs: [log3] })
+          .thenCall(() => {
+            when(mockedPlayerEntity.situation).thenReturn('DEAD');
 
-        expect(result).toEqual({ logs: [logDied] });
+            return { logs: [log3] };
+          });
+
+        const result: LogMessageDefinition[] = [];
+
+        when(mockedLoggingService.log(deepEqual(logDied))).thenCall(() => {
+          result.push(logDied);
+        });
+
+        service.run(attackEvent);
+
+        expect(result).toEqual([logDied]);
       });
     });
   });
 });
 
-const subject = new Subject<HitPointsEvent>();
-
 const log1 = createFreeLogMessage('test', 'took some dmg');
 
 const log2 = createFreeLogMessage('player', 'dodged');
+
+const log3 = createFreeLogMessage('player', 'NOOOO');
 
 const logDied = createActorIsDeadMessage('player');

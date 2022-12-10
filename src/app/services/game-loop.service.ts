@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { ActionableEvent } from '../events/actionable.event';
 import { RulesHelper } from '../helpers/rules.helper';
 import { RuleInterface } from '../interfaces/rule.interface';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { CharacterService } from './character.service';
 import {
   createActorIsDeadMessage,
@@ -15,6 +14,7 @@ import { ActorEntity } from '../entities/actor.entity';
 import { ArrayView } from '../views/array.view';
 import { ActionReactive } from '../interfaces/action-reactive.interface';
 import { PlayerEntity } from '../entities/player.entity';
+import { LoggingService } from './logging.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,12 +26,11 @@ export class GameLoopService {
 
   private readonly player: PlayerEntity;
 
-  private isPlayerAlive: boolean;
-
   constructor(
     private readonly rulesHelper: RulesHelper,
     private readonly characterService: CharacterService,
-    private readonly narrativeService: NarrativeService
+    private readonly narrativeService: NarrativeService,
+    private readonly loggingService: LoggingService
   ) {
     this.dispatcher = {
       SKILL: this.rulesHelper.skillRule,
@@ -44,13 +43,7 @@ export class GameLoopService {
       ASK: this.rulesHelper.conversationRule,
     };
 
-    this.isPlayerAlive = true;
-
     this.player = this.characterService.currentCharacter;
-
-    this.player.hpChanged$.subscribe(() => {
-      this.isPlayerAlive = this.player.situation === 'ALIVE';
-    });
   }
 
   public reactives(interactiveId: string): ActionReactive {
@@ -71,15 +64,13 @@ export class GameLoopService {
     return new ArrayView(actors);
   }
 
-  public run(action: ActionableEvent): RuleResultInterface {
-    let logs: LogMessageDefinition[] = [];
-
-    if (this.isPlayerAlive) {
+  public run(action: ActionableEvent) {
+    if (this.isPlayerAlive()) {
       const playerResult = this.dispatcher[
         action.actionableDefinition.actionable
       ].execute(this.player, action, this.reactives(action.eventId));
 
-      logs = logs.concat(playerResult.logs);
+      this.logging(playerResult.logs);
 
       this.actors.items.forEach((actor) => {
         if (actor.action && actor.situation === 'ALIVE') {
@@ -89,17 +80,21 @@ export class GameLoopService {
             this.player
           );
 
-          logs = logs.concat(resultLogs.logs);
+          this.logging(resultLogs.logs);
         }
       });
     }
+  }
 
-    if (!this.isPlayerAlive) {
-      logs.push(createActorIsDeadMessage(this.player.name));
+  private logging(logs: LogMessageDefinition[]): void {
+    logs.forEach((log) => this.loggingService.log(log));
+
+    if (!this.isPlayerAlive()) {
+      this.loggingService.log(createActorIsDeadMessage(this.player.name));
     }
+  }
 
-    return {
-      logs,
-    };
+  private isPlayerAlive(): boolean {
+    return this.player.situation === 'ALIVE';
   }
 }

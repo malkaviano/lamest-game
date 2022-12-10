@@ -98,6 +98,8 @@ export const setupMocks = () => {
 
   when(mockedPlayerEntity.classification).thenReturn('PLAYER');
 
+  when(mockedPlayerEntity.skills).thenReturn(fakeSkills);
+
   when(mockedInteractiveEntity.id).thenReturn('id1');
 
   when(mockedInteractiveEntity.name).thenReturn('test');
@@ -107,8 +109,6 @@ export const setupMocks = () => {
   when(mockedActorEntity.name).thenReturn('actor');
 
   when(mockedActorEntity.classification).thenReturn('ACTOR');
-
-  when(mockedPlayerEntity.skills).thenReturn(fakeSkills);
 
   when(mockedTargetPlayerEntity.name).thenReturn('targetPlayer');
 
