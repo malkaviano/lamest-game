@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Dice } from '../definitions/dice.definition';
 import { RollDefinition } from '../definitions/roll.definition';
-import { skillDefinitions } from '../definitions/skill.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { DiceLiteral } from '../literals/dice.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
@@ -42,13 +41,7 @@ export class RollService {
       return new RollDefinition('IMPOSSIBLE', 0);
     }
 
-    const isCombatSkill = skillDefinitions[skillName].combat;
-
-    if (isCombatSkill) {
-      return this.skillCheck(skillValue);
-    }
-
-    return this.competencyCheck(skillValue);
+    return this.skillCheck(skillValue);
   }
 
   public roll(roll: Dice): number {
@@ -77,23 +70,5 @@ export class RollService {
     const result = rolled <= skillValue ? 'SUCCESS' : 'FAILURE';
 
     return new RollDefinition(result, rolled);
-  }
-
-  private competencyCheck(skillValue: number): RollDefinition {
-    const rolled: number[] = [];
-
-    for (let index = 0; index < this.competencyChecks; index++) {
-      rolled.push(this.rngService.getRandomInterval(1, 100));
-    }
-
-    rolled.sort((a, b) => a - b);
-
-    const selected = rolled.slice(0, this.competencyPasses);
-
-    const worstRollSelected = selected[selected.length - 1];
-
-    const result = worstRollSelected <= skillValue ? 'SUCCESS' : 'FAILURE';
-
-    return new RollDefinition(result, worstRollSelected);
   }
 }

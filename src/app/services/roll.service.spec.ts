@@ -49,68 +49,30 @@ describe('RollService', () => {
     });
 
     describe('when skill value is above zero', () => {
-      describe('when skill is combat skill', () => {
-        [
-          {
-            checkResult: 'FAILURE',
-            roll: 80,
-          },
-          {
-            checkResult: 'SUCCESS',
-            roll: 10,
-          },
-        ].forEach(({ checkResult, roll }) => {
-          it(`return ${checkResult} and ${roll}`, () => {
-            when(mockedRngService.getRandomInterval(1, 100)).thenReturn(roll);
+      [
+        {
+          checkResult: 'FAILURE',
+          roll: 80,
+        },
+        {
+          checkResult: 'SUCCESS',
+          roll: 10,
+        },
+      ].forEach(({ checkResult, roll }) => {
+        it(`return ${checkResult} and ${roll}`, () => {
+          when(mockedRngService.getRandomInterval(1, 100)).thenReturn(roll);
 
-            const result = service.actorSkillCheck(
-              instance(mockedActorEntity),
-              'Melee Weapon (Simple)'
-            );
+          const result = service.actorSkillCheck(
+            instance(mockedActorEntity),
+            'Melee Weapon (Simple)'
+          );
 
-            const expected = new RollDefinition(
-              checkResult as ResultLiteral,
-              roll
-            );
+          const expected = new RollDefinition(
+            checkResult as ResultLiteral,
+            roll
+          );
 
-            expect(result).toEqual(expected);
-          });
-        });
-      });
-
-      describe('when skill is not combat skill', () => {
-        [
-          {
-            checkResult: 'FAILURE',
-            rolls: [80, 70, 2, 3, 46],
-            expectedRoll: 46,
-          },
-          {
-            checkResult: 'SUCCESS',
-            rolls: [100, 90, 45, 30, 1],
-            expectedRoll: 45,
-          },
-        ].forEach(({ checkResult, rolls, expectedRoll }) => {
-          it(`return ${checkResult} and ${expectedRoll}`, () => {
-            when(mockedRngService.getRandomInterval(1, 100))
-              .thenReturn(rolls[0])
-              .thenReturn(rolls[1])
-              .thenReturn(rolls[2])
-              .thenReturn(rolls[3])
-              .thenReturn(rolls[4]);
-
-            const result = service.actorSkillCheck(
-              instance(mockedActorEntity),
-              'First Aid'
-            );
-
-            const expected = new RollDefinition(
-              checkResult as ResultLiteral,
-              expectedRoll
-            );
-
-            expect(result).toEqual(expected);
-          });
+          expect(result).toEqual(expected);
         });
       });
     });
