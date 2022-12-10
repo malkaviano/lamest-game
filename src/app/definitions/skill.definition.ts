@@ -63,7 +63,7 @@ export const skillDefinitions: {
     'Artillery (Siege)',
     '',
     'TRAINED',
-    true,
+    false,
     justInt
   ),
   'Artillery (War)': new SkillDefinition(

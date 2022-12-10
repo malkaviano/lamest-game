@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, reset, when } from 'ts-mockito';
-
 import { RollDefinition } from '../definitions/roll.definition';
-import { ActorInterface } from '../interfaces/actor.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { RandomIntService } from '../services/random-int.service';
 import { RollService } from './roll.service';
+
+import { instance, when } from 'ts-mockito';
+import {
+  mockedActorEntity,
+  mockedRngService,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('RollService', () => {
   let service: RollService;
@@ -21,9 +25,7 @@ describe('RollService', () => {
       ],
     });
 
-    reset(mockedActor);
-
-    when(mockedActor.skills).thenReturn({ 'Craft (Leatherworking)': 50 });
+    setupMocks();
 
     service = TestBed.inject(RollService);
   });
@@ -36,7 +38,7 @@ describe('RollService', () => {
     describe('when skill value is undefined or zero', () => {
       it('return IMPOSSIBLE and 0', () => {
         const result = service.actorSkillCheck(
-          instance(mockedActor),
+          instance(mockedActorEntity),
           'Appraise'
         );
 
@@ -46,31 +48,69 @@ describe('RollService', () => {
       });
     });
 
-    describe('when skill value is defined and above zero', () => {
-      [
-        {
-          checkResult: 'FAILURE',
-          roll: 80,
-        },
-        {
-          checkResult: 'SUCCESS',
-          roll: 10,
-        },
-      ].forEach(({ checkResult, roll }) => {
-        it(`return ${checkResult} and ${roll}`, () => {
-          when(mockedRngService.getRandomInterval(1, 100)).thenReturn(roll);
+    describe('when skill value is above zero', () => {
+      describe('when skill is combat skill', () => {
+        [
+          {
+            checkResult: 'FAILURE',
+            roll: 80,
+          },
+          {
+            checkResult: 'SUCCESS',
+            roll: 10,
+          },
+        ].forEach(({ checkResult, roll }) => {
+          it(`return ${checkResult} and ${roll}`, () => {
+            when(mockedRngService.getRandomInterval(1, 100)).thenReturn(roll);
 
-          const result = service.actorSkillCheck(
-            instance(mockedActor),
-            'Craft (Leatherworking)'
-          );
+            const result = service.actorSkillCheck(
+              instance(mockedActorEntity),
+              'Melee Weapon (Simple)'
+            );
 
-          const expected = new RollDefinition(
-            checkResult as ResultLiteral,
-            roll
-          );
+            const expected = new RollDefinition(
+              checkResult as ResultLiteral,
+              roll
+            );
 
-          expect(result).toEqual(expected);
+            expect(result).toEqual(expected);
+          });
+        });
+      });
+
+      describe('when skill is not combat skill', () => {
+        [
+          {
+            checkResult: 'FAILURE',
+            rolls: [80, 70, 2, 3, 46],
+            expectedRoll: 46,
+          },
+          {
+            checkResult: 'SUCCESS',
+            rolls: [100, 90, 45, 30, 1],
+            expectedRoll: 45,
+          },
+        ].forEach(({ checkResult, rolls, expectedRoll }) => {
+          it(`return ${checkResult} and ${expectedRoll}`, () => {
+            when(mockedRngService.getRandomInterval(1, 100))
+              .thenReturn(rolls[0])
+              .thenReturn(rolls[1])
+              .thenReturn(rolls[2])
+              .thenReturn(rolls[3])
+              .thenReturn(rolls[4]);
+
+            const result = service.actorSkillCheck(
+              instance(mockedActorEntity),
+              'First Aid'
+            );
+
+            const expected = new RollDefinition(
+              checkResult as ResultLiteral,
+              expectedRoll
+            );
+
+            expect(result).toEqual(expected);
+          });
         });
       });
     });
@@ -100,7 +140,3 @@ describe('RollService', () => {
     });
   });
 });
-
-const mockedRngService = mock(RandomIntService);
-
-const mockedActor = mock<ActorInterface>();

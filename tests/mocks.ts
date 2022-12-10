@@ -20,6 +20,7 @@ import { GameLoopService } from '../src/app/services/game-loop.service';
 import { InventoryService } from '../src/app/services/inventory.service';
 import { LoggingService } from '../src/app/services/logging.service';
 import { NarrativeService } from '../src/app/services/narrative.service';
+import { RandomIntService } from '../src/app/services/random-int.service';
 import { RollService } from '../src/app/services/roll.service';
 import { InteractiveStore } from '../src/app/stores/interactive.store';
 import { ItemStore } from '../src/app/stores/item.store';
@@ -87,6 +88,8 @@ export const mockedSceneStore = mock(SceneStore);
 
 export const mockedInteractiveStore = mock(InteractiveStore);
 
+export const mockedRngService = mock(RandomIntService);
+
 export const setupMocks = () => {
   resetMocks();
 
@@ -109,6 +112,8 @@ export const setupMocks = () => {
   when(mockedInteractiveEntity.classification).thenReturn('REACTIVE');
 
   when(mockedActorEntity.name).thenReturn('actor');
+
+  when(mockedActorEntity.skills).thenReturn(fakeSkills);
 
   when(mockedActorEntity.classification).thenReturn('ACTOR');
 
@@ -184,4 +189,6 @@ const resetMocks = () => {
   reset(mockedRulesHelper);
 
   reset(mockedSceneStore);
+
+  reset(mockedRngService);
 };

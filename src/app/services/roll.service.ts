@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Dice } from '../definitions/dice.definition';
 import { RollDefinition } from '../definitions/roll.definition';
+import { skillDefinitions } from '../definitions/skill.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { DiceLiteral } from '../literals/dice.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
@@ -14,6 +15,10 @@ export class RollService {
   private readonly diceMap: {
     readonly [key in DiceLiteral]: { min: number; max: number };
   };
+
+  public readonly competencyChecks = 5;
+
+  public readonly competencyPasses = 3;
 
   constructor(private readonly rngService: RandomIntService) {
     this.diceMap = {
@@ -33,7 +38,17 @@ export class RollService {
   ): RollDefinition {
     const skillValue = actor.skills[skillName] ?? 0;
 
-    return this.skillCheck(skillValue);
+    if (skillValue === 0) {
+      return new RollDefinition('IMPOSSIBLE', 0);
+    }
+
+    const isCombatSkill = skillDefinitions[skillName].combat;
+
+    if (isCombatSkill) {
+      return this.skillCheck(skillValue);
+    }
+
+    return this.competencyCheck(skillValue);
   }
 
   public roll(roll: Dice): number {
@@ -57,14 +72,28 @@ export class RollService {
   }
 
   private skillCheck(skillValue: number): RollDefinition {
-    if (skillValue > 0) {
-      const rolled = this.rngService.getRandomInterval(1, 100);
+    const rolled = this.rngService.getRandomInterval(1, 100);
 
-      const result = rolled <= skillValue ? 'SUCCESS' : 'FAILURE';
+    const result = rolled <= skillValue ? 'SUCCESS' : 'FAILURE';
 
-      return new RollDefinition(result, rolled);
+    return new RollDefinition(result, rolled);
+  }
+
+  private competencyCheck(skillValue: number): RollDefinition {
+    const rolled: number[] = [];
+
+    for (let index = 0; index < this.competencyChecks; index++) {
+      rolled.push(this.rngService.getRandomInterval(1, 100));
     }
 
-    return new RollDefinition('IMPOSSIBLE', 0);
+    rolled.sort((a, b) => a - b);
+
+    const selected = rolled.slice(0, this.competencyPasses);
+
+    const worstRollSelected = selected[selected.length - 1];
+
+    const result = worstRollSelected <= skillValue ? 'SUCCESS' : 'FAILURE';
+
+    return new RollDefinition(result, worstRollSelected);
   }
 }
