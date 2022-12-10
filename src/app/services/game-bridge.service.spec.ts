@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { of, Subject, take } from 'rxjs';
-import { anyString, anything, instance, when } from 'ts-mockito';
+import { anyString, instance, when } from 'ts-mockito';
 
 import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
 import { ActionableEvent } from '../events/actionable.event';
@@ -112,9 +112,7 @@ describe('GameBridgeService', () => {
     it('should invoke GameLoopService run', (done) => {
       let result = false;
 
-      when(mockedGameLoopService.run(anything())).thenCall(
-        () => (result = true)
-      );
+      when(mockedGameLoopService.run()).thenCall(() => (result = true));
 
       service.actionableReceived(actionableEvent);
 

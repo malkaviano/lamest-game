@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { ActionableEvent } from '../events/actionable.event';
 import { RulesHelper } from '../helpers/rules.helper';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { CharacterService } from './character.service';
@@ -64,19 +63,27 @@ export class GameLoopService {
     return new ArrayView(actors);
   }
 
-  public run(action: ActionableEvent) {
+  public run() {
     if (this.isPlayerAlive()) {
-      const playerResult = this.dispatcher[
-        action.actionableDefinition.actionable
-      ].execute(this.player, action, this.reactives(action.eventId));
+      const playerAction = this.player.action;
 
-      this.logging(playerResult.logs);
+      if (playerAction) {
+        const playerResult = this.dispatcher[
+          playerAction.actionableDefinition.actionable
+        ].execute(
+          this.player,
+          playerAction,
+          this.reactives(playerAction.eventId)
+        );
+
+        this.logging(playerResult.logs);
+      }
 
       this.actors.items.forEach((actor) => {
         if (actor.action && actor.situation === 'ALIVE') {
           const resultLogs = this.dispatcher[
             actor.action.actionableDefinition.actionable
-          ].execute(actor, action, this.player);
+          ].execute(actor, actor.action, this.player);
 
           this.logging(resultLogs.logs);
         }

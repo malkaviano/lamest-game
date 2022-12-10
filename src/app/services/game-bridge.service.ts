@@ -16,12 +16,13 @@ import {
 import { GameItemLiteral } from '../literals/game-item.literal';
 import { GameLoopService } from './game-loop.service';
 import { LoggingService } from './logging.service';
+import { PlayerEntity } from '../entities/player.entity';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameBridgeService {
-  public readonly playerName: string;
+  public readonly player: PlayerEntity;
 
   public readonly events: GameEventsDefinition;
 
@@ -32,10 +33,10 @@ export class GameBridgeService {
     inventoryService: InventoryService,
     loggingService: LoggingService
   ) {
-    this.playerName = characterService.currentCharacter.name;
+    this.player = characterService.currentCharacter;
 
     const inventoryChanged = inventoryService.inventoryChanged$.pipe(
-      filter((event) => event.storageName === this.playerName),
+      filter((event) => event.storageName === this.player.name),
       map(() => {
         const items = this.playerInventory(inventoryService);
 
@@ -52,13 +53,15 @@ export class GameBridgeService {
   }
 
   public actionableReceived(action: ActionableEvent): void {
-    this.gameLoopService.run(action);
+    this.player.playerDecision(action);
+
+    this.gameLoopService.run();
   }
 
   private playerInventory(
     inventoryService: InventoryService
   ): ArrayView<ActionableItemDefinition> {
-    const playerItems = inventoryService.check(this.playerName);
+    const playerItems = inventoryService.check(this.player.name);
 
     const inventoryView: ActionableItemDefinition[] = [];
 

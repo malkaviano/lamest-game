@@ -67,6 +67,8 @@ describe('GameLoopService', () => {
 
       when(mockedActorEntity.situation).thenReturn('ALIVE');
 
+      when(mockedPlayerEntity.action).thenReturn(attackEvent);
+
       when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
       when(mockedCombatRule.execute(anything(), anything(), anything()))
@@ -87,7 +89,7 @@ describe('GameLoopService', () => {
         result.push(log2);
       });
 
-      service.run(attackEvent);
+      service.run();
 
       expect(result).toEqual([log1, log2]);
     });
@@ -97,6 +99,8 @@ describe('GameLoopService', () => {
         when(mockedActorEntity.action).thenReturn(attackEvent);
 
         when(mockedActorEntity.situation).thenReturn('ALIVE');
+
+        when(mockedPlayerEntity.action).thenReturn(attackEvent);
 
         when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
@@ -114,7 +118,7 @@ describe('GameLoopService', () => {
           result.push(logDied);
         });
 
-        service.run(attackEvent);
+        service.run();
 
         expect(result).toEqual([logDied]);
       });
