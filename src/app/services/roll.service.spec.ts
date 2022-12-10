@@ -4,6 +4,7 @@ import { instance, mock, reset, when } from 'ts-mockito';
 
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
+import { ResultLiteral } from '../literals/result.literal';
 import { RandomIntService } from '../services/random-int.service';
 import { RollService } from './roll.service';
 
@@ -46,17 +47,31 @@ describe('RollService', () => {
     });
 
     describe('when skill value is defined and above zero', () => {
-      it('return result and roll', () => {
-        when(mockedRngService.getRandomInterval(1, 100)).thenReturn(80);
+      [
+        {
+          checkResult: 'FAILURE',
+          roll: 80,
+        },
+        {
+          checkResult: 'SUCCESS',
+          roll: 10,
+        },
+      ].forEach(({ checkResult, roll }) => {
+        it(`return ${checkResult} and ${roll}`, () => {
+          when(mockedRngService.getRandomInterval(1, 100)).thenReturn(roll);
 
-        const result = service.actorSkillCheck(
-          instance(mockedActor),
-          'Craft (Leatherworking)'
-        );
+          const result = service.actorSkillCheck(
+            instance(mockedActor),
+            'Craft (Leatherworking)'
+          );
 
-        const expected = new RollDefinition('FAILURE', 80);
+          const expected = new RollDefinition(
+            checkResult as ResultLiteral,
+            roll
+          );
 
-        expect(result).toEqual(expected);
+          expect(result).toEqual(expected);
+        });
       });
     });
   });
