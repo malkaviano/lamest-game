@@ -48,8 +48,8 @@ export class GameLoopService {
 
     this.player = this.characterService.currentCharacter;
 
-    this.player.hpChanged$.subscribe((event) => {
-      this.isPlayerAlive = event.current > 0;
+    this.player.hpChanged$.subscribe(() => {
+      this.isPlayerAlive = this.player.situation === 'ALIVE';
     });
   }
 

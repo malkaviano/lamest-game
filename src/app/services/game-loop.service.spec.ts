@@ -85,6 +85,8 @@ describe('GameLoopService', () => {
       it('should log player died', (done) => {
         subject.next(new HitPointsEvent(10, 0));
 
+        when(mockedActorEntity.situation).thenReturn('DEAD');
+
         done();
 
         const result = service.run(attackEvent);
