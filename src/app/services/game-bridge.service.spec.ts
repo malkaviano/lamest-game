@@ -7,7 +7,7 @@ import { ActionableItemDefinition } from '../definitions/actionable-item.definit
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
-import { GameManagerService } from './game-manager.service';
+import { GameBridgeService } from './game-bridge.service';
 import { InventoryService } from './inventory.service';
 import { GameLoopService } from './game-loop.service';
 import { ItemStorageDefinition } from '../definitions/item-storage.definition';
@@ -31,8 +31,8 @@ import {
   unDodgeableAxe,
 } from '../../../tests/fakes';
 
-describe('GameManagerService', () => {
-  let service: GameManagerService;
+describe('GameBridgeService', () => {
+  let service: GameBridgeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -68,7 +68,7 @@ describe('GameManagerService', () => {
 
     when(mockedLoggingService.gameLog$).thenReturn(of(log));
 
-    service = TestBed.inject(GameManagerService);
+    service = TestBed.inject(GameBridgeService);
   });
 
   it('should be created', () => {

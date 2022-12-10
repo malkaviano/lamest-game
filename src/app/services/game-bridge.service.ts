@@ -20,7 +20,7 @@ import { LoggingService } from './logging.service';
 @Injectable({
   providedIn: 'root',
 })
-export class GameManagerService {
+export class GameBridgeService {
   public readonly playerName: string;
 
   public readonly events: GameEventsDefinition;

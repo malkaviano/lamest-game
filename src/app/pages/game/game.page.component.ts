@@ -7,7 +7,7 @@ import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { ConverterHelper } from '../../helpers/converter.helper';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { GameManagerService } from '../../services/game-manager.service';
+import { GameBridgeService } from '../../services/game-bridge.service';
 import { ArrayView } from '../../views/array.view';
 
 @Component({
@@ -28,7 +28,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   public equipped!: GameItemDefinition;
 
   constructor(
-    private readonly gameManagerService: GameManagerService,
+    private readonly gameManagerService: GameBridgeService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly converterHelper: ConverterHelper
   ) {

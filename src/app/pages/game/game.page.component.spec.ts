@@ -14,7 +14,7 @@ import { CharacteristicDefinition } from '../../definitions/characteristic.defin
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
-import { GameManagerService } from '../../services/game-manager.service';
+import { GameBridgeService } from '../../services/game-bridge.service';
 import { GameEventsDefinition } from '../../definitions/game-events.definition';
 import {
   ActionableDefinition,
@@ -44,7 +44,7 @@ describe('GamePageComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
-          provide: GameManagerService,
+          provide: GameBridgeService,
           useValue: instance(mockedGameManagerService),
         },
         {
@@ -240,7 +240,7 @@ const scene = new SceneDefinition(
   ])
 );
 
-const mockedGameManagerService = mock(GameManagerService);
+const mockedGameManagerService = mock(GameBridgeService);
 
 const mockedGameEventsService = mock(GameEventsDefinition);
 
