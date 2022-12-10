@@ -21,11 +21,10 @@ export class ActorBehavior {
     private readonly mSkills: Map<SkillNameLiteral, number>
   ) {
     this.maximumHP = Math.trunc(
-      (this.characteristics['CON'].value + this.characteristics['SIZ'].value) /
-        2
+      (this.characteristics.CON.value + this.characteristics.SIZ.value) / 2
     );
 
-    this.maximumPP = this.characteristics['POW'].value;
+    this.maximumPP = this.characteristics.POW.value;
 
     this.currentHP = this.maximumHP;
 
