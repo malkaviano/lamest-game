@@ -57,20 +57,17 @@ export class CombatRule implements RuleInterface {
 
           targetHit = dodgeResult !== 'SUCCESS';
 
-          switch (dodgeResult) {
-            case 'IMPOSSIBLE':
-              logs.push(createCannotCheckLogMessage(targetActor.name, 'Dodge'));
-              break;
-            default:
-              logs.push(
-                createCheckLogMessage(
-                  targetActor.name,
-                  'Dodge',
-                  dodgeRoll,
-                  dodgeResult
-                )
-              );
-              break;
+          if (dodgeResult === 'IMPOSSIBLE') {
+            logs.push(createCannotCheckLogMessage(targetActor.name, 'Dodge'));
+          } else {
+            logs.push(
+              createCheckLogMessage(
+                targetActor.name,
+                'Dodge',
+                dodgeRoll,
+                dodgeResult
+              )
+            );
           }
         } else {
           logs.push(createUnDodgeableAttackLogMessage(targetActor.name));

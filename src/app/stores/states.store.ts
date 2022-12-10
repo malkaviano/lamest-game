@@ -13,7 +13,6 @@ import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ArrayView } from '../views/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
-import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 
 @Injectable({

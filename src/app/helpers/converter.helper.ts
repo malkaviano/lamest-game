@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { ArrayView } from '../views/array.view';
-import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
-import { derivedAttributeDefinitions } from '../definitions/derived-attribute.definition';
+import {
+  DerivedAttributeDefinition,
+  derivedAttributeDefinitions,
+} from '../definitions/derived-attribute.definition';
 import { characterIdentityDefinitions } from '../definitions/character-identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
 import {
