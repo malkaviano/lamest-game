@@ -6,7 +6,7 @@ import { DamageDefinition } from '../src/app/definitions/damage.definition';
 import { DerivedAttributeSetDefinition } from '../src/app/definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../src/app/definitions/derived-attribute.definition';
 import { createDice } from '../src/app/definitions/dice.definition';
-import { IdentityDefinition } from '../src/app/definitions/identity.definition';
+import { CharacterIdentityDefinition } from '../src/app/definitions/character-identity.definition';
 import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
 import { ActionableEvent } from '../src/app/events/actionable.event';
 import { KeyValueInterface } from '../src/app/interfaces/key-value.interface';
@@ -116,7 +116,7 @@ export const fakeMapSkills: Map<SkillNameLiteral, number> = new Map<
   ['Brawl', 45],
 ]);
 
-export const fakeIdentity = new IdentityDefinition(
+export const fakeIdentity = new CharacterIdentityDefinition(
   'Some Name',
   'Police Detective',
   'YOUNG',

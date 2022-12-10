@@ -1,4 +1,4 @@
-import { IdentityDefinition } from '../definitions/identity.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ClassificationLiteral } from '../literals/classification.literal';
@@ -10,7 +10,7 @@ export class PlayerEntity extends ActorEntity {
   private playerAction: ActionableEvent | null;
 
   constructor(
-    public readonly identity: IdentityDefinition,
+    public readonly identity: CharacterIdentityDefinition,
     actorBehavior: ActorBehavior,
     equipmentBehavior: EquipmentBehavior
   ) {

@@ -5,7 +5,7 @@ import { anyNumber, anything, instance, mock, when } from 'ts-mockito';
 import { RandomCharacterService } from './random-character.service';
 import { GeneratorService } from './generator.service';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { IdentityDefinition } from '../definitions/identity.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { PlayerEntity } from '../entities/player.entity';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { SkillService } from './skill.service';
@@ -75,7 +75,7 @@ const prepareMock = () => {
     .thenReturn(fakeSkills);
 };
 
-const fakeIdentity = new IdentityDefinition(
+const fakeIdentity = new CharacterIdentityDefinition(
   'Some Name',
   'Police Detective',
   'YOUNG',

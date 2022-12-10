@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { GeneratorService } from './generator.service';
-import { IdentityDefinition } from '../definitions/identity.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { SkillService } from './skill.service';
 import { professionSkillDefinitions } from '../definitions/profession.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
@@ -35,7 +35,7 @@ export class RandomCharacterService {
     );
   }
 
-  private identity(): IdentityDefinition {
+  private identity(): CharacterIdentityDefinition {
     return this.generator.identity();
   }
 

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-import { characterIdentityDefinitions } from '../src/app/definitions/identity.definition';
+import { characterIdentityDefinitions } from '../src/app/definitions/character-identity.definition';
 import { commonSkillDefinitions } from '../src/app/definitions/skill.definition';
 import { professionSkillDefinitions } from '../src/app/definitions/profession.definition';
 import { ProfessionLiteral } from '../src/app/literals/profession.literal';

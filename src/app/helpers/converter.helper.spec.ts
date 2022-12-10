@@ -1,7 +1,7 @@
 import { instance, mock, when } from 'ts-mockito';
 
 import { ArrayView } from '../views/array.view';
-import { IdentityDefinition } from '../definitions/identity.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { KeyValueDescriptionDefinition } from '../definitions/key-value-description.definition';
@@ -47,7 +47,7 @@ describe('ConverterHelper', () => {
 
 const helper = new ConverterHelper();
 
-const identity = new IdentityDefinition(
+const identity = new CharacterIdentityDefinition(
   'name',
   'Hunter',
   'ADULT',

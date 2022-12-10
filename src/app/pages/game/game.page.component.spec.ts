@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { GamePageComponent } from './game.page.component';
 import { ArrayView } from '../../views/array.view';
 import { PlayerEntity } from '../../entities/player.entity';
-import { IdentityDefinition } from '../../definitions/identity.definition';
+import { CharacterIdentityDefinition } from '../../definitions/character-identity.definition';
 import { CharacteristicDefinition } from '../../definitions/characteristic.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
@@ -90,7 +90,7 @@ describe('GamePageComponent', () => {
     });
 
     when(mockedPlayerEntity.identity).thenReturn(
-      new IdentityDefinition(
+      new CharacterIdentityDefinition(
         'name',
         'Hunter',
         'ADULT',

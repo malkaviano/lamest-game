@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { anyNumber, instance, mock, when } from 'ts-mockito';
 
-import { IdentityDefinition } from '../definitions/identity.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { professions } from '../definitions/profession.definition';
 import { ages } from '../literals/age.literal';
@@ -85,7 +85,7 @@ const expectedCharacteristics = {
   APP: new CharacteristicDefinition('APP', 9),
 };
 
-const expectedIdentity = new IdentityDefinition(
+const expectedIdentity = new CharacterIdentityDefinition(
   'Alice Shields',
   professions.items[0],
   ages[0],
