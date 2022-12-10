@@ -13,6 +13,7 @@ import {
   createHealedMessage,
 } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
+import { ActionableEvent } from '../events/actionable.event';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -60,8 +61,11 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return 'ACTOR';
   }
 
-  public get action(): ActionableDefinition | null {
-    return createActionableDefinition('ATTACK', 'attack', 'Attack');
+  public get action(): ActionableEvent | null {
+    return new ActionableEvent(
+      createActionableDefinition('ATTACK', 'attack', 'Attack'),
+      'player'
+    );
   }
 
   public get weaponEquipped(): WeaponDefinition {

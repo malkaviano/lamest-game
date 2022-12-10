@@ -74,11 +74,9 @@ export class GameLoopService {
 
       this.actors.items.forEach((actor) => {
         if (actor.action && actor.situation === 'ALIVE') {
-          const resultLogs = this.dispatcher[actor.action.actionable].execute(
-            actor,
-            action,
-            this.player
-          );
+          const resultLogs = this.dispatcher[
+            actor.action.actionableDefinition.actionable
+          ].execute(actor, action, this.player);
 
           this.logging(resultLogs.logs);
         }

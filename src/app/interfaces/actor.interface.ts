@@ -1,4 +1,4 @@
-import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ActionableEvent } from '../events/actionable.event';
 import { ActorSituation } from '../literals/actor-situation.literal';
 import { ActionReactive } from './action-reactive.interface';
 import { WeaponEquipped } from './weapon-equipped.interface';
@@ -12,7 +12,7 @@ export interface ActorInterface
     WithSkillsInterface,
     WeaponEquipped,
     ActionReactive {
-  get action(): ActionableDefinition | null;
+  get action(): ActionableEvent | null;
 
   get situation(): ActorSituation;
 }

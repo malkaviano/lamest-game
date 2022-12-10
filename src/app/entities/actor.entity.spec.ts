@@ -19,7 +19,7 @@ import { ActorEntity } from './actor.entity';
 import { emptyState } from '../states/empty.state';
 
 import {
-  actionAttack,
+  attackPlayerEvent,
   fakeCharacteristics,
   fakeDerivedAttributes,
   fakeSkills,
@@ -257,7 +257,7 @@ describe('ActorEntity', () => {
 
   describe('action', () => {
     it('return action attack', () => {
-      expect(fakeActor().action).toEqual(actionAttack);
+      expect(fakeActor().action).toEqual(attackPlayerEvent);
     });
   });
 });

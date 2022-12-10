@@ -13,7 +13,7 @@ import { GameLoopService } from './game-loop.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
 
-import { actionAttack, attackEvent } from '../../../tests/fakes';
+import { attackEvent } from '../../../tests/fakes';
 import {
   mockedActorEntity,
   mockedCharacterService,
@@ -63,7 +63,7 @@ describe('GameLoopService', () => {
 
   describe('run', () => {
     it('return rule logs', () => {
-      when(mockedActorEntity.action).thenReturn(actionAttack);
+      when(mockedActorEntity.action).thenReturn(attackEvent);
 
       when(mockedActorEntity.situation).thenReturn('ALIVE');
 
@@ -94,7 +94,7 @@ describe('GameLoopService', () => {
 
     describe('when player HP reaches 0', () => {
       it('should log player died', () => {
-        when(mockedActorEntity.action).thenReturn(actionAttack);
+        when(mockedActorEntity.action).thenReturn(attackEvent);
 
         when(mockedActorEntity.situation).thenReturn('ALIVE');
 

@@ -79,6 +79,8 @@ export const actionAttack = createActionableDefinition(
 
 export const attackEvent = new ActionableEvent(actionAttack, 'id1');
 
+export const attackPlayerEvent = new ActionableEvent(actionAttack, 'player');
+
 export const actionPick = createActionableDefinition('PICK', 'name1', 'label1');
 
 export const fakeCharacteristics: CharacteristicSetDefinition = {
