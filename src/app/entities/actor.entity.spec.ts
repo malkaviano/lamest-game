@@ -32,6 +32,7 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import { ArrayView } from '../views/array.view';
+import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 
 describe('ActorEntity', () => {
   beforeEach(() => {
@@ -271,9 +272,7 @@ describe('ActorEntity', () => {
 
 const fakeActor = () =>
   new ActorEntity(
-    'id1',
-    'actor',
-    'Some Actor',
+    new ActorIdentityDefinition('id1', 'actor', 'Some Actor'),
     emptyState,
     false,
     instance(mockedActorBehavior),

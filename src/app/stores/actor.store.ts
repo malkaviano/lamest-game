@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
+import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActorEntity } from '../entities/actor.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
@@ -37,9 +38,7 @@ export class ActorStore {
         behaviorState,
       }) => {
         const actor = new ActorEntity(
-          id,
-          name,
-          description,
+          new ActorIdentityDefinition(id, name, description),
           stateStore.states[behaviorState],
           resettable,
           new ActorBehavior(characteristics, skills),

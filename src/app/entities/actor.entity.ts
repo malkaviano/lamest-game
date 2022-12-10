@@ -6,6 +6,7 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '../definitions/actionable.definition';
+import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 import {
@@ -35,16 +36,20 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public readonly weaponEquippedChanged$: Observable<WeaponDefinition>;
 
   constructor(
-    id: string,
-    name: string,
-    description: string,
+    identity: ActorIdentityDefinition,
     currentState: ActionableState,
     resettable: boolean,
     protected readonly actorBehavior: ActorBehavior,
     protected readonly equipmentBehavior: EquipmentBehavior,
     protected readonly killedState: ActionableState
   ) {
-    super(id, name, description, currentState, resettable);
+    super(
+      identity.id,
+      identity.name,
+      identity.description,
+      currentState,
+      resettable
+    );
 
     this.hpChanged = new Subject();
 

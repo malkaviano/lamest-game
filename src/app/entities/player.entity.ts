@@ -5,6 +5,7 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { emptyState } from '../states/empty.state';
 import { ActorEntity } from './actor.entity';
 import { ActionableEvent } from '../events/actionable.event';
+import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 
 export class PlayerEntity extends ActorEntity {
   private playerAction: ActionableEvent | null;
@@ -15,9 +16,7 @@ export class PlayerEntity extends ActorEntity {
     equipmentBehavior: EquipmentBehavior
   ) {
     super(
-      identity.name,
-      identity.name,
-      '',
+      new ActorIdentityDefinition(identity.name, identity.name, ''),
       emptyState,
       false,
       actorBehavior,
