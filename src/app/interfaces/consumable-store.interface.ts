@@ -2,10 +2,10 @@ import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 export interface ConsumableStoreInterface {
   readonly consumables: {
-    name: string;
-    label: string;
-    description: string;
-    hp: number;
-    skillName?: SkillNameLiteral;
+    readonly name: string;
+    readonly label: string;
+    readonly description: string;
+    readonly hp: number;
+    readonly skillName?: SkillNameLiteral;
   }[];
 }

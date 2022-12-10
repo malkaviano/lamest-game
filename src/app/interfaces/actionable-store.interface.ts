@@ -1,10 +1,10 @@
 import { ActionableLiteral } from '../literals/actionable.literal';
 
 export interface ActionableStoreInterface {
-  actionables: {
-    key: string;
-    name: string;
-    actionable: ActionableLiteral;
-    label?: string;
+  readonly actionables: {
+    readonly key: string;
+    readonly name: string;
+    readonly actionable: ActionableLiteral;
+    readonly label?: string;
   }[];
 }

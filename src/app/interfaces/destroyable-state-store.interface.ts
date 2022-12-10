@@ -1,8 +1,8 @@
 export interface DestroyableStateStoreInterface {
   readonly states: {
-    interactiveId: string;
-    actionables: string[];
-    destroyedState: string;
-    hitpoints: number;
+    readonly interactiveId: string;
+    readonly actionables: string[];
+    readonly destroyedState: string;
+    readonly hitpoints: number;
   }[];
 }

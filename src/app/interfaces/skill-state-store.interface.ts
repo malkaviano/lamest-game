@@ -1,8 +1,8 @@
 export interface SkillStateStoreInterface {
   readonly states: {
-    interactiveId: string;
-    actionable: string;
-    maximumTries: number;
-    successState: string;
+    readonly interactiveId: string;
+    readonly actionable: string;
+    readonly maximumTries: number;
+    readonly successState: string;
   }[];
 }

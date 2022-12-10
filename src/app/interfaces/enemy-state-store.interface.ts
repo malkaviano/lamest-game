@@ -4,12 +4,12 @@ import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 export interface EnemyStateStoreInterface {
   readonly states: {
-    interactiveId: string;
-    actionables: string[];
-    killedState: string;
-    weaponName: string;
-    behavior: EnemyBehaviorLiteral;
-    characteristics: CharacteristicSetDefinition;
-    skills: Map<SkillNameLiteral, number>;
+    readonly interactiveId: string;
+    readonly actionables: string[];
+    readonly killedState: string;
+    readonly weaponName: string;
+    readonly behavior: EnemyBehaviorLiteral;
+    readonly characteristics: CharacteristicSetDefinition;
+    readonly skills: Map<SkillNameLiteral, number>;
   }[];
 }

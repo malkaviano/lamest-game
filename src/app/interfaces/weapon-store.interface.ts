@@ -4,15 +4,15 @@ import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
 
 export interface WeaponStoreInterface {
   readonly weapons: {
-    name: string;
-    label: string;
-    description: string;
-    skillName: SkillNameLiteral;
-    damage: {
-      dice: Dice;
-      fixed: number;
+    readonly name: string;
+    readonly label: string;
+    readonly description: string;
+    readonly skillName: SkillNameLiteral;
+    readonly damage: {
+      readonly dice: Dice;
+      readonly fixed: number;
     };
-    dodgeable: boolean;
-    usability: WeaponUsabilityLiteral;
+    readonly dodgeable: boolean;
+    readonly usability: WeaponUsabilityLiteral;
   }[];
 }

@@ -1,7 +1,7 @@
 export interface ConversationStateStoreInterface {
   readonly states: {
-    interactiveId: string;
-    maps: string[];
-    initialMap: string;
+    readonly interactiveId: string;
+    readonly maps: string[];
+    readonly initialMap: string;
   }[];
 }

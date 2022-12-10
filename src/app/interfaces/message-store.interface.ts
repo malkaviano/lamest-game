@@ -1,11 +1,11 @@
 export interface MessageStoreInterface {
-  messages: {
-    id: string;
-    options: {
-      name: string;
-      label: string;
-      answer: string;
-      change?: string;
+  readonly messages: {
+    readonly id: string;
+    readonly options: {
+      readonly name: string;
+      readonly label: string;
+      readonly answer: string;
+      readonly change?: string;
     }[];
   }[];
 }

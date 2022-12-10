@@ -1,6 +1,6 @@
 export interface DiscardStateStoreInterface {
   readonly states: {
-    interactiveId: string;
-    actionables: string[];
+    readonly interactiveId: string;
+    readonly actionables: string[];
   }[];
 }

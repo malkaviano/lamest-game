@@ -1,11 +1,11 @@
 export interface SceneStoreInterface {
   readonly scenes: {
-    name: string;
-    description: string;
-    interactives: string[];
-    transitions: {
-      name: string;
-      scene: string;
+    readonly name: string;
+    readonly description: string;
+    readonly interactives: string[];
+    readonly transitions: {
+      readonly name: string;
+      readonly scene: string;
     }[];
   }[];
 }

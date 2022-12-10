@@ -1,6 +1,6 @@
 export interface DescriptionStoreInterface {
   readonly descriptions: {
-    sceneName: string;
-    paragraphs: string[];
+    readonly sceneName: string;
+    readonly paragraphs: string[];
   }[];
 }
