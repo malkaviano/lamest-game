@@ -1,1 +1,1 @@
-export type ActorSituation = 'ALIVE' | 'DEAD';
+export type ActorSituationLiteral = 'ALIVE' | 'DEAD';

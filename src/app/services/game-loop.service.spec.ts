@@ -13,11 +13,12 @@ import { GameLoopService } from './game-loop.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
 
-import { attackEvent } from '../../../tests/fakes';
+import { attackEvent, attackPlayerEvent } from '../../../tests/fakes';
 import {
   mockedActorEntity,
   mockedCharacterService,
   mockedCombatRule,
+  mockedInteractiveEntity,
   mockedLoggingService,
   mockedNarrativeService,
   mockedPlayerEntity,
@@ -52,6 +53,14 @@ describe('GameLoopService', () => {
 
     setupMocks();
 
+    when(mockedActorEntity.action(anything())).thenReturn(attackPlayerEvent);
+
+    when(mockedActorEntity.situation).thenReturn('ALIVE');
+
+    when(mockedPlayerEntity.action).thenReturn(() => attackEvent);
+
+    when(mockedPlayerEntity.situation).thenReturn('ALIVE');
+
     when(mockedRulesHelper.combatRule).thenReturn(instance(mockedCombatRule));
 
     service = TestBed.inject(GameLoopService);
@@ -61,16 +70,26 @@ describe('GameLoopService', () => {
     expect(service).toBeTruthy();
   });
 
+  describe('reactives', () => {
+    describe('when interactive is the player', () => {
+      it('return player', () => {
+        const result = service.reactives('player');
+
+        expect(result).toEqual(instance(mockedPlayerEntity));
+      });
+    });
+
+    describe('when interactive is interactive', () => {
+      it('return interactive', () => {
+        const result = service.reactives('id1');
+
+        expect(result).toEqual(instance(mockedInteractiveEntity));
+      });
+    });
+  });
+
   describe('run', () => {
     it('return rule logs', () => {
-      when(mockedActorEntity.action).thenReturn(attackEvent);
-
-      when(mockedActorEntity.situation).thenReturn('ALIVE');
-
-      when(mockedPlayerEntity.action).thenReturn(attackEvent);
-
-      when(mockedPlayerEntity.situation).thenReturn('ALIVE');
-
       when(mockedCombatRule.execute(anything(), anything(), anything()))
         .thenReturn({
           logs: [log1],
@@ -96,14 +115,6 @@ describe('GameLoopService', () => {
 
     describe('when player HP reaches 0', () => {
       it('should log player died', () => {
-        when(mockedActorEntity.action).thenReturn(attackEvent);
-
-        when(mockedActorEntity.situation).thenReturn('ALIVE');
-
-        when(mockedPlayerEntity.action).thenReturn(attackEvent);
-
-        when(mockedPlayerEntity.situation).thenReturn('ALIVE');
-
         when(mockedCombatRule.execute(anything(), anything(), anything()))
           .thenReturn({ logs: [log3] })
           .thenCall(() => {

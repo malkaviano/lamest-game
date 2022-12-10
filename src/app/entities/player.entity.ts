@@ -32,7 +32,7 @@ export class PlayerEntity extends ActorEntity {
     return 'PLAYER';
   }
 
-  public override get action(): ActionableEvent | null {
+  public override action(): ActionableEvent | null {
     return this.playerAction;
   }
 

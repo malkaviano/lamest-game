@@ -23,6 +23,7 @@ import {
   fakeCharacteristics,
   fakeDerivedAttributes,
   fakeSkills,
+  fakeSceneActorsInfo,
   simpleSword,
 } from '../../../tests/fakes';
 import {
@@ -257,7 +258,13 @@ describe('ActorEntity', () => {
 
   describe('action', () => {
     it('return action attack', () => {
-      expect(fakeActor().action).toEqual(attackPlayerEvent);
+      expect(fakeActor().action(fakeSceneActorsInfo)).toEqual(
+        attackPlayerEvent
+      );
+    });
+
+    it('return action null', () => {
+      expect(fakeActor().action(new ArrayView([]))).toBeNull();
     });
   });
 });

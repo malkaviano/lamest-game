@@ -17,10 +17,12 @@ import { ActionableEvent } from '../events/actionable.event';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ActorSituation } from '../literals/actor-situation.literal';
+import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
+import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ClassificationLiteral } from '../literals/classification.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from '../states/actionable.state';
+import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
@@ -53,7 +55,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.weaponEquippedChanged$ = this.weaponEquippedChanged.asObservable();
   }
 
-  public get situation(): ActorSituation {
+  public get situation(): ActorSituationLiteral {
     return this.actorBehavior.situation;
   }
 
@@ -61,11 +63,22 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return 'ACTOR';
   }
 
-  public get action(): ActionableEvent | null {
-    return new ActionableEvent(
-      createActionableDefinition('ATTACK', 'attack', 'Attack'),
-      'player'
+  // TODO: implement some AI behavior
+  public action(
+    sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
+  ): ActionableEvent | null {
+    const player = sceneActorsInfo.items.find(
+      (a) => a.classification === 'PLAYER' && a.situation === 'ALIVE'
     );
+
+    if (player) {
+      return new ActionableEvent(
+        createActionableDefinition('ATTACK', 'attack', 'Attack'),
+        player.id
+      );
+    }
+
+    return null;
   }
 
   public get weaponEquipped(): WeaponDefinition {

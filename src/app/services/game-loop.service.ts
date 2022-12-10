@@ -14,6 +14,7 @@ import { ArrayView } from '../views/array.view';
 import { ActionReactive } from '../interfaces/action-reactive.interface';
 import { PlayerEntity } from '../entities/player.entity';
 import { LoggingService } from './logging.service';
+import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,10 @@ export class GameLoopService {
   }
 
   public reactives(interactiveId: string): ActionReactive {
+    if (interactiveId === this.player.id) {
+      return this.player;
+    }
+
     return this.narrativeService.interatives[interactiveId];
   }
 
@@ -60,30 +65,32 @@ export class GameLoopService {
       }
     );
 
+    actors.unshift(this.player);
+
     return new ArrayView(actors);
+  }
+
+  public get sceneActorsInfo(): ArrayView<SceneActorsInfoInterface> {
+    return new ArrayView(
+      this.actors.items.map((a) => {
+        return {
+          id: a.id,
+          situation: a.situation,
+          classification: a.classification,
+        };
+      })
+    );
   }
 
   public run() {
     if (this.isPlayerAlive()) {
-      const playerAction = this.player.action;
-
-      if (playerAction) {
-        const playerResult = this.dispatcher[
-          playerAction.actionableDefinition.actionable
-        ].execute(
-          this.player,
-          playerAction,
-          this.reactives(playerAction.eventId)
-        );
-
-        this.logging(playerResult.logs);
-      }
-
       this.actors.items.forEach((actor) => {
-        if (actor.action && actor.situation === 'ALIVE') {
+        const action = actor.action(this.sceneActorsInfo);
+
+        if (action && actor.situation === 'ALIVE') {
           const resultLogs = this.dispatcher[
-            actor.action.actionableDefinition.actionable
-          ].execute(actor, actor.action, this.player);
+            action.actionableDefinition.actionable
+          ].execute(actor, action, this.reactives(action.eventId));
 
           this.logging(resultLogs.logs);
         }

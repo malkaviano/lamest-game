@@ -4,7 +4,7 @@ import { DerivedAttributeDefinition } from '../definitions/derived-attribute.def
 import { skillDefinitions } from '../definitions/skill.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ActorSituation } from '../literals/actor-situation.literal';
+import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 export class ActorBehavior {
@@ -57,7 +57,7 @@ export class ActorBehavior {
     );
   }
 
-  public get situation(): ActorSituation {
+  public get situation(): ActorSituationLiteral {
     return this.currentHP > 0 ? 'ALIVE' : 'DEAD';
   }
 

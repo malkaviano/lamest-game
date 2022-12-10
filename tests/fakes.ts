@@ -10,7 +10,9 @@ import { IdentityDefinition } from '../src/app/definitions/identity.definition';
 import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
 import { ActionableEvent } from '../src/app/events/actionable.event';
 import { KeyValueInterface } from '../src/app/interfaces/key-value.interface';
+import { SceneActorsInfoInterface } from '../src/app/interfaces/scene-actors.interface';
 import { SkillNameLiteral } from '../src/app/literals/skill-name.literal';
+import { ArrayView } from '../src/app/views/array.view';
 
 export const simpleSword = new WeaponDefinition(
   'sword',
@@ -122,3 +124,12 @@ export const fakeIdentity = new IdentityDefinition(
   'SHORT',
   'LIGHT'
 );
+
+export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
+  new ArrayView([
+    {
+      id: 'player',
+      classification: 'PLAYER',
+      situation: 'ALIVE',
+    },
+  ]);

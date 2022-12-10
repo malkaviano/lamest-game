@@ -27,7 +27,7 @@ describe('PlayerEntity', () => {
   describe('action', () => {
     describe('when player made no decision', () => {
       it('return null', () => {
-        expect(fakeCharacter().action).toBeNull();
+        expect(fakeCharacter().action()).toBeNull();
       });
     });
 
@@ -39,7 +39,7 @@ describe('PlayerEntity', () => {
 
         char.playerDecision(expected);
 
-        expect(char.action).toEqual(expected);
+        expect(char.action()).toEqual(expected);
       });
     });
   });

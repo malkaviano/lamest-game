@@ -94,6 +94,8 @@ export const setupMocks = () => {
     instance(mockedPlayerEntity)
   );
 
+  when(mockedPlayerEntity.id).thenReturn('player');
+
   when(mockedPlayerEntity.name).thenReturn('player');
 
   when(mockedPlayerEntity.classification).thenReturn('PLAYER');
