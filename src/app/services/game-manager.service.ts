@@ -27,26 +27,26 @@ export class GameManagerService {
 
   constructor(
     private readonly gameLoopService: GameLoopService,
-    private readonly characterService: CharacterService,
-    private readonly narrativeService: NarrativeService,
-    private readonly inventoryService: InventoryService,
+    characterService: CharacterService,
+    narrativeService: NarrativeService,
+    inventoryService: InventoryService,
     private readonly loggingService: LoggingService
   ) {
-    this.playerName = this.characterService.currentCharacter.name;
+    this.playerName = characterService.currentCharacter.name;
 
-    const inventoryChanged = this.inventoryService.inventoryChanged$.pipe(
+    const inventoryChanged = inventoryService.inventoryChanged$.pipe(
       filter((event) => event.storageName === this.playerName),
       map(() => {
-        const items = this.playerInventory();
+        const items = this.playerInventory(inventoryService);
 
         return items;
       })
     );
 
     this.events = new GameEventsDefinition(
-      this.narrativeService.sceneChanged$,
+      narrativeService.sceneChanged$,
       this.loggingService.gameLog$,
-      this.characterService.characterChanged$,
+      characterService.characterChanged$,
       inventoryChanged
     );
   }
@@ -57,8 +57,10 @@ export class GameManagerService {
     result.logs.forEach((log) => this.loggingService.log(log));
   }
 
-  private playerInventory(): ArrayView<ActionableItemDefinition> {
-    const playerItems = this.inventoryService.check(this.playerName);
+  private playerInventory(
+    inventoryService: InventoryService
+  ): ArrayView<ActionableItemDefinition> {
+    const playerItems = inventoryService.check(this.playerName);
 
     const inventoryView: ActionableItemDefinition[] = [];
 
