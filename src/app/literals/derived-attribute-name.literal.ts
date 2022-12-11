@@ -1,1 +1,1 @@
-export type DerivedAttributeNameLiteral = 'HP' | 'PP' | 'MOV';
+export type DerivedAttributeNameLiteral = 'HP' | 'EP' | 'MOV';

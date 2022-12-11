@@ -42,7 +42,7 @@ describe('ActorEntity', () => {
   });
 
   describe('derivedAttributes', () => {
-    it('return HP 9, PP 13, MOV 10', () => {
+    it('return HP 9, EP 13, MOV 10', () => {
       expect(fakeActor().derivedAttributes).toEqual(fakeDerivedAttributes);
     });
   });

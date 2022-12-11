@@ -104,7 +104,7 @@ export const fakeCharacteristics: CharacteristicSetDefinition = {
 
 export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
   HP: new DerivedAttributeDefinition('HP', 8),
-  PP: new DerivedAttributeDefinition('PP', 13),
+  EP: new DerivedAttributeDefinition('EP', 13),
   MOV: new DerivedAttributeDefinition('MOV', 10),
 };
 
@@ -165,7 +165,7 @@ export const fakeCharacterSheetCharacteristics = new ArrayView([
 
 export const fakeCharacterSheetDerivedAttributes = new ArrayView([
   new KeyValueDescriptionDefinition('HP', '8', 'The character hit points'),
-  new KeyValueDescriptionDefinition('PP', '13', 'The character power points'),
+  new KeyValueDescriptionDefinition('EP', '13', 'The character essence points'),
   new KeyValueDescriptionDefinition('MOV', '10', 'The character movement'),
 ]);
 

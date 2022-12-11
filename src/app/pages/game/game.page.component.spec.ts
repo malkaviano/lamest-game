@@ -101,7 +101,7 @@ describe('GamePageComponent', () => {
 
     when(mockedPlayerEntity.derivedAttributes).thenReturn({
       HP: new DerivedAttributeDefinition('HP', 9),
-      PP: new DerivedAttributeDefinition('PP', 13),
+      EP: new DerivedAttributeDefinition('EP', 13),
       MOV: new DerivedAttributeDefinition('MOV', 10),
     });
 
@@ -298,7 +298,7 @@ const characteristicValues = new ArrayView([
 
 const derivedAttributeValues = new ArrayView([
   new KeyValueDescriptionDefinition('HP', '9', 'The character hit points'),
-  new KeyValueDescriptionDefinition('PP', '13', 'The character power points'),
+  new KeyValueDescriptionDefinition('EP', '13', 'The character essence points'),
   new KeyValueDescriptionDefinition('MOV', '10', 'The character movement'),
 ]);
 

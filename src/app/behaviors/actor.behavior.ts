@@ -38,7 +38,7 @@ export class ActorBehavior {
   public get derivedAttributes(): DerivedAttributeSetDefinition {
     return {
       HP: new DerivedAttributeDefinition('HP', this.currentHP),
-      PP: new DerivedAttributeDefinition('PP', this.currentPP),
+      EP: new DerivedAttributeDefinition('EP', this.currentPP),
       MOV: new DerivedAttributeDefinition('MOV', 10),
     };
   }
