@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anyNumber, instance, mock, when } from 'ts-mockito';
+import { anyNumber, instance, when } from 'ts-mockito';
 
 import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
@@ -12,7 +12,7 @@ import { weights } from '../literals/weight.literal';
 import { GeneratorService } from './generator.service';
 import { RandomIntService } from './random-int.service';
 
-const mockedRandomIntService = mock(RandomIntService);
+import { mockedRandomIntService, setupMocks } from '../../../tests/mocks';
 
 describe('GeneratorService', () => {
   let service: GeneratorService;
@@ -26,6 +26,9 @@ describe('GeneratorService', () => {
         },
       ],
     });
+
+    setupMocks();
+
     service = TestBed.inject(GeneratorService);
   });
 

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { ArrayView } from '../views/array.view';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RandomIntService } from './random-int.service';
 import { SkillService } from './skill.service';
 
-const mockedRandomIntService = mock(RandomIntService);
+import { mockedRandomIntService } from '../../../tests/mocks';
 
 describe('SkillService', () => {
   let service: SkillService;
@@ -29,6 +29,13 @@ describe('SkillService', () => {
   });
 
   it('should create new profession skill set', () => {
+    const expectedNewSkillSet = new Map<SkillNameLiteral, number>([
+      ['First Aid', 0],
+      ['Insight', 0],
+      ['Research', 0],
+      ['Listen', 0],
+    ]);
+
     const skillNames: ArrayView<SkillNameLiteral> = new ArrayView([
       'First Aid',
       'Insight',
@@ -42,6 +49,13 @@ describe('SkillService', () => {
   });
 
   it('should distribute 20 points over skills', () => {
+    const expectedSkills = new Map<SkillNameLiteral, number>([
+      ['First Aid', 10],
+      ['Insight', 5],
+      ['Research', 0],
+      ['Listen', 5],
+    ]);
+
     const selectedSkills = new Map<SkillNameLiteral, number>([
       ['First Aid', 0],
       ['Insight', 0],
@@ -60,17 +74,3 @@ describe('SkillService', () => {
     expect(result).toEqual(expectedSkills);
   });
 });
-
-const expectedSkills = new Map<SkillNameLiteral, number>([
-  ['First Aid', 10],
-  ['Insight', 5],
-  ['Research', 0],
-  ['Listen', 5],
-]);
-
-const expectedNewSkillSet = new Map<SkillNameLiteral, number>([
-  ['First Aid', 0],
-  ['Insight', 0],
-  ['Research', 0],
-  ['Listen', 0],
-]);

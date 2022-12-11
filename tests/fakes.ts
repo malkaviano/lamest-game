@@ -63,12 +63,6 @@ export const actionEquip = createActionableDefinition(
   'Equip'
 );
 
-export const actionConsume = createActionableDefinition(
-  'CONSUME',
-  'consume',
-  'Consume'
-);
-
 export const bubbleGum = new ConsumableDefinition(
   'bubbleGum',
   'Bubble Gum',
@@ -99,12 +93,6 @@ export const actionAsk = createActionableDefinition(
 );
 
 export const actionHeal = createActionableDefinition('HEAL', 'heal', 'Heal');
-
-export const actionUse = createActionableDefinition(
-  'USE',
-  'masterKey',
-  'Master Key'
-);
 
 export const fakeCharacteristics: CharacteristicSetDefinition = {
   STR: new CharacteristicDefinition('STR', 8),
@@ -200,3 +188,67 @@ export const fakeCharacterSheet = new CharacterValuesDefinition(
 );
 
 export const lootState = new DiscardState(new ArrayView([actionPickBubbleGum]));
+
+export const consumableFirstAid = new ConsumableDefinition(
+  'firstAid',
+  'First Aid Kit',
+  'Very simple First Aid',
+  5,
+  'First Aid'
+);
+
+export const consumableChesseBurger = new ConsumableDefinition(
+  'sandwich',
+  'Cheeseburger',
+  'Delicious',
+  2
+);
+
+export const actionConsume = createActionableDefinition(
+  'CONSUME',
+  'consume',
+  'Consume'
+);
+
+export const eventConsumeFirstAid = new ActionableEvent(
+  actionConsume,
+  consumableFirstAid.name
+);
+
+export const eventConsumeCheeseBurger = new ActionableEvent(
+  actionConsume,
+  consumableChesseBurger.name
+);
+
+export const eventEquipUnDodgeableAxe = new ActionableEvent(
+  actionEquip,
+  unDodgeableAxe.name
+);
+
+export const actionUse = createActionableDefinition(
+  'USE',
+  'masterKey',
+  'Master Key'
+);
+
+export const actionSceneExit = createActionableDefinition(
+  'SCENE',
+  'exit',
+  'Exit'
+);
+
+export const eventSceneExit = new ActionableEvent(
+  actionSceneExit,
+  'sceneExitDoor'
+);
+
+export const actionSkillAthleticism = createActionableDefinition(
+  'SKILL',
+  'athleticism',
+  'Athleticism'
+);
+
+export const eventSkillAthleticism = new ActionableEvent(
+  actionSkillAthleticism,
+  'athleticism'
+);

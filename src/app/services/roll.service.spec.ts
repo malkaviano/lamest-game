@@ -8,7 +8,7 @@ import { RollService } from './roll.service';
 import { instance, when } from 'ts-mockito';
 import {
   mockedActorEntity,
-  mockedRngService,
+  mockedRandomIntService,
   setupMocks,
 } from '../../../tests/mocks';
 
@@ -20,7 +20,7 @@ describe('RollService', () => {
       providers: [
         {
           provide: RandomIntService,
-          useValue: instance(mockedRngService),
+          useValue: instance(mockedRandomIntService),
         },
       ],
     });
@@ -60,7 +60,9 @@ describe('RollService', () => {
         },
       ].forEach(({ checkResult, roll }) => {
         it(`return ${checkResult} and ${roll}`, () => {
-          when(mockedRngService.getRandomInterval(1, 100)).thenReturn(roll);
+          when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(
+            roll
+          );
 
           const result = service.actorSkillCheck(
             instance(mockedActorEntity),
@@ -80,13 +82,13 @@ describe('RollService', () => {
 
   describe('roll', () => {
     it('return summed result', () => {
-      when(mockedRngService.getRandomInterval(1, 100)).thenReturn(50);
-      when(mockedRngService.getRandomInterval(1, 20)).thenReturn(10);
-      when(mockedRngService.getRandomInterval(1, 12)).thenReturn(6);
-      when(mockedRngService.getRandomInterval(1, 10)).thenReturn(5);
-      when(mockedRngService.getRandomInterval(1, 8)).thenReturn(4);
-      when(mockedRngService.getRandomInterval(1, 6)).thenReturn(3);
-      when(mockedRngService.getRandomInterval(1, 4)).thenReturn(2);
+      when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(50);
+      when(mockedRandomIntService.getRandomInterval(1, 20)).thenReturn(10);
+      when(mockedRandomIntService.getRandomInterval(1, 12)).thenReturn(6);
+      when(mockedRandomIntService.getRandomInterval(1, 10)).thenReturn(5);
+      when(mockedRandomIntService.getRandomInterval(1, 8)).thenReturn(4);
+      when(mockedRandomIntService.getRandomInterval(1, 6)).thenReturn(3);
+      when(mockedRandomIntService.getRandomInterval(1, 4)).thenReturn(2);
 
       const result = service.roll({
         D4: 1,

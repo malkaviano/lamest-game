@@ -3,25 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import { take } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { SceneDefinition } from '../definitions/scene.definition';
-import { InteractiveEntity } from '../entities/interactive.entity';
-import { SceneEntity } from '../entities/scene.entity';
-import { ActionableEvent } from '../events/actionable.event';
-import { SimpleState } from '../states/simple.state';
 import { SceneStore } from '../stores/scene.store';
-import { ArrayView } from '../views/array.view';
 import { NarrativeService } from './narrative.service';
-import { InventoryService } from './inventory.service';
-import { ItemStore } from '../stores/item.store';
 
 import {
+  mockedInteractiveEntity,
   mockedInteractiveStore,
-  mockedInventoryService,
-  mockedItemStore,
+  mockedSceneEntity,
   mockedSceneStore,
+  setupMocks,
 } from '../../../tests/mocks';
+import { eventSceneExit, eventSkillAthleticism } from '../../../tests/fakes';
+import { ArrayView } from '../views/array.view';
 
 describe('NarrativeService', () => {
   let service: NarrativeService;
@@ -33,25 +28,27 @@ describe('NarrativeService', () => {
           provide: SceneStore,
           useValue: instance(mockedSceneStore),
         },
-        {
-          provide: InventoryService,
-          useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: ItemStore,
-          useValue: instance(mockedItemStore),
-        },
       ],
     });
 
+    setupMocks();
+
     when(mockedSceneStore.scenes).thenReturn({
-      scene1: entity1,
-      scene2: entity2,
+      scene1: instance(mockedSceneEntity),
+      scene2: instance(mockedSceneEntity),
     });
 
     when(mockedInteractiveStore.interactives).thenReturn({
-      sceneExitDoor: sceneInteractive,
+      sceneExitDoor: instance(mockedInteractiveEntity),
     });
+
+    when(mockedSceneEntity.transitions).thenReturn({
+      sceneExitDoor: 'scene2',
+    });
+
+    when(mockedSceneEntity.interactives).thenReturn(
+      new ArrayView([instance(mockedInteractiveEntity)])
+    );
 
     service = TestBed.inject(NarrativeService);
   });
@@ -69,19 +66,19 @@ describe('NarrativeService', () => {
           result = scene;
         });
 
-        service.changeScene(new ActionableEvent(exitDoor, 'sceneExitDoor'));
+        service.changeScene(eventSceneExit);
 
         done();
 
-        expect(result).toEqual(entity2);
+        expect(result).toEqual(instance(mockedSceneEntity));
       });
     });
 
     describe('when a NON SCENE is received', () => {
       it('throw INVALID OPERATION', () => {
-        expect(() =>
-          service.changeScene(new ActionableEvent(skill, 'athleticism'))
-        ).toThrowError(errorMessages['INVALID-OPERATION']);
+        expect(() => service.changeScene(eventSkillAthleticism)).toThrowError(
+          errorMessages['INVALID-OPERATION']
+        );
       });
     });
   });
@@ -91,37 +88,8 @@ describe('NarrativeService', () => {
       const result = service.interatives;
 
       expect(result).toEqual({
-        sceneExitDoor: sceneInteractive,
-        athleticism: skillInteractive,
+        id1: instance(mockedInteractiveEntity),
       });
     });
   });
 });
-
-const exitDoor = createActionableDefinition('SCENE', 'exit', 'Exit');
-
-const skill = createActionableDefinition('SKILL', 'athleticism', 'Athleticism');
-
-const sceneInteractive = new InteractiveEntity(
-  'sceneExitDoor',
-  'exit',
-  'leaving',
-  new SimpleState(new ArrayView([exitDoor]))
-);
-
-const skillInteractive = new InteractiveEntity(
-  'athleticism',
-  'Jumping',
-  'Jump outside the window',
-  new SimpleState(new ArrayView([skill]))
-);
-
-const entity1 = new SceneEntity(
-  new ArrayView([]),
-  new ArrayView([sceneInteractive, skillInteractive]),
-  {
-    sceneExitDoor: 'scene2',
-  }
-);
-
-const entity2 = new SceneEntity(new ArrayView([]), new ArrayView([]), {});

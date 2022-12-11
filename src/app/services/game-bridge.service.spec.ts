@@ -4,7 +4,6 @@ import { of, Subject, take } from 'rxjs';
 import { anyString, instance, when } from 'ts-mockito';
 
 import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 import { GameBridgeService } from './game-bridge.service';
@@ -27,8 +26,9 @@ import {
 import {
   actionEquip,
   actionConsume,
-  bubbleGum,
+  consumableFirstAid,
   unDodgeableAxe,
+  eventEquipUnDodgeableAxe,
 } from '../../../tests/fakes';
 
 describe('GameBridgeService', () => {
@@ -78,9 +78,12 @@ describe('GameBridgeService', () => {
   describe('when player inventory changes', () => {
     [
       {
-        invEvent: new InventoryEvent('CONSUME', 'player', bubbleGum),
-        expected: new ActionableItemDefinition(bubbleGum, actionConsume),
-        item: bubbleGum,
+        invEvent: new InventoryEvent('CONSUME', 'player', consumableFirstAid),
+        expected: new ActionableItemDefinition(
+          consumableFirstAid,
+          actionConsume
+        ),
+        item: consumableFirstAid,
       },
       {
         invEvent: new InventoryEvent('EQUIP', 'player', unDodgeableAxe),
@@ -114,7 +117,7 @@ describe('GameBridgeService', () => {
 
       when(mockedGameLoopService.run()).thenCall(() => (result = true));
 
-      service.actionableReceived(actionableEvent);
+      service.actionableReceived(eventEquipUnDodgeableAxe);
 
       done();
 
@@ -122,8 +125,6 @@ describe('GameBridgeService', () => {
     });
   });
 });
-
-const actionableEvent = new ActionableEvent(actionEquip, unDodgeableAxe.name);
 
 const inventoryEventSubject = new Subject<InventoryEvent>();
 

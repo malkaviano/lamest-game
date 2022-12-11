@@ -1,15 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 
 import { Subject, take } from 'rxjs';
-import { instance, mock, reset, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { DamageDefinition } from '../definitions/damage.definition';
-import { createDice } from '../definitions/dice.definition';
+
+import { simpleSword } from '../../../tests/fakes';
+import {
+  mockedPlayerEntity,
+  mockedRandomCharacterService,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -24,7 +29,7 @@ describe('CharacterService', () => {
       ],
     });
 
-    reset(mockedRandomCharacterService);
+    setupMocks();
 
     when(mockedRandomCharacterService.character()).thenReturn(
       instance(mockedPlayerEntity)
@@ -76,7 +81,7 @@ describe('CharacterService', () => {
           result = event;
         });
 
-        subjectWeapon.next(weapon1);
+        subjectWeapon.next(simpleSword);
 
         done();
 
@@ -114,20 +119,6 @@ describe('CharacterService', () => {
   });
 });
 
-const mockedRandomCharacterService = mock(RandomCharacterService);
-
-const mockedPlayerEntity = mock(PlayerEntity);
-
 const subjectHP = new Subject<HitPointsEvent>();
 
 const subjectWeapon = new Subject<WeaponDefinition>();
-
-const weapon1 = new WeaponDefinition(
-  'sword1',
-  'Rusted Sword',
-  'Old sword full of rust',
-  'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0),
-  true,
-  'PERMANENT'
-);

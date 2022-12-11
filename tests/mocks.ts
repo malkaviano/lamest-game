@@ -5,6 +5,7 @@ import { EquipmentBehavior } from '../src/app/behaviors/equipment.behavior';
 import { ActorEntity } from '../src/app/entities/actor.entity';
 import { InteractiveEntity } from '../src/app/entities/interactive.entity';
 import { PlayerEntity } from '../src/app/entities/player.entity';
+import { SceneEntity } from '../src/app/entities/scene.entity';
 import { ConverterHelper } from '../src/app/helpers/converter.helper';
 import { RulesHelper } from '../src/app/helpers/rules.helper';
 import { CombatRule } from '../src/app/rules/combat.rule';
@@ -17,11 +18,14 @@ import { SkillRule } from '../src/app/rules/skill.rule';
 import { UnEquipRule } from '../src/app/rules/unequip.rule';
 import { CharacterService } from '../src/app/services/character.service';
 import { GameLoopService } from '../src/app/services/game-loop.service';
+import { GeneratorService } from '../src/app/services/generator.service';
 import { InventoryService } from '../src/app/services/inventory.service';
 import { LoggingService } from '../src/app/services/logging.service';
 import { NarrativeService } from '../src/app/services/narrative.service';
+import { RandomCharacterService } from '../src/app/services/random-character.service';
 import { RandomIntService } from '../src/app/services/random-int.service';
 import { RollService } from '../src/app/services/roll.service';
+import { SkillService } from '../src/app/services/skill.service';
 import { ActionableState } from '../src/app/states/actionable.state';
 import { ActionableStore } from '../src/app/stores/actionable.store';
 import { InteractiveStore } from '../src/app/stores/interactive.store';
@@ -34,6 +38,7 @@ import { StatesStore } from '../src/app/stores/states.store';
 import {
   fakeCharacteristics,
   fakeDerivedAttributes,
+  fakeIdentity,
   fakeSkills,
   simpleSword,
 } from './fakes';
@@ -92,8 +97,6 @@ export const mockedSceneStore = mock(SceneStore);
 
 export const mockedInteractiveStore = mock(InteractiveStore);
 
-export const mockedRngService = mock(RandomIntService);
-
 export const mockedActionableState = mock<ActionableState>();
 
 export const mockedActionableState2 = mock<ActionableState>();
@@ -101,6 +104,16 @@ export const mockedActionableState2 = mock<ActionableState>();
 export const mockedMessageStore = mock(MessageStore);
 
 export const mockedActionableStore = mock(ActionableStore);
+
+export const mockedRandomCharacterService = mock(RandomCharacterService);
+
+export const mockedRandomIntService = mock(RandomIntService);
+
+export const mockedGeneratorService = mock(GeneratorService);
+
+export const mockedSkillService = mock(SkillService);
+
+export const mockedSceneEntity = mock(SceneEntity);
 
 export const setupMocks = () => {
   resetMocks();
@@ -189,6 +202,12 @@ export const setupMocks = () => {
   when(mockedResourcesStore.lockedContainerStateStore).thenReturn({
     states: [],
   });
+
+  when(mockedGeneratorService.identity()).thenReturn(fakeIdentity);
+
+  when(mockedGeneratorService.characteristics()).thenReturn(
+    fakeCharacteristics
+  );
 };
 
 const resetMocks = () => {
@@ -242,11 +261,15 @@ const resetMocks = () => {
 
   reset(mockedSceneStore);
 
-  reset(mockedRngService);
+  reset(mockedRandomIntService);
 
   reset(mockedActionableState);
 
   reset(mockedActionableState2);
 
   reset(mockedMessageStore);
+
+  reset(mockedRandomCharacterService);
+
+  reset(mockedSceneEntity);
 };

@@ -2,10 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
-import { ConsumableDefinition } from '../definitions/consumable.definition';
-import { DamageDefinition } from '../definitions/damage.definition';
-import { createDice } from '../definitions/dice.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 import {
   createCannotCheckLogMessage,
@@ -14,7 +10,6 @@ import {
   createFreeLogMessage,
   createHealedMessage,
 } from '../definitions/log-message.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
@@ -26,6 +21,15 @@ import {
   mockedRollService,
   setupMocks,
 } from '../../../tests/mocks';
+import {
+  actionConsume,
+  actionHeal,
+  consumableChesseBurger,
+  consumableFirstAid,
+  eventConsumeCheeseBurger,
+  eventConsumeFirstAid,
+  simpleSword,
+} from '../../../tests/fakes';
 
 describe('ConsumeRule', () => {
   let service: ConsumeRule;
@@ -56,22 +60,14 @@ describe('ConsumeRule', () => {
   describe('execute', () => {
     describe('when item was not a consumable', () => {
       it('throw Wrong item was used', () => {
-        when(mockedInventoryService.take('player', 'gun')).thenReturn(
-          new WeaponDefinition(
-            'gun',
-            'Gun',
-            '',
-            'Firearm (Handgun)',
-            new DamageDefinition(createDice(), 0),
-            true,
-            'PERMANENT'
-          )
+        when(mockedInventoryService.take('player', 'sword')).thenReturn(
+          simpleSword
         );
 
         expect(() =>
           service.execute(
             instance(mockedPlayerEntity),
-            new ActionableEvent(consumeAction, 'gun')
+            new ActionableEvent(actionConsume, 'sword')
           )
         ).toThrowError(errorMessages['WRONG-ITEM']);
       });
@@ -94,7 +90,10 @@ describe('ConsumeRule', () => {
             roll: 100,
           });
 
-          const result = service.execute(instance(mockedPlayerEntity), event);
+          const result = service.execute(
+            instance(mockedPlayerEntity),
+            eventConsumeFirstAid
+          );
 
           expect(result).toEqual({
             logs: [logFirstAid1, logFirstAidFailure],
@@ -119,10 +118,13 @@ describe('ConsumeRule', () => {
           });
 
           when(
-            mockedPlayerEntity.reactTo(deepEqual(healAction), 'SUCCESS', 5)
+            mockedPlayerEntity.reactTo(deepEqual(actionHeal), 'SUCCESS', 5)
           ).thenReturn(logHeal5);
 
-          const result = service.execute(instance(mockedPlayerEntity), event);
+          const result = service.execute(
+            instance(mockedPlayerEntity),
+            eventConsumeFirstAid
+          );
 
           expect(result).toEqual({
             logs: [logFirstAid1, logFirstAidSuccess, logFirstAid3],
@@ -148,7 +150,10 @@ describe('ConsumeRule', () => {
             roll: 0,
           });
 
-          const result = service.execute(instance(mockedPlayerEntity), event);
+          const result = service.execute(
+            instance(mockedPlayerEntity),
+            eventConsumeFirstAid
+          );
 
           expect(result).toEqual({
             logs: [logError],
@@ -164,10 +169,13 @@ describe('ConsumeRule', () => {
         );
 
         when(
-          mockedPlayerEntity.reactTo(deepEqual(healAction), 'NONE', 2)
+          mockedPlayerEntity.reactTo(deepEqual(actionHeal), 'NONE', 2)
         ).thenReturn(logHeal2);
 
-        const result = service.execute(instance(mockedPlayerEntity), event2);
+        const result = service.execute(
+          instance(mockedPlayerEntity),
+          eventConsumeCheeseBurger
+        );
 
         expect(result).toEqual({
           logs: [logCheeseBurger1, logCheeseBurger2],
@@ -176,33 +184,6 @@ describe('ConsumeRule', () => {
     });
   });
 });
-
-const consumableFirstAid = new ConsumableDefinition(
-  'firstAid',
-  'First Aid Kit',
-  'Very simple First Aid',
-  5,
-  'First Aid'
-);
-
-const consumableChesseBurger = new ConsumableDefinition(
-  'sandwich',
-  'Cheeseburger',
-  'Delicious',
-  2
-);
-
-const consumeAction = createActionableDefinition(
-  'CONSUME',
-  'firstAid',
-  'First Aid Kit'
-);
-
-const healAction = createActionableDefinition('HEAL', 'heal', 'Heal');
-
-const event = new ActionableEvent(consumeAction, 'firstAid');
-
-const event2 = new ActionableEvent(consumeAction, 'sandwich');
 
 const logCheeseBurger1 = createConsumedLogMessage('player', 'Cheeseburger');
 

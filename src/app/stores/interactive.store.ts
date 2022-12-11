@@ -25,7 +25,6 @@ export class InteractiveStore {
 
     resourcesStore.interactiveStore.interactives.forEach(
       ({ id, name, description, state, resettable }) => {
-        console.log(id, name, description, state, resettable);
         this.store.set(
           id,
           new InteractiveEntity(

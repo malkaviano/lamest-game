@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
-import { errorMessages } from '../definitions/error-messages.definition';
 
+import { errorMessages } from '../definitions/error-messages.definition';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { InteractiveEntity } from '../entities/interactive.entity';
 import { SceneEntity } from '../entities/scene.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ItemStore } from '../stores/item.store';
 import { SceneStore } from '../stores/scene.store';
-import { InventoryService } from './inventory.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,12 +20,8 @@ export class NarrativeService {
 
   public readonly sceneChanged$: Observable<SceneDefinition>;
 
-  constructor(
-    itemStore: ItemStore,
-    inventoryService: InventoryService,
-    private readonly sceneStore: SceneStore
-  ) {
-    this.currentScene = this.sceneStore.scenes['scene1'];
+  constructor(private readonly sceneStore: SceneStore) {
+    this.currentScene = this.sceneStore.scenes['scene1']; // FIXME: OMG
 
     this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
 
