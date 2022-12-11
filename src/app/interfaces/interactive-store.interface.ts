@@ -6,7 +6,7 @@ export interface InteractiveStoreInterface {
     readonly state: string;
     readonly resettable: boolean;
   }[];
-  readonly usedItems: {
+  readonly inventoryItems: {
     readonly id: string;
     readonly items: {
       readonly name: string;

@@ -40,7 +40,7 @@ describe('InteractiveStore', () => {
 
     when(mockedResourcesStore.interactiveStore).thenReturn({
       interactives: [],
-      usedItems: [],
+      inventoryItems: [],
     });
 
     when(mockedItemStore.items).thenReturn({});

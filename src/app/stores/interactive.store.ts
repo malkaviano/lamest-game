@@ -39,7 +39,7 @@ export class InteractiveStore {
       }
     );
 
-    resourcesStore.interactiveStore.usedItems.forEach(({ id, items }) => {
+    resourcesStore.interactiveStore.inventoryItems.forEach(({ id, items }) => {
       items.forEach(({ name, quantity }) => {
         for (let index = 0; index < quantity; index++) {
           inventoryService.store(id, itemStore.items[name]);
