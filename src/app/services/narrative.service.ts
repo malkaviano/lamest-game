@@ -21,7 +21,7 @@ export class NarrativeService {
   public readonly sceneChanged$: Observable<SceneDefinition>;
 
   constructor(private readonly sceneStore: SceneStore) {
-    this.currentScene = this.sceneStore.scenes['scene1']; // FIXME: OMG
+    this.currentScene = this.sceneStore.scenes[this.sceneStore.initial];
 
     this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
 

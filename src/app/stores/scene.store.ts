@@ -15,6 +15,8 @@ import { ResourcesStore } from './resources.store';
 export class SceneStore {
   private readonly store: Map<string, SceneEntity>;
 
+  public readonly initial: string;
+
   constructor(
     descriptionsStore: DescriptionStore,
     interactiveStore: InteractiveStore,
@@ -46,6 +48,8 @@ export class SceneStore {
         )
       );
     });
+
+    this.initial = resourcesStore.sceneStore.initial;
   }
 
   public get scenes(): KeyValueInterface<SceneEntity> {

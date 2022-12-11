@@ -7,6 +7,7 @@ import { errorMessages } from '../definitions/error-messages.definition';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { SceneStore } from '../stores/scene.store';
 import { NarrativeService } from './narrative.service';
+import { ArrayView } from '../views/array.view';
 
 import {
   mockedInteractiveEntity,
@@ -16,7 +17,6 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import { eventSceneExit, eventSkillAthleticism } from '../../../tests/fakes';
-import { ArrayView } from '../views/array.view';
 
 describe('NarrativeService', () => {
   let service: NarrativeService;
@@ -32,6 +32,8 @@ describe('NarrativeService', () => {
     });
 
     setupMocks();
+
+    when(mockedSceneStore.initial).thenReturn('scene1');
 
     when(mockedSceneStore.scenes).thenReturn({
       scene1: instance(mockedSceneEntity),

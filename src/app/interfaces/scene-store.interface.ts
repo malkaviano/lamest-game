@@ -8,4 +8,5 @@ export interface SceneStoreInterface {
       readonly scene: string;
     }[];
   }[];
+  readonly initial: string;
 }

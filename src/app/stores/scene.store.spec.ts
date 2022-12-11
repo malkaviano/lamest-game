@@ -40,6 +40,7 @@ describe('SceneStore', () => {
 
     when(mockedResourcesStore.sceneStore).thenReturn({
       scenes: [],
+      initial: '',
     });
 
     when(mockedDescriptionStore.descriptions).thenReturn({});
