@@ -1,22 +1,27 @@
 import { instance, mock, when } from 'ts-mockito';
 
 import { ArrayView } from '../views/array.view';
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { CharacterValuesDefinition } from '../definitions/character-values.definition';
-import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { KeyValueDescriptionDefinition } from '../definitions/key-value-description.definition';
 import { PlayerEntity } from '../entities/player.entity';
 import { ConverterHelper } from './converter.helper';
-import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
+
+import {
+  fakeCharacteristics,
+  fakeDerivedAttributes,
+  fakeIdentity,
+} from '../../../tests/fakes';
 
 describe('ConverterHelper', () => {
   describe('converting a character to keyValues', () => {
     it('return keyvalue array', () => {
-      when(mockedPlayerEntity.identity).thenReturn(identity);
+      when(mockedPlayerEntity.identity).thenReturn(fakeIdentity);
 
-      when(mockedPlayerEntity.characteristics).thenReturn(characteristics);
+      when(mockedPlayerEntity.characteristics).thenReturn(fakeCharacteristics);
 
-      when(mockedPlayerEntity.derivedAttributes).thenReturn(derivedAttributes);
+      when(mockedPlayerEntity.derivedAttributes).thenReturn(
+        fakeDerivedAttributes
+      );
 
       when(mockedPlayerEntity.skills).thenReturn(skills);
 
@@ -47,31 +52,6 @@ describe('ConverterHelper', () => {
 
 const helper = new ConverterHelper();
 
-const identity = new CharacterIdentityDefinition(
-  'name',
-  'Hunter',
-  'ADULT',
-  'HUMAN',
-  'AVERAGE',
-  'AVERAGE'
-);
-
-const characteristics = {
-  STR: new CharacteristicDefinition('STR', 12),
-  VIT: new CharacteristicDefinition('VIT', 12),
-  SIZ: new CharacteristicDefinition('SIZ', 12),
-  DEX: new CharacteristicDefinition('DEX', 12),
-  INT: new CharacteristicDefinition('INT', 12),
-  POW: new CharacteristicDefinition('POW', 12),
-  APP: new CharacteristicDefinition('APP', 12),
-};
-
-const derivedAttributes = {
-  HP: new DerivedAttributeDefinition('HP', 12),
-  PP: new DerivedAttributeDefinition('PP', 12),
-  MOV: new DerivedAttributeDefinition('MOV', 10),
-};
-
 const skills = {
   'Firearm (Handgun)': 62,
   'First Aid': 47,
@@ -83,26 +63,25 @@ const skills = {
 
 const expected = new CharacterValuesDefinition(
   new ArrayView([
-    new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
+    new KeyValueDescriptionDefinition('NAME', 'Some Name', 'Character name'),
     new KeyValueDescriptionDefinition(
       'PROFESSION',
-      'Hunter',
+      'Police Detective',
       'Character profession'
     ),
-    new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
+    new KeyValueDescriptionDefinition('AGE', 'YOUNG', 'Character age'),
     new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
-    new KeyValueDescriptionDefinition('HEIGHT', 'AVERAGE', 'Character height'),
-    new KeyValueDescriptionDefinition('WEIGHT', 'AVERAGE', 'Character weight'),
+    new KeyValueDescriptionDefinition('HEIGHT', 'SHORT', 'Character height'),
+    new KeyValueDescriptionDefinition('WEIGHT', 'LIGHT', 'Character weight'),
   ]),
   new ArrayView([
     new KeyValueDescriptionDefinition(
       'STR',
-      '12',
+      '8',
       'The character physical force'
     ),
-    new KeyValueDescriptionDefinition('VIT', '12', 'The character vitality'),
-    new KeyValueDescriptionDefinition('SIZ', '12', 'The character body shape'),
-    new KeyValueDescriptionDefinition('DEX', '12', 'The character agility'),
+    new KeyValueDescriptionDefinition('VIT', '9', 'The character vitality'),
+    new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
     new KeyValueDescriptionDefinition(
       'INT',
       '12',
@@ -110,14 +89,14 @@ const expected = new CharacterValuesDefinition(
     ),
     new KeyValueDescriptionDefinition(
       'POW',
-      '12',
+      '13',
       'The character mental strength'
     ),
-    new KeyValueDescriptionDefinition('APP', '12', 'The character looks'),
+    new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
   ]),
   new ArrayView([
-    new KeyValueDescriptionDefinition('HP', '12', 'The character hit points'),
-    new KeyValueDescriptionDefinition('PP', '12', 'The character power points'),
+    new KeyValueDescriptionDefinition('HP', '8', 'The character hit points'),
+    new KeyValueDescriptionDefinition('PP', '13', 'The character power points'),
     new KeyValueDescriptionDefinition('MOV', '10', 'The character movement'),
   ]),
   new ArrayView([

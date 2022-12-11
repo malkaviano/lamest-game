@@ -1,8 +1,7 @@
 export type CharacteristicNameLiteral =
   | 'STR'
   | 'VIT'
-  | 'SIZ'
-  | 'DEX'
+  | 'AGI'
   | 'INT'
   | 'POW'
   | 'APP';

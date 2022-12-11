@@ -82,8 +82,7 @@ describe('GamePageComponent', () => {
     when(mockedPlayerEntity.characteristics).thenReturn({
       STR: new CharacteristicDefinition('STR', 8),
       VIT: new CharacteristicDefinition('VIT', 9),
-      SIZ: new CharacteristicDefinition('SIZ', 10),
-      DEX: new CharacteristicDefinition('DEX', 11),
+      AGI: new CharacteristicDefinition('AGI', 11),
       INT: new CharacteristicDefinition('INT', 12),
       POW: new CharacteristicDefinition('POW', 13),
       APP: new CharacteristicDefinition('APP', 14),
@@ -291,7 +290,7 @@ const characteristicValues = new ArrayView([
     'The character body constitution'
   ),
   new KeyValueDescriptionDefinition('SIZ', '10', 'The character body shape'),
-  new KeyValueDescriptionDefinition('DEX', '11', 'The character agility'),
+  new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
   new KeyValueDescriptionDefinition('INT', '12', 'The character intelligence'),
   new KeyValueDescriptionDefinition(
     'POW',

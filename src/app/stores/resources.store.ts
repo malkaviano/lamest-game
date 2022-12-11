@@ -127,8 +127,7 @@ export class ResourcesStore {
       const characteristics: CharacteristicSetDefinition = {
         STR: new CharacteristicDefinition('STR', a.characteristics.STR),
         VIT: new CharacteristicDefinition('VIT', a.characteristics.VIT),
-        SIZ: new CharacteristicDefinition('SIZ', a.characteristics.SIZ),
-        DEX: new CharacteristicDefinition('DEX', a.characteristics.DEX),
+        AGI: new CharacteristicDefinition('AGI', a.characteristics.AGI),
         INT: new CharacteristicDefinition('INT', a.characteristics.INT),
         POW: new CharacteristicDefinition('POW', a.characteristics.POW),
         APP: new CharacteristicDefinition('APP', a.characteristics.APP),

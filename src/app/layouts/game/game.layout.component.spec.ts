@@ -111,7 +111,7 @@ describe('GameLayoutComponent', () => {
           '10',
           'The character body shape'
         ),
-        new KeyValueDescriptionDefinition('DEX', '11', 'The character agility'),
+        new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
         new KeyValueDescriptionDefinition(
           'INT',
           '12',
@@ -306,7 +306,7 @@ const characterValue = new CharacterValuesDefinition(
       'The character body constitution'
     ),
     new KeyValueDescriptionDefinition('SIZ', '10', 'The character body shape'),
-    new KeyValueDescriptionDefinition('DEX', '11', 'The character agility'),
+    new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
     new KeyValueDescriptionDefinition(
       'INT',
       '12',

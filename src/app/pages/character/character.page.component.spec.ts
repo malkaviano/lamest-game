@@ -26,7 +26,7 @@ describe('CharacterPageComponent', () => {
   });
 
   it('should have characteristics', () => {
-    expect(component.characteristicsView.items.length).toBe(7);
+    expect(component.characteristicsView.items.length).toBe(6);
   });
 
   it('should have identity', () => {

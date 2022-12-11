@@ -22,8 +22,7 @@ export class GeneratorService {
     return {
       STR: new CharacteristicDefinition('STR', this.twoD6Plus6()),
       VIT: new CharacteristicDefinition('VIT', this.twoD6Plus6()),
-      SIZ: new CharacteristicDefinition('SIZ', this.twoD6Plus6()),
-      DEX: new CharacteristicDefinition('DEX', this.twoD6Plus6()),
+      AGI: new CharacteristicDefinition('AGI', this.twoD6Plus6()),
       INT: new CharacteristicDefinition('INT', this.twoD6Plus6()),
       POW: new CharacteristicDefinition('POW', this.twoD6Plus6()),
       APP: new CharacteristicDefinition('APP', this.twoD6Plus6()),

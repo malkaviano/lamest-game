@@ -33,22 +33,22 @@ describe('ActorBehavior', () => {
   });
 
   describe('damaged', () => {
-    it('return HitPointsEvent previous 9 current 0', () => {
+    it('return HitPointsEvent previous 8 current 0', () => {
       const result = behavior().damaged(12);
 
-      expect(result).toEqual(new HitPointsEvent(9, 0));
+      expect(result).toEqual(new HitPointsEvent(8, 0));
     });
   });
 
   describe('healed', () => {
-    it('return HitPointsEvent previous 9 current 0', () => {
+    it('return HitPointsEvent previous 6 current 8', () => {
       const char = behavior();
 
       char.damaged(2);
 
       const result = char.healed(4);
 
-      expect(result).toEqual(new HitPointsEvent(7, 9));
+      expect(result).toEqual(new HitPointsEvent(6, 8));
     });
   });
 

@@ -12,8 +12,7 @@ export const characteristicsDefinitions: {
 } = {
   STR: 'The character physical force',
   VIT: 'The character vitality',
-  DEX: 'The character agility',
-  SIZ: 'The character body shape',
+  AGI: 'The character agility',
   INT: 'The character intelligence',
   POW: 'The character mental strength',
   APP: 'The character looks',

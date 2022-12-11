@@ -23,7 +23,7 @@ const justStr = (characteristics: CharacteristicSetDefinition) =>
   characteristics['STR'].value;
 
 const justDex = (characteristics: CharacteristicSetDefinition) =>
-  characteristics['DEX'].value;
+  characteristics['AGI'].value;
 
 const justInt = (characteristics: CharacteristicSetDefinition) =>
   characteristics['INT'].value;
@@ -37,7 +37,7 @@ const justApp = (characteristics: CharacteristicSetDefinition) =>
 const strPlusConPlusDex = (characteristics: CharacteristicSetDefinition) =>
   characteristics['STR'].value +
   characteristics['VIT'].value +
-  characteristics['DEX'].value;
+  characteristics['AGI'].value;
 
 const strPlusDex = (characteristics: CharacteristicSetDefinition) =>
   justStr(characteristics) + justDex(characteristics);

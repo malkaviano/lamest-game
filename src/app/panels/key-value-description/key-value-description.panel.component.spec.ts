@@ -55,7 +55,7 @@ const characteristics = () => [
     'The character body constitution'
   ),
   new KeyValueDescriptionDefinition('SIZ', '11', 'The character body shape'),
-  new KeyValueDescriptionDefinition('DEX', '9', 'The character agility'),
+  new KeyValueDescriptionDefinition('AGI', '9', 'The character agility'),
   new KeyValueDescriptionDefinition('INT', '13', 'The character intelligence'),
   new KeyValueDescriptionDefinition(
     'POW',

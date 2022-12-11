@@ -87,8 +87,7 @@ const fakeIdentity = new CharacterIdentityDefinition(
 const fakeCharacteristics = {
   STR: new CharacteristicDefinition('STR', 8),
   VIT: new CharacteristicDefinition('VIT', 9),
-  SIZ: new CharacteristicDefinition('SIZ', 10),
-  DEX: new CharacteristicDefinition('DEX', 11),
+  AGI: new CharacteristicDefinition('AGI', 11),
   INT: new CharacteristicDefinition('INT', 12),
   POW: new CharacteristicDefinition('POW', 13),
   APP: new CharacteristicDefinition('APP', 14),

@@ -88,15 +88,14 @@ export const actionPick = createActionableDefinition('PICK', 'name1', 'label1');
 export const fakeCharacteristics: CharacteristicSetDefinition = {
   STR: new CharacteristicDefinition('STR', 8),
   VIT: new CharacteristicDefinition('VIT', 9),
-  SIZ: new CharacteristicDefinition('SIZ', 10),
-  DEX: new CharacteristicDefinition('DEX', 11),
+  AGI: new CharacteristicDefinition('AGI', 11),
   INT: new CharacteristicDefinition('INT', 12),
   POW: new CharacteristicDefinition('POW', 13),
   APP: new CharacteristicDefinition('APP', 14),
 };
 
 export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
-  HP: new DerivedAttributeDefinition('HP', 9),
+  HP: new DerivedAttributeDefinition('HP', 8),
   PP: new DerivedAttributeDefinition('PP', 13),
   MOV: new DerivedAttributeDefinition('MOV', 10),
 };
