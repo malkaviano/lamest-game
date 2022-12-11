@@ -33,16 +33,29 @@
     </div>
   </div>
   <div class="section text-box-width">
-    <div class="title-border">
-      <mat-toolbar>
-        <span class="title-text">Scene Description</span>
-      </mat-toolbar>
-    </div>
-    <div class="main-box vertical-scrollable border-blue">
-      <app-text-area-panel
-        [paragraphs]="scene.description"
-        data-testid="description"
-      ></app-text-area-panel>
+    <div class="main-box">
+      <div class="title-border">
+        <mat-toolbar>
+          <span class="title-text">Scene Description</span>
+        </mat-toolbar>
+      </div>
+      <div class="half-box vertical-scrollable border-blue">
+        <app-text-area-panel
+          [paragraphs]="scene.description"
+          data-testid="description"
+        ></app-text-area-panel>
+      </div>
+      <div class="title-border">
+        <mat-toolbar>
+          <span class="title-text">What happened?</span>
+        </mat-toolbar>
+      </div>
+      <div class="half-box vertical-scrollable border-yellow">
+        <app-text-area-panel
+          [paragraphs]="logs"
+          data-testid="log"
+        ></app-text-area-panel>
+      </div>
     </div>
   </div>
   <div class="section">
@@ -62,24 +75,13 @@
     </div>
   </div>
   <div class="section text-box-width base-margin-right">
-    <div class="title-border">
-      <mat-toolbar>
-        <span class="title-text">What happened?</span>
-      </mat-toolbar>
-    </div>
     <div class="main-box">
-      <div class="half-box vertical-scrollable border-yellow">
-        <app-text-area-panel
-          [paragraphs]="logs"
-          data-testid="log"
-        ></app-text-area-panel>
-      </div>
       <div class="title-border">
         <mat-toolbar>
           <span class="title-text">Inventory</span>
         </mat-toolbar>
       </div>
-      <div class="half-box vertical-scrollable border-violet">
+      <div class="vertical-scrollable border-violet">
         <div data-testid="inventory">
           <app-inventory-panel
             [equipped]="equipped"
