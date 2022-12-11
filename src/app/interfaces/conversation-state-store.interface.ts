@@ -1,6 +1,6 @@
 export interface ConversationStateStoreInterface {
   readonly states: {
-    readonly interactiveId: string;
+    readonly id: string;
     readonly maps: string[];
     readonly initialMap: string;
   }[];

@@ -1,16 +1,20 @@
 {
   "states": [
     {
-      "interactiveId": "shelfLoot",
+      "id": "shelfLoot",
       "actionables": ["knife", "firstAid", "firstAid"]
     },
     {
-      "interactiveId": "lootWoodBox",
+      "id": "lootWoodBox",
       "actionables": ["club"]
     },
     {
-      "interactiveId": "tableLoot",
-      "actionables": ["halberd", "bubbleGum", "molotov"]
+      "id": "tableLoot",
+      "actionables": ["bubbleGum", "molotov"]
+    },
+    {
+      "id": "lockedChestLoot",
+      "actionables": ["halberd"]
     }
   ]
 }

@@ -2,6 +2,8 @@ import { ArrayView } from '../views/array.view';
 import { LockedContainerState } from './locked-container';
 
 import { actionUse, lootState } from '../../../tests/fakes';
+import { LazyHelper } from '../helpers/lazy.helper';
+import { DiscardState } from './discard.state';
 
 describe('LockedContainerState', () => {
   describe(`when item was not in player's inventory`, () => {
@@ -24,4 +26,7 @@ describe('LockedContainerState', () => {
   });
 });
 
-const state = new LockedContainerState(new ArrayView([actionUse]), lootState);
+const state = new LockedContainerState(
+  new ArrayView([actionUse]),
+  new LazyHelper<DiscardState>(() => lootState)
+);

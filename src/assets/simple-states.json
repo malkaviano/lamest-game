@@ -1,23 +1,23 @@
 {
   "states": [
     {
-      "interactiveId": "exitDoor",
+      "id": "exitDoor",
       "actionables": ["sceneExitDoor"]
     },
     {
-      "interactiveId": "enterDoor",
+      "id": "enterDoor",
       "actionables": ["enterSceneDoor"]
     },
     {
-      "interactiveId": "corridorDoor",
+      "id": "corridorDoor",
       "actionables": ["corridorDoor"]
     },
     {
-      "interactiveId": "trainingDummy",
+      "id": "trainingDummy",
       "actionables": ["attack"]
     },
     {
-      "interactiveId": "zombie",
+      "id": "zombie",
       "actionables": ["attack"]
     }
   ]

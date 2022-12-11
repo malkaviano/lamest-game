@@ -1,0 +1,9 @@
+{
+  "props": [
+    {
+      "name": "masterKey",
+      "label": "Master Key",
+      "description": "Use to open locked containers"
+    }
+  ]
+}

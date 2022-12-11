@@ -48,6 +48,13 @@
       "description": "Common table",
       "state": "tableLoot",
       "resettable": false
+    },
+    {
+      "id": "lockedChest",
+      "name": "Locked Chest",
+      "description": "Needs key to open",
+      "state": "lockedChest",
+      "resettable": false
     }
   ],
   "usedItems": [
@@ -77,15 +84,20 @@
       "id": "table",
       "items": [
         {
-          "name": "halberd",
-          "quantity": 1
-        },
-        {
           "name": "bubbleGum",
           "quantity": 1
         },
         {
           "name": "molotov",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "lockedChest",
+      "items": [
+        {
+          "name": "halberd",
           "quantity": 1
         }
       ]

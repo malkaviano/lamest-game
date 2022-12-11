@@ -19,6 +19,8 @@ import { CharacteristicSetDefinition } from '../definitions/characteristic-set.d
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
 import { ActorStoreInterface } from '../interfaces/actor-store.interface';
+import { PropsStoreInterface } from '../interfaces/item-store.interface';
+import { LockedContainerStateStoreInterface } from '../interfaces/locked-container-state-store';
 
 import sceneStore from '../../assets/scenes.json';
 import skillStateStore from '../../assets/skill-states.json';
@@ -33,6 +35,8 @@ import descriptionStore from '../../assets/descriptions.json';
 import actionableStore from '../../assets/actionables.json';
 import messageStore from '../../assets/messages.json';
 import actorStore from '../../assets/actors.json';
+import propsStore from '../../assets/props.json';
+import lockedContainerStateStore from '../../assets/locked-container-state.json';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +67,10 @@ export class ResourcesStore {
   public readonly actionableStore: ActionableStoreInterface;
 
   public readonly messageStore: MessageStoreInterface;
+
+  public readonly propsStore: PropsStoreInterface;
+
+  public readonly lockedContainerStateStore: LockedContainerStateStoreInterface;
 
   constructor() {
     this.sceneStore = sceneStore;
@@ -153,5 +161,9 @@ export class ResourcesStore {
     });
 
     this.actorStore = { actors };
+
+    this.propsStore = propsStore;
+
+    this.lockedContainerStateStore = lockedContainerStateStore;
   }
 }

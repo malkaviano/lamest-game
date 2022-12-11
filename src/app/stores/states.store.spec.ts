@@ -1,16 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, instance, mock, when } from 'ts-mockito';
+import { anything, instance, when } from 'ts-mockito';
+import { actionConsume } from '../../../tests/fakes';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { SimpleState } from '../states/simple.state';
 import { ArrayView } from '../views/array.view';
 import { ActionableStore } from './actionable.store';
-import { ItemStore } from './item.store';
 import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';
 import { StatesStore } from './states.store';
+
+import {
+  mockedActionableStore,
+  mockedConverterHelper,
+  mockedMessageStore,
+  mockedResourcesStore,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('StatesStore', () => {
   let service: StatesStore;
@@ -34,36 +41,18 @@ describe('StatesStore', () => {
           provide: ActionableStore,
           useValue: instance(mockedActionableStore),
         },
-        {
-          provide: ItemStore,
-          useValue: instance(mockedItemStore),
-        },
       ],
     });
+
+    setupMocks();
 
     when(mockedResourcesStore.simpleStateStore).thenReturn({
       states: [
         {
-          interactiveId: 'id1',
+          id: 'id1',
           actionables: ['GG'],
         },
       ],
-    });
-
-    when(mockedResourcesStore.skillStateStore).thenReturn({
-      states: [],
-    });
-
-    when(mockedResourcesStore.destroyableStateStore).thenReturn({
-      states: [],
-    });
-
-    when(mockedResourcesStore.discardStateStore).thenReturn({
-      states: [],
-    });
-
-    when(mockedResourcesStore.conversationStateStore).thenReturn({
-      states: [],
     });
 
     when(mockedConverterHelper.mapToKeyValueInterface(anything())).thenReturn({
@@ -71,7 +60,7 @@ describe('StatesStore', () => {
     });
 
     when(mockedActionableStore.actionables).thenReturn({
-      GG: actionable,
+      GG: actionConsume,
     });
 
     service = TestBed.inject(StatesStore);
@@ -90,16 +79,4 @@ describe('StatesStore', () => {
   });
 });
 
-const mockedConverterHelper = mock(ConverterHelper);
-
-const mockedResourcesStore = mock(ResourcesStore);
-
-const mockedMessageStore = mock(MessageStore);
-
-const mockedActionableStore = mock(ActionableStore);
-
-const mockedItemStore = mock(ItemStore);
-
-const actionable = createActionableDefinition('CONSUME', 'GG');
-
-const state = new SimpleState(new ArrayView([actionable]));
+const state = new SimpleState(new ArrayView([actionConsume]));

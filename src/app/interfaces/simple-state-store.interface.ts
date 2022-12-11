@@ -1,6 +1,6 @@
 export interface SimpleStateStoreInterface {
   readonly states: {
-    readonly interactiveId: string;
+    readonly id: string;
     readonly actionables: string[];
   }[];
 }

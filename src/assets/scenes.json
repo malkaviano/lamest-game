@@ -25,7 +25,7 @@
     {
       "name": "scene2",
       "description": "scene2",
-      "interactives": ["enterSceneDoor", "trainingDummy"],
+      "interactives": ["enterSceneDoor", "trainingDummy", "lockedChest"],
       "transitions": [
         {
           "name": "enterSceneDoor",

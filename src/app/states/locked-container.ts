@@ -1,4 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -6,7 +7,7 @@ import { ActionableState } from './actionable.state';
 export class LockedContainerState extends ActionableState {
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
-    protected readonly openedState: ActionableState
+    protected readonly openedState: LazyHelper<ActionableState>
   ) {
     super('LockedContainerState', stateActions);
   }
@@ -17,7 +18,7 @@ export class LockedContainerState extends ActionableState {
   ): { state: ActionableState; log?: string } {
     if (result === 'USED') {
       return {
-        state: this.openedState,
+        state: this.openedState.value,
         log: `was opened using ${action.label}`,
       };
     }

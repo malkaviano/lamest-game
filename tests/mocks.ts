@@ -23,8 +23,10 @@ import { NarrativeService } from '../src/app/services/narrative.service';
 import { RandomIntService } from '../src/app/services/random-int.service';
 import { RollService } from '../src/app/services/roll.service';
 import { ActionableState } from '../src/app/states/actionable.state';
+import { ActionableStore } from '../src/app/stores/actionable.store';
 import { InteractiveStore } from '../src/app/stores/interactive.store';
 import { ItemStore } from '../src/app/stores/item.store';
+import { MessageStore } from '../src/app/stores/message.store';
 import { ResourcesStore } from '../src/app/stores/resources.store';
 import { SceneStore } from '../src/app/stores/scene.store';
 import { StatesStore } from '../src/app/stores/states.store';
@@ -96,6 +98,10 @@ export const mockedActionableState = mock<ActionableState>();
 
 export const mockedActionableState2 = mock<ActionableState>();
 
+export const mockedMessageStore = mock(MessageStore);
+
+export const mockedActionableStore = mock(ActionableStore);
+
 export const setupMocks = () => {
   resetMocks();
 
@@ -151,6 +157,38 @@ export const setupMocks = () => {
   when(mockedActorBehavior.derivedAttributes).thenReturn(fakeDerivedAttributes);
 
   when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
+
+  when(mockedResourcesStore.weaponStore).thenReturn({
+    weapons: [],
+  });
+
+  when(mockedResourcesStore.consumableStore).thenReturn({
+    consumables: [],
+  });
+
+  when(mockedResourcesStore.propsStore).thenReturn({
+    props: [],
+  });
+
+  when(mockedResourcesStore.skillStateStore).thenReturn({
+    states: [],
+  });
+
+  when(mockedResourcesStore.destroyableStateStore).thenReturn({
+    states: [],
+  });
+
+  when(mockedResourcesStore.discardStateStore).thenReturn({
+    states: [],
+  });
+
+  when(mockedResourcesStore.conversationStateStore).thenReturn({
+    states: [],
+  });
+
+  when(mockedResourcesStore.lockedContainerStateStore).thenReturn({
+    states: [],
+  });
 };
 
 const resetMocks = () => {
@@ -209,4 +247,6 @@ const resetMocks = () => {
   reset(mockedActionableState);
 
   reset(mockedActionableState2);
+
+  reset(mockedMessageStore);
 };

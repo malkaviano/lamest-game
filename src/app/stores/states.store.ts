@@ -14,6 +14,7 @@ import { MessageStore } from './message.store';
 import { ArrayView } from '../views/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResourcesStore } from './resources.store';
+import { LockedContainerState } from '../states/locked-container';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class StatesStore {
 
     resourcesStore.skillStateStore.states.forEach((state) => {
       this.store.set(
-        state.interactiveId,
+        state.id,
         new SkillState(
           actionableStore.actionables[state.actionable],
           this.lazyState(state.successState),
@@ -45,13 +46,13 @@ export class StatesStore {
     resourcesStore.discardStateStore.states.forEach((state) => {
       const actionables = this.getActionables(actionableStore, state);
 
-      this.store.set(state.interactiveId, new DiscardState(actionables));
+      this.store.set(state.id, new DiscardState(actionables));
     });
 
     resourcesStore.simpleStateStore.states.forEach((state) => {
       const actionables = this.getActionables(actionableStore, state);
 
-      this.store.set(state.interactiveId, new SimpleState(actionables));
+      this.store.set(state.id, new SimpleState(actionables));
     });
 
     resourcesStore.conversationStateStore.states.forEach((state) => {
@@ -75,22 +76,28 @@ export class StatesStore {
         {}
       );
 
-      this.store.set(
-        state.interactiveId,
-        new ConversationState(map, state.initialMap)
-      );
+      this.store.set(state.id, new ConversationState(map, state.initialMap));
     });
 
     resourcesStore.destroyableStateStore.states.forEach((state) => {
       const actionables = this.getActionables(actionableStore, state);
 
       this.store.set(
-        state.interactiveId,
+        state.id,
         new DestroyableState(
           actionables,
           this.lazyState(state.destroyedState),
           state.hitpoints
         )
+      );
+    });
+
+    resourcesStore.lockedContainerStateStore.states.forEach((state) => {
+      const actionables = this.getActionables(actionableStore, state);
+
+      this.store.set(
+        state.id,
+        new LockedContainerState(actionables, this.lazyState(state.openedState))
       );
     });
   }
@@ -106,7 +113,7 @@ export class StatesStore {
   private getActionables(
     actionableStore: ActionableStore,
     state: {
-      interactiveId: string;
+      id: string;
       actionables: string[];
     }
   ) {

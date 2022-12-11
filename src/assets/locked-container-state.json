@@ -1,0 +1,9 @@
+{
+  "states": [
+    {
+      "id": "lockedChest",
+      "actionables": ["masterKey"],
+      "openedState": "lockedChestLoot"
+    }
+  ]
+}
