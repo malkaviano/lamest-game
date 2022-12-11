@@ -89,7 +89,7 @@ const fakeCharacteristics = {
   VIT: new CharacteristicDefinition('VIT', 9),
   AGI: new CharacteristicDefinition('AGI', 11),
   INT: new CharacteristicDefinition('INT', 12),
-  POW: new CharacteristicDefinition('POW', 13),
+  ESN: new CharacteristicDefinition('ESN', 13),
   APP: new CharacteristicDefinition('APP', 14),
 };
 

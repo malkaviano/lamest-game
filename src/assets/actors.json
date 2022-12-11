@@ -11,7 +11,7 @@
         "SIZ": 5,
         "AGI": 5,
         "INT": 0,
-        "POW": 0,
+        "ESN": 0,
         "APP": 0
       },
       "skills": [
@@ -35,7 +35,7 @@
         "SIZ": 10,
         "AGI": 10,
         "INT": 3,
-        "POW": 3,
+        "ESN": 3,
         "APP": 1
       },
       "skills": [

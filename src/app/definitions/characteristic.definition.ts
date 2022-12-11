@@ -14,6 +14,6 @@ export const characteristicsDefinitions: {
   VIT: 'The character vitality',
   AGI: 'The character agility',
   INT: 'The character intelligence',
-  POW: 'The character mental strength',
+  ESN: 'The character essence',
   APP: 'The character looks',
 };

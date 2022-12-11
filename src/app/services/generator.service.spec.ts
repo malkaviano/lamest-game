@@ -34,7 +34,7 @@ describe('GeneratorService', () => {
   });
 
   describe('generating random characteristics', () => {
-    it('should have STR | VIT | AGI | INT | POW | APP', () => {
+    it('should have STR | VIT | AGI | INT | ESN | APP', () => {
       when(mockedRandomIntService.getRandomInterval(1, 6))
         .thenReturn(1)
         .thenReturn(3)
@@ -78,7 +78,7 @@ const expectedCharacteristics = {
   VIT: new CharacteristicDefinition('VIT', 12),
   AGI: new CharacteristicDefinition('AGI', 14),
   INT: new CharacteristicDefinition('INT', 13),
-  POW: new CharacteristicDefinition('POW', 8),
+  ESN: new CharacteristicDefinition('ESN', 8),
   APP: new CharacteristicDefinition('APP', 9),
 };
 

@@ -129,7 +129,7 @@ export class ResourcesStore {
         VIT: new CharacteristicDefinition('VIT', a.characteristics.VIT),
         AGI: new CharacteristicDefinition('AGI', a.characteristics.AGI),
         INT: new CharacteristicDefinition('INT', a.characteristics.INT),
-        POW: new CharacteristicDefinition('POW', a.characteristics.POW),
+        ESN: new CharacteristicDefinition('ESN', a.characteristics.ESN),
         APP: new CharacteristicDefinition('APP', a.characteristics.APP),
       };
 

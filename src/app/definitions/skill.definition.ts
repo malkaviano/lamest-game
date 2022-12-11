@@ -29,7 +29,7 @@ const justInt = (characteristics: CharacteristicSetDefinition) =>
   characteristics['INT'].value;
 
 const justPow = (characteristics: CharacteristicSetDefinition) =>
-  characteristics['POW'].value;
+  characteristics['ESN'].value;
 
 const justApp = (characteristics: CharacteristicSetDefinition) =>
   characteristics['APP'].value;

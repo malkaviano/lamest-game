@@ -24,7 +24,7 @@ export class GeneratorService {
       VIT: new CharacteristicDefinition('VIT', this.twoD6Plus6()),
       AGI: new CharacteristicDefinition('AGI', this.twoD6Plus6()),
       INT: new CharacteristicDefinition('INT', this.twoD6Plus6()),
-      POW: new CharacteristicDefinition('POW', this.twoD6Plus6()),
+      ESN: new CharacteristicDefinition('ESN', this.twoD6Plus6()),
       APP: new CharacteristicDefinition('APP', this.twoD6Plus6()),
     };
   }

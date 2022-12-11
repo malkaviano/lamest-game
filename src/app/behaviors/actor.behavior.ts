@@ -24,7 +24,7 @@ export class ActorBehavior {
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
     );
 
-    this.maximumPP = this.characteristics.POW.value;
+    this.maximumPP = this.characteristics.ESN.value;
 
     this.currentHP = this.maximumHP;
 

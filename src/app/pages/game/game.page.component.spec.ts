@@ -84,7 +84,7 @@ describe('GamePageComponent', () => {
       VIT: new CharacteristicDefinition('VIT', 9),
       AGI: new CharacteristicDefinition('AGI', 11),
       INT: new CharacteristicDefinition('INT', 12),
-      POW: new CharacteristicDefinition('POW', 13),
+      ESN: new CharacteristicDefinition('ESN', 13),
       APP: new CharacteristicDefinition('APP', 14),
     });
 
@@ -292,11 +292,7 @@ const characteristicValues = new ArrayView([
   new KeyValueDescriptionDefinition('SIZ', '10', 'The character body shape'),
   new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
   new KeyValueDescriptionDefinition('INT', '12', 'The character intelligence'),
-  new KeyValueDescriptionDefinition(
-    'POW',
-    '13',
-    'The character mental strength'
-  ),
+  new KeyValueDescriptionDefinition('ESN', '13', 'The character essence'),
   new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
 ]);
 

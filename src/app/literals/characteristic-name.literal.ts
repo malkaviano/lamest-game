@@ -3,5 +3,5 @@ export type CharacteristicNameLiteral =
   | 'VIT'
   | 'AGI'
   | 'INT'
-  | 'POW'
+  | 'ESN'
   | 'APP';

@@ -117,11 +117,7 @@ describe('GameLayoutComponent', () => {
           '12',
           'The character intelligence'
         ),
-        new KeyValueDescriptionDefinition(
-          'POW',
-          '13',
-          'The character mental strength'
-        ),
+        new KeyValueDescriptionDefinition('ESN', '13', 'The character essence'),
         new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
       ])
     );
@@ -312,11 +308,7 @@ const characterValue = new CharacterValuesDefinition(
       '12',
       'The character intelligence'
     ),
-    new KeyValueDescriptionDefinition(
-      'POW',
-      '13',
-      'The character mental strength'
-    ),
+    new KeyValueDescriptionDefinition('ESN', '13', 'The character essence'),
     new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
   ]),
   new ArrayView([
