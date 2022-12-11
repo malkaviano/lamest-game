@@ -2,7 +2,7 @@
   "states": [
     {
       "id": "lockedChest",
-      "actionables": ["masterKey"],
+      "actionables": ["useMasterKey"],
       "openedState": "lockedChestLoot"
     }
   ]

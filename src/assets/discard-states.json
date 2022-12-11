@@ -6,7 +6,7 @@
     },
     {
       "id": "lootWoodBox",
-      "actionables": ["club"]
+      "actionables": ["club", "getMasterKey"]
     },
     {
       "id": "tableLoot",

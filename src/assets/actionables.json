@@ -66,9 +66,15 @@
       "label": "Molotov"
     },
     {
-      "key": "masterKey",
+      "key": "useMasterKey",
       "name": "masterKey",
       "actionable": "USE",
+      "label": "Use Master Key"
+    },
+    {
+      "key": "getMasterKey",
+      "name": "masterKey",
+      "actionable": "PICK",
       "label": "Master Key"
     }
   ]

@@ -77,6 +77,10 @@
         {
           "name": "club",
           "quantity": 1
+        },
+        {
+          "name": "masterKey",
+          "quantity": 1
         }
       ]
     },
