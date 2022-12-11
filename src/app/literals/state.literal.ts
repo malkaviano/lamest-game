@@ -1,7 +1,6 @@
 export type StateLiteral =
   | 'SimpleState'
-  | 'ContainerOpenedState'
-  | 'ContainerClosedState'
+  | 'LockedContainerState'
   | 'ConversationState'
   | 'SkillState'
   | 'EmptyState'

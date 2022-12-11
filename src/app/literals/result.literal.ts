@@ -1,1 +1,6 @@
-export type ResultLiteral = 'SUCCESS' | 'FAILURE' | 'NONE' | 'IMPOSSIBLE';
+export type ResultLiteral =
+  | 'SUCCESS'
+  | 'FAILURE'
+  | 'NONE'
+  | 'IMPOSSIBLE'
+  | 'USED';

@@ -6,7 +6,7 @@ import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 
-import { actionConsume, actionPick } from '../../../tests/fakes';
+import { actionConsume, actionPickBubbleGum } from '../../../tests/fakes';
 import {
   mockedActionableState,
   mockedActionableState2,
@@ -22,7 +22,7 @@ describe('InteractiveEntity', () => {
     );
 
     when(mockedActionableState2.actions).thenReturn(
-      new ArrayView([actionPick])
+      new ArrayView([actionPickBubbleGum])
     );
   });
 
@@ -54,11 +54,11 @@ describe('InteractiveEntity', () => {
         result = event;
       });
 
-      entity.reactTo(actionPick, 'NONE');
+      entity.reactTo(actionPickBubbleGum, 'NONE');
 
       done();
 
-      expect(result).toEqual(new ArrayView([actionPick]));
+      expect(result).toEqual(new ArrayView([actionPickBubbleGum]));
     });
   });
 
@@ -77,7 +77,7 @@ describe('InteractiveEntity', () => {
           result = event;
         });
 
-        entity.reactTo(actionPick, 'NONE');
+        entity.reactTo(actionPickBubbleGum, 'NONE');
 
         entity.reset();
 
@@ -101,13 +101,13 @@ describe('InteractiveEntity', () => {
           result = event;
         });
 
-        entity.reactTo(actionPick, 'NONE');
+        entity.reactTo(actionPickBubbleGum, 'NONE');
 
         entity.reset();
 
         done();
 
-        expect(result).toEqual(new ArrayView([actionPick]));
+        expect(result).toEqual(new ArrayView([actionPickBubbleGum]));
       });
     });
   });

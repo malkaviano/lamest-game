@@ -7,4 +7,5 @@ export type ActionableLiteral =
   | 'SKILL'
   | 'EQUIP'
   | 'UNEQUIP'
-  | 'CONSUME';
+  | 'CONSUME'
+  | 'USE';

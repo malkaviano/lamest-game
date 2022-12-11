@@ -15,6 +15,7 @@ import { SkillNameLiteral } from '../src/app/literals/skill-name.literal';
 import { ArrayView } from '../src/app/views/array.view';
 import { CharacterValuesDefinition } from '../src/app/definitions/character-values.definition';
 import { KeyValueDescriptionDefinition } from '../src/app/definitions/key-value-description.definition';
+import { DiscardState } from '../src/app/states/discard.state';
 
 export const simpleSword = new WeaponDefinition(
   'sword',
@@ -85,7 +86,11 @@ export const attackEvent = new ActionableEvent(actionAttack, 'id1');
 
 export const attackPlayerEvent = new ActionableEvent(actionAttack, 'player');
 
-export const actionPick = createActionableDefinition('PICK', 'name1', 'label1');
+export const actionPickBubbleGum = createActionableDefinition(
+  'PICK',
+  'bubbleGum',
+  'Bubble Gum'
+);
 
 export const actionAsk = createActionableDefinition(
   'ASK',
@@ -94,6 +99,12 @@ export const actionAsk = createActionableDefinition(
 );
 
 export const actionHeal = createActionableDefinition('HEAL', 'heal', 'Heal');
+
+export const actionUse = createActionableDefinition(
+  'USE',
+  'masterKey',
+  'Master Key'
+);
 
 export const fakeCharacteristics: CharacteristicSetDefinition = {
   STR: new CharacteristicDefinition('STR', 8),
@@ -187,3 +198,5 @@ export const fakeCharacterSheet = new CharacterValuesDefinition(
   fakeCharacterSheetDerivedAttributes,
   fakeCharacterSheetSkills
 );
+
+export const lootState = new DiscardState(new ArrayView([actionPickBubbleGum]));
