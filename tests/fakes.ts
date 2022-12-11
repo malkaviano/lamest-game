@@ -141,47 +141,47 @@ export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
     },
   ]);
 
-export const characterSheetIdentity = new ArrayView([
-  new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
+export const fakeCharacterSheetIdentity = new ArrayView([
+  new KeyValueDescriptionDefinition('NAME', 'Some Name', 'Character name'),
   new KeyValueDescriptionDefinition(
     'PROFESSION',
-    'Hunter',
+    'Police Detective',
     'Character profession'
   ),
-  new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
+  new KeyValueDescriptionDefinition('AGE', 'YOUNG', 'Character age'),
   new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
-  new KeyValueDescriptionDefinition('HEIGHT', 'AVERAGE', 'Character height'),
-  new KeyValueDescriptionDefinition('WEIGHT', 'AVERAGE', 'Character weight'),
+  new KeyValueDescriptionDefinition('HEIGHT', 'SHORT', 'Character height'),
+  new KeyValueDescriptionDefinition('WEIGHT', 'LIGHT', 'Character weight'),
 ]);
 
-export const characterSheetCharacteristics = new ArrayView([
+export const fakeCharacterSheetCharacteristics = new ArrayView([
   new KeyValueDescriptionDefinition('STR', '8', 'The character physical force'),
   new KeyValueDescriptionDefinition('VIT', '9', 'The character vitality'),
-  new KeyValueDescriptionDefinition('SIZ', '10', 'The character body shape'),
   new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
   new KeyValueDescriptionDefinition('INT', '12', 'The character intelligence'),
   new KeyValueDescriptionDefinition('ESN', '13', 'The character essence'),
   new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
 ]);
 
-export const characterSheetDerivedAttributes = new ArrayView([
-  new KeyValueDescriptionDefinition('HP', '9', 'The character hit points'),
+export const fakeCharacterSheetDerivedAttributes = new ArrayView([
+  new KeyValueDescriptionDefinition('HP', '8', 'The character hit points'),
   new KeyValueDescriptionDefinition('PP', '13', 'The character power points'),
   new KeyValueDescriptionDefinition('MOV', '10', 'The character movement'),
 ]);
 
-export const characterSheetSkills = new ArrayView([
-  new KeyValueDescriptionDefinition('Appraise', '12', ''),
+export const fakeCharacterSheetSkills = new ArrayView([
   new KeyValueDescriptionDefinition(
-    'Dodge',
-    '32',
-    'Ability to avoid being hit'
+    'Brawl',
+    '45',
+    'Fighting with bare hands and martial arts'
   ),
+  new KeyValueDescriptionDefinition('First Aid', '45', ''),
+  new KeyValueDescriptionDefinition('Melee Weapon (Simple)', '45', ''),
 ]);
 
-export const characterSheet = new CharacterValuesDefinition(
-  characterSheetIdentity,
-  characterSheetCharacteristics,
-  characterSheetDerivedAttributes,
-  characterSheetSkills
+export const fakeCharacterSheet = new CharacterValuesDefinition(
+  fakeCharacterSheetIdentity,
+  fakeCharacterSheetCharacteristics,
+  fakeCharacterSheetDerivedAttributes,
+  fakeCharacterSheetSkills
 );

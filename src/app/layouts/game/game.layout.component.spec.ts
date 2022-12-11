@@ -15,11 +15,11 @@ import { ActionableEvent } from '../../events/actionable.event';
 
 import {
   actionAsk,
-  characterSheet,
-  characterSheetCharacteristics,
-  characterSheetDerivedAttributes,
-  characterSheetIdentity,
-  characterSheetSkills,
+  fakeCharacterSheet,
+  fakeCharacterSheetCharacteristics,
+  fakeCharacterSheetDerivedAttributes,
+  fakeCharacterSheetIdentity,
+  fakeCharacterSheetSkills,
   molotov,
   simpleSword,
 } from '../../../../tests/fakes';
@@ -39,7 +39,7 @@ describe('GameLayoutComponent', () => {
 
     component = fixture.componentInstance;
 
-    component.characterValues = characterSheet;
+    component.characterValues = fakeCharacterSheet;
 
     component.scene = scene;
 
@@ -66,7 +66,7 @@ describe('GameLayoutComponent', () => {
 
     expect(result.properties['panelName']).toEqual('identity');
 
-    expect(result.properties['items']).toEqual(characterSheetIdentity);
+    expect(result.properties['items']).toEqual(fakeCharacterSheetIdentity);
   });
 
   it(`should have characteristic values panel`, () => {
@@ -76,7 +76,9 @@ describe('GameLayoutComponent', () => {
 
     expect(result.properties['panelName']).toEqual('characteristics');
 
-    expect(result.properties['items']).toEqual(characterSheetCharacteristics);
+    expect(result.properties['items']).toEqual(
+      fakeCharacterSheetCharacteristics
+    );
   });
 
   it(`should have derived attributes values panel`, () => {
@@ -86,7 +88,9 @@ describe('GameLayoutComponent', () => {
 
     expect(result.properties['panelName']).toEqual('derived-attributes');
 
-    expect(result.properties['items']).toEqual(characterSheetDerivedAttributes);
+    expect(result.properties['items']).toEqual(
+      fakeCharacterSheetDerivedAttributes
+    );
   });
 
   it(`should have skills values panel`, () => {
@@ -97,7 +101,7 @@ describe('GameLayoutComponent', () => {
 
     expect(result.properties['panelName']).toEqual('skills');
 
-    expect(result.properties['items']).toEqual(characterSheetSkills);
+    expect(result.properties['items']).toEqual(fakeCharacterSheetSkills);
   });
 
   describe('interactives panel', () => {
