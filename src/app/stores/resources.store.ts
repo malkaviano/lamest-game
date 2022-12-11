@@ -126,7 +126,7 @@ export class ResourcesStore {
     const actors = actorStore.actors.map((a) => {
       const characteristics: CharacteristicSetDefinition = {
         STR: new CharacteristicDefinition('STR', a.characteristics.STR),
-        CON: new CharacteristicDefinition('CON', a.characteristics.CON),
+        VIT: new CharacteristicDefinition('VIT', a.characteristics.VIT),
         SIZ: new CharacteristicDefinition('SIZ', a.characteristics.SIZ),
         DEX: new CharacteristicDefinition('DEX', a.characteristics.DEX),
         INT: new CharacteristicDefinition('INT', a.characteristics.INT),

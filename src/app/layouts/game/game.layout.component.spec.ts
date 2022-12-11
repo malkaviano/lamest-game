@@ -102,7 +102,7 @@ describe('GameLayoutComponent', () => {
           'The character physical force'
         ),
         new KeyValueDescriptionDefinition(
-          'CON',
+          'VIT',
           '9',
           'The character body constitution'
         ),
@@ -301,7 +301,7 @@ const characterValue = new CharacterValuesDefinition(
       'The character physical force'
     ),
     new KeyValueDescriptionDefinition(
-      'CON',
+      'VIT',
       '9',
       'The character body constitution'
     ),

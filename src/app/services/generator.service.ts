@@ -21,7 +21,7 @@ export class GeneratorService {
   public characteristics(): CharacteristicSetDefinition {
     return {
       STR: new CharacteristicDefinition('STR', this.twoD6Plus6()),
-      CON: new CharacteristicDefinition('CON', this.twoD6Plus6()),
+      VIT: new CharacteristicDefinition('VIT', this.twoD6Plus6()),
       SIZ: new CharacteristicDefinition('SIZ', this.twoD6Plus6()),
       DEX: new CharacteristicDefinition('DEX', this.twoD6Plus6()),
       INT: new CharacteristicDefinition('INT', this.twoD6Plus6()),

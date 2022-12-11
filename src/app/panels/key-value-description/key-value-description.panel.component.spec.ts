@@ -50,7 +50,7 @@ const characteristics = () => [
     'The character physical force'
   ),
   new KeyValueDescriptionDefinition(
-    'CON',
+    'VIT',
     '12',
     'The character body constitution'
   ),

@@ -58,7 +58,7 @@ const identity = new CharacterIdentityDefinition(
 
 const characteristics = {
   STR: new CharacteristicDefinition('STR', 12),
-  CON: new CharacteristicDefinition('CON', 12),
+  VIT: new CharacteristicDefinition('VIT', 12),
   SIZ: new CharacteristicDefinition('SIZ', 12),
   DEX: new CharacteristicDefinition('DEX', 12),
   INT: new CharacteristicDefinition('INT', 12),
@@ -100,11 +100,7 @@ const expected = new CharacterValuesDefinition(
       '12',
       'The character physical force'
     ),
-    new KeyValueDescriptionDefinition(
-      'CON',
-      '12',
-      'The character body constitution'
-    ),
+    new KeyValueDescriptionDefinition('VIT', '12', 'The character vitality'),
     new KeyValueDescriptionDefinition('SIZ', '12', 'The character body shape'),
     new KeyValueDescriptionDefinition('DEX', '12', 'The character agility'),
     new KeyValueDescriptionDefinition(

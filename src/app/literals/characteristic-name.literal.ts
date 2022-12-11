@@ -1,6 +1,6 @@
 export type CharacteristicNameLiteral =
   | 'STR'
-  | 'CON'
+  | 'VIT'
   | 'SIZ'
   | 'DEX'
   | 'INT'

@@ -11,7 +11,7 @@ export const characteristicsDefinitions: {
   [key in CharacteristicNameLiteral]: string;
 } = {
   STR: 'The character physical force',
-  CON: 'The character body constitution',
+  VIT: 'The character vitality',
   DEX: 'The character agility',
   SIZ: 'The character body shape',
   INT: 'The character intelligence',

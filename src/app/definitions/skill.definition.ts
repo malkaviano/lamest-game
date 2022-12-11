@@ -36,7 +36,7 @@ const justApp = (characteristics: CharacteristicSetDefinition) =>
 
 const strPlusConPlusDex = (characteristics: CharacteristicSetDefinition) =>
   characteristics['STR'].value +
-  characteristics['CON'].value +
+  characteristics['VIT'].value +
   characteristics['DEX'].value;
 
 const strPlusDex = (characteristics: CharacteristicSetDefinition) =>
