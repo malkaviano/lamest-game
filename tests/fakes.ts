@@ -13,6 +13,8 @@ import { KeyValueInterface } from '../src/app/interfaces/key-value.interface';
 import { SceneActorsInfoInterface } from '../src/app/interfaces/scene-actors.interface';
 import { SkillNameLiteral } from '../src/app/literals/skill-name.literal';
 import { ArrayView } from '../src/app/views/array.view';
+import { CharacterValuesDefinition } from '../src/app/definitions/character-values.definition';
+import { KeyValueDescriptionDefinition } from '../src/app/definitions/key-value-description.definition';
 
 export const simpleSword = new WeaponDefinition(
   'sword',
@@ -85,6 +87,12 @@ export const attackPlayerEvent = new ActionableEvent(actionAttack, 'player');
 
 export const actionPick = createActionableDefinition('PICK', 'name1', 'label1');
 
+export const actionAsk = createActionableDefinition(
+  'ASK',
+  'action1',
+  'Got action?'
+);
+
 export const fakeCharacteristics: CharacteristicSetDefinition = {
   STR: new CharacteristicDefinition('STR', 8),
   VIT: new CharacteristicDefinition('VIT', 9),
@@ -132,3 +140,48 @@ export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
       situation: 'ALIVE',
     },
   ]);
+
+export const characterSheetIdentity = new ArrayView([
+  new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
+  new KeyValueDescriptionDefinition(
+    'PROFESSION',
+    'Hunter',
+    'Character profession'
+  ),
+  new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
+  new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
+  new KeyValueDescriptionDefinition('HEIGHT', 'AVERAGE', 'Character height'),
+  new KeyValueDescriptionDefinition('WEIGHT', 'AVERAGE', 'Character weight'),
+]);
+
+export const characterSheetCharacteristics = new ArrayView([
+  new KeyValueDescriptionDefinition('STR', '8', 'The character physical force'),
+  new KeyValueDescriptionDefinition('VIT', '9', 'The character vitality'),
+  new KeyValueDescriptionDefinition('SIZ', '10', 'The character body shape'),
+  new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
+  new KeyValueDescriptionDefinition('INT', '12', 'The character intelligence'),
+  new KeyValueDescriptionDefinition('ESN', '13', 'The character essence'),
+  new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
+]);
+
+export const characterSheetDerivedAttributes = new ArrayView([
+  new KeyValueDescriptionDefinition('HP', '9', 'The character hit points'),
+  new KeyValueDescriptionDefinition('PP', '13', 'The character power points'),
+  new KeyValueDescriptionDefinition('MOV', '10', 'The character movement'),
+]);
+
+export const characterSheetSkills = new ArrayView([
+  new KeyValueDescriptionDefinition('Appraise', '12', ''),
+  new KeyValueDescriptionDefinition(
+    'Dodge',
+    '32',
+    'Ability to avoid being hit'
+  ),
+]);
+
+export const characterSheet = new CharacterValuesDefinition(
+  characterSheetIdentity,
+  characterSheetCharacteristics,
+  characterSheetDerivedAttributes,
+  characterSheetSkills
+);

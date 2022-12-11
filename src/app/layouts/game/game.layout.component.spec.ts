@@ -8,18 +8,21 @@ import { ArrayView } from '../../views/array.view';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
-import { createActionableDefinition } from '../../definitions/actionable.definition';
-import {
-  unarmedWeapon,
-  WeaponDefinition,
-} from '../../definitions/weapon.definition';
-import { DamageDefinition } from '../../definitions/damage.definition';
-import { createDice } from '../../definitions/dice.definition';
-import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
+import { unarmedWeapon } from '../../definitions/weapon.definition';
 import { GameLayoutComponent } from './game.layout.component';
-import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
 import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
 import { ActionableEvent } from '../../events/actionable.event';
+
+import {
+  actionAsk,
+  characterSheet,
+  characterSheetCharacteristics,
+  characterSheetDerivedAttributes,
+  characterSheetIdentity,
+  characterSheetSkills,
+  molotov,
+  simpleSword,
+} from '../../../../tests/fakes';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;
@@ -36,15 +39,15 @@ describe('GameLayoutComponent', () => {
 
     component = fixture.componentInstance;
 
-    component.characterValues = characterValue;
+    component.characterValues = characterSheet;
 
     component.scene = scene;
 
     component.logs = new ArrayView(['OMG', 'This is not happening', 'GG']);
 
     component.inventory = [
-      new ActionableItemDefinition(weapon1, askAction),
-      new ActionableItemDefinition(weapon2, askAction),
+      new ActionableItemDefinition(simpleSword, actionAsk),
+      new ActionableItemDefinition(molotov, actionAsk),
     ];
 
     component.equipped = unarmedWeapon;
@@ -63,28 +66,7 @@ describe('GameLayoutComponent', () => {
 
     expect(result.properties['panelName']).toEqual('identity');
 
-    expect(result.properties['items']).toEqual(
-      new ArrayView([
-        new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
-        new KeyValueDescriptionDefinition(
-          'PROFESSION',
-          'Hunter',
-          'Character profession'
-        ),
-        new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
-        new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
-        new KeyValueDescriptionDefinition(
-          'HEIGHT',
-          'AVERAGE',
-          'Character height'
-        ),
-        new KeyValueDescriptionDefinition(
-          'WEIGHT',
-          'AVERAGE',
-          'Character weight'
-        ),
-      ])
-    );
+    expect(result.properties['items']).toEqual(characterSheetIdentity);
   });
 
   it(`should have characteristic values panel`, () => {
@@ -94,33 +76,7 @@ describe('GameLayoutComponent', () => {
 
     expect(result.properties['panelName']).toEqual('characteristics');
 
-    expect(result.properties['items']).toEqual(
-      new ArrayView([
-        new KeyValueDescriptionDefinition(
-          'STR',
-          '8',
-          'The character physical force'
-        ),
-        new KeyValueDescriptionDefinition(
-          'VIT',
-          '9',
-          'The character body constitution'
-        ),
-        new KeyValueDescriptionDefinition(
-          'SIZ',
-          '10',
-          'The character body shape'
-        ),
-        new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
-        new KeyValueDescriptionDefinition(
-          'INT',
-          '12',
-          'The character intelligence'
-        ),
-        new KeyValueDescriptionDefinition('ESN', '13', 'The character essence'),
-        new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
-      ])
-    );
+    expect(result.properties['items']).toEqual(characterSheetCharacteristics);
   });
 
   it(`should have derived attributes values panel`, () => {
@@ -130,25 +86,7 @@ describe('GameLayoutComponent', () => {
 
     expect(result.properties['panelName']).toEqual('derived-attributes');
 
-    expect(result.properties['items']).toEqual(
-      new ArrayView([
-        new KeyValueDescriptionDefinition(
-          'HP',
-          '9',
-          'The character hit points'
-        ),
-        new KeyValueDescriptionDefinition(
-          'PP',
-          '13',
-          'The character power points'
-        ),
-        new KeyValueDescriptionDefinition(
-          'MOV',
-          '10',
-          'The character movement'
-        ),
-      ])
-    );
+    expect(result.properties['items']).toEqual(characterSheetDerivedAttributes);
   });
 
   it(`should have skills values panel`, () => {
@@ -159,16 +97,7 @@ describe('GameLayoutComponent', () => {
 
     expect(result.properties['panelName']).toEqual('skills');
 
-    expect(result.properties['items']).toEqual(
-      new ArrayView([
-        new KeyValueDescriptionDefinition('Appraise', '12', ''),
-        new KeyValueDescriptionDefinition(
-          'Dodge',
-          '32',
-          'Ability to avoid being hit'
-        ),
-      ])
-    );
+    expect(result.properties['items']).toEqual(characterSheetSkills);
   });
 
   describe('interactives panel', () => {
@@ -185,14 +114,14 @@ describe('GameLayoutComponent', () => {
             'id1',
             'props1',
             'This is props1',
-            new SimpleState(new ArrayView([askAction]))
+            new SimpleState(new ArrayView([actionAsk]))
           ),
         ])
       );
     });
 
     it('should send an ActionableEvent', (done) => {
-      const event = new ActionableEvent(askAction, 'id1');
+      const event = new ActionableEvent(actionAsk, 'id1');
 
       const panel = fixture.debugElement.query(By.css(`app-interactive-panel`));
 
@@ -217,15 +146,15 @@ describe('GameLayoutComponent', () => {
       expect(result.properties['panelName']).toEqual('inventory');
 
       expect(result.properties['inventory']).toEqual([
-        new ActionableItemDefinition(weapon1, askAction),
-        new ActionableItemDefinition(weapon2, askAction),
+        new ActionableItemDefinition(simpleSword, actionAsk),
+        new ActionableItemDefinition(molotov, actionAsk),
       ]);
 
       expect(result.properties['equipped']).toEqual(unarmedWeapon);
     });
 
     it('should send an ActionableEvent', (done) => {
-      const event = new ActionableEvent(askAction, 'id1');
+      const event = new ActionableEvent(actionAsk, 'id1');
 
       const panel = fixture.debugElement.query(By.css(`app-inventory-panel`));
 
@@ -263,8 +192,6 @@ describe('GameLayoutComponent', () => {
   });
 });
 
-const askAction = createActionableDefinition('ASK', 'action1', 'Got action?');
-
 const scene = new SceneDefinition(
   new ArrayView(['this is a test', 'okay okay']),
   new ArrayView([
@@ -272,76 +199,7 @@ const scene = new SceneDefinition(
       'id1',
       'props1',
       'This is props1',
-      new SimpleState(new ArrayView([askAction]))
+      new SimpleState(new ArrayView([actionAsk]))
     ),
   ])
-);
-
-const characterValue = new CharacterValuesDefinition(
-  new ArrayView([
-    new KeyValueDescriptionDefinition('NAME', 'name', 'Character name'),
-    new KeyValueDescriptionDefinition(
-      'PROFESSION',
-      'Hunter',
-      'Character profession'
-    ),
-    new KeyValueDescriptionDefinition('AGE', 'ADULT', 'Character age'),
-    new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
-    new KeyValueDescriptionDefinition('HEIGHT', 'AVERAGE', 'Character height'),
-    new KeyValueDescriptionDefinition('WEIGHT', 'AVERAGE', 'Character weight'),
-  ]),
-  new ArrayView([
-    new KeyValueDescriptionDefinition(
-      'STR',
-      '8',
-      'The character physical force'
-    ),
-    new KeyValueDescriptionDefinition(
-      'VIT',
-      '9',
-      'The character body constitution'
-    ),
-    new KeyValueDescriptionDefinition('SIZ', '10', 'The character body shape'),
-    new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
-    new KeyValueDescriptionDefinition(
-      'INT',
-      '12',
-      'The character intelligence'
-    ),
-    new KeyValueDescriptionDefinition('ESN', '13', 'The character essence'),
-    new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
-  ]),
-  new ArrayView([
-    new KeyValueDescriptionDefinition('HP', '9', 'The character hit points'),
-    new KeyValueDescriptionDefinition('PP', '13', 'The character power points'),
-    new KeyValueDescriptionDefinition('MOV', '10', 'The character movement'),
-  ]),
-  new ArrayView([
-    new KeyValueDescriptionDefinition('Appraise', '12', ''),
-    new KeyValueDescriptionDefinition(
-      'Dodge',
-      '32',
-      'Ability to avoid being hit'
-    ),
-  ])
-);
-
-const weapon1 = new WeaponDefinition(
-  'sword1',
-  'Rusted Sword',
-  'Old sword full of rust',
-  'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0),
-  true,
-  'PERMANENT'
-);
-
-const weapon2 = new WeaponDefinition(
-  'sword2',
-  'Decent Sword',
-  'A good sword, not exceptional',
-  'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0),
-  true,
-  'PERMANENT'
 );
