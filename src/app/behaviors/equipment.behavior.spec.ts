@@ -1,39 +1,39 @@
-import { DamageDefinition } from '../definitions/damage.definition';
-import { createDice } from '../definitions/dice.definition';
 import {
   unarmedWeapon,
   WeaponDefinition,
 } from '../definitions/weapon.definition';
 import { EquipmentBehavior } from './equipment.behavior';
 
+import { molotov, simpleSword } from '../../../tests/fakes';
+
 describe('EquipmentBehavior', () => {
   describe('weaponEquipped', () => {
     describe('when created', () => {
       it('return unarmed weapon', () => {
-        expect(behavior().weaponEquipped).toEqual(unarmedWeapon);
+        expect(fakeBehavior().weaponEquipped).toEqual(unarmedWeapon);
       });
     });
 
     describe('when equipping a weapon', () => {
       describe('when no weapon was equipped', () => {
         it('should equip the weapon', () => {
-          const char = behavior();
+          const char = fakeBehavior();
 
-          equipBehavior(char, weapon1);
+          equipBehavior(char, simpleSword);
 
-          expect(char.weaponEquipped).toEqual(weapon1);
+          expect(char.weaponEquipped).toEqual(simpleSword);
         });
       });
 
       describe('when weapon was equipped', () => {
         it('should equip the weapon', () => {
-          const char = behavior();
+          const char = fakeBehavior();
 
-          equipBehavior(char, weapon1);
+          equipBehavior(char, simpleSword);
 
-          equipBehavior(char, weapon2);
+          equipBehavior(char, molotov);
 
-          expect(char.weaponEquipped).toEqual(weapon2);
+          expect(char.weaponEquipped).toEqual(molotov);
         });
       });
     });
@@ -42,9 +42,9 @@ describe('EquipmentBehavior', () => {
   describe('equip', () => {
     describe('when no weapon was equipped', () => {
       it('return null', () => {
-        const char = behavior();
+        const char = fakeBehavior();
 
-        const weapon = equipBehavior(char, weapon1);
+        const weapon = equipBehavior(char, simpleSword);
 
         expect(weapon).toBeNull();
       });
@@ -52,13 +52,13 @@ describe('EquipmentBehavior', () => {
 
     describe('when weapon was equipped', () => {
       it('return previous weapon', () => {
-        const char = behavior();
+        const char = fakeBehavior();
 
-        equipBehavior(char, weapon1);
+        equipBehavior(char, simpleSword);
 
-        const weapon = equipBehavior(char, weapon2);
+        const weapon = equipBehavior(char, molotov);
 
-        expect(weapon).toEqual(weapon1);
+        expect(weapon).toEqual(simpleSword);
       });
     });
   });
@@ -66,7 +66,7 @@ describe('EquipmentBehavior', () => {
   describe('unEquip', () => {
     describe('when no weapon was equipped', () => {
       it('return null', () => {
-        const char = behavior();
+        const char = fakeBehavior();
 
         const weapon = unEquipBehavior(char);
 
@@ -76,19 +76,19 @@ describe('EquipmentBehavior', () => {
 
     describe('when weapon was equipped', () => {
       it('return previous weapon', () => {
-        const char = behavior();
+        const char = fakeBehavior();
 
-        equipBehavior(char, weapon1);
+        equipBehavior(char, simpleSword);
 
         const weapon = unEquipBehavior(char);
 
-        expect(weapon).toEqual(weapon1);
+        expect(weapon).toEqual(simpleSword);
       });
     });
   });
 });
 
-const behavior = () => new EquipmentBehavior();
+const fakeBehavior = () => new EquipmentBehavior();
 
 const equipBehavior = (
   character: EquipmentBehavior,
@@ -98,26 +98,6 @@ const equipBehavior = (
 
   return previous;
 };
-
-const weapon1 = new WeaponDefinition(
-  'sword1',
-  'Rusted Sword',
-  'Old sword full of rust',
-  'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0),
-  true,
-  'PERMANENT'
-);
-
-const weapon2 = new WeaponDefinition(
-  'sword2',
-  'Decent Sword',
-  'A good sword, not exceptional',
-  'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0),
-  true,
-  'PERMANENT'
-);
 
 const unEquipBehavior = (
   character: EquipmentBehavior

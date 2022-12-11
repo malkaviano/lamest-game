@@ -1,5 +1,5 @@
 import { first, take } from 'rxjs';
-import { anyString, anything, instance, mock, reset, when } from 'ts-mockito';
+import { anyString, anything, instance, when } from 'ts-mockito';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
@@ -7,20 +7,25 @@ import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 
 import { actionConsume, actionPick } from '../../../tests/fakes';
-
-beforeEach(() => {
-  reset(mockedActionableState);
-
-  reset(mockedActionableState2);
-
-  when(mockedActionableState.actions).thenReturn(
-    new ArrayView([actionConsume])
-  );
-
-  when(mockedActionableState2.actions).thenReturn(new ArrayView([actionPick]));
-});
+import {
+  mockedActionableState,
+  mockedActionableState2,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('InteractiveEntity', () => {
+  beforeEach(() => {
+    setupMocks();
+
+    when(mockedActionableState.actions).thenReturn(
+      new ArrayView([actionConsume])
+    );
+
+    when(mockedActionableState2.actions).thenReturn(
+      new ArrayView([actionPick])
+    );
+  });
+
   describe('initial state', () => {
     it('push an actionsChanged notification', (done) => {
       const expected = new ArrayView([actionConsume]);
@@ -113,10 +118,6 @@ describe('InteractiveEntity', () => {
     });
   });
 });
-
-const mockedActionableState = mock<ActionableState>();
-
-const mockedActionableState2 = mock<ActionableState>();
 
 const state1 = instance(mockedActionableState);
 

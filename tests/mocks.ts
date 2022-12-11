@@ -22,6 +22,7 @@ import { LoggingService } from '../src/app/services/logging.service';
 import { NarrativeService } from '../src/app/services/narrative.service';
 import { RandomIntService } from '../src/app/services/random-int.service';
 import { RollService } from '../src/app/services/roll.service';
+import { ActionableState } from '../src/app/states/actionable.state';
 import { InteractiveStore } from '../src/app/stores/interactive.store';
 import { ItemStore } from '../src/app/stores/item.store';
 import { ResourcesStore } from '../src/app/stores/resources.store';
@@ -32,6 +33,7 @@ import {
   fakeCharacteristics,
   fakeDerivedAttributes,
   fakeSkills,
+  simpleSword,
 } from './fakes';
 
 export const mockedInventoryService = mock(InventoryService);
@@ -90,6 +92,10 @@ export const mockedInteractiveStore = mock(InteractiveStore);
 
 export const mockedRngService = mock(RandomIntService);
 
+export const mockedActionableState = mock<ActionableState>();
+
+export const mockedActionableState2 = mock<ActionableState>();
+
 export const setupMocks = () => {
   resetMocks();
 
@@ -137,6 +143,14 @@ export const setupMocks = () => {
     id1: instance(mockedInteractiveEntity),
     actor: instanceActorEntity,
   });
+
+  when(mockedActorBehavior.characteristics).thenReturn(fakeCharacteristics);
+
+  when(mockedActorBehavior.skills).thenReturn(fakeSkills);
+
+  when(mockedActorBehavior.derivedAttributes).thenReturn(fakeDerivedAttributes);
+
+  when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
 };
 
 const resetMocks = () => {
@@ -191,4 +205,8 @@ const resetMocks = () => {
   reset(mockedSceneStore);
 
   reset(mockedRngService);
+
+  reset(mockedActionableState);
+
+  reset(mockedActionableState2);
 };

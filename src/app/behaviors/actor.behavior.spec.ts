@@ -10,13 +10,13 @@ import {
 describe('ActorBehavior', () => {
   describe('characteristics', () => {
     it('return characteristics', () => {
-      expect(behavior().characteristics).toEqual(fakeCharacteristics);
+      expect(fakeBehavior().characteristics).toEqual(fakeCharacteristics);
     });
   });
 
   describe('derived attributes', () => {
     it('return derived attributes', () => {
-      expect(behavior().derivedAttributes).toEqual(fakeDerivedAttributes);
+      expect(fakeBehavior().derivedAttributes).toEqual(fakeDerivedAttributes);
     });
   });
 
@@ -28,13 +28,13 @@ describe('ActorBehavior', () => {
         Brawl: 64,
       };
 
-      expect(behavior().skills).toEqual(expectedSkills);
+      expect(fakeBehavior().skills).toEqual(expectedSkills);
     });
   });
 
   describe('damaged', () => {
     it('return HitPointsEvent previous 8 current 0', () => {
-      const result = behavior().damaged(12);
+      const result = fakeBehavior().damaged(12);
 
       expect(result).toEqual(new HitPointsEvent(8, 0));
     });
@@ -42,7 +42,7 @@ describe('ActorBehavior', () => {
 
   describe('healed', () => {
     it('return HitPointsEvent previous 6 current 8', () => {
-      const char = behavior();
+      const char = fakeBehavior();
 
       char.damaged(2);
 
@@ -55,13 +55,13 @@ describe('ActorBehavior', () => {
   describe('situation', () => {
     describe('when HP is above 0', () => {
       it('return ALIVE', () => {
-        expect(behavior().situation).toEqual('ALIVE');
+        expect(fakeBehavior().situation).toEqual('ALIVE');
       });
     });
 
     describe('when HP is 0', () => {
       it('return DEAD', () => {
-        const b = behavior();
+        const b = fakeBehavior();
 
         b.damaged(100);
 
@@ -71,4 +71,5 @@ describe('ActorBehavior', () => {
   });
 });
 
-const behavior = () => new ActorBehavior(fakeCharacteristics, fakeMapSkills);
+const fakeBehavior = () =>
+  new ActorBehavior(fakeCharacteristics, fakeMapSkills);

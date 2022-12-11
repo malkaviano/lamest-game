@@ -1,21 +1,19 @@
-import { instance, when } from 'ts-mockito';
+import { instance } from 'ts-mockito';
 
 import { PlayerEntity } from './player.entity';
 
 import { ActionableEvent } from '../events/actionable.event';
 
-import {
-  fakeCharacteristics,
-  fakeDerivedAttributes,
-  fakeIdentity,
-  fakeSkills,
-  simpleSword,
-  actionConsume,
-} from '../../../tests/fakes';
+import { fakeIdentity, actionConsume } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
   mockedEquipmentBehavior,
+  setupMocks,
 } from '../../../tests/mocks';
+
+beforeEach(() => {
+  setupMocks();
+});
 
 describe('PlayerEntity', () => {
   describe('classification', () => {
@@ -51,11 +49,3 @@ const fakeCharacter = () =>
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior)
   );
-
-when(mockedActorBehavior.characteristics).thenReturn(fakeCharacteristics);
-
-when(mockedActorBehavior.skills).thenReturn(fakeSkills);
-
-when(mockedActorBehavior.derivedAttributes).thenReturn(fakeDerivedAttributes);
-
-when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);

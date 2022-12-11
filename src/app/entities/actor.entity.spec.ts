@@ -2,10 +2,7 @@ import { take } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { HitPointsEvent } from '../events/hitpoints.event';
-import {
-  ActionableDefinition,
-  createActionableDefinition,
-} from '../definitions/actionable.definition';
+import { ActionableDefinition } from '../definitions/actionable.definition';
 import {
   createDamagedMessage,
   createHealedMessage,
@@ -17,6 +14,8 @@ import {
 } from '../definitions/weapon.definition';
 import { ActorEntity } from './actor.entity';
 import { emptyState } from '../states/empty.state';
+import { ArrayView } from '../views/array.view';
+import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 
 import {
   attackPlayerEvent,
@@ -25,14 +24,14 @@ import {
   fakeSkills,
   fakeSceneActorsInfo,
   simpleSword,
+  actionHeal,
+  actionAttack,
 } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
-import { ArrayView } from '../views/array.view';
-import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 
 describe('ActorEntity', () => {
   beforeEach(() => {
@@ -74,7 +73,7 @@ describe('ActorEntity', () => {
               new HitPointsEvent(9, 0)
             );
 
-            const result = fakeActor().reactTo(attackAction, 'SUCCESS', 10);
+            const result = fakeActor().reactTo(actionAttack, 'SUCCESS', 10);
 
             expect(result).toEqual(logAttacked);
           });
@@ -92,7 +91,7 @@ describe('ActorEntity', () => {
               result = event;
             });
 
-            char.reactTo(attackAction, 'SUCCESS', 6);
+            char.reactTo(actionAttack, 'SUCCESS', 6);
 
             done();
 
@@ -104,7 +103,7 @@ describe('ActorEntity', () => {
           describe(`attack was ${result}`, () => {
             it('return nothing', () => {
               const log = fakeActor().reactTo(
-                attackAction,
+                actionAttack,
                 result as ResultLiteral,
                 1
               );
@@ -128,7 +127,7 @@ describe('ActorEntity', () => {
           result = event;
         });
 
-        char.reactTo(attackAction, 'SUCCESS', 6);
+        char.reactTo(actionAttack, 'SUCCESS', 6);
 
         done();
 
@@ -145,7 +144,7 @@ describe('ActorEntity', () => {
             );
 
             const log = fakeActor().reactTo(
-              healAction,
+              actionHeal,
               result as ResultLiteral,
               10
             );
@@ -167,7 +166,7 @@ describe('ActorEntity', () => {
             hpResult = event;
           });
 
-          char.reactTo(healAction, result as ResultLiteral, 5);
+          char.reactTo(actionHeal, result as ResultLiteral, 5);
 
           done();
 
@@ -179,7 +178,7 @@ describe('ActorEntity', () => {
         describe(`heal was ${result}`, () => {
           it('return nothing', () => {
             const log = fakeActor().reactTo(
-              healAction,
+              actionHeal,
               result as ResultLiteral,
               1
             );
@@ -279,10 +278,6 @@ const fakeActor = () =>
     instance(mockedEquipmentBehavior),
     emptyState
   );
-
-const attackAction = createActionableDefinition('ATTACK', 'attack', 'Attack');
-
-const healAction = createActionableDefinition('HEAL', 'heal', 'Heal');
 
 const logAttacked = createDamagedMessage(9);
 

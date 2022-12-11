@@ -1,9 +1,15 @@
-import { SimpleState } from '../states/simple.state';
+import { instance } from 'ts-mockito';
+
 import { ArrayView } from '../views/array.view';
-import { InteractiveEntity } from './interactive.entity';
 import { SceneEntity } from './scene.entity';
 
+import { mockedInteractiveEntity, setupMocks } from '../../../tests/mocks';
+
 describe('SceneEntity', () => {
+  beforeEach(() => {
+    setupMocks();
+  });
+
   it('should have description', () => {
     expect(entity.description).toEqual(descriptions);
   });
@@ -21,11 +27,6 @@ describe('SceneEntity', () => {
 
 const descriptions = new ArrayView(['GG']);
 
-const interactive = new InteractiveEntity(
-  'id1',
-  'inter1',
-  'GG',
-  new SimpleState(new ArrayView([]))
-);
+const interactive = instance(mockedInteractiveEntity);
 
 const entity = new SceneEntity(descriptions, new ArrayView([interactive]), {});
