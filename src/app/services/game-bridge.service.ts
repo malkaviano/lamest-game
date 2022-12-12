@@ -90,6 +90,6 @@ export class GameBridgeService {
       return createActionableDefinition('CONSUME', 'consume', 'Consume');
     }
 
-    return createActionableDefinition('COMMON', 'noop', 'NOOP');
+    return createActionableDefinition('NOOP', 'noop', 'NOOP');
   }
 }

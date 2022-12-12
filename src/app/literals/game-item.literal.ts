@@ -1,1 +1,1 @@
-export type GameItemLiteral = 'CONSUMABLE' | 'WEAPON' | 'COMMON';
+export type GameItemLiteral = 'CONSUMABLE' | 'WEAPON' | 'USABLE';

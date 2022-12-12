@@ -16,6 +16,7 @@ import { PickRule } from '../src/app/rules/pick.rule';
 import { SceneRule } from '../src/app/rules/scene.rule';
 import { SkillRule } from '../src/app/rules/skill.rule';
 import { UnEquipRule } from '../src/app/rules/unequip.rule';
+import { UseRule } from '../src/app/rules/use.rule';
 import { CharacterService } from '../src/app/services/character.service';
 import { GameLoopService } from '../src/app/services/game-loop.service';
 import { GeneratorService } from '../src/app/services/generator.service';
@@ -42,6 +43,10 @@ import {
   fakeSkills,
   simpleSword,
 } from './fakes';
+
+export const playerInfo = { id: 'player', name: 'player' };
+
+export const interactiveInfo = { id: 'id1', name: 'test' };
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -115,6 +120,8 @@ export const mockedSkillService = mock(SkillService);
 
 export const mockedSceneEntity = mock(SceneEntity);
 
+export const mockedUseRule = mock(UseRule);
+
 export const setupMocks = () => {
   resetMocks();
 
@@ -122,17 +129,17 @@ export const setupMocks = () => {
     instance(mockedPlayerEntity)
   );
 
-  when(mockedPlayerEntity.id).thenReturn('player');
+  when(mockedPlayerEntity.id).thenReturn(playerInfo.id);
 
-  when(mockedPlayerEntity.name).thenReturn('player');
+  when(mockedPlayerEntity.name).thenReturn(playerInfo.name);
 
   when(mockedPlayerEntity.classification).thenReturn('PLAYER');
 
   when(mockedPlayerEntity.skills).thenReturn(fakeSkills);
 
-  when(mockedInteractiveEntity.id).thenReturn('id1');
+  when(mockedInteractiveEntity.id).thenReturn(interactiveInfo.id);
 
-  when(mockedInteractiveEntity.name).thenReturn('test');
+  when(mockedInteractiveEntity.name).thenReturn(interactiveInfo.name);
 
   when(mockedInteractiveEntity.classification).thenReturn('REACTIVE');
 
@@ -272,4 +279,6 @@ const resetMocks = () => {
   reset(mockedRandomCharacterService);
 
   reset(mockedSceneEntity);
+
+  reset(mockedUseRule);
 };

@@ -41,6 +41,7 @@ export class GameLoopService {
       ATTACK: this.rulesHelper.combatRule,
       CONSUME: this.rulesHelper.consumableRule,
       ASK: this.rulesHelper.conversationRule,
+      USE: this.rulesHelper.useRule,
     };
 
     this.player = this.characterService.currentCharacter;

@@ -1,7 +1,7 @@
 import { GameItemDefinition } from './game-item.definition';
 
-export class CommonItemDefinition extends GameItemDefinition {
+export class UsableItemDefinition extends GameItemDefinition {
   constructor(name: string, label: string, description: string) {
-    super('COMMON', name, label, description);
+    super('USABLE', name, label, description);
   }
 }

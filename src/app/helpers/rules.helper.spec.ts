@@ -21,7 +21,9 @@ import {
   mockedSceneRule,
   mockedSkillRule,
   mockedUnEquipRule,
+  mockedUseRule,
 } from '../../../tests/mocks';
+import { UseRule } from '../rules/use.rule';
 
 describe('RulesHelper', () => {
   let service: RulesHelper;
@@ -61,8 +63,13 @@ describe('RulesHelper', () => {
           provide: CombatRule,
           useValue: instance(mockedCombatRule),
         },
+        {
+          provide: UseRule,
+          useValue: instance(mockedUseRule),
+        },
       ],
     });
+
     service = TestBed.inject(RulesHelper);
   });
 

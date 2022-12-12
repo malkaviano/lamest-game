@@ -1,4 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
+import { createOpenedUsingMessage } from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
@@ -19,7 +20,7 @@ export class LockedContainerState extends ActionableState {
     if (result === 'USED') {
       return {
         state: this.openedState.value,
-        log: `was opened using ${action.label}`,
+        log: createOpenedUsingMessage(action.label),
       };
     }
 

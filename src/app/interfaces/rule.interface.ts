@@ -6,7 +6,7 @@ import { RuleResultInterface } from './rule-result.interface';
 export interface RuleInterface {
   execute(
     actor: ActorInterface,
-    action: ActionableEvent,
+    event: ActionableEvent,
     target?: ActionReactive
   ): RuleResultInterface;
 }

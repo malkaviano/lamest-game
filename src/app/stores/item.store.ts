@@ -10,7 +10,7 @@ import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
-import { CommonItemDefinition } from '../definitions/common-item.definition';
+import { UsableItemDefinition } from '../definitions/usable-item.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +58,7 @@ export class ItemStore {
     resourcesStore.propsStore.props.forEach((item) => {
       this.store.set(
         item.name,
-        new CommonItemDefinition(item.name, item.label, item.description)
+        new UsableItemDefinition(item.name, item.label, item.description)
       );
     });
   }

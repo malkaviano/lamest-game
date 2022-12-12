@@ -10,4 +10,6 @@ export type LogCategoryLiteral =
   | 'SCENE'
   | 'MISSED'
   | 'DIED'
-  | 'LOST';
+  | 'LOST'
+  | 'NOT-FOUND'
+  | 'OPENED';

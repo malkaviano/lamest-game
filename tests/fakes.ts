@@ -16,6 +16,7 @@ import { ArrayView } from '../src/app/views/array.view';
 import { CharacterValuesDefinition } from '../src/app/definitions/character-values.definition';
 import { KeyValueDescriptionDefinition } from '../src/app/definitions/key-value-description.definition';
 import { DiscardState } from '../src/app/states/discard.state';
+import { UsableItemDefinition } from '../src/app/definitions/usable-item.definition';
 
 export const simpleSword = new WeaponDefinition(
   'sword',
@@ -225,12 +226,6 @@ export const eventEquipUnDodgeableAxe = new ActionableEvent(
   unDodgeableAxe.name
 );
 
-export const actionUse = createActionableDefinition(
-  'COMMON',
-  'masterKey',
-  'Master Key'
-);
-
 export const actionSceneExit = createActionableDefinition(
   'SCENE',
   'exit',
@@ -251,4 +246,29 @@ export const actionSkillAthleticism = createActionableDefinition(
 export const eventSkillAthleticism = new ActionableEvent(
   actionSkillAthleticism,
   'athleticism'
+);
+
+export const masterKey = new UsableItemDefinition(
+  'masterKey',
+  'Master Key',
+  'Opens stuff'
+);
+
+export const actionUseMasterKey = createActionableDefinition(
+  'USE',
+  masterKey.name,
+  masterKey.label
+);
+
+export const actionWrongUseSimpleSword = createActionableDefinition(
+  'USE',
+  simpleSword.name,
+  simpleSword.label
+);
+
+export const eventUseMasterKey = new ActionableEvent(actionUseMasterKey, 'id1');
+
+export const eventWrongUseSimpleSword = new ActionableEvent(
+  actionWrongUseSimpleSword,
+  'id1'
 );

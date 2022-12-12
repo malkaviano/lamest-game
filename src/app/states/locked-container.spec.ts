@@ -1,14 +1,15 @@
 import { ArrayView } from '../views/array.view';
 import { LockedContainerState } from './locked-container';
 
-import { actionUse, lootState } from '../../../tests/fakes';
+import { actionUseMasterKey, lootState } from '../../../tests/fakes';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { DiscardState } from './discard.state';
+import { createOpenedUsingMessage } from '../definitions/log-message.definition';
 
 describe('LockedContainerState', () => {
   describe(`when item was not in player's inventory`, () => {
     it('return same state', () => {
-      const result = state.onResult(actionUse, 'NONE');
+      const result = state.onResult(actionUseMasterKey, 'NONE');
 
       expect(result).toEqual({ state: state });
     });
@@ -16,17 +17,19 @@ describe('LockedContainerState', () => {
 
   describe(`when item was in player's inventory`, () => {
     it('return discarded state and log', () => {
-      const result = state.onResult(actionUse, 'USED');
+      const result = state.onResult(actionUseMasterKey, 'USED');
 
       expect(result).toEqual({
         state: lootState,
-        log: 'was opened using Master Key',
+        log,
       });
     });
   });
 });
 
 const state = new LockedContainerState(
-  new ArrayView([actionUse]),
+  new ArrayView([actionUseMasterKey]),
   new LazyHelper<DiscardState>(() => lootState)
 );
+
+const log = createOpenedUsingMessage('Master Key');

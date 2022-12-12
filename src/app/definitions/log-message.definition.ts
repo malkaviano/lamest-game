@@ -103,3 +103,9 @@ export const createLostLogMessage = (actor: string, item: string) =>
 
 export const createUnDodgeableAttackLogMessage = (target: string) =>
   new LogMessageDefinition('ATTACKED', target, `Attack is not dodgeable`);
+
+export const createNotFoundLogMessage = (actor: string, item: string) =>
+  new LogMessageDefinition('NOT-FOUND', actor, `${item} was not found`);
+
+export const createOpenedUsingMessage = (item: string) =>
+  `was opened using ${item}`;

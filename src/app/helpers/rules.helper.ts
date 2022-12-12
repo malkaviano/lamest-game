@@ -8,6 +8,7 @@ import { PickRule } from '../rules/pick.rule';
 import { SceneRule } from '../rules/scene.rule';
 import { SkillRule } from '../rules/skill.rule';
 import { UnEquipRule } from '../rules/unequip.rule';
+import { UseRule } from '../rules/use.rule';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class RulesHelper {
     public readonly sceneRule: SceneRule,
     public readonly combatRule: CombatRule,
     public readonly consumableRule: ConsumeRule,
-    public readonly conversationRule: ConversationRule
+    public readonly conversationRule: ConversationRule,
+    public readonly useRule: UseRule
   ) {}
 }
