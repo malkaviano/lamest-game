@@ -205,7 +205,13 @@ export const skillDefinitions: {
     justAgi
   ),
   'First Aid': new SkillDefinition('First Aid', '', 'NATURAL', false, justInt),
-  Gaming: new SkillDefinition('Gaming', '', 'NATURAL', false, justInt),
+  Streetwise: new SkillDefinition(
+    'Streetwise',
+    'Hearing gossip and making small change on the streets',
+    'NATURAL',
+    false,
+    justInt
+  ),
   'Industrial Heavy Machinery': new SkillDefinition(
     'Industrial Heavy Machinery',
     '',

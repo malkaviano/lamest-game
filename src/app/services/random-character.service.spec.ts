@@ -59,7 +59,7 @@ describe('RandomCharacterService', () => {
         ['Appraise', 5],
         ['Bargain', 5],
         ['Disguise', 5],
-        ['Gaming', 5],
+        ['Streetwise', 5],
         ['Hide', 5],
         ['Melee Weapon (Simple)', 5],
         ['Ranged Weapon (Throw)', 5],

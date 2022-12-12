@@ -22,7 +22,7 @@ export type SkillNameLiteral =
   | 'Firearm (Handgun)'
   | 'Firearm (Shooter)'
   | 'First Aid'
-  | 'Gaming'
+  | 'Streetwise'
   | 'Industrial Heavy Machinery'
   | 'Hide'
   | 'Knowledge (Antique)'
