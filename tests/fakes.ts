@@ -182,13 +182,17 @@ export const fakeCharacterSheetDerivedAttributes = new ArrayView([
 ]);
 
 export const fakeCharacterSheetSkills = new ArrayView([
+  new KeyValueDescriptionDefinition('Brawl', '45', 'Fighting unarmed'),
   new KeyValueDescriptionDefinition(
-    'Brawl',
+    'First Aid',
     '45',
-    'Fighting with bare hands and martial arts'
+    'Use emergency kit to heal'
   ),
-  new KeyValueDescriptionDefinition('First Aid', '45', ''),
-  new KeyValueDescriptionDefinition('Melee Weapon (Simple)', '45', ''),
+  new KeyValueDescriptionDefinition(
+    'Melee Weapon (Simple)',
+    '45',
+    'Light close combat weapons, one handed'
+  ),
 ]);
 
 export const fakeCharacterSheet = new CharacterValuesDefinition(

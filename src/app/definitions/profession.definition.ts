@@ -15,11 +15,11 @@ export const professions: ArrayView<ProfessionLiteral> = new ArrayView([
 
 const doctor: ArrayView<SkillNameLiteral> = new ArrayView([
   'First Aid',
-  'Science(Medicine)',
+  'Science(Chemistry)',
   'Manipulation',
   'Research',
   'Detect',
-  'Science(Medicine)',
+  'Science(Botany)',
   'Sleight of Hand',
   'Knowledge (Linguistics)',
   'Craft (Sewing)',
@@ -70,7 +70,7 @@ const mercenary: ArrayView<SkillNameLiteral> = new ArrayView([
   'Athleticism',
   'Dodge',
   'First Aid',
-  'Knowledge (Strategy)',
+  'Drive (Heavy Vehicles)',
   'Firearm (Shooter)',
   'Demolition',
   'Engineering (Electrical)',
