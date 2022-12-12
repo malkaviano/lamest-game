@@ -8,10 +8,10 @@ import { ActionableState } from './actionable.state';
 
 export class LockedContainerState extends ActionableState {
   constructor(
-    stateActions: ArrayView<ActionableDefinition>,
-    protected readonly openedState: LazyHelper<ActionableState>
+    stateAction: ArrayView<ActionableDefinition>,
+    private readonly openedState: LazyHelper<ActionableState>
   ) {
-    super('LockedContainerState', stateActions);
+    super('LockedContainerState', stateAction);
   }
 
   protected stateResult(
@@ -19,13 +19,18 @@ export class LockedContainerState extends ActionableState {
     result: ResultLiteral,
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
-    if (result === 'USED') {
+    const item = values.item;
+
+    if (
+      super.actions.items.some((a) => a.name === action.name) &&
+      item &&
+      result === 'USED'
+    ) {
       return {
         state: this.openedState.value,
-        log: createOpenedUsingMessage(values.item?.label ?? action.label),
+        log: createOpenedUsingMessage(item.label),
       };
     }
-
     return { state: this };
   }
 }
