@@ -13,7 +13,7 @@ import { ActionReactive } from '../interfaces/action-reactive.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class ConversationRule implements RuleInterface {
+export class InteractionRule implements RuleInterface {
   public execute(
     actor: ActorInterface,
     action: ActionableEvent,

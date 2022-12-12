@@ -14,8 +14,16 @@ describe('SimpleState', () => {
   });
 });
 
-const askAction1 = createActionableDefinition('ASK', 'ask1', 'May I help?');
-const askAction2 = createActionableDefinition('ASK', 'ask2', 'Are you ok?');
+const askAction1 = createActionableDefinition(
+  'INTERACTION',
+  'ask1',
+  'May I help?'
+);
+const askAction2 = createActionableDefinition(
+  'INTERACTION',
+  'ask2',
+  'Are you ok?'
+);
 const pickAction = createActionableDefinition(
   'PICK',
   'pickBubbleGum',

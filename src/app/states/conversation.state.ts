@@ -21,7 +21,11 @@ export class ConversationState extends ActionableState {
     const currentMessages = messageMap[currentMap];
 
     const actions = Object.keys(currentMessages).map((topic) =>
-      createActionableDefinition('ASK', topic, currentMessages[topic].label)
+      createActionableDefinition(
+        'INTERACTION',
+        topic,
+        currentMessages[topic].label
+      )
     );
     super('ConversationState', new ArrayView(actions));
 

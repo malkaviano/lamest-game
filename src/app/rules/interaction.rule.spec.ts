@@ -5,7 +5,7 @@ import { anything, deepEqual, instance, when } from 'ts-mockito';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createFreeLogMessage } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
-import { ConversationRule } from './conversation.rule';
+import { InteractionRule } from './interaction.rule';
 
 import {
   mockedInteractiveEntity,
@@ -13,15 +13,15 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 
-describe('ConversationRule', () => {
-  let service: ConversationRule;
+describe('InteractionRule', () => {
+  let service: InteractionRule;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
 
     setupMocks();
 
-    service = TestBed.inject(ConversationRule);
+    service = TestBed.inject(InteractionRule);
   });
 
   it('should be created', () => {
@@ -37,7 +37,7 @@ describe('ConversationRule', () => {
       const result = service.execute(
         instance(mockedPlayerEntity),
         new ActionableEvent(
-          createActionableDefinition('ASK', 'hi', 'Hi'),
+          createActionableDefinition('INTERACTION', 'hi', 'Hi'),
           'id1'
         ),
         instance(mockedInteractiveEntity)

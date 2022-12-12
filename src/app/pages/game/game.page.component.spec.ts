@@ -187,7 +187,7 @@ describe('GamePageComponent', () => {
           true,
           'PERMANENT'
         ),
-        new ActionableDefinition('ASK', 'action1', 'Got action?')
+        new ActionableDefinition('INTERACTION', 'action1', 'Got action?')
       ),
       new ActionableItemDefinition(
         new WeaponDefinition(
@@ -202,7 +202,7 @@ describe('GamePageComponent', () => {
           true,
           'PERMANENT'
         ),
-        new ActionableDefinition('ASK', 'action1', 'Got action?')
+        new ActionableDefinition('INTERACTION', 'action1', 'Got action?')
       ),
     ]);
   });
@@ -225,7 +225,11 @@ describe('GamePageComponent', () => {
 
 const mockedPlayerEntity = mock(PlayerEntity);
 
-const askAction = createActionableDefinition('ASK', 'action1', 'Got action?');
+const askAction = createActionableDefinition(
+  'INTERACTION',
+  'action1',
+  'Got action?'
+);
 
 const scene = new SceneDefinition(
   new ArrayView(['this is a test', 'okay okay']),

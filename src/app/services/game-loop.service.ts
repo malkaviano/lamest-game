@@ -40,7 +40,7 @@ export class GameLoopService {
       SCENE: this.rulesHelper.sceneRule,
       ATTACK: this.rulesHelper.combatRule,
       CONSUME: this.rulesHelper.consumableRule,
-      ASK: this.rulesHelper.conversationRule,
+      INTERACTION: this.rulesHelper.interactionRule,
       USE: this.rulesHelper.useRule,
     };
 

@@ -98,7 +98,7 @@ export const actionPickBubbleGum = createActionableDefinition(
 );
 
 export const actionAsk = createActionableDefinition(
-  'ASK',
+  'INTERACTION',
   'action1',
   'Got action?'
 );

@@ -49,8 +49,8 @@ const messageMap: MessageMapDefinition = {
   },
 };
 
-const helloAction = createActionableDefinition('ASK', 'hello', 'Hello');
-const dieAction = createActionableDefinition('ASK', 'die', 'Die');
-const sorryAction = createActionableDefinition('ASK', 'sorry', 'Sorry');
+const helloAction = createActionableDefinition('INTERACTION', 'hello', 'Hello');
+const dieAction = createActionableDefinition('INTERACTION', 'die', 'Die');
+const sorryAction = createActionableDefinition('INTERACTION', 'sorry', 'Sorry');
 
 const state = new ConversationState(messageMap, 'map1');

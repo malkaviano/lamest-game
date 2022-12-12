@@ -9,13 +9,13 @@ import { EquipRule } from '../rules/equip.rule';
 import { UnEquipRule } from '../rules/unequip.rule';
 import { SceneRule } from '../rules/scene.rule';
 import { ConsumeRule } from '../rules/consume.rule';
-import { ConversationRule } from '../rules/conversation.rule';
+import { InteractionRule } from '../rules/interaction.rule';
 import { CombatRule } from '../rules/combat.rule';
 
 import {
   mockedCombatRule,
   mockedConsumeRule,
-  mockedConversationRule,
+  mockedInteractionRule,
   mockedEquipRule,
   mockedPickRule,
   mockedSceneRule,
@@ -56,8 +56,8 @@ describe('RulesHelper', () => {
           useValue: instance(mockedConsumeRule),
         },
         {
-          provide: ConversationRule,
-          useValue: instance(mockedConversationRule),
+          provide: InteractionRule,
+          useValue: instance(mockedInteractionRule),
         },
         {
           provide: CombatRule,

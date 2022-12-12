@@ -7,7 +7,7 @@ describe('EmptyState', () => {
     it('throws', () => {
       expect(() =>
         emptyState.onResult(
-          new ActionableDefinition('ASK', 'gg', 'GG'),
+          new ActionableDefinition('INTERACTION', 'gg', 'GG'),
           'NONE',
           {}
         )

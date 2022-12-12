@@ -10,7 +10,7 @@ import { ConverterHelper } from '../src/app/helpers/converter.helper';
 import { RulesHelper } from '../src/app/helpers/rules.helper';
 import { CombatRule } from '../src/app/rules/combat.rule';
 import { ConsumeRule } from '../src/app/rules/consume.rule';
-import { ConversationRule } from '../src/app/rules/conversation.rule';
+import { InteractionRule } from '../src/app/rules/interaction.rule';
 import { EquipRule } from '../src/app/rules/equip.rule';
 import { PickRule } from '../src/app/rules/pick.rule';
 import { SceneRule } from '../src/app/rules/scene.rule';
@@ -90,7 +90,7 @@ export const mockedSceneRule = mock(SceneRule);
 
 export const mockedConsumeRule = mock(ConsumeRule);
 
-export const mockedConversationRule = mock(ConversationRule);
+export const mockedInteractionRule = mock(InteractionRule);
 
 export const mockedCombatRule = mock(CombatRule);
 
@@ -258,7 +258,7 @@ const resetMocks = () => {
 
   reset(mockedConsumeRule);
 
-  reset(mockedConversationRule);
+  reset(mockedInteractionRule);
 
   reset(mockedCombatRule);
 
