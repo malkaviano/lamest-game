@@ -4,6 +4,7 @@ import {
   createDestroyedByDamageMessage,
 } from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
+import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -20,10 +21,14 @@ export class DestroyableState extends ActionableState {
   protected override stateResult(
     action: ActionableDefinition,
     result: ResultLiteral,
-    damageTaken?: number
+    values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
-    if (action.actionable === 'ATTACK' && result === 'SUCCESS' && damageTaken) {
-      const dmg = damageTaken;
+    if (
+      action.actionable === 'ATTACK' &&
+      result === 'SUCCESS' &&
+      values.damage
+    ) {
+      const dmg = values.damage;
 
       const hp = this.hitPoints - dmg;
 

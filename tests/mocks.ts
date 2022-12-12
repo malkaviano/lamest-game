@@ -41,12 +41,10 @@ import {
   fakeDerivedAttributes,
   fakeIdentity,
   fakeSkills,
+  interactiveInfo,
+  playerInfo,
   simpleSword,
 } from './fakes';
-
-export const playerInfo = { id: 'player', name: 'player' };
-
-export const interactiveInfo = { id: 'id1', name: 'test' };
 
 export const mockedInventoryService = mock(InventoryService);
 

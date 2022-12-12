@@ -118,7 +118,13 @@ describe('ConsumeRule', () => {
           });
 
           when(
-            mockedPlayerEntity.reactTo(deepEqual(actionHeal), 'SUCCESS', 5)
+            mockedPlayerEntity.reactTo(
+              deepEqual(actionHeal),
+              'SUCCESS',
+              deepEqual({
+                heal: 5,
+              })
+            )
           ).thenReturn(logHeal5);
 
           const result = service.execute(
@@ -169,7 +175,11 @@ describe('ConsumeRule', () => {
         );
 
         when(
-          mockedPlayerEntity.reactTo(deepEqual(actionHeal), 'NONE', 2)
+          mockedPlayerEntity.reactTo(
+            deepEqual(actionHeal),
+            'NONE',
+            deepEqual({ heal: 2 })
+          )
         ).thenReturn(logHeal2);
 
         const result = service.execute(

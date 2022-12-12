@@ -48,7 +48,7 @@ export class UseRule implements RuleInterface {
       actionableDefinition.name
     );
 
-    const log = target.reactTo(actionableDefinition, 'USED');
+    const log = target.reactTo(actionableDefinition, 'USED', { item: usable });
 
     if (log) {
       logs.push(createFreeLogMessage(target.name, log));

@@ -1,5 +1,5 @@
 import { take } from 'rxjs';
-import { instance, when } from 'ts-mockito';
+import { deepEqual, instance, when } from 'ts-mockito';
 
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { ActionableDefinition } from '../definitions/actionable.definition';
@@ -18,7 +18,7 @@ import { ArrayView } from '../views/array.view';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 
 import {
-  attackPlayerEvent,
+  eventAttackPlayer,
   fakeCharacteristics,
   fakeDerivedAttributes,
   fakeSkills,
@@ -73,7 +73,9 @@ describe('ActorEntity', () => {
               new HitPointsEvent(9, 0)
             );
 
-            const result = fakeActor().reactTo(actionAttack, 'SUCCESS', 10);
+            const result = fakeActor().reactTo(actionAttack, 'SUCCESS', {
+              damage: 10,
+            });
 
             expect(result).toEqual(logAttacked);
           });
@@ -91,7 +93,7 @@ describe('ActorEntity', () => {
               result = event;
             });
 
-            char.reactTo(actionAttack, 'SUCCESS', 6);
+            char.reactTo(actionAttack, 'SUCCESS', { damage: 6 });
 
             done();
 
@@ -105,7 +107,7 @@ describe('ActorEntity', () => {
               const log = fakeActor().reactTo(
                 actionAttack,
                 result as ResultLiteral,
-                1
+                deepEqual({ damage: 1 })
               );
 
               expect(log).not.toBeDefined();
@@ -127,7 +129,7 @@ describe('ActorEntity', () => {
           result = event;
         });
 
-        char.reactTo(actionAttack, 'SUCCESS', 6);
+        char.reactTo(actionAttack, 'SUCCESS', { damage: 6 });
 
         done();
 
@@ -146,7 +148,7 @@ describe('ActorEntity', () => {
             const log = fakeActor().reactTo(
               actionHeal,
               result as ResultLiteral,
-              10
+              { heal: 10 }
             );
 
             expect(log).toEqual(logHealed);
@@ -166,7 +168,7 @@ describe('ActorEntity', () => {
             hpResult = event;
           });
 
-          char.reactTo(actionHeal, result as ResultLiteral, 5);
+          char.reactTo(actionHeal, result as ResultLiteral, { heal: 5 });
 
           done();
 
@@ -180,7 +182,7 @@ describe('ActorEntity', () => {
             const log = fakeActor().reactTo(
               actionHeal,
               result as ResultLiteral,
-              1
+              deepEqual({ heal: 1 })
             );
 
             expect(log).not.toBeDefined();
@@ -259,7 +261,7 @@ describe('ActorEntity', () => {
   describe('action', () => {
     it('return action attack', () => {
       expect(fakeActor().action(fakeSceneActorsInfo)).toEqual(
-        attackPlayerEvent
+        eventAttackPlayer
       );
     });
 

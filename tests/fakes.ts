@@ -18,6 +18,10 @@ import { KeyValueDescriptionDefinition } from '../src/app/definitions/key-value-
 import { DiscardState } from '../src/app/states/discard.state';
 import { UsableItemDefinition } from '../src/app/definitions/usable-item.definition';
 
+export const playerInfo = { id: 'player', name: 'player' };
+
+export const interactiveInfo = { id: 'id1', name: 'test' };
+
 export const simpleSword = new WeaponDefinition(
   'sword',
   'Sword',
@@ -77,9 +81,15 @@ export const actionAttack = createActionableDefinition(
   'Attack'
 );
 
-export const attackEvent = new ActionableEvent(actionAttack, 'id1');
+export const eventAttackInteractive = new ActionableEvent(
+  actionAttack,
+  interactiveInfo.id
+);
 
-export const attackPlayerEvent = new ActionableEvent(actionAttack, 'player');
+export const eventAttackPlayer = new ActionableEvent(
+  actionAttack,
+  playerInfo.id
+);
 
 export const actionPickBubbleGum = createActionableDefinition(
   'PICK',
@@ -137,7 +147,7 @@ export const fakeIdentity = new CharacterIdentityDefinition(
 export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
   new ArrayView([
     {
-      id: 'player',
+      id: playerInfo.id,
       classification: 'PLAYER',
       situation: 'ALIVE',
     },
@@ -266,9 +276,30 @@ export const actionWrongUseSimpleSword = createActionableDefinition(
   simpleSword.label
 );
 
-export const eventUseMasterKey = new ActionableEvent(actionUseMasterKey, 'id1');
+export const eventUseMasterKey = new ActionableEvent(
+  actionUseMasterKey,
+  interactiveInfo.id
+);
 
 export const eventWrongUseSimpleSword = new ActionableEvent(
   actionWrongUseSimpleSword,
-  'id1'
+  interactiveInfo.id
+);
+
+export const actionPickSimpleSword = createActionableDefinition(
+  'PICK',
+  simpleSword.name,
+  simpleSword.label
+);
+
+export const eventPickSimpleSword = new ActionableEvent(
+  actionPickSimpleSword,
+  interactiveInfo.id
+);
+
+export const actionSkillBrawl = createActionableDefinition('SKILL', 'Brawl');
+
+export const eventSkillBrawl = new ActionableEvent(
+  actionSkillBrawl,
+  interactiveInfo.id
 );

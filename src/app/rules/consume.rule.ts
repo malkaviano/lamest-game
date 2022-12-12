@@ -72,7 +72,7 @@ export class ConsumeRule implements RuleInterface {
       const log = actor.reactTo(
         createActionableDefinition('HEAL', 'heal', 'Heal'),
         rollDefinition.result,
-        hp
+        { heal: hp }
       );
 
       if (log) {

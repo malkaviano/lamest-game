@@ -13,7 +13,10 @@ import { GameLoopService } from './game-loop.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
 
-import { attackEvent, attackPlayerEvent } from '../../../tests/fakes';
+import {
+  eventAttackInteractive,
+  eventAttackPlayer,
+} from '../../../tests/fakes';
 import {
   mockedActorEntity,
   mockedCharacterService,
@@ -53,11 +56,11 @@ describe('GameLoopService', () => {
 
     setupMocks();
 
-    when(mockedActorEntity.action(anything())).thenReturn(attackPlayerEvent);
+    when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
 
     when(mockedActorEntity.situation).thenReturn('ALIVE');
 
-    when(mockedPlayerEntity.action).thenReturn(() => attackEvent);
+    when(mockedPlayerEntity.action).thenReturn(() => eventAttackInteractive);
 
     when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 

@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, instance, when } from 'ts-mockito';
+import { anything, deepEqual, instance, when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import {
   createCannotCheckLogMessage,
   createCheckLogMessage,
   createFreeLogMessage,
 } from '../definitions/log-message.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 
@@ -18,6 +16,7 @@ import {
   mockedRollService,
   setupMocks,
 } from '../../../tests/mocks';
+import { eventSkillBrawl } from '../../../tests/fakes';
 
 describe('SkillRule', () => {
   let service: SkillRule;
@@ -34,9 +33,9 @@ describe('SkillRule', () => {
 
     setupMocks();
 
-    when(mockedInteractiveEntity.reactTo(anything(), anything())).thenReturn(
-      'destroyed by xpto'
-    );
+    when(
+      mockedInteractiveEntity.reactTo(anything(), anything(), deepEqual({}))
+    ).thenReturn('destroyed by xpto');
 
     service = TestBed.inject(SkillRule);
   });
@@ -62,7 +61,7 @@ describe('SkillRule', () => {
 
         const result = service.execute(
           instance(mockedPlayerEntity),
-          event,
+          eventSkillBrawl,
           instance(mockedInteractiveEntity)
         );
 
@@ -84,7 +83,7 @@ describe('SkillRule', () => {
 
       const result = service.execute(
         instance(mockedPlayerEntity),
-        event,
+        eventSkillBrawl,
         instance(mockedInteractiveEntity)
       );
 
@@ -94,10 +93,6 @@ describe('SkillRule', () => {
     });
   });
 });
-
-const action = createActionableDefinition('SKILL', 'Brawl');
-
-const event = new ActionableEvent(action, 'id1');
 
 const log1 = createCheckLogMessage('player', 'Brawl', 10, 'SUCCESS');
 

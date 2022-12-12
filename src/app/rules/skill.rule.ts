@@ -34,7 +34,7 @@ export class SkillRule implements RuleInterface {
     if (result !== 'IMPOSSIBLE') {
       logs.push(createCheckLogMessage(actor.name, skillName, roll, result));
 
-      const log = target.reactTo(action.actionableDefinition, result);
+      const log = target.reactTo(action.actionableDefinition, result, {});
 
       if (log) {
         logs.push(createFreeLogMessage(target.name, log));

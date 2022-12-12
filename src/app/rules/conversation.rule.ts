@@ -23,7 +23,7 @@ export class ConversationRule implements RuleInterface {
 
     const { actionableDefinition } = action;
 
-    const log = target.reactTo(actionableDefinition, 'NONE');
+    const log = target.reactTo(actionableDefinition, 'NONE', {});
 
     logs.push(createFreeLogMessage(actor.name, actionableDefinition.label));
 

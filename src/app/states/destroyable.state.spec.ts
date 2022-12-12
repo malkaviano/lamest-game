@@ -7,7 +7,7 @@ import { DiscardState } from './discard.state';
 describe('DestroyableState', () => {
   describe('when HP <= 0', () => {
     it('return DiscardState', () => {
-      const result = state.onResult(attackAction, 'SUCCESS', 12);
+      const result = state.onResult(attackAction, 'SUCCESS', { damage: 12 });
 
       expect(result).toEqual({
         state: discardedState,
@@ -18,7 +18,7 @@ describe('DestroyableState', () => {
 
   describe('when HP > 0', () => {
     it('return DestroyableState with remaining HP', () => {
-      const result = state.onResult(attackAction, 'SUCCESS', 6);
+      const result = state.onResult(attackAction, 'SUCCESS', { damage: 6 });
 
       expect(result).toEqual({ state: state2, log: 'received 6 damage' });
     });
@@ -26,7 +26,7 @@ describe('DestroyableState', () => {
 
   describe('when no damage is taken', () => {
     it('return DestroyableState with same HP', () => {
-      const result = state.onResult(attackAction, 'FAILURE');
+      const result = state.onResult(attackAction, 'FAILURE', {});
 
       expect(result).toEqual({ state });
     });

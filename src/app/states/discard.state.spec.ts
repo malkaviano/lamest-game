@@ -5,7 +5,7 @@ import { DiscardState } from './discard.state';
 describe('DiscardState', () => {
   describe('stateResult', () => {
     it('return state without the action', () => {
-      const result = state.onResult(knifeAction, 'NONE');
+      const result = state.onResult(knifeAction, 'NONE', {});
 
       const expected = new DiscardState(
         new ArrayView([knifeAction, firstAidAction])

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, instance, when } from 'ts-mockito';
+import { anything, deepEqual, instance, when } from 'ts-mockito';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createFreeLogMessage } from '../definitions/log-message.definition';
@@ -30,9 +30,9 @@ describe('ConversationRule', () => {
 
   describe('execute', () => {
     it('return logs', () => {
-      when(mockedInteractiveEntity.reactTo(anything(), 'NONE')).thenReturn(
-        'Hello'
-      );
+      when(
+        mockedInteractiveEntity.reactTo(anything(), 'NONE', deepEqual({}))
+      ).thenReturn('Hello');
 
       const result = service.execute(
         instance(mockedPlayerEntity),

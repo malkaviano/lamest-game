@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, when } from 'ts-mockito';
+import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
@@ -16,13 +16,13 @@ import {
 } from '../definitions/log-message.definition';
 
 import {
-  interactiveInfo,
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
-  playerInfo,
 } from '../../../tests/mocks';
 import {
+  playerInfo,
+  interactiveInfo,
   actionUseMasterKey,
   eventUseMasterKey,
   eventWrongUseSimpleSword,
@@ -82,7 +82,7 @@ describe('UseRule', () => {
     });
   });
 
-  describe('when item was ok to use', () => {
+  describe('when item was usable', () => {
     it('return log', () => {
       when(mockedInventoryService.check(playerInfo.id)).thenReturn(
         new ArrayView([new ItemStorageDefinition(masterKey, 1)])
@@ -93,7 +93,13 @@ describe('UseRule', () => {
       ).thenReturn(masterKey);
 
       when(
-        mockedInteractiveEntity.reactTo(actionUseMasterKey, 'USED')
+        mockedInteractiveEntity.reactTo(
+          actionUseMasterKey,
+          'USED',
+          deepEqual({
+            item: masterKey,
+          })
+        )
       ).thenReturn(createOpenedUsingMessage(masterKey.label));
 
       const result = service.execute(

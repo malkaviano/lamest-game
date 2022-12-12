@@ -98,7 +98,7 @@ export class CombatRule implements RuleInterface {
     const log = target.reactTo(
       createActionableDefinition('ATTACK', 'attack', 'Attack'),
       'SUCCESS',
-      damageAmount
+      { damage: damageAmount }
     );
 
     if (log) {

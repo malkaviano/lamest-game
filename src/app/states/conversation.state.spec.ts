@@ -11,7 +11,7 @@ describe('ConversationState', () => {
   describe('message context', () => {
     describe('when message Hello is received', () => {
       it('keep context', () => {
-        const result = state.onResult(helloAction, 'NONE');
+        const result = state.onResult(helloAction, 'NONE', {});
 
         expect(result.state.actions).toEqual(
           new ArrayView([helloAction, dieAction])
@@ -21,7 +21,7 @@ describe('ConversationState', () => {
 
     describe('when message Die is received', () => {
       it('change context', () => {
-        const result = state.onResult(dieAction, 'NONE');
+        const result = state.onResult(dieAction, 'NONE', {});
 
         expect(result.state.actions).toEqual(new ArrayView([sorryAction]));
       });

@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, verify, when } from 'ts-mockito';
+import { deepEqual, instance, verify, when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createTookLogMessage } from '../definitions/log-message.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
 
@@ -14,7 +12,13 @@ import {
   mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
-import { simpleSword } from '../../../tests/fakes';
+import {
+  actionPickSimpleSword,
+  eventPickSimpleSword,
+  interactiveInfo,
+  playerInfo,
+  simpleSword,
+} from '../../../tests/fakes';
 
 describe('PickRule', () => {
   let service: PickRule;
@@ -40,19 +44,25 @@ describe('PickRule', () => {
 
   describe('execute', () => {
     it('return logs', () => {
-      when(mockedInventoryService.take('id1', 'sword')).thenReturn(simpleSword);
+      when(
+        mockedInventoryService.take(interactiveInfo.id, simpleSword.name)
+      ).thenReturn(simpleSword);
 
       when(
-        mockedInteractiveEntity.reactTo(event.actionableDefinition, 'NONE')
-      ).thenReturn('Sword');
+        mockedInteractiveEntity.reactTo(
+          actionPickSimpleSword,
+          'NONE',
+          deepEqual({})
+        )
+      ).thenReturn(simpleSword.label);
 
       const result = service.execute(
         instance(mockedPlayerEntity),
-        event,
+        eventPickSimpleSword,
         instance(mockedInteractiveEntity)
       );
 
-      verify(mockedInventoryService.store('player', simpleSword)).once();
+      verify(mockedInventoryService.store(playerInfo.id, simpleSword)).once();
 
       expect(result).toEqual({
         logs: [log],
@@ -61,8 +71,8 @@ describe('PickRule', () => {
   });
 });
 
-const action = createActionableDefinition('PICK', 'sword', 'Sword');
-
-const event = new ActionableEvent(action, 'id1');
-
-const log = createTookLogMessage('player', 'test', 'Sword');
+const log = createTookLogMessage(
+  playerInfo.name,
+  interactiveInfo.name,
+  simpleSword.label
+);

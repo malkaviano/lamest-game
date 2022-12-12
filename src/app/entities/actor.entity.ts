@@ -18,6 +18,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ClassificationLiteral } from '../literals/classification.literal';
@@ -123,23 +124,23 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public override reactTo(
     action: ActionableDefinition,
     result: ResultLiteral,
-    value?: number | undefined
+    values: ReactionValuesInterface
   ): string | undefined {
     const { actionable } = action;
 
     let resultLog: string | undefined;
 
     if (this.situation === 'ALIVE') {
-      if (actionable === 'ATTACK' && result === 'SUCCESS' && value) {
-        const { effective } = this.damaged(value);
+      if (actionable === 'ATTACK' && result === 'SUCCESS' && values.damage) {
+        const { effective } = this.damaged(values.damage);
 
         resultLog = createDamagedMessage(effective);
       } else if (
         actionable === 'HEAL' &&
         ['SUCCESS', 'NONE'].includes(result) &&
-        value
+        values.heal
       ) {
-        const { effective } = this.healed(value);
+        const { effective } = this.healed(values.heal);
 
         resultLog = createHealedMessage(effective);
       }

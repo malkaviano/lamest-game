@@ -23,7 +23,7 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
-  attackEvent,
+  eventAttackInteractive,
   molotov,
   simpleSword,
   unDodgeableAxe,
@@ -53,25 +53,25 @@ describe('CombatRule', () => {
 
     when(
       mockedActorEntity.reactTo(
-        deepEqual(attackEvent.actionableDefinition),
+        deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
-        2
+        deepEqual({ damage: 2 })
       )
     ).thenReturn(damageMessage2);
 
     when(
       mockedTargetPlayerEntity.reactTo(
-        deepEqual(attackEvent.actionableDefinition),
+        deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
-        2
+        deepEqual({ damage: 2 })
       )
     ).thenReturn(damageMessage2);
 
     when(
       mockedInteractiveEntity.reactTo(
-        deepEqual(attackEvent.actionableDefinition),
+        deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
-        2
+        deepEqual({ damage: 2 })
       )
     ).thenReturn(damageMessage2);
 
@@ -87,7 +87,7 @@ describe('CombatRule', () => {
       it('should automatic hit', () => {
         const result = service.execute(
           instance(mockedPlayerEntity),
-          attackEvent,
+          eventAttackInteractive,
           instance(mockedInteractiveEntity)
         );
 
@@ -119,7 +119,7 @@ describe('CombatRule', () => {
 
             const result = service.execute(
               instance(mockedPlayerEntity),
-              attackEvent,
+              eventAttackInteractive,
               instance(target)
             );
 
@@ -148,7 +148,7 @@ describe('CombatRule', () => {
 
               const result = service.execute(
                 instance(mockedPlayerEntity),
-                attackEvent,
+                eventAttackInteractive,
                 instance(target)
               );
 
@@ -178,7 +178,7 @@ describe('CombatRule', () => {
 
               const result = service.execute(
                 instance(mockedPlayerEntity),
-                attackEvent,
+                eventAttackInteractive,
                 instance(target)
               );
 
@@ -213,7 +213,7 @@ describe('CombatRule', () => {
 
                 const result = service.execute(
                   instance(mockedPlayerEntity),
-                  attackEvent,
+                  eventAttackInteractive,
                   instance(target)
                 );
 
@@ -242,7 +242,7 @@ describe('CombatRule', () => {
 
                 const result = service.execute(
                   instance(mockedPlayerEntity),
-                  attackEvent,
+                  eventAttackInteractive,
                   instance(target)
                 );
 
@@ -271,7 +271,7 @@ describe('CombatRule', () => {
 
         service.execute(
           instance(mockedPlayerEntity),
-          attackEvent,
+          eventAttackInteractive,
           instance(mockedInteractiveEntity)
         );
 
@@ -289,7 +289,7 @@ describe('CombatRule', () => {
 
         const result = service.execute(
           instance(mockedPlayerEntity),
-          attackEvent,
+          eventAttackInteractive,
           instance(mockedInteractiveEntity)
         );
 

@@ -6,7 +6,7 @@ describe('SimpleState', () => {
   describe('execute action', () => {
     describe('when known message received', () => {
       it('return same state"', () => {
-        const result = state.onResult(pickAction, 'FAILURE');
+        const result = state.onResult(pickAction, 'FAILURE', {});
 
         expect(result).toEqual({ state });
       });

@@ -6,6 +6,7 @@ import { ActionableState } from '../states/actionable.state';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionReactive } from '../interfaces/action-reactive.interface';
 import { ClassificationLiteral } from '../literals/classification.literal';
+import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 
 export class InteractiveEntity implements ActionReactive {
   private readonly initialState: ActionableState;
@@ -39,11 +40,11 @@ export class InteractiveEntity implements ActionReactive {
   public reactTo(
     action: ActionableDefinition,
     result: ResultLiteral,
-    value?: number
+    values: ReactionValuesInterface
   ): string | undefined {
     const oldActions = this.currentState.actions;
 
-    const { state, log } = this.currentState.onResult(action, result, value);
+    const { state, log } = this.currentState.onResult(action, result, values);
 
     this.currentState = state;
 

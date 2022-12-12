@@ -9,7 +9,7 @@ import { SkillState } from './skill.state';
 describe('SkillState', () => {
   describe('when action succeeds', () => {
     it('return an empty state"', () => {
-      const { state } = state1().onResult(pickAction, 'SUCCESS');
+      const { state } = state1().onResult(pickAction, 'SUCCESS', {});
 
       expect(state).toEqual(successState);
     });
@@ -20,7 +20,7 @@ describe('SkillState', () => {
       it('return another TryState with tries 1"', () => {
         const state = state1();
 
-        const result = state.onResult(pickAction, 'FAILURE');
+        const result = state.onResult(pickAction, 'FAILURE', {});
 
         expect(result.state).toEqual(state2());
       });
@@ -30,9 +30,9 @@ describe('SkillState', () => {
       it('return an empty state"', () => {
         let state = state1();
 
-        state = state.onResult(pickAction, 'FAILURE').state;
+        state = state.onResult(pickAction, 'FAILURE', {}).state;
 
-        state = state.onResult(pickAction, 'FAILURE').state;
+        state = state.onResult(pickAction, 'FAILURE', {}).state;
 
         expect(state).toEqual(emptyState);
       });
@@ -43,7 +43,7 @@ describe('SkillState', () => {
     it('return the same state', () => {
       const state = state1();
 
-      const result = state.onResult(pickAction, 'NONE');
+      const result = state.onResult(pickAction, 'NONE', {});
 
       expect(result).toEqual({ state });
     });

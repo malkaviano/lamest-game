@@ -31,7 +31,7 @@ export class PickRule implements RuleInterface {
 
     this.inventoryService.store(actor.name, item);
 
-    const log = target.reactTo(action.actionableDefinition, 'NONE');
+    const log = target.reactTo(action.actionableDefinition, 'NONE', {});
 
     if (log) {
       logs.push(createTookLogMessage(actor.name, target.name, log));

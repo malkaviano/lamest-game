@@ -3,6 +3,7 @@ import { ArrayView } from '../views/array.view';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
 import { ResultLiteral } from '../literals/result.literal';
+import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 
 export abstract class ActionableState {
   constructor(
@@ -17,18 +18,18 @@ export abstract class ActionableState {
   public onResult(
     action: ActionableDefinition,
     result: ResultLiteral,
-    damageTaken?: number
+    values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
     if (!this.stateActions.items.some((a) => a.equals(action))) {
       throw new Error(errorMessages['WRONG-ACTION']);
     }
 
-    return this.stateResult(action, result, damageTaken);
+    return this.stateResult(action, result, values);
   }
 
   protected abstract stateResult(
     action: ActionableDefinition,
     result: ResultLiteral,
-    damageTaken?: number
+    values: ReactionValuesInterface
   ): { state: ActionableState; log?: string };
 }
