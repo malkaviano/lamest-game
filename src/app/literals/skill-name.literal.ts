@@ -1,5 +1,7 @@
 export type SkillNameLiteral =
   | 'Athleticism'
+  | 'Endure'
+  | 'Discipline'
   | 'Appraise'
   | 'Artillery (Siege)'
   | 'Artillery (War)'
@@ -34,7 +36,7 @@ export type SkillNameLiteral =
   | 'Ranged Weapon (Bow)'
   | 'Ranged Weapon (Throw)'
   | 'Performance'
-  | 'Persuade'
+  | 'Manipulation'
   | 'Pilot (Airplane)'
   | 'Pilot (Boat)'
   | 'Research'

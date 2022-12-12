@@ -20,19 +20,22 @@ export class SkillDefinition {
 }
 
 const justStr = (characteristics: CharacteristicSetDefinition) =>
-  characteristics['STR'].value;
+  characteristics.STR.value;
 
 const justAgi = (characteristics: CharacteristicSetDefinition) =>
-  characteristics['AGI'].value;
+  characteristics.AGI.value;
 
 const justInt = (characteristics: CharacteristicSetDefinition) =>
-  characteristics['INT'].value;
+  characteristics.INT.value;
 
 const justEsn = (characteristics: CharacteristicSetDefinition) =>
-  characteristics['ESN'].value;
+  characteristics.ESN.value;
 
 const justApp = (characteristics: CharacteristicSetDefinition) =>
-  characteristics['APP'].value;
+  characteristics.APP.value;
+
+const justVit = (characteristics: CharacteristicSetDefinition) =>
+  characteristics.VIT.value;
 
 const strPlusAgi = (characteristics: CharacteristicSetDefinition) =>
   justStr(characteristics) + justAgi(characteristics);
@@ -43,15 +46,39 @@ const doubleDex = (characteristics: CharacteristicSetDefinition) =>
 const intPlusEsn = (characteristics: CharacteristicSetDefinition) =>
   justInt(characteristics) + justEsn(characteristics);
 
+const intPlusApp = (characteristics: CharacteristicSetDefinition) =>
+  justInt(characteristics) + justApp(characteristics);
+
 export const skillDefinitions: {
   readonly [key in SkillNameLiteral]: SkillDefinition;
 } = {
   Athleticism: new SkillDefinition(
     'Athleticism',
-    'Swim, Jump, Climb and related',
+    'Swim, Jump, Climb and related basic actions',
     'NATURAL',
     false,
     strPlusAgi
+  ),
+  Endure: new SkillDefinition(
+    'Endure',
+    'Body resistance against poisons and other internal body attacks',
+    'NATURAL',
+    false,
+    justVit
+  ),
+  Discipline: new SkillDefinition(
+    'Discipline',
+    'Mental resistance, willpower and concentration',
+    'NATURAL',
+    false,
+    intPlusEsn
+  ),
+  Manipulation: new SkillDefinition(
+    'Manipulation',
+    'Mind and looks working together to mislead others',
+    'NATURAL',
+    false,
+    intPlusApp
   ),
   Appraise: new SkillDefinition('Appraise', '', 'NATURAL', false, justInt),
   'Artillery (Siege)': new SkillDefinition(
@@ -178,7 +205,7 @@ export const skillDefinitions: {
     justAgi
   ),
   'First Aid': new SkillDefinition('First Aid', '', 'NATURAL', false, justInt),
-  Gaming: new SkillDefinition('Gaming', '', 'NATURAL', false, intPlusEsn),
+  Gaming: new SkillDefinition('Gaming', '', 'NATURAL', false, justInt),
   'Industrial Heavy Machinery': new SkillDefinition(
     'Industrial Heavy Machinery',
     '',
@@ -264,7 +291,6 @@ export const skillDefinitions: {
     false,
     justApp
   ),
-  Persuade: new SkillDefinition('Persuade', '', 'NATURAL', false, justApp),
   'Pilot (Airplane)': new SkillDefinition(
     'Pilot (Airplane)',
     '',

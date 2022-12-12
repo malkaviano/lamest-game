@@ -48,7 +48,7 @@ describe('RandomCharacterService', () => {
       const distributedSkills = new Map<SkillNameLiteral, number>([
         ['Firearm (Handgun)', 35],
         ['First Aid', 35],
-        ['Persuade', 35],
+        ['Manipulation', 35],
         ['Detect', 35],
         ['Research', 35],
         ['Drive (Automobile)', 35],
@@ -73,7 +73,7 @@ describe('RandomCharacterService', () => {
           new Map([
             ['Firearm (Handgun)', 0],
             ['First Aid', 0],
-            ['Persuade', 0],
+            ['Manipulation', 0],
             ['Detect', 0],
             ['Research', 0],
             ['Drive (Automobile)', 0],
