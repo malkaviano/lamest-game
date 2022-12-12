@@ -23,11 +23,11 @@ import { PropsStoreInterface } from '../interfaces/item-store.interface';
 import { LockedContainerStateStoreInterface } from '../interfaces/locked-container-state-store';
 
 import sceneStore from '../../assets/scenes.json';
-import skillStateStore from '../../assets/skill-states.json';
-import discardStateStore from '../../assets/discard-states.json';
-import simpleStateStore from '../../assets/simple-states.json';
-import conversationStateStore from '../../assets/conversation-states.json';
-import destroyableStateStore from '../../assets/destroyable-states.json';
+import skillStateStore from '../../assets/states/skill-states.json';
+import discardStateStore from '../../assets/states/discard-states.json';
+import simpleStateStore from '../../assets/states/simple-states.json';
+import conversationStateStore from '../../assets/states/conversation-states.json';
+import destroyableStateStore from '../../assets/states/destroyable-states.json';
 import weaponStore from '../../assets/weapons.json';
 import consumableStore from '../../assets/consumables.json';
 import interactiveStore from '../../assets/interactives.json';
@@ -36,7 +36,7 @@ import actionableStore from '../../assets/actionables.json';
 import messageStore from '../../assets/messages.json';
 import actorStore from '../../assets/actors.json';
 import propsStore from '../../assets/props.json';
-import lockedContainerStateStore from '../../assets/locked-container-state.json';
+import lockedContainerStateStore from '../../assets/states/locked-container-state.json';
 
 @Injectable({
   providedIn: 'root',
