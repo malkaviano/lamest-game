@@ -1,1 +1,1 @@
-export type SkillCategoryLiteral = 'TRAINED' | 'COMMON';
+export type SkillCategoryLiteral = 'TRAINED' | 'NATURAL';

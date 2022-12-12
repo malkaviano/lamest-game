@@ -54,11 +54,11 @@ export const skillDefinitions: {
   Athleticism: new SkillDefinition(
     'Athleticism',
     'Swim, Jump, Climb and related',
-    'COMMON',
+    'NATURAL',
     false,
     strPlusConPlusDex
   ),
-  Appraise: new SkillDefinition('Appraise', '', 'COMMON', false, justInt),
+  Appraise: new SkillDefinition('Appraise', '', 'NATURAL', false, justInt),
   'Artillery (Siege)': new SkillDefinition(
     'Artillery (Siege)',
     '',
@@ -73,11 +73,11 @@ export const skillDefinitions: {
     true,
     justInt
   ),
-  Bargain: new SkillDefinition('Bargain', '', 'COMMON', false, justApp),
+  Bargain: new SkillDefinition('Bargain', '', 'NATURAL', false, justApp),
   Brawl: new SkillDefinition(
     'Brawl',
     'Fighting with bare hands and martial arts',
-    'COMMON',
+    'NATURAL',
     true,
     strPlusDex
   ),
@@ -120,11 +120,11 @@ export const skillDefinitions: {
   Dodge: new SkillDefinition(
     'Dodge',
     'Ability to avoid being hit',
-    'COMMON',
+    'NATURAL',
     true,
     doubleDex
   ),
-  Disguise: new SkillDefinition('Disguise', '', 'COMMON', false, justApp),
+  Disguise: new SkillDefinition('Disguise', '', 'NATURAL', false, justApp),
   'Drive (Automobile)': new SkillDefinition(
     'Drive (Automobile)',
     '',
@@ -171,7 +171,7 @@ export const skillDefinitions: {
   'Firearm (Handgun)': new SkillDefinition(
     'Firearm (Handgun)',
     '',
-    'COMMON',
+    'NATURAL',
     true,
     justDex
   ),
@@ -182,8 +182,8 @@ export const skillDefinitions: {
     true,
     justDex
   ),
-  'First Aid': new SkillDefinition('First Aid', '', 'COMMON', false, justInt),
-  Gaming: new SkillDefinition('Gaming', '', 'COMMON', false, intPlusPow),
+  'First Aid': new SkillDefinition('First Aid', '', 'NATURAL', false, justInt),
+  Gaming: new SkillDefinition('Gaming', '', 'NATURAL', false, intPlusPow),
   'Industrial Heavy Machinery': new SkillDefinition(
     'Industrial Heavy Machinery',
     '',
@@ -191,8 +191,8 @@ export const skillDefinitions: {
     false,
     justInt
   ),
-  Hide: new SkillDefinition('Hide', '', 'COMMON', false, justPow),
-  Insight: new SkillDefinition('Insight', '', 'COMMON', false, justPow),
+  Hide: new SkillDefinition('Hide', '', 'NATURAL', false, justPow),
+  Insight: new SkillDefinition('Insight', '', 'NATURAL', false, justPow),
   'Knowledge (Antique)': new SkillDefinition(
     'Knowledge (Antique)',
     '',
@@ -235,11 +235,11 @@ export const skillDefinitions: {
     false,
     justInt
   ),
-  Listen: new SkillDefinition('Listen', '', 'COMMON', false, justPow),
+  Listen: new SkillDefinition('Listen', '', 'NATURAL', false, justPow),
   'Melee Weapon (Simple)': new SkillDefinition(
     'Melee Weapon (Simple)',
     '',
-    'COMMON',
+    'NATURAL',
     true,
     justStr
   ),
@@ -253,7 +253,7 @@ export const skillDefinitions: {
   'Ranged Weapon (Throw)': new SkillDefinition(
     'Ranged Weapon (Throw)',
     '',
-    'COMMON',
+    'NATURAL',
     true,
     justDex
   ),
@@ -264,9 +264,15 @@ export const skillDefinitions: {
     true,
     justDex
   ),
-  Navigate: new SkillDefinition('Navigate', '', 'COMMON', false, justInt),
-  Performance: new SkillDefinition('Performance', '', 'COMMON', false, justApp),
-  Persuade: new SkillDefinition('Persuade', '', 'COMMON', false, justApp),
+  Navigate: new SkillDefinition('Navigate', '', 'NATURAL', false, justInt),
+  Performance: new SkillDefinition(
+    'Performance',
+    '',
+    'NATURAL',
+    false,
+    justApp
+  ),
+  Persuade: new SkillDefinition('Persuade', '', 'NATURAL', false, justApp),
   'Pilot (Airplane)': new SkillDefinition(
     'Pilot (Airplane)',
     '',
@@ -281,7 +287,7 @@ export const skillDefinitions: {
     false,
     justInt
   ),
-  Research: new SkillDefinition('Research', '', 'COMMON', false, justInt),
+  Research: new SkillDefinition('Research', '', 'NATURAL', false, justInt),
   'Ride (Horse)': new SkillDefinition(
     'Ride (Horse)',
     '',
@@ -327,18 +333,18 @@ export const skillDefinitions: {
   'Sleight of Hand': new SkillDefinition(
     'Sleight of Hand',
     '',
-    'COMMON',
+    'NATURAL',
     false,
     justDex
   ),
-  Spot: new SkillDefinition('Spot', '', 'COMMON', false, justPow),
-  Survival: new SkillDefinition('Survival', '', 'COMMON', false, justInt),
+  Spot: new SkillDefinition('Spot', '', 'NATURAL', false, justPow),
+  Survival: new SkillDefinition('Survival', '', 'NATURAL', false, justInt),
   Track: new SkillDefinition('Track', '', 'TRAINED', false, justInt),
 };
 
 export const commonSkillDefinitions: ArrayView<SkillNameLiteral> =
   new ArrayView(
     Object.entries(skillDefinitions)
-      .filter(([, value]) => value.category === 'COMMON')
+      .filter(([, value]) => value.category === 'NATURAL')
       .map((kv) => kv[0] as SkillNameLiteral)
   );
