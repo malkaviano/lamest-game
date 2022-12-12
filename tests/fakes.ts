@@ -226,7 +226,7 @@ export const eventEquipUnDodgeableAxe = new ActionableEvent(
 );
 
 export const actionUse = createActionableDefinition(
-  'USE',
+  'COMMON',
   'masterKey',
   'Master Key'
 );

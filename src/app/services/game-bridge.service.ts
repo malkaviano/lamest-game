@@ -86,6 +86,10 @@ export class GameBridgeService {
       return createActionableDefinition('EQUIP', 'equip', 'Equip');
     }
 
-    return createActionableDefinition('CONSUME', 'consume', 'Consume');
+    if (category === 'CONSUMABLE') {
+      return createActionableDefinition('CONSUME', 'consume', 'Consume');
+    }
+
+    return createActionableDefinition('COMMON', 'noop', 'NOOP');
   }
 }

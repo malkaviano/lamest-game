@@ -4,7 +4,7 @@
       equipment.item.label
     }}</span>
   </div>
-  <div class="action">
+  <div class="action" *ngIf="equipment.action.actionable !== 'COMMON'">
     <button
       mat-raised-button
       color="primary"

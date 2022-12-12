@@ -8,4 +8,4 @@ export type ActionableLiteral =
   | 'EQUIP'
   | 'UNEQUIP'
   | 'CONSUME'
-  | 'USE';
+  | 'COMMON';
