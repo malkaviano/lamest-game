@@ -22,31 +22,26 @@ export class SkillDefinition {
 const justStr = (characteristics: CharacteristicSetDefinition) =>
   characteristics['STR'].value;
 
-const justDex = (characteristics: CharacteristicSetDefinition) =>
+const justAgi = (characteristics: CharacteristicSetDefinition) =>
   characteristics['AGI'].value;
 
 const justInt = (characteristics: CharacteristicSetDefinition) =>
   characteristics['INT'].value;
 
-const justPow = (characteristics: CharacteristicSetDefinition) =>
+const justEsn = (characteristics: CharacteristicSetDefinition) =>
   characteristics['ESN'].value;
 
 const justApp = (characteristics: CharacteristicSetDefinition) =>
   characteristics['APP'].value;
 
-const strPlusConPlusDex = (characteristics: CharacteristicSetDefinition) =>
-  characteristics['STR'].value +
-  characteristics['VIT'].value +
-  characteristics['AGI'].value;
-
-const strPlusDex = (characteristics: CharacteristicSetDefinition) =>
-  justStr(characteristics) + justDex(characteristics);
+const strPlusAgi = (characteristics: CharacteristicSetDefinition) =>
+  justStr(characteristics) + justAgi(characteristics);
 
 const doubleDex = (characteristics: CharacteristicSetDefinition) =>
-  justDex(characteristics) * 2;
+  justAgi(characteristics) * 2;
 
-const intPlusPow = (characteristics: CharacteristicSetDefinition) =>
-  justInt(characteristics) + justPow(characteristics);
+const intPlusEsn = (characteristics: CharacteristicSetDefinition) =>
+  justInt(characteristics) + justEsn(characteristics);
 
 export const skillDefinitions: {
   readonly [key in SkillNameLiteral]: SkillDefinition;
@@ -56,7 +51,7 @@ export const skillDefinitions: {
     'Swim, Jump, Climb and related',
     'NATURAL',
     false,
-    strPlusConPlusDex
+    strPlusAgi
   ),
   Appraise: new SkillDefinition('Appraise', '', 'NATURAL', false, justInt),
   'Artillery (Siege)': new SkillDefinition(
@@ -79,7 +74,7 @@ export const skillDefinitions: {
     'Fighting with bare hands and martial arts',
     'NATURAL',
     true,
-    strPlusDex
+    justStr
   ),
   'Craft (Blacksmithing)': new SkillDefinition(
     'Craft (Blacksmithing)',
@@ -100,7 +95,7 @@ export const skillDefinitions: {
     '',
     'TRAINED',
     false,
-    justDex
+    justAgi
   ),
   'Craft (Woodworking)': new SkillDefinition(
     'Craft (Woodworking)',
@@ -114,7 +109,7 @@ export const skillDefinitions: {
     '',
     'TRAINED',
     false,
-    justDex
+    justAgi
   ),
   Demolition: new SkillDefinition('Demolition', '', 'TRAINED', false, justInt),
   Dodge: new SkillDefinition(
@@ -173,17 +168,17 @@ export const skillDefinitions: {
     '',
     'NATURAL',
     true,
-    justDex
+    justAgi
   ),
   'Firearm (Shooter)': new SkillDefinition(
     'Firearm (Shooter)',
     '',
     'TRAINED',
     true,
-    justDex
+    justAgi
   ),
   'First Aid': new SkillDefinition('First Aid', '', 'NATURAL', false, justInt),
-  Gaming: new SkillDefinition('Gaming', '', 'NATURAL', false, intPlusPow),
+  Gaming: new SkillDefinition('Gaming', '', 'NATURAL', false, intPlusEsn),
   'Industrial Heavy Machinery': new SkillDefinition(
     'Industrial Heavy Machinery',
     '',
@@ -191,8 +186,7 @@ export const skillDefinitions: {
     false,
     justInt
   ),
-  Hide: new SkillDefinition('Hide', '', 'NATURAL', false, justPow),
-  Insight: new SkillDefinition('Insight', '', 'NATURAL', false, justPow),
+  Hide: new SkillDefinition('Hide', '', 'NATURAL', false, justEsn),
   'Knowledge (Antique)': new SkillDefinition(
     'Knowledge (Antique)',
     '',
@@ -235,7 +229,6 @@ export const skillDefinitions: {
     false,
     justInt
   ),
-  Listen: new SkillDefinition('Listen', '', 'NATURAL', false, justPow),
   'Melee Weapon (Simple)': new SkillDefinition(
     'Melee Weapon (Simple)',
     '',
@@ -255,16 +248,15 @@ export const skillDefinitions: {
     '',
     'NATURAL',
     true,
-    justDex
+    justAgi
   ),
   'Ranged Weapon (Bow)': new SkillDefinition(
     'Ranged Weapon (Bow)',
     '',
     'TRAINED',
     true,
-    justDex
+    justAgi
   ),
-  Navigate: new SkillDefinition('Navigate', '', 'NATURAL', false, justInt),
   Performance: new SkillDefinition(
     'Performance',
     '',
@@ -293,7 +285,7 @@ export const skillDefinitions: {
     '',
     'TRAINED',
     false,
-    justDex
+    justAgi
   ),
   'Science(Botany)': new SkillDefinition(
     'Science(Botany)',
@@ -335,11 +327,11 @@ export const skillDefinitions: {
     '',
     'NATURAL',
     false,
-    justDex
+    justAgi
   ),
-  Spot: new SkillDefinition('Spot', '', 'NATURAL', false, justPow),
+  Detect: new SkillDefinition('Detect', '', 'NATURAL', false, justEsn),
   Survival: new SkillDefinition('Survival', '', 'NATURAL', false, justInt),
-  Track: new SkillDefinition('Track', '', 'TRAINED', false, justInt),
+  Hunting: new SkillDefinition('Hunting', '', 'TRAINED', false, justInt),
 };
 
 export const commonSkillDefinitions: ArrayView<SkillNameLiteral> =

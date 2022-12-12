@@ -25,7 +25,7 @@ describe('ActorBehavior', () => {
       const expectedSkills = {
         'First Aid': 57,
         'Melee Weapon (Simple)': 53,
-        Brawl: 64,
+        Brawl: 53,
       };
 
       expect(fakeBehavior().skills).toEqual(expectedSkills);

@@ -31,16 +31,12 @@ describe('SkillService', () => {
   it('should create new profession skill set', () => {
     const expectedNewSkillSet = new Map<SkillNameLiteral, number>([
       ['First Aid', 0],
-      ['Insight', 0],
       ['Research', 0],
-      ['Listen', 0],
     ]);
 
     const skillNames: ArrayView<SkillNameLiteral> = new ArrayView([
       'First Aid',
-      'Insight',
       'Research',
-      'Listen',
     ]);
 
     const result = service.newSkillSetFor(skillNames);
@@ -51,16 +47,14 @@ describe('SkillService', () => {
   it('should distribute 20 points over skills', () => {
     const expectedSkills = new Map<SkillNameLiteral, number>([
       ['First Aid', 10],
-      ['Insight', 5],
-      ['Research', 0],
-      ['Listen', 5],
+      ['Research', 5],
+      ['Athleticism', 5],
     ]);
 
     const selectedSkills = new Map<SkillNameLiteral, number>([
       ['First Aid', 0],
-      ['Insight', 0],
       ['Research', 0],
-      ['Listen', 0],
+      ['Athleticism', 0],
     ]);
 
     when(mockedRandomIntService.getRandomInterval(0, 1))
