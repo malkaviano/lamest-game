@@ -89,11 +89,21 @@ export class GameLoopService {
         const action = actor.action(this.sceneActorsInfo);
 
         if (actor.situation === 'ALIVE' && action) {
+          const target = this.reactives(action.eventId);
+
           const resultLogs = this.dispatcher[
             action.actionableDefinition.actionable
-          ].execute(actor, action, this.reactives(action.eventId));
+          ].execute(actor, action, target);
 
           this.logging(resultLogs.logs);
+
+          if (
+            target &&
+            target instanceof ActorEntity &&
+            target.situation === 'DEAD'
+          ) {
+            this.logging([createActorIsDeadMessage(target.name)]);
+          }
         }
       });
     }
@@ -101,14 +111,6 @@ export class GameLoopService {
 
   private logging(logs: LogMessageDefinition[]): void {
     logs.forEach((log) => this.loggingService.log(log));
-
-    this.sceneActorsInfo.items
-      .filter((a) => a.situation === 'DEAD')
-      .forEach((a) => {
-        const name = this.reactives(a.id).name;
-
-        this.loggingService.log(createActorIsDeadMessage(name));
-      });
   }
 
   private isPlayerAlive(): boolean {

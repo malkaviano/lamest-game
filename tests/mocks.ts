@@ -161,7 +161,11 @@ export const setupMocks = () => {
 
   const instanceActorEntity = instance(mockedActorEntity);
 
+  const instancePlayerEntity = instance(mockedPlayerEntity);
+
   Object.setPrototypeOf(instanceActorEntity, ActorEntity.prototype);
+
+  Object.setPrototypeOf(instancePlayerEntity, ActorEntity.prototype);
 
   when(mockedNarrativeService.interatives).thenReturn({
     id1: instance(mockedInteractiveEntity),
