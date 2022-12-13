@@ -1,17 +1,19 @@
 <div class="card-box" matTooltip="{{ equipped.description }}">
-  <div class="label">
-    <span attr.data-testid="equip-label-{{ equipped.name }}">{{
-      equipped.label
-    }}</span>
-  </div>
-  <div class="action" *ngIf="equipped.name !== 'unarmed'">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="onActionSelected(equipped)"
-      attr.data-testid="unequip-action-{{ equipped.name }}"
-    >
-      Unequip
-    </button>
+  <div>
+    <div class="label">
+      <span attr.data-testid="equip-label-{{ equipped.name }}">{{
+        equipped.label
+      }}</span>
+    </div>
+    <div class="action" *ngIf="equipped.name !== 'unarmed'">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onActionSelected(equipped)"
+        attr.data-testid="unequip-action-{{ equipped.name }}"
+      >
+        Unequip
+      </button>
+    </div>
   </div>
 </div>
