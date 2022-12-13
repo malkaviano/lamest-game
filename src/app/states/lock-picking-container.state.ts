@@ -88,13 +88,4 @@ export class LockPickingContainerState extends LockedContainerState {
 
     return super.stateResult(action, result, values);
   }
-
-  private removeLockPickingActions(): ArrayView<ActionableDefinition> {
-    const actions = this.stateActions.items.filter(
-      (i) =>
-        !directionNamesDefinition.items.includes(i.name as DirectionLiteral)
-    );
-
-    return new ArrayView(actions);
-  }
 }

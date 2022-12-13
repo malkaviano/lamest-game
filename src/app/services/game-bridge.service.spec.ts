@@ -29,6 +29,8 @@ import {
   consumableFirstAid,
   unDodgeableAxe,
   eventEquipUnDodgeableAxe,
+  masterKey,
+  actionNoop,
 } from '../../../tests/fakes';
 
 describe('GameBridgeService', () => {
@@ -89,6 +91,11 @@ describe('GameBridgeService', () => {
         invEvent: new InventoryEvent('EQUIP', 'player', unDodgeableAxe),
         expected: new ActionableItemDefinition(unDodgeableAxe, actionEquip),
         item: unDodgeableAxe,
+      },
+      {
+        invEvent: new InventoryEvent('STORE', 'player', masterKey),
+        expected: new ActionableItemDefinition(masterKey, actionNoop),
+        item: masterKey,
       },
     ].forEach(({ invEvent, expected, item }) => {
       it(`should emit event ${invEvent.eventName}`, (done) => {

@@ -307,3 +307,5 @@ export const eventSkillBrawl = new ActionableEvent(
   actionSkillBrawl,
   interactiveInfo.id
 );
+
+export const actionNoop = createActionableDefinition('NOOP', 'noop', 'NOOP');
