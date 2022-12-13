@@ -3,5 +3,9 @@ export interface LockedContainerStateStoreInterface {
     readonly id: string;
     readonly actionables: string[];
     readonly openedState: string;
+    readonly lockPicking?: {
+      complexity: number;
+      maximumTries: number;
+    };
   }[];
 }

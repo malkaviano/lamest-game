@@ -9,7 +9,7 @@ import { ActionableState } from './actionable.state';
 export class LockedContainerState extends ActionableState {
   constructor(
     stateAction: ArrayView<ActionableDefinition>,
-    private readonly openedState: LazyHelper<ActionableState>
+    protected readonly openedState: LazyHelper<ActionableState>
   ) {
     super('LockedContainerState', stateAction);
   }

@@ -15,6 +15,10 @@
     {
       "id": "lockedChestLoot",
       "actionables": ["halberd"]
+    },
+    {
+      "id": "lockPickingChestLoot",
+      "actionables": []
     }
   ]
 }

@@ -11,6 +11,7 @@ import { races } from '../literals/race.literal';
 import { weights } from '../literals/weight.literal';
 import { GeneratorService } from './generator.service';
 import { RandomIntService } from './random-int.service';
+import { DirectionLiteral } from '../literals/direction.literal';
 
 import { mockedRandomIntService, setupMocks } from '../../../tests/mocks';
 
@@ -72,6 +73,22 @@ describe('GeneratorService', () => {
       expect(identity.height).toEqual(expectedIdentity.height);
       expect(identity.weight).toEqual(expectedIdentity.weight);
       expect(identity.name).not.toBeNull();
+    });
+  });
+
+  describe('generating lock picking sequence', () => {
+    it('return sequence', () => {
+      when(mockedRandomIntService.getRandomInterval(0, 1))
+        .thenReturn(0)
+        .thenReturn(0)
+        .thenReturn(1)
+        .thenReturn(1);
+
+      const expected: DirectionLiteral[] = ['LEFT', 'DOWN', 'RIGHT', 'UP'];
+
+      const result = service.lockPickSequence(4);
+
+      expect(result).toEqual(expected);
     });
   });
 });

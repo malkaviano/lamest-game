@@ -109,3 +109,15 @@ export const createNotFoundLogMessage = (actor: string, item: string) =>
 
 export const createOpenedUsingMessage = (item: string) =>
   `was opened using ${item}`;
+
+export const createLockpickMovedMessage = (direction: string) =>
+  `lockpick moved ${direction}`;
+
+export const createLockpickStuckMessage = (direction: string) =>
+  `lockpick got stuck moving ${direction}`;
+
+export const createLockpickOpenedMessage = (direction: string) =>
+  `${createLockpickMovedMessage(direction)} and opened the container`;
+
+export const createLockpickJammedMessage = (direction: string) =>
+  `${createLockpickStuckMessage(direction)} and cannot be lockpicked anymore`;

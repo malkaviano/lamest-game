@@ -4,6 +4,15 @@
       "id": "lockedChest",
       "actionables": ["useMasterKey"],
       "openedState": "lockedChestLoot"
+    },
+    {
+      "id": "lockPickingChest",
+      "actionables": ["useMasterKey"],
+      "openedState": "emptyState",
+      "lockPicking": {
+        "complexity": 3,
+        "maximumTries": 4
+      }
     }
   ]
 }

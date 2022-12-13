@@ -15,6 +15,9 @@ import { ArrayView } from '../views/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResourcesStore } from './resources.store';
 import { LockedContainerState } from '../states/locked-container';
+import { LockPickingContainerState } from '../states/lock-picking-container.state';
+import { GeneratorService } from '../services/generator.service';
+import { allDirectionsDefinition } from '../definitions/directions.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +29,8 @@ export class StatesStore {
     private readonly converterHelper: ConverterHelper,
     messageStore: MessageStore,
     actionableStore: ActionableStore,
-    resourcesStore: ResourcesStore
+    resourcesStore: ResourcesStore,
+    generatorService: GeneratorService
   ) {
     this.store = new Map<string, ActionableState>();
 
@@ -95,10 +99,22 @@ export class StatesStore {
     resourcesStore.lockedContainerStateStore.states.forEach((state) => {
       const actionables = this.getActionables(actionableStore, state);
 
-      this.store.set(
-        state.id,
-        new LockedContainerState(actionables, this.lazyState(state.openedState))
-      );
+      const locked = state.lockPicking
+        ? new LockPickingContainerState(
+            allDirectionsDefinition,
+            actionables,
+            this.lazyState(state.openedState),
+            new ArrayView(
+              generatorService.lockPickSequence(state.lockPicking.complexity)
+            ),
+            state.lockPicking.maximumTries
+          )
+        : new LockedContainerState(
+            actionables,
+            this.lazyState(state.openedState)
+          );
+
+      this.store.set(state.id, locked);
     });
   }
 

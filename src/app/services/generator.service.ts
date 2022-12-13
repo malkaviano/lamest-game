@@ -11,6 +11,7 @@ import { RaceLiteral, races } from '../literals/race.literal';
 import { WeightLiteral, weights } from '../literals/weight.literal';
 import { RandomIntService } from './random-int.service';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
+import { DirectionLiteral } from '../literals/direction.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,23 @@ export class GeneratorService {
       this.height(),
       this.weight()
     );
+  }
+
+  public lockPickSequence(complexity: number): DirectionLiteral[] {
+    const odd: DirectionLiteral[] = ['LEFT', 'RIGHT'];
+    const even: DirectionLiteral[] = ['DOWN', 'UP'];
+
+    const sequence: DirectionLiteral[] = [];
+
+    for (let index = 1; index <= complexity; index++) {
+      const roll = this.randomIntService.getRandomInterval(0, 1);
+
+      const result = index % 2 ? odd[roll] : even[roll];
+
+      sequence.push(result);
+    }
+
+    return sequence;
   }
 
   private height(): HeightLiteral {

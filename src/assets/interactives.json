@@ -55,6 +55,13 @@
       "description": "Needs key to open",
       "state": "lockedChest",
       "resettable": false
+    },
+    {
+      "id": "lockPickingChest",
+      "name": "LockPicking Chest",
+      "description": "Try to lock pick",
+      "state": "lockPickingChest",
+      "resettable": false
     }
   ],
   "inventoryItems": [
