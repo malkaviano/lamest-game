@@ -11,9 +11,7 @@ import { ConverterHelper } from '../helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 import { UsableItemDefinition } from '../definitions/usable-item.definition';
 import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
-import { MagazineBehavior } from '../behaviors/magazine.behavior';
-import { FirearmValueObject } from '../value-objects/weapons/firearm.vobject';
-import { ManualWeaponValueObject } from '../value-objects/weapons/manual-weapon.vobject';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -28,38 +26,19 @@ export class ItemStore {
     this.store = new Map<string, GameItemDefinition>();
 
     resourcesStore.weaponStore.weapons.forEach((item) => {
-      if (item.munition) {
-        const behavior = new MagazineBehavior(item.munition.caliber);
-
-        this.store.set(
-          item.name,
-          new FirearmValueObject(
-            new ItemIdentityDefinition(item.name, item.label, item.description),
-            item.skillName,
-            new DamageDefinition(
-              createDice(item.damage?.dice),
-              item.damage.fixed
-            ),
-            item.dodgeable,
-            item.usability,
-            behavior
-          )
-        );
-      } else {
-        this.store.set(
-          item.name,
-          new ManualWeaponValueObject(
-            new ItemIdentityDefinition(item.name, item.label, item.description),
-            item.skillName,
-            new DamageDefinition(
-              createDice(item.damage?.dice),
-              item.damage.fixed
-            ),
-            item.dodgeable,
-            item.usability
-          )
-        );
-      }
+      this.store.set(
+        item.name,
+        new WeaponDefinition(
+          new ItemIdentityDefinition(item.name, item.label, item.description),
+          item.skillName,
+          new DamageDefinition(
+            createDice(item.damage?.dice),
+            item.damage.fixed
+          ),
+          item.dodgeable,
+          item.usability
+        )
+      );
     });
 
     resourcesStore.consumableStore.consumables.forEach((item) => {

@@ -8,7 +8,7 @@ import { first } from 'rxjs';
 import { MaterialModule } from '../../../material/material.module';
 import { ActionableEvent } from '../../events/actionable.event';
 import { EquippedWidgetComponent } from './equipped.widget.component';
-import { unarmedWeapon } from '../../value-objects/weapons/manual-weapon.vobject';
+import { unarmedWeapon } from '../../definitions/weapon.definition';
 
 import { actionUnEquip, simpleSword } from '../../../../tests/fakes';
 

@@ -11,7 +11,7 @@ import { SimpleState } from '../../states/simple.state';
 import { GameLayoutComponent } from './game.layout.component';
 import { ActionableItemView } from '../../views/actionable-item.view';
 import { ActionableEvent } from '../../events/actionable.event';
-import { unarmedWeapon } from '../../value-objects/weapons/manual-weapon.vobject';
+import { unarmedWeapon } from '../../definitions/weapon.definition';
 
 import {
   actionAsk,

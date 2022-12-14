@@ -1,8 +1,10 @@
 import { EquipmentBehavior } from './equipment.behavior';
+import {
+  unarmedWeapon,
+  WeaponDefinition,
+} from '../definitions/weapon.definition';
 
 import { molotov, simpleSword } from '../../../tests/fakes';
-import { unarmedWeapon } from '../value-objects/weapons/manual-weapon.vobject';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 
 describe('EquipmentBehavior', () => {
   describe('weaponEquipped', () => {

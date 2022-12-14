@@ -28,7 +28,7 @@ import {
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
-import { unarmedWeapon } from '../value-objects/weapons/manual-weapon.vobject';
+import { unarmedWeapon } from '../definitions/weapon.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 
 describe('ActorEntity', () => {

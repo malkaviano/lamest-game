@@ -22,15 +22,13 @@ import { UsableItemDefinition } from '../src/app/definitions/usable-item.definit
 import { ItemIdentityDefinition } from '../src/app/definitions/item-identity.definition';
 import { ActionableItemView } from '../src/app/views/actionable-item.view';
 import { GameItemDefinition } from '../src/app/definitions/game-item.definition';
-import { MagazineDefinition } from '../src/app/definitions/magazine.definition';
-import { WeaponCaliberLiteral } from '../src/app/literals/weapon-caliber.literal';
-import { ManualWeaponValueObject } from '../src/app/value-objects/weapons/manual-weapon.vobject';
+import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
 
 export const playerInfo = { id: 'player', name: 'player' };
 
 export const interactiveInfo = { id: 'id1', name: 'test' };
 
-export const simpleSword = new ManualWeaponValueObject(
+export const simpleSword = new WeaponDefinition(
   new ItemIdentityDefinition('sword', 'Sword', 'some sword'),
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice(), 2),
@@ -38,7 +36,7 @@ export const simpleSword = new ManualWeaponValueObject(
   'PERMANENT'
 );
 
-export const greatSword = new ManualWeaponValueObject(
+export const greatSword = new WeaponDefinition(
   new ItemIdentityDefinition('greatSword', 'Great Sword', 'Some Great Sword'),
   'Melee Weapon (Great)',
   new DamageDefinition(createDice(), 6),
@@ -46,7 +44,7 @@ export const greatSword = new ManualWeaponValueObject(
   'PERMANENT'
 );
 
-export const unDodgeableAxe = new ManualWeaponValueObject(
+export const unDodgeableAxe = new WeaponDefinition(
   new ItemIdentityDefinition('axe', 'Axe', 'UnDodgeable Axe'),
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice(), 2),
@@ -54,7 +52,7 @@ export const unDodgeableAxe = new ManualWeaponValueObject(
   'PERMANENT'
 );
 
-export const molotov = new ManualWeaponValueObject(
+export const molotov = new WeaponDefinition(
   new ItemIdentityDefinition('molotov', 'Molotov', 'Homemade Bomb'),
   'Ranged Weapon (Throw)',
   new DamageDefinition(createDice(), 2),
@@ -316,8 +314,3 @@ export const actionableItemView = (
 
 export const actionableEvent = (action: ActionableDefinition, id: string) =>
   new ActionableEvent(action, id);
-
-export const magazineDefinition = (
-  caliber: WeaponCaliberLiteral,
-  quantity: number
-) => new MagazineDefinition(caliber, quantity);

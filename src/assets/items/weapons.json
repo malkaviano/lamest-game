@@ -84,11 +84,7 @@
         "fixed": 2
       },
       "dodgeable": false,
-      "usability": "PERMANENT",
-      "munition": {
-        "caliber": "9MM",
-        "reload": "magazine"
-      }
+      "usability": "PERMANENT"
     }
   ]
 }

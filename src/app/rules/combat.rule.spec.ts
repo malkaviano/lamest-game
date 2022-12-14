@@ -13,7 +13,7 @@ import {
 } from '../definitions/log-message.definition';
 import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
-import { unarmedWeapon } from '../value-objects/weapons/manual-weapon.vobject';
+import { unarmedWeapon } from '../definitions/weapon.definition';
 
 import {
   mockedActorEntity,
