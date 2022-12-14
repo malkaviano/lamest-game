@@ -1,0 +1,125 @@
+{
+  "professions": [
+    {
+      "name": "doctor",
+      "skills": [
+        "First Aid",
+        "Science(Chemistry)",
+        "Manipulation",
+        "Research",
+        "Detect",
+        "Science(Botany)",
+        "Sleight of Hand",
+        "Knowledge (Linguistics)",
+        "Craft (Sewing)",
+        "Etiquette"
+      ]
+    },
+    {
+      "name": "policeDetective",
+      "skills": [
+        "Firearm (Handgun)",
+        "First Aid",
+        "Detect",
+        "Manipulation",
+        "Etiquette",
+        "Research",
+        "Drive (Automobile)",
+        "Firearm (Shooter)",
+        "Brawl",
+        "Dodge"
+      ]
+    },
+    {
+      "name": "privateInvestigator",
+      "skills": [
+        "Firearm (Handgun)",
+        "First Aid",
+        "Detect",
+        "Manipulation",
+        "Streetwise",
+        "Research",
+        "Drive (Automobile)",
+        "Hide",
+        "Engineering (Computer)",
+        "Disguise"
+      ]
+    },
+
+    {
+      "name": "hunter",
+      "skills": [
+        "Craft (Cooking)",
+        "Athleticism",
+        "Hide",
+        "Detect",
+        "Ranged Weapon (Throw)",
+        "Craft (Leatherworking)",
+        "Hunting",
+        "Survival",
+        "Firearm (Shooter)",
+        "Melee Weapon (Simple)"
+      ]
+    },
+    {
+      "name": "mercenary",
+      "skills": [
+        "Brawl",
+        "Athleticism",
+        "Dodge",
+        "First Aid",
+        "Drive (Heavy Vehicles)",
+        "Firearm (Shooter)",
+        "Demolition",
+        "Engineering (Electrical)",
+        "Artillery (War)",
+        "Survival"
+      ]
+    },
+    {
+      "name": "fisherman",
+      "skills": [
+        "Athleticism",
+        "Craft (Cooking)",
+        "Dodge",
+        "Ranged Weapon (Throw)",
+        "Pilot (Boat)",
+        "Detect",
+        "Hide",
+        "Engineering (Mechanical)",
+        "Melee Weapon (Simple)",
+        "Survival"
+      ]
+    },
+    {
+      "name": "vagabond",
+      "skills": [
+        "Firearm (Handgun)",
+        "Dodge",
+        "Melee Weapon (Simple)",
+        "Detect",
+        "Streetwise",
+        "Performance",
+        "Manipulation",
+        "Sleight of Hand",
+        "Hide",
+        "Ranged Weapon (Throw)"
+      ]
+    },
+    {
+      "name": "scholar",
+      "skills": [
+        "First Aid",
+        "Detect",
+        "Research",
+        "Appraise",
+        "Manipulation",
+        "Etiquette",
+        "Knowledge (History)",
+        "Knowledge (Occult)",
+        "Knowledge (Linguistics)",
+        "Knowledge (Religion)"
+      ]
+    }
+  ]
+}
