@@ -12,6 +12,10 @@ import { ActorEntity } from './actor.entity';
 import { emptyState } from '../states/empty.state';
 import { ArrayView } from '../views/array.view';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
+import {
+  unarmedWeapon,
+  WeaponDefinition,
+} from '../definitions/weapon.definition';
 
 import {
   eventAttackPlayer,
@@ -28,8 +32,6 @@ import {
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
-import { unarmedWeapon } from '../definitions/weapon.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 
 describe('ActorEntity', () => {
   beforeEach(() => {
