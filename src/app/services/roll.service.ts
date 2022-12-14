@@ -4,7 +4,6 @@ import { Dice } from '../definitions/dice.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { DiceLiteral } from '../literals/dice.literal';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RandomIntService } from './random-int.service';
 
 @Injectable({
@@ -33,7 +32,7 @@ export class RollService {
 
   public actorSkillCheck(
     actor: ActorInterface,
-    skillName: SkillNameLiteral
+    skillName: string
   ): RollDefinition {
     const skillValue = actor.skills[skillName] ?? 0;
 

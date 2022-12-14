@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { ArrayView } from '../views/array.view';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RandomIntService } from './random-int.service';
 
 @Injectable({
@@ -10,10 +9,8 @@ import { RandomIntService } from './random-int.service';
 export class SkillService {
   constructor(private readonly randomIntService: RandomIntService) {}
 
-  public newSkillSetFor(
-    skillNames: ArrayView<SkillNameLiteral>
-  ): Map<SkillNameLiteral, number> {
-    const skills = new Map<SkillNameLiteral, number>();
+  public newSkillSetFor(skillNames: ArrayView<string>): Map<string, number> {
+    const skills = new Map<string, number>();
 
     return skillNames.items.reduce((acc, skillName) => {
       acc.set(skillName, 0);
@@ -23,9 +20,9 @@ export class SkillService {
   }
 
   public distribute(
-    characterSkills: Map<SkillNameLiteral, number>,
+    characterSkills: Map<string, number>,
     points: number
-  ): Map<SkillNameLiteral, number> {
+  ): Map<string, number> {
     let spent = 0;
 
     while (spent < points) {

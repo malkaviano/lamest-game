@@ -1,5 +1,4 @@
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 export interface ActorStoreInterface {
   readonly actors: {
@@ -8,7 +7,7 @@ export interface ActorStoreInterface {
     readonly description: string;
     readonly resettable: boolean;
     readonly characteristics: CharacteristicSetDefinition;
-    readonly skills: Map<SkillNameLiteral, number>;
+    readonly skills: Map<string, number>;
     readonly equippedWeapon: string;
     readonly killedState: string;
     readonly behaviorState: string;

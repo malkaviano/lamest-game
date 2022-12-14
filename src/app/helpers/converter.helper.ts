@@ -15,7 +15,7 @@ import { KeyValueDescriptionDefinition } from '../definitions/key-value-descript
 import { skillDefinitions } from '../definitions/skill.definition';
 import { PlayerEntity } from '../entities/player.entity';
 import { IdentityLiteral } from '../literals/identity.literal';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
+
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 
 @Injectable({
@@ -65,7 +65,7 @@ export class ConverterHelper {
           return new KeyValueDescriptionDefinition(
             key,
             value.toString(),
-            skillDefinitions[key as SkillNameLiteral].description
+            skillDefinitions[key].description
           );
         })
         .sort((a, b) => (a.key < b.key ? -1 : 1))

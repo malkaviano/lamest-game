@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { instance, when } from 'ts-mockito';
 
 import { ArrayView } from '../views/array.view';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
+
 import { RandomIntService } from './random-int.service';
 import { SkillService } from './skill.service';
 
@@ -29,12 +29,12 @@ describe('SkillService', () => {
   });
 
   it('should create new profession skill set', () => {
-    const expectedNewSkillSet = new Map<SkillNameLiteral, number>([
+    const expectedNewSkillSet = new Map<string, number>([
       ['First Aid', 0],
       ['Research', 0],
     ]);
 
-    const skillNames: ArrayView<SkillNameLiteral> = new ArrayView([
+    const skillNames: ArrayView<string> = new ArrayView([
       'First Aid',
       'Research',
     ]);
@@ -45,13 +45,13 @@ describe('SkillService', () => {
   });
 
   it('should distribute 20 points over skills', () => {
-    const expectedSkills = new Map<SkillNameLiteral, number>([
+    const expectedSkills = new Map<string, number>([
       ['First Aid', 10],
       ['Research', 5],
       ['Athleticism', 5],
     ]);
 
-    const selectedSkills = new Map<SkillNameLiteral, number>([
+    const selectedSkills = new Map<string, number>([
       ['First Aid', 0],
       ['Research', 0],
       ['Athleticism', 0],

@@ -5,7 +5,7 @@ import { anyNumber, anything, instance, when } from 'ts-mockito';
 import { RandomCharacterService } from './random-character.service';
 import { GeneratorService } from './generator.service';
 import { PlayerEntity } from '../entities/player.entity';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
+
 import { SkillService } from './skill.service';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
@@ -56,7 +56,7 @@ describe('RandomCharacterService', () => {
 
   describe('character', () => {
     it('return new character', () => {
-      const distributedSkills = new Map<SkillNameLiteral, number>([
+      const distributedSkills = new Map<string, number>([
         ['Firearm (Handgun)', 35],
         ['First Aid', 35],
         ['Manipulation', 35],

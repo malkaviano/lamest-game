@@ -6,7 +6,6 @@ import { createDice } from '../definitions/dice.definition';
 import { GameItemDefinition } from '../definitions/game-item.definition';
 import { SkillItemDefinition } from '../definitions/skill-item.definition';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 import { UsableItemDefinition } from '../definitions/usable-item.definition';
@@ -70,7 +69,7 @@ export class ItemStore {
     return this.items[itemName].identity.label;
   }
 
-  public itemSkill(itemName: string): SkillNameLiteral | null {
+  public itemSkill(itemName: string): string | null {
     const item = this.items[itemName];
 
     return (item as SkillItemDefinition).skillName ?? null;

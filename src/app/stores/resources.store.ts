@@ -7,7 +7,6 @@ import { SimpleStateStoreInterface } from '../interfaces/simple-state-store.inte
 import { ConversationStateStoreInterface } from '../interfaces/conversation-state-store.interface';
 import { DestroyableStateStoreInterface } from '../interfaces/destroyable-state-store.interface';
 import { WeaponStoreInterface } from '../interfaces/weapon-store.interface';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { createDice } from '../definitions/dice.definition';
 import { ConsumableStoreInterface } from '../interfaces/consumable-store.interface';
 import { InteractiveStoreInterface } from '../interfaces/interactive-store.interface';
@@ -94,7 +93,7 @@ export class ResourcesStore {
         name: w.name,
         label: w.label,
         description: w.description,
-        skillName: w.skillName as SkillNameLiteral,
+        skillName: w.skillName,
         damage: {
           dice: createDice(w.damage.dice),
           fixed: w.damage.fixed,
@@ -106,17 +105,7 @@ export class ResourcesStore {
 
     this.weaponStore = { weapons };
 
-    const consumables = consumableStore.consumables.map((c) => {
-      return {
-        name: c.name,
-        label: c.label,
-        description: c.description,
-        hp: c.hp,
-        skillName: c.skillName as SkillNameLiteral,
-      };
-    });
-
-    this.consumableStore = { consumables };
+    this.consumableStore = consumableStore;
 
     this.interactiveStore = interactiveStore;
 
@@ -145,10 +134,10 @@ export class ResourcesStore {
         APP: new CharacteristicDefinition('APP', a.characteristics.APP),
       };
 
-      const skills = new Map<SkillNameLiteral, number>();
+      const skills = new Map<string, number>();
 
       a.skills.forEach((s) => {
-        skills.set(s.name as SkillNameLiteral, s.value);
+        skills.set(s.name, s.value);
       });
 
       return {
@@ -170,13 +159,6 @@ export class ResourcesStore {
 
     this.lockedContainerStateStore = lockedContainerStateStore;
 
-    const professions = professionStore.professions.map((p) => {
-      return {
-        name: p.name,
-        skills: p.skills.map((s) => s as SkillNameLiteral),
-      };
-    });
-
-    this.professionStore = { professions };
+    this.professionStore = professionStore;
   }
 }

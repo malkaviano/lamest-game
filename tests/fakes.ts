@@ -13,7 +13,6 @@ import { CharacterIdentityDefinition } from '../src/app/definitions/character-id
 import { ActionableEvent } from '../src/app/events/actionable.event';
 import { KeyValueInterface } from '../src/app/interfaces/key-value.interface';
 import { SceneActorsInfoInterface } from '../src/app/interfaces/scene-actors.interface';
-import { SkillNameLiteral } from '../src/app/literals/skill-name.literal';
 import { ArrayView } from '../src/app/views/array.view';
 import { CharacterValuesDefinition } from '../src/app/definitions/character-values.definition';
 import { KeyValueDescriptionDefinition } from '../src/app/definitions/key-value-description.definition';
@@ -125,10 +124,7 @@ export const fakeSkills: KeyValueInterface<number> = {
   Brawl: 45,
 };
 
-export const fakeMapSkills: Map<SkillNameLiteral, number> = new Map<
-  SkillNameLiteral,
-  number
->([
+export const fakeMapSkills: Map<string, number> = new Map<string, number>([
   ['First Aid', 45],
   ['Melee Weapon (Simple)', 45],
   ['Brawl', 45],

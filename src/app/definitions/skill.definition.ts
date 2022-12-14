@@ -1,11 +1,11 @@
 import { CharacteristicSetDefinition } from './characteristic-set.definition';
 import { SkillCategoryLiteral } from '../literals/skill-category.literal';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
+
 import { ArrayView } from '../views/array.view';
 
 export class SkillDefinition {
   constructor(
-    public readonly name: SkillNameLiteral,
+    public readonly name: string,
     public readonly description: string,
     public readonly category: SkillCategoryLiteral,
     public readonly combat: boolean,
@@ -50,7 +50,7 @@ const intPlusApp = (characteristics: CharacteristicSetDefinition) =>
   justInt(characteristics) + justApp(characteristics);
 
 export const skillDefinitions: {
-  readonly [key in SkillNameLiteral]: SkillDefinition;
+  readonly [key in string]: SkillDefinition;
 } = {
   Athleticism: new SkillDefinition(
     'Athleticism',
@@ -365,9 +365,8 @@ export const skillDefinitions: {
   ),
 };
 
-export const commonSkillDefinitions: ArrayView<SkillNameLiteral> =
-  new ArrayView(
-    Object.entries(skillDefinitions)
-      .filter(([, value]) => value.category === 'NATURAL')
-      .map((kv) => kv[0] as SkillNameLiteral)
-  );
+export const commonSkillDefinitions: ArrayView<string> = new ArrayView(
+  Object.entries(skillDefinitions)
+    .filter(([, value]) => value.category === 'NATURAL')
+    .map((kv) => kv[0])
+);

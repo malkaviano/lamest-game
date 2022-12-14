@@ -1,6 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
+import {
+  mockedConverterHelper,
+  mockedResourcesStore,
+} from '../../../tests/mocks';
 
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ActionableStore } from './actionable.store';
@@ -34,7 +38,3 @@ describe('ActionableStore', () => {
     expect(service).toBeTruthy();
   });
 });
-
-const mockedConverterHelper = mock(ConverterHelper);
-
-const mockedResourcesStore = mock(ResourcesStore);

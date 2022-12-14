@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { GeneratorService } from './generator.service';
 import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { SkillService } from './skill.service';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { commonSkillDefinitions } from '../definitions/skill.definition';
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
@@ -46,7 +45,7 @@ export class RandomCharacterService {
   private skills(
     profession: string,
     intelligence: number
-  ): Map<SkillNameLiteral, number> {
+  ): Map<string, number> {
     const professionSkills = this.professionStore.professions[profession];
 
     const distributedSkills = this.skillService.distribute(

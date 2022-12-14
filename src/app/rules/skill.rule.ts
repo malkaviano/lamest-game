@@ -9,7 +9,6 @@ import {
   createFreeLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActionReactive } from '../interfaces/action-reactive.interface';
@@ -27,7 +26,7 @@ export class SkillRule implements RuleInterface {
   ): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
 
-    const skillName = action.actionableDefinition.name as SkillNameLiteral;
+    const skillName = action.actionableDefinition.name;
 
     const { roll, result } = this.rollRule.actorSkillCheck(actor, skillName);
 

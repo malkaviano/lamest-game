@@ -1,6 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, mock, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
+import {
+  mockedConverterHelper,
+  mockedInventoryService,
+  mockedItemStore,
+  mockedResourcesStore,
+  mockedStatesStore,
+} from '../../../tests/mocks';
 
 import { ConverterHelper } from '../helpers/converter.helper';
 import { InventoryService } from '../services/inventory.service';
@@ -54,13 +61,3 @@ describe('InteractiveStore', () => {
     expect(service).toBeTruthy();
   });
 });
-
-const mockedConverterHelper = mock(ConverterHelper);
-
-const mockedResourcesStore = mock(ResourcesStore);
-
-const mockedInventoryService = mock(InventoryService);
-
-const mockedStatesStore = mock(StatesStore);
-
-const mockedItemStore = mock(ItemStore);

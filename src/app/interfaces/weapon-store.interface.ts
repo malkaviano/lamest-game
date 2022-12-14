@@ -1,5 +1,5 @@
 import { Dice } from '../definitions/dice.definition';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
+
 import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
 
 export interface WeaponStoreInterface {
@@ -7,7 +7,7 @@ export interface WeaponStoreInterface {
     readonly name: string;
     readonly label: string;
     readonly description: string;
-    readonly skillName: SkillNameLiteral;
+    readonly skillName: string;
     readonly damage: {
       readonly dice: Dice;
       readonly fixed: number;

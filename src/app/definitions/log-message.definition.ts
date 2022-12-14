@@ -1,6 +1,5 @@
 import { LogCategoryLiteral } from '../literals/log-category.literal';
 import { ResultLiteral } from '../literals/result.literal';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 export class LogMessageDefinition {
   constructor(
@@ -27,7 +26,7 @@ export const createActorIsDeadMessage = (actor: string) =>
 
 export const createCheckLogMessage = (
   actor: string,
-  skill: SkillNameLiteral,
+  skill: string,
   roll: number,
   result: ResultLiteral
 ) =>
@@ -37,10 +36,7 @@ export const createCheckLogMessage = (
     `${skill} skill checked and rolled ${roll}, it was a ${result}`
   );
 
-export const createCannotCheckLogMessage = (
-  actor: string,
-  skill: SkillNameLiteral
-) =>
+export const createCannotCheckLogMessage = (actor: string, skill: string) =>
   new LogMessageDefinition(
     'CHECK',
     actor,
@@ -72,7 +68,7 @@ export const createFreeLogMessage = (actor: string, message: string) =>
 
 export const createEquipErrorLogMessage = (
   actor: string,
-  skill: SkillNameLiteral,
+  skill: string,
   equipment: string
 ) =>
   new LogMessageDefinition(

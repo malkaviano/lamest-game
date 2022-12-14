@@ -5,7 +5,6 @@ import { skillDefinitions } from '../definitions/skill.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
-import { SkillNameLiteral } from '../literals/skill-name.literal';
 
 export class ActorBehavior {
   private readonly maximumHP: number;
@@ -18,7 +17,7 @@ export class ActorBehavior {
 
   constructor(
     private readonly mCharacteristics: CharacteristicSetDefinition,
-    private readonly mSkills: Map<SkillNameLiteral, number>
+    private readonly mSkills: Map<string, number>
   ) {
     this.maximumHP = Math.trunc(
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2

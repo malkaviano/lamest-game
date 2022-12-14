@@ -53,6 +53,8 @@ import { SceneDefinition } from '../src/app/definitions/scene.definition';
 import { ArrayView } from '../src/app/views/array.view';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { ProfessionStore } from '../src/app/stores/profession.store';
+import { DescriptionStore } from '../src/app/stores/description.store';
+import { ActorStore } from '../src/app/stores/actor.store';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -135,6 +137,10 @@ export const mockedGameEventsService = mock(GameEventsDefinition);
 export const mockedWithSubscriptionHelper = mock(WithSubscriptionHelper);
 
 export const mockedProfessionStore = mock(ProfessionStore);
+
+export const mockedDescriptionStore = mock(DescriptionStore);
+
+export const mockedActorStore = mock(ActorStore);
 
 export const setupMocks = () => {
   resetMocks();
@@ -334,4 +340,8 @@ const resetMocks = () => {
   reset(mockedWithSubscriptionHelper);
 
   reset(mockedProfessionStore);
+
+  reset(mockedDescriptionStore);
+
+  reset(mockedActorStore);
 };
