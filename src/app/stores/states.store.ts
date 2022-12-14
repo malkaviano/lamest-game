@@ -17,7 +17,10 @@ import { ResourcesStore } from './resources.store';
 import { LockedContainerState } from '../states/locked-container';
 import { LockPickingContainerState } from '../states/lock-picking-container.state';
 import { GeneratorService } from '../services/generator.service';
-import { allDirectionsDefinition } from '../definitions/directions.definition';
+import {
+  directionActionableDefinition,
+  directionNamesDefinition,
+} from '../definitions/directions.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -99,9 +102,15 @@ export class StatesStore {
     resourcesStore.lockedContainerStateStore.states.forEach((state) => {
       const actionables = this.getActionables(actionableStore, state);
 
+      const allDirectionsDefinition = directionNamesDefinition.items.map(
+        (direction) => {
+          return directionActionableDefinition(direction, `Turn ${direction}`);
+        }
+      );
+
       const locked = state.lockPicking
         ? new LockPickingContainerState(
-            allDirectionsDefinition,
+            new ArrayView(allDirectionsDefinition),
             actionables,
             this.lazyState(state.openedState),
             new ArrayView(

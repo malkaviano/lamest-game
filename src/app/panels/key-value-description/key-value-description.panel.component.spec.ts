@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
 import { KeyValueDescriptionPanelComponent } from './key-value-description.panel.component';
-import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
+import { KeyValueDescriptionView } from '../../views/key-value-description.view';
 import { ArrayView } from '../../views/array.view';
 
 describe('KeyValueDescriptionPanelComponent', () => {
@@ -44,19 +44,11 @@ describe('KeyValueDescriptionPanelComponent', () => {
 });
 
 const characteristics = () => [
-  new KeyValueDescriptionDefinition(
-    'STR',
-    '10',
-    'The character physical force'
-  ),
-  new KeyValueDescriptionDefinition(
-    'VIT',
-    '12',
-    'The character body constitution'
-  ),
-  new KeyValueDescriptionDefinition('SIZ', '11', 'The character body shape'),
-  new KeyValueDescriptionDefinition('AGI', '9', 'The character agility'),
-  new KeyValueDescriptionDefinition('INT', '13', 'The character intelligence'),
-  new KeyValueDescriptionDefinition('ESN', '14', 'The character essence'),
-  new KeyValueDescriptionDefinition('APP', '16', 'The character looks'),
+  new KeyValueDescriptionView('STR', '10', 'The character physical force'),
+  new KeyValueDescriptionView('VIT', '12', 'The character body constitution'),
+  new KeyValueDescriptionView('SIZ', '11', 'The character body shape'),
+  new KeyValueDescriptionView('AGI', '9', 'The character agility'),
+  new KeyValueDescriptionView('INT', '13', 'The character intelligence'),
+  new KeyValueDescriptionView('ESN', '14', 'The character essence'),
+  new KeyValueDescriptionView('APP', '16', 'The character looks'),
 ];

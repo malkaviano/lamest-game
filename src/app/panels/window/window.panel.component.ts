@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
+import { KeyValueDescriptionView } from '../../views/key-value-description.view';
 
 @Component({
   selector: 'app-window-panel',
@@ -8,5 +8,5 @@ import { KeyValueDescriptionDefinition } from '../../definitions/key-value-descr
   styleUrls: ['./window.panel.component.css'],
 })
 export class WindowPanelComponent {
-  @Input() public keyValue!: KeyValueDescriptionDefinition;
+  @Input() public keyValue!: KeyValueDescriptionView;
 }

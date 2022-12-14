@@ -10,17 +10,26 @@ import {
   createLockpickJammedMessage,
 } from '../definitions/log-message.definition';
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { allDirectionsDefinition } from '../definitions/directions.definition';
-
-import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';
 import { LockedContainerState } from './locked-container';
 import { ActionableState } from './actionable.state';
+import {
+  directionActionableDefinition,
+  directionNamesDefinition,
+} from '../definitions/directions.definition';
+
+import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';
 
 const f = () => lootState;
 
 const jammedState = new LockedContainerState(
   new ArrayView([actionUseMasterKey]),
   new LazyHelper<DiscardState>(f)
+);
+
+const allDirectionsDefinition = new ArrayView(
+  directionNamesDefinition.items.map((direction) => {
+    return directionActionableDefinition(direction, `Turn ${direction}`);
+  })
 );
 
 const fakeState = () =>
@@ -140,7 +149,7 @@ function scenario(
   log: string
 ) {
   const result = s.onResult(
-    createActionableDefinition('INTERACTION', direction, `Try ${direction}`),
+    createActionableDefinition('INTERACTION', direction, `Turn ${direction}`),
     'NONE',
     {}
   );

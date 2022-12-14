@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ActionableItemView } from '../../views/actionable-item.view';
-import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
+import { CharacterValuesView } from '../../views/character-values.view';
 import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
@@ -21,7 +21,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public scene: SceneDefinition;
 
-  public characterValues: CharacterValuesDefinition;
+  public characterValues: CharacterValuesView;
 
   public inventory: ActionableItemView[];
 
@@ -36,7 +36,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     this.inventory = [];
 
-    this.characterValues = new CharacterValuesDefinition(
+    this.characterValues = new CharacterValuesView(
       new ArrayView([]),
       new ArrayView([]),
       new ArrayView([]),

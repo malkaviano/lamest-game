@@ -6,12 +6,12 @@ import {
   derivedAttributeDefinitions,
 } from '../definitions/derived-attribute.definition';
 import { characterIdentityDefinitions } from '../definitions/character-identity.definition';
-import { CharacterValuesDefinition } from '../definitions/character-values.definition';
+import { CharacterValuesView } from '../views/character-values.view';
 import {
   CharacteristicDefinition,
   characteristicsDefinitions,
 } from '../definitions/characteristic.definition';
-import { KeyValueDescriptionDefinition } from '../definitions/key-value-description.definition';
+import { KeyValueDescriptionView } from '../views/key-value-description.view';
 import { PlayerEntity } from '../entities/player.entity';
 import { IdentityLiteral } from '../literals/identity.literal';
 import { SkillStore } from '../stores/skill.store';
@@ -24,10 +24,10 @@ export class FormatterHelperService {
 
   public characterToKeyValueDescription(
     character: PlayerEntity
-  ): CharacterValuesDefinition {
+  ): CharacterValuesView {
     const identity = new ArrayView(
       Object.entries(character.identity).map(([key, value]) => {
-        return new KeyValueDescriptionDefinition(
+        return new KeyValueDescriptionView(
           key.toUpperCase(),
           value,
           characterIdentityDefinitions[key as IdentityLiteral]
@@ -38,7 +38,7 @@ export class FormatterHelperService {
     const characteristics = new ArrayView(
       Object.values(character.characteristics).map(
         (c: CharacteristicDefinition) => {
-          return new KeyValueDescriptionDefinition(
+          return new KeyValueDescriptionView(
             c.key,
             c.value.toString(),
             characteristicsDefinitions[c.key]
@@ -50,7 +50,7 @@ export class FormatterHelperService {
     const derivedAttributes = new ArrayView(
       Object.values(character.derivedAttributes).map(
         (da: DerivedAttributeDefinition) => {
-          return new KeyValueDescriptionDefinition(
+          return new KeyValueDescriptionView(
             da.key,
             da.value.toString(),
             derivedAttributeDefinitions[da.key]
@@ -62,7 +62,7 @@ export class FormatterHelperService {
     const skills = new ArrayView(
       Object.entries(character.skills)
         .map(([key, value]) => {
-          return new KeyValueDescriptionDefinition(
+          return new KeyValueDescriptionView(
             key,
             value.toString(),
             this.skillStore.skills[key].description
@@ -71,7 +71,7 @@ export class FormatterHelperService {
         .sort((a, b) => (a.key < b.key ? -1 : 1))
     );
 
-    return new CharacterValuesDefinition(
+    return new CharacterValuesView(
       identity,
       characteristics,
       derivedAttributes,

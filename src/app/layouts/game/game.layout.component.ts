@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ActionableItemView } from '../../views/actionable-item.view';
-import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
+import { CharacterValuesView } from '../../views/character-values.view';
 import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
@@ -19,7 +19,7 @@ export class GameLayoutComponent {
 
   @Input() scene!: SceneDefinition;
 
-  @Input() characterValues!: CharacterValuesDefinition;
+  @Input() characterValues!: CharacterValuesView;
 
   @Input() inventory!: ActionableItemView[];
 

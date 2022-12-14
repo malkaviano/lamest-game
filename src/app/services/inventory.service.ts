@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { errorMessages } from '../definitions/error-messages.definition';
 import { GameItemDefinition } from '../definitions/game-item.definition';
-import { ItemStorageDefinition } from '../definitions/item-storage.definition';
+import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 
@@ -14,12 +14,12 @@ import { ArrayView } from '../views/array.view';
 export class InventoryService {
   private readonly inventoryChanged: Subject<InventoryEvent>;
 
-  private storage: Map<string, { [key: string]: ItemStorageDefinition }>;
+  private storage: Map<string, { [key: string]: ItemStoredDefinition }>;
 
   public readonly inventoryChanged$: Observable<InventoryEvent>;
 
   constructor() {
-    this.storage = new Map<string, { [key: string]: ItemStorageDefinition }>();
+    this.storage = new Map<string, { [key: string]: ItemStoredDefinition }>();
 
     this.inventoryChanged = new Subject<InventoryEvent>();
 
@@ -33,7 +33,7 @@ export class InventoryService {
 
     const quantity = (itemStored?.quantity ?? 0) + 1;
 
-    const itemStorage = new ItemStorageDefinition(item, quantity);
+    const itemStorage = new ItemStoredDefinition(item, quantity);
 
     storage[item.identity.name] = itemStorage;
 
@@ -56,7 +56,7 @@ export class InventoryService {
     const quantity = itemStored.quantity - 1;
 
     if (quantity) {
-      storage[name] = new ItemStorageDefinition(itemStored.item, quantity);
+      storage[name] = new ItemStoredDefinition(itemStored.item, quantity);
     } else {
       delete storage[name];
     }
@@ -68,10 +68,10 @@ export class InventoryService {
     return itemStored.item;
   }
 
-  public check(key: string): ArrayView<ItemStorageDefinition> {
+  public check(key: string): ArrayView<ItemStoredDefinition> {
     const storage = this.getStorage(key);
 
-    const result: ItemStorageDefinition[] = [];
+    const result: ItemStoredDefinition[] = [];
 
     const a = Object.entries(storage).reduce((acc, [, item]) => {
       acc.push(item);
@@ -83,7 +83,7 @@ export class InventoryService {
   }
 
   private getStorage(key: string): {
-    [key: string]: ItemStorageDefinition;
+    [key: string]: ItemStoredDefinition;
   } {
     return this.storage.get(key) ?? {};
   }

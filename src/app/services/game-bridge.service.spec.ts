@@ -9,7 +9,7 @@ import { ArrayView } from '../views/array.view';
 import { GameBridgeService } from './game-bridge.service';
 import { InventoryService } from './inventory.service';
 import { GameLoopService } from './game-loop.service';
-import { ItemStorageDefinition } from '../definitions/item-storage.definition';
+import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
@@ -99,7 +99,7 @@ describe('GameBridgeService', () => {
         let result: ArrayView<ActionableItemView> | undefined;
 
         when(mockedInventoryService.check(anyString())).thenReturn(
-          new ArrayView([new ItemStorageDefinition(item, 1)])
+          new ArrayView([new ItemStoredDefinition(item, 1)])
         );
 
         service.events.playerInventory$.pipe(take(10)).subscribe((event) => {

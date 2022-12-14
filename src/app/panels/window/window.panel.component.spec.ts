@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
 import { WindowPanelComponent } from './window.panel.component';
-import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
+import { KeyValueDescriptionView } from '../../views/key-value-description.view';
 
 describe('WindowPanelComponent', () => {
   let fixture: ComponentFixture<WindowPanelComponent>;
@@ -47,4 +47,4 @@ describe('WindowPanelComponent', () => {
 });
 
 const characteristic = (name: string, value: string, description: string) =>
-  new KeyValueDescriptionDefinition(name, value, description);
+  new KeyValueDescriptionView(name, value, description);

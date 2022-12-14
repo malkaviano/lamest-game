@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
+import { KeyValueDescriptionView } from '../../views/key-value-description.view';
 import { ArrayView } from '../../views/array.view';
 
 @Component({
@@ -10,7 +10,7 @@ import { ArrayView } from '../../views/array.view';
 })
 export class KeyValueDescriptionPanelComponent {
   @Input() public panelName!: string;
-  @Input() public items: ArrayView<KeyValueDescriptionDefinition>;
+  @Input() public items: ArrayView<KeyValueDescriptionView>;
 
   constructor() {
     this.items = new ArrayView([]);

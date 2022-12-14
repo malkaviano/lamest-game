@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { take } from 'rxjs';
 
 import { errorMessages } from '../definitions/error-messages.definition';
-import { ItemStorageDefinition } from '../definitions/item-storage.definition';
+import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 import { InventoryService } from './inventory.service';
@@ -122,7 +122,7 @@ describe('InventoryService', () => {
           service.take('take', simpleSword.identity.name);
 
           const expected = new ArrayView([
-            new ItemStorageDefinition(simpleSword, 1),
+            new ItemStoredDefinition(simpleSword, 1),
           ]);
 
           const result = service.check('take');
@@ -165,8 +165,8 @@ describe('InventoryService', () => {
     describe('when storage has items', () => {
       it('return items stored on storage', () => {
         const expected = new ArrayView([
-          new ItemStorageDefinition(simpleSword, 1),
-          new ItemStorageDefinition(greatSword, 2),
+          new ItemStoredDefinition(simpleSword, 1),
+          new ItemStoredDefinition(greatSword, 2),
         ]);
 
         service.store('check', simpleSword);

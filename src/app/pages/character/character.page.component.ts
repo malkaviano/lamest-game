@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ArrayView } from '../../views/array.view';
-import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
+import { KeyValueDescriptionView } from '../../views/key-value-description.view';
 import { CharacterService } from '../../services/character.service';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 
@@ -11,10 +11,10 @@ import { FormatterHelperService } from '../../helpers/formatter.helper.service';
   styleUrls: ['./character.page.component.css'],
 })
 export class CharacterPageComponent implements OnInit {
-  public identityView!: ArrayView<KeyValueDescriptionDefinition>;
-  public characteristicsView!: ArrayView<KeyValueDescriptionDefinition>;
-  public derivedAttributesView!: ArrayView<KeyValueDescriptionDefinition>;
-  public skillsView!: ArrayView<KeyValueDescriptionDefinition>;
+  public identityView!: ArrayView<KeyValueDescriptionView>;
+  public characteristicsView!: ArrayView<KeyValueDescriptionView>;
+  public derivedAttributesView!: ArrayView<KeyValueDescriptionView>;
+  public skillsView!: ArrayView<KeyValueDescriptionView>;
 
   constructor(
     private readonly characterService: CharacterService,

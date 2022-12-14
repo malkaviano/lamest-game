@@ -14,8 +14,8 @@ import { ActionableEvent } from '../src/app/events/actionable.event';
 import { KeyValueInterface } from '../src/app/interfaces/key-value.interface';
 import { SceneActorsInfoInterface } from '../src/app/interfaces/scene-actors.interface';
 import { ArrayView } from '../src/app/views/array.view';
-import { CharacterValuesDefinition } from '../src/app/definitions/character-values.definition';
-import { KeyValueDescriptionDefinition } from '../src/app/definitions/key-value-description.definition';
+import { CharacterValuesView } from '../src/app/views/character-values.view';
+import { KeyValueDescriptionView } from '../src/app/views/key-value-description.view';
 import { DiscardState } from '../src/app/states/discard.state';
 import { UsableItemDefinition } from '../src/app/definitions/usable-item.definition';
 import { ItemIdentityDefinition } from '../src/app/definitions/item-identity.definition';
@@ -177,48 +177,44 @@ export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
   ]);
 
 export const fakeCharacterSheetIdentity = new ArrayView([
-  new KeyValueDescriptionDefinition('NAME', 'Some Name', 'Character name'),
-  new KeyValueDescriptionDefinition(
+  new KeyValueDescriptionView('NAME', 'Some Name', 'Character name'),
+  new KeyValueDescriptionView(
     'PROFESSION',
     'Police Detective',
     'Character profession'
   ),
-  new KeyValueDescriptionDefinition('AGE', 'YOUNG', 'Character age'),
-  new KeyValueDescriptionDefinition('RACE', 'HUMAN', 'Character race'),
-  new KeyValueDescriptionDefinition('HEIGHT', 'SHORT', 'Character height'),
-  new KeyValueDescriptionDefinition('WEIGHT', 'LIGHT', 'Character weight'),
+  new KeyValueDescriptionView('AGE', 'YOUNG', 'Character age'),
+  new KeyValueDescriptionView('RACE', 'HUMAN', 'Character race'),
+  new KeyValueDescriptionView('HEIGHT', 'SHORT', 'Character height'),
+  new KeyValueDescriptionView('WEIGHT', 'LIGHT', 'Character weight'),
 ]);
 
 export const fakeCharacterSheetCharacteristics = new ArrayView([
-  new KeyValueDescriptionDefinition('STR', '8', 'The character physical force'),
-  new KeyValueDescriptionDefinition('VIT', '9', 'The character vitality'),
-  new KeyValueDescriptionDefinition('AGI', '11', 'The character agility'),
-  new KeyValueDescriptionDefinition('INT', '12', 'The character intelligence'),
-  new KeyValueDescriptionDefinition('ESN', '13', 'The character essence'),
-  new KeyValueDescriptionDefinition('APP', '14', 'The character looks'),
+  new KeyValueDescriptionView('STR', '8', 'The character physical force'),
+  new KeyValueDescriptionView('VIT', '9', 'The character vitality'),
+  new KeyValueDescriptionView('AGI', '11', 'The character agility'),
+  new KeyValueDescriptionView('INT', '12', 'The character intelligence'),
+  new KeyValueDescriptionView('ESN', '13', 'The character essence'),
+  new KeyValueDescriptionView('APP', '14', 'The character looks'),
 ]);
 
 export const fakeCharacterSheetDerivedAttributes = new ArrayView([
-  new KeyValueDescriptionDefinition('HP', '8', 'The character hit points'),
-  new KeyValueDescriptionDefinition('EP', '13', 'The character essence points'),
-  new KeyValueDescriptionDefinition('MOV', '10', 'The character movement'),
+  new KeyValueDescriptionView('HP', '8', 'The character hit points'),
+  new KeyValueDescriptionView('EP', '13', 'The character essence points'),
+  new KeyValueDescriptionView('MOV', '10', 'The character movement'),
 ]);
 
 export const fakeCharacterSheetSkills = new ArrayView([
-  new KeyValueDescriptionDefinition('Brawl', '45', 'Fighting unarmed'),
-  new KeyValueDescriptionDefinition(
-    'First Aid',
-    '45',
-    'Use emergency kit to heal'
-  ),
-  new KeyValueDescriptionDefinition(
+  new KeyValueDescriptionView('Brawl', '45', 'Fighting unarmed'),
+  new KeyValueDescriptionView('First Aid', '45', 'Use emergency kit to heal'),
+  new KeyValueDescriptionView(
     'Melee Weapon (Simple)',
     '45',
     'Light close combat weapons, one handed'
   ),
 ]);
 
-export const fakeCharacterSheet = new CharacterValuesDefinition(
+export const fakeCharacterSheet = new CharacterValuesView(
   fakeCharacterSheetIdentity,
   fakeCharacterSheetCharacteristics,
   fakeCharacterSheetDerivedAttributes,
