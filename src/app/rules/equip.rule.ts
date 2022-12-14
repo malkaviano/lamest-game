@@ -11,8 +11,8 @@ import {
   createUnEquippedLogMessage,
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -34,16 +34,18 @@ export class EquipRule implements RuleInterface {
     if (skillName && actor.skills[skillName] > 0) {
       const weapon = this.inventoryService.take(actor.name, action.eventId);
 
-      if (weapon.category === 'WEAPON') {
-        const previous = actor.equip(weapon as WeaponDefinition);
+      if (weapon instanceof WeaponDefinition) {
+        const previous = actor.equip(weapon);
 
         if (previous) {
           this.inventoryService.store(actor.name, previous);
 
-          logs.push(createUnEquippedLogMessage(actor.name, previous.label));
+          logs.push(
+            createUnEquippedLogMessage(actor.name, previous.identity.label)
+          );
         }
 
-        logs.push(createEquippedLogMessage(actor.name, weapon.label));
+        logs.push(createEquippedLogMessage(actor.name, weapon.identity.label));
       }
     } else if (skillName) {
       logs.push(

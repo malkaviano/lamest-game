@@ -89,7 +89,7 @@ describe('UseRule', () => {
       );
 
       when(
-        mockedInventoryService.take(playerInfo.id, masterKey.name)
+        mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
       ).thenReturn(masterKey);
 
       when(
@@ -100,7 +100,7 @@ describe('UseRule', () => {
             item: masterKey,
           })
         )
-      ).thenReturn(createOpenedUsingMessage(masterKey.label));
+      ).thenReturn(createOpenedUsingMessage(masterKey.identity.label));
 
       const result = service.execute(
         instance(mockedPlayerEntity),
@@ -113,11 +113,17 @@ describe('UseRule', () => {
   });
 });
 
-const notFoundLog = createNotFoundLogMessage(playerInfo.name, masterKey.label);
+const notFoundLog = createNotFoundLogMessage(
+  playerInfo.name,
+  masterKey.identity.label
+);
 
 const openedLog = createFreeLogMessage(
   interactiveInfo.name,
-  createOpenedUsingMessage(masterKey.label)
+  createOpenedUsingMessage(masterKey.identity.label)
 );
 
-const itemLostLog = createLostLogMessage(playerInfo.name, masterKey.label);
+const itemLostLog = createLostLogMessage(
+  playerInfo.name,
+  masterKey.identity.label
+);

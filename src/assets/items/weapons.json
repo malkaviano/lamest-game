@@ -73,6 +73,22 @@
       },
       "dodgeable": false,
       "usability": "DISPOSABLE"
+    },
+    {
+      "name": "g17",
+      "label": "GLOCK 17",
+      "description": "9mm reliable handgun",
+      "skillName": "Firearm (Handgun)",
+      "damage": {
+        "dice": { "D4": 1 },
+        "fixed": 2
+      },
+      "dodgeable": false,
+      "usability": "PERMANENT",
+      "munition": {
+        "caliber": "9MM",
+        "reload": "magazine"
+      }
     }
   ]
 }

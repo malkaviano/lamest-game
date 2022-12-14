@@ -7,7 +7,6 @@ import { PlayerEntity } from '../entities/player.entity';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
 import { HitPointsEvent } from '../events/hitpoints.event';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 
 import { simpleSword } from '../../../tests/fakes';
 import {
@@ -15,6 +14,7 @@ import {
   mockedRandomCharacterService,
   setupMocks,
 } from '../../../tests/mocks';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 describe('CharacterService', () => {
   let service: CharacterService;

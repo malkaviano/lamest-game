@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { of, Subject, take } from 'rxjs';
 import { anyString, instance, when } from 'ts-mockito';
 
-import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
+import { ActionableItemView } from '../views/actionable-item.view';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 import { GameBridgeService } from './game-bridge.service';
@@ -81,25 +81,22 @@ describe('GameBridgeService', () => {
     [
       {
         invEvent: new InventoryEvent('CONSUME', 'player', consumableFirstAid),
-        expected: new ActionableItemDefinition(
-          consumableFirstAid,
-          actionConsume
-        ),
+        expected: new ActionableItemView(consumableFirstAid, actionConsume),
         item: consumableFirstAid,
       },
       {
         invEvent: new InventoryEvent('EQUIP', 'player', unDodgeableAxe),
-        expected: new ActionableItemDefinition(unDodgeableAxe, actionEquip),
+        expected: new ActionableItemView(unDodgeableAxe, actionEquip),
         item: unDodgeableAxe,
       },
       {
         invEvent: new InventoryEvent('STORE', 'player', masterKey),
-        expected: new ActionableItemDefinition(masterKey, actionNoop),
+        expected: new ActionableItemView(masterKey, actionNoop),
         item: masterKey,
       },
     ].forEach(({ invEvent, expected, item }) => {
       it(`should emit event ${invEvent.eventName}`, (done) => {
-        let result: ArrayView<ActionableItemDefinition> | undefined;
+        let result: ArrayView<ActionableItemView> | undefined;
 
         when(mockedInventoryService.check(anyString())).thenReturn(
           new ArrayView([new ItemStorageDefinition(item, 1)])
@@ -135,4 +132,8 @@ describe('GameBridgeService', () => {
 
 const inventoryEventSubject = new Subject<InventoryEvent>();
 
-const log = new LogMessageDefinition('FREE', 'player', unDodgeableAxe.label);
+const log = new LogMessageDefinition(
+  'FREE',
+  'player',
+  unDodgeableAxe.identity.label
+);

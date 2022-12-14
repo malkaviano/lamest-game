@@ -8,10 +8,6 @@ import {
   createHealedMessage,
 } from '../definitions/log-message.definition';
 import { ResultLiteral } from '../literals/result.literal';
-import {
-  unarmedWeapon,
-  WeaponDefinition,
-} from '../definitions/weapon.definition';
 import { ActorEntity } from './actor.entity';
 import { emptyState } from '../states/empty.state';
 import { ArrayView } from '../views/array.view';
@@ -32,6 +28,8 @@ import {
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
+import { unarmedWeapon } from '../value-objects/weapons/manual-weapon.vobject';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 describe('ActorEntity', () => {
   beforeEach(() => {

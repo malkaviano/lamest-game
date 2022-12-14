@@ -8,10 +8,10 @@ import { ArrayView } from '../../views/array.view';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
-import { unarmedWeapon } from '../../definitions/weapon.definition';
 import { GameLayoutComponent } from './game.layout.component';
-import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
+import { ActionableItemView } from '../../views/actionable-item.view';
 import { ActionableEvent } from '../../events/actionable.event';
+import { unarmedWeapon } from '../../value-objects/weapons/manual-weapon.vobject';
 
 import {
   actionAsk,
@@ -46,8 +46,8 @@ describe('GameLayoutComponent', () => {
     component.logs = new ArrayView(['OMG', 'This is not happening', 'GG']);
 
     component.inventory = [
-      new ActionableItemDefinition(simpleSword, actionAsk),
-      new ActionableItemDefinition(molotov, actionAsk),
+      new ActionableItemView(simpleSword, actionAsk),
+      new ActionableItemView(molotov, actionAsk),
     ];
 
     component.equipped = unarmedWeapon;
@@ -150,8 +150,8 @@ describe('GameLayoutComponent', () => {
       expect(result.properties['panelName']).toEqual('inventory');
 
       expect(result.properties['inventory']).toEqual([
-        new ActionableItemDefinition(simpleSword, actionAsk),
-        new ActionableItemDefinition(molotov, actionAsk),
+        new ActionableItemView(simpleSword, actionAsk),
+        new ActionableItemView(molotov, actionAsk),
       ]);
 
       expect(result.properties['equipped']).toEqual(unarmedWeapon);

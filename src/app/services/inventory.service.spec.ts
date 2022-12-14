@@ -74,9 +74,9 @@ describe('InventoryService', () => {
   describe('taking an item', () => {
     describe('when the store is empty', () => {
       it('throws INVALID-OPERATION', () => {
-        expect(() => service.take('take', simpleSword.name)).toThrowError(
-          errorMessages['INVALID-OPERATION']
-        );
+        expect(() =>
+          service.take('take', simpleSword.identity.name)
+        ).toThrowError(errorMessages['INVALID-OPERATION']);
       });
     });
 
@@ -94,7 +94,7 @@ describe('InventoryService', () => {
       it('return the item', () => {
         service.store('take', simpleSword);
 
-        const result = service.take('take', simpleSword.name);
+        const result = service.take('take', simpleSword.identity.name);
 
         expect(result).toEqual(simpleSword);
       });
@@ -103,7 +103,7 @@ describe('InventoryService', () => {
         it('should remove the item from storage', () => {
           service.store('take', simpleSword);
 
-          service.take('take', simpleSword.name);
+          service.take('take', simpleSword.identity.name);
 
           const expected = new ArrayView([]);
 
@@ -119,7 +119,7 @@ describe('InventoryService', () => {
 
           service.store('take', simpleSword);
 
-          service.take('take', simpleSword.name);
+          service.take('take', simpleSword.identity.name);
 
           const expected = new ArrayView([
             new ItemStorageDefinition(simpleSword, 1),
@@ -142,7 +142,7 @@ describe('InventoryService', () => {
 
         service.store('takeEvent', bubbleGum);
 
-        service.take('takeEvent', bubbleGum.name);
+        service.take('takeEvent', bubbleGum.identity.name);
 
         done();
 

@@ -6,15 +6,11 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { first } from 'rxjs';
 
 import { MaterialModule } from '../../../material/material.module';
-import { createActionableDefinition } from '../../definitions/actionable.definition';
-import { DamageDefinition } from '../../definitions/damage.definition';
-import { createDice } from '../../definitions/dice.definition';
-import {
-  unarmedWeapon,
-  WeaponDefinition,
-} from '../../definitions/weapon.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { EquippedWidgetComponent } from './equipped.widget.component';
+import { unarmedWeapon } from '../../value-objects/weapons/manual-weapon.vobject';
+
+import { actionUnEquip, simpleSword } from '../../../../tests/fakes';
 
 describe('EquippedWidgetComponent', () => {
   let component: EquippedWidgetComponent;
@@ -44,7 +40,7 @@ describe('EquippedWidgetComponent', () => {
 
   describe('clicking action button', () => {
     it('return the the actionable unequip and item name', async () => {
-      fixture.componentInstance.equipped = item;
+      fixture.componentInstance.equipped = simpleSword;
 
       fixture.detectChanges();
 
@@ -57,7 +53,12 @@ describe('EquippedWidgetComponent', () => {
         .subscribe((action: ActionableEvent) => {
           result = action;
 
-          expect(result).toEqual(new ActionableEvent(unequipAction, 'sword'));
+          expect(result).toEqual(
+            new ActionableEvent(
+              actionUnEquip(simpleSword.identity.label),
+              simpleSword.identity.name
+            )
+          );
         });
 
       await button.click();
@@ -66,19 +67,3 @@ describe('EquippedWidgetComponent', () => {
     });
   });
 });
-
-const unequipAction = createActionableDefinition(
-  'UNEQUIP',
-  'unequip',
-  'Long Sword'
-);
-
-const item = new WeaponDefinition(
-  'sword',
-  'Long Sword',
-  'Some big sword',
-  'Melee Weapon (Simple)',
-  new DamageDefinition(createDice({ D6: 1 }), 0),
-  true,
-  'PERMANENT'
-);

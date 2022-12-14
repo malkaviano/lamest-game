@@ -13,6 +13,7 @@ import {
 } from '../definitions/log-message.definition';
 import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
+import { unarmedWeapon } from '../value-objects/weapons/manual-weapon.vobject';
 
 import {
   mockedActorEntity,
@@ -28,7 +29,6 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../tests/fakes';
-import { unarmedWeapon } from '../definitions/weapon.definition';
 
 describe('CombatRule', () => {
   let service: CombatRule;
@@ -125,7 +125,11 @@ describe('CombatRule', () => {
 
             expect(result).toEqual({
               logs: [
-                createAttackedLogMessage('player', name, simpleSword.label),
+                createAttackedLogMessage(
+                  'player',
+                  name,
+                  simpleSword.identity.label
+                ),
                 checkFailureLog,
               ],
             });
@@ -154,7 +158,11 @@ describe('CombatRule', () => {
 
               expect(result).toEqual({
                 logs: [
-                  createAttackedLogMessage('player', name, simpleSword.label),
+                  createAttackedLogMessage(
+                    'player',
+                    name,
+                    simpleSword.identity.label
+                  ),
                   checkSuccessLog,
                   createCannotCheckLogMessage(name, 'Dodge'),
                   createFreeLogMessage(name, damageMessage2),
@@ -187,7 +195,7 @@ describe('CombatRule', () => {
                   createAttackedLogMessage(
                     'player',
                     name,
-                    unDodgeableAxe.label
+                    unDodgeableAxe.identity.label
                   ),
                   checkSuccessLog,
                   createUnDodgeableAttackLogMessage(name),
@@ -219,7 +227,11 @@ describe('CombatRule', () => {
 
                 expect(result).toEqual({
                   logs: [
-                    createAttackedLogMessage('player', name, simpleSword.label),
+                    createAttackedLogMessage(
+                      'player',
+                      name,
+                      simpleSword.identity.label
+                    ),
                     checkSuccessLog,
                     createCheckLogMessage(name, 'Dodge', 15, 'SUCCESS'),
                   ],
@@ -248,7 +260,11 @@ describe('CombatRule', () => {
 
                 expect(result).toEqual({
                   logs: [
-                    createAttackedLogMessage('player', name, simpleSword.label),
+                    createAttackedLogMessage(
+                      'player',
+                      name,
+                      simpleSword.identity.label
+                    ),
                     checkSuccessLog,
                     createCheckLogMessage(name, 'Dodge', 75, 'FAILURE'),
                     createFreeLogMessage(name, damageMessage2),
@@ -295,7 +311,7 @@ describe('CombatRule', () => {
 
         expect(result).toEqual({
           logs: [
-            createLostLogMessage('player', molotov.label),
+            createLostLogMessage('player', molotov.identity.label),
             damageInteractiveLog,
           ],
         });

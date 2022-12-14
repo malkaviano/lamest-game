@@ -19,7 +19,7 @@ import { CharacteristicSetDefinition } from '../definitions/characteristic-set.d
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
 import { ActorStoreInterface } from '../interfaces/actor-store.interface';
-import { PropsStoreInterface } from '../interfaces/item-store.interface';
+import { UsablesStoreInterface } from '../interfaces/item-store.interface';
 import { LockedContainerStateStoreInterface } from '../interfaces/locked-container-state-store';
 
 import sceneStore from '../../assets/scenes.json';
@@ -28,14 +28,14 @@ import discardStateStore from '../../assets/states/discard-states.json';
 import simpleStateStore from '../../assets/states/simple-states.json';
 import conversationStateStore from '../../assets/states/conversation-states.json';
 import destroyableStateStore from '../../assets/states/destroyable-states.json';
-import weaponStore from '../../assets/weapons.json';
-import consumableStore from '../../assets/consumables.json';
+import weaponStore from '../../assets/items/weapons.json';
+import consumableStore from '../../assets/items/consumables.json';
 import interactiveStore from '../../assets/interactives.json';
 import descriptionStore from '../../assets/descriptions.json';
 import actionableStore from '../../assets/actionables.json';
 import messageStore from '../../assets/messages.json';
 import actorStore from '../../assets/actors.json';
-import propsStore from '../../assets/props.json';
+import usablesStore from '../../assets/items/usables.json';
 import lockedContainerStateStore from '../../assets/states/locked-container-state.json';
 
 @Injectable({
@@ -68,7 +68,7 @@ export class ResourcesStore {
 
   public readonly messageStore: MessageStoreInterface;
 
-  public readonly propsStore: PropsStoreInterface;
+  public readonly usablesStore: UsablesStoreInterface;
 
   public readonly lockedContainerStateStore: LockedContainerStateStoreInterface;
 
@@ -162,7 +162,7 @@ export class ResourcesStore {
 
     this.actorStore = { actors };
 
-    this.propsStore = propsStore;
+    this.usablesStore = usablesStore;
 
     this.lockedContainerStateStore = lockedContainerStateStore;
   }

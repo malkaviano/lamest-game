@@ -29,13 +29,13 @@ export class InventoryService {
   public store(key: string, item: GameItemDefinition): number {
     const storage = this.getStorage(key);
 
-    const itemStored = storage[item.name];
+    const itemStored = storage[item.identity.name];
 
     const quantity = (itemStored?.quantity ?? 0) + 1;
 
     const itemStorage = new ItemStorageDefinition(item, quantity);
 
-    storage[item.name] = itemStorage;
+    storage[item.identity.name] = itemStorage;
 
     this.storage.set(key, storage);
 

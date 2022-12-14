@@ -45,7 +45,10 @@ describe('PickRule', () => {
   describe('execute', () => {
     it('return logs', () => {
       when(
-        mockedInventoryService.take(interactiveInfo.id, simpleSword.name)
+        mockedInventoryService.take(
+          interactiveInfo.id,
+          simpleSword.identity.name
+        )
       ).thenReturn(simpleSword);
 
       when(
@@ -54,7 +57,7 @@ describe('PickRule', () => {
           'NONE',
           deepEqual({})
         )
-      ).thenReturn(simpleSword.label);
+      ).thenReturn(simpleSword.identity.label);
 
       const result = service.execute(
         instance(mockedPlayerEntity),
@@ -74,5 +77,5 @@ describe('PickRule', () => {
 const log = createTookLogMessage(
   playerInfo.name,
   interactiveInfo.name,
-  simpleSword.label
+  simpleSword.identity.label
 );

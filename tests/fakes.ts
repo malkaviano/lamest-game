@@ -1,4 +1,7 @@
-import { createActionableDefinition } from '../src/app/definitions/actionable.definition';
+import {
+  ActionableDefinition,
+  createActionableDefinition,
+} from '../src/app/definitions/actionable.definition';
 import { CharacteristicSetDefinition } from '../src/app/definitions/characteristic-set.definition';
 import { CharacteristicDefinition } from '../src/app/definitions/characteristic.definition';
 import { ConsumableDefinition } from '../src/app/definitions/consumable.definition';
@@ -7,7 +10,6 @@ import { DerivedAttributeSetDefinition } from '../src/app/definitions/derived-at
 import { DerivedAttributeDefinition } from '../src/app/definitions/derived-attribute.definition';
 import { createDice } from '../src/app/definitions/dice.definition';
 import { CharacterIdentityDefinition } from '../src/app/definitions/character-identity.definition';
-import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
 import { ActionableEvent } from '../src/app/events/actionable.event';
 import { KeyValueInterface } from '../src/app/interfaces/key-value.interface';
 import { SceneActorsInfoInterface } from '../src/app/interfaces/scene-actors.interface';
@@ -17,45 +19,43 @@ import { CharacterValuesDefinition } from '../src/app/definitions/character-valu
 import { KeyValueDescriptionDefinition } from '../src/app/definitions/key-value-description.definition';
 import { DiscardState } from '../src/app/states/discard.state';
 import { UsableItemDefinition } from '../src/app/definitions/usable-item.definition';
+import { ItemIdentityDefinition } from '../src/app/definitions/item-identity.definition';
+import { ActionableItemView } from '../src/app/views/actionable-item.view';
+import { GameItemDefinition } from '../src/app/definitions/game-item.definition';
+import { MagazineDefinition } from '../src/app/definitions/magazine.definition';
+import { WeaponCaliberLiteral } from '../src/app/literals/weapon-caliber.literal';
+import { ManualWeaponValueObject } from '../src/app/value-objects/weapons/manual-weapon.vobject';
 
 export const playerInfo = { id: 'player', name: 'player' };
 
 export const interactiveInfo = { id: 'id1', name: 'test' };
 
-export const simpleSword = new WeaponDefinition(
-  'sword',
-  'Sword',
-  'some sword',
+export const simpleSword = new ManualWeaponValueObject(
+  new ItemIdentityDefinition('sword', 'Sword', 'some sword'),
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice(), 2),
   true,
   'PERMANENT'
 );
 
-export const greatSword = new WeaponDefinition(
-  'greatSword',
-  'Great Sword',
-  'Some Great Sword',
+export const greatSword = new ManualWeaponValueObject(
+  new ItemIdentityDefinition('greatSword', 'Great Sword', 'Some Great Sword'),
   'Melee Weapon (Great)',
   new DamageDefinition(createDice(), 6),
   true,
   'PERMANENT'
 );
 
-export const unDodgeableAxe = new WeaponDefinition(
-  'axe',
-  'Axe',
-  'UnDodgeable Axe',
+export const unDodgeableAxe = new ManualWeaponValueObject(
+  new ItemIdentityDefinition('axe', 'Axe', 'UnDodgeable Axe'),
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice(), 2),
   false,
   'PERMANENT'
 );
 
-export const molotov = new WeaponDefinition(
-  'molotov',
-  'Molotov',
-  'Homemade Bomb',
+export const molotov = new ManualWeaponValueObject(
+  new ItemIdentityDefinition('molotov', 'Molotov', 'Homemade Bomb'),
   'Ranged Weapon (Throw)',
   new DamageDefinition(createDice(), 2),
   false,
@@ -68,10 +68,11 @@ export const actionEquip = createActionableDefinition(
   'Equip'
 );
 
+export const actionUnEquip = (label: string) =>
+  createActionableDefinition('UNEQUIP', 'unequip', label);
+
 export const bubbleGum = new ConsumableDefinition(
-  'bubbleGum',
-  'Bubble Gum',
-  'That is a bubble gum',
+  new ItemIdentityDefinition('bubbleGum', 'Bubble Gum', 'That is a bubble gum'),
   1
 );
 
@@ -205,17 +206,17 @@ export const fakeCharacterSheet = new CharacterValuesDefinition(
 export const lootState = new DiscardState(new ArrayView([actionPickBubbleGum]));
 
 export const consumableFirstAid = new ConsumableDefinition(
-  'firstAid',
-  'First Aid Kit',
-  'Very simple First Aid',
+  new ItemIdentityDefinition(
+    'firstAid',
+    'First Aid Kit',
+    'Very simple First Aid'
+  ),
   5,
   'First Aid'
 );
 
 export const consumableChesseBurger = new ConsumableDefinition(
-  'sandwich',
-  'Cheeseburger',
-  'Delicious',
+  new ItemIdentityDefinition('sandwich', 'Cheeseburger', 'Delicious'),
   2
 );
 
@@ -227,17 +228,17 @@ export const actionConsume = createActionableDefinition(
 
 export const eventConsumeFirstAid = new ActionableEvent(
   actionConsume,
-  consumableFirstAid.name
+  consumableFirstAid.identity.name
 );
 
 export const eventConsumeCheeseBurger = new ActionableEvent(
   actionConsume,
-  consumableChesseBurger.name
+  consumableChesseBurger.identity.name
 );
 
 export const eventEquipUnDodgeableAxe = new ActionableEvent(
   actionEquip,
-  unDodgeableAxe.name
+  unDodgeableAxe.identity.name
 );
 
 export const actionSceneExit = createActionableDefinition(
@@ -263,21 +264,19 @@ export const eventSkillAthleticism = new ActionableEvent(
 );
 
 export const masterKey = new UsableItemDefinition(
-  'masterKey',
-  'Master Key',
-  'Opens stuff'
+  new ItemIdentityDefinition('masterKey', 'Master Key', 'Opens stuff')
 );
 
 export const actionUseMasterKey = createActionableDefinition(
   'USE',
-  masterKey.name,
-  masterKey.label
+  masterKey.identity.name,
+  masterKey.identity.label
 );
 
 export const actionWrongUseSimpleSword = createActionableDefinition(
   'USE',
-  simpleSword.name,
-  simpleSword.label
+  simpleSword.identity.name,
+  simpleSword.identity.label
 );
 
 export const eventUseMasterKey = new ActionableEvent(
@@ -292,8 +291,8 @@ export const eventWrongUseSimpleSword = new ActionableEvent(
 
 export const actionPickSimpleSword = createActionableDefinition(
   'PICK',
-  simpleSword.name,
-  simpleSword.label
+  simpleSword.identity.name,
+  simpleSword.identity.label
 );
 
 export const eventPickSimpleSword = new ActionableEvent(
@@ -309,3 +308,16 @@ export const eventSkillBrawl = new ActionableEvent(
 );
 
 export const actionNoop = createActionableDefinition('NOOP', 'noop', 'NOOP');
+
+export const actionableItemView = (
+  item: GameItemDefinition,
+  action: ActionableDefinition
+): ActionableItemView => new ActionableItemView(item, action);
+
+export const actionableEvent = (action: ActionableDefinition, id: string) =>
+  new ActionableEvent(action, id);
+
+export const magazineDefinition = (
+  caliber: WeaponCaliberLiteral,
+  quantity: number
+) => new MagazineDefinition(caliber, quantity);

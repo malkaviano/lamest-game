@@ -6,13 +6,14 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { first } from 'rxjs';
 
 import { MaterialModule } from '../../../material/material.module';
-import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
-import { createActionableDefinition } from '../../definitions/actionable.definition';
-import { DamageDefinition } from '../../definitions/damage.definition';
-import { createDice } from '../../definitions/dice.definition';
-import { WeaponDefinition } from '../../definitions/weapon.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { EquipmentWidgetComponent } from './equipment.widget.component';
+
+import {
+  actionableItemView,
+  actionEquip,
+  simpleSword,
+} from '../../../../tests/fakes';
 
 describe('EquipmentWidgetComponent', () => {
   let component: EquipmentWidgetComponent;
@@ -27,7 +28,10 @@ describe('EquipmentWidgetComponent', () => {
 
     fixture = TestBed.createComponent(EquipmentWidgetComponent);
 
-    fixture.componentInstance.equipment = actionableItem;
+    fixture.componentInstance.equipment = actionableItemView(
+      simpleSword,
+      actionEquip
+    );
 
     component = fixture.componentInstance;
 
@@ -51,7 +55,9 @@ describe('EquipmentWidgetComponent', () => {
         .subscribe((action: ActionableEvent) => {
           result = action;
 
-          expect(result).toEqual(new ActionableEvent(equipAction, 'sword'));
+          expect(result).toEqual(
+            new ActionableEvent(actionEquip, simpleSword.identity.name)
+          );
         });
 
       await button.click();
@@ -60,18 +66,3 @@ describe('EquipmentWidgetComponent', () => {
     });
   });
 });
-
-const equipAction = createActionableDefinition('EQUIP', 'equip', 'Equip');
-
-const actionableItem = new ActionableItemDefinition(
-  new WeaponDefinition(
-    'sword',
-    'Long Sword',
-    'Some big sword',
-    'Melee Weapon (Simple)',
-    new DamageDefinition(createDice({ D8: 1 }), 0),
-    true,
-    'PERMANENT'
-  ),
-  equipAction
-);

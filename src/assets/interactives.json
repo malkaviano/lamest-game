@@ -112,6 +112,15 @@
           "quantity": 1
         }
       ]
+    },
+    {
+      "id": "lockPickingChest",
+      "items": [
+        {
+          "name": "g17",
+          "quantity": 1
+        }
+      ]
     }
   ]
 }

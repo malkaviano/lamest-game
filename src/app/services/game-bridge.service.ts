@@ -8,7 +8,7 @@ import { NarrativeService } from './narrative.service';
 import { ActionableEvent } from '../events/actionable.event';
 import { ArrayView } from '../views/array.view';
 import { InventoryService } from './inventory.service';
-import { ActionableItemDefinition } from '../definitions/actionable-item.definition';
+import { ActionableItemView } from '../views/actionable-item.view';
 import {
   ActionableDefinition,
   createActionableDefinition,
@@ -60,15 +60,15 @@ export class GameBridgeService {
 
   private playerInventory(
     inventoryService: InventoryService
-  ): ArrayView<ActionableItemDefinition> {
+  ): ArrayView<ActionableItemView> {
     const playerItems = inventoryService.check(this.player.name);
 
-    const inventoryView: ActionableItemDefinition[] = [];
+    const inventoryView: ActionableItemView[] = [];
 
     const items = playerItems.items.reduce((acc, itemStorage) => {
       for (let index = 0; index < itemStorage.quantity; index++) {
         acc.push(
-          new ActionableItemDefinition(
+          new ActionableItemView(
             itemStorage.item,
             this.inventoryAction(itemStorage.item.category)
           )

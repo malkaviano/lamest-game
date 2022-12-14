@@ -33,7 +33,7 @@ export class CombatRule implements RuleInterface {
 
     let targetHit = true;
 
-    const { dodgeable, damage, skillName, label, usability } =
+    const { dodgeable, damage, skillName, identity, usability } =
       actor.weaponEquipped;
 
     if (['ACTOR', 'PLAYER'].includes(target.classification)) {
@@ -42,7 +42,9 @@ export class CombatRule implements RuleInterface {
       const { result: actorResult, roll: actorRoll } =
         this.rollRule.actorSkillCheck(actor, skillName);
 
-      logs.push(createAttackedLogMessage(actor.name, targetActor.name, label));
+      logs.push(
+        createAttackedLogMessage(actor.name, targetActor.name, identity.label)
+      );
 
       logs.push(
         createCheckLogMessage(actor.name, skillName, actorRoll, actorResult)
@@ -78,7 +80,7 @@ export class CombatRule implements RuleInterface {
     if (usability === 'DISPOSABLE') {
       actor.unEquip();
 
-      logs.push(createLostLogMessage(actor.name, label));
+      logs.push(createLostLogMessage(actor.name, identity.label));
     }
 
     if (targetHit) {

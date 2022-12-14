@@ -27,7 +27,9 @@ export class UseRule implements RuleInterface {
 
     const { items } = this.inventoryService.check(actor.id);
 
-    const item = items.find((i) => i.item.name === actionableDefinition.name);
+    const item = items.find(
+      (i) => i.item.identity.name === actionableDefinition.name
+    );
 
     if (!item) {
       return {
@@ -54,7 +56,7 @@ export class UseRule implements RuleInterface {
       logs.push(createFreeLogMessage(target.name, log));
     }
 
-    logs.push(createLostLogMessage(actor.name, usable.label));
+    logs.push(createLostLogMessage(actor.name, usable.identity.label));
 
     return {
       logs,

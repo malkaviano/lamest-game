@@ -1,5 +1,5 @@
 {
-  "props": [
+  "usables": [
     {
       "name": "masterKey",
       "label": "Master Key",

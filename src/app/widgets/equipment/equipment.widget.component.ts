@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
+import { ActionableItemView } from '../../views/actionable-item.view';
 import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 
@@ -10,7 +10,7 @@ import { ActionableEvent } from '../../events/actionable.event';
   styleUrls: ['./equipment.widget.component.css'],
 })
 export class EquipmentWidgetComponent {
-  @Input() equipment!: ActionableItemDefinition;
+  @Input() equipment!: ActionableItemView;
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
   constructor() {
@@ -19,7 +19,7 @@ export class EquipmentWidgetComponent {
 
   onActionSelected(action: ActionableDefinition): void {
     this.actionSelected.emit(
-      new ActionableEvent(action, this.equipment.item.name)
+      new ActionableEvent(action, this.equipment.item.identity.name)
     );
   }
 }

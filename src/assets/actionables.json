@@ -76,6 +76,12 @@
       "name": "masterKey",
       "actionable": "PICK",
       "label": "Master Key"
+    },
+    {
+      "key": "glock17",
+      "name": "g17",
+      "actionable": "PICK",
+      "label": "Glock 17"
     }
   ]
 }

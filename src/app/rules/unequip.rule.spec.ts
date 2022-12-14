@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createUnEquippedLogMessage } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
@@ -13,7 +12,11 @@ import {
   mockedInventoryService,
   setupMocks,
 } from '../../../tests/mocks';
-import { unDodgeableAxe } from '../../../tests/fakes';
+import {
+  actionUnEquip,
+  playerInfo,
+  unDodgeableAxe,
+} from '../../../tests/fakes';
 
 describe('UnEquipRule', () => {
   let service: UnEquipRule;
@@ -39,17 +42,17 @@ describe('UnEquipRule', () => {
 
   describe('execute', () => {
     it('return logs', () => {
-      when(mockedInventoryService.store('player', unDodgeableAxe)).thenReturn(
-        1
-      );
+      when(
+        mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
+      ).thenReturn(1);
 
       when(mockedPlayerEntity.unEquip()).thenReturn(unDodgeableAxe);
 
       const logs = service.execute(
         instance(mockedPlayerEntity),
         new ActionableEvent(
-          createActionableDefinition('UNEQUIP', 'unequip', 'Sword'),
-          'someId'
+          actionUnEquip(unDodgeableAxe.identity.label),
+          unDodgeableAxe.identity.name
         )
       );
 
@@ -60,4 +63,7 @@ describe('UnEquipRule', () => {
   });
 });
 
-const log = createUnEquippedLogMessage('player', 'Sword');
+const log = createUnEquippedLogMessage(
+  playerInfo.name,
+  unDodgeableAxe.identity.label
+);

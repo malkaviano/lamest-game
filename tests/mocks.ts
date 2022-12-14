@@ -1,3 +1,4 @@
+import { of } from 'rxjs';
 import { instance, mock, reset, when } from 'ts-mockito';
 
 import { ActorBehavior } from '../src/app/behaviors/actor.behavior';
@@ -38,6 +39,7 @@ import { StatesStore } from '../src/app/stores/states.store';
 
 import {
   fakeCharacteristics,
+  fakeCharacterSheet,
   fakeDerivedAttributes,
   fakeIdentity,
   fakeSkills,
@@ -45,6 +47,12 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
+import { GameBridgeService } from '../src/app/services/game-bridge.service';
+import { GameEventsDefinition } from '../src/app/definitions/game-events.definition';
+import { SceneDefinition } from '../src/app/definitions/scene.definition';
+import { ArrayView } from '../src/app/views/array.view';
+import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
+import { MagazineBehavior } from '../src/app/behaviors/magazine.behavior';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -120,6 +128,14 @@ export const mockedSceneEntity = mock(SceneEntity);
 
 export const mockedUseRule = mock(UseRule);
 
+export const mockedGameBridgeService = mock(GameBridgeService);
+
+export const mockedGameEventsService = mock(GameEventsDefinition);
+
+export const mockedWithSubscriptionHelper = mock(WithSubscriptionHelper);
+
+export const mockedMagazineBehavior = mock(MagazineBehavior);
+
 export const setupMocks = () => {
   resetMocks();
 
@@ -188,8 +204,8 @@ export const setupMocks = () => {
     consumables: [],
   });
 
-  when(mockedResourcesStore.propsStore).thenReturn({
-    props: [],
+  when(mockedResourcesStore.usablesStore).thenReturn({
+    usables: [],
   });
 
   when(mockedResourcesStore.skillStateStore).thenReturn({
@@ -217,6 +233,29 @@ export const setupMocks = () => {
   when(mockedGeneratorService.characteristics()).thenReturn(
     fakeCharacteristics
   );
+
+  when(mockedGameBridgeService.events).thenReturn(
+    instance(mockedGameEventsService)
+  );
+
+  when(mockedGameEventsService.characterChanged$).thenReturn(
+    of(instance(mockedPlayerEntity))
+  );
+
+  when(mockedGameEventsService.sceneChanged$).thenReturn(
+    of(
+      new SceneDefinition(
+        new ArrayView(['this is a test', 'okay okay']),
+        new ArrayView([instance(mockedInteractiveEntity)])
+      )
+    )
+  );
+
+  when(
+    mockedConverterHelper.characterToKeyValueDescription(
+      instance(mockedPlayerEntity)
+    )
+  ).thenReturn(fakeCharacterSheet);
 };
 
 const resetMocks = () => {
@@ -283,4 +322,12 @@ const resetMocks = () => {
   reset(mockedSceneEntity);
 
   reset(mockedUseRule);
+
+  reset(mockedGameBridgeService);
+
+  reset(mockedGameEventsService);
+
+  reset(mockedWithSubscriptionHelper);
+
+  reset(mockedMagazineBehavior);
 };

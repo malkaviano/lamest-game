@@ -1,7 +1,5 @@
-import {
-  unarmedWeapon,
-  WeaponDefinition,
-} from '../definitions/weapon.definition';
+import { WeaponDefinition } from '../definitions/weapon.definition';
+import { unarmedWeapon } from '../value-objects/weapons/manual-weapon.vobject';
 
 export class EquipmentBehavior {
   private weapon: WeaponDefinition | null;

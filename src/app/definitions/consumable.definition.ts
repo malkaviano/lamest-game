@@ -1,14 +1,13 @@
 import { SkillNameLiteral } from '../literals/skill-name.literal';
+import { ItemIdentityDefinition } from './item-identity.definition';
 import { GameItemDefinition } from './game-item.definition';
 
 export class ConsumableDefinition extends GameItemDefinition {
   constructor(
-    name: string,
-    label: string,
-    description: string,
+    identity: ItemIdentityDefinition,
     public readonly hp: number,
     public readonly skillName?: SkillNameLiteral
   ) {
-    super('CONSUMABLE', name, label, description);
+    super('CONSUMABLE', identity);
   }
 }

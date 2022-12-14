@@ -56,7 +56,9 @@ export class ConsumeRule implements RuleInterface {
     }
 
     if (rollDefinition.result !== 'IMPOSSIBLE') {
-      logs.push(createConsumedLogMessage(actor.name, consumable.label));
+      logs.push(
+        createConsumedLogMessage(actor.name, consumable.identity.label)
+      );
 
       if (rollDefinition.result !== 'NONE' && consumable.skillName) {
         logs.push(

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ActionableItemDefinition } from '../../definitions/actionable-item.definition';
+import { ActionableItemView } from '../../views/actionable-item.view';
 import { CharacterValuesDefinition } from '../../definitions/character-values.definition';
 import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
@@ -21,7 +21,7 @@ export class GameLayoutComponent {
 
   @Input() characterValues!: CharacterValuesDefinition;
 
-  @Input() inventory!: ActionableItemDefinition[];
+  @Input() inventory!: ActionableItemView[];
 
   @Input() equipped!: GameItemDefinition;
 

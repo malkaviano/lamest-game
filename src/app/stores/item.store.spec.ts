@@ -34,9 +34,11 @@ describe('ItemStore', () => {
 
     when(mockedConverterHelper.mapToKeyValueInterface(anything())).thenReturn({
       knife: {
-        name: 'knife',
-        label: 'Hunting Knife',
-        description: 'gg',
+        identity: {
+          name: 'knife',
+          label: 'Hunting Knife',
+          description: 'gg',
+        },
         dodgeable: true,
         skillName: 'Melee Weapon (Simple)',
         damage: {
@@ -45,9 +47,11 @@ describe('ItemStore', () => {
         },
       },
       bubbleGum: {
-        name: 'bubbleGum',
-        label: 'Bubble Gum',
-        description: 'gg',
+        identity: {
+          name: 'bubbleGum',
+          label: 'Bubble Gum',
+          description: 'gg',
+        },
       },
     });
 

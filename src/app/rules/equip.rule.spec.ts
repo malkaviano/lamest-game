@@ -2,13 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import {
   createEquipErrorLogMessage,
   createEquippedLogMessage,
   createUnEquippedLogMessage,
 } from '../definitions/log-message.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from '../stores/item.store';
 import { EquipRule } from './equip.rule';
@@ -19,7 +17,12 @@ import {
   mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
-import { greatSword, simpleSword } from '../../../tests/fakes';
+import {
+  actionableEvent,
+  actionEquip,
+  greatSword,
+  simpleSword,
+} from '../../../tests/fakes';
 
 describe('EquipRule', () => {
   let service: EquipRule;
@@ -51,7 +54,7 @@ describe('EquipRule', () => {
     );
 
     when(mockedItemStore.itemLabel(eventNoSkill.eventId)).thenReturn(
-      greatSword.label
+      greatSword.identity.label
     );
 
     service = TestBed.inject(EquipRule);
@@ -81,7 +84,7 @@ describe('EquipRule', () => {
     describe('when a previous weapon was equipped', () => {
       it('return logs', () => {
         when(
-          mockedInventoryService.take('player', simpleSword.name)
+          mockedInventoryService.take('player', simpleSword.identity.name)
         ).thenReturn(simpleSword);
 
         const result = service.execute(instance(mockedPlayerEntity), eventOk);
@@ -95,7 +98,7 @@ describe('EquipRule', () => {
         let result = 0;
 
         when(
-          mockedInventoryService.take('player', simpleSword.name)
+          mockedInventoryService.take('player', simpleSword.identity.name)
         ).thenReturn(simpleSword);
 
         when(mockedInventoryService.store('player', simpleSword)).thenCall(
@@ -123,22 +126,19 @@ describe('EquipRule', () => {
   });
 });
 
-const eventOk = new ActionableEvent(
-  createActionableDefinition('EQUIP', 'equip', 'Equip'),
-  simpleSword.name
+const eventOk = actionableEvent(actionEquip, simpleSword.identity.name);
+
+const eventNoSkill = actionableEvent(actionEquip, greatSword.identity.name);
+
+const logEquip = createEquippedLogMessage('player', simpleSword.identity.label);
+
+const logUnEquip = createUnEquippedLogMessage(
+  'player',
+  simpleSword.identity.label
 );
-
-const eventNoSkill = new ActionableEvent(
-  createActionableDefinition('EQUIP', 'equip', 'Equip'),
-  greatSword.name
-);
-
-const logEquip = createEquippedLogMessage('player', simpleSword.label);
-
-const logUnEquip = createUnEquippedLogMessage('player', simpleSword.label);
 
 const logError = createEquipErrorLogMessage(
   'player',
   greatSword.skillName,
-  greatSword.label
+  greatSword.identity.label
 );

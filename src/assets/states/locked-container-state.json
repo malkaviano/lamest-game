@@ -8,7 +8,7 @@
     {
       "id": "lockPickingChest",
       "actionables": ["useMasterKey"],
-      "openedState": "emptyState",
+      "openedState": "lockPickingChestLoot",
       "lockPicking": {
         "complexity": 3,
         "maximumTries": 4

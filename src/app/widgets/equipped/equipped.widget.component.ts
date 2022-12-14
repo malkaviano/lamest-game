@@ -19,8 +19,8 @@ export class EquippedWidgetComponent {
   onActionSelected(item: GameItemDefinition): void {
     this.actionSelected.emit(
       new ActionableEvent(
-        createActionableDefinition('UNEQUIP', 'unequip', item.label),
-        item.name
+        createActionableDefinition('UNEQUIP', 'unequip', item.identity.label),
+        item.identity.name
       )
     );
   }

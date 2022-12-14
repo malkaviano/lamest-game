@@ -1,6 +1,8 @@
 import { Dice } from '../definitions/dice.definition';
+import { WeaponCaliberLiteral } from '../literals/weapon-caliber.literal';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
+import { ReloadMechanismLiteral } from '../literals/reload-mechanism.literal';
 
 export interface WeaponStoreInterface {
   readonly weapons: {
@@ -14,5 +16,9 @@ export interface WeaponStoreInterface {
     };
     readonly dodgeable: boolean;
     readonly usability: WeaponUsabilityLiteral;
+    readonly munition?: {
+      caliber: WeaponCaliberLiteral;
+      reload: ReloadMechanismLiteral;
+    };
   }[];
 }

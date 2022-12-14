@@ -1,7 +1,7 @@
-<div class="card-box" matTooltip="{{ equipment.item.description }}">
+<div class="card-box" matTooltip="{{ equipment.item.identity.description }}">
   <div class="label">
-    <span attr.data-testid="equip-label-{{ equipment.item.name }}">{{
-      equipment.item.label
+    <span attr.data-testid="equip-label-{{ equipment.item.identity.name }}">{{
+      equipment.item.identity.label
     }}</span>
   </div>
   <div class="action" *ngIf="equipment.action.actionable !== 'NOOP'">

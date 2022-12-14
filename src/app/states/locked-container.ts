@@ -28,7 +28,7 @@ export class LockedContainerState extends ActionableState {
     ) {
       return {
         state: this.openedState.value,
-        log: createOpenedUsingMessage(item.label),
+        log: createOpenedUsingMessage(item.identity.label),
       };
     }
     return { state: this };

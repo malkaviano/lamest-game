@@ -3,5 +3,4 @@ export type InventoryLiteral =
   | 'STORE'
   | 'EQUIP'
   | 'UNEQUIP'
-  | 'CONSUME'
-  | 'DISPOSE';
+  | 'CONSUME';
