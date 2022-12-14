@@ -1,10 +1,10 @@
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
-import { skillDefinitions } from '../definitions/skill.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
+import { SkillStore } from '../stores/skill.store';
 
 export class ActorBehavior {
   private readonly maximumHP: number;
@@ -17,7 +17,8 @@ export class ActorBehavior {
 
   constructor(
     private readonly mCharacteristics: CharacteristicSetDefinition,
-    private readonly mSkills: Map<string, number>
+    private readonly mSkills: Map<string, number>,
+    private readonly skillStore: SkillStore
   ) {
     this.maximumHP = Math.trunc(
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
@@ -45,7 +46,7 @@ export class ActorBehavior {
   public get skills(): KeyValueInterface<number> {
     return Array.from(this.mSkills.entries()).reduce(
       (acc: { [key: string]: number }, [k, v]) => {
-        const base = skillDefinitions[k].base(this.characteristics);
+        const base = this.skillStore.skills[k].base(this.characteristics);
 
         acc[k] = v + base;
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ArrayView } from '../../views/array.view';
 import { KeyValueDescriptionDefinition } from '../../definitions/key-value-description.definition';
-import { ConverterHelper } from '../../helpers/converter.helper';
 import { CharacterService } from '../../services/character.service';
+import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 
 @Component({
   selector: 'app-character-page',
@@ -18,14 +18,14 @@ export class CharacterPageComponent implements OnInit {
 
   constructor(
     private readonly characterService: CharacterService,
-    private readonly converterHelper: ConverterHelper
+    private readonly formatterHelperService: FormatterHelperService
   ) {}
 
   ngOnInit(): void {
     const character = this.characterService.randomCharacter;
 
     const characterValues =
-      this.converterHelper.characterToKeyValueDescription(character);
+      this.formatterHelperService.characterToKeyValueDescription(character);
 
     this.identityView = characterValues.identity;
 

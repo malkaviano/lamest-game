@@ -13,10 +13,9 @@ import { ActionableEvent } from '../../events/actionable.event';
 import { ActionableItemView } from '../../views/actionable-item.view';
 import { createTookLogMessage } from '../../definitions/log-message.definition';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ConverterHelper } from '../../helpers/converter.helper';
 
 import {
-  mockedConverterHelper,
+  mockedFormatterHelperService,
   mockedGameBridgeService,
   mockedGameEventsService,
   mockedInteractiveEntity,
@@ -34,6 +33,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
+import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;
@@ -55,8 +55,8 @@ describe('GamePageComponent', () => {
           useValue: instance(mockedWithSubscriptionHelper),
         },
         {
-          provide: ConverterHelper,
-          useValue: instance(mockedConverterHelper),
+          provide: FormatterHelperService,
+          useValue: instance(mockedFormatterHelperService),
         },
       ],
     }).compileComponents();

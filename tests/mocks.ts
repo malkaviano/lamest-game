@@ -43,6 +43,7 @@ import {
   fakeDerivedAttributes,
   fakeIdentity,
   fakeSkills,
+  fakeSkillStore,
   interactiveInfo,
   playerInfo,
   simpleSword,
@@ -55,6 +56,8 @@ import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.hel
 import { ProfessionStore } from '../src/app/stores/profession.store';
 import { DescriptionStore } from '../src/app/stores/description.store';
 import { ActorStore } from '../src/app/stores/actor.store';
+import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
+import { SkillStore } from '../src/app/stores/skill.store';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -142,10 +145,18 @@ export const mockedDescriptionStore = mock(DescriptionStore);
 
 export const mockedActorStore = mock(ActorStore);
 
+export const mockedFormatterHelperService = mock(FormatterHelperService);
+
+export const mockedSkillStore = mock(SkillStore);
+
 export const setupMocks = () => {
   resetMocks();
 
   when(mockedCharacterService.currentCharacter).thenReturn(
+    instance(mockedPlayerEntity)
+  );
+
+  when(mockedCharacterService.randomCharacter).thenReturn(
     instance(mockedPlayerEntity)
   );
 
@@ -262,10 +273,12 @@ export const setupMocks = () => {
   );
 
   when(
-    mockedConverterHelper.characterToKeyValueDescription(
+    mockedFormatterHelperService.characterToKeyValueDescription(
       instance(mockedPlayerEntity)
     )
   ).thenReturn(fakeCharacterSheet);
+
+  when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
 };
 
 const resetMocks = () => {
@@ -344,4 +357,8 @@ const resetMocks = () => {
   reset(mockedDescriptionStore);
 
   reset(mockedActorStore);
+
+  reset(mockedFormatterHelperService);
+
+  reset(mockedSkillStore);
 };

@@ -2,8 +2,18 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+import { instance } from 'ts-mockito';
+
 import { MaterialModule } from '../../../material/material.module';
+import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { CharacterPageComponent } from './character.page.component';
+import { CharacterService } from '../../services/character.service';
+
+import {
+  mockedCharacterService,
+  mockedFormatterHelperService,
+  setupMocks,
+} from '../../../../tests/mocks';
 
 describe('CharacterPageComponent', () => {
   let component: CharacterPageComponent;
@@ -14,7 +24,19 @@ describe('CharacterPageComponent', () => {
       declarations: [CharacterPageComponent],
       imports: [MaterialModule, NoopAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {
+          provide: CharacterService,
+          useValue: instance(mockedCharacterService),
+        },
+        {
+          provide: FormatterHelperService,
+          useValue: instance(mockedFormatterHelperService),
+        },
+      ],
     }).compileComponents();
+
+    setupMocks();
 
     fixture = TestBed.createComponent(CharacterPageComponent);
     component = fixture.componentInstance;

@@ -22,6 +22,10 @@ import { ItemIdentityDefinition } from '../src/app/definitions/item-identity.def
 import { ActionableItemView } from '../src/app/views/actionable-item.view';
 import { GameItemDefinition } from '../src/app/definitions/game-item.definition';
 import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
+import {
+  influencedDefinitions,
+  SkillDefinition,
+} from '../src/app/definitions/skill.definition';
 
 export const playerInfo = { id: 'player', name: 'player' };
 
@@ -122,6 +126,30 @@ export const fakeSkills: KeyValueInterface<number> = {
   'First Aid': 45,
   'Melee Weapon (Simple)': 45,
   Brawl: 45,
+};
+
+export const fakeSkillStore: KeyValueInterface<SkillDefinition> = {
+  'First Aid': new SkillDefinition(
+    'First Aid',
+    'Use emergency kit to heal',
+    'NATURAL',
+    false,
+    influencedDefinitions['justInt']
+  ),
+  'Melee Weapon (Simple)': new SkillDefinition(
+    'Melee Weapon (Simple)',
+    'Light close combat weapons, one handed',
+    'NATURAL',
+    true,
+    influencedDefinitions['justStr']
+  ),
+  Brawl: new SkillDefinition(
+    'Brawl',
+    'Fighting unarmed',
+    'NATURAL',
+    true,
+    influencedDefinitions['justStr']
+  ),
 };
 
 export const fakeMapSkills: Map<string, number> = new Map<string, number>([

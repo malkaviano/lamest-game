@@ -5,10 +5,10 @@ import { CharacterValuesDefinition } from '../../definitions/character-values.de
 import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
-import { ConverterHelper } from '../../helpers/converter.helper';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameBridgeService } from '../../services/game-bridge.service';
 import { ArrayView } from '../../views/array.view';
+import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 
 @Component({
   selector: 'app-game-page',
@@ -30,7 +30,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly gameManagerService: GameBridgeService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
-    private readonly converterHelper: ConverterHelper
+    private readonly formatterHelperService: FormatterHelperService
   ) {
     this.gameLogs = [];
 
@@ -55,7 +55,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
       this.gameManagerService.events.characterChanged$.subscribe(
         (character) => {
           this.characterValues =
-            this.converterHelper.characterToKeyValueDescription(character);
+            this.formatterHelperService.characterToKeyValueDescription(
+              character
+            );
           this.equipped = character.weaponEquipped;
         }
       )

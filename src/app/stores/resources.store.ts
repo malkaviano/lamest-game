@@ -38,6 +38,9 @@ import actorStore from '../../assets/actors.json';
 import usablesStore from '../../assets/items/usables.json';
 import lockedContainerStateStore from '../../assets/states/locked-container-state.json';
 import professionStore from '../../assets/professions.json';
+import skillStore from '../../assets/skills.json';
+import { SkillStoreInterface } from '../interfaces/stores/skill-store.interface';
+import { SkillAffinityLiteral } from '../literals/skill-category.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -74,6 +77,8 @@ export class ResourcesStore {
   public readonly lockedContainerStateStore: LockedContainerStateStoreInterface;
 
   public readonly professionStore: ProfessionStoreInterface;
+
+  public readonly skillStore: SkillStoreInterface;
 
   constructor() {
     this.sceneStore = sceneStore;
@@ -160,5 +165,16 @@ export class ResourcesStore {
     this.lockedContainerStateStore = lockedContainerStateStore;
 
     this.professionStore = professionStore;
+
+    const skills = skillStore.skills.map((s) => {
+      return {
+        name: s.name,
+        description: s.description,
+        affinity: s.affinity as SkillAffinityLiteral,
+        combat: s.combat,
+        influenced: s.influenced,
+      };
+    });
+    this.skillStore = { skills };
   }
 }

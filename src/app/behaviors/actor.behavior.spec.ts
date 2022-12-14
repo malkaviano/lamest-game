@@ -1,3 +1,5 @@
+import { instance } from 'ts-mockito';
+
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { ActorBehavior } from './actor.behavior';
 
@@ -6,8 +8,13 @@ import {
   fakeDerivedAttributes,
   fakeMapSkills,
 } from '../../../tests/fakes';
+import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
 
 describe('ActorBehavior', () => {
+  beforeEach(() => {
+    setupMocks();
+  });
+
   describe('characteristics', () => {
     it('return characteristics', () => {
       expect(fakeBehavior().characteristics).toEqual(fakeCharacteristics);
@@ -72,4 +79,8 @@ describe('ActorBehavior', () => {
 });
 
 const fakeBehavior = () =>
-  new ActorBehavior(fakeCharacteristics, fakeMapSkills);
+  new ActorBehavior(
+    fakeCharacteristics,
+    fakeMapSkills,
+    instance(mockedSkillStore)
+  );

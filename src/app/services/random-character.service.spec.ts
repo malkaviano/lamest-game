@@ -16,9 +16,11 @@ import {
   mockedGeneratorService,
   mockedProfessionStore,
   mockedSkillService,
+  mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
 import { fakeCharacteristics, fakeIdentity } from '../../../tests/fakes';
+import { SkillStore } from '../stores/skill.store';
 
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
@@ -38,6 +40,10 @@ describe('RandomCharacterService', () => {
           provide: ProfessionStore,
           useValue: instance(mockedProfessionStore),
         },
+        {
+          provide: SkillStore,
+          useValue: instance(mockedSkillStore),
+        },
       ],
     });
 
@@ -46,6 +52,8 @@ describe('RandomCharacterService', () => {
     when(mockedProfessionStore.professions).thenReturn({
       'Police Detective': new ArrayView([]),
     });
+
+    when(mockedSkillStore.naturalSkills).thenReturn(new ArrayView([]));
 
     service = TestBed.inject(RandomCharacterService);
   });
@@ -97,7 +105,11 @@ describe('RandomCharacterService', () => {
 
       const expectedCharacter = new PlayerEntity(
         fakeIdentity,
-        new ActorBehavior(fakeCharacteristics, distributedSkills),
+        new ActorBehavior(
+          fakeCharacteristics,
+          distributedSkills,
+          instance(mockedSkillStore)
+        ),
         new EquipmentBehavior()
       );
 

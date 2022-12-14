@@ -12,8 +12,11 @@ import {
   mockedConverterHelper,
   mockedItemStore,
   mockedResourcesStore,
+  mockedSkillStore,
   mockedStatesStore,
+  setupMocks,
 } from '../../../tests/mocks';
+import { SkillStore } from './skill.store';
 
 describe('ActorStore', () => {
   let service: ActorStore;
@@ -37,8 +40,14 @@ describe('ActorStore', () => {
           provide: ItemStore,
           useValue: instance(mockedItemStore),
         },
+        {
+          provide: SkillStore,
+          useValue: instance(mockedSkillStore),
+        },
       ],
     });
+
+    setupMocks();
 
     when(mockedResourcesStore.actorStore).thenReturn({
       actors: [],

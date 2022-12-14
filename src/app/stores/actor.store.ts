@@ -9,6 +9,7 @@ import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
+import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
 
 @Injectable({
@@ -21,7 +22,8 @@ export class ActorStore {
     private readonly converterHelper: ConverterHelper,
     stateStore: StatesStore,
     resourcesStore: ResourcesStore,
-    itemStore: ItemStore
+    itemStore: ItemStore,
+    skillStore: SkillStore
   ) {
     this.store = new Map<string, ActorEntity>();
 
@@ -41,7 +43,7 @@ export class ActorStore {
           new ActorIdentityDefinition(id, name, description),
           stateStore.states[behaviorState],
           resettable,
-          new ActorBehavior(characteristics, skills),
+          new ActorBehavior(characteristics, skills, skillStore),
           new EquipmentBehavior(),
           stateStore.states[killedState]
         );
