@@ -21,6 +21,7 @@ import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
 import { ActorStoreInterface } from '../interfaces/actor-store.interface';
 import { UsablesStoreInterface } from '../interfaces/item-store.interface';
 import { LockedContainerStateStoreInterface } from '../interfaces/locked-container-state-store';
+import { ProfessionStoreInterface } from '../interfaces/stores/profession-store.interface';
 
 import sceneStore from '../../assets/scenes.json';
 import skillStateStore from '../../assets/states/skill-states.json';
@@ -37,6 +38,7 @@ import messageStore from '../../assets/messages.json';
 import actorStore from '../../assets/actors.json';
 import usablesStore from '../../assets/items/usables.json';
 import lockedContainerStateStore from '../../assets/states/locked-container-state.json';
+import professionStore from '../../assets/professions.json';
 
 @Injectable({
   providedIn: 'root',
@@ -71,6 +73,8 @@ export class ResourcesStore {
   public readonly usablesStore: UsablesStoreInterface;
 
   public readonly lockedContainerStateStore: LockedContainerStateStoreInterface;
+
+  public readonly professionStore: ProfessionStoreInterface;
 
   constructor() {
     this.sceneStore = sceneStore;
@@ -165,5 +169,14 @@ export class ResourcesStore {
     this.usablesStore = usablesStore;
 
     this.lockedContainerStateStore = lockedContainerStateStore;
+
+    const professions = professionStore.professions.map((p) => {
+      return {
+        name: p.name,
+        skills: p.skills.map((s) => s as SkillNameLiteral),
+      };
+    });
+
+    this.professionStore = { professions };
   }
 }

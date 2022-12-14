@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { GeneratorService } from './generator.service';
 import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { SkillService } from './skill.service';
-import { professionSkillDefinitions } from '../definitions/profession.definition';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { commonSkillDefinitions } from '../definitions/skill.definition';
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
+import { ProfessionStore } from '../stores/profession.store';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,8 @@ import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 export class RandomCharacterService {
   constructor(
     private readonly generator: GeneratorService,
-    private readonly skillService: SkillService
+    private readonly skillService: SkillService,
+    private readonly professionStore: ProfessionStore
   ) {}
 
   public character(): PlayerEntity {
@@ -46,7 +47,7 @@ export class RandomCharacterService {
     profession: string,
     intelligence: number
   ): Map<SkillNameLiteral, number> {
-    const professionSkills = professionSkillDefinitions[profession];
+    const professionSkills = this.professionStore.professions[profession];
 
     const distributedSkills = this.skillService.distribute(
       this.skillService.newSkillSetFor(professionSkills),

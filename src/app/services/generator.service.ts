@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
 import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { professions } from '../definitions/profession.definition';
 import { AgeLiteral, ages } from '../literals/age.literal';
 import { HeightLiteral, heights } from '../literals/height.literal';
 import { RaceLiteral, races } from '../literals/race.literal';
@@ -11,12 +10,16 @@ import { WeightLiteral, weights } from '../literals/weight.literal';
 import { RandomIntService } from './random-int.service';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DirectionLiteral } from '../literals/direction.literal';
+import { ProfessionStore } from '../stores/profession.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GeneratorService {
-  constructor(private readonly randomIntService: RandomIntService) {}
+  constructor(
+    private readonly randomIntService: RandomIntService,
+    private readonly professionStore: ProfessionStore
+  ) {}
 
   public characteristics(): CharacteristicSetDefinition {
     return {
@@ -88,12 +91,11 @@ export class GeneratorService {
   }
 
   private profession(): string {
-    const index = this.randomIntService.getRandomInterval(
-      0,
-      professions.items.length - 1
-    );
+    const keys = Object.keys(this.professionStore.professions);
 
-    return professions.items[index];
+    const index = this.randomIntService.getRandomInterval(0, keys.length - 1);
+
+    return keys[index];
   }
 
   private name(): string {

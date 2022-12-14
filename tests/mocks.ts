@@ -52,6 +52,7 @@ import { GameEventsDefinition } from '../src/app/definitions/game-events.definit
 import { SceneDefinition } from '../src/app/definitions/scene.definition';
 import { ArrayView } from '../src/app/views/array.view';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
+import { ProfessionStore } from '../src/app/stores/profession.store';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -132,6 +133,8 @@ export const mockedGameBridgeService = mock(GameBridgeService);
 export const mockedGameEventsService = mock(GameEventsDefinition);
 
 export const mockedWithSubscriptionHelper = mock(WithSubscriptionHelper);
+
+export const mockedProfessionStore = mock(ProfessionStore);
 
 export const setupMocks = () => {
   resetMocks();
@@ -223,6 +226,10 @@ export const setupMocks = () => {
 
   when(mockedResourcesStore.lockedContainerStateStore).thenReturn({
     states: [],
+  });
+
+  when(mockedResourcesStore.professionStore).thenReturn({
+    professions: [],
   });
 
   when(mockedGeneratorService.identity()).thenReturn(fakeIdentity);
@@ -325,4 +332,6 @@ const resetMocks = () => {
   reset(mockedGameEventsService);
 
   reset(mockedWithSubscriptionHelper);
+
+  reset(mockedProfessionStore);
 };

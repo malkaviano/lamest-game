@@ -4,7 +4,6 @@ import { anyNumber, instance, when } from 'ts-mockito';
 
 import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { professions } from '../definitions/profession.definition';
 import { ages } from '../literals/age.literal';
 import { heights } from '../literals/height.literal';
 import { races } from '../literals/race.literal';
@@ -12,8 +11,14 @@ import { weights } from '../literals/weight.literal';
 import { GeneratorService } from './generator.service';
 import { RandomIntService } from './random-int.service';
 import { DirectionLiteral } from '../literals/direction.literal';
+import { ProfessionStore } from '../stores/profession.store';
+import { ArrayView } from '../views/array.view';
 
-import { mockedRandomIntService, setupMocks } from '../../../tests/mocks';
+import {
+  mockedProfessionStore,
+  mockedRandomIntService,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('GeneratorService', () => {
   let service: GeneratorService;
@@ -25,10 +30,18 @@ describe('GeneratorService', () => {
           provide: RandomIntService,
           useValue: instance(mockedRandomIntService),
         },
+        {
+          provide: ProfessionStore,
+          useValue: instance(mockedProfessionStore),
+        },
       ],
     });
 
     setupMocks();
+
+    when(mockedProfessionStore.professions).thenReturn({
+      'Police Detective': new ArrayView([]),
+    });
 
     service = TestBed.inject(GeneratorService);
   });
@@ -104,7 +117,7 @@ const expectedCharacteristics = {
 
 const expectedIdentity = new CharacterIdentityDefinition(
   'Alice Shields',
-  professions.items[0],
+  'Police Detective',
   ages[0],
   races[0],
   heights[0],

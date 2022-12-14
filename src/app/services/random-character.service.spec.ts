@@ -9,9 +9,12 @@ import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { SkillService } from './skill.service';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
+import { ProfessionStore } from '../stores/profession.store';
+import { ArrayView } from '../views/array.view';
 
 import {
   mockedGeneratorService,
+  mockedProfessionStore,
   mockedSkillService,
   setupMocks,
 } from '../../../tests/mocks';
@@ -20,7 +23,7 @@ import { fakeCharacteristics, fakeIdentity } from '../../../tests/fakes';
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
 
-  beforeAll(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         {
@@ -31,10 +34,18 @@ describe('RandomCharacterService', () => {
           provide: SkillService,
           useValue: instance(mockedSkillService),
         },
+        {
+          provide: ProfessionStore,
+          useValue: instance(mockedProfessionStore),
+        },
       ],
     });
 
     setupMocks();
+
+    when(mockedProfessionStore.professions).thenReturn({
+      'Police Detective': new ArrayView([]),
+    });
 
     service = TestBed.inject(RandomCharacterService);
   });
