@@ -6,7 +6,6 @@ import { CharacteristicDefinition } from '../definitions/characteristic.definiti
 import { professions } from '../definitions/profession.definition';
 import { AgeLiteral, ages } from '../literals/age.literal';
 import { HeightLiteral, heights } from '../literals/height.literal';
-import { ProfessionLiteral } from '../literals/profession.literal';
 import { RaceLiteral, races } from '../literals/race.literal';
 import { WeightLiteral, weights } from '../literals/weight.literal';
 import { RandomIntService } from './random-int.service';
@@ -88,7 +87,7 @@ export class GeneratorService {
     return races[index];
   }
 
-  private profession(): ProfessionLiteral {
+  private profession(): string {
     const index = this.randomIntService.getRandomInterval(
       0,
       professions.items.length - 1

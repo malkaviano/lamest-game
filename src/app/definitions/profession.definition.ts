@@ -1,8 +1,8 @@
-import { ProfessionLiteral } from '../literals/profession.literal';
+import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { SkillNameLiteral } from '../literals/skill-name.literal';
 import { ArrayView } from '../views/array.view';
 
-export const professions: ArrayView<ProfessionLiteral> = new ArrayView([
+export const professions: ArrayView<string> = new ArrayView([
   'Police Detective',
   'Private investigator',
   'Hunter',
@@ -117,9 +117,9 @@ const scholar: ArrayView<SkillNameLiteral> = new ArrayView([
   'Knowledge (Religion)',
 ]);
 
-export const professionSkillDefinitions: {
-  [key in ProfessionLiteral]: ArrayView<SkillNameLiteral>;
-} = {
+export const professionSkillDefinitions: KeyValueInterface<
+  ArrayView<SkillNameLiteral>
+> = {
   'Police Detective': policeDetective,
   'Private investigator': privateInvestigator,
   Hunter: hunter,
