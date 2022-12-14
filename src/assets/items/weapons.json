@@ -76,7 +76,7 @@
     },
     {
       "name": "g17",
-      "label": "GLOCK 17",
+      "label": "Glock 17",
       "description": "9mm reliable handgun",
       "skillName": "Firearm (Handgun)",
       "damage": {
