@@ -84,14 +84,4 @@ describe('NarrativeService', () => {
       });
     });
   });
-
-  describe('interatives', () => {
-    it('return interactives from current scene', () => {
-      const result = service.interatives;
-
-      expect(result).toEqual({
-        id1: instance(mockedInteractiveEntity),
-      });
-    });
-  });
 });

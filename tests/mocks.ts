@@ -200,10 +200,13 @@ export const setupMocks = () => {
 
   Object.setPrototypeOf(instancePlayerEntity, ActorEntity.prototype);
 
-  when(mockedNarrativeService.interatives).thenReturn({
-    id1: instance(mockedInteractiveEntity),
-    actor: instanceActorEntity,
-  });
+  when(mockedNarrativeService.sceneChanged$).thenReturn(
+    of(instance(mockedSceneEntity))
+  );
+
+  when(mockedSceneEntity.interactives).thenReturn(
+    ArrayView.create([instance(mockedInteractiveEntity), instanceActorEntity])
+  );
 
   when(mockedActorBehavior.characteristics).thenReturn(fakeCharacteristics);
 

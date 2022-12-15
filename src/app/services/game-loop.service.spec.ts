@@ -21,7 +21,6 @@ import {
   mockedActorEntity,
   mockedCharacterService,
   mockedCombatRule,
-  mockedInteractiveEntity,
   mockedLoggingService,
   mockedNarrativeService,
   mockedPlayerEntity,
@@ -73,23 +72,23 @@ describe('GameLoopService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('reactives', () => {
-    describe('when interactive is the player', () => {
-      it('return player', () => {
-        const result = service.reactives('player');
+  // describe('reactives', () => {
+  //   describe('when interactive was the player', () => {
+  //     it('return player', () => {
+  //       const result = service.reactives(playerInfo.id);
 
-        expect(result).toEqual(instance(mockedPlayerEntity));
-      });
-    });
+  //       expect(result).toEqual(instance(mockedPlayerEntity));
+  //     });
+  //   });
 
-    describe('when interactive is interactive', () => {
-      it('return interactive', () => {
-        const result = service.reactives('id1');
+  //   describe('when interactive was interactive', () => {
+  //     it('return interactive', () => {
+  //       const result = service.reactives('id1');
 
-        expect(result).toEqual(instance(mockedInteractiveEntity));
-      });
-    });
-  });
+  //       expect(result).toEqual(instance(mockedInteractiveEntity));
+  //     });
+  //   });
+  // });
 
   describe('run', () => {
     it('return rule logs', () => {

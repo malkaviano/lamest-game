@@ -15,6 +15,7 @@ import { ActionReactive } from '../interfaces/action-reactive.interface';
 import { PlayerEntity } from '../entities/player.entity';
 import { LoggingService } from './logging.service';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
+import { SceneDefinition } from '../definitions/scene.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,12 @@ export class GameLoopService {
   };
 
   private readonly player: PlayerEntity;
+
+  private currentScene!: SceneDefinition;
+
+  private actionReactives: { [key: string]: ActionReactive };
+
+  private actors: ArrayView<ActorInterface>;
 
   constructor(
     private readonly rulesHelper: RulesHelper,
@@ -45,51 +52,27 @@ export class GameLoopService {
     };
 
     this.player = this.characterService.currentCharacter;
+
+    this.actionReactives = {};
+
+    this.actors = ArrayView.create([]);
+
+    this.narrativeService.sceneChanged$.subscribe((scene) => {
+      this.currentScene = scene;
+
+      this.setActionReactives();
+
+      this.setActors();
+    });
   }
 
-  public reactives(interactiveId: string): ActionReactive {
-    if (interactiveId === this.player.id) {
-      return this.player;
-    }
-
-    return this.narrativeService.interatives[interactiveId];
-  }
-
-  public get actors(): ArrayView<ActorInterface> {
-    const actors: ActorInterface[] = [];
-
-    Object.entries(this.narrativeService.interatives).forEach(
-      ([, interactive]) => {
-        if (interactive instanceof ActorEntity) {
-          actors.push(interactive);
-        }
-      }
-    );
-
-    actors.unshift(this.player);
-
-    return ArrayView.create(actors);
-  }
-
-  public get sceneActorsInfo(): ArrayView<SceneActorsInfoInterface> {
-    return ArrayView.create(
-      this.actors.items.map((a) => {
-        return {
-          id: a.id,
-          situation: a.situation,
-          classification: a.classification,
-        };
-      })
-    );
-  }
-
-  public run() {
+  public run(): void {
     if (this.isPlayerAlive()) {
       this.actors.items.forEach((actor) => {
         const action = actor.action(this.sceneActorsInfo);
 
         if (actor.situation === 'ALIVE' && action) {
-          const target = this.reactives(action.eventId);
+          const target = this.actionReactives[action.eventId];
 
           const resultLogs = this.dispatcher[
             action.actionableDefinition.actionable
@@ -115,5 +98,44 @@ export class GameLoopService {
 
   private isPlayerAlive(): boolean {
     return this.player.situation === 'ALIVE';
+  }
+
+  private setActionReactives(): void {
+    this.actionReactives = this.currentScene.interactives.items.reduce(
+      (map: { [key: string]: ActionReactive }, i) => {
+        map[i.id] = i;
+
+        return map;
+      },
+      {}
+    );
+
+    this.actionReactives[this.player.id] = this.player;
+  }
+
+  private setActors(): void {
+    const actors: ActorInterface[] = [];
+
+    this.currentScene.interactives.items.forEach((interactive) => {
+      if (interactive instanceof ActorEntity) {
+        actors.push(interactive);
+      }
+    });
+
+    actors.unshift(this.player);
+
+    this.actors = ArrayView.create(actors);
+  }
+
+  private get sceneActorsInfo(): ArrayView<SceneActorsInfoInterface> {
+    return ArrayView.create(
+      this.actors.items.map((a) => {
+        return {
+          id: a.id,
+          situation: a.situation,
+          classification: a.classification,
+        };
+      })
+    );
   }
 }
