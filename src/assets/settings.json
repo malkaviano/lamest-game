@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "professionPoints": 300,
+    "intelligencePoints": 10,
+    "playerEffectDefenses": {
+      "immunities": [],
+      "cures": [
+        "REMEDY",
+        "SACRED"
+      ],
+      "vulnerabilities": [],
+      "resistances": []
+    }
+  }
+}

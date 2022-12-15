@@ -54,7 +54,9 @@ describe('RandomCharacterService', () => {
       'Police Detective': new ArrayView([]),
     });
 
-    when(mockedSkillStore.naturalSkills).thenReturn(new ArrayView([]));
+    when(mockedSkillStore.naturalSkills).thenReturn(
+      new ArrayView(['Artillery', 'First Aid', 'Manipulation'])
+    );
 
     service = TestBed.inject(RandomCharacterService);
   });

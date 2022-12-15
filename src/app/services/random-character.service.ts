@@ -9,8 +9,7 @@ import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ProfessionStore } from '../stores/profession.store';
 import { SkillStore } from '../stores/skill.store';
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
-import { ArrayView } from '../views/array.view';
+import { SettingsStore } from '../stores/settings.store';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +19,8 @@ export class RandomCharacterService {
     private readonly generator: GeneratorService,
     private readonly skillService: SkillService,
     private readonly professionStore: ProfessionStore,
-    private readonly skillStore: SkillStore
+    private readonly skillStore: SkillStore,
+    private readonly settingsStore: SettingsStore
   ) {}
 
   public character(): PlayerEntity {
@@ -31,14 +31,9 @@ export class RandomCharacterService {
       identity,
       new ActorBehavior(
         characteristics,
-        this.skills(identity.profession, characteristics['INT'].value),
+        this.skills(identity.profession, characteristics.INT.value),
         this.skillStore,
-        {
-          immunities: new ArrayView<EffectTypeLiteral>([]),
-          cures: new ArrayView<EffectTypeLiteral>(['REMEDY', 'SACRED']),
-          vulnerabilities: new ArrayView<EffectTypeLiteral>([]),
-          resistances: new ArrayView<EffectTypeLiteral>([]),
-        }
+        this.settingsStore.settings.playerEffectDefenses
       ),
       new EquipmentBehavior()
     );
@@ -60,7 +55,7 @@ export class RandomCharacterService {
 
     const distributedSkills = this.skillService.distribute(
       this.skillService.newSkillSetFor(professionSkills),
-      300
+      this.settingsStore.settings.professionPoints
     );
 
     this.skillStore.naturalSkills.items.forEach((skillName) => {
@@ -71,7 +66,7 @@ export class RandomCharacterService {
 
     const distributedCharacterSkills = this.skillService.distribute(
       distributedSkills,
-      intelligence * 10
+      intelligence * this.settingsStore.settings.intelligencePoints
     );
 
     return distributedCharacterSkills;

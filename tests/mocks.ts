@@ -249,6 +249,19 @@ export const setupMocks = () => {
     professions: [],
   });
 
+  when(mockedResourcesStore.settingsStore).thenReturn({
+    settings: {
+      intelligencePoints: 10,
+      professionPoints: 300,
+      playerEffectDefenses: {
+        cures: new ArrayView([]),
+        immunities: new ArrayView([]),
+        resistances: new ArrayView([]),
+        vulnerabilities: new ArrayView([]),
+      },
+    },
+  });
+
   when(mockedGeneratorService.identity()).thenReturn(fakeIdentity);
 
   when(mockedGeneratorService.characteristics()).thenReturn(

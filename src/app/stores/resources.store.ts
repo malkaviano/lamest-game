@@ -24,6 +24,8 @@ import { ProfessionStoreInterface } from '../interfaces/stores/profession-store.
 import { SkillStoreInterface } from '../interfaces/stores/skill-store.interface';
 import { SkillAffinityLiteral } from '../literals/skill-category.literal';
 import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { SettingsStoreInterface } from '../interfaces/stores/settings-store.interface';
+import { ArrayView } from '../views/array.view';
 
 import sceneStore from '../../assets/scenes.json';
 import skillStateStore from '../../assets/states/skill-states.json';
@@ -42,7 +44,7 @@ import usablesStore from '../../assets/items/usables.json';
 import lockedContainerStateStore from '../../assets/states/locked-container-state.json';
 import professionStore from '../../assets/professions.json';
 import skillStore from '../../assets/skills.json';
-import { ArrayView } from '../views/array.view';
+import settingsStore from '../../assets/settings.json';
 
 @Injectable({
   providedIn: 'root',
@@ -81,6 +83,8 @@ export class ResourcesStore {
   public readonly professionStore: ProfessionStoreInterface;
 
   public readonly skillStore: SkillStoreInterface;
+
+  public readonly settingsStore: SettingsStoreInterface;
 
   constructor() {
     this.sceneStore = sceneStore;
@@ -193,6 +197,39 @@ export class ResourcesStore {
         influenced: s.influenced,
       };
     });
+
     this.skillStore = { skills };
+
+    const { professionPoints, intelligencePoints, playerEffectDefenses } =
+      settingsStore.settings;
+
+    const cures = new ArrayView(
+      playerEffectDefenses.cures.map((e) => e as EffectTypeLiteral)
+    );
+
+    const immunities = new ArrayView(
+      playerEffectDefenses.immunities.map((e) => e as EffectTypeLiteral)
+    );
+
+    const resistances = new ArrayView(
+      playerEffectDefenses.resistances.map((e) => e as EffectTypeLiteral)
+    );
+
+    const vulnerabilities = new ArrayView(
+      playerEffectDefenses.vulnerabilities.map((e) => e as EffectTypeLiteral)
+    );
+
+    this.settingsStore = {
+      settings: {
+        professionPoints,
+        intelligencePoints,
+        playerEffectDefenses: {
+          cures,
+          immunities,
+          resistances,
+          vulnerabilities,
+        },
+      },
+    };
   }
 }
