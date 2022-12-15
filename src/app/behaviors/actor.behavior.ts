@@ -76,12 +76,14 @@ export class ActorBehavior {
     let value = 0;
 
     if (!this.effectDefenses.immunities.items.includes(effectType)) {
-      if (this.effectDefenses.vulnerabilities.items.includes(effectType)) {
-        value = amount * this.effectCoeficients.vulnerabilityCoefficient * -1;
+      if (this.effectDefenses.cures.items.includes(effectType)) {
+        value = amount;
       } else if (this.effectDefenses.resistances.items.includes(effectType)) {
         value = amount * this.effectCoeficients.resistanceCoefficient * -1;
-      } else if (this.effectDefenses.cures.items.includes(effectType)) {
-        value = amount;
+      } else if (
+        this.effectDefenses.vulnerabilities.items.includes(effectType)
+      ) {
+        value = amount * this.effectCoeficients.vulnerabilityCoefficient * -1;
       } else {
         value = amount * -1;
       }
