@@ -200,8 +200,13 @@ export class ResourcesStore {
 
     this.skillStore = { skills };
 
-    const { professionPoints, intelligencePoints, playerEffectDefenses } =
-      settingsStore.settings;
+    const {
+      professionPoints,
+      intelligencePoints,
+      vulnerabilityCoefficient,
+      resistanceCoefficient,
+      playerEffectDefenses,
+    } = settingsStore.settings;
 
     const cures = ArrayView.create(
       playerEffectDefenses.cures.map((e) => e as EffectTypeLiteral)
@@ -223,6 +228,8 @@ export class ResourcesStore {
       settings: {
         professionPoints,
         intelligencePoints,
+        vulnerabilityCoefficient,
+        resistanceCoefficient,
         playerEffectDefenses: {
           cures,
           immunities,

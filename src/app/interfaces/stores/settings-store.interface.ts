@@ -5,6 +5,8 @@ export interface SettingsStoreInterface {
   readonly settings: {
     readonly professionPoints: number;
     readonly intelligencePoints: number;
+    readonly vulnerabilityCoefficient: number;
+    readonly resistanceCoefficient: number;
     readonly playerEffectDefenses: {
       readonly immunities: ArrayView<EffectTypeLiteral>;
       readonly cures: ArrayView<EffectTypeLiteral>;
