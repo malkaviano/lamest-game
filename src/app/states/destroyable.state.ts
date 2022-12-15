@@ -24,7 +24,7 @@ export class DestroyableState extends ActionableState {
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
     if (
-      action.actionable === 'ATTACK' &&
+      action.actionable === 'AFFECT' &&
       result === 'SUCCESS' &&
       values.effect
     ) {

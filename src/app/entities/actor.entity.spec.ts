@@ -146,7 +146,7 @@ describe('ActorEntity', () => {
       });
     });
 
-    describe('when heal received', () => {
+    describe('when consume', () => {
       ['SUCCESS', 'NONE'].forEach((result) => {
         describe(`heal was ${result}`, () => {
           it('return heal received', () => {

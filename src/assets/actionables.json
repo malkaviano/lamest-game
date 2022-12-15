@@ -12,10 +12,10 @@
       "actionable": "SKILL"
     },
     {
-      "key": "attack",
-      "name": "attack",
-      "actionable": "ATTACK",
-      "label": "Attack"
+      "key": "affect",
+      "name": "affect",
+      "actionable": "AFFECT",
+      "label": "Use Equipped"
     },
     {
       "key": "knife",

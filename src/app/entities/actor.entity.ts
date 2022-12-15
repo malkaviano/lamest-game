@@ -80,7 +80,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     if (player) {
       return new ActionableEvent(
-        createActionableDefinition('ATTACK', 'attack', 'Attack'),
+        createActionableDefinition('AFFECT', 'affect', 'Use Equipped'),
         player.id
       );
     }
@@ -134,7 +134,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     if (this.situation === 'ALIVE') {
       if (
         values.effect &&
-        ((actionable === 'ATTACK' && result === 'SUCCESS') ||
+        ((actionable === 'AFFECT' && result === 'SUCCESS') ||
           (actionable === 'CONSUME' && ['SUCCESS', 'NONE'].includes(result)))
       ) {
         const result = this.actorBehavior.effectReceived(values.effect);

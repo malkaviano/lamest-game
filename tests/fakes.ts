@@ -81,9 +81,9 @@ export const bubbleGum = new ConsumableDefinition(
 );
 
 export const actionAttack = createActionableDefinition(
-  'ATTACK',
-  'attack',
-  'Attack'
+  'AFFECT',
+  'affect',
+  'Use Equipped'
 );
 
 export const eventAttackInteractive = new ActionableEvent(

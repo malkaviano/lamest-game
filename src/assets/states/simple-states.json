@@ -14,11 +14,11 @@
     },
     {
       "id": "trainingDummy",
-      "actionables": ["attack"]
+      "actionables": ["affect"]
     },
     {
       "id": "zombie",
-      "actionables": ["attack"]
+      "actionables": ["affect"]
     }
   ]
 }

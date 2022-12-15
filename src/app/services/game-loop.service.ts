@@ -38,7 +38,7 @@ export class GameLoopService {
       EQUIP: this.rulesHelper.equipRule,
       UNEQUIP: this.rulesHelper.unequipRule,
       SCENE: this.rulesHelper.sceneRule,
-      ATTACK: this.rulesHelper.combatRule,
+      AFFECT: this.rulesHelper.combatRule,
       CONSUME: this.rulesHelper.consumableRule,
       INTERACTION: this.rulesHelper.interactionRule,
       USE: this.rulesHelper.useRule,

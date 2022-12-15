@@ -12,7 +12,7 @@ import {
   createLostLogMessage,
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
-import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActionReactive } from '../interfaces/action-reactive.interface';
@@ -85,26 +85,23 @@ export class CombatRule implements RuleInterface {
     }
 
     if (targetHit) {
-      this.applyDamage(damage, target, logs);
+      this.applyDamage(action.actionableDefinition, damage, target, logs);
     }
 
     return { logs };
   }
 
   private applyDamage(
+    action: ActionableDefinition,
     damage: DamageDefinition,
     target: ActionReactive,
     logs: LogMessageDefinition[]
   ) {
     const damageAmount = this.rollRule.roll(damage.diceRoll) + damage.fixed;
 
-    const log = target.reactTo(
-      createActionableDefinition('ATTACK', 'attack', 'Attack'),
-      'SUCCESS',
-      {
-        effect: new EffectReceivedDefinition(damage.effectType, damageAmount),
-      }
-    );
+    const log = target.reactTo(action, 'SUCCESS', {
+      effect: new EffectReceivedDefinition(damage.effectType, damageAmount),
+    });
 
     if (log) {
       logs.push(createFreeLogMessage(target.name, log));
