@@ -135,7 +135,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       if (
         values.effect &&
         ((actionable === 'ATTACK' && result === 'SUCCESS') ||
-          (actionable === 'HEAL' && ['SUCCESS', 'NONE'].includes(result)))
+          (actionable === 'CONSUME' && ['SUCCESS', 'NONE'].includes(result)))
       ) {
         const result = this.actorBehavior.effectReceived(values.effect);
 

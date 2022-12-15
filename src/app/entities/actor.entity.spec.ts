@@ -24,9 +24,9 @@ import {
   fakeSkills,
   fakeSceneActorsInfo,
   simpleSword,
-  actionHeal,
   actionAttack,
   fakeEffect,
+  actionConsume,
 } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
@@ -157,7 +157,7 @@ describe('ActorEntity', () => {
             ).thenReturn(new HitPointsEvent(4, 9));
 
             const log = fakeActor().reactTo(
-              actionHeal,
+              actionConsume,
               result as ResultLiteral,
               { effect: fakeEffect('REMEDY', 10) }
             );
@@ -181,7 +181,7 @@ describe('ActorEntity', () => {
             hpResult = event;
           });
 
-          char.reactTo(actionHeal, result as ResultLiteral, {
+          char.reactTo(actionConsume, result as ResultLiteral, {
             effect: fakeEffect('REMEDY', 5),
           });
 
@@ -195,7 +195,7 @@ describe('ActorEntity', () => {
         describe(`heal was ${result}`, () => {
           it('return nothing', () => {
             const log = fakeActor().reactTo(
-              actionHeal,
+              actionConsume,
               result as ResultLiteral,
               deepEqual({ effect: fakeEffect('REMEDY', 1) })
             );

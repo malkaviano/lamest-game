@@ -15,7 +15,6 @@ import {
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
 
@@ -34,7 +33,7 @@ export class ConsumeRule implements RuleInterface {
   ): RuleResultInterface {
     const logs: LogMessageDefinition[] = [];
 
-    const { eventId } = event;
+    const { actionableDefinition, eventId } = event;
 
     const consumable = this.inventoryService.take(actor.name, eventId);
 
@@ -69,13 +68,9 @@ export class ConsumeRule implements RuleInterface {
         );
       }
 
-      const log = actor.reactTo(
-        createActionableDefinition('HEAL', 'heal', 'Heal'),
-        rollDefinition.result,
-        {
-          effect: new EffectReceivedDefinition(consumable.effect, amount),
-        }
-      );
+      const log = actor.reactTo(actionableDefinition, rollDefinition.result, {
+        effect: new EffectReceivedDefinition(consumable.effect, amount),
+      });
 
       if (log) {
         logs.push(createFreeLogMessage(actor.name, log));

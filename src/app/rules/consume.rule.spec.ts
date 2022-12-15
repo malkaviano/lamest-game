@@ -23,7 +23,6 @@ import {
 } from '../../../tests/mocks';
 import {
   actionConsume,
-  actionHeal,
   consumableAnalgesic,
   consumableFirstAid,
   eventConsumeAnalgesic,
@@ -121,7 +120,7 @@ describe('ConsumeRule', () => {
 
           when(
             mockedPlayerEntity.reactTo(
-              deepEqual(actionHeal),
+              deepEqual(actionConsume),
               'SUCCESS',
               deepEqual({
                 effect: new EffectReceivedDefinition('REMEDY', 5),
@@ -181,7 +180,7 @@ describe('ConsumeRule', () => {
 
         when(
           mockedPlayerEntity.reactTo(
-            deepEqual(actionHeal),
+            deepEqual(actionConsume),
             'NONE',
             deepEqual({
               effect: new EffectReceivedDefinition('REMEDY', 2),

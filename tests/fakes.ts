@@ -108,8 +108,6 @@ export const actionAsk = createActionableDefinition(
   'Got action?'
 );
 
-export const actionHeal = createActionableDefinition('HEAL', 'heal', 'Heal');
-
 export const fakeCharacteristics: CharacteristicSetDefinition = {
   STR: new CharacteristicDefinition('STR', 8),
   VIT: new CharacteristicDefinition('VIT', 9),

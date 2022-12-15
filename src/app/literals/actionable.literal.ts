@@ -1,6 +1,5 @@
 export type ActionableLiteral =
   | 'ATTACK'
-  | 'HEAL'
   | 'PICK'
   | 'INTERACTION'
   | 'SCENE'
