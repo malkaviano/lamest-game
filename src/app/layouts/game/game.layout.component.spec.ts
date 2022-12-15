@@ -43,7 +43,7 @@ describe('GameLayoutComponent', () => {
 
     component.scene = scene;
 
-    component.logs = new ArrayView(['OMG', 'This is not happening', 'GG']);
+    component.logs = ArrayView.create(['OMG', 'This is not happening', 'GG']);
 
     component.inventory = [
       new ActionableItemView(simpleSword, actionAsk),
@@ -113,12 +113,12 @@ describe('GameLayoutComponent', () => {
       expect(result.properties['panelName']).toEqual('interactives');
 
       expect(result.properties['interactives']).toEqual(
-        new ArrayView([
+        ArrayView.create([
           new InteractiveEntity(
             'id1',
             'props1',
             'This is props1',
-            new SimpleState(new ArrayView([actionAsk]))
+            new SimpleState(ArrayView.create([actionAsk]))
           ),
         ])
       );
@@ -191,19 +191,19 @@ describe('GameLayoutComponent', () => {
     expect(result).not.toBeNull();
 
     expect(component.logs).toEqual(
-      new ArrayView(['OMG', 'This is not happening', 'GG'])
+      ArrayView.create(['OMG', 'This is not happening', 'GG'])
     );
   });
 });
 
 const scene = new SceneDefinition(
-  new ArrayView(['this is a test', 'okay okay']),
-  new ArrayView([
+  ArrayView.create(['this is a test', 'okay okay']),
+  ArrayView.create([
     new InteractiveEntity(
       'id1',
       'props1',
       'This is props1',
-      new SimpleState(new ArrayView([actionAsk]))
+      new SimpleState(ArrayView.create([actionAsk]))
     ),
   ])
 );

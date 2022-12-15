@@ -133,7 +133,7 @@ describe('ActorEntity', () => {
 
         done();
 
-        expect(result).toEqual(new ArrayView([]));
+        expect(result).toEqual(ArrayView.create([]));
       });
     });
 
@@ -266,7 +266,7 @@ describe('ActorEntity', () => {
     });
 
     it('return action null', () => {
-      expect(fakeActor().action(new ArrayView([]))).toBeNull();
+      expect(fakeActor().action(ArrayView.create([]))).toBeNull();
     });
   });
 });

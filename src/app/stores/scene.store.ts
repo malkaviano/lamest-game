@@ -43,7 +43,7 @@ export class SceneStore {
         scene.name,
         new SceneEntity(
           descriptionsStore.descriptions[scene.description],
-          new ArrayView(interactives),
+          ArrayView.create(interactives),
           transitions
         )
       );

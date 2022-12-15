@@ -110,10 +110,10 @@ export class StatesStore {
 
       const locked = state.lockPicking
         ? new LockPickingContainerState(
-            new ArrayView(allDirectionsDefinition),
+            ArrayView.create(allDirectionsDefinition),
             actionables,
             this.lazyState(state.openedState),
-            new ArrayView(
+            ArrayView.create(
               generatorService.lockPickSequence(state.lockPicking.complexity)
             ),
             state.lockPicking.maximumTries
@@ -142,7 +142,7 @@ export class StatesStore {
       actionables: string[];
     }
   ) {
-    return new ArrayView(
+    return ArrayView.create(
       state.actionables.map((a) => actionableStore.actionables[a])
     );
   }

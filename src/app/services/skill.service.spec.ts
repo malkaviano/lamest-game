@@ -34,7 +34,7 @@ describe('SkillService', () => {
       ['Research', 0],
     ]);
 
-    const skillNames: ArrayView<string> = new ArrayView([
+    const skillNames: ArrayView<string> = ArrayView.create([
       'First Aid',
       'Research',
     ]);

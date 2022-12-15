@@ -51,11 +51,11 @@ describe('RandomCharacterService', () => {
     setupMocks();
 
     when(mockedProfessionStore.professions).thenReturn({
-      'Police Detective': new ArrayView([]),
+      'Police Detective': ArrayView.create([]),
     });
 
     when(mockedSkillStore.naturalSkills).thenReturn(
-      new ArrayView(['Artillery', 'First Aid', 'Manipulation'])
+      ArrayView.create(['Artillery', 'First Aid', 'Manipulation'])
     );
 
     service = TestBed.inject(RandomCharacterService);
@@ -113,10 +113,10 @@ describe('RandomCharacterService', () => {
           distributedSkills,
           instance(mockedSkillStore),
           {
-            immunities: new ArrayView<EffectTypeLiteral>([]),
-            cures: new ArrayView<EffectTypeLiteral>(['REMEDY', 'SACRED']),
-            vulnerabilities: new ArrayView<EffectTypeLiteral>([]),
-            resistances: new ArrayView<EffectTypeLiteral>([]),
+            immunities: ArrayView.create<EffectTypeLiteral>([]),
+            cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
+            vulnerabilities: ArrayView.create<EffectTypeLiteral>([]),
+            resistances: ArrayView.create<EffectTypeLiteral>([]),
           }
         ),
         new EquipmentBehavior()

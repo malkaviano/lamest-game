@@ -25,7 +25,7 @@ export class FormatterHelperService {
   public characterToKeyValueDescription(
     character: PlayerEntity
   ): CharacterValuesView {
-    const identity = new ArrayView(
+    const identity = ArrayView.create(
       Object.entries(character.identity).map(([key, value]) => {
         return new KeyValueDescriptionView(
           key.toUpperCase(),
@@ -35,7 +35,7 @@ export class FormatterHelperService {
       })
     );
 
-    const characteristics = new ArrayView(
+    const characteristics = ArrayView.create(
       Object.values(character.characteristics).map(
         (c: CharacteristicDefinition) => {
           return new KeyValueDescriptionView(
@@ -47,7 +47,7 @@ export class FormatterHelperService {
       )
     );
 
-    const derivedAttributes = new ArrayView(
+    const derivedAttributes = ArrayView.create(
       Object.values(character.derivedAttributes).map(
         (da: DerivedAttributeDefinition) => {
           return new KeyValueDescriptionView(
@@ -59,7 +59,7 @@ export class FormatterHelperService {
       )
     );
 
-    const skills = new ArrayView(
+    const skills = ArrayView.create(
       Object.entries(character.skills)
         .map(([key, value]) => {
           return new KeyValueDescriptionView(

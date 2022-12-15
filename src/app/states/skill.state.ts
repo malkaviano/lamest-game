@@ -11,7 +11,7 @@ export class SkillState extends ActionableState {
     private readonly successState: LazyHelper<ActionableState>,
     private readonly maximumTries: number
   ) {
-    super('SkillState', new ArrayView([stateAction]));
+    super('SkillState', ArrayView.create([stateAction]));
   }
 
   protected override stateResult(

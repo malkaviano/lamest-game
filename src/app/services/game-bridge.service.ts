@@ -78,7 +78,7 @@ export class GameBridgeService {
       return acc;
     }, inventoryView);
 
-    return new ArrayView([...items]);
+    return ArrayView.create([...items]);
   }
 
   private inventoryAction(category: GameItemLiteral): ActionableDefinition {

@@ -23,7 +23,7 @@ describe('KeyValueDescriptionPanelComponent', () => {
 
     component = fixture.componentInstance;
 
-    fixture.componentInstance.items = new ArrayView(characteristics());
+    fixture.componentInstance.items = ArrayView.create(characteristics());
 
     fixture.componentInstance.panelName = 'test';
 

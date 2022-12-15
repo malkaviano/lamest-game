@@ -49,7 +49,7 @@ describe('NarrativeService', () => {
     });
 
     when(mockedSceneEntity.interactives).thenReturn(
-      new ArrayView([instance(mockedInteractiveEntity)])
+      ArrayView.create([instance(mockedInteractiveEntity)])
     );
 
     service = TestBed.inject(NarrativeService);

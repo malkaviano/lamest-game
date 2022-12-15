@@ -37,4 +37,4 @@ const state = new (class extends ActionableState {
   protected override stateResult(): { state: ActionableState; log?: string } {
     throw new Error('SHOULD NOT HAPPEN');
   }
-})('SimpleState', new ArrayView([askAction1, askAction2, pickAction]));
+})('SimpleState', ArrayView.create([askAction1, askAction2, pickAction]));

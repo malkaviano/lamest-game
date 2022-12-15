@@ -99,7 +99,7 @@ describe('GameBridgeService', () => {
         let result: ArrayView<ActionableItemView> | undefined;
 
         when(mockedInventoryService.check(anyString())).thenReturn(
-          new ArrayView([new ItemStoredDefinition(item, 1)])
+          ArrayView.create([new ItemStoredDefinition(item, 1)])
         );
 
         service.events.playerInventory$.pipe(take(10)).subscribe((event) => {
@@ -110,7 +110,7 @@ describe('GameBridgeService', () => {
 
         done();
 
-        expect(result).toEqual(new ArrayView([expected]));
+        expect(result).toEqual(ArrayView.create([expected]));
       });
     });
   });

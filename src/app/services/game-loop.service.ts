@@ -68,11 +68,11 @@ export class GameLoopService {
 
     actors.unshift(this.player);
 
-    return new ArrayView(actors);
+    return ArrayView.create(actors);
   }
 
   public get sceneActorsInfo(): ArrayView<SceneActorsInfoInterface> {
-    return new ArrayView(
+    return ArrayView.create(
       this.actors.items.map((a) => {
         return {
           id: a.id,

@@ -11,6 +11,6 @@ export class TextAreaPanelComponent {
   public paragraphs: ArrayView<string>;
 
   constructor() {
-    this.paragraphs = new ArrayView([]);
+    this.paragraphs = ArrayView.create([]);
   }
 }

@@ -31,5 +31,5 @@ const pickAction = createActionableDefinition(
 );
 
 const state = new SimpleState(
-  new ArrayView([askAction1, askAction2, pickAction])
+  ArrayView.create([askAction1, askAction2, pickAction])
 );

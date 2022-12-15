@@ -8,7 +8,7 @@ describe('DiscardState', () => {
       const result = state.onResult(knifeAction, 'NONE', {});
 
       const expected = new DiscardState(
-        new ArrayView([knifeAction, firstAidAction])
+        ArrayView.create([knifeAction, firstAidAction])
       );
 
       expect(result).toEqual({ state: expected, log: knifeAction.label });
@@ -29,5 +29,5 @@ const firstAidAction = createActionableDefinition(
 );
 
 const state = new DiscardState(
-  new ArrayView([knifeAction, knifeAction, firstAidAction])
+  ArrayView.create([knifeAction, knifeAction, firstAidAction])
 );

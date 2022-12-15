@@ -65,7 +65,7 @@ describe('GamePageComponent', () => {
 
     when(mockedGameEventsService.playerInventory$).thenReturn(
       of(
-        new ArrayView([
+        ArrayView.create([
           new ActionableItemView(simpleSword, actionEquip),
           new ActionableItemView(unDodgeableAxe, actionEquip),
         ])
@@ -109,18 +109,18 @@ describe('GamePageComponent', () => {
 
   it(`should have description`, () => {
     expect(component.scene.description).toEqual(
-      new ArrayView(['this is a test', 'okay okay'])
+      ArrayView.create(['this is a test', 'okay okay'])
     );
   });
 
   it(`should have interactives`, () => {
     expect(component.scene.interactives).toEqual(
-      new ArrayView([instance(mockedInteractiveEntity)])
+      ArrayView.create([instance(mockedInteractiveEntity)])
     );
   });
 
   it(`should have action log`, () => {
-    expect(component.logs).toEqual(new ArrayView([log.toString()]));
+    expect(component.logs).toEqual(ArrayView.create([log.toString()]));
   });
 
   it(`should have inventory`, () => {

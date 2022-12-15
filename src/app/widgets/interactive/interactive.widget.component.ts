@@ -26,7 +26,7 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
 
   constructor(private readonly withSubscriptionHelper: WithSubscriptionHelper) {
     this.actionSelected = new EventEmitter<ActionableEvent>();
-    this.actions = new ArrayView([]);
+    this.actions = ArrayView.create([]);
   }
 
   ngOnInit(): void {

@@ -53,7 +53,7 @@ describe('UseRule', () => {
   describe('when item category was not USABLE', () => {
     it('throw Wrong item was used', () => {
       when(mockedInventoryService.check(playerInfo.id)).thenReturn(
-        new ArrayView([new ItemStoredDefinition(simpleSword, 1)])
+        ArrayView.create([new ItemStoredDefinition(simpleSword, 1)])
       );
 
       expect(() =>
@@ -69,7 +69,7 @@ describe('UseRule', () => {
   describe('when item was not found', () => {
     it('return item label not found', () => {
       when(mockedInventoryService.check(playerInfo.id)).thenReturn(
-        new ArrayView([new ItemStoredDefinition(simpleSword, 1)])
+        ArrayView.create([new ItemStoredDefinition(simpleSword, 1)])
       );
 
       const result = service.execute(
@@ -85,7 +85,7 @@ describe('UseRule', () => {
   describe('when item was usable', () => {
     it('return log', () => {
       when(mockedInventoryService.check(playerInfo.id)).thenReturn(
-        new ArrayView([new ItemStoredDefinition(masterKey, 1)])
+        ArrayView.create([new ItemStoredDefinition(masterKey, 1)])
       );
 
       when(

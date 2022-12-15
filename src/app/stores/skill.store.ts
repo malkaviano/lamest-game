@@ -40,7 +40,7 @@ export class SkillStore {
   }
 
   public get naturalSkills(): ArrayView<string> {
-    return new ArrayView(
+    return ArrayView.create(
       Object.entries(this.skills)
         .filter(([, value]) => value.affinity === 'NATURAL')
         .map((kv) => kv[0])

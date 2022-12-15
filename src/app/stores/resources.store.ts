@@ -173,10 +173,10 @@ export class ResourcesStore {
         equippedWeapon: a.equippedWeapon,
         killedState: a.killedState,
         behaviorState: a.behaviorState,
-        immunities: new ArrayView(a.immunities),
-        resistances: new ArrayView(a.resistances),
-        cures: new ArrayView(a.cures),
-        vulnerabilities: new ArrayView(a.vulnerabilities),
+        immunities: ArrayView.create(a.immunities),
+        resistances: ArrayView.create(a.resistances),
+        cures: ArrayView.create(a.cures),
+        vulnerabilities: ArrayView.create(a.vulnerabilities),
       };
     });
 
@@ -203,19 +203,19 @@ export class ResourcesStore {
     const { professionPoints, intelligencePoints, playerEffectDefenses } =
       settingsStore.settings;
 
-    const cures = new ArrayView(
+    const cures = ArrayView.create(
       playerEffectDefenses.cures.map((e) => e as EffectTypeLiteral)
     );
 
-    const immunities = new ArrayView(
+    const immunities = ArrayView.create(
       playerEffectDefenses.immunities.map((e) => e as EffectTypeLiteral)
     );
 
-    const resistances = new ArrayView(
+    const resistances = ArrayView.create(
       playerEffectDefenses.resistances.map((e) => e as EffectTypeLiteral)
     );
 
-    const vulnerabilities = new ArrayView(
+    const vulnerabilities = ArrayView.create(
       playerEffectDefenses.vulnerabilities.map((e) => e as EffectTypeLiteral)
     );
 

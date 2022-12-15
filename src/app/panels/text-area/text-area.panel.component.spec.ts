@@ -8,7 +8,7 @@ import { ArrayView } from '../../views/array.view';
 describe('TextAreaPanelComponent', () => {
   let component: TextAreaPanelComponent;
   let fixture: ComponentFixture<TextAreaPanelComponent>;
-  const paragraphs = new ArrayView(['p1', 'p2', 'p3', 'p4']);
+  const paragraphs = ArrayView.create(['p1', 'p2', 'p3', 'p4']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

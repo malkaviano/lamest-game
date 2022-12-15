@@ -40,7 +40,7 @@ describe('GeneratorService', () => {
     setupMocks();
 
     when(mockedProfessionStore.professions).thenReturn({
-      'Police Detective': new ArrayView([]),
+      'Police Detective': ArrayView.create([]),
     });
 
     service = TestBed.inject(GeneratorService);

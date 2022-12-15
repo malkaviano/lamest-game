@@ -25,8 +25,12 @@ describe('SceneEntity', () => {
   });
 });
 
-const descriptions = new ArrayView(['GG']);
+const descriptions = ArrayView.create(['GG']);
 
 const interactive = instance(mockedInteractiveEntity);
 
-const entity = new SceneEntity(descriptions, new ArrayView([interactive]), {});
+const entity = new SceneEntity(
+  descriptions,
+  ArrayView.create([interactive]),
+  {}
+);

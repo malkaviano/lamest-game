@@ -169,7 +169,7 @@ export const fakeIdentity = new CharacterIdentityDefinition(
 );
 
 export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
-  new ArrayView([
+  ArrayView.create([
     {
       id: playerInfo.id,
       classification: 'PLAYER',
@@ -177,7 +177,7 @@ export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
     },
   ]);
 
-export const fakeCharacterSheetIdentity = new ArrayView([
+export const fakeCharacterSheetIdentity = ArrayView.create([
   new KeyValueDescriptionView('NAME', 'Some Name', 'Character name'),
   new KeyValueDescriptionView(
     'PROFESSION',
@@ -190,7 +190,7 @@ export const fakeCharacterSheetIdentity = new ArrayView([
   new KeyValueDescriptionView('WEIGHT', 'LIGHT', 'Character weight'),
 ]);
 
-export const fakeCharacterSheetCharacteristics = new ArrayView([
+export const fakeCharacterSheetCharacteristics = ArrayView.create([
   new KeyValueDescriptionView('STR', '8', 'The character physical force'),
   new KeyValueDescriptionView('VIT', '9', 'The character vitality'),
   new KeyValueDescriptionView('AGI', '11', 'The character agility'),
@@ -199,13 +199,13 @@ export const fakeCharacterSheetCharacteristics = new ArrayView([
   new KeyValueDescriptionView('APP', '14', 'The character looks'),
 ]);
 
-export const fakeCharacterSheetDerivedAttributes = new ArrayView([
+export const fakeCharacterSheetDerivedAttributes = ArrayView.create([
   new KeyValueDescriptionView('HP', '8', 'The character hit points'),
   new KeyValueDescriptionView('EP', '13', 'The character essence points'),
   new KeyValueDescriptionView('MOV', '10', 'The character movement'),
 ]);
 
-export const fakeCharacterSheetSkills = new ArrayView([
+export const fakeCharacterSheetSkills = ArrayView.create([
   new KeyValueDescriptionView('Brawl', '45', 'Fighting unarmed'),
   new KeyValueDescriptionView('First Aid', '45', 'Use emergency kit to heal'),
   new KeyValueDescriptionView(
@@ -222,7 +222,9 @@ export const fakeCharacterSheet = new CharacterValuesView(
   fakeCharacterSheetSkills
 );
 
-export const lootState = new DiscardState(new ArrayView([actionPickBubbleGum]));
+export const lootState = new DiscardState(
+  ArrayView.create([actionPickBubbleGum])
+);
 
 export const consumableFirstAid = new ConsumableDefinition(
   new ItemIdentityDefinition(

@@ -79,7 +79,7 @@ export class InventoryService {
       return acc;
     }, result);
 
-    return new ArrayView(a);
+    return ArrayView.create(a);
   }
 
   private getStorage(key: string): {

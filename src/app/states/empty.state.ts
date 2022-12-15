@@ -3,7 +3,7 @@ import { ActionableState } from './actionable.state';
 
 class EmptyState extends ActionableState {
   constructor() {
-    super('EmptyState', new ArrayView([]));
+    super('EmptyState', ArrayView.create([]));
   }
 
   // Unreachable code

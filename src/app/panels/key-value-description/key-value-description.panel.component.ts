@@ -13,6 +13,6 @@ export class KeyValueDescriptionPanelComponent {
   @Input() public items: ArrayView<KeyValueDescriptionView>;
 
   constructor() {
-    this.items = new ArrayView([]);
+    this.items = ArrayView.create([]);
   }
 }

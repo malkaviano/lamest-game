@@ -86,9 +86,9 @@ const fakeBehavior = () =>
     fakeMapSkills,
     instance(mockedSkillStore),
     {
-      immunities: new ArrayView<EffectTypeLiteral>([]),
-      cures: new ArrayView<EffectTypeLiteral>(['REMEDY', 'SACRED']),
-      vulnerabilities: new ArrayView<EffectTypeLiteral>([]),
-      resistances: new ArrayView<EffectTypeLiteral>([]),
+      immunities: ArrayView.create<EffectTypeLiteral>([]),
+      cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
+      vulnerabilities: ArrayView.create<EffectTypeLiteral>([]),
+      resistances: ArrayView.create<EffectTypeLiteral>([]),
     }
   );

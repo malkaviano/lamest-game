@@ -18,7 +18,7 @@ export class DescriptionStore {
     this.store = new Map<string, ArrayView<string>>();
 
     resourcesStore.descriptionStore.descriptions.forEach((item) => {
-      this.store.set(item.sceneName, new ArrayView(item.paragraphs));
+      this.store.set(item.sceneName, ArrayView.create(item.paragraphs));
     });
   }
 

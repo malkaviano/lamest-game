@@ -22,11 +22,11 @@ import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';
 const f = () => lootState;
 
 const jammedState = new LockedContainerState(
-  new ArrayView([actionUseMasterKey]),
+  ArrayView.create([actionUseMasterKey]),
   new LazyHelper<DiscardState>(f)
 );
 
-const allDirectionsDefinition = new ArrayView(
+const allDirectionsDefinition = ArrayView.create(
   directionNamesDefinition.items.map((direction) => {
     return directionActionableDefinition(direction, `Turn ${direction}`);
   })
@@ -35,9 +35,9 @@ const allDirectionsDefinition = new ArrayView(
 const fakeState = () =>
   new LockPickingContainerState(
     allDirectionsDefinition,
-    new ArrayView([actionUseMasterKey]),
+    ArrayView.create([actionUseMasterKey]),
     new LazyHelper<DiscardState>(f),
-    new ArrayView(['LEFT', 'DOWN']),
+    ArrayView.create(['LEFT', 'DOWN']),
     3
   );
 

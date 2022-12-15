@@ -41,12 +41,12 @@ const knifeAction = createActionableDefinition(
   'Hunting Knife'
 );
 
-const discardedState = new DiscardState(new ArrayView([knifeAction]));
+const discardedState = new DiscardState(ArrayView.create([knifeAction]));
 
 const f = () => discardedState;
 
 const lazy = new LazyHelper(f);
 
-const state = new DestroyableState(new ArrayView([attackAction]), lazy, 10);
+const state = new DestroyableState(ArrayView.create([attackAction]), lazy, 10);
 
-const state2 = new DestroyableState(new ArrayView([attackAction]), lazy, 4);
+const state2 = new DestroyableState(ArrayView.create([attackAction]), lazy, 4);

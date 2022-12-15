@@ -254,10 +254,10 @@ export const setupMocks = () => {
       intelligencePoints: 10,
       professionPoints: 300,
       playerEffectDefenses: {
-        cures: new ArrayView([]),
-        immunities: new ArrayView([]),
-        resistances: new ArrayView([]),
-        vulnerabilities: new ArrayView([]),
+        cures: ArrayView.create([]),
+        immunities: ArrayView.create([]),
+        resistances: ArrayView.create([]),
+        vulnerabilities: ArrayView.create([]),
       },
     },
   });
@@ -279,8 +279,8 @@ export const setupMocks = () => {
   when(mockedGameEventsService.sceneChanged$).thenReturn(
     of(
       new SceneDefinition(
-        new ArrayView(['this is a test', 'okay okay']),
-        new ArrayView([instance(mockedInteractiveEntity)])
+        ArrayView.create(['this is a test', 'okay okay']),
+        ArrayView.create([instance(mockedInteractiveEntity)])
       )
     )
   );

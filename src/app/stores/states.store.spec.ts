@@ -79,4 +79,4 @@ describe('StatesStore', () => {
   });
 });
 
-const state = new SimpleState(new ArrayView([actionConsume]));
+const state = new SimpleState(ArrayView.create([actionConsume]));

@@ -37,13 +37,16 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.inventory = [];
 
     this.characterValues = new CharacterValuesView(
-      new ArrayView([]),
-      new ArrayView([]),
-      new ArrayView([]),
-      new ArrayView([])
+      ArrayView.create([]),
+      ArrayView.create([]),
+      ArrayView.create([]),
+      ArrayView.create([])
     );
 
-    this.scene = new SceneDefinition(new ArrayView([]), new ArrayView([]));
+    this.scene = new SceneDefinition(
+      ArrayView.create([]),
+      ArrayView.create([])
+    );
   }
 
   ngOnDestroy(): void {
@@ -87,6 +90,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   public get logs(): ArrayView<string> {
-    return new ArrayView(this.gameLogs);
+    return ArrayView.create(this.gameLogs);
   }
 }
