@@ -6,7 +6,7 @@ import {
 export class EquipmentBehavior {
   private weapon: WeaponDefinition | null;
 
-  constructor() {
+  private constructor() {
     this.weapon = null;
   }
 
@@ -28,5 +28,9 @@ export class EquipmentBehavior {
     this.weapon = null;
 
     return previous;
+  }
+
+  public static create(): EquipmentBehavior {
+    return new EquipmentBehavior();
   }
 }

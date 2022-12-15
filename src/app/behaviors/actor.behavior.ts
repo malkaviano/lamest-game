@@ -16,7 +16,7 @@ export class ActorBehavior {
 
   private currentPP: number;
 
-  constructor(
+  private constructor(
     private readonly mCharacteristics: CharacteristicSetDefinition,
     private readonly mSkills: Map<string, number>,
     private readonly skillStore: SkillStore,
@@ -68,6 +68,20 @@ export class ActorBehavior {
 
   public healed(healed: number): HitPointsEvent {
     return this.modifyHealth(healed);
+  }
+
+  public static create(
+    characteristics: CharacteristicSetDefinition,
+    skills: Map<string, number>,
+    skillStore: SkillStore,
+    effectDefenses: EffectDefensesInterface
+  ): ActorBehavior {
+    return new ActorBehavior(
+      characteristics,
+      skills,
+      skillStore,
+      effectDefenses
+    );
   }
 
   private modifyHealth(modified: number): HitPointsEvent {

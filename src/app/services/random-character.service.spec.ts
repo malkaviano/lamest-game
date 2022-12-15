@@ -108,7 +108,7 @@ describe('RandomCharacterService', () => {
 
       const expectedCharacter = new PlayerEntity(
         fakeIdentity,
-        new ActorBehavior(
+        ActorBehavior.create(
           fakeCharacteristics,
           distributedSkills,
           instance(mockedSkillStore),
@@ -119,7 +119,7 @@ describe('RandomCharacterService', () => {
             resistances: ArrayView.create<EffectTypeLiteral>([]),
           }
         ),
-        new EquipmentBehavior()
+        EquipmentBehavior.create()
       );
 
       const character = service.character();

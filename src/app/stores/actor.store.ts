@@ -47,13 +47,13 @@ export class ActorStore {
           new ActorIdentityDefinition(id, name, description),
           stateStore.states[behaviorState],
           resettable,
-          new ActorBehavior(characteristics, skills, skillStore, {
+          ActorBehavior.create(characteristics, skills, skillStore, {
             immunities,
             cures,
             vulnerabilities,
             resistances,
           }),
-          new EquipmentBehavior(),
+          EquipmentBehavior.create(),
           stateStore.states[killedState]
         );
 

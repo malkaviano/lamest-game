@@ -29,13 +29,13 @@ export class RandomCharacterService {
 
     return new PlayerEntity(
       identity,
-      new ActorBehavior(
+      ActorBehavior.create(
         characteristics,
         this.skills(identity.profession, characteristics.INT.value),
         this.skillStore,
         this.settingsStore.settings.playerEffectDefenses
       ),
-      new EquipmentBehavior()
+      EquipmentBehavior.create()
     );
   }
 

@@ -88,7 +88,7 @@ describe('EquipmentBehavior', () => {
   });
 });
 
-const fakeBehavior = () => new EquipmentBehavior();
+const fakeBehavior = () => EquipmentBehavior.create();
 
 const equipBehavior = (
   character: EquipmentBehavior,

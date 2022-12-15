@@ -81,7 +81,7 @@ describe('ActorBehavior', () => {
 });
 
 const fakeBehavior = () =>
-  new ActorBehavior(
+  ActorBehavior.create(
     fakeCharacteristics,
     fakeMapSkills,
     instance(mockedSkillStore),
