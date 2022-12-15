@@ -253,6 +253,8 @@ export const setupMocks = () => {
     settings: {
       intelligencePoints: 10,
       professionPoints: 300,
+      vulnerabilityCoefficient: 1.5,
+      resistanceCoefficient: 0.5,
       playerEffectDefenses: {
         cures: ArrayView.create([]),
         immunities: ArrayView.create([]),
