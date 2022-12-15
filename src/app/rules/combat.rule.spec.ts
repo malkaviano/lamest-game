@@ -339,7 +339,7 @@ describe('CombatRule', () => {
   });
 });
 
-const damageMessage2 = createDamagedMessage(2);
+const damageMessage2 = createDamagedMessage(2, simpleSword.damage.effectType);
 
 const damageInteractiveLog = createFreeLogMessage(
   interactiveInfo.name,

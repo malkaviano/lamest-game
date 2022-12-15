@@ -39,13 +39,13 @@ export class DestroyableState extends ActionableState {
             this.destroyedState,
             hp
           ),
-          log: createDamagedMessage(dmg),
+          log: createDamagedMessage(dmg, values.effect.effectType),
         };
       }
 
       return {
         state: this.destroyedState.value,
-        log: createDestroyedByDamageMessage(dmg),
+        log: createDestroyedByDamageMessage(dmg, values.effect.effectType),
       };
     }
 

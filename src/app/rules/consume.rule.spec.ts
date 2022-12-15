@@ -207,7 +207,7 @@ const logAnalgesic1 = createConsumedLogMessage(
   consumableAnalgesic.identity.label
 );
 
-const logHeal2 = createHealedMessage(2);
+const logHeal2 = createHealedMessage(2, consumableAnalgesic.effect);
 
 const logAnalgesic2 = createFreeLogMessage(playerInfo.name, logHeal2);
 
@@ -220,7 +220,7 @@ const logFirstAidSuccess = createCheckLogMessage(
   'SUCCESS'
 );
 
-const logHeal5 = createHealedMessage(5);
+const logHeal5 = createHealedMessage(5, consumableFirstAid.effect);
 
 const logFirstAid3 = createFreeLogMessage(playerInfo.name, logHeal5);
 

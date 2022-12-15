@@ -1,3 +1,4 @@
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { LogCategoryLiteral } from '../literals/log-category.literal';
 import { ResultLiteral } from '../literals/result.literal';
 
@@ -13,13 +14,22 @@ export class LogMessageDefinition {
   }
 }
 
-export const createHealedMessage = (heal: number) => `healed ${heal} hp`;
+export const createHealedMessage = (
+  heal: number,
+  healType: EffectTypeLiteral
+) => `received ${healType} cure, healed ${heal} hp`;
 
-export const createDamagedMessage = (damage: number) =>
-  `received ${damage} damage`;
+export const createDamagedMessage = (
+  damage: number,
+  damageType: EffectTypeLiteral
+) => `received ${damage} ${damageType} damage`;
 
-export const createDestroyedByDamageMessage = (damage: number) =>
-  `received ${damage} damage and was destroyed`;
+export const createHPDidNotChangeMessage = () => `HP did not change`;
+
+export const createDestroyedByDamageMessage = (
+  damage: number,
+  damageType: EffectTypeLiteral
+) => `${createDamagedMessage(damage, damageType)} and was destroyed`;
 
 export const createActorIsDeadMessage = (actor: string) =>
   new LogMessageDefinition('DIED', actor, 'is dead');

@@ -296,9 +296,9 @@ const fakeActor = () =>
     emptyState
   );
 
-const logAttacked = createDamagedMessage(9);
+const logAttacked = createDamagedMessage(9, 'ACID');
 
-const logHealed = createHealedMessage(5);
+const logHealed = createHealedMessage(5, 'REMEDY');
 
 const equipActorScenario = (
   character: ActorEntity,

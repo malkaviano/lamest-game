@@ -12,6 +12,7 @@ import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-
 import {
   createDamagedMessage,
   createHealedMessage,
+  createHPDidNotChangeMessage,
 } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
@@ -142,10 +143,19 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
           this.hpChanged.next(result);
         }
 
-        resultLog =
-          result.current > result.previous
-            ? createHealedMessage(result.effective)
-            : createDamagedMessage(result.effective);
+        if (result.current > result.previous) {
+          resultLog = createHealedMessage(
+            result.effective,
+            values.effect.effectType
+          );
+        } else if (result.current < result.previous) {
+          resultLog = createDamagedMessage(
+            result.effective,
+            values.effect.effectType
+          );
+        } else {
+          resultLog = createHPDidNotChangeMessage();
+        }
       }
     }
 
