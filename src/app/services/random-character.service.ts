@@ -9,6 +9,8 @@ import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ProfessionStore } from '../stores/profession.store';
 import { SkillStore } from '../stores/skill.store';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { ArrayView } from '../views/array.view';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +32,13 @@ export class RandomCharacterService {
       new ActorBehavior(
         characteristics,
         this.skills(identity.profession, characteristics['INT'].value),
-        this.skillStore
+        this.skillStore,
+        {
+          immunities: new ArrayView<EffectTypeLiteral>([]),
+          cures: new ArrayView<EffectTypeLiteral>(['REMEDY', 'SACRED']),
+          vulnerabilities: new ArrayView<EffectTypeLiteral>([]),
+          resistances: new ArrayView<EffectTypeLiteral>([]),
+        }
       ),
       new EquipmentBehavior()
     );

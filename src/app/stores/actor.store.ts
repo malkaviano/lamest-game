@@ -38,12 +38,21 @@ export class ActorStore {
         equippedWeapon,
         killedState,
         behaviorState,
+        immunities,
+        cures,
+        resistances,
+        vulnerabilities,
       }) => {
         const actor = new ActorEntity(
           new ActorIdentityDefinition(id, name, description),
           stateStore.states[behaviorState],
           resettable,
-          new ActorBehavior(characteristics, skills, skillStore),
+          new ActorBehavior(characteristics, skills, skillStore, {
+            immunities,
+            cures,
+            vulnerabilities,
+            resistances,
+          }),
           new EquipmentBehavior(),
           stateStore.states[killedState]
         );

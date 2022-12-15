@@ -42,6 +42,7 @@ import usablesStore from '../../assets/items/usables.json';
 import lockedContainerStateStore from '../../assets/states/locked-container-state.json';
 import professionStore from '../../assets/professions.json';
 import skillStore from '../../assets/skills.json';
+import { ArrayView } from '../views/array.view';
 
 @Injectable({
   providedIn: 'root',
@@ -168,6 +169,10 @@ export class ResourcesStore {
         equippedWeapon: a.equippedWeapon,
         killedState: a.killedState,
         behaviorState: a.behaviorState,
+        immunities: new ArrayView(a.immunities),
+        resistances: new ArrayView(a.resistances),
+        cures: new ArrayView(a.cures),
+        vulnerabilities: new ArrayView(a.vulnerabilities),
       };
     });
 

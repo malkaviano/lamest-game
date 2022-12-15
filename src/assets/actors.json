@@ -22,7 +22,11 @@
       ],
       "equippedWeapon": "bambooSword",
       "killedState": "emptyState",
-      "behaviorState": "trainingDummy"
+      "behaviorState": "trainingDummy",
+      "immunities": [],
+      "cures": [],
+      "vulnerabilities": [],
+      "resistances": []
     },
     {
       "id": "zombie",
@@ -46,7 +50,11 @@
       ],
       "equippedWeapon": "claw",
       "killedState": "emptyState",
-      "behaviorState": "zombie"
+      "behaviorState": "zombie",
+      "immunities": [],
+      "cures": [],
+      "vulnerabilities": [],
+      "resistances": []
     }
   ]
 }

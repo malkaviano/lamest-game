@@ -21,6 +21,7 @@ import {
 } from '../../../tests/mocks';
 import { fakeCharacteristics, fakeIdentity } from '../../../tests/fakes';
 import { SkillStore } from '../stores/skill.store';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
@@ -108,7 +109,13 @@ describe('RandomCharacterService', () => {
         new ActorBehavior(
           fakeCharacteristics,
           distributedSkills,
-          instance(mockedSkillStore)
+          instance(mockedSkillStore),
+          {
+            immunities: new ArrayView<EffectTypeLiteral>([]),
+            cures: new ArrayView<EffectTypeLiteral>(['REMEDY', 'SACRED']),
+            vulnerabilities: new ArrayView<EffectTypeLiteral>([]),
+            resistances: new ArrayView<EffectTypeLiteral>([]),
+          }
         ),
         new EquipmentBehavior()
       );

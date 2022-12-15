@@ -9,6 +9,8 @@ import {
   fakeMapSkills,
 } from '../../../tests/fakes';
 import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
+import { ArrayView } from '../views/array.view';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 
 describe('ActorBehavior', () => {
   beforeEach(() => {
@@ -82,5 +84,11 @@ const fakeBehavior = () =>
   new ActorBehavior(
     fakeCharacteristics,
     fakeMapSkills,
-    instance(mockedSkillStore)
+    instance(mockedSkillStore),
+    {
+      immunities: new ArrayView<EffectTypeLiteral>([]),
+      cures: new ArrayView<EffectTypeLiteral>(['REMEDY', 'SACRED']),
+      vulnerabilities: new ArrayView<EffectTypeLiteral>([]),
+      resistances: new ArrayView<EffectTypeLiteral>([]),
+    }
   );

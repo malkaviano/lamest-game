@@ -2,6 +2,7 @@ import { CharacteristicSetDefinition } from '../definitions/characteristic-set.d
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
+import { EffectDefensesInterface } from '../interfaces/effect-defenses.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { SkillStore } from '../stores/skill.store';
@@ -18,7 +19,8 @@ export class ActorBehavior {
   constructor(
     private readonly mCharacteristics: CharacteristicSetDefinition,
     private readonly mSkills: Map<string, number>,
-    private readonly skillStore: SkillStore
+    private readonly skillStore: SkillStore,
+    private readonly effectDefenses: EffectDefensesInterface
   ) {
     this.maximumHP = Math.trunc(
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
