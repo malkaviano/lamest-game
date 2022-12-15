@@ -17,6 +17,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActionReactive } from '../interfaces/action-reactive.interface';
 import { DamageDefinition } from '../definitions/damage.definition';
+import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -100,7 +101,10 @@ export class CombatRule implements RuleInterface {
     const log = target.reactTo(
       createActionableDefinition('ATTACK', 'attack', 'Attack'),
       'SUCCESS',
-      { damage: damageAmount }
+      {
+        damage: damageAmount,
+        effect: new EffectReceivedDefinition(damage.effectType, damageAmount),
+      }
     );
 
     if (log) {

@@ -17,6 +17,7 @@ import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
+import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -35,16 +36,13 @@ export class ConsumeRule implements RuleInterface {
 
     const { eventId } = event;
 
-    const consumable = this.inventoryService.take(
-      actor.name,
-      eventId
-    ) as ConsumableDefinition;
+    const consumable = this.inventoryService.take(actor.name, eventId);
 
-    if (consumable.category !== 'CONSUMABLE') {
+    if (!(consumable instanceof ConsumableDefinition)) {
       throw new Error(errorMessages['WRONG-ITEM']);
     }
 
-    const hp = consumable.hp;
+    const amount = consumable.amount;
 
     let rollDefinition: RollDefinition = new RollDefinition('NONE', 0);
 
@@ -74,7 +72,10 @@ export class ConsumeRule implements RuleInterface {
       const log = actor.reactTo(
         createActionableDefinition('HEAL', 'heal', 'Heal'),
         rollDefinition.result,
-        { heal: hp }
+        {
+          heal: amount,
+          effect: new EffectReceivedDefinition(consumable.effect, amount),
+        }
       );
 
       if (log) {

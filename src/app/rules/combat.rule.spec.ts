@@ -14,6 +14,7 @@ import {
 import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
 import { unarmedWeapon } from '../definitions/weapon.definition';
+import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
 
 import {
   mockedActorEntity,
@@ -25,7 +26,9 @@ import {
 } from '../../../tests/mocks';
 import {
   eventAttackInteractive,
+  interactiveInfo,
   molotov,
+  playerInfo,
   simpleSword,
   unDodgeableAxe,
 } from '../../../tests/fakes';
@@ -55,7 +58,10 @@ describe('CombatRule', () => {
       mockedActorEntity.reactTo(
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
-        deepEqual({ damage: 2 })
+        deepEqual({
+          damage: 2,
+          effect: new EffectReceivedDefinition('KINETIC', 2),
+        })
       )
     ).thenReturn(damageMessage2);
 
@@ -63,7 +69,10 @@ describe('CombatRule', () => {
       mockedTargetPlayerEntity.reactTo(
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
-        deepEqual({ damage: 2 })
+        deepEqual({
+          damage: 2,
+          effect: new EffectReceivedDefinition('KINETIC', 2),
+        })
       )
     ).thenReturn(damageMessage2);
 
@@ -71,7 +80,21 @@ describe('CombatRule', () => {
       mockedInteractiveEntity.reactTo(
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
-        deepEqual({ damage: 2 })
+        deepEqual({
+          damage: 2,
+          effect: new EffectReceivedDefinition('FIRE', 2),
+        })
+      )
+    ).thenReturn(damageMessage2);
+
+    when(
+      mockedInteractiveEntity.reactTo(
+        deepEqual(eventAttackInteractive.actionableDefinition),
+        'SUCCESS',
+        deepEqual({
+          damage: 2,
+          effect: new EffectReceivedDefinition('KINETIC', 2),
+        })
       )
     ).thenReturn(damageMessage2);
 
@@ -126,7 +149,7 @@ describe('CombatRule', () => {
             expect(result).toEqual({
               logs: [
                 createAttackedLogMessage(
-                  'player',
+                  playerInfo.name,
                   name,
                   simpleSword.identity.label
                 ),
@@ -159,7 +182,7 @@ describe('CombatRule', () => {
               expect(result).toEqual({
                 logs: [
                   createAttackedLogMessage(
-                    'player',
+                    playerInfo.name,
                     name,
                     simpleSword.identity.label
                   ),
@@ -193,7 +216,7 @@ describe('CombatRule', () => {
               expect(result).toEqual({
                 logs: [
                   createAttackedLogMessage(
-                    'player',
+                    playerInfo.name,
                     name,
                     unDodgeableAxe.identity.label
                   ),
@@ -228,7 +251,7 @@ describe('CombatRule', () => {
                 expect(result).toEqual({
                   logs: [
                     createAttackedLogMessage(
-                      'player',
+                      playerInfo.name,
                       name,
                       simpleSword.identity.label
                     ),
@@ -261,7 +284,7 @@ describe('CombatRule', () => {
                 expect(result).toEqual({
                   logs: [
                     createAttackedLogMessage(
-                      'player',
+                      playerInfo.name,
                       name,
                       simpleSword.identity.label
                     ),
@@ -311,7 +334,7 @@ describe('CombatRule', () => {
 
         expect(result).toEqual({
           logs: [
-            createLostLogMessage('player', molotov.identity.label),
+            createLostLogMessage(playerInfo.name, molotov.identity.label),
             damageInteractiveLog,
           ],
         });
@@ -322,17 +345,20 @@ describe('CombatRule', () => {
 
 const damageMessage2 = createDamagedMessage(2);
 
-const damageInteractiveLog = createFreeLogMessage('test', damageMessage2);
+const damageInteractiveLog = createFreeLogMessage(
+  interactiveInfo.name,
+  damageMessage2
+);
 
 const checkFailureLog = createCheckLogMessage(
-  'player',
+  playerInfo.name,
   'Melee Weapon (Simple)',
   90,
   'FAILURE'
 );
 
 const checkSuccessLog = createCheckLogMessage(
-  'player',
+  playerInfo.name,
   'Melee Weapon (Simple)',
   10,
   'SUCCESS'

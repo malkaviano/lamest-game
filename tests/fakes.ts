@@ -34,7 +34,7 @@ export const interactiveInfo = { id: 'id1', name: 'test' };
 export const simpleSword = new WeaponDefinition(
   new ItemIdentityDefinition('sword', 'Sword', 'some sword'),
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice(), 2),
+  new DamageDefinition(createDice(), 2, 'KINETIC'),
   true,
   'PERMANENT'
 );
@@ -42,7 +42,7 @@ export const simpleSword = new WeaponDefinition(
 export const greatSword = new WeaponDefinition(
   new ItemIdentityDefinition('greatSword', 'Great Sword', 'Some Great Sword'),
   'Melee Weapon (Great)',
-  new DamageDefinition(createDice(), 6),
+  new DamageDefinition(createDice(), 6, 'KINETIC'),
   true,
   'PERMANENT'
 );
@@ -50,7 +50,7 @@ export const greatSword = new WeaponDefinition(
 export const unDodgeableAxe = new WeaponDefinition(
   new ItemIdentityDefinition('axe', 'Axe', 'UnDodgeable Axe'),
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice(), 2),
+  new DamageDefinition(createDice(), 2, 'KINETIC'),
   false,
   'PERMANENT'
 );
@@ -58,7 +58,7 @@ export const unDodgeableAxe = new WeaponDefinition(
 export const molotov = new WeaponDefinition(
   new ItemIdentityDefinition('molotov', 'Molotov', 'Homemade Bomb'),
   'Ranged Weapon (Throw)',
-  new DamageDefinition(createDice(), 2),
+  new DamageDefinition(createDice(), 2, 'FIRE'),
   false,
   'DISPOSABLE'
 );
@@ -74,7 +74,8 @@ export const actionUnEquip = (label: string) =>
 
 export const bubbleGum = new ConsumableDefinition(
   new ItemIdentityDefinition('bubbleGum', 'Bubble Gum', 'That is a bubble gum'),
-  1
+  1,
+  'REMEDY'
 );
 
 export const actionAttack = createActionableDefinition(
@@ -230,12 +231,14 @@ export const consumableFirstAid = new ConsumableDefinition(
     'Very simple First Aid'
   ),
   5,
+  'REMEDY',
   'First Aid'
 );
 
-export const consumableChesseBurger = new ConsumableDefinition(
-  new ItemIdentityDefinition('sandwich', 'Cheeseburger', 'Delicious'),
-  2
+export const consumableAnalgesic = new ConsumableDefinition(
+  new ItemIdentityDefinition('analgesic', 'Analgesic', 'Relieves pain'),
+  2,
+  'REMEDY'
 );
 
 export const actionConsume = createActionableDefinition(
@@ -249,9 +252,9 @@ export const eventConsumeFirstAid = new ActionableEvent(
   consumableFirstAid.identity.name
 );
 
-export const eventConsumeCheeseBurger = new ActionableEvent(
+export const eventConsumeAnalgesic = new ActionableEvent(
   actionConsume,
-  consumableChesseBurger.identity.name
+  consumableAnalgesic.identity.name
 );
 
 export const eventEquipUnDodgeableAxe = new ActionableEvent(

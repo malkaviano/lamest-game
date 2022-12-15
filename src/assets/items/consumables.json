@@ -4,14 +4,16 @@
       "name": "firstAid",
       "label": "First Aid Kit",
       "description": "Use to recover HP",
-      "hp": 4,
+      "amount": 4,
+      "effect": "REMEDY",
       "skillName": "First Aid"
     },
     {
       "name": "bubbleGum",
       "label": "Bubble Gum",
       "description": "Use to recover HP",
-      "hp": 1
+      "amount": 1,
+      "effect": "REMEDY"
     }
   ]
 }

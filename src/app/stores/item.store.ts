@@ -32,7 +32,8 @@ export class ItemStore {
           item.skillName,
           new DamageDefinition(
             createDice(item.damage?.dice),
-            item.damage.fixed
+            item.damage.fixed,
+            item.damage.effect
           ),
           item.dodgeable,
           item.usability
@@ -45,7 +46,8 @@ export class ItemStore {
         item.name,
         new ConsumableDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
-          item.hp,
+          item.amount,
+          item.effect,
           item.skillName
         )
       );

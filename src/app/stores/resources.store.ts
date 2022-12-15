@@ -21,6 +21,9 @@ import { ActorStoreInterface } from '../interfaces/actor-store.interface';
 import { UsablesStoreInterface } from '../interfaces/item-store.interface';
 import { LockedContainerStateStoreInterface } from '../interfaces/locked-container-state-store';
 import { ProfessionStoreInterface } from '../interfaces/stores/profession-store.interface';
+import { SkillStoreInterface } from '../interfaces/stores/skill-store.interface';
+import { SkillAffinityLiteral } from '../literals/skill-category.literal';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 
 import sceneStore from '../../assets/scenes.json';
 import skillStateStore from '../../assets/states/skill-states.json';
@@ -39,8 +42,6 @@ import usablesStore from '../../assets/items/usables.json';
 import lockedContainerStateStore from '../../assets/states/locked-container-state.json';
 import professionStore from '../../assets/professions.json';
 import skillStore from '../../assets/skills.json';
-import { SkillStoreInterface } from '../interfaces/stores/skill-store.interface';
-import { SkillAffinityLiteral } from '../literals/skill-category.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -102,6 +103,7 @@ export class ResourcesStore {
         damage: {
           dice: createDice(w.damage.dice),
           fixed: w.damage.fixed,
+          effect: w.damage.effect as EffectTypeLiteral,
         },
         dodgeable: w.dodgeable,
         usability: w.usability as WeaponUsabilityLiteral,
@@ -110,7 +112,18 @@ export class ResourcesStore {
 
     this.weaponStore = { weapons };
 
-    this.consumableStore = consumableStore;
+    const consumables = consumableStore.consumables.map((c) => {
+      return {
+        name: c.name,
+        label: c.label,
+        description: c.description,
+        amount: c.amount,
+        effect: c.effect as EffectTypeLiteral,
+        skillName: c.skillName,
+      };
+    });
+
+    this.consumableStore = { consumables };
 
     this.interactiveStore = interactiveStore;
 

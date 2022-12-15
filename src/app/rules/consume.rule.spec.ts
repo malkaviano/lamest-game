@@ -24,12 +24,14 @@ import {
 import {
   actionConsume,
   actionHeal,
-  consumableChesseBurger,
+  consumableAnalgesic,
   consumableFirstAid,
-  eventConsumeCheeseBurger,
+  eventConsumeAnalgesic,
   eventConsumeFirstAid,
+  playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
+import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
 
 describe('ConsumeRule', () => {
   let service: ConsumeRule;
@@ -60,7 +62,7 @@ describe('ConsumeRule', () => {
   describe('execute', () => {
     describe('when item was not a consumable', () => {
       it('throw Wrong item was used', () => {
-        when(mockedInventoryService.take('player', 'sword')).thenReturn(
+        when(mockedInventoryService.take(playerInfo.id, 'sword')).thenReturn(
           simpleSword
         );
 
@@ -76,9 +78,9 @@ describe('ConsumeRule', () => {
     describe('when consumable has skill requirement', () => {
       describe('when skill check fails', () => {
         it('should not heal player', () => {
-          when(mockedInventoryService.take('player', 'firstAid')).thenReturn(
-            consumableFirstAid
-          );
+          when(
+            mockedInventoryService.take(playerInfo.id, 'firstAid')
+          ).thenReturn(consumableFirstAid);
 
           when(
             mockedRollService.actorSkillCheck(
@@ -103,9 +105,9 @@ describe('ConsumeRule', () => {
 
       describe('when skill check passes', () => {
         it('should heal player', () => {
-          when(mockedInventoryService.take('player', 'firstAid')).thenReturn(
-            consumableFirstAid
-          );
+          when(
+            mockedInventoryService.take(playerInfo.id, 'firstAid')
+          ).thenReturn(consumableFirstAid);
 
           when(
             mockedRollService.actorSkillCheck(
@@ -123,6 +125,7 @@ describe('ConsumeRule', () => {
               'SUCCESS',
               deepEqual({
                 heal: 5,
+                effect: new EffectReceivedDefinition('REMEDY', 5),
               })
             )
           ).thenReturn(logHeal5);
@@ -142,9 +145,9 @@ describe('ConsumeRule', () => {
         it('should log error message', () => {
           when(mockedPlayerEntity.skills).thenReturn({ 'First Aid': 0 });
 
-          when(mockedInventoryService.take('player', 'firstAid')).thenReturn(
-            consumableFirstAid
-          );
+          when(
+            mockedInventoryService.take(playerInfo.id, 'firstAid')
+          ).thenReturn(consumableFirstAid);
 
           when(
             mockedRollService.actorSkillCheck(
@@ -170,41 +173,50 @@ describe('ConsumeRule', () => {
 
     describe('when consumable has no skill requirement', () => {
       it('should heal player', () => {
-        when(mockedInventoryService.take('player', 'sandwich')).thenReturn(
-          consumableChesseBurger
-        );
+        when(
+          mockedInventoryService.take(
+            playerInfo.id,
+            consumableAnalgesic.identity.name
+          )
+        ).thenReturn(consumableAnalgesic);
 
         when(
           mockedPlayerEntity.reactTo(
             deepEqual(actionHeal),
             'NONE',
-            deepEqual({ heal: 2 })
+            deepEqual({
+              heal: 2,
+              effect: new EffectReceivedDefinition('REMEDY', 2),
+            })
           )
         ).thenReturn(logHeal2);
 
         const result = service.execute(
           instance(mockedPlayerEntity),
-          eventConsumeCheeseBurger
+          eventConsumeAnalgesic
         );
 
         expect(result).toEqual({
-          logs: [logCheeseBurger1, logCheeseBurger2],
+          logs: [logAnalgesic1, logAnalgesic2],
         });
       });
     });
   });
 });
 
-const logCheeseBurger1 = createConsumedLogMessage('player', 'Cheeseburger');
+const logAnalgesic1 = createConsumedLogMessage(
+  playerInfo.name,
+  consumableAnalgesic.identity.label
+);
 
 const logHeal2 = createHealedMessage(2);
 
-const logCheeseBurger2 = createFreeLogMessage('player', logHeal2);
+const logAnalgesic2 = createFreeLogMessage(playerInfo.name, logHeal2);
 
-const logFirstAid1 = createConsumedLogMessage('player', 'First Aid Kit');
+const logFirstAid1 = createConsumedLogMessage(playerInfo.name, 'First Aid Kit');
 
 const logFirstAidSuccess = createCheckLogMessage(
-  'player',
+  playerInfo.name,
   'First Aid',
   10,
   'SUCCESS'
@@ -212,13 +224,13 @@ const logFirstAidSuccess = createCheckLogMessage(
 
 const logHeal5 = createHealedMessage(5);
 
-const logFirstAid3 = createFreeLogMessage('player', logHeal5);
+const logFirstAid3 = createFreeLogMessage(playerInfo.name, logHeal5);
 
 const logFirstAidFailure = createCheckLogMessage(
-  'player',
+  playerInfo.name,
   'First Aid',
   100,
   'FAILURE'
 );
 
-const logError = createCannotCheckLogMessage('player', 'First Aid');
+const logError = createCannotCheckLogMessage(playerInfo.name, 'First Aid');

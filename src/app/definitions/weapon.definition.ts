@@ -19,7 +19,7 @@ export class WeaponDefinition extends SkillItemDefinition {
 export const unarmedWeapon = new WeaponDefinition(
   new ItemIdentityDefinition('unarmed', 'Unarmed', 'Actor Natural Weapon'),
   'Brawl',
-  new DamageDefinition(createDice({ D4: 1 }), 0),
+  new DamageDefinition(createDice({ D4: 1 }), 0, 'KINETIC'),
   true,
   'PERMANENT'
 );

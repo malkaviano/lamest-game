@@ -1,4 +1,5 @@
 import { Dice } from '../definitions/dice.definition';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 
 import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
 
@@ -11,6 +12,7 @@ export interface WeaponStoreInterface {
     readonly damage: {
       readonly dice: Dice;
       readonly fixed: number;
+      readonly effect: EffectTypeLiteral;
     };
     readonly dodgeable: boolean;
     readonly usability: WeaponUsabilityLiteral;

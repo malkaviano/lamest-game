@@ -1,10 +1,12 @@
 import { ItemIdentityDefinition } from './item-identity.definition';
 import { GameItemDefinition } from './game-item.definition';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 
 export class ConsumableDefinition extends GameItemDefinition {
   constructor(
     identity: ItemIdentityDefinition,
-    public readonly hp: number,
+    public readonly amount: number,
+    public readonly effect: EffectTypeLiteral,
     public readonly skillName?: string
   ) {
     super('CONSUMABLE', identity);
