@@ -66,8 +66,8 @@ describe('GamePageComponent', () => {
     when(mockedGameEventsService.playerInventory$).thenReturn(
       of(
         ArrayView.create([
-          new ActionableItemView(simpleSword, actionEquip),
-          new ActionableItemView(unDodgeableAxe, actionEquip),
+          ActionableItemView.create(simpleSword, actionEquip),
+          ActionableItemView.create(unDodgeableAxe, actionEquip),
         ])
       )
     );

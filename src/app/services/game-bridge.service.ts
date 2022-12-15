@@ -68,7 +68,7 @@ export class GameBridgeService {
     const items = playerItems.items.reduce((acc, itemStorage) => {
       for (let index = 0; index < itemStorage.quantity; index++) {
         acc.push(
-          new ActionableItemView(
+          ActionableItemView.create(
             itemStorage.item,
             this.inventoryAction(itemStorage.item.category)
           )

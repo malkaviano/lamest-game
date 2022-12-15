@@ -81,17 +81,17 @@ describe('GameBridgeService', () => {
     [
       {
         invEvent: new InventoryEvent('CONSUME', 'player', consumableFirstAid),
-        expected: new ActionableItemView(consumableFirstAid, actionConsume),
+        expected: ActionableItemView.create(consumableFirstAid, actionConsume),
         item: consumableFirstAid,
       },
       {
         invEvent: new InventoryEvent('EQUIP', 'player', unDodgeableAxe),
-        expected: new ActionableItemView(unDodgeableAxe, actionEquip),
+        expected: ActionableItemView.create(unDodgeableAxe, actionEquip),
         item: unDodgeableAxe,
       },
       {
         invEvent: new InventoryEvent('STORE', 'player', masterKey),
-        expected: new ActionableItemView(masterKey, actionNoop),
+        expected: ActionableItemView.create(masterKey, actionNoop),
         item: masterKey,
       },
     ].forEach(({ invEvent, expected, item }) => {

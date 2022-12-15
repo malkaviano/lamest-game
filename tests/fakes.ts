@@ -335,7 +335,7 @@ export const actionNoop = createActionableDefinition('NOOP', 'noop', 'NOOP');
 export const actionableItemView = (
   item: GameItemDefinition,
   action: ActionableDefinition
-): ActionableItemView => new ActionableItemView(item, action);
+): ActionableItemView => ActionableItemView.create(item, action);
 
 export const actionableEvent = (action: ActionableDefinition, id: string) =>
   new ActionableEvent(action, id);

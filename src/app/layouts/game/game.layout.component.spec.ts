@@ -46,8 +46,8 @@ describe('GameLayoutComponent', () => {
     component.logs = ArrayView.create(['OMG', 'This is not happening', 'GG']);
 
     component.inventory = [
-      new ActionableItemView(simpleSword, actionAsk),
-      new ActionableItemView(molotov, actionAsk),
+      ActionableItemView.create(simpleSword, actionAsk),
+      ActionableItemView.create(molotov, actionAsk),
     ];
 
     component.equipped = unarmedWeapon;
@@ -150,8 +150,8 @@ describe('GameLayoutComponent', () => {
       expect(result.properties['panelName']).toEqual('inventory');
 
       expect(result.properties['inventory']).toEqual([
-        new ActionableItemView(simpleSword, actionAsk),
-        new ActionableItemView(molotov, actionAsk),
+        ActionableItemView.create(simpleSword, actionAsk),
+        ActionableItemView.create(molotov, actionAsk),
       ]);
 
       expect(result.properties['equipped']).toEqual(unarmedWeapon);
