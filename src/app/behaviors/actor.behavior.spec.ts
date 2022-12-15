@@ -106,11 +106,13 @@ describe('ActorBehavior', () => {
     [
       {
         effect: fakeEffect('REMEDY', 4),
+        current: 8,
       },
       {
         effect: fakeEffect('SACRED', 4),
+        current: 6,
       },
-    ].forEach(({ effect }) => {
+    ].forEach(({ effect, current }) => {
       describe(`when behavior is cured by ${effect}`, () => {
         it('return HitPointsEvent previous 4 current 8', () => {
           const b = fakeBehavior();
@@ -119,7 +121,7 @@ describe('ActorBehavior', () => {
 
           const result = b.effectReceived(effect);
 
-          expect(result).toEqual(new HitPointsEvent(4, 8));
+          expect(result).toEqual(new HitPointsEvent(4, current));
         });
       });
     });
@@ -135,7 +137,7 @@ const fakeBehavior = () =>
       immunities: ArrayView.create<EffectTypeLiteral>(['ACID']),
       cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
       vulnerabilities: ArrayView.create<EffectTypeLiteral>(['PROFANE']),
-      resistances: ArrayView.create<EffectTypeLiteral>(['KINETIC']),
+      resistances: ArrayView.create<EffectTypeLiteral>(['KINETIC', 'SACRED']),
     },
     {
       resistanceCoefficient: 0.5,
