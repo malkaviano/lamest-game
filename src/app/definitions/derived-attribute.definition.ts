@@ -11,6 +11,6 @@ export const derivedAttributeDefinitions: {
   [key in DerivedAttributeNameLiteral]: string;
 } = {
   HP: 'The character hit points',
-  EP: 'The character essence points',
+  EP: 'The character energy points',
   MOV: 'The character movement',
 };

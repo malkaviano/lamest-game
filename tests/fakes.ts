@@ -203,7 +203,7 @@ export const fakeCharacterSheetCharacteristics = ArrayView.create([
 
 export const fakeCharacterSheetDerivedAttributes = ArrayView.create([
   KeyValueDescriptionView.create('HP', '8', 'The character hit points'),
-  KeyValueDescriptionView.create('EP', '13', 'The character essence points'),
+  KeyValueDescriptionView.create('EP', '13', 'The character energy points'),
   KeyValueDescriptionView.create('MOV', '10', 'The character movement'),
 ]);
 
