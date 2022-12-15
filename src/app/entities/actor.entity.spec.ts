@@ -26,6 +26,7 @@ import {
   simpleSword,
   actionHeal,
   actionAttack,
+  fakeEffect,
 } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
@@ -69,12 +70,14 @@ describe('ActorEntity', () => {
       describe('when damage taken', () => {
         describe('attack was SUCCESS', () => {
           it('return damage taken', () => {
-            when(mockedActorBehavior.damaged(10)).thenReturn(
-              new HitPointsEvent(9, 0)
-            );
+            when(
+              mockedActorBehavior.effectReceived(
+                deepEqual(fakeEffect('ACID', 10))
+              )
+            ).thenReturn(new HitPointsEvent(9, 0));
 
             const result = fakeActor().reactTo(actionAttack, 'SUCCESS', {
-              damage: 10,
+              effect: fakeEffect('ACID', 10),
             });
 
             expect(result).toEqual(logAttacked);
@@ -83,9 +86,11 @@ describe('ActorEntity', () => {
           it('should emit an event', (done) => {
             let result: HitPointsEvent | undefined;
 
-            when(mockedActorBehavior.damaged(6)).thenReturn(
-              new HitPointsEvent(9, 3)
-            );
+            when(
+              mockedActorBehavior.effectReceived(
+                deepEqual(fakeEffect('ACID', 6))
+              )
+            ).thenReturn(new HitPointsEvent(9, 3));
 
             const char = fakeActor();
 
@@ -93,7 +98,9 @@ describe('ActorEntity', () => {
               result = event;
             });
 
-            char.reactTo(actionAttack, 'SUCCESS', { damage: 6 });
+            char.reactTo(actionAttack, 'SUCCESS', {
+              effect: fakeEffect('ACID', 6),
+            });
 
             done();
 
@@ -107,7 +114,7 @@ describe('ActorEntity', () => {
               const log = fakeActor().reactTo(
                 actionAttack,
                 result as ResultLiteral,
-                deepEqual({ damage: 1 })
+                deepEqual({ effect: fakeEffect('ACID', 1) })
               );
 
               expect(log).not.toBeDefined();
@@ -129,7 +136,9 @@ describe('ActorEntity', () => {
           result = event;
         });
 
-        char.reactTo(actionAttack, 'SUCCESS', { damage: 6 });
+        char.reactTo(actionAttack, 'SUCCESS', {
+          effect: fakeEffect('ACID', 6),
+        });
 
         done();
 
@@ -141,14 +150,16 @@ describe('ActorEntity', () => {
       ['SUCCESS', 'NONE'].forEach((result) => {
         describe(`heal was ${result}`, () => {
           it('return heal received', () => {
-            when(mockedActorBehavior.healed(10)).thenReturn(
-              new HitPointsEvent(4, 9)
-            );
+            when(
+              mockedActorBehavior.effectReceived(
+                deepEqual(fakeEffect('REMEDY', 10))
+              )
+            ).thenReturn(new HitPointsEvent(4, 9));
 
             const log = fakeActor().reactTo(
               actionHeal,
               result as ResultLiteral,
-              { heal: 10 }
+              { effect: fakeEffect('REMEDY', 10) }
             );
 
             expect(log).toEqual(logHealed);
@@ -158,9 +169,11 @@ describe('ActorEntity', () => {
         it('should emit an event', (done) => {
           let hpResult: HitPointsEvent | undefined;
 
-          when(mockedActorBehavior.healed(5)).thenReturn(
-            new HitPointsEvent(6, 9)
-          );
+          when(
+            mockedActorBehavior.effectReceived(
+              deepEqual(fakeEffect('REMEDY', 5))
+            )
+          ).thenReturn(new HitPointsEvent(6, 9));
 
           const char = fakeActor();
 
@@ -168,7 +181,9 @@ describe('ActorEntity', () => {
             hpResult = event;
           });
 
-          char.reactTo(actionHeal, result as ResultLiteral, { heal: 5 });
+          char.reactTo(actionHeal, result as ResultLiteral, {
+            effect: fakeEffect('REMEDY', 5),
+          });
 
           done();
 
@@ -182,7 +197,7 @@ describe('ActorEntity', () => {
             const log = fakeActor().reactTo(
               actionHeal,
               result as ResultLiteral,
-              deepEqual({ heal: 1 })
+              deepEqual({ effect: fakeEffect('REMEDY', 1) })
             );
 
             expect(log).not.toBeDefined();

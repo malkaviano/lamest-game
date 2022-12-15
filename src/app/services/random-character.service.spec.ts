@@ -117,6 +117,10 @@ describe('RandomCharacterService', () => {
             cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
             vulnerabilities: ArrayView.create<EffectTypeLiteral>([]),
             resistances: ArrayView.create<EffectTypeLiteral>([]),
+          },
+          {
+            resistanceCoefficient: 0.5,
+            vulnerabilityCoefficient: 1.5,
           }
         ),
         EquipmentBehavior.create()

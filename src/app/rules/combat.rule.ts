@@ -102,7 +102,6 @@ export class CombatRule implements RuleInterface {
       createActionableDefinition('ATTACK', 'attack', 'Attack'),
       'SUCCESS',
       {
-        damage: damageAmount,
         effect: new EffectReceivedDefinition(damage.effectType, damageAmount),
       }
     );

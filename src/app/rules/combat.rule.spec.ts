@@ -59,7 +59,6 @@ describe('CombatRule', () => {
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
-          damage: 2,
           effect: new EffectReceivedDefinition('KINETIC', 2),
         })
       )
@@ -70,7 +69,6 @@ describe('CombatRule', () => {
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
-          damage: 2,
           effect: new EffectReceivedDefinition('KINETIC', 2),
         })
       )
@@ -81,7 +79,6 @@ describe('CombatRule', () => {
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
-          damage: 2,
           effect: new EffectReceivedDefinition('FIRE', 2),
         })
       )
@@ -92,7 +89,6 @@ describe('CombatRule', () => {
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
-          damage: 2,
           effect: new EffectReceivedDefinition('KINETIC', 2),
         })
       )

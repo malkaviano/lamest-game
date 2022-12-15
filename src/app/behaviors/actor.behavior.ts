@@ -1,12 +1,17 @@
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
+import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { EffectDefensesInterface } from '../interfaces/effect-defenses.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { SkillStore } from '../stores/skill.store';
 
+type EffectCoeficientsInterface = {
+  readonly vulnerabilityCoefficient: number;
+  readonly resistanceCoefficient: number;
+};
 export class ActorBehavior {
   private readonly maximumHP: number;
 
@@ -20,7 +25,8 @@ export class ActorBehavior {
     private readonly mCharacteristics: CharacteristicSetDefinition,
     private readonly mSkills: Map<string, number>,
     private readonly skillStore: SkillStore,
-    private readonly effectDefenses: EffectDefensesInterface
+    private readonly effectDefenses: EffectDefensesInterface,
+    private readonly effectCoeficients: EffectCoeficientsInterface
   ) {
     this.maximumHP = Math.trunc(
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
@@ -62,25 +68,41 @@ export class ActorBehavior {
     return this.currentHP > 0 ? 'ALIVE' : 'DEAD';
   }
 
-  public damaged(damage: number): HitPointsEvent {
-    return this.modifyHealth(-damage);
-  }
+  public effectReceived(
+    effectReceived: EffectReceivedDefinition
+  ): HitPointsEvent {
+    const { effectType, amount } = effectReceived;
 
-  public healed(healed: number): HitPointsEvent {
-    return this.modifyHealth(healed);
+    let value = 0;
+
+    if (!this.effectDefenses.immunities.items.includes(effectType)) {
+      if (this.effectDefenses.vulnerabilities.items.includes(effectType)) {
+        value = amount * this.effectCoeficients.vulnerabilityCoefficient * -1;
+      } else if (this.effectDefenses.resistances.items.includes(effectType)) {
+        value = amount * this.effectCoeficients.resistanceCoefficient * -1;
+      } else if (this.effectDefenses.cures.items.includes(effectType)) {
+        value = amount;
+      } else {
+        value = amount * -1;
+      }
+    }
+
+    return this.modifyHealth(value);
   }
 
   public static create(
     characteristics: CharacteristicSetDefinition,
     skills: Map<string, number>,
     skillStore: SkillStore,
-    effectDefenses: EffectDefensesInterface
+    effectDefenses: EffectDefensesInterface,
+    effectCoeficients: EffectCoeficientsInterface
   ): ActorBehavior {
     return new ActorBehavior(
       characteristics,
       skills,
       skillStore,
-      effectDefenses
+      effectDefenses,
+      effectCoeficients
     );
   }
 

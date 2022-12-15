@@ -131,18 +131,21 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     let resultLog: string | undefined;
 
     if (this.situation === 'ALIVE') {
-      if (actionable === 'ATTACK' && result === 'SUCCESS' && values.damage) {
-        const { effective } = this.damaged(values.damage);
-
-        resultLog = createDamagedMessage(effective);
-      } else if (
-        actionable === 'HEAL' &&
-        ['SUCCESS', 'NONE'].includes(result) &&
-        values.heal
+      if (
+        values.effect &&
+        ((actionable === 'ATTACK' && result === 'SUCCESS') ||
+          (actionable === 'HEAL' && ['SUCCESS', 'NONE'].includes(result)))
       ) {
-        const { effective } = this.healed(values.heal);
+        const result = this.actorBehavior.effectReceived(values.effect);
 
-        resultLog = createHealedMessage(effective);
+        if (result.effective) {
+          this.hpChanged.next(result);
+        }
+
+        resultLog =
+          result.current > result.previous
+            ? createHealedMessage(result.effective)
+            : createDamagedMessage(result.effective);
       }
     }
 
@@ -151,25 +154,5 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     return resultLog;
-  }
-
-  protected damaged(damage: number): HitPointsEvent {
-    const result = this.actorBehavior.damaged(damage);
-
-    if (result.effective) {
-      this.hpChanged.next(result);
-    }
-
-    return result;
-  }
-
-  protected healed(heal: number): HitPointsEvent {
-    const result = this.actorBehavior.healed(heal);
-
-    if (result.effective) {
-      this.hpChanged.next(result);
-    }
-
-    return result;
   }
 }

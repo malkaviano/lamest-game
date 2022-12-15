@@ -73,7 +73,6 @@ export class ConsumeRule implements RuleInterface {
         createActionableDefinition('HEAL', 'heal', 'Heal'),
         rollDefinition.result,
         {
-          heal: amount,
           effect: new EffectReceivedDefinition(consumable.effect, amount),
         }
       );

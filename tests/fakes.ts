@@ -26,6 +26,8 @@ import {
   influencedDefinitions,
   SkillDefinition,
 } from '../src/app/definitions/skill.definition';
+import { EffectReceivedDefinition } from '../src/app/definitions/effect-received.definition';
+import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 
 export const playerInfo = { id: 'player', name: 'player' };
 
@@ -343,3 +345,6 @@ export const actionableItemView = (
 
 export const actionableEvent = (action: ActionableDefinition, id: string) =>
   new ActionableEvent(action, id);
+
+export const fakeEffect = (effectType: EffectTypeLiteral, amount: number) =>
+  new EffectReceivedDefinition(effectType, amount);

@@ -9,6 +9,7 @@ import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
+import { SettingsStore } from './settings.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
 
@@ -23,7 +24,8 @@ export class ActorStore {
     stateStore: StatesStore,
     resourcesStore: ResourcesStore,
     itemStore: ItemStore,
-    skillStore: SkillStore
+    skillStore: SkillStore,
+    settingsStore: SettingsStore
   ) {
     this.store = new Map<string, ActorEntity>();
 
@@ -47,12 +49,23 @@ export class ActorStore {
           new ActorIdentityDefinition(id, name, description),
           stateStore.states[behaviorState],
           resettable,
-          ActorBehavior.create(characteristics, skills, skillStore, {
-            immunities,
-            cures,
-            vulnerabilities,
-            resistances,
-          }),
+          ActorBehavior.create(
+            characteristics,
+            skills,
+            skillStore,
+            {
+              immunities,
+              cures,
+              vulnerabilities,
+              resistances,
+            },
+            {
+              vulnerabilityCoefficient:
+                settingsStore.settings.vulnerabilityCoefficient,
+              resistanceCoefficient:
+                settingsStore.settings.resistanceCoefficient,
+            }
+          ),
           EquipmentBehavior.create(),
           stateStore.states[killedState]
         );

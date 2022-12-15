@@ -1,3 +1,4 @@
+import { fakeEffect } from '../../../tests/fakes';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../views/array.view';
@@ -7,7 +8,9 @@ import { DiscardState } from './discard.state';
 describe('DestroyableState', () => {
   describe('when HP <= 0', () => {
     it('return DiscardState', () => {
-      const result = state.onResult(attackAction, 'SUCCESS', { damage: 12 });
+      const result = state.onResult(attackAction, 'SUCCESS', {
+        effect: fakeEffect('KINETIC', 12),
+      });
 
       expect(result).toEqual({
         state: discardedState,
@@ -18,7 +21,9 @@ describe('DestroyableState', () => {
 
   describe('when HP > 0', () => {
     it('return DestroyableState with remaining HP', () => {
-      const result = state.onResult(attackAction, 'SUCCESS', { damage: 6 });
+      const result = state.onResult(attackAction, 'SUCCESS', {
+        effect: fakeEffect('KINETIC', 6),
+      });
 
       expect(result).toEqual({ state: state2, log: 'received 6 damage' });
     });

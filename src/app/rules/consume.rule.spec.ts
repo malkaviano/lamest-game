@@ -124,7 +124,6 @@ describe('ConsumeRule', () => {
               deepEqual(actionHeal),
               'SUCCESS',
               deepEqual({
-                heal: 5,
                 effect: new EffectReceivedDefinition('REMEDY', 5),
               })
             )
@@ -185,7 +184,6 @@ describe('ConsumeRule', () => {
             deepEqual(actionHeal),
             'NONE',
             deepEqual({
-              heal: 2,
               effect: new EffectReceivedDefinition('REMEDY', 2),
             })
           )
