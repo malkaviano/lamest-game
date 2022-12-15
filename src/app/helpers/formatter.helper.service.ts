@@ -13,7 +13,7 @@ import {
 } from '../definitions/characteristic.definition';
 import { KeyValueDescriptionView } from '../views/key-value-description.view';
 import { PlayerEntity } from '../entities/player.entity';
-import { IdentityLiteral } from '../literals/identity.literal';
+import { CharacterIdentityLiteral } from '../literals/character-identity.literal';
 import { SkillStore } from '../stores/skill.store';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class FormatterHelperService {
         return new KeyValueDescriptionView(
           key.toUpperCase(),
           value,
-          characterIdentityDefinitions[key as IdentityLiteral]
+          characterIdentityDefinitions[key as CharacterIdentityLiteral]
         );
       })
     );

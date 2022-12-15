@@ -1,4 +1,4 @@
-export type IdentityLiteral =
+export type CharacterIdentityLiteral =
   | 'name'
   | 'profession'
   | 'age'
