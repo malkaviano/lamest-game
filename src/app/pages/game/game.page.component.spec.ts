@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -13,12 +13,14 @@ import { ActionableEvent } from '../../events/actionable.event';
 import { ActionableItemView } from '../../views/actionable-item.view';
 import { createTookLogMessage } from '../../definitions/log-message.definition';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 
 import {
   mockedFormatterHelperService,
   mockedGameBridgeService,
   mockedGameEventsService,
   mockedInteractiveEntity,
+  mockedMatDialog,
   mockedWithSubscriptionHelper,
   setupMocks,
 } from '../../../../tests/mocks';
@@ -33,7 +35,6 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
-import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;
@@ -41,7 +42,7 @@ describe('GamePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatSnackBarModule, NoopAnimationsModule],
+      imports: [NoopAnimationsModule],
       declarations: [GamePageComponent],
       // Unit Test page, child won't be rendered
       schemas: [NO_ERRORS_SCHEMA],
@@ -57,6 +58,10 @@ describe('GamePageComponent', () => {
         {
           provide: FormatterHelperService,
           useValue: instance(mockedFormatterHelperService),
+        },
+        {
+          provide: MatDialog,
+          useValue: instance(mockedMatDialog),
         },
       ],
     }).compileComponents();

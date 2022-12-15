@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Observable, Subject } from 'rxjs';
+
 import { RulesHelper } from '../helpers/rules.helper';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { CharacterService } from './character.service';
@@ -16,6 +18,7 @@ import { PlayerEntity } from '../entities/player.entity';
 import { LoggingService } from './logging.service';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { SceneDefinition } from '../definitions/scene.definition';
+import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +35,10 @@ export class GameLoopService {
   private actionReactives: { [key: string]: ActionReactive };
 
   private actors: ArrayView<ActorInterface>;
+
+  private readonly documentOpened: Subject<DocumentOpenedInterface>;
+
+  public readonly documentOpened$: Observable<DocumentOpenedInterface>;
 
   constructor(
     private readonly rulesHelper: RulesHelper,
@@ -64,6 +71,10 @@ export class GameLoopService {
 
       this.setActors();
     });
+
+    this.documentOpened = new Subject();
+
+    this.documentOpened$ = this.documentOpened.asObservable();
   }
 
   public run(): void {
@@ -74,11 +85,15 @@ export class GameLoopService {
         if (actor.situation === 'ALIVE' && action) {
           const target = this.actionReactives[action.eventId];
 
-          const resultLogs = this.dispatcher[
+          const result = this.dispatcher[
             action.actionableDefinition.actionable
           ].execute(actor, action, target);
 
-          this.logging(resultLogs.logs);
+          this.logging(result.logs);
+
+          if (result.documentOpened) {
+            this.documentOpened.next(result.documentOpened);
+          }
 
           if (
             target &&

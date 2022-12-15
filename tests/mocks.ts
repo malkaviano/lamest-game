@@ -1,3 +1,5 @@
+import { MatDialog } from '@angular/material/dialog';
+
 import { of } from 'rxjs';
 import { instance, mock, reset, when } from 'ts-mockito';
 
@@ -36,6 +38,16 @@ import { MessageStore } from '../src/app/stores/message.store';
 import { ResourcesStore } from '../src/app/stores/resources.store';
 import { SceneStore } from '../src/app/stores/scene.store';
 import { StatesStore } from '../src/app/stores/states.store';
+import { GameBridgeService } from '../src/app/services/game-bridge.service';
+import { GameEventsDefinition } from '../src/app/definitions/game-events.definition';
+import { SceneDefinition } from '../src/app/definitions/scene.definition';
+import { ArrayView } from '../src/app/views/array.view';
+import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
+import { ProfessionStore } from '../src/app/stores/profession.store';
+import { DescriptionStore } from '../src/app/stores/description.store';
+import { ActorStore } from '../src/app/stores/actor.store';
+import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
+import { SkillStore } from '../src/app/stores/skill.store';
 
 import {
   fakeCharacteristics,
@@ -48,16 +60,6 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { GameBridgeService } from '../src/app/services/game-bridge.service';
-import { GameEventsDefinition } from '../src/app/definitions/game-events.definition';
-import { SceneDefinition } from '../src/app/definitions/scene.definition';
-import { ArrayView } from '../src/app/views/array.view';
-import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
-import { ProfessionStore } from '../src/app/stores/profession.store';
-import { DescriptionStore } from '../src/app/stores/description.store';
-import { ActorStore } from '../src/app/stores/actor.store';
-import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
-import { SkillStore } from '../src/app/stores/skill.store';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -148,6 +150,8 @@ export const mockedActorStore = mock(ActorStore);
 export const mockedFormatterHelperService = mock(FormatterHelperService);
 
 export const mockedSkillStore = mock(SkillStore);
+
+export const mockedMatDialog = mock(MatDialog);
 
 export const setupMocks = () => {
   resetMocks();
@@ -290,6 +294,8 @@ export const setupMocks = () => {
     )
   );
 
+  when(mockedGameEventsService.documentOpened$).thenReturn(of());
+
   when(
     mockedFormatterHelperService.characterToKeyValueDescription(
       instance(mockedPlayerEntity)
@@ -379,4 +385,6 @@ const resetMocks = () => {
   reset(mockedFormatterHelperService);
 
   reset(mockedSkillStore);
+
+  reset(mockedMatDialog);
 };

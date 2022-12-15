@@ -16,6 +16,7 @@ import { EquippedWidgetComponent } from './widgets/equipped/equipped.widget.comp
 import { GameLayoutComponent } from './layouts/game/game.layout.component';
 import { InteractivePanelComponent } from './panels/interactive/interactive.panel.component';
 import { InventoryPanelComponent } from './panels/inventory/inventory.panel.component';
+import { ReaderDialogComponent } from './dialogs/reader.dialog/reader.dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { InventoryPanelComponent } from './panels/inventory/inventory.panel.comp
     GameLayoutComponent,
     InteractivePanelComponent,
     InventoryPanelComponent,
+    ReaderDialogComponent,
   ],
   imports: [
     BrowserModule,

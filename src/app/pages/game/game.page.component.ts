@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ActionableItemView } from '../../views/actionable-item.view';
 import { CharacterValuesView } from '../../views/character-values.view';
@@ -9,6 +10,8 @@ import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameBridgeService } from '../../services/game-bridge.service';
 import { ArrayView } from '../../views/array.view';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
+import { ReaderDialogComponent } from '../../dialogs/reader.dialog/reader.dialog.component';
+import { DocumentOpenedInterface } from '../../interfaces/reader-dialog.interface';
 
 @Component({
   selector: 'app-game-page',
@@ -30,7 +33,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly gameManagerService: GameBridgeService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
-    private readonly formatterHelperService: FormatterHelperService
+    private readonly formatterHelperService: FormatterHelperService,
+    private readonly dialog: MatDialog
   ) {
     this.gameLogs = [];
 
@@ -83,6 +87,14 @@ export class GamePageComponent implements OnInit, OnDestroy {
         this.inventory = inventory.items;
       })
     );
+
+    this.withSubscriptionHelper.addSubscription(
+      this.gameManagerService.events.documentOpened$.subscribe(
+        (documentText) => {
+          this.openReaderDialog(documentText);
+        }
+      )
+    );
   }
 
   informActionSelected(action: ActionableEvent): void {
@@ -91,5 +103,11 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public get logs(): ArrayView<string> {
     return ArrayView.create(this.gameLogs);
+  }
+
+  private openReaderDialog(data: DocumentOpenedInterface): void {
+    this.dialog.open(ReaderDialogComponent, {
+      data,
+    });
   }
 }

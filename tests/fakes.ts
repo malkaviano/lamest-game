@@ -346,3 +346,8 @@ export const actionableEvent = (action: ActionableDefinition, id: string) =>
 
 export const fakeEffect = (effectType: EffectTypeLiteral, amount: number) =>
   new EffectReceivedDefinition(effectType, amount);
+
+export const documentOpened = {
+  title: 'Testing',
+  text: ArrayView.create(['GG man']),
+};

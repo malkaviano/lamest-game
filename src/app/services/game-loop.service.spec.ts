@@ -14,6 +14,7 @@ import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
 
 import {
+  documentOpened,
   eventAttackInteractive,
   eventAttackPlayer,
 } from '../../../tests/fakes';
@@ -27,6 +28,8 @@ import {
   mockedRulesHelper,
   setupMocks,
 } from '../../../tests/mocks';
+import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { take } from 'rxjs';
 
 describe('GameLoopService', () => {
   let service: GameLoopService;
@@ -72,24 +75,6 @@ describe('GameLoopService', () => {
     expect(service).toBeTruthy();
   });
 
-  // describe('reactives', () => {
-  //   describe('when interactive was the player', () => {
-  //     it('return player', () => {
-  //       const result = service.reactives(playerInfo.id);
-
-  //       expect(result).toEqual(instance(mockedPlayerEntity));
-  //     });
-  //   });
-
-  //   describe('when interactive was interactive', () => {
-  //     it('return interactive', () => {
-  //       const result = service.reactives('id1');
-
-  //       expect(result).toEqual(instance(mockedInteractiveEntity));
-  //     });
-  //   });
-  // });
-
   describe('run', () => {
     it('return rule logs', () => {
       when(mockedCombatRule.execute(anything(), anything(), anything()))
@@ -113,6 +98,31 @@ describe('GameLoopService', () => {
       service.run();
 
       expect(result).toEqual([log1, log2]);
+    });
+
+    describe('when documentOpened is returned', () => {
+      it('should emit documentOpened event', (done) => {
+        let result: DocumentOpenedInterface | undefined;
+
+        when(mockedCombatRule.execute(anything(), anything(), anything()))
+          .thenReturn({
+            logs: [log1],
+            documentOpened: documentOpened,
+          })
+          .thenReturn({
+            logs: [log2],
+          });
+
+        service.documentOpened$.pipe(take(10)).subscribe((event) => {
+          result = event;
+        });
+
+        service.run();
+
+        done();
+
+        expect(result).toEqual(documentOpened);
+      });
     });
 
     describe('when player HP reaches 0', () => {

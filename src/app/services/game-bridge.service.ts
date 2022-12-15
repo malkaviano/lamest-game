@@ -48,7 +48,8 @@ export class GameBridgeService {
       narrativeService.sceneChanged$,
       loggingService.gameLog$,
       characterService.characterChanged$,
-      inventoryChanged
+      inventoryChanged,
+      this.gameLoopService.documentOpened$
     );
   }
 
