@@ -215,7 +215,7 @@ export const fakeCharacterSheetSkills = ArrayView.create([
   ),
 ]);
 
-export const fakeCharacterSheet = new CharacterValuesView(
+export const fakeCharacterSheet = CharacterValuesView.create(
   fakeCharacterSheetIdentity,
   fakeCharacterSheetCharacteristics,
   fakeCharacterSheetDerivedAttributes,

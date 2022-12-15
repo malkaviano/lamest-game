@@ -36,7 +36,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     this.inventory = [];
 
-    this.characterValues = new CharacterValuesView(
+    this.characterValues = CharacterValuesView.create(
       ArrayView.create([]),
       ArrayView.create([]),
       ArrayView.create([]),

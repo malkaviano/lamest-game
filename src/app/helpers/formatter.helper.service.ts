@@ -71,7 +71,7 @@ export class FormatterHelperService {
         .sort((a, b) => (a.key < b.key ? -1 : 1))
     );
 
-    return new CharacterValuesView(
+    return CharacterValuesView.create(
       identity,
       characteristics,
       derivedAttributes,

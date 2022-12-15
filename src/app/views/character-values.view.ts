@@ -8,4 +8,18 @@ export class CharacterValuesView {
     public readonly derivedAttributes: ArrayView<KeyValueDescriptionView>,
     public readonly skills: ArrayView<KeyValueDescriptionView>
   ) {}
+
+  public static create(
+    identity: ArrayView<KeyValueDescriptionView>,
+    characteristics: ArrayView<KeyValueDescriptionView>,
+    derivedAttributes: ArrayView<KeyValueDescriptionView>,
+    skills: ArrayView<KeyValueDescriptionView>
+  ): CharacterValuesView {
+    return new CharacterValuesView(
+      identity,
+      characteristics,
+      derivedAttributes,
+      skills
+    );
+  }
 }
