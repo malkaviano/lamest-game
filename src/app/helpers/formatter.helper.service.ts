@@ -27,7 +27,7 @@ export class FormatterHelperService {
   ): CharacterValuesView {
     const identity = ArrayView.create(
       Object.entries(character.identity).map(([key, value]) => {
-        return new KeyValueDescriptionView(
+        return KeyValueDescriptionView.create(
           key.toUpperCase(),
           value,
           characterIdentityDefinitions[key as CharacterIdentityLiteral]
@@ -38,7 +38,7 @@ export class FormatterHelperService {
     const characteristics = ArrayView.create(
       Object.values(character.characteristics).map(
         (c: CharacteristicDefinition) => {
-          return new KeyValueDescriptionView(
+          return KeyValueDescriptionView.create(
             c.key,
             c.value.toString(),
             characteristicsDefinitions[c.key]
@@ -50,7 +50,7 @@ export class FormatterHelperService {
     const derivedAttributes = ArrayView.create(
       Object.values(character.derivedAttributes).map(
         (da: DerivedAttributeDefinition) => {
-          return new KeyValueDescriptionView(
+          return KeyValueDescriptionView.create(
             da.key,
             da.value.toString(),
             derivedAttributeDefinitions[da.key]
@@ -62,7 +62,7 @@ export class FormatterHelperService {
     const skills = ArrayView.create(
       Object.entries(character.skills)
         .map(([key, value]) => {
-          return new KeyValueDescriptionView(
+          return KeyValueDescriptionView.create(
             key,
             value.toString(),
             this.skillStore.skills[key].description

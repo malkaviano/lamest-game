@@ -47,4 +47,4 @@ describe('WindowPanelComponent', () => {
 });
 
 const characteristic = (name: string, value: string, description: string) =>
-  new KeyValueDescriptionView(name, value, description);
+  KeyValueDescriptionView.create(name, value, description);

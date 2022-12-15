@@ -178,37 +178,41 @@ export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
   ]);
 
 export const fakeCharacterSheetIdentity = ArrayView.create([
-  new KeyValueDescriptionView('NAME', 'Some Name', 'Character name'),
-  new KeyValueDescriptionView(
+  KeyValueDescriptionView.create('NAME', 'Some Name', 'Character name'),
+  KeyValueDescriptionView.create(
     'PROFESSION',
     'Police Detective',
     'Character profession'
   ),
-  new KeyValueDescriptionView('AGE', 'YOUNG', 'Character age'),
-  new KeyValueDescriptionView('RACE', 'HUMAN', 'Character race'),
-  new KeyValueDescriptionView('HEIGHT', 'SHORT', 'Character height'),
-  new KeyValueDescriptionView('WEIGHT', 'LIGHT', 'Character weight'),
+  KeyValueDescriptionView.create('AGE', 'YOUNG', 'Character age'),
+  KeyValueDescriptionView.create('RACE', 'HUMAN', 'Character race'),
+  KeyValueDescriptionView.create('HEIGHT', 'SHORT', 'Character height'),
+  KeyValueDescriptionView.create('WEIGHT', 'LIGHT', 'Character weight'),
 ]);
 
 export const fakeCharacterSheetCharacteristics = ArrayView.create([
-  new KeyValueDescriptionView('STR', '8', 'The character physical force'),
-  new KeyValueDescriptionView('VIT', '9', 'The character vitality'),
-  new KeyValueDescriptionView('AGI', '11', 'The character agility'),
-  new KeyValueDescriptionView('INT', '12', 'The character intelligence'),
-  new KeyValueDescriptionView('ESN', '13', 'The character essence'),
-  new KeyValueDescriptionView('APP', '14', 'The character looks'),
+  KeyValueDescriptionView.create('STR', '8', 'The character physical force'),
+  KeyValueDescriptionView.create('VIT', '9', 'The character vitality'),
+  KeyValueDescriptionView.create('AGI', '11', 'The character agility'),
+  KeyValueDescriptionView.create('INT', '12', 'The character intelligence'),
+  KeyValueDescriptionView.create('ESN', '13', 'The character essence'),
+  KeyValueDescriptionView.create('APP', '14', 'The character looks'),
 ]);
 
 export const fakeCharacterSheetDerivedAttributes = ArrayView.create([
-  new KeyValueDescriptionView('HP', '8', 'The character hit points'),
-  new KeyValueDescriptionView('EP', '13', 'The character essence points'),
-  new KeyValueDescriptionView('MOV', '10', 'The character movement'),
+  KeyValueDescriptionView.create('HP', '8', 'The character hit points'),
+  KeyValueDescriptionView.create('EP', '13', 'The character essence points'),
+  KeyValueDescriptionView.create('MOV', '10', 'The character movement'),
 ]);
 
 export const fakeCharacterSheetSkills = ArrayView.create([
-  new KeyValueDescriptionView('Brawl', '45', 'Fighting unarmed'),
-  new KeyValueDescriptionView('First Aid', '45', 'Use emergency kit to heal'),
-  new KeyValueDescriptionView(
+  KeyValueDescriptionView.create('Brawl', '45', 'Fighting unarmed'),
+  KeyValueDescriptionView.create(
+    'First Aid',
+    '45',
+    'Use emergency kit to heal'
+  ),
+  KeyValueDescriptionView.create(
     'Melee Weapon (Simple)',
     '45',
     'Light close combat weapons, one handed'

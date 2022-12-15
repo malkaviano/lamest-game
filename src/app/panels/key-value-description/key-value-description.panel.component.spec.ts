@@ -44,11 +44,15 @@ describe('KeyValueDescriptionPanelComponent', () => {
 });
 
 const characteristics = () => [
-  new KeyValueDescriptionView('STR', '10', 'The character physical force'),
-  new KeyValueDescriptionView('VIT', '12', 'The character body constitution'),
-  new KeyValueDescriptionView('SIZ', '11', 'The character body shape'),
-  new KeyValueDescriptionView('AGI', '9', 'The character agility'),
-  new KeyValueDescriptionView('INT', '13', 'The character intelligence'),
-  new KeyValueDescriptionView('ESN', '14', 'The character essence'),
-  new KeyValueDescriptionView('APP', '16', 'The character looks'),
+  KeyValueDescriptionView.create('STR', '10', 'The character physical force'),
+  KeyValueDescriptionView.create(
+    'VIT',
+    '12',
+    'The character body constitution'
+  ),
+  KeyValueDescriptionView.create('SIZ', '11', 'The character body shape'),
+  KeyValueDescriptionView.create('AGI', '9', 'The character agility'),
+  KeyValueDescriptionView.create('INT', '13', 'The character intelligence'),
+  KeyValueDescriptionView.create('ESN', '14', 'The character essence'),
+  KeyValueDescriptionView.create('APP', '16', 'The character looks'),
 ];
