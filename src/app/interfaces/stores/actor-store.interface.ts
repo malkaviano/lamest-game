@@ -1,6 +1,6 @@
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
-import { ArrayView } from '../views/array.view';
+import { CharacteristicSetDefinition } from '../../definitions/characteristic-set.definition';
+import { EffectTypeLiteral } from '../../literals/effect-type.literal';
+import { ArrayView } from '../../views/array.view';
 
 export interface ActorStoreInterface {
   readonly actors: {
