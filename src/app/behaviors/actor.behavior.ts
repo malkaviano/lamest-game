@@ -8,7 +8,7 @@ import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { SkillStore } from '../stores/skill.store';
 
-type EffectCoeficientsInterface = {
+type EffectCoefficientsInterface = {
   readonly vulnerabilityCoefficient: number;
   readonly resistanceCoefficient: number;
 };
@@ -26,7 +26,7 @@ export class ActorBehavior {
     private readonly mSkills: Map<string, number>,
     private readonly skillStore: SkillStore,
     private readonly effectDefenses: EffectDefensesInterface,
-    private readonly effectCoeficients: EffectCoeficientsInterface
+    private readonly effectCoefficients: EffectCoefficientsInterface
   ) {
     this.maximumHP = Math.trunc(
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
@@ -85,12 +85,12 @@ export class ActorBehavior {
         value += amount;
       } else {
         value -= isVulnerable
-          ? amount * this.effectCoeficients.vulnerabilityCoefficient
+          ? amount * this.effectCoefficients.vulnerabilityCoefficient
           : amount;
       }
 
       if (this.effectDefenses.resistances.items.includes(effectType)) {
-        value += value * this.effectCoeficients.resistanceCoefficient * -1;
+        value += value * this.effectCoefficients.resistanceCoefficient * -1;
       }
     }
 
@@ -102,14 +102,14 @@ export class ActorBehavior {
     skills: Map<string, number>,
     skillStore: SkillStore,
     effectDefenses: EffectDefensesInterface,
-    effectCoeficients: EffectCoeficientsInterface
+    effectCoefficients: EffectCoefficientsInterface
   ): ActorBehavior {
     return new ActorBehavior(
       characteristics,
       skills,
       skillStore,
       effectDefenses,
-      effectCoeficients
+      effectCoefficients
     );
   }
 
