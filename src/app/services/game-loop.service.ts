@@ -97,7 +97,7 @@ export class GameLoopService {
             action.actionableDefinition.actionable
           ].execute(actor, action, {
             target,
-            targetDodgesPerformed: this.dodgesPerRound.get(target.id),
+            targetDodgesPerformed: this.dodgesPerRound.get(target?.id),
           });
 
           this.logging(result.logs);

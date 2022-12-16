@@ -32,6 +32,8 @@ import {
   actionNoop,
   playerInfo,
   actionableEvent,
+  readable,
+  actionInspect,
 } from '../../../tests/fakes';
 
 describe('GameBridgeService', () => {
@@ -82,7 +84,7 @@ describe('GameBridgeService', () => {
     [
       {
         invEvent: new InventoryEvent(
-          'CONSUME',
+          'STORE',
           playerInfo.id,
           consumableFirstAid
         ),
@@ -90,7 +92,7 @@ describe('GameBridgeService', () => {
         item: consumableFirstAid,
       },
       {
-        invEvent: new InventoryEvent('EQUIP', playerInfo.id, unDodgeableAxe),
+        invEvent: new InventoryEvent('STORE', playerInfo.id, unDodgeableAxe),
         expected: ActionableItemView.create(unDodgeableAxe, actionEquip),
         item: unDodgeableAxe,
       },
@@ -98,6 +100,11 @@ describe('GameBridgeService', () => {
         invEvent: new InventoryEvent('STORE', playerInfo.id, masterKey),
         expected: ActionableItemView.create(masterKey, actionNoop),
         item: masterKey,
+      },
+      {
+        invEvent: new InventoryEvent('STORE', playerInfo.id, readable),
+        expected: ActionableItemView.create(readable, actionInspect),
+        item: readable,
       },
     ].forEach(({ invEvent, expected, item }) => {
       it(`should emit event ${invEvent.eventName}`, (done) => {
