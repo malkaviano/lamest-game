@@ -79,6 +79,13 @@ describe('GamePageComponent', () => {
 
     when(mockedGameEventsService.actionLogged$).thenReturn(of(log));
 
+    when(mockedGameEventsService.documentOpened$).thenReturn(
+      of({
+        title: 'GG',
+        text: ArrayView.create([]),
+      })
+    );
+
     fixture = TestBed.createComponent(GamePageComponent);
 
     component = fixture.componentInstance;

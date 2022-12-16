@@ -22,14 +22,12 @@ import { ItemIdentityDefinition } from '../src/app/definitions/item-identity.def
 import { ActionableItemView } from '../src/app/views/actionable-item.view';
 import { GameItemDefinition } from '../src/app/definitions/game-item.definition';
 import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
-import {
-  influencedDefinitions,
-  SkillDefinition,
-} from '../src/app/definitions/skill.definition';
+import { SkillDefinition } from '../src/app/definitions/skill.definition';
 import { EffectReceivedDefinition } from '../src/app/definitions/effect-received.definition';
 import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/app/definitions/readable.definition';
 import { GameSettingsInterface } from '../src/app/interfaces/game-settings.interface';
+import { influencedDefinitions } from '../src/app/stores/skill.store';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
