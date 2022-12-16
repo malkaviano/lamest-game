@@ -24,10 +24,10 @@ import {
   playerInfo,
   interactiveInfo,
   actionUseMasterKey,
-  eventUseMasterKey,
-  eventWrongUseSimpleSword,
   masterKey,
   simpleSword,
+  actionableEvent,
+  actionWrongUseSimpleSword,
 } from '../../../tests/fakes';
 
 describe('UseRule', () => {
@@ -126,4 +126,14 @@ const openedLog = createFreeLogMessage(
 const itemLostLog = createLostLogMessage(
   playerInfo.name,
   masterKey.identity.label
+);
+
+const eventWrongUseSimpleSword = actionableEvent(
+  actionWrongUseSimpleSword,
+  interactiveInfo.id
+);
+
+const eventUseMasterKey = actionableEvent(
+  actionUseMasterKey,
+  interactiveInfo.id
 );

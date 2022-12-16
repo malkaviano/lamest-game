@@ -13,8 +13,8 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
+  actionableEvent,
   actionPickSimpleSword,
-  eventPickSimpleSword,
   interactiveInfo,
   playerInfo,
   simpleSword,
@@ -78,4 +78,9 @@ const log = createTookLogMessage(
   playerInfo.name,
   interactiveInfo.name,
   simpleSword.identity.label
+);
+
+const eventPickSimpleSword = actionableEvent(
+  actionPickSimpleSword,
+  interactiveInfo.id
 );

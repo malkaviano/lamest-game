@@ -16,8 +16,9 @@ import { LoggingService } from './logging.service';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 
 import {
+  actionableEvent,
+  actionAttack,
   documentOpened,
-  eventAttack,
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
@@ -59,15 +60,11 @@ describe('GameLoopService', () => {
 
     setupMocks();
 
-    when(mockedActorEntity.action(anything())).thenReturn(
-      eventAttack(playerInfo.id)
-    );
+    when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
 
     when(mockedActorEntity.situation).thenReturn('ALIVE');
 
-    when(mockedPlayerEntity.action).thenReturn(() =>
-      eventAttack(interactiveInfo.id)
-    );
+    when(mockedPlayerEntity.action).thenReturn(() => eventAttackInteractive);
 
     when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
@@ -161,3 +158,10 @@ const log2 = createFreeLogMessage(playerInfo.name, 'dodged');
 const log3 = createFreeLogMessage(playerInfo.name, 'NOOOO');
 
 const logDied = createActorIsDeadMessage(playerInfo.name);
+
+const eventAttackPlayer = actionableEvent(actionAttack, playerInfo.id);
+
+const eventAttackInteractive = actionableEvent(
+  actionAttack,
+  interactiveInfo.id
+);

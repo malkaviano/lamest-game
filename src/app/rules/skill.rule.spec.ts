@@ -17,7 +17,8 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
-  eventSkillBrawl,
+  actionableEvent,
+  actionSkillBrawl,
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
@@ -97,6 +98,8 @@ describe('SkillRule', () => {
     });
   });
 });
+
+const eventSkillBrawl = actionableEvent(actionSkillBrawl, interactiveInfo.id);
 
 const log1 = createCheckLogMessage(playerInfo.name, 'Brawl', 10, 'SUCCESS');
 

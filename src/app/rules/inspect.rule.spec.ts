@@ -14,7 +14,8 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
-  eventInspect,
+  actionableEvent,
+  actionInspect,
   playerInfo,
   readable,
   simpleSword,
@@ -51,10 +52,7 @@ describe('InspectRule', () => {
         );
 
         expect(() =>
-          service.execute(
-            instance(mockedPlayerEntity),
-            eventInspect(readable.identity.name)
-          )
+          service.execute(instance(mockedPlayerEntity), eventInspectReadable)
         ).toThrowError(errorMessages['INVALID-OPERATION']);
       });
     });
@@ -66,10 +64,7 @@ describe('InspectRule', () => {
         );
 
         expect(() =>
-          service.execute(
-            instance(mockedPlayerEntity),
-            eventInspect(simpleSword.identity.name)
-          )
+          service.execute(instance(mockedPlayerEntity), eventInspectWrong)
         ).toThrowError(errorMessages['WRONG-ITEM']);
       });
     });
@@ -82,7 +77,7 @@ describe('InspectRule', () => {
 
         const result = service.execute(
           instance(mockedPlayerEntity),
-          eventInspect(readable.identity.name)
+          eventInspectReadable
         );
 
         expect(result).toEqual({
@@ -96,5 +91,15 @@ describe('InspectRule', () => {
     });
   });
 });
+
+const eventInspectReadable = actionableEvent(
+  actionInspect,
+  readable.identity.name
+);
+
+const eventInspectWrong = actionableEvent(
+  actionInspect,
+  simpleSword.identity.name
+);
 
 const log = createItemInspectedLogs(playerInfo.name, readable.identity.label);

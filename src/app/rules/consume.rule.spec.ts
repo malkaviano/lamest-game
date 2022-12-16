@@ -22,11 +22,10 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
+  actionableEvent,
   actionConsume,
   consumableAnalgesic,
   consumableFirstAid,
-  eventConsumeAnalgesic,
-  eventConsumeFirstAid,
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
@@ -231,3 +230,13 @@ const logFirstAidFailure = createCheckLogMessage(
 );
 
 const logError = createCannotCheckLogMessage(playerInfo.name, 'First Aid');
+
+const eventConsumeFirstAid = actionableEvent(
+  actionConsume,
+  consumableFirstAid.identity.name
+);
+
+const eventConsumeAnalgesic = actionableEvent(
+  actionConsume,
+  consumableAnalgesic.identity.name
+);

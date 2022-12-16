@@ -19,7 +19,7 @@ import {
 import {
   actionableEvent,
   actionSceneExit,
-  eventSkillAthleticism,
+  actionSkillAthleticism,
 } from '../../../tests/fakes';
 
 describe('NarrativeService', () => {
@@ -89,3 +89,8 @@ describe('NarrativeService', () => {
     });
   });
 });
+
+const eventSkillAthleticism = actionableEvent(
+  actionSkillAthleticism,
+  'athleticism'
+);

@@ -28,10 +28,10 @@ import {
   actionConsume,
   consumableFirstAid,
   unDodgeableAxe,
-  eventEquipUnDodgeableAxe,
   masterKey,
   actionNoop,
   playerInfo,
+  actionableEvent,
 } from '../../../tests/fakes';
 
 describe('GameBridgeService', () => {
@@ -141,4 +141,9 @@ const log = new LogMessageDefinition(
   'FREE',
   playerInfo.name,
   unDodgeableAxe.identity.label
+);
+
+const eventEquipUnDodgeableAxe = actionableEvent(
+  actionEquip,
+  unDodgeableAxe.identity.name
 );

@@ -26,8 +26,8 @@ import {
   actionAttack,
   fakeEffect,
   actionConsume,
-  eventAttack,
   playerInfo,
+  actionableEvent,
 } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
@@ -277,7 +277,7 @@ describe('ActorEntity', () => {
   describe('action', () => {
     it('return action attack', () => {
       expect(fakeActor().action(fakeSceneActorsInfo)).toEqual(
-        eventAttack(playerInfo.id)
+        eventAttackPlayer
       );
     });
 
@@ -315,3 +315,5 @@ const unEquipActorScenario = (
 ): WeaponDefinition | null => {
   return character.unEquip();
 };
+
+const eventAttackPlayer = actionableEvent(actionAttack, playerInfo.id);

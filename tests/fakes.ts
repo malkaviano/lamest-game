@@ -89,9 +89,6 @@ export const actionAttack = createActionableDefinition(
   'Use Equipped'
 );
 
-export const eventAttack = (targetId: string) =>
-  new ActionableEvent(actionAttack, targetId);
-
 export const actionPickBubbleGum = createActionableDefinition(
   'PICK',
   'bubbleGum',
@@ -249,21 +246,6 @@ export const actionConsume = createActionableDefinition(
   'Consume'
 );
 
-export const eventConsumeFirstAid = new ActionableEvent(
-  actionConsume,
-  consumableFirstAid.identity.name
-);
-
-export const eventConsumeAnalgesic = new ActionableEvent(
-  actionConsume,
-  consumableAnalgesic.identity.name
-);
-
-export const eventEquipUnDodgeableAxe = new ActionableEvent(
-  actionEquip,
-  unDodgeableAxe.identity.name
-);
-
 export const actionSceneExit = createActionableDefinition(
   'SCENE',
   'exit',
@@ -274,11 +256,6 @@ export const actionSkillAthleticism = createActionableDefinition(
   'SKILL',
   'athleticism',
   'Athleticism'
-);
-
-export const eventSkillAthleticism = new ActionableEvent(
-  actionSkillAthleticism,
-  'athleticism'
 );
 
 export const masterKey = new UsableDefinition(
@@ -297,33 +274,13 @@ export const actionWrongUseSimpleSword = createActionableDefinition(
   simpleSword.identity.label
 );
 
-export const eventUseMasterKey = new ActionableEvent(
-  actionUseMasterKey,
-  interactiveInfo.id
-);
-
-export const eventWrongUseSimpleSword = new ActionableEvent(
-  actionWrongUseSimpleSword,
-  interactiveInfo.id
-);
-
 export const actionPickSimpleSword = createActionableDefinition(
   'PICK',
   simpleSword.identity.name,
   simpleSword.identity.label
 );
 
-export const eventPickSimpleSword = new ActionableEvent(
-  actionPickSimpleSword,
-  interactiveInfo.id
-);
-
 export const actionSkillBrawl = createActionableDefinition('SKILL', 'Brawl');
-
-export const eventSkillBrawl = new ActionableEvent(
-  actionSkillBrawl,
-  interactiveInfo.id
-);
 
 export const actionNoop = createActionableDefinition('NOOP', 'noop', 'NOOP');
 
@@ -354,6 +311,3 @@ export const readable = new ReadableDefinition(
   'BOOK',
   ArrayView.create(['GG'])
 );
-
-export const eventInspect = (name: string) =>
-  new ActionableEvent(actionInspect, name);
