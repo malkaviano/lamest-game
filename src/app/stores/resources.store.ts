@@ -91,6 +91,47 @@ export class ResourcesStore {
   public readonly readableStore: ReadableStoreInterface;
 
   constructor() {
+    const {
+      professionPoints,
+      intelligencePoints,
+      vulnerabilityCoefficient,
+      resistanceCoefficient,
+      playerEffectDefenses,
+      oneDodgesEveryAgiAmount,
+    } = settingsStore.settings;
+
+    const cures = ArrayView.create(
+      playerEffectDefenses.cures.map((e) => e as EffectTypeLiteral)
+    );
+
+    const immunities = ArrayView.create(
+      playerEffectDefenses.immunities.map((e) => e as EffectTypeLiteral)
+    );
+
+    const resistances = ArrayView.create(
+      playerEffectDefenses.resistances.map((e) => e as EffectTypeLiteral)
+    );
+
+    const vulnerabilities = ArrayView.create(
+      playerEffectDefenses.vulnerabilities.map((e) => e as EffectTypeLiteral)
+    );
+
+    this.settingsStore = {
+      settings: {
+        professionPoints,
+        intelligencePoints,
+        vulnerabilityCoefficient,
+        resistanceCoefficient,
+        oneDodgesEveryAgiAmount,
+        playerEffectDefenses: {
+          cures,
+          immunities,
+          resistances,
+          vulnerabilities,
+        },
+      },
+    };
+
     this.sceneStore = sceneStore;
 
     this.skillStateStore = skillStateStore;
@@ -177,10 +218,6 @@ export class ResourcesStore {
         equippedWeapon: a.equippedWeapon,
         killedState: a.killedState,
         behaviorState: a.behaviorState,
-        immunities: ArrayView.create(a.immunities),
-        resistances: ArrayView.create(a.resistances),
-        cures: ArrayView.create(a.cures),
-        vulnerabilities: ArrayView.create(a.vulnerabilities),
       };
     });
 
@@ -203,45 +240,6 @@ export class ResourcesStore {
     });
 
     this.skillStore = { skills };
-
-    const {
-      professionPoints,
-      intelligencePoints,
-      vulnerabilityCoefficient,
-      resistanceCoefficient,
-      playerEffectDefenses,
-    } = settingsStore.settings;
-
-    const cures = ArrayView.create(
-      playerEffectDefenses.cures.map((e) => e as EffectTypeLiteral)
-    );
-
-    const immunities = ArrayView.create(
-      playerEffectDefenses.immunities.map((e) => e as EffectTypeLiteral)
-    );
-
-    const resistances = ArrayView.create(
-      playerEffectDefenses.resistances.map((e) => e as EffectTypeLiteral)
-    );
-
-    const vulnerabilities = ArrayView.create(
-      playerEffectDefenses.vulnerabilities.map((e) => e as EffectTypeLiteral)
-    );
-
-    this.settingsStore = {
-      settings: {
-        professionPoints,
-        intelligencePoints,
-        vulnerabilityCoefficient,
-        resistanceCoefficient,
-        playerEffectDefenses: {
-          cures,
-          immunities,
-          resistances,
-          vulnerabilities,
-        },
-      },
-    };
 
     this.readableStore = readableStore;
   }

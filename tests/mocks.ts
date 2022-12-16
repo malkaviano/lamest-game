@@ -57,11 +57,13 @@ import {
   fakeIdentity,
   fakeSkills,
   fakeSkillStore,
+  gameSettings,
   interactiveInfo,
   playerInfo,
   simpleSword,
 } from './fakes';
 import { InspectRule } from '../src/app/rules/inspect.rule';
+import { SettingsStore } from '../src/app/stores/settings.store';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -84,6 +86,8 @@ export const mockedCharacterService = mock(CharacterService);
 export const mockedLoggingService = mock(LoggingService);
 
 export const mockedActorEntity = mock(ActorEntity);
+
+export const mockedActorEntity2 = mock(ActorEntity);
 
 export const mockedActorBehavior = mock(ActorBehavior);
 
@@ -157,6 +161,8 @@ export const mockedMatDialog = mock(MatDialog);
 
 export const mockedInspectRule = mock(InspectRule);
 
+export const mockedSettingsStore = mock(SettingsStore);
+
 export const setupMocks = () => {
   resetMocks();
 
@@ -192,9 +198,23 @@ export const setupMocks = () => {
 
   when(mockedActorEntity.classification).thenReturn('ACTOR');
 
+  when(mockedActorEntity.situation).thenReturn('ALIVE');
+
+  when(mockedActorEntity2.id).thenReturn(`${actorInfo.id}2`);
+
+  when(mockedActorEntity2.name).thenReturn(`${actorInfo.name}2`);
+
+  when(mockedActorEntity2.skills).thenReturn(fakeSkills);
+
+  when(mockedActorEntity2.classification).thenReturn('ACTOR');
+
+  when(mockedActorEntity2.situation).thenReturn('ALIVE');
+
   when(mockedTargetPlayerEntity.name).thenReturn('targetPlayer');
 
   when(mockedTargetPlayerEntity.classification).thenReturn('PLAYER');
+
+  when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
   when(mockedActorBehavior.characteristics).thenReturn(fakeCharacteristics);
 
@@ -206,19 +226,23 @@ export const setupMocks = () => {
 
   const instanceActorEntity = instance(mockedActorEntity);
 
+  const instanceActorEntity2 = instance(mockedActorEntity2);
+
   const instancePlayerEntity = instance(mockedPlayerEntity);
 
   Object.setPrototypeOf(instanceActorEntity, ActorEntity.prototype);
 
+  Object.setPrototypeOf(instanceActorEntity2, ActorEntity.prototype);
+
   Object.setPrototypeOf(instancePlayerEntity, ActorEntity.prototype);
 
-  when(mockedNarrativeService.sceneChanged$).thenReturn(
-    of(instance(mockedSceneEntity))
-  );
+  // when(mockedNarrativeService.sceneChanged$).thenReturn(
+  //   of(instance(mockedSceneEntity))
+  // );
 
-  when(mockedSceneEntity.interactives).thenReturn(
-    ArrayView.create([instance(mockedInteractiveEntity), instanceActorEntity])
-  );
+  // when(mockedSceneEntity.interactives).thenReturn(
+  //   ArrayView.create([instance(mockedInteractiveEntity), instanceActorEntity])
+  // );
 
   when(mockedActorBehavior.characteristics).thenReturn(fakeCharacteristics);
 
@@ -274,6 +298,7 @@ export const setupMocks = () => {
       professionPoints: 300,
       vulnerabilityCoefficient: 1.5,
       resistanceCoefficient: 0.5,
+      oneDodgesEveryAgiAmount: 8,
       playerEffectDefenses: {
         cures: ArrayView.create([]),
         immunities: ArrayView.create([]),
@@ -315,6 +340,8 @@ export const setupMocks = () => {
   ).thenReturn(fakeCharacterSheet);
 
   when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
+
+  when(mockedSettingsStore.settings).thenReturn(gameSettings);
 };
 
 const resetMocks = () => {
@@ -401,4 +428,8 @@ const resetMocks = () => {
   reset(mockedMatDialog);
 
   reset(mockedInspectRule);
+
+  reset(mockedSettingsStore);
+
+  reset(mockedActorEntity2);
 };

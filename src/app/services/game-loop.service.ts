@@ -13,12 +13,13 @@ import { NarrativeService } from './narrative.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActorEntity } from '../entities/actor.entity';
 import { ArrayView } from '../views/array.view';
-import { ActionReactive } from '../interfaces/action-reactive.interface';
+import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { PlayerEntity } from '../entities/player.entity';
 import { LoggingService } from './logging.service';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { RuleResultInterface } from '../interfaces/rule-result.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -32,9 +33,11 @@ export class GameLoopService {
 
   private currentScene!: SceneDefinition;
 
-  private actionReactives: { [key: string]: ActionReactive };
+  private actionReactives: { [key: string]: ActionReactiveInterface };
 
   private actors: ArrayView<ActorInterface>;
+
+  private readonly dodgesPerRound: Map<string, number>;
 
   private readonly documentOpened: Subject<DocumentOpenedInterface>;
 
@@ -76,10 +79,14 @@ export class GameLoopService {
     this.documentOpened = new Subject();
 
     this.documentOpened$ = this.documentOpened.asObservable();
+
+    this.dodgesPerRound = new Map<string, number>();
   }
 
   public run(): void {
     if (this.isPlayerAlive()) {
+      this.dodgesPerRound.clear();
+
       this.actors.items.forEach((actor) => {
         const action = actor.action(this.sceneActorsInfo);
 
@@ -88,13 +95,16 @@ export class GameLoopService {
 
           const result = this.dispatcher[
             action.actionableDefinition.actionable
-          ].execute(actor, action, target);
+          ].execute(actor, action, {
+            target,
+            targetDodgesPerformed: this.dodgesPerRound.get(target.id),
+          });
 
           this.logging(result.logs);
 
-          if (result.documentOpened) {
-            this.documentOpened.next(result.documentOpened);
-          }
+          this.setDodges(result, target);
+
+          this.inspect(result);
 
           if (
             target &&
@@ -108,6 +118,23 @@ export class GameLoopService {
     }
   }
 
+  private inspect(result: RuleResultInterface) {
+    if (result.documentOpened) {
+      this.documentOpened.next(result.documentOpened);
+    }
+  }
+
+  private setDodges(
+    result: RuleResultInterface,
+    target: ActionReactiveInterface
+  ): void {
+    if (result.dodged) {
+      const dodges = this.dodgesPerRound.get(target.id) ?? 0;
+
+      this.dodgesPerRound.set(target.id, dodges + 1);
+    }
+  }
+
   private logging(logs: LogMessageDefinition[]): void {
     logs.forEach((log) => this.loggingService.log(log));
   }
@@ -118,7 +145,7 @@ export class GameLoopService {
 
   private setActionReactives(): void {
     this.actionReactives = this.currentScene.interactives.items.reduce(
-      (map: { [key: string]: ActionReactive }, i) => {
+      (map: { [key: string]: ActionReactiveInterface }, i) => {
         map[i.id] = i;
 
         return map;

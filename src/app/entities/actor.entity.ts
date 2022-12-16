@@ -62,6 +62,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.weaponEquippedChanged$ = this.weaponEquippedChanged.asObservable();
   }
 
+  public get dodgesPerRound(): number {
+    return this.actorBehavior.dodgesPerRound;
+  }
+
   public get situation(): ActorSituationLiteral {
     return this.actorBehavior.situation;
   }

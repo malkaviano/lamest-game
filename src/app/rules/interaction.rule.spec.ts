@@ -41,7 +41,7 @@ describe('InteractionRule', () => {
           createActionableDefinition('INTERACTION', 'hi', 'Hi'),
           'id1'
         ),
-        instance(mockedInteractiveEntity)
+        { target: instance(mockedInteractiveEntity) }
       );
 
       expect(result).toEqual({

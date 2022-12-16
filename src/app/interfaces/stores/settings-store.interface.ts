@@ -13,5 +13,6 @@ export interface SettingsStoreInterface {
       readonly vulnerabilities: ArrayView<EffectTypeLiteral>;
       readonly resistances: ArrayView<EffectTypeLiteral>;
     };
+    readonly oneDodgesEveryAgiAmount: number;
   };
 }

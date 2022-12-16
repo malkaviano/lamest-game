@@ -29,6 +29,7 @@ import {
 import { EffectReceivedDefinition } from '../src/app/definitions/effect-received.definition';
 import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/app/definitions/readable.definition';
+import { GameSettingsInterface } from '../src/app/interfaces/game-settings.interface';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
@@ -311,3 +312,17 @@ export const readable = new ReadableDefinition(
   'BOOK',
   ArrayView.create(['GG'])
 );
+
+export const gameSettings: GameSettingsInterface = {
+  playerEffectDefenses: {
+    immunities: ArrayView.create<EffectTypeLiteral>(['ACID']),
+    cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
+    vulnerabilities: ArrayView.create<EffectTypeLiteral>(['PROFANE']),
+    resistances: ArrayView.create<EffectTypeLiteral>(['KINETIC', 'SACRED']),
+  },
+  resistanceCoefficient: 0.5,
+  vulnerabilityCoefficient: 1.5,
+  oneDodgesEveryAgiAmount: 8,
+  intelligencePoints: 10,
+  professionPoints: 300,
+};

@@ -9,6 +9,7 @@ import {
   createDamagedMessage,
   createFreeLogMessage,
   createLostLogMessage,
+  createOutOfDodgesLogMessage,
   createUnDodgeableAttackLogMessage,
 } from '../definitions/log-message.definition';
 import { CombatRule } from './combat.rule';
@@ -27,6 +28,7 @@ import {
 import {
   actionableEvent,
   actionAttack,
+  actorInfo,
   interactiveInfo,
   molotov,
   playerInfo,
@@ -56,6 +58,12 @@ describe('CombatRule', () => {
     when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
     when(mockedActorEntity.weaponEquipped).thenReturn(simpleSword);
+
+    when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
+
+    when(mockedActorEntity.dodgesPerRound).thenReturn(2);
+
+    when(mockedTargetPlayerEntity.dodgesPerRound).thenReturn(2);
 
     when(
       mockedActorEntity.reactTo(
@@ -110,7 +118,7 @@ describe('CombatRule', () => {
         const result = service.execute(
           instance(mockedPlayerEntity),
           eventAttackInteractive,
-          instance(mockedInteractiveEntity)
+          { target: instance(mockedInteractiveEntity) }
         );
 
         expect(result).toEqual({ logs: [damageInteractiveLog] });
@@ -120,7 +128,7 @@ describe('CombatRule', () => {
     [
       {
         target: mockedActorEntity,
-        name: 'actor',
+        name: actorInfo.name,
       },
       {
         target: mockedTargetPlayerEntity,
@@ -130,18 +138,15 @@ describe('CombatRule', () => {
       describe(`when target was ACTOR`, () => {
         describe('when attack fails', () => {
           it('return logs', () => {
+            const actor = instance(mockedPlayerEntity);
+
             when(
-              mockedRollService.actorSkillCheck(
-                instance(mockedPlayerEntity),
-                'Melee Weapon (Simple)'
-              )
+              mockedRollService.actorSkillCheck(actor, 'Melee Weapon (Simple)')
             ).thenReturn({ result: 'FAILURE', roll: 90 });
 
-            const result = service.execute(
-              instance(mockedPlayerEntity),
-              eventAttackInteractive,
-              instance(target)
-            );
+            const result = service.execute(actor, eventAttackInteractive, {
+              target: instance(target),
+            });
 
             expect(result).toEqual({
               logs: [
@@ -173,7 +178,7 @@ describe('CombatRule', () => {
               const result = service.execute(
                 instance(mockedPlayerEntity),
                 eventAttackInteractive,
-                instance(target)
+                { target: instance(target) }
               );
 
               expect(result).toEqual({
@@ -207,7 +212,7 @@ describe('CombatRule', () => {
               const result = service.execute(
                 instance(mockedPlayerEntity),
                 eventAttackInteractive,
-                instance(target)
+                { target: instance(target) }
               );
 
               expect(result).toEqual({
@@ -228,9 +233,11 @@ describe('CombatRule', () => {
           describe('when attack is dodgeable', () => {
             describe('when target dodges', () => {
               it('return logs', () => {
+                const actor = instance(mockedPlayerEntity);
+
                 when(
                   mockedRollService.actorSkillCheck(
-                    instance(mockedPlayerEntity),
+                    actor,
                     'Melee Weapon (Simple)'
                   )
                 ).thenReturn({ result: 'SUCCESS', roll: 10 });
@@ -239,11 +246,9 @@ describe('CombatRule', () => {
                   mockedRollService.actorSkillCheck(instance(target), 'Dodge')
                 ).thenReturn({ result: 'SUCCESS', roll: 15 });
 
-                const result = service.execute(
-                  instance(mockedPlayerEntity),
-                  eventAttackInteractive,
-                  instance(target)
-                );
+                const result = service.execute(actor, eventAttackInteractive, {
+                  target: instance(target),
+                });
 
                 expect(result).toEqual({
                   logs: [
@@ -275,7 +280,7 @@ describe('CombatRule', () => {
                 const result = service.execute(
                   instance(mockedPlayerEntity),
                   eventAttackInteractive,
-                  instance(target)
+                  { target: instance(target) }
                 );
 
                 expect(result).toEqual({
@@ -305,11 +310,9 @@ describe('CombatRule', () => {
           when(mockedPlayerEntity.weaponEquipped).thenReturn(unarmedWeapon);
         });
 
-        service.execute(
-          instance(mockedPlayerEntity),
-          eventAttackInteractive,
-          instance(mockedInteractiveEntity)
-        );
+        service.execute(instance(mockedPlayerEntity), eventAttackInteractive, {
+          target: instance(mockedInteractiveEntity),
+        });
 
         expect(instance(mockedPlayerEntity).weaponEquipped).toEqual(
           unarmedWeapon
@@ -326,13 +329,66 @@ describe('CombatRule', () => {
         const result = service.execute(
           instance(mockedPlayerEntity),
           eventAttackInteractive,
-          instance(mockedInteractiveEntity)
+          { target: instance(mockedInteractiveEntity) }
         );
 
         expect(result).toEqual({
           logs: [
             createLostLogMessage(playerInfo.name, molotov.identity.label),
             damageInteractiveLog,
+          ],
+        });
+      });
+    });
+
+    describe('actor out of dodges', () => {
+      it('return actor is out of dodges', () => {
+        const actor = instance(mockedActorEntity);
+
+        const target = instance(mockedPlayerEntity);
+
+        when(
+          mockedRollService.actorSkillCheck(
+            instance(mockedActorEntity),
+            'Melee Weapon (Simple)'
+          )
+        ).thenReturn({ result: 'SUCCESS', roll: 10 });
+
+        when(mockedRollService.actorSkillCheck(target, 'Dodge')).thenReturn({
+          result: 'SUCCESS',
+          roll: 15,
+        });
+
+        when(
+          mockedPlayerEntity.reactTo(
+            deepEqual(eventAttackPlayer.actionableDefinition),
+            'SUCCESS',
+            deepEqual({
+              effect: new EffectReceivedDefinition('KINETIC', 2),
+            })
+          )
+        ).thenReturn(damageMessage2);
+
+        const result = service.execute(actor, eventAttackInteractive, {
+          target: instance(mockedPlayerEntity),
+          targetDodgesPerformed: 2,
+        });
+
+        expect(result).toEqual({
+          logs: [
+            createAttackedLogMessage(
+              actor.name,
+              target.name,
+              simpleSword.identity.label
+            ),
+            createCheckLogMessage(
+              actor.name,
+              'Melee Weapon (Simple)',
+              10,
+              'SUCCESS'
+            ),
+            createOutOfDodgesLogMessage(target.name),
+            createFreeLogMessage(target.name, damageMessage2),
           ],
         });
       });
@@ -365,3 +421,5 @@ const eventAttackInteractive = actionableEvent(
   actionAttack,
   interactiveInfo.id
 );
+
+const eventAttackPlayer = actionableEvent(actionAttack, playerInfo.id);

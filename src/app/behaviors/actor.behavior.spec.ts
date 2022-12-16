@@ -2,16 +2,27 @@ import { instance } from 'ts-mockito';
 
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { ActorBehavior } from './actor.behavior';
-import { ArrayView } from '../views/array.view';
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 
 import {
   fakeCharacteristics,
   fakeDerivedAttributes,
   fakeEffect,
   fakeMapSkills,
+  gameSettings,
 } from '../../../tests/fakes';
 import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
+
+const fakeCharacteristicsAgi = (agi: number) => {
+  return {
+    STR: new CharacteristicDefinition('STR', 8),
+    VIT: new CharacteristicDefinition('VIT', 9),
+    AGI: new CharacteristicDefinition('AGI', agi),
+    INT: new CharacteristicDefinition('INT', 12),
+    ESN: new CharacteristicDefinition('ESN', 13),
+    APP: new CharacteristicDefinition('APP', 14),
+  };
+};
 
 describe('ActorBehavior', () => {
   beforeEach(() => {
@@ -126,21 +137,33 @@ describe('ActorBehavior', () => {
       });
     });
   });
+
+  describe('dodgesPerRound', () => {
+    [
+      {
+        characteristics: fakeCharacteristicsAgi(12),
+        expected: 1,
+      },
+      {
+        characteristics: fakeCharacteristicsAgi(3),
+        expected: 1,
+      },
+      {
+        characteristics: fakeCharacteristicsAgi(30),
+        expected: 3,
+      },
+    ].forEach(({ characteristics, expected }) => {
+      it(`return ${expected}`, () => {
+        expect(fakeBehavior(characteristics).dodgesPerRound).toEqual(expected);
+      });
+    });
+  });
 });
 
-const fakeBehavior = () =>
+const fakeBehavior = (characteristics = fakeCharacteristics) =>
   ActorBehavior.create(
-    fakeCharacteristics,
+    characteristics,
     fakeMapSkills,
     instance(mockedSkillStore),
-    {
-      immunities: ArrayView.create<EffectTypeLiteral>(['ACID']),
-      cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
-      vulnerabilities: ArrayView.create<EffectTypeLiteral>(['PROFANE']),
-      resistances: ArrayView.create<EffectTypeLiteral>(['KINETIC', 'SACRED']),
-    },
-    {
-      resistanceCoefficient: 0.5,
-      vulnerabilityCoefficient: 1.5,
-    }
+    gameSettings
   );

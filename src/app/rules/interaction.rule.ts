@@ -8,17 +8,22 @@ import {
   LogMessageDefinition,
 } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
-import { ActionReactive } from '../interfaces/action-reactive.interface';
+import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InteractionRule implements RuleInterface {
+  constructor(private readonly withTarget: ExtractorHelper) {}
+
   public execute(
     actor: ActorInterface,
     action: ActionableEvent,
-    target: ActionReactive
+    extras: RuleExtrasInterface
   ): RuleResultInterface {
+    const target = this.withTarget.extractRuleTarget(extras);
+
     const logs: LogMessageDefinition[] = [];
 
     const { actionableDefinition } = action;

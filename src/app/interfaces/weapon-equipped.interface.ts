@@ -1,6 +1,6 @@
 import { WeaponDefinition } from '../definitions/weapon.definition';
 
-export interface WeaponEquipped {
+export interface WeaponEquippedInterface {
   get weaponEquipped(): WeaponDefinition;
 
   equip(weapon: WeaponDefinition): WeaponDefinition | null;

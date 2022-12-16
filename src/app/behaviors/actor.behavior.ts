@@ -3,15 +3,11 @@ import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
 import { HitPointsEvent } from '../events/hitpoints.event';
-import { EffectDefensesInterface } from '../interfaces/effect-defenses.interface';
+import { GameSettingsInterface } from '../interfaces/game-settings.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { SkillStore } from '../stores/skill.store';
 
-type EffectCoefficientsInterface = {
-  readonly vulnerabilityCoefficient: number;
-  readonly resistanceCoefficient: number;
-};
 export class ActorBehavior {
   private readonly maximumHP: number;
 
@@ -25,8 +21,7 @@ export class ActorBehavior {
     private readonly mCharacteristics: CharacteristicSetDefinition,
     private readonly mSkills: Map<string, number>,
     private readonly skillStore: SkillStore,
-    private readonly effectDefenses: EffectDefensesInterface,
-    private readonly effectCoefficients: EffectCoefficientsInterface
+    private readonly gameSettings: GameSettingsInterface
   ) {
     this.maximumHP = Math.trunc(
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
@@ -68,6 +63,14 @@ export class ActorBehavior {
     return this.currentHP > 0 ? 'ALIVE' : 'DEAD';
   }
 
+  public get dodgesPerRound(): number {
+    const dodges = Math.trunc(
+      this.characteristics.AGI.value / this.gameSettings.oneDodgesEveryAgiAmount
+    );
+
+    return this.clamp(dodges, 1, Number.MAX_VALUE);
+  }
+
   public effectReceived(
     effectReceived: EffectReceivedDefinition
   ): HitPointsEvent {
@@ -75,22 +78,33 @@ export class ActorBehavior {
 
     let value = 0;
 
-    if (!this.effectDefenses.immunities.items.includes(effectType)) {
-      const isCure = this.effectDefenses.cures.items.includes(effectType);
+    if (
+      !this.gameSettings.playerEffectDefenses.immunities.items.includes(
+        effectType
+      )
+    ) {
+      const isCure =
+        this.gameSettings.playerEffectDefenses.cures.items.includes(effectType);
 
       const isVulnerable =
-        this.effectDefenses.vulnerabilities.items.includes(effectType);
+        this.gameSettings.playerEffectDefenses.vulnerabilities.items.includes(
+          effectType
+        );
 
       if (isCure) {
         value += amount;
       } else {
         value -= isVulnerable
-          ? amount * this.effectCoefficients.vulnerabilityCoefficient
+          ? amount * this.gameSettings.vulnerabilityCoefficient
           : amount;
       }
 
-      if (this.effectDefenses.resistances.items.includes(effectType)) {
-        value += value * this.effectCoefficients.resistanceCoefficient * -1;
+      if (
+        this.gameSettings.playerEffectDefenses.resistances.items.includes(
+          effectType
+        )
+      ) {
+        value += value * this.gameSettings.resistanceCoefficient * -1;
       }
     }
 
@@ -101,16 +115,9 @@ export class ActorBehavior {
     characteristics: CharacteristicSetDefinition,
     skills: Map<string, number>,
     skillStore: SkillStore,
-    effectDefenses: EffectDefensesInterface,
-    effectCoefficients: EffectCoefficientsInterface
+    gameSettings: GameSettingsInterface
   ): ActorBehavior {
-    return new ActorBehavior(
-      characteristics,
-      skills,
-      skillStore,
-      effectDefenses,
-      effectCoefficients
-    );
+    return new ActorBehavior(characteristics, skills, skillStore, gameSettings);
   }
 
   private modifyHealth(modified: number): HitPointsEvent {

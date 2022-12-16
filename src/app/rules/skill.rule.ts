@@ -11,19 +11,25 @@ import {
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
-import { ActionReactive } from '../interfaces/action-reactive.interface';
+import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillRule implements RuleInterface {
-  constructor(private readonly rollRule: RollService) {}
+  constructor(
+    private readonly rollRule: RollService,
+    private readonly withTarget: ExtractorHelper
+  ) {}
 
   public execute(
     actor: ActorInterface,
     action: ActionableEvent,
-    target: ActionReactive
+    extras: RuleExtrasInterface
   ): RuleResultInterface {
+    const target = this.withTarget.extractRuleTarget(extras);
+
     const logs: LogMessageDefinition[] = [];
 
     const skillName = action.actionableDefinition.name;

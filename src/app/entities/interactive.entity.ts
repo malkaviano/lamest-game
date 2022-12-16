@@ -4,11 +4,11 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { ResultLiteral } from '../literals/result.literal';
-import { ActionReactive } from '../interfaces/action-reactive.interface';
+import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { ClassificationLiteral } from '../literals/classification.literal';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 
-export class InteractiveEntity implements ActionReactive {
+export class InteractiveEntity implements ActionReactiveInterface {
   private readonly initialState: ActionableState;
 
   private readonly actionsChanged: BehaviorSubject<

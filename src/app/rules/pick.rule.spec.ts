@@ -62,7 +62,7 @@ describe('PickRule', () => {
       const result = service.execute(
         instance(mockedPlayerEntity),
         eventPickSimpleSword,
-        instance(mockedInteractiveEntity)
+        { target: instance(mockedInteractiveEntity) }
       );
 
       verify(mockedInventoryService.store(playerInfo.id, simpleSword)).once();

@@ -43,11 +43,9 @@ describe('SceneRule', () => {
 
   describe('execute', () => {
     it('return logs', () => {
-      const result = service.execute(
-        instance(mockedPlayerEntity),
-        event,
-        instance(mockedInteractiveEntity)
-      );
+      const result = service.execute(instance(mockedPlayerEntity), event, {
+        target: instance(mockedInteractiveEntity),
+      });
 
       verify(mockedNarrativeService.changeScene(event)).once();
 

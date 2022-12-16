@@ -67,7 +67,7 @@ describe('SkillRule', () => {
         const result = service.execute(
           instance(mockedPlayerEntity),
           eventSkillBrawl,
-          instance(mockedInteractiveEntity)
+          { target: instance(mockedInteractiveEntity) }
         );
 
         expect(result).toEqual({
@@ -89,7 +89,7 @@ describe('SkillRule', () => {
       const result = service.execute(
         instance(mockedPlayerEntity),
         eventSkillBrawl,
-        instance(mockedInteractiveEntity)
+        { target: instance(mockedInteractiveEntity) }
       );
 
       expect(result).toEqual({

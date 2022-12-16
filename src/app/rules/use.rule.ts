@@ -6,8 +6,9 @@ import {
   createNotFoundLogMessage,
 } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
-import { ActionReactive } from '../interfaces/action-reactive.interface';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 import { ActorInterface } from '../interfaces/actor.interface';
+import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { InventoryService } from '../services/inventory.service';
@@ -16,13 +17,18 @@ import { InventoryService } from '../services/inventory.service';
   providedIn: 'root',
 })
 export class UseRule implements RuleInterface {
-  constructor(private readonly inventoryService: InventoryService) {}
+  constructor(
+    private readonly inventoryService: InventoryService,
+    private readonly withTarget: ExtractorHelper
+  ) {}
 
   execute(
     actor: ActorInterface,
     event: ActionableEvent,
-    target: ActionReactive
+    extras: RuleExtrasInterface
   ): RuleResultInterface {
+    const target = this.withTarget.extractRuleTarget(extras);
+
     const { actionableDefinition } = event;
 
     const { items } = this.inventoryService.check(actor.id);

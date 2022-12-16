@@ -1,9 +1,10 @@
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ArrayView } from '../views/array.view';
-import { ActionReactive } from './action-reactive.interface';
+import { ActionReactiveInterface } from './action-reactive.interface';
+import { ActorDefenseInterface } from './actor-defense.interface';
 import { SceneActorsInfoInterface } from './scene-actors.interface';
-import { WeaponEquipped } from './weapon-equipped.interface';
+import { WeaponEquippedInterface } from './weapon-equipped.interface';
 import { WithCharacteristicsInterface } from './with-characteristics.interface';
 import { WithDerivedAttibutesInterface } from './with-derived-attributes.interface';
 import { WithSkillsInterface } from './with-skills.interface';
@@ -12,8 +13,9 @@ export interface ActorInterface
   extends WithCharacteristicsInterface,
     WithDerivedAttibutesInterface,
     WithSkillsInterface,
-    WeaponEquipped,
-    ActionReactive {
+    WeaponEquippedInterface,
+    ActionReactiveInterface,
+    ActorDefenseInterface {
   action(
     sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
   ): ActionableEvent | null;

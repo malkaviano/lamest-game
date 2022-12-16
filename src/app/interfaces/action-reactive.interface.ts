@@ -3,7 +3,7 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ReactionValuesInterface } from './reaction-values.interface';
 
-export interface ActionReactive {
+export interface ActionReactiveInterface {
   get id(): string;
 
   get name(): string;

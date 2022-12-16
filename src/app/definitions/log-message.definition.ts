@@ -134,3 +134,6 @@ export const createLockpickJammedMessage = (direction: string) =>
 
 export const createItemInspectedLogs = (actor: string, item: string) =>
   new LogMessageDefinition('INSPECTED', actor, `inspected ${item}`);
+
+export const createOutOfDodgesLogMessage = (target: string) =>
+  new LogMessageDefinition('ATTACKED', target, `was out of dodges`);

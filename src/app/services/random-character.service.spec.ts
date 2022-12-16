@@ -11,17 +11,22 @@ import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ProfessionStore } from '../stores/profession.store';
 import { ArrayView } from '../views/array.view';
+import { SkillStore } from '../stores/skill.store';
 
 import {
   mockedGeneratorService,
   mockedProfessionStore,
+  mockedSettingsStore,
   mockedSkillService,
   mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
-import { fakeCharacteristics, fakeIdentity } from '../../../tests/fakes';
-import { SkillStore } from '../stores/skill.store';
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import {
+  fakeCharacteristics,
+  fakeIdentity,
+  gameSettings,
+} from '../../../tests/fakes';
+import { SettingsStore } from '../stores/settings.store';
 
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
@@ -44,6 +49,10 @@ describe('RandomCharacterService', () => {
         {
           provide: SkillStore,
           useValue: instance(mockedSkillStore),
+        },
+        {
+          provide: SettingsStore,
+          useValue: instance(mockedSettingsStore),
         },
       ],
     });
@@ -112,16 +121,7 @@ describe('RandomCharacterService', () => {
           fakeCharacteristics,
           distributedSkills,
           instance(mockedSkillStore),
-          {
-            immunities: ArrayView.create<EffectTypeLiteral>([]),
-            cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
-            vulnerabilities: ArrayView.create<EffectTypeLiteral>([]),
-            resistances: ArrayView.create<EffectTypeLiteral>([]),
-          },
-          {
-            resistanceCoefficient: 0.5,
-            vulnerabilityCoefficient: 1.5,
-          }
+          gameSettings
         ),
         EquipmentBehavior.create()
       );

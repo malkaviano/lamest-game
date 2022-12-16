@@ -60,7 +60,7 @@ describe('UseRule', () => {
         service.execute(
           instance(mockedPlayerEntity),
           eventWrongUseSimpleSword,
-          instance(mockedInteractiveEntity)
+          { target: instance(mockedInteractiveEntity) }
         )
       ).toThrowError(errorMessages['WRONG-ITEM']);
     });
@@ -75,7 +75,7 @@ describe('UseRule', () => {
       const result = service.execute(
         instance(mockedPlayerEntity),
         eventUseMasterKey,
-        instance(mockedInteractiveEntity)
+        { target: instance(mockedInteractiveEntity) }
       );
 
       expect(result).toEqual({ logs: [notFoundLog] });
@@ -105,7 +105,7 @@ describe('UseRule', () => {
       const result = service.execute(
         instance(mockedPlayerEntity),
         eventUseMasterKey,
-        instance(mockedInteractiveEntity)
+        { target: instance(mockedInteractiveEntity) }
       );
 
       expect(result).toEqual({ logs: [openedLog, itemLostLog] });

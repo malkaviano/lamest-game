@@ -4,4 +4,5 @@ import { DocumentOpenedInterface } from './reader-dialog.interface';
 export interface RuleResultInterface {
   readonly logs: LogMessageDefinition[];
   readonly documentOpened?: DocumentOpenedInterface;
+  readonly dodged?: boolean;
 }

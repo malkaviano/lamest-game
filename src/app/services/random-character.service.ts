@@ -33,13 +33,7 @@ export class RandomCharacterService {
         characteristics,
         this.skills(identity.profession, characteristics.INT.value),
         this.skillStore,
-        this.settingsStore.settings.playerEffectDefenses,
-        {
-          resistanceCoefficient:
-            this.settingsStore.settings.resistanceCoefficient,
-          vulnerabilityCoefficient:
-            this.settingsStore.settings.vulnerabilityCoefficient,
-        }
+        this.settingsStore.settings
       ),
       EquipmentBehavior.create()
     );

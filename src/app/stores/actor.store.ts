@@ -40,10 +40,6 @@ export class ActorStore {
         equippedWeapon,
         killedState,
         behaviorState,
-        immunities,
-        cures,
-        resistances,
-        vulnerabilities,
       }) => {
         const actor = new ActorEntity(
           new ActorIdentityDefinition(id, name, description),
@@ -53,18 +49,7 @@ export class ActorStore {
             characteristics,
             skills,
             skillStore,
-            {
-              immunities,
-              cures,
-              vulnerabilities,
-              resistances,
-            },
-            {
-              vulnerabilityCoefficient:
-                settingsStore.settings.vulnerabilityCoefficient,
-              resistanceCoefficient:
-                settingsStore.settings.resistanceCoefficient,
-            }
+            settingsStore.settings
           ),
           EquipmentBehavior.create(),
           stateStore.states[killedState]
