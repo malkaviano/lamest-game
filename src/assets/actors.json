@@ -55,6 +55,34 @@
       "cures": [],
       "vulnerabilities": [],
       "resistances": []
+    },
+    {
+      "id": "goblin",
+      "name": "Goblin",
+      "description": "Ugly, small and pesky",
+      "resettable": false,
+      "characteristics": {
+        "STR": 5,
+        "VIT": 5,
+        "SIZ": 5,
+        "AGI": 5,
+        "INT": 5,
+        "ESN": 5,
+        "APP": 5
+      },
+      "skills": [
+        {
+          "name": "Melee Weapon (Simple)",
+          "value": 100
+        }
+      ],
+      "equippedWeapon": "bambooSword",
+      "killedState": "emptyState",
+      "behaviorState": "goblin",
+      "immunities": [],
+      "cures": [],
+      "vulnerabilities": [],
+      "resistances": []
     }
   ]
 }

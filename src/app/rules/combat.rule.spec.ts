@@ -121,7 +121,7 @@ describe('CombatRule', () => {
           { target: instance(mockedInteractiveEntity) }
         );
 
-        expect(result).toEqual({ logs: [damageInteractiveLog] });
+        expect(result).toEqual({ logs: [damageInteractiveLog], dodged: false });
       });
     });
 
@@ -157,6 +157,7 @@ describe('CombatRule', () => {
                 ),
                 checkFailureLog,
               ],
+              dodged: false,
             });
           });
         });
@@ -192,6 +193,7 @@ describe('CombatRule', () => {
                   createCannotCheckLogMessage(name, 'Dodge'),
                   createFreeLogMessage(name, damageMessage2),
                 ],
+                dodged: false,
               });
             });
           });
@@ -226,13 +228,14 @@ describe('CombatRule', () => {
                   createUnDodgeableAttackLogMessage(name),
                   createFreeLogMessage(name, damageMessage2),
                 ],
+                dodged: false,
               });
             });
           });
 
           describe('when attack is dodgeable', () => {
             describe('when target dodges', () => {
-              it('return logs', () => {
+              it('return logs and dodged', () => {
                 const actor = instance(mockedPlayerEntity);
 
                 when(
@@ -260,6 +263,7 @@ describe('CombatRule', () => {
                     checkSuccessLog,
                     createCheckLogMessage(name, 'Dodge', 15, 'SUCCESS'),
                   ],
+                  dodged: true,
                 });
               });
             });
@@ -294,6 +298,7 @@ describe('CombatRule', () => {
                     createCheckLogMessage(name, 'Dodge', 75, 'FAILURE'),
                     createFreeLogMessage(name, damageMessage2),
                   ],
+                  dodged: false,
                 });
               });
             });
@@ -337,6 +342,7 @@ describe('CombatRule', () => {
             createLostLogMessage(playerInfo.name, molotov.identity.label),
             damageInteractiveLog,
           ],
+          dodged: false,
         });
       });
     });
@@ -390,6 +396,7 @@ describe('CombatRule', () => {
             createOutOfDodgesLogMessage(target.name),
             createFreeLogMessage(target.name, damageMessage2),
           ],
+          dodged: false,
         });
       });
     });

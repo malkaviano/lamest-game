@@ -42,6 +42,8 @@ export class CombatRule implements RuleInterface {
 
     let targetHit = true;
 
+    let dodged = false;
+
     const { dodgeable, damage, skillName, identity, usability } =
       actor.weaponEquipped;
 
@@ -63,11 +65,13 @@ export class CombatRule implements RuleInterface {
 
       if (targetHit) {
         if (dodgeable) {
-          targetHit = this.checkIfHit(
+          dodged = this.checkIfDodged(
             targetActor,
             logs,
             extras.targetDodgesPerformed ?? 0
           );
+
+          targetHit = !dodged;
         } else {
           logs.push(createUnDodgeableAttackLogMessage(targetActor.name));
         }
@@ -84,10 +88,10 @@ export class CombatRule implements RuleInterface {
       this.applyDamage(action.actionableDefinition, damage, target, logs);
     }
 
-    return { logs };
+    return { logs, dodged };
   }
 
-  private checkIfHit(
+  private checkIfDodged(
     targetActor: ActorInterface,
     logs: LogMessageDefinition[],
     dodgesPerformed: number
@@ -97,7 +101,7 @@ export class CombatRule implements RuleInterface {
     const { result: dodgeResult, roll: dodgeRoll } =
       this.rollRule.actorSkillCheck(targetActor, 'Dodge');
 
-    let hit = dodgeResult !== 'SUCCESS';
+    let dodged = dodgeResult === 'SUCCESS';
 
     if (dodgeResult === 'IMPOSSIBLE') {
       logs.push(createCannotCheckLogMessage(targetActor.name, 'Dodge'));
@@ -106,12 +110,12 @@ export class CombatRule implements RuleInterface {
         createCheckLogMessage(targetActor.name, 'Dodge', dodgeRoll, dodgeResult)
       );
     } else {
-      hit = true;
+      dodged = false;
 
       logs.push(createOutOfDodgesLogMessage(targetActor.name));
     }
 
-    return hit;
+    return dodged;
   }
 
   private applyDamage(

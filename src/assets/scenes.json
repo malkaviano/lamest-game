@@ -29,7 +29,10 @@
         "enterSceneDoor",
         "trainingDummy",
         "lockedChest",
-        "lockPickingChest"
+        "lockPickingChest",
+        "goblin",
+        "goblin",
+        "goblin"
       ],
       "transitions": [
         {
