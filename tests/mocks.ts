@@ -60,6 +60,7 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
+import { InspectRule } from '../src/app/rules/inspect.rule';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -152,6 +153,8 @@ export const mockedFormatterHelperService = mock(FormatterHelperService);
 export const mockedSkillStore = mock(SkillStore);
 
 export const mockedMatDialog = mock(MatDialog);
+
+export const mockedInspectRule = mock(InspectRule);
 
 export const setupMocks = () => {
   resetMocks();
@@ -391,4 +394,6 @@ const resetMocks = () => {
   reset(mockedSkillStore);
 
   reset(mockedMatDialog);
+
+  reset(mockedInspectRule);
 };

@@ -9,6 +9,7 @@ import { SceneRule } from '../rules/scene.rule';
 import { SkillRule } from '../rules/skill.rule';
 import { UnEquipRule } from '../rules/unequip.rule';
 import { UseRule } from '../rules/use.rule';
+import { InspectRule } from '../rules/inspect.rule';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class RulesHelper {
     public readonly combatRule: CombatRule,
     public readonly consumableRule: ConsumeRule,
     public readonly interactionRule: InteractionRule,
-    public readonly useRule: UseRule
+    public readonly useRule: UseRule,
+    public readonly inspectRule: InspectRule
   ) {}
 }

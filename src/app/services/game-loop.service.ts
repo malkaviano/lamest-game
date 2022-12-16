@@ -56,6 +56,7 @@ export class GameLoopService {
       CONSUME: this.rulesHelper.consumableRule,
       INTERACTION: this.rulesHelper.interactionRule,
       USE: this.rulesHelper.useRule,
+      INSPECT: this.rulesHelper.inspectRule,
     };
 
     this.player = this.characterService.currentCharacter;

@@ -131,3 +131,6 @@ export const createLockpickOpenedMessage = (direction: string) =>
 
 export const createLockpickJammedMessage = (direction: string) =>
   `${createLockpickStuckMessage(direction)} and cannot be lockpicked anymore`;
+
+export const createItemInspectedLogs = (actor: string, item: string) =>
+  new LogMessageDefinition('INSPECTED', actor, `inspected ${item}`);

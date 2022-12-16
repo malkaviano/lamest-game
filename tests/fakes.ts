@@ -28,6 +28,7 @@ import {
 } from '../src/app/definitions/skill.definition';
 import { EffectReceivedDefinition } from '../src/app/definitions/effect-received.definition';
 import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
+import { ReadableDefinition } from '../src/app/definitions/readable.definition';
 
 export const playerInfo = { id: 'player', name: 'player' };
 
@@ -351,3 +352,18 @@ export const documentOpened = {
   title: 'Testing',
   text: ArrayView.create(['GG man']),
 };
+
+export const actionInspect = createActionableDefinition(
+  'INSPECT',
+  'inspect',
+  'Inspect'
+);
+
+export const readable = new ReadableDefinition(
+  new ItemIdentityDefinition('book', 'Book', 'Some book'),
+  'BOOK',
+  ArrayView.create(['GG'])
+);
+
+export const eventInspect = (name: string) =>
+  new ActionableEvent(actionInspect, name);

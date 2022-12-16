@@ -12,4 +12,5 @@ export type LogCategoryLiteral =
   | 'DIED'
   | 'LOST'
   | 'NOT-FOUND'
-  | 'OPENED';
+  | 'OPENED'
+  | 'INSPECTED';

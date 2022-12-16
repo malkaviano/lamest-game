@@ -22,8 +22,10 @@ import {
   mockedSkillRule,
   mockedUnEquipRule,
   mockedUseRule,
+  mockedInspectRule,
 } from '../../../tests/mocks';
 import { UseRule } from '../rules/use.rule';
+import { InspectRule } from '../rules/inspect.rule';
 
 describe('RulesHelper', () => {
   let service: RulesHelper;
@@ -66,6 +68,10 @@ describe('RulesHelper', () => {
         {
           provide: UseRule,
           useValue: instance(mockedUseRule),
+        },
+        {
+          provide: InspectRule,
+          useValue: instance(mockedInspectRule),
         },
       ],
     });

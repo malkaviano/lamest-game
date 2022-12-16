@@ -13,10 +13,10 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '../definitions/actionable.definition';
-import { GameItemLiteral } from '../literals/game-item.literal';
 import { GameLoopService } from './game-loop.service';
 import { LoggingService } from './logging.service';
 import { PlayerEntity } from '../entities/player.entity';
+import { GameItemDefinition } from '../definitions/game-item.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -71,7 +71,7 @@ export class GameBridgeService {
         acc.push(
           ActionableItemView.create(
             itemStorage.item,
-            this.inventoryAction(itemStorage.item.category)
+            this.inventoryAction(itemStorage.item)
           )
         );
       }
@@ -82,13 +82,17 @@ export class GameBridgeService {
     return ArrayView.create([...items]);
   }
 
-  private inventoryAction(category: GameItemLiteral): ActionableDefinition {
-    if (category === 'WEAPON') {
+  private inventoryAction(item: GameItemDefinition): ActionableDefinition {
+    if (item.category === 'WEAPON') {
       return createActionableDefinition('EQUIP', 'equip', 'Equip');
     }
 
-    if (category === 'CONSUMABLE') {
+    if (item.category === 'CONSUMABLE') {
       return createActionableDefinition('CONSUME', 'consume', 'Consume');
+    }
+
+    if (item.category === 'READABLE') {
+      return createActionableDefinition('INSPECT', 'inspect', 'Inspect');
     }
 
     return createActionableDefinition('NOOP', 'noop', 'NOOP');

@@ -12,6 +12,7 @@ import { UsableDefinition } from '../definitions/usable.definition';
 import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ReadableDefinition } from '../definitions/readable.definition';
+import { ArrayView } from '../views/array.view';
 
 @Injectable({
   providedIn: 'root',
@@ -69,7 +70,7 @@ export class ItemStore {
         new ReadableDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
           item.title,
-          item.text
+          ArrayView.create(item.text)
         )
       );
     });
