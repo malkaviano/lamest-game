@@ -85,22 +85,52 @@ describe('ActorBehavior', () => {
     });
 
     describe('when behavior is vulnerable to the effect', () => {
-      it('return HitPointsEvent previous 8 current 2', () => {
-        const b = fakeBehavior();
+      [
+        {
+          value: 4,
+          expected: new HitPointsEvent(8, 2),
+        },
+        {
+          value: 1,
+          expected: new HitPointsEvent(8, 7),
+        },
+        {
+          value: 5,
+          expected: new HitPointsEvent(8, 1),
+        },
+      ].forEach(({ value, expected }) => {
+        it(`return HitPointsEvent previous ${expected.previous} current ${expected.current}`, () => {
+          const b = fakeBehavior();
 
-        const result = b.effectReceived(fakeEffect('PROFANE', 4));
+          const result = b.effectReceived(fakeEffect('PROFANE', value));
 
-        expect(result).toEqual(new HitPointsEvent(8, 2));
+          expect(result).toEqual(expected);
+        });
       });
     });
 
     describe('when behavior is resistant to the effect', () => {
-      it('return HitPointsEvent previous 8 current 6', () => {
-        const b = fakeBehavior();
+      [
+        {
+          value: 4,
+          expected: new HitPointsEvent(8, 6),
+        },
+        {
+          value: 1,
+          expected: new HitPointsEvent(8, 8),
+        },
+        {
+          value: 5,
+          expected: new HitPointsEvent(8, 6),
+        },
+      ].forEach(({ value, expected }) => {
+        it(`return HitPointsEvent previous ${expected.previous} current ${expected.current}`, () => {
+          const b = fakeBehavior();
 
-        const result = b.effectReceived(fakeEffect('KINETIC', 4));
+          const result = b.effectReceived(fakeEffect('KINETIC', value));
 
-        expect(result).toEqual(new HitPointsEvent(8, 6));
+          expect(result).toEqual(expected);
+        });
       });
     });
 

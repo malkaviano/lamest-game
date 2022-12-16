@@ -108,7 +108,7 @@ export class ActorBehavior {
       }
     }
 
-    return this.modifyHealth(value);
+    return this.modifyHealth(Math.trunc(value));
   }
 
   public static create(
