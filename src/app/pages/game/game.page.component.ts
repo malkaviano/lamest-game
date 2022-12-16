@@ -10,7 +10,7 @@ import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameBridgeService } from '../../services/game-bridge.service';
 import { ArrayView } from '../../views/array.view';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
-import { ReaderDialogComponent } from '../../dialogs/reader.dialog/reader.dialog.component';
+import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 import { DocumentOpenedInterface } from '../../interfaces/reader-dialog.interface';
 
 @Component({
