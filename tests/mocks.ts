@@ -256,6 +256,10 @@ export const setupMocks = () => {
     professions: [],
   });
 
+  when(mockedResourcesStore.readableStore).thenReturn({
+    readables: [],
+  });
+
   when(mockedResourcesStore.settingsStore).thenReturn({
     settings: {
       intelligencePoints: 10,

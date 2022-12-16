@@ -82,6 +82,12 @@
       "name": "g17",
       "actionable": "PICK",
       "label": "Glock 17"
+    },
+    {
+      "key": "basicManual",
+      "name": "basicManual",
+      "actionable": "PICK",
+      "label": "Basic Manual"
     }
   ]
 }

@@ -17,7 +17,7 @@ import { ArrayView } from '../src/app/views/array.view';
 import { CharacterValuesView } from '../src/app/views/character-values.view';
 import { KeyValueDescriptionView } from '../src/app/views/key-value-description.view';
 import { DiscardState } from '../src/app/states/discard.state';
-import { UsableItemDefinition } from '../src/app/definitions/usable-item.definition';
+import { UsableDefinition } from '../src/app/definitions/usable.definition';
 import { ItemIdentityDefinition } from '../src/app/definitions/item-identity.definition';
 import { ActionableItemView } from '../src/app/views/actionable-item.view';
 import { GameItemDefinition } from '../src/app/definitions/game-item.definition';
@@ -290,7 +290,7 @@ export const eventSkillAthleticism = new ActionableEvent(
   'athleticism'
 );
 
-export const masterKey = new UsableItemDefinition(
+export const masterKey = new UsableDefinition(
   new ItemIdentityDefinition('masterKey', 'Master Key', 'Opens stuff')
 );
 

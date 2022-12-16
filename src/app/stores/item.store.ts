@@ -8,9 +8,10 @@ import { SkillItemDefinition } from '../definitions/skill-item.definition';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
-import { UsableItemDefinition } from '../definitions/usable-item.definition';
+import { UsableDefinition } from '../definitions/usable.definition';
 import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
+import { ReadableDefinition } from '../definitions/readable.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -56,8 +57,19 @@ export class ItemStore {
     resourcesStore.usablesStore.usables.forEach((item) => {
       this.store.set(
         item.name,
-        new UsableItemDefinition(
+        new UsableDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description)
+        )
+      );
+    });
+
+    resourcesStore.readableStore.readables.forEach((item) => {
+      this.store.set(
+        item.name,
+        new ReadableDefinition(
+          new ItemIdentityDefinition(item.name, item.label, item.description),
+          item.title,
+          item.text
         )
       );
     });

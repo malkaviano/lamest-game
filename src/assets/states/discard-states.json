@@ -10,7 +10,7 @@
     },
     {
       "id": "tableLoot",
-      "actionables": ["bubbleGum", "molotov"]
+      "actionables": ["bubbleGum", "molotov", "basicManual"]
     },
     {
       "id": "lockedChestLoot",

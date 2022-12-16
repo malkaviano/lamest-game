@@ -101,6 +101,10 @@
         {
           "name": "molotov",
           "quantity": 1
+        },
+        {
+          "name": "basicManual",
+          "quantity": 1
         }
       ]
     },

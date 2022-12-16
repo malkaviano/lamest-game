@@ -1,7 +1,7 @@
 import { ItemIdentityDefinition } from './item-identity.definition';
 import { GameItemDefinition } from './game-item.definition';
 
-export class UsableItemDefinition extends GameItemDefinition {
+export class UsableDefinition extends GameItemDefinition {
   constructor(identity: ItemIdentityDefinition) {
     super('USABLE', identity);
   }

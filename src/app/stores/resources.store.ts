@@ -26,6 +26,7 @@ import { SkillAffinityLiteral } from '../literals/skill-category.literal';
 import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { SettingsStoreInterface } from '../interfaces/stores/settings-store.interface';
 import { ArrayView } from '../views/array.view';
+import { ReadableStoreInterface } from '../interfaces/stores/readable-store.interface';
 
 import sceneStore from '../../assets/scenes.json';
 import skillStateStore from '../../assets/states/skill-states.json';
@@ -45,6 +46,7 @@ import lockedContainerStateStore from '../../assets/states/locked-container-stat
 import professionStore from '../../assets/professions.json';
 import skillStore from '../../assets/skills.json';
 import settingsStore from '../../assets/settings.json';
+import readableStore from '../../assets/items/readables.json';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +87,8 @@ export class ResourcesStore {
   public readonly skillStore: SkillStoreInterface;
 
   public readonly settingsStore: SettingsStoreInterface;
+
+  public readonly readableStore: ReadableStoreInterface;
 
   constructor() {
     this.sceneStore = sceneStore;
@@ -238,5 +242,7 @@ export class ResourcesStore {
         },
       },
     };
+
+    this.readableStore = readableStore;
   }
 }

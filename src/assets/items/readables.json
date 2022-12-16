@@ -1,0 +1,17 @@
+{
+  "readables": [
+    {
+      "name": "basicManual",
+      "label": "Basic Manual",
+      "description": "Some kind of manual. Read it!",
+      "title": "Basic Manual",
+      "text": [
+        "This manual is a test",
+        "The author should have used it to explain the game",
+        "But let's be honest, look at this crap.",
+        "What were you expecting?",
+        "Go figure stuff by yourself"
+      ]
+    }
+  ]
+}
