@@ -21,6 +21,7 @@ import {
   actionableEvent,
   actionEquip,
   greatSword,
+  playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
 
@@ -42,8 +43,6 @@ describe('EquipRule', () => {
     });
 
     setupMocks();
-
-    when(mockedPlayerEntity.equip(simpleSword)).thenReturn(simpleSword);
 
     when(mockedItemStore.itemSkill(eventOk.eventId)).thenReturn(
       'Melee Weapon (Simple)'
@@ -69,9 +68,9 @@ describe('EquipRule', () => {
       it('return logs', () => {
         when(mockedPlayerEntity.equip(simpleSword)).thenReturn(null);
 
-        when(mockedInventoryService.take('player', 'sword')).thenReturn(
-          simpleSword
-        );
+        when(
+          mockedInventoryService.take(playerInfo.id, simpleSword.identity.name)
+        ).thenReturn(simpleSword);
 
         const result = service.execute(instance(mockedPlayerEntity), eventOk);
 
@@ -83,8 +82,10 @@ describe('EquipRule', () => {
 
     describe('when a previous weapon was equipped', () => {
       it('return logs', () => {
+        when(mockedPlayerEntity.equip(simpleSword)).thenReturn(simpleSword);
+
         when(
-          mockedInventoryService.take('player', simpleSword.identity.name)
+          mockedInventoryService.take(playerInfo.id, simpleSword.identity.name)
         ).thenReturn(simpleSword);
 
         const result = service.execute(instance(mockedPlayerEntity), eventOk);
@@ -97,11 +98,13 @@ describe('EquipRule', () => {
       it('should store previous weapon', () => {
         let result = 0;
 
+        when(mockedPlayerEntity.equip(simpleSword)).thenReturn(simpleSword);
+
         when(
-          mockedInventoryService.take('player', simpleSword.identity.name)
+          mockedInventoryService.take(playerInfo.id, simpleSword.identity.name)
         ).thenReturn(simpleSword);
 
-        when(mockedInventoryService.store('player', simpleSword)).thenCall(
+        when(mockedInventoryService.store(playerInfo.id, simpleSword)).thenCall(
           () => (result = 1)
         );
 
@@ -130,15 +133,18 @@ const eventOk = actionableEvent(actionEquip, simpleSword.identity.name);
 
 const eventNoSkill = actionableEvent(actionEquip, greatSword.identity.name);
 
-const logEquip = createEquippedLogMessage('player', simpleSword.identity.label);
+const logEquip = createEquippedLogMessage(
+  playerInfo.name,
+  simpleSword.identity.label
+);
 
 const logUnEquip = createUnEquippedLogMessage(
-  'player',
+  playerInfo.name,
   simpleSword.identity.label
 );
 
 const logError = createEquipErrorLogMessage(
-  'player',
+  playerInfo.name,
   greatSword.skillName,
   greatSword.identity.label
 );

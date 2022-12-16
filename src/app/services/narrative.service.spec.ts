@@ -16,7 +16,11 @@ import {
   mockedSceneStore,
   setupMocks,
 } from '../../../tests/mocks';
-import { eventSceneExit, eventSkillAthleticism } from '../../../tests/fakes';
+import {
+  actionableEvent,
+  actionSceneExit,
+  eventSkillAthleticism,
+} from '../../../tests/fakes';
 
 describe('NarrativeService', () => {
   let service: NarrativeService;
@@ -68,7 +72,7 @@ describe('NarrativeService', () => {
           result = scene;
         });
 
-        service.changeScene(eventSceneExit);
+        service.changeScene(actionableEvent(actionSceneExit, 'sceneExitDoor'));
 
         done();
 

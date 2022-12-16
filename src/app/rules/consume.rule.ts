@@ -35,7 +35,7 @@ export class ConsumeRule implements RuleInterface {
 
     const { actionableDefinition, eventId } = event;
 
-    const consumable = this.inventoryService.take(actor.name, eventId);
+    const consumable = this.inventoryService.take(actor.id, eventId);
 
     if (!(consumable instanceof ConsumableDefinition)) {
       throw new Error(errorMessages['WRONG-ITEM']);

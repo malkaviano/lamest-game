@@ -31,6 +31,7 @@ import {
   eventEquipUnDodgeableAxe,
   masterKey,
   actionNoop,
+  playerInfo,
 } from '../../../tests/fakes';
 
 describe('GameBridgeService', () => {
@@ -80,17 +81,21 @@ describe('GameBridgeService', () => {
   describe('when player inventory changes', () => {
     [
       {
-        invEvent: new InventoryEvent('CONSUME', 'player', consumableFirstAid),
+        invEvent: new InventoryEvent(
+          'CONSUME',
+          playerInfo.id,
+          consumableFirstAid
+        ),
         expected: ActionableItemView.create(consumableFirstAid, actionConsume),
         item: consumableFirstAid,
       },
       {
-        invEvent: new InventoryEvent('EQUIP', 'player', unDodgeableAxe),
+        invEvent: new InventoryEvent('EQUIP', playerInfo.id, unDodgeableAxe),
         expected: ActionableItemView.create(unDodgeableAxe, actionEquip),
         item: unDodgeableAxe,
       },
       {
-        invEvent: new InventoryEvent('STORE', 'player', masterKey),
+        invEvent: new InventoryEvent('STORE', playerInfo.id, masterKey),
         expected: ActionableItemView.create(masterKey, actionNoop),
         item: masterKey,
       },
@@ -134,6 +139,6 @@ const inventoryEventSubject = new Subject<InventoryEvent>();
 
 const log = new LogMessageDefinition(
   'FREE',
-  'player',
+  playerInfo.name,
   unDodgeableAxe.identity.label
 );

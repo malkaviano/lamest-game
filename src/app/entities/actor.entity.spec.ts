@@ -18,7 +18,6 @@ import {
 } from '../definitions/weapon.definition';
 
 import {
-  eventAttackPlayer,
   fakeCharacteristics,
   fakeDerivedAttributes,
   fakeSkills,
@@ -27,6 +26,8 @@ import {
   actionAttack,
   fakeEffect,
   actionConsume,
+  eventAttack,
+  playerInfo,
 } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
@@ -276,7 +277,7 @@ describe('ActorEntity', () => {
   describe('action', () => {
     it('return action attack', () => {
       expect(fakeActor().action(fakeSceneActorsInfo)).toEqual(
-        eventAttackPlayer
+        eventAttack(playerInfo.id)
       );
     });
 

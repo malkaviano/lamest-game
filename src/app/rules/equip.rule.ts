@@ -32,13 +32,13 @@ export class EquipRule implements RuleInterface {
     const skillName = this.itemStore.itemSkill(action.eventId);
 
     if (skillName && actor.skills[skillName] > 0) {
-      const weapon = this.inventoryService.take(actor.name, action.eventId);
+      const weapon = this.inventoryService.take(actor.id, action.eventId);
 
       if (weapon instanceof WeaponDefinition) {
         const previous = actor.equip(weapon);
 
         if (previous) {
-          this.inventoryService.store(actor.name, previous);
+          this.inventoryService.store(actor.id, previous);
 
           logs.push(
             createUnEquippedLogMessage(actor.name, previous.identity.label)

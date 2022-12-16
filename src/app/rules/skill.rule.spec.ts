@@ -16,7 +16,11 @@ import {
   mockedRollService,
   setupMocks,
 } from '../../../tests/mocks';
-import { eventSkillBrawl } from '../../../tests/fakes';
+import {
+  eventSkillBrawl,
+  interactiveInfo,
+  playerInfo,
+} from '../../../tests/fakes';
 
 describe('SkillRule', () => {
   let service: SkillRule;
@@ -94,8 +98,8 @@ describe('SkillRule', () => {
   });
 });
 
-const log1 = createCheckLogMessage('player', 'Brawl', 10, 'SUCCESS');
+const log1 = createCheckLogMessage(playerInfo.name, 'Brawl', 10, 'SUCCESS');
 
-const log2 = createCannotCheckLogMessage('player', 'Brawl');
+const log2 = createCannotCheckLogMessage(playerInfo.name, 'Brawl');
 
-const log3 = createFreeLogMessage('test', 'destroyed by xpto');
+const log3 = createFreeLogMessage(interactiveInfo.name, 'destroyed by xpto');

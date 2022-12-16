@@ -12,6 +12,7 @@ import {
   mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
+import { interactiveInfo, playerInfo } from '../../../tests/fakes';
 
 describe('InteractionRule', () => {
   let service: InteractionRule;
@@ -50,6 +51,6 @@ describe('InteractionRule', () => {
   });
 });
 
-const log1 = createFreeLogMessage('player', 'Hi');
+const log1 = createFreeLogMessage(playerInfo.name, 'Hi');
 
-const log2 = createFreeLogMessage('test', 'Hello');
+const log2 = createFreeLogMessage(interactiveInfo.name, 'Hello');

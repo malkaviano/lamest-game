@@ -50,6 +50,7 @@ import { FormatterHelperService } from '../src/app/helpers/formatter.helper.serv
 import { SkillStore } from '../src/app/stores/skill.store';
 
 import {
+  actorInfo,
   fakeCharacteristics,
   fakeCharacterSheet,
   fakeDerivedAttributes,
@@ -175,13 +176,17 @@ export const setupMocks = () => {
 
   when(mockedPlayerEntity.skills).thenReturn(fakeSkills);
 
+  when(mockedPlayerEntity.identity).thenReturn(fakeIdentity);
+
   when(mockedInteractiveEntity.id).thenReturn(interactiveInfo.id);
 
   when(mockedInteractiveEntity.name).thenReturn(interactiveInfo.name);
 
   when(mockedInteractiveEntity.classification).thenReturn('REACTIVE');
 
-  when(mockedActorEntity.name).thenReturn('actor');
+  when(mockedActorEntity.id).thenReturn(actorInfo.id);
+
+  when(mockedActorEntity.name).thenReturn(actorInfo.name);
 
   when(mockedActorEntity.skills).thenReturn(fakeSkills);
 

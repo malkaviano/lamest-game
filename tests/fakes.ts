@@ -30,9 +30,11 @@ import { EffectReceivedDefinition } from '../src/app/definitions/effect-received
 import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/app/definitions/readable.definition';
 
-export const playerInfo = { id: 'player', name: 'player' };
+export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
 export const interactiveInfo = { id: 'id1', name: 'test' };
+
+export const actorInfo = { id: 'actorId', name: 'actor' };
 
 export const simpleSword = new WeaponDefinition(
   new ItemIdentityDefinition('sword', 'Sword', 'some sword'),
@@ -87,15 +89,8 @@ export const actionAttack = createActionableDefinition(
   'Use Equipped'
 );
 
-export const eventAttackInteractive = new ActionableEvent(
-  actionAttack,
-  interactiveInfo.id
-);
-
-export const eventAttackPlayer = new ActionableEvent(
-  actionAttack,
-  playerInfo.id
-);
+export const eventAttack = (targetId: string) =>
+  new ActionableEvent(actionAttack, targetId);
 
 export const actionPickBubbleGum = createActionableDefinition(
   'PICK',
@@ -273,11 +268,6 @@ export const actionSceneExit = createActionableDefinition(
   'SCENE',
   'exit',
   'Exit'
-);
-
-export const eventSceneExit = new ActionableEvent(
-  actionSceneExit,
-  'sceneExitDoor'
 );
 
 export const actionSkillAthleticism = createActionableDefinition(

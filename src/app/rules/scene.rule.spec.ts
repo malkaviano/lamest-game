@@ -2,9 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, verify } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createSceneLogMessage } from '../definitions/log-message.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
 
@@ -14,6 +12,12 @@ import {
   mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
+import {
+  actionableEvent,
+  actionSceneExit,
+  interactiveInfo,
+  playerInfo,
+} from '../../../tests/fakes';
 
 describe('SceneRule', () => {
   let service: SceneRule;
@@ -54,8 +58,10 @@ describe('SceneRule', () => {
   });
 });
 
-const action = createActionableDefinition('SCENE', 'exit', 'Exit');
+const event = actionableEvent(actionSceneExit, interactiveInfo.id);
 
-const event = new ActionableEvent(action, 'id1');
-
-const log = createSceneLogMessage('player', 'test', 'Exit');
+const log = createSceneLogMessage(
+  playerInfo.name,
+  interactiveInfo.name,
+  'Exit'
+);

@@ -29,7 +29,7 @@ export class PickRule implements RuleInterface {
       action.actionableDefinition.name
     );
 
-    this.inventoryService.store(actor.name, item);
+    this.inventoryService.store(actor.id, item);
 
     const log = target.reactTo(action.actionableDefinition, 'NONE', {});
 

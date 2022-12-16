@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { anything, deepEqual, instance, when } from 'ts-mockito';
+import { take } from 'rxjs';
 
 import {
   createActorIsDeadMessage,
@@ -12,11 +13,13 @@ import { CharacterService } from './character.service';
 import { GameLoopService } from './game-loop.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
+import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 
 import {
   documentOpened,
-  eventAttackInteractive,
-  eventAttackPlayer,
+  eventAttack,
+  interactiveInfo,
+  playerInfo,
 } from '../../../tests/fakes';
 import {
   mockedActorEntity,
@@ -28,8 +31,6 @@ import {
   mockedRulesHelper,
   setupMocks,
 } from '../../../tests/mocks';
-import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
-import { take } from 'rxjs';
 
 describe('GameLoopService', () => {
   let service: GameLoopService;
@@ -58,11 +59,15 @@ describe('GameLoopService', () => {
 
     setupMocks();
 
-    when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
+    when(mockedActorEntity.action(anything())).thenReturn(
+      eventAttack(playerInfo.id)
+    );
 
     when(mockedActorEntity.situation).thenReturn('ALIVE');
 
-    when(mockedPlayerEntity.action).thenReturn(() => eventAttackInteractive);
+    when(mockedPlayerEntity.action).thenReturn(() =>
+      eventAttack(interactiveInfo.id)
+    );
 
     when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
@@ -149,10 +154,10 @@ describe('GameLoopService', () => {
   });
 });
 
-const log1 = createFreeLogMessage('test', 'took some dmg');
+const log1 = createFreeLogMessage(interactiveInfo.name, 'took some dmg');
 
-const log2 = createFreeLogMessage('player', 'dodged');
+const log2 = createFreeLogMessage(playerInfo.name, 'dodged');
 
-const log3 = createFreeLogMessage('player', 'NOOOO');
+const log3 = createFreeLogMessage(playerInfo.name, 'NOOOO');
 
-const logDied = createActorIsDeadMessage('player');
+const logDied = createActorIsDeadMessage(playerInfo.name);

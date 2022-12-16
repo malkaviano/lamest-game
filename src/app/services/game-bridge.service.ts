@@ -36,7 +36,7 @@ export class GameBridgeService {
     this.player = characterService.currentCharacter;
 
     const inventoryChanged = inventoryService.inventoryChanged$.pipe(
-      filter((event) => event.storageName === this.player.name),
+      filter((event) => event.storageName === this.player.id),
       map(() => {
         const items = this.playerInventory(inventoryService);
 
@@ -62,7 +62,7 @@ export class GameBridgeService {
   private playerInventory(
     inventoryService: InventoryService
   ): ArrayView<ActionableItemView> {
-    const playerItems = inventoryService.check(this.player.name);
+    const playerItems = inventoryService.check(this.player.id);
 
     const inventoryView: ActionableItemView[] = [];
 
