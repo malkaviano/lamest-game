@@ -6,6 +6,7 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import {
   createDamagedMessage,
   createHealedMessage,
+  createHPDidNotChangeMessage,
 } from '../definitions/log-message.definition';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActorEntity } from './actor.entity';
@@ -72,18 +73,29 @@ describe('ActorEntity', () => {
     describe('when ALIVE', () => {
       describe('when damage taken', () => {
         describe('attack was SUCCESS', () => {
-          it('return damage taken', () => {
-            when(
-              mockedActorBehavior.effectReceived(
-                deepEqual(fakeEffect('ACID', 10))
-              )
-            ).thenReturn(new HitPointsEvent(9, 0));
+          [
+            {
+              event: new HitPointsEvent(9, 0),
+              log: createDamagedMessage(9, 'ACID'),
+            },
+            {
+              event: new HitPointsEvent(9, 9),
+              log: createHPDidNotChangeMessage(),
+            },
+          ].forEach(({ event, log }) => {
+            it('return damage taken', () => {
+              when(
+                mockedActorBehavior.effectReceived(
+                  deepEqual(fakeEffect('ACID', 10))
+                )
+              ).thenReturn(event);
 
-            const result = fakeActor().reactTo(actionAttack, 'SUCCESS', {
-              effect: fakeEffect('ACID', 10),
+              const result = fakeActor().reactTo(actionAttack, 'SUCCESS', {
+                effect: fakeEffect('ACID', 10),
+              });
+
+              expect(result).toEqual(log);
             });
-
-            expect(result).toEqual(logAttacked);
           });
 
           it('should emit an event', (done) => {
@@ -304,8 +316,6 @@ const fakeActor = () =>
     instance(mockedEquipmentBehavior),
     emptyState
   );
-
-const logAttacked = createDamagedMessage(9, 'ACID');
 
 const logHealed = createHealedMessage(5, 'REMEDY');
 
