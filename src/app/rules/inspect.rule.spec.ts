@@ -7,6 +7,7 @@ import { InspectRule } from './inspect.rule';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { ArrayView } from '../views/array.view';
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
+import { createItemInspectedLogs } from '../definitions/log-message.definition';
 
 import {
   mockedInventoryService,
@@ -20,7 +21,6 @@ import {
   readable,
   simpleSword,
 } from '../../../tests/fakes';
-import { createItemInspectedLogs } from '../definitions/log-message.definition';
 
 describe('InspectRule', () => {
   let service: InspectRule;

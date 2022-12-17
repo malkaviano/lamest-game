@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+
 import { errorMessages } from '../definitions/error-messages.definition';
 import { createItemInspectedLogs } from '../definitions/log-message.definition';
 import { ReadableDefinition } from '../definitions/readable.definition';
-
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
