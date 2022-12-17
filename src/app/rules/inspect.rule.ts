@@ -19,19 +19,14 @@ export class InspectRule implements RuleInterface {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {
-    const { items } = this.inventoryService.list(actor.id);
-
     const itemName = event.eventId;
 
-    const itemStored = items.find((i) => i.item.identity.name === itemName);
+    const item = this.inventoryService.look<ReadableDefinition>(
+      actor.id,
+      itemName
+    );
 
-    if (!itemStored) {
-      throw new Error(errorMessages['INVALID-OPERATION']);
-    }
-
-    const { item } = itemStored;
-
-    if (!(item instanceof ReadableDefinition)) {
+    if (!item) {
       throw new Error(errorMessages['WRONG-ITEM']);
     }
 

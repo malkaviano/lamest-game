@@ -5,8 +5,6 @@ import { instance, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
 import { errorMessages } from '../definitions/error-messages.definition';
-import { ArrayView } from '../views/array.view';
-import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { createItemInspectedLogs } from '../definitions/log-message.definition';
 
 import {
@@ -45,23 +43,11 @@ describe('InspectRule', () => {
   });
 
   describe('execute', () => {
-    describe('when item was not in inventory', () => {
-      it('throw Invalid operation ocurred', () => {
-        when(mockedInventoryService.list(playerInfo.id)).thenReturn(
-          ArrayView.create([])
-        );
-
-        expect(() =>
-          service.execute(instance(mockedPlayerEntity), eventInspectReadable)
-        ).toThrowError(errorMessages['INVALID-OPERATION']);
-      });
-    });
-
-    describe('when item was not READABLE', () => {
+    describe('when item was null', () => {
       it('throw Wrong item was used', () => {
-        when(mockedInventoryService.list(playerInfo.id)).thenReturn(
-          ArrayView.create([new ItemStoredDefinition(simpleSword, 1)])
-        );
+        when(
+          mockedInventoryService.look(playerInfo.id, eventInspectWrong.eventId)
+        ).thenReturn(null);
 
         expect(() =>
           service.execute(instance(mockedPlayerEntity), eventInspectWrong)
@@ -71,9 +57,9 @@ describe('InspectRule', () => {
 
     describe('when item was READABLE', () => {
       it('return log and documentOpened', () => {
-        when(mockedInventoryService.list(playerInfo.id)).thenReturn(
-          ArrayView.create([new ItemStoredDefinition(readable, 1)])
-        );
+        when(
+          mockedInventoryService.look(playerInfo.id, readable.identity.name)
+        ).thenReturn(readable);
 
         const result = service.execute(
           instance(mockedPlayerEntity),

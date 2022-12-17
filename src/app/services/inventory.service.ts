@@ -88,6 +88,19 @@ export class InventoryService {
     return ArrayView.create(a);
   }
 
+  public look<T extends GameItemDefinition>(
+    key: string,
+    name: string
+  ): T | null {
+    const itemStored = this.getStorage(key)[name];
+
+    if (itemStored && this.isItemTypeRight(itemStored.item)) {
+      return itemStored.item as T;
+    }
+
+    return null;
+  }
+
   private getStorage(key: string): {
     [key: string]: ItemStoredDefinition;
   } {

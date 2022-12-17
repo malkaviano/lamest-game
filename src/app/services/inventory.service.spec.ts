@@ -151,7 +151,7 @@ describe('InventoryService', () => {
     });
   });
 
-  describe('checking items stored', () => {
+  describe('listing items stored', () => {
     describe('when storage is empty', () => {
       it('return empty', () => {
         const expected = ArrayView.create([]);
@@ -179,6 +179,30 @@ describe('InventoryService', () => {
 
         expect(result).toEqual(expected);
       });
+    });
+  });
+
+  describe('looking an item', () => {
+    describe('when the item is not found', () => {
+      it('return null', () => {
+        service.store('look', simpleSword);
+
+        expect(service.look('look', 'wrongName')).toBeNull();
+      });
+    });
+
+    describe('when the store has the item', () => {
+      [simpleSword, consumableAnalgesic, readable, masterKey].forEach(
+        (item) => {
+          it('return the item', () => {
+            service.store('look', item);
+
+            const result = service.look('look', item.identity.name);
+
+            expect(result).toEqual(item);
+          });
+        }
+      );
     });
   });
 });
