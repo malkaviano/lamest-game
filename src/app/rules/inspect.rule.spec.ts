@@ -47,7 +47,7 @@ describe('InspectRule', () => {
   describe('execute', () => {
     describe('when item was not in inventory', () => {
       it('throw Invalid operation ocurred', () => {
-        when(mockedInventoryService.check(playerInfo.id)).thenReturn(
+        when(mockedInventoryService.list(playerInfo.id)).thenReturn(
           ArrayView.create([])
         );
 
@@ -59,7 +59,7 @@ describe('InspectRule', () => {
 
     describe('when item was not READABLE', () => {
       it('throw Wrong item was used', () => {
-        when(mockedInventoryService.check(playerInfo.id)).thenReturn(
+        when(mockedInventoryService.list(playerInfo.id)).thenReturn(
           ArrayView.create([new ItemStoredDefinition(simpleSword, 1)])
         );
 
@@ -71,7 +71,7 @@ describe('InspectRule', () => {
 
     describe('when item was READABLE', () => {
       it('return log and documentOpened', () => {
-        when(mockedInventoryService.check(playerInfo.id)).thenReturn(
+        when(mockedInventoryService.list(playerInfo.id)).thenReturn(
           ArrayView.create([new ItemStoredDefinition(readable, 1)])
         );
 

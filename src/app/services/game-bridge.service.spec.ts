@@ -110,7 +110,7 @@ describe('GameBridgeService', () => {
       it(`should emit event ${invEvent.eventName}`, (done) => {
         let result: ArrayView<ActionableItemView> | undefined;
 
-        when(mockedInventoryService.check(anyString())).thenReturn(
+        when(mockedInventoryService.list(anyString())).thenReturn(
           ArrayView.create([new ItemStoredDefinition(item, 1)])
         );
 

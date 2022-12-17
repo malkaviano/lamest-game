@@ -74,7 +74,7 @@ export class InventoryService {
     return null;
   }
 
-  public check(key: string): ArrayView<ItemStoredDefinition> {
+  public list(key: string): ArrayView<ItemStoredDefinition> {
     const storage = this.getStorage(key);
 
     const result: ItemStoredDefinition[] = [];

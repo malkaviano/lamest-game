@@ -62,7 +62,7 @@ export class GameBridgeService {
   private playerInventory(
     inventoryService: InventoryService
   ): ArrayView<ActionableItemView> {
-    const playerItems = inventoryService.check(this.player.id);
+    const playerItems = inventoryService.list(this.player.id);
 
     const inventoryView: ActionableItemView[] = [];
 

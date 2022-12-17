@@ -107,7 +107,7 @@ describe('InventoryService', () => {
 
           const expected = ArrayView.create([]);
 
-          const result = service.check('take');
+          const result = service.list('take');
 
           expect(result).toEqual(expected);
         });
@@ -125,7 +125,7 @@ describe('InventoryService', () => {
             new ItemStoredDefinition(simpleSword, 1),
           ]);
 
-          const result = service.check('take');
+          const result = service.list('take');
 
           expect(result).toEqual(expected);
         });
@@ -156,7 +156,7 @@ describe('InventoryService', () => {
       it('return empty', () => {
         const expected = ArrayView.create([]);
 
-        const result = service.check('check');
+        const result = service.list('check');
 
         expect(result).toEqual(expected);
       });
@@ -175,7 +175,7 @@ describe('InventoryService', () => {
 
         service.store('check', greatSword);
 
-        const result = service.check('check');
+        const result = service.list('check');
 
         expect(result).toEqual(expected);
       });

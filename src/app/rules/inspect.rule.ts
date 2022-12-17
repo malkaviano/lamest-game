@@ -19,7 +19,7 @@ export class InspectRule implements RuleInterface {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {
-    const { items } = this.inventoryService.check(actor.id);
+    const { items } = this.inventoryService.list(actor.id);
 
     const itemName = event.eventId;
 
