@@ -13,6 +13,7 @@ import {
 } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 export class EquipRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly itemStore: ItemStore
+    private readonly itemStore: ItemStore,
+    private readonly extractorHelper: ExtractorHelper
   ) {}
 
   public execute(
@@ -32,9 +34,13 @@ export class EquipRule implements RuleInterface {
     const skillName = this.itemStore.itemSkill(action.eventId);
 
     if (skillName && actor.skills[skillName] > 0) {
-      const weapon = this.inventoryService.take(actor.id, action.eventId);
+      const weapon = this.extractorHelper.extractItemOrThrow<WeaponDefinition>(
+        this.inventoryService,
+        actor.id,
+        action.eventId
+      );
 
-      if (weapon instanceof WeaponDefinition) {
+      if (weapon) {
         const previous = actor.equip(weapon);
 
         if (previous) {

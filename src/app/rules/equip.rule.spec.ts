@@ -10,8 +10,10 @@ import {
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from '../stores/item.store';
 import { EquipRule } from './equip.rule';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 import {
+  mockedExtractorHelper,
   mockedInventoryService,
   mockedItemStore,
   mockedPlayerEntity,
@@ -24,8 +26,9 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
-describe('EquipRule', () => {
+fdescribe('EquipRule', () => {
   let service: EquipRule;
 
   beforeEach(() => {
@@ -38,6 +41,10 @@ describe('EquipRule', () => {
         {
           provide: ItemStore,
           useValue: instance(mockedItemStore),
+        },
+        {
+          provide: ExtractorHelper,
+          useValue: instance(mockedExtractorHelper),
         },
       ],
     });
@@ -55,6 +62,14 @@ describe('EquipRule', () => {
     when(mockedItemStore.itemLabel(eventNoSkill.eventId)).thenReturn(
       greatSword.identity.label
     );
+
+    when(
+      mockedExtractorHelper.extractItemOrThrow<WeaponDefinition>(
+        instance(mockedInventoryService),
+        playerInfo.id,
+        simpleSword.identity.name
+      )
+    ).thenReturn(simpleSword);
 
     service = TestBed.inject(EquipRule);
   });
