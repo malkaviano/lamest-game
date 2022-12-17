@@ -6,6 +6,6 @@ export interface SkillStoreInterface {
     readonly description: string;
     readonly affinity: SkillAffinityLiteral;
     readonly combat: boolean;
-    readonly influenced: string;
+    readonly influenced: string[];
   }[];
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 
+import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { SkillDefinition } from '../definitions/skill.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -20,6 +20,17 @@ export class SkillStore {
     this.store = new Map<string, SkillDefinition>();
 
     resourcesStore.skillStore.skills.forEach((skill) => {
+      const r = skill.influenced.reduce(
+        (acc, f) => {
+          return (characteristics: CharacteristicSetDefinition) =>
+            acc(characteristics) + influencedDefinitions[f](characteristics);
+        },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        (_: CharacteristicSetDefinition): number => {
+          return 0;
+        }
+      );
+
       this.store.set(
         skill.name,
         new SkillDefinition(
@@ -27,7 +38,7 @@ export class SkillStore {
           skill.description,
           skill.affinity,
           skill.combat,
-          influencedDefinitions[skill.influenced]
+          r
         )
       );
     });
@@ -46,48 +57,36 @@ export class SkillStore {
   }
 }
 
-const justStr = (characteristics: CharacteristicSetDefinition) =>
+const str = (characteristics: CharacteristicSetDefinition) =>
   characteristics.STR.value;
 
-const justAgi = (characteristics: CharacteristicSetDefinition) =>
+const agi = (characteristics: CharacteristicSetDefinition) =>
   characteristics.AGI.value;
 
-const justInt = (characteristics: CharacteristicSetDefinition) =>
+const int = (characteristics: CharacteristicSetDefinition) =>
   characteristics.INT.value;
 
-const justEsn = (characteristics: CharacteristicSetDefinition) =>
+const esn = (characteristics: CharacteristicSetDefinition) =>
   characteristics.ESN.value;
 
-const justApp = (characteristics: CharacteristicSetDefinition) =>
+const app = (characteristics: CharacteristicSetDefinition) =>
   characteristics.APP.value;
 
-const justVit = (characteristics: CharacteristicSetDefinition) =>
+const vit = (characteristics: CharacteristicSetDefinition) =>
   characteristics.VIT.value;
 
-export const influencedDefinitions: KeyValueInterface<
+const influencedDefinitions: KeyValueInterface<
   (characteristics: CharacteristicSetDefinition) => number
 > = {
-  justStr,
+  str,
 
-  justAgi,
+  agi,
 
-  justInt,
+  int,
 
-  justEsn,
+  esn,
 
-  justApp,
+  app,
 
-  justVit,
-
-  strPlusAgi: (characteristics: CharacteristicSetDefinition) =>
-    justStr(characteristics) + justAgi(characteristics),
-
-  intPlusEsn: (characteristics: CharacteristicSetDefinition) =>
-    justInt(characteristics) + justEsn(characteristics),
-
-  intPlusApp: (characteristics: CharacteristicSetDefinition) =>
-    justInt(characteristics) + justApp(characteristics),
-
-  doubleDex: (characteristics: CharacteristicSetDefinition) =>
-    justAgi(characteristics) * 2,
+  vit,
 };

@@ -27,7 +27,6 @@ import { EffectReceivedDefinition } from '../src/app/definitions/effect-received
 import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/app/definitions/readable.definition';
 import { GameSettingsInterface } from '../src/app/interfaces/game-settings.interface';
-import { influencedDefinitions } from '../src/app/stores/skill.store';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
@@ -121,28 +120,28 @@ export const fakeSkills: KeyValueInterface<number> = {
   Brawl: 45,
 };
 
+const str = (characteristics: CharacteristicSetDefinition) =>
+  characteristics.STR.value;
+
+const int = (characteristics: CharacteristicSetDefinition) =>
+  characteristics.INT.value;
+
 export const fakeSkillStore: KeyValueInterface<SkillDefinition> = {
   'First Aid': new SkillDefinition(
     'First Aid',
     'Use emergency kit to heal',
     'NATURAL',
     false,
-    influencedDefinitions['justInt']
+    int
   ),
   'Melee Weapon (Simple)': new SkillDefinition(
     'Melee Weapon (Simple)',
     'Light close combat weapons, one handed',
     'NATURAL',
     true,
-    influencedDefinitions['justStr']
+    str
   ),
-  Brawl: new SkillDefinition(
-    'Brawl',
-    'Fighting unarmed',
-    'NATURAL',
-    true,
-    influencedDefinitions['justStr']
-  ),
+  Brawl: new SkillDefinition('Brawl', 'Fighting unarmed', 'NATURAL', true, str),
 };
 
 export const fakeMapSkills: Map<string, number> = new Map<string, number>([

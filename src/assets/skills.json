@@ -5,322 +5,322 @@
       "description": "Swim, Jump, Climb and related basic actions",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "strPlusAgi"
+      "influenced": ["str", "agi"]
     },
     {
       "name": "Endure",
       "description": "Body resistance against poisons and other internal body attacks",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justVit"
+      "influenced": ["vit"]
     },
     {
       "name": "Discipline",
       "description": "Mental resistance, willpower and concentration",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "intPlusEsn"
+      "influenced": ["int", "esn"]
     },
     {
       "name": "Manipulation",
       "description": "Mind and looks working together to mislead others",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "intPlusApp"
+      "influenced": ["int", "app"]
     },
     {
       "name": "Artillery (Siege)",
       "description": "Medieval siege weapons",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Artillery (War)",
       "description": "Modern artillery weapons and mortars",
       "affinity": "TRAINED",
       "combat": true,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Bargain",
       "description": "Sells high, buy low. Influence prices",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justApp"
+      "influenced": ["app"]
     },
     {
       "name": "Brawl",
       "description": "Fighting unarmed",
       "affinity": "NATURAL",
       "combat": true,
-      "influenced": "justStr"
+      "influenced": ["str"]
     },
     {
       "name": "Craft (Blacksmithing)",
       "description": "Craft armor and weapons, can be used to make money",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justStr"
+      "influenced": ["str"]
     },
     {
       "name": "Craft (Cooking)",
       "description": "Makes healing food, can be used to make money",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Craft (Leatherworking)",
       "description": "Craft armor and items, can be used to make money",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justAgi"
+      "influenced": ["agi"]
     },
     {
       "name": "Craft (Sewing)",
       "description": "Craft and repair clothes, can be used to make money",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justAgi"
+      "influenced": ["agi"]
     },
     {
       "name": "Demolition",
       "description": "Use and disarm explosives",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Dodge",
       "description": "Ability to avoid being hit",
       "affinity": "NATURAL",
       "combat": true,
-      "influenced": "doubleDex"
+      "influenced": ["agi", "agi"]
     },
     {
       "name": "Disguise",
       "description": "Change appearance to looks like another",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justApp"
+      "influenced": ["app"]
     },
     {
       "name": "Drive (Automobile)",
       "description": "Drive motor light vehicles",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Drive (Traction)",
       "description": "Drive animal traction vehicles",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Drive (Heavy Vehicles)",
       "description": "Drive motor heavy vehicles",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Etiquette",
       "description": "Knowing and adapting own behavior to the situation",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justApp"
+      "influenced": ["app"]
     },
     {
       "name": "Engineering (Computer)",
       "description": "Hardware, software and programming",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Engineering (Electrical)",
       "description": "Electric and electronic manipulation of devices",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Engineering (Mechanical)",
       "description": "Combustion motors, operate and repair of non electric devices and simple traps",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Firearm (Handgun)",
       "description": "Light firearms, mostly one handed",
       "affinity": "NATURAL",
       "combat": true,
-      "influenced": "justAgi"
+      "influenced": ["agi"]
     },
     {
       "name": "Firearm (Shooter)",
       "description": "Heavier firearms, mostly two handed",
       "affinity": "TRAINED",
       "combat": true,
-      "influenced": "justAgi"
+      "influenced": ["agi"]
     },
     {
       "name": "First Aid",
       "description": "Use emergency kit to heal",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Streetwise",
       "description": "Hearing gossip and making small change on the streets",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Hide",
       "description": "Avoid detection",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justEsn"
+      "influenced": ["esn"]
     },
     {
       "name": "Knowledge (History)",
       "description": "Knowledge of old and contemporary history of the world",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Knowledge (Linguistics)",
       "description": "Knowledge of other languages",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Knowledge (Occult)",
       "description": "Knowledge of the obscure",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Knowledge (Religion)",
       "description": "Knowledge of most common religions",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Melee Weapon (Simple)",
       "description": "Light close combat weapons, one handed",
       "affinity": "NATURAL",
       "combat": true,
-      "influenced": "justStr"
+      "influenced": ["str"]
     },
     {
       "name": "Melee Weapon (Great)",
       "description": "Heavier close combat weapons, two handed",
       "affinity": "TRAINED",
       "combat": true,
-      "influenced": "justStr"
+      "influenced": ["str"]
     },
     {
       "name": "Ranged Weapon (Throw)",
       "description": "Light throwable light weapons",
       "affinity": "NATURAL",
       "combat": true,
-      "influenced": "justAgi"
+      "influenced": ["agi"]
     },
     {
       "name": "Ranged Weapon (Bow)",
       "description": "Bows, crossbows and related",
       "affinity": "TRAINED",
       "combat": true,
-      "influenced": "justAgi"
+      "influenced": ["agi"]
     },
     {
       "name": "Performance",
       "description": "Personification of other",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justApp"
+      "influenced": ["app"]
     },
     {
       "name": "Pilot (Airplane)",
       "description": "Piloting anything that flies",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Pilot (Boat)",
       "description": "Piloting anything that goes in the sea",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Research",
       "description": "Looking for clues on documents and related",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Ride (Horse)",
       "description": "Riding horses and other mountable animals",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justAgi"
+      "influenced": ["agi"]
     },
     {
       "name": "Science(Botany)",
       "description": "Knowledge about plants, natural remedies and venoms",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Science(Chemistry)",
       "description": "Knowledge about drugs, potions and crafting bombs",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Sleight of Hand",
       "description": "Fast hands, can be used to steal undetected",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justAgi"
+      "influenced": ["agi"]
     },
     {
       "name": "Detect",
       "description": "The capacity to spot and listen hidden stuff",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justEsn"
+      "influenced": ["esn"]
     },
     {
       "name": "Survival",
       "description": "Navigation, camping and find food in the wilds",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     },
     {
       "name": "Hunting",
       "description": "Tracking and knowledge about prey",
       "affinity": "TRAINED",
       "combat": false,
-      "influenced": "justInt"
+      "influenced": ["int"]
     }
   ]
 }
