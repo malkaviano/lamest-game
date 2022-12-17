@@ -19,7 +19,7 @@ describe('ExtractorHelper', () => {
   describe('extractRuleTarget', () => {
     describe('when target is undefined', () => {
       it('throw Action should not happen', () => {
-        expect(() => service.extractRuleTarget({})).toThrowError(
+        expect(() => service.extractRuleTargetOrThrow({})).toThrowError(
           errorMessages['SHOULD-NOT-HAPPEN']
         );
       });
@@ -28,7 +28,7 @@ describe('ExtractorHelper', () => {
     describe('when target is defined', () => {
       it('return target', () => {
         expect(
-          service.extractRuleTarget({ target: mockedActorEntity })
+          service.extractRuleTargetOrThrow({ target: mockedActorEntity })
         ).toEqual(mockedActorEntity);
       });
     });

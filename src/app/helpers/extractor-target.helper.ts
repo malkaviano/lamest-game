@@ -10,7 +10,7 @@ import { InventoryService } from '../services/inventory.service';
   providedIn: 'root',
 })
 export class ExtractorHelper {
-  public extractRuleTarget(
+  public extractRuleTargetOrThrow(
     ruleExtrasInterface: RuleExtrasInterface
   ): ActionReactiveInterface {
     const target = ruleExtrasInterface.target;
@@ -22,7 +22,7 @@ export class ExtractorHelper {
     return target;
   }
 
-  public extractItem<T>(
+  public extractItemOrThrow<T>(
     inventoryService: InventoryService,
     category: GameItemLiteral,
     actorId: string,

@@ -27,7 +27,7 @@ export class UseRule implements RuleInterface {
     event: ActionableEvent,
     extras: RuleExtrasInterface
   ): RuleResultInterface {
-    const target = this.withTarget.extractRuleTarget(extras);
+    const target = this.withTarget.extractRuleTargetOrThrow(extras);
 
     const { actionableDefinition } = event;
 

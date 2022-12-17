@@ -67,7 +67,7 @@ describe('ConsumeRule', () => {
     describe('when item was not a consumable', () => {
       it('throw Wrong item was used', () => {
         when(
-          mockedExtractorHelper.extractItem<ConsumableDefinition>(
+          mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             'CONSUMABLE',
             playerInfo.id,
@@ -88,7 +88,7 @@ describe('ConsumeRule', () => {
       describe('when skill check fails', () => {
         it('should not heal player', () => {
           when(
-            mockedExtractorHelper.extractItem<ConsumableDefinition>(
+            mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
               'CONSUMABLE',
               playerInfo.id,
@@ -120,7 +120,7 @@ describe('ConsumeRule', () => {
       describe('when skill check passes', () => {
         it('should heal player', () => {
           when(
-            mockedExtractorHelper.extractItem<ConsumableDefinition>(
+            mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
               'CONSUMABLE',
               playerInfo.id,
@@ -162,7 +162,7 @@ describe('ConsumeRule', () => {
       describe('when actor skill value was 0', () => {
         it('should log error message', () => {
           when(
-            mockedExtractorHelper.extractItem<ConsumableDefinition>(
+            mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
               'CONSUMABLE',
               playerInfo.id,
@@ -197,7 +197,7 @@ describe('ConsumeRule', () => {
     describe('when consumable has no skill requirement', () => {
       it('should heal player', () => {
         when(
-          mockedExtractorHelper.extractItem<ConsumableDefinition>(
+          mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             'CONSUMABLE',
             playerInfo.id,

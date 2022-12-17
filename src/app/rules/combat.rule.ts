@@ -36,7 +36,7 @@ export class CombatRule implements RuleInterface {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): RuleResultInterface {
-    const target = this.withTarget.extractRuleTarget(extras);
+    const target = this.withTarget.extractRuleTargetOrThrow(extras);
 
     const logs: LogMessageDefinition[] = [];
 
