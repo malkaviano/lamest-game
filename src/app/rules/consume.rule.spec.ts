@@ -30,7 +30,7 @@ import {
   simpleSword,
 } from '../../../tests/fakes';
 import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 
 describe('ConsumeRule', () => {

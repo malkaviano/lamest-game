@@ -64,7 +64,7 @@ import {
 } from './fakes';
 import { InspectRule } from '../src/app/rules/inspect.rule';
 import { SettingsStore } from '../src/app/stores/settings.store';
-import { ExtractorHelper } from '../src/app/helpers/extractor-target.helper';
+import { ExtractorHelper } from '../src/app/helpers/extractor.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 

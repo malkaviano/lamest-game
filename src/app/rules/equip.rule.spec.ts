@@ -10,7 +10,7 @@ import {
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from '../stores/item.store';
 import { EquipRule } from './equip.rule';
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import {
   mockedExtractorHelper,

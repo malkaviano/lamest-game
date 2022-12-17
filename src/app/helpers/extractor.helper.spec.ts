@@ -4,7 +4,7 @@ import { instance, when } from 'ts-mockito';
 
 import { errorMessages } from '../definitions/error-messages.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { ExtractorHelper } from './extractor-target.helper';
+import { ExtractorHelper } from './extractor.helper';
 
 import { playerInfo, simpleSword } from '../../../tests/fakes';
 import {

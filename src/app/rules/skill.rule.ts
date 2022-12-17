@@ -12,7 +12,7 @@ import {
 import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 
 @Injectable({
   providedIn: 'root',

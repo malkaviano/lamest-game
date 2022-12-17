@@ -4,7 +4,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 import {
   createFreeLogMessage,
   createLostLogMessage,

@@ -16,7 +16,7 @@ import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 
 @Injectable({
   providedIn: 'root',

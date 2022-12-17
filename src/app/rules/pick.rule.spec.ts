@@ -20,7 +20,7 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 
 describe('PickRule', () => {
   let service: PickRule;

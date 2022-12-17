@@ -13,7 +13,7 @@ import {
 } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 
 @Injectable({
   providedIn: 'root',

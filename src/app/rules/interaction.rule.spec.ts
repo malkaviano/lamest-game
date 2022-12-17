@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { anything, deepEqual, instance, when } from 'ts-mockito';
 
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createFreeLogMessage } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';

@@ -23,7 +23,7 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
-import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 
 describe('SkillRule', () => {
   let service: SkillRule;
