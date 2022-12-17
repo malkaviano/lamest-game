@@ -28,7 +28,7 @@ import {
 } from '../../../tests/fakes';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 
-fdescribe('EquipRule', () => {
+describe('EquipRule', () => {
   let service: EquipRule;
 
   beforeEach(() => {
