@@ -19,6 +19,7 @@ import { EffectReceivedDefinition } from '../definitions/effect-received.definit
 
 import {
   mockedActorEntity,
+  mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedPlayerEntity,
   mockedRollService,
@@ -35,6 +36,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../tests/fakes';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 describe('CombatRule', () => {
   let service: CombatRule;
@@ -45,6 +47,10 @@ describe('CombatRule', () => {
         {
           provide: RollService,
           useValue: instance(mockedRollService),
+        },
+        {
+          provide: ExtractorHelper,
+          useValue: instance(mockedExtractorHelper),
         },
       ],
     });

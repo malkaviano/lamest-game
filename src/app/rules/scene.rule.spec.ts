@@ -7,6 +7,7 @@ import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
 
 import {
+  mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedNarrativeService,
   mockedPlayerEntity,
@@ -18,6 +19,7 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 describe('SceneRule', () => {
   let service: SceneRule;
@@ -28,6 +30,10 @@ describe('SceneRule', () => {
         {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
+        },
+        {
+          provide: ExtractorHelper,
+          useValue: instance(mockedExtractorHelper),
         },
       ],
     });

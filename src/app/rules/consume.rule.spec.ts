@@ -69,7 +69,6 @@ describe('ConsumeRule', () => {
         when(
           mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
-            'CONSUMABLE',
             playerInfo.id,
             simpleSword.identity.name
           )
@@ -90,7 +89,6 @@ describe('ConsumeRule', () => {
           when(
             mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
-              'CONSUMABLE',
               playerInfo.id,
               consumableFirstAid.identity.name
             )
@@ -122,7 +120,6 @@ describe('ConsumeRule', () => {
           when(
             mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
-              'CONSUMABLE',
               playerInfo.id,
               consumableFirstAid.identity.name
             )
@@ -164,7 +161,6 @@ describe('ConsumeRule', () => {
           when(
             mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
-              'CONSUMABLE',
               playerInfo.id,
               consumableFirstAid.identity.name
             )
@@ -199,7 +195,6 @@ describe('ConsumeRule', () => {
         when(
           mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
-            'CONSUMABLE',
             playerInfo.id,
             consumableAnalgesic.identity.name
           )

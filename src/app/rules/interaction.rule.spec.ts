@@ -2,12 +2,14 @@ import { TestBed } from '@angular/core/testing';
 
 import { anything, deepEqual, instance, when } from 'ts-mockito';
 
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { createFreeLogMessage } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InteractionRule } from './interaction.rule';
 
 import {
+  mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedPlayerEntity,
   setupMocks,
@@ -18,7 +20,14 @@ describe('InteractionRule', () => {
   let service: InteractionRule;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: ExtractorHelper,
+          useValue: instance(mockedExtractorHelper),
+        },
+      ],
+    });
 
     setupMocks();
 

@@ -4,10 +4,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
-import { errorMessages } from '../definitions/error-messages.definition';
-import { ItemStoredDefinition } from '../definitions/item-storage.definition';
-
-import { ArrayView } from '../views/array.view';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 import {
   createFreeLogMessage,
   createLostLogMessage,
@@ -16,9 +13,11 @@ import {
 } from '../definitions/log-message.definition';
 
 import {
+  mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
+  setupMocks,
 } from '../../../tests/mocks';
 import {
   playerInfo,
@@ -27,7 +26,6 @@ import {
   masterKey,
   simpleSword,
   actionableEvent,
-  actionWrongUseSimpleSword,
 } from '../../../tests/fakes';
 
 describe('UseRule', () => {
@@ -40,8 +38,14 @@ describe('UseRule', () => {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
         },
+        {
+          provide: ExtractorHelper,
+          useValue: instance(mockedExtractorHelper),
+        },
       ],
     });
+
+    setupMocks();
 
     service = TestBed.inject(UseRule);
   });
@@ -50,27 +54,11 @@ describe('UseRule', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('when item category was not USABLE', () => {
-    it('throw Wrong item was used', () => {
-      when(mockedInventoryService.check(playerInfo.id)).thenReturn(
-        ArrayView.create([new ItemStoredDefinition(simpleSword, 1)])
-      );
-
-      expect(() =>
-        service.execute(
-          instance(mockedPlayerEntity),
-          eventWrongUseSimpleSword,
-          { target: instance(mockedInteractiveEntity) }
-        )
-      ).toThrowError(errorMessages['WRONG-ITEM']);
-    });
-  });
-
   describe('when item was not found', () => {
     it('return item label not found', () => {
-      when(mockedInventoryService.check(playerInfo.id)).thenReturn(
-        ArrayView.create([new ItemStoredDefinition(simpleSword, 1)])
-      );
+      when(
+        mockedInventoryService.take(playerInfo.id, simpleSword.identity.name)
+      ).thenReturn(null);
 
       const result = service.execute(
         instance(mockedPlayerEntity),
@@ -84,10 +72,6 @@ describe('UseRule', () => {
 
   describe('when item was usable', () => {
     it('return log', () => {
-      when(mockedInventoryService.check(playerInfo.id)).thenReturn(
-        ArrayView.create([new ItemStoredDefinition(masterKey, 1)])
-      );
-
       when(
         mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
       ).thenReturn(masterKey);
@@ -126,11 +110,6 @@ const openedLog = createFreeLogMessage(
 const itemLostLog = createLostLogMessage(
   playerInfo.name,
   masterKey.identity.label
-);
-
-const eventWrongUseSimpleSword = actionableEvent(
-  actionWrongUseSimpleSword,
-  interactiveInfo.id
 );
 
 const eventUseMasterKey = actionableEvent(

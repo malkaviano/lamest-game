@@ -1,7 +1,7 @@
 import { MatDialog } from '@angular/material/dialog';
 
 import { of } from 'rxjs';
-import { instance, mock, reset, when } from 'ts-mockito';
+import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
 import { ActorBehavior } from '../src/app/behaviors/actor.behavior';
 import { EquipmentBehavior } from '../src/app/behaviors/equipment.behavior';
@@ -337,6 +337,47 @@ export const setupMocks = () => {
   when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
 
   when(mockedSettingsStore.settings).thenReturn(gameSettings);
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedInteractiveEntity),
+      })
+    )
+  ).thenReturn(instance(mockedInteractiveEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedActorEntity),
+      })
+    )
+  ).thenReturn(instance(mockedActorEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedPlayerEntity),
+      })
+    )
+  ).thenReturn(instance(mockedPlayerEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedTargetPlayerEntity),
+      })
+    )
+  ).thenReturn(instance(mockedTargetPlayerEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedPlayerEntity),
+        targetDodgesPerformed: 2,
+      })
+    )
+  ).thenReturn(instance(mockedPlayerEntity));
 };
 
 const resetMocks = () => {

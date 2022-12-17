@@ -2,13 +2,19 @@ import { TestBed } from '@angular/core/testing';
 
 import { take } from 'rxjs';
 
-import { errorMessages } from '../definitions/error-messages.definition';
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 import { InventoryService } from './inventory.service';
 
-import { bubbleGum, greatSword, simpleSword } from '../../../tests/fakes';
+import {
+  bubbleGum,
+  consumableAnalgesic,
+  greatSword,
+  masterKey,
+  readable,
+  simpleSword,
+} from '../../../tests/fakes';
 
 describe('InventoryService', () => {
   let service: InventoryService;
@@ -72,32 +78,26 @@ describe('InventoryService', () => {
   });
 
   describe('taking an item', () => {
-    describe('when the store is empty', () => {
-      it('throws INVALID-OPERATION', () => {
-        expect(() =>
-          service.take('take', simpleSword.identity.name)
-        ).toThrowError(errorMessages['INVALID-OPERATION']);
-      });
-    });
-
     describe('when the item is not found', () => {
-      it('throws INVALID-OPERATION', () => {
+      it('return null', () => {
         service.store('take', simpleSword);
 
-        expect(() => service.take('take', 'wrongName')).toThrowError(
-          errorMessages['INVALID-OPERATION']
-        );
+        expect(service.take('take', 'wrongName')).toBeNull();
       });
     });
 
     describe('when the store has the item', () => {
-      it('return the item', () => {
-        service.store('take', simpleSword);
+      [simpleSword, consumableAnalgesic, readable, masterKey].forEach(
+        (item) => {
+          it('return the item', () => {
+            service.store('take', item);
 
-        const result = service.take('take', simpleSword.identity.name);
+            const result = service.take('take', item.identity.name);
 
-        expect(result).toEqual(simpleSword);
-      });
+            expect(result).toEqual(item);
+          });
+        }
+      );
 
       describe('when quantity is 1', () => {
         it('should remove the item from storage', () => {

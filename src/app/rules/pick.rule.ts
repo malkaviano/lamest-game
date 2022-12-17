@@ -18,7 +18,7 @@ import { ExtractorHelper } from '../helpers/extractor-target.helper';
 export class PickRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly withTarget: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper
   ) {}
 
   public execute(
@@ -26,11 +26,12 @@ export class PickRule implements RuleInterface {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): RuleResultInterface {
-    const target = this.withTarget.extractRuleTargetOrThrow(extras);
+    const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     const logs: LogMessageDefinition[] = [];
 
-    const item = this.inventoryService.take(
+    const item = this.extractorHelper.extractItemOrThrow(
+      this.inventoryService,
       action.eventId,
       action.actionableDefinition.name
     );

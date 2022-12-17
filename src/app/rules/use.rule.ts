@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { errorMessages } from '../definitions/error-messages.definition';
+
 import {
   createFreeLogMessage,
   createLostLogMessage,
   createNotFoundLogMessage,
 } from '../definitions/log-message.definition';
+import { UsableDefinition } from '../definitions/usable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ExtractorHelper } from '../helpers/extractor-target.helper';
 import { ActorInterface } from '../interfaces/actor.interface';
@@ -19,7 +20,7 @@ import { InventoryService } from '../services/inventory.service';
 export class UseRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly withTarget: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper
   ) {}
 
   execute(
@@ -27,14 +28,13 @@ export class UseRule implements RuleInterface {
     event: ActionableEvent,
     extras: RuleExtrasInterface
   ): RuleResultInterface {
-    const target = this.withTarget.extractRuleTargetOrThrow(extras);
+    const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     const { actionableDefinition } = event;
 
-    const { items } = this.inventoryService.check(actor.id);
-
-    const item = items.find(
-      (i) => i.item.identity.name === actionableDefinition.name
+    const item = this.inventoryService.take<UsableDefinition>(
+      actor.id,
+      actionableDefinition.name
     );
 
     if (!item) {
@@ -45,24 +45,15 @@ export class UseRule implements RuleInterface {
       };
     }
 
-    if (item.item.category !== 'USABLE') {
-      throw new Error(errorMessages['WRONG-ITEM']);
-    }
-
     const logs = [];
 
-    const usable = this.inventoryService.take(
-      actor.id,
-      actionableDefinition.name
-    );
-
-    const log = target.reactTo(actionableDefinition, 'USED', { item: usable });
+    const log = target.reactTo(actionableDefinition, 'USED', { item });
 
     if (log) {
       logs.push(createFreeLogMessage(target.name, log));
     }
 
-    logs.push(createLostLogMessage(actor.name, usable.identity.label));
+    logs.push(createLostLogMessage(actor.name, item.identity.label));
 
     return {
       logs,

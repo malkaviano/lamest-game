@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { errorMessages } from '../definitions/error-messages.definition';
+import { GameItemDefinition } from '../definitions/game-item.definition';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-import { GameItemLiteral } from '../literals/game-item.literal';
 import { InventoryService } from '../services/inventory.service';
 
 @Injectable({
@@ -22,22 +22,17 @@ export class ExtractorHelper {
     return target;
   }
 
-  public extractItemOrThrow<T>(
+  public extractItemOrThrow<T extends GameItemDefinition>(
     inventoryService: InventoryService,
-    category: GameItemLiteral,
     actorId: string,
     itemName: string
   ): T {
-    const item = inventoryService
-      .check(actorId)
-      .items.find(
-        (i) => i.item.identity.name === itemName && i.item.category === category
-      );
+    const item = inventoryService.take<T>(actorId, itemName);
 
     if (!item) {
       throw new Error(errorMessages['WRONG-ITEM']);
     }
 
-    return inventoryService.take(actorId, itemName) as T;
+    return item;
   }
 }

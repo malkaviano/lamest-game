@@ -39,7 +39,6 @@ export class ConsumeRule implements RuleInterface {
     const consumable =
       this.extractorHelper.extractItemOrThrow<ConsumableDefinition>(
         this.inventoryService,
-        'CONSUMABLE',
         actor.id,
         eventId
       );

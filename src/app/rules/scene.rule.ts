@@ -18,7 +18,7 @@ import { ExtractorHelper } from '../helpers/extractor-target.helper';
 export class SceneRule implements RuleInterface {
   constructor(
     private readonly narrativeService: NarrativeService,
-    private readonly withTarget: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper
   ) {}
 
   public execute(
@@ -26,7 +26,7 @@ export class SceneRule implements RuleInterface {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): RuleResultInterface {
-    const target = this.withTarget.extractRuleTargetOrThrow(extras);
+    const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     const logs: LogMessageDefinition[] = [];
 

@@ -7,6 +7,7 @@ import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
 
 import {
+  mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
@@ -19,6 +20,7 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 describe('PickRule', () => {
   let service: PickRule;
@@ -29,6 +31,10 @@ describe('PickRule', () => {
         {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
+        },
+        {
+          provide: ExtractorHelper,
+          useValue: instance(mockedExtractorHelper),
         },
       ],
     });
@@ -45,19 +51,20 @@ describe('PickRule', () => {
   describe('execute', () => {
     it('return logs', () => {
       when(
-        mockedInventoryService.take(
-          interactiveInfo.id,
-          simpleSword.identity.name
-        )
-      ).thenReturn(simpleSword);
-
-      when(
         mockedInteractiveEntity.reactTo(
           actionPickSimpleSword,
           'NONE',
           deepEqual({})
         )
       ).thenReturn(simpleSword.identity.label);
+
+      when(
+        mockedExtractorHelper.extractItemOrThrow(
+          instance(mockedInventoryService),
+          eventPickSimpleSword.eventId,
+          simpleSword.identity.name
+        )
+      ).thenReturn(simpleSword);
 
       const result = service.execute(
         instance(mockedPlayerEntity),

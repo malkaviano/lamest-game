@@ -15,6 +15,7 @@ import {
   mockedInteractiveEntity,
   mockedRollService,
   setupMocks,
+  mockedExtractorHelper,
 } from '../../../tests/mocks';
 import {
   actionableEvent,
@@ -22,6 +23,7 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 describe('SkillRule', () => {
   let service: SkillRule;
@@ -32,6 +34,10 @@ describe('SkillRule', () => {
         {
           provide: RollService,
           useValue: instance(mockedRollService),
+        },
+        {
+          provide: ExtractorHelper,
+          useValue: instance(mockedExtractorHelper),
         },
       ],
     });

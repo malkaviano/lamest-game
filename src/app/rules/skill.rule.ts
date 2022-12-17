@@ -20,7 +20,7 @@ import { ExtractorHelper } from '../helpers/extractor-target.helper';
 export class SkillRule implements RuleInterface {
   constructor(
     private readonly rollRule: RollService,
-    private readonly withTarget: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper
   ) {}
 
   public execute(
@@ -28,7 +28,7 @@ export class SkillRule implements RuleInterface {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): RuleResultInterface {
-    const target = this.withTarget.extractRuleTargetOrThrow(extras);
+    const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     const logs: LogMessageDefinition[] = [];
 

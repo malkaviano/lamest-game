@@ -266,12 +266,6 @@ export const actionUseMasterKey = createActionableDefinition(
   masterKey.identity.label
 );
 
-export const actionWrongUseSimpleSword = createActionableDefinition(
-  'USE',
-  simpleSword.identity.name,
-  simpleSword.identity.label
-);
-
 export const actionPickSimpleSword = createActionableDefinition(
   'PICK',
   simpleSword.identity.name,
