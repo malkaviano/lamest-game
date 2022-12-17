@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { ConsumableDefinition } from '../definitions/consumable.definition';
-import { errorMessages } from '../definitions/error-messages.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
@@ -17,6 +16,7 @@ import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,8 @@ import { EffectReceivedDefinition } from '../definitions/effect-received.definit
 export class ConsumeRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly rollRule: RollService
+    private readonly rollRule: RollService,
+    private readonly extractorHelper: ExtractorHelper
   ) {}
 
   public execute(
@@ -35,11 +36,12 @@ export class ConsumeRule implements RuleInterface {
 
     const { actionableDefinition, eventId } = event;
 
-    const consumable = this.inventoryService.take(actor.id, eventId);
-
-    if (!(consumable instanceof ConsumableDefinition)) {
-      throw new Error(errorMessages['WRONG-ITEM']);
-    }
+    const consumable = this.extractorHelper.extractItem<ConsumableDefinition>(
+      this.inventoryService,
+      'CONSUMABLE',
+      actor.id,
+      eventId
+    );
 
     const amount = consumable.amount;
 

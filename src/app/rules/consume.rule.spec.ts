@@ -10,12 +10,12 @@ import {
   createFreeLogMessage,
   createHealedMessage,
 } from '../definitions/log-message.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
 import { RollService } from '../services/roll.service';
 
 import {
+  mockedExtractorHelper,
   mockedInventoryService,
   mockedPlayerEntity,
   mockedRollService,
@@ -30,6 +30,8 @@ import {
   simpleSword,
 } from '../../../tests/fakes';
 import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
+import { ExtractorHelper } from '../helpers/extractor-target.helper';
+import { ConsumableDefinition } from '../definitions/consumable.definition';
 
 describe('ConsumeRule', () => {
   let service: ConsumeRule;
@@ -44,6 +46,10 @@ describe('ConsumeRule', () => {
         {
           provide: RollService,
           useValue: instance(mockedRollService),
+        },
+        {
+          provide: ExtractorHelper,
+          useValue: instance(mockedExtractorHelper),
         },
       ],
     });
@@ -60,14 +66,19 @@ describe('ConsumeRule', () => {
   describe('execute', () => {
     describe('when item was not a consumable', () => {
       it('throw Wrong item was used', () => {
-        when(mockedInventoryService.take(playerInfo.id, 'sword')).thenReturn(
-          simpleSword
-        );
+        when(
+          mockedExtractorHelper.extractItem<ConsumableDefinition>(
+            instance(mockedInventoryService),
+            'CONSUMABLE',
+            playerInfo.id,
+            simpleSword.identity.name
+          )
+        ).thenThrow(new Error(errorMessages['WRONG-ITEM']));
 
         expect(() =>
           service.execute(
             instance(mockedPlayerEntity),
-            new ActionableEvent(actionConsume, 'sword')
+            actionableEvent(actionConsume, simpleSword.identity.name)
           )
         ).toThrowError(errorMessages['WRONG-ITEM']);
       });
@@ -77,7 +88,12 @@ describe('ConsumeRule', () => {
       describe('when skill check fails', () => {
         it('should not heal player', () => {
           when(
-            mockedInventoryService.take(playerInfo.id, 'firstAid')
+            mockedExtractorHelper.extractItem<ConsumableDefinition>(
+              instance(mockedInventoryService),
+              'CONSUMABLE',
+              playerInfo.id,
+              consumableFirstAid.identity.name
+            )
           ).thenReturn(consumableFirstAid);
 
           when(
@@ -104,7 +120,12 @@ describe('ConsumeRule', () => {
       describe('when skill check passes', () => {
         it('should heal player', () => {
           when(
-            mockedInventoryService.take(playerInfo.id, 'firstAid')
+            mockedExtractorHelper.extractItem<ConsumableDefinition>(
+              instance(mockedInventoryService),
+              'CONSUMABLE',
+              playerInfo.id,
+              consumableFirstAid.identity.name
+            )
           ).thenReturn(consumableFirstAid);
 
           when(
@@ -140,11 +161,16 @@ describe('ConsumeRule', () => {
 
       describe('when actor skill value was 0', () => {
         it('should log error message', () => {
-          when(mockedPlayerEntity.skills).thenReturn({ 'First Aid': 0 });
-
           when(
-            mockedInventoryService.take(playerInfo.id, 'firstAid')
+            mockedExtractorHelper.extractItem<ConsumableDefinition>(
+              instance(mockedInventoryService),
+              'CONSUMABLE',
+              playerInfo.id,
+              consumableFirstAid.identity.name
+            )
           ).thenReturn(consumableFirstAid);
+
+          when(mockedPlayerEntity.skills).thenReturn({ 'First Aid': 0 });
 
           when(
             mockedRollService.actorSkillCheck(
@@ -171,7 +197,9 @@ describe('ConsumeRule', () => {
     describe('when consumable has no skill requirement', () => {
       it('should heal player', () => {
         when(
-          mockedInventoryService.take(
+          mockedExtractorHelper.extractItem<ConsumableDefinition>(
+            instance(mockedInventoryService),
+            'CONSUMABLE',
             playerInfo.id,
             consumableAnalgesic.identity.name
           )

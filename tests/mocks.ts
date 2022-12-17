@@ -64,6 +64,7 @@ import {
 } from './fakes';
 import { InspectRule } from '../src/app/rules/inspect.rule';
 import { SettingsStore } from '../src/app/stores/settings.store';
+import { ExtractorHelper } from '../src/app/helpers/extractor-target.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -162,6 +163,8 @@ export const mockedMatDialog = mock(MatDialog);
 export const mockedInspectRule = mock(InspectRule);
 
 export const mockedSettingsStore = mock(SettingsStore);
+
+export const mockedExtractorHelper = mock(ExtractorHelper);
 
 export const setupMocks = () => {
   resetMocks();
@@ -424,4 +427,6 @@ const resetMocks = () => {
   reset(mockedSettingsStore);
 
   reset(mockedActorEntity2);
+
+  reset(mockedExtractorHelper);
 };
