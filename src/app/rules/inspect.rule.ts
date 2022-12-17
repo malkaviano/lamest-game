@@ -8,16 +8,12 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { InventoryService } from '../services/inventory.service';
-import { ItemStore } from '../stores/item.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InspectRule implements RuleInterface {
-  constructor(
-    private readonly inventoryService: InventoryService,
-    private readonly itemStore: ItemStore
-  ) {}
+  constructor(private readonly inventoryService: InventoryService) {}
 
   public execute(
     actor: ActorInterface,
