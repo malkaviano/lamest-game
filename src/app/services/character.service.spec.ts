@@ -7,6 +7,8 @@ import { PlayerEntity } from '../entities/player.entity';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
 import { HitPointsEvent } from '../events/hit-points.event';
+import { WeaponDefinition } from '../definitions/weapon.definition';
+import { EnergyPointsEvent } from '../events/energy-points.event';
 
 import { simpleSword } from '../../../tests/fakes';
 import {
@@ -14,7 +16,6 @@ import {
   mockedRandomCharacterService,
   setupMocks,
 } from '../../../tests/mocks';
-import { WeaponDefinition } from '../definitions/weapon.definition';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -37,6 +38,8 @@ describe('CharacterService', () => {
 
     when(mockedPlayerEntity.hpChanged$).thenReturn(subjectHP);
 
+    when(mockedPlayerEntity.epChanged$).thenReturn(subjectEP);
+
     when(mockedPlayerEntity.weaponEquippedChanged$).thenReturn(subjectWeapon);
 
     service = TestBed.inject(CharacterService);
@@ -44,7 +47,7 @@ describe('CharacterService', () => {
 
   describe('character changed events', () => {
     describe('on creation', () => {
-      it('should emit and event', (done) => {
+      it('should emit an event', (done) => {
         let result: PlayerEntity | undefined;
 
         service.characterChanged$.pipe(take(10)).subscribe((event) => {
@@ -58,7 +61,7 @@ describe('CharacterService', () => {
     });
 
     describe('when character takes damage', () => {
-      it('should emit and event', (done) => {
+      it('should emit an event', (done) => {
         let result: PlayerEntity | undefined;
 
         service.characterChanged$.pipe(take(10)).subscribe((event) => {
@@ -74,7 +77,7 @@ describe('CharacterService', () => {
     });
 
     describe('when character equips a Weapon', () => {
-      it('should emit and event', (done) => {
+      it('should emit an event', (done) => {
         let result: PlayerEntity | undefined;
 
         service.characterChanged$.pipe(take(10)).subscribe((event) => {
@@ -117,8 +120,26 @@ describe('CharacterService', () => {
       });
     });
   });
+
+  describe('when character spent energy', () => {
+    it('should emit an event', (done) => {
+      let result: PlayerEntity | undefined;
+
+      service.characterChanged$.pipe(take(10)).subscribe((event) => {
+        result = event;
+      });
+
+      subjectEP.next(new EnergyPointsEvent(12, 8));
+
+      done();
+
+      expect(result).toEqual(instance(mockedPlayerEntity));
+    });
+  });
 });
 
 const subjectHP = new Subject<HitPointsEvent>();
+
+const subjectEP = new Subject<EnergyPointsEvent>();
 
 const subjectWeapon = new Subject<WeaponDefinition>();
