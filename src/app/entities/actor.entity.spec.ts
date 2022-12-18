@@ -4,8 +4,8 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import {
-  createDamagedMessage,
-  createHealedMessage,
+  createEffectDamagedMessage,
+  createEffectRestoredHPMessage,
   createHPDidNotChangeMessage,
 } from '../definitions/log-message.definition';
 import { ResultLiteral } from '../literals/result.literal';
@@ -76,7 +76,7 @@ describe('ActorEntity', () => {
           [
             {
               event: new HitPointsEvent(9, 0),
-              log: createDamagedMessage(9, 'ACID'),
+              log: createEffectDamagedMessage(9, 'ACID'),
             },
             {
               event: new HitPointsEvent(9, 9),
@@ -317,7 +317,7 @@ const fakeActor = () =>
     emptyState
   );
 
-const logHealed = createHealedMessage(5, 'REMEDY');
+const logHealed = createEffectRestoredHPMessage('REMEDY', 5);
 
 const equipActorScenario = (
   character: ActorEntity,

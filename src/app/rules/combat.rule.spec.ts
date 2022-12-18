@@ -6,7 +6,7 @@ import {
   createAttackedLogMessage,
   createCannotCheckLogMessage,
   createCheckLogMessage,
-  createDamagedMessage,
+  createEffectDamagedMessage,
   createFreeLogMessage,
   createLostLogMessage,
   createOutOfDodgesLogMessage,
@@ -409,7 +409,10 @@ describe('CombatRule', () => {
   });
 });
 
-const damageMessage2 = createDamagedMessage(2, simpleSword.damage.effectType);
+const damageMessage2 = createEffectDamagedMessage(
+  2,
+  simpleSword.damage.effectType
+);
 
 const damageInteractiveLog = createFreeLogMessage(
   interactiveInfo.name,

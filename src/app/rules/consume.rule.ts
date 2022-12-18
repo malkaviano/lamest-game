@@ -43,7 +43,9 @@ export class ConsumeRule implements RuleInterface {
         eventId
       );
 
-    const amount = consumable.hp;
+    const hp = consumable.hp;
+
+    const energy = consumable.energy;
 
     let rollDefinition: RollDefinition = new RollDefinition('NONE', 0);
 
@@ -71,7 +73,8 @@ export class ConsumeRule implements RuleInterface {
       }
 
       const log = actor.reactTo(actionableDefinition, rollDefinition.result, {
-        effect: new EffectReceivedDefinition(consumable.effect, amount),
+        effect: new EffectReceivedDefinition(consumable.effect, hp),
+        energyGained: energy,
       });
 
       if (log) {

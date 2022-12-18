@@ -10,8 +10,8 @@ import { ActorIdentityDefinition } from '../definitions/actor-identity.definitio
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 import {
-  createDamagedMessage,
-  createHealedMessage,
+  createEffectDamagedMessage,
+  createEffectRestoredHPMessage,
   createHPDidNotChangeMessage,
 } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
@@ -148,12 +148,12 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
         }
 
         if (result.current > result.previous) {
-          resultLog = createHealedMessage(
-            result.effective,
-            values.effect.effectType
+          resultLog = createEffectRestoredHPMessage(
+            values.effect.effectType,
+            result.effective
           );
         } else if (result.current < result.previous) {
-          resultLog = createDamagedMessage(
+          resultLog = createEffectDamagedMessage(
             result.effective,
             values.effect.effectType
           );

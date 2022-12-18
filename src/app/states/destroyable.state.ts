@@ -1,6 +1,6 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import {
-  createDamagedMessage,
+  createEffectDamagedMessage,
   createDestroyedByDamageMessage,
 } from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
@@ -39,7 +39,7 @@ export class DestroyableState extends ActionableState {
             this.destroyedState,
             hp
           ),
-          log: createDamagedMessage(dmg, values.effect.effectType),
+          log: createEffectDamagedMessage(dmg, values.effect.effectType),
         };
       }
 

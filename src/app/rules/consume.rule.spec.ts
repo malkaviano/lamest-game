@@ -8,7 +8,7 @@ import {
   createCheckLogMessage,
   createConsumedLogMessage,
   createFreeLogMessage,
-  createHealedMessage,
+  createEffectRestoredHPMessage,
 } from '../definitions/log-message.definition';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
@@ -85,7 +85,7 @@ describe('ConsumeRule', () => {
 
     describe('when consumable has skill requirement', () => {
       describe('when skill check fails', () => {
-        it('should not heal player', () => {
+        it('should not recover HP | Energy', () => {
           when(
             mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
@@ -116,7 +116,7 @@ describe('ConsumeRule', () => {
       });
 
       describe('when skill check passes', () => {
-        it('should heal player', () => {
+        it('should recover HP | Energy', () => {
           when(
             mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
@@ -141,6 +141,7 @@ describe('ConsumeRule', () => {
               'SUCCESS',
               deepEqual({
                 effect: new EffectReceivedDefinition('REMEDY', 5),
+                energyGained: 0,
               })
             )
           ).thenReturn(logHeal5);
@@ -191,7 +192,7 @@ describe('ConsumeRule', () => {
     });
 
     describe('when consumable has no skill requirement', () => {
-      it('should heal player', () => {
+      it('should recover HP | Energy', () => {
         when(
           mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
@@ -206,6 +207,7 @@ describe('ConsumeRule', () => {
             'NONE',
             deepEqual({
               effect: new EffectReceivedDefinition('REMEDY', 2),
+              energyGained: 1,
             })
           )
         ).thenReturn(logHeal2);
@@ -228,7 +230,7 @@ const logAnalgesic1 = createConsumedLogMessage(
   consumableAnalgesic.identity.label
 );
 
-const logHeal2 = createHealedMessage(2, consumableAnalgesic.effect);
+const logHeal2 = createEffectRestoredHPMessage(consumableAnalgesic.effect, 2);
 
 const logAnalgesic2 = createFreeLogMessage(playerInfo.name, logHeal2);
 
@@ -241,7 +243,7 @@ const logFirstAidSuccess = createCheckLogMessage(
   'SUCCESS'
 );
 
-const logHeal5 = createHealedMessage(5, consumableFirstAid.effect);
+const logHeal5 = createEffectRestoredHPMessage(consumableFirstAid.effect, 5);
 
 const logFirstAid3 = createFreeLogMessage(playerInfo.name, logHeal5);
 

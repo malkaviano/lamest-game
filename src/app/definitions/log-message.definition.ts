@@ -14,22 +14,25 @@ export class LogMessageDefinition {
   }
 }
 
-export const createHealedMessage = (
-  heal: number,
-  healType: EffectTypeLiteral
-) => `received ${healType} cure, healed ${heal} hp`;
+export const createEffectRestoredHPMessage = (
+  effectType: EffectTypeLiteral,
+  heal: number
+) => `received ${effectType} effect, healed ${heal} hp`;
 
-export const createDamagedMessage = (
+export const createEnergizedMessage = (energy: number) =>
+  `restored ${energy} energy`;
+
+export const createEffectDamagedMessage = (
   damage: number,
-  damageType: EffectTypeLiteral
-) => `received ${damage} ${damageType} damage`;
+  effectType: EffectTypeLiteral
+) => `received ${damage} ${effectType} damage`;
 
 export const createHPDidNotChangeMessage = () => `HP did not change`;
 
 export const createDestroyedByDamageMessage = (
   damage: number,
   damageType: EffectTypeLiteral
-) => `${createDamagedMessage(damage, damageType)} and was destroyed`;
+) => `${createEffectDamagedMessage(damage, damageType)} and was destroyed`;
 
 export const createActorIsDeadMessage = (actor: string) =>
   new LogMessageDefinition('DIED', actor, 'is dead');

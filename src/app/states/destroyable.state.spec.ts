@@ -1,5 +1,5 @@
 import {
-  createDamagedMessage,
+  createEffectDamagedMessage,
   createDestroyedByDamageMessage,
 } from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
@@ -58,6 +58,6 @@ const state = new DestroyableState(ArrayView.create([actionAttack]), lazy, 10);
 
 const state2 = new DestroyableState(ArrayView.create([actionAttack]), lazy, 4);
 
-const log6 = createDamagedMessage(6, 'KINETIC');
+const log6 = createEffectDamagedMessage(6, 'KINETIC');
 
 const log12 = createDestroyedByDamageMessage(12, 'KINETIC');
