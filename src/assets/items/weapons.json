@@ -13,7 +13,8 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT"
+      "usability": "PERMANENT",
+      "energyActivation": 0
     },
     {
       "name": "halberd",
@@ -27,7 +28,8 @@
       },
       "dodgeable": true,
       "usability": "PERMANENT",
-      "effect": "KINETIC"
+      "effect": "KINETIC",
+      "energyActivation": 0
     },
     {
       "name": "club",
@@ -40,7 +42,8 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT"
+      "usability": "PERMANENT",
+      "energyActivation": 0
     },
     {
       "name": "bambooSword",
@@ -53,7 +56,8 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT"
+      "usability": "PERMANENT",
+      "energyActivation": 0
     },
     {
       "name": "claw",
@@ -66,7 +70,8 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT"
+      "usability": "PERMANENT",
+      "energyActivation": 0
     },
     {
       "name": "molotov",
@@ -79,7 +84,8 @@
         "effect": "FIRE"
       },
       "dodgeable": false,
-      "usability": "DISPOSABLE"
+      "usability": "DISPOSABLE",
+      "energyActivation": 0
     },
     {
       "name": "g17",
@@ -92,7 +98,8 @@
         "effect": "KINETIC"
       },
       "dodgeable": false,
-      "usability": "PERMANENT"
+      "usability": "PERMANENT",
+      "energyActivation": 0
     }
   ]
 }

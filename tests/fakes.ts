@@ -39,7 +39,8 @@ export const simpleSword = new WeaponDefinition(
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice(), 2, 'KINETIC'),
   true,
-  'PERMANENT'
+  'PERMANENT',
+  0
 );
 
 export const greatSword = new WeaponDefinition(
@@ -47,7 +48,8 @@ export const greatSword = new WeaponDefinition(
   'Melee Weapon (Great)',
   new DamageDefinition(createDice(), 6, 'KINETIC'),
   true,
-  'PERMANENT'
+  'PERMANENT',
+  0
 );
 
 export const unDodgeableAxe = new WeaponDefinition(
@@ -55,7 +57,8 @@ export const unDodgeableAxe = new WeaponDefinition(
   'Melee Weapon (Simple)',
   new DamageDefinition(createDice(), 2, 'KINETIC'),
   false,
-  'PERMANENT'
+  'PERMANENT',
+  0
 );
 
 export const molotov = new WeaponDefinition(
@@ -63,7 +66,8 @@ export const molotov = new WeaponDefinition(
   'Ranged Weapon (Throw)',
   new DamageDefinition(createDice(), 2, 'FIRE'),
   false,
-  'DISPOSABLE'
+  'DISPOSABLE',
+  0
 );
 
 export const actionEquip = createActionableDefinition(

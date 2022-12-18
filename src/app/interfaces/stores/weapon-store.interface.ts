@@ -1,6 +1,5 @@
 import { Dice } from '../../definitions/dice.definition';
 import { EffectTypeLiteral } from '../../literals/effect-type.literal';
-
 import { WeaponUsabilityLiteral } from '../../literals/weapon-usability';
 
 export interface WeaponStoreInterface {
@@ -16,5 +15,6 @@ export interface WeaponStoreInterface {
     };
     readonly dodgeable: boolean;
     readonly usability: WeaponUsabilityLiteral;
+    readonly energyActivation: number;
   }[];
 }

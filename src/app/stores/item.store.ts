@@ -38,7 +38,8 @@ export class ItemStore {
             item.damage.effect
           ),
           item.dodgeable,
-          item.usability
+          item.usability,
+          item.energyActivation
         )
       );
     });

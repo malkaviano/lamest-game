@@ -157,6 +157,7 @@ export class ResourcesStore {
         },
         dodgeable: w.dodgeable,
         usability: w.usability as WeaponUsabilityLiteral,
+        energyActivation: w.energyActivation,
       };
     });
 

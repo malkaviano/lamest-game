@@ -10,7 +10,8 @@ export class WeaponDefinition extends SkillItemDefinition {
     skillName: string,
     public readonly damage: DamageDefinition,
     public readonly dodgeable: boolean,
-    public readonly usability: WeaponUsabilityLiteral
+    public readonly usability: WeaponUsabilityLiteral,
+    public readonly energyActivation: number
   ) {
     super('WEAPON', identity, skillName);
   }
@@ -21,5 +22,6 @@ export const unarmedWeapon = new WeaponDefinition(
   'Brawl',
   new DamageDefinition(createDice({ D4: 1 }), 0, 'KINETIC'),
   true,
-  'PERMANENT'
+  'PERMANENT',
+  0
 );
