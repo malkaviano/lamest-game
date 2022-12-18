@@ -21,7 +21,7 @@ import { SkillRule } from '../src/app/rules/skill.rule';
 import { UnEquipRule } from '../src/app/rules/unequip.rule';
 import { UseRule } from '../src/app/rules/use.rule';
 import { CharacterService } from '../src/app/services/character.service';
-import { GameLoopService } from '../src/app/services/game-loop.service';
+import { GameRoundService } from '../src/app/services/game-round.service';
 import { GeneratorService } from '../src/app/services/generator.service';
 import { InventoryService } from '../src/app/services/inventory.service';
 import { LoggingService } from '../src/app/services/logging.service';
@@ -80,7 +80,7 @@ export const mockedNarrativeService = mock(NarrativeService);
 
 export const mockedItemStore = mock(ItemStore);
 
-export const mockedGameLoopService = mock(GameLoopService);
+export const mockedGameLoopService = mock(GameRoundService);
 
 export const mockedCharacterService = mock(CharacterService);
 

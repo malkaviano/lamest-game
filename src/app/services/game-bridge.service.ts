@@ -13,7 +13,7 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '../definitions/actionable.definition';
-import { GameLoopService } from './game-loop.service';
+import { GameRoundService } from './game-round.service';
 import { LoggingService } from './logging.service';
 import { PlayerEntity } from '../entities/player.entity';
 import { GameItemDefinition } from '../definitions/game-item.definition';
@@ -27,7 +27,7 @@ export class GameBridgeService {
   public readonly events: GameEventsDefinition;
 
   constructor(
-    private readonly gameLoopService: GameLoopService,
+    private readonly gameLoopService: GameRoundService,
     characterService: CharacterService,
     narrativeService: NarrativeService,
     inventoryService: InventoryService,

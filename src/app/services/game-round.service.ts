@@ -24,7 +24,7 @@ import { RuleResultInterface } from '../interfaces/rule-result.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class GameLoopService {
+export class GameRoundService {
   private readonly dispatcher: {
     [key: string]: RuleInterface;
   };

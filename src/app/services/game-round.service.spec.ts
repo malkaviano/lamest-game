@@ -10,7 +10,7 @@ import {
 } from '../definitions/log-message.definition';
 import { RulesHelper } from '../helpers/rules.helper';
 import { CharacterService } from './character.service';
-import { GameLoopService } from './game-loop.service';
+import { GameRoundService } from './game-round.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
@@ -38,8 +38,8 @@ import {
 } from '../../../tests/mocks';
 import { ArrayView } from '../views/array.view';
 
-describe('GameLoopService', () => {
-  let service: GameLoopService;
+describe('GameRoundService', () => {
+  let service: GameRoundService;
 
   const actor = instance(mockedActorEntity);
 
@@ -87,7 +87,7 @@ describe('GameLoopService', () => {
       of(instance(mockedSceneEntity))
     );
 
-    service = TestBed.inject(GameLoopService);
+    service = TestBed.inject(GameRoundService);
   });
 
   it('should be created', () => {

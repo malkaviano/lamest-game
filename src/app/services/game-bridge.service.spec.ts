@@ -8,7 +8,7 @@ import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
 import { GameBridgeService } from './game-bridge.service';
 import { InventoryService } from './inventory.service';
-import { GameLoopService } from './game-loop.service';
+import { GameRoundService } from './game-round.service';
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
@@ -47,7 +47,7 @@ describe('GameBridgeService', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: GameLoopService,
+          provide: GameRoundService,
           useValue: instance(mockedGameLoopService),
         },
         {
