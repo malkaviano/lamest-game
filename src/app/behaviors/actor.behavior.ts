@@ -2,7 +2,8 @@ import { CharacteristicSetDefinition } from '../definitions/characteristic-set.d
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 import { EffectEvent } from '../events/effect.event';
-import { HitPointsEvent } from '../events/hitpoints.event';
+import { EnergyPointsEvent } from '../events/energy-points.event';
+import { HitPointsEvent } from '../events/hit-points.event';
 import { GameSettingsInterface } from '../interfaces/game-settings.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
@@ -11,11 +12,11 @@ import { SkillStore } from '../stores/skill.store';
 export class ActorBehavior {
   private readonly maximumHP: number;
 
-  private readonly maximumPP: number;
+  private readonly maximumEP: number;
 
   private currentHP: number;
 
-  private currentPP: number;
+  private currentEP: number;
 
   private constructor(
     private readonly mCharacteristics: CharacteristicSetDefinition,
@@ -27,11 +28,11 @@ export class ActorBehavior {
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
     );
 
-    this.maximumPP = this.characteristics.ESN.value;
+    this.maximumEP = this.characteristics.ESN.value;
 
     this.currentHP = this.maximumHP;
 
-    this.currentPP = this.maximumPP;
+    this.currentEP = this.maximumEP;
   }
 
   public get characteristics(): CharacteristicSetDefinition {
@@ -41,7 +42,7 @@ export class ActorBehavior {
   public get derivedAttributes(): DerivedAttributeSetDefinition {
     return {
       HP: new DerivedAttributeDefinition('HP', this.currentHP),
-      EP: new DerivedAttributeDefinition('EP', this.currentPP),
+      EP: new DerivedAttributeDefinition('EP', this.currentEP),
       MOV: new DerivedAttributeDefinition('MOV', 10),
     };
   }
@@ -107,6 +108,16 @@ export class ActorBehavior {
     }
 
     return this.modifyHealth(Math.trunc(value));
+  }
+
+  public energyChange(energy: number): EnergyPointsEvent {
+    const previousEP = this.currentEP;
+
+    this.currentEP += energy;
+
+    this.currentEP = this.clamp(this.currentEP, 0, this.maximumEP);
+
+    return new EnergyPointsEvent(previousEP, this.currentEP);
   }
 
   public static create(

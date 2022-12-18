@@ -14,5 +14,5 @@ export interface ActionReactiveInterface {
     selected: ActionableDefinition,
     result: ResultLiteral,
     values: ReactionValuesInterface
-  ): string | undefined;
+  ): string | null;
 }

@@ -1,11 +1,14 @@
 import { take } from 'rxjs';
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { HitPointsEvent } from '../events/hitpoints.event';
+import { HitPointsEvent } from '../events/hit-points.event';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import {
   createEffectDamagedMessage,
   createEffectRestoredHPMessage,
+  createEnergizedMessage,
+  createEnergyDidNotChangeMessage,
+  createEnergyDrainedMessage,
   createHPDidNotChangeMessage,
 } from '../definitions/log-message.definition';
 import { ResultLiteral } from '../literals/result.literal';
@@ -35,6 +38,7 @@ import {
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
+import { EnergyPointsEvent } from '../events/energy-points.event';
 
 describe('ActorEntity', () => {
   beforeEach(() => {
@@ -132,7 +136,7 @@ describe('ActorEntity', () => {
                 deepEqual({ effect: fakeEffect('ACID', 1) })
               );
 
-              expect(log).not.toBeDefined();
+              expect(log).toBeNull();
             });
           });
         });
@@ -162,49 +166,141 @@ describe('ActorEntity', () => {
     });
 
     describe('when consume', () => {
-      ['SUCCESS', 'NONE'].forEach((result) => {
-        describe(`heal was ${result}`, () => {
-          it('return heal received', () => {
-            when(
-              mockedActorBehavior.effectReceived(
-                deepEqual(fakeEffect('REMEDY', 10))
-              )
-            ).thenReturn(new HitPointsEvent(4, 9));
+      [
+        {
+          result: 'SUCCESS',
+          effect: fakeEffect('REMEDY', 10),
+          mockedEffect: fakeEffect('REMEDY', 10),
+          resultHpEvent: new HitPointsEvent(4, 9),
+          energy: 0,
+          resultEpEvent: new EnergyPointsEvent(6, 6),
+          resultLog: `${createEffectRestoredHPMessage('REMEDY', 5)}`,
+          hpEventEmitted: new HitPointsEvent(4, 9),
+          epEventEmitted: undefined,
+        },
+        {
+          result: 'NONE',
+          effect: fakeEffect('REMEDY', 10),
+          mockedEffect: fakeEffect('REMEDY', 10),
+          resultHpEvent: new HitPointsEvent(4, 9),
+          energy: 4,
+          resultEpEvent: new EnergyPointsEvent(2, 6),
+          resultLog: `${createEffectRestoredHPMessage(
+            'REMEDY',
+            5
+          )} and ${createEnergizedMessage(4)}`,
+          hpEventEmitted: new HitPointsEvent(4, 9),
+          epEventEmitted: new EnergyPointsEvent(2, 6),
+        },
+        {
+          result: 'NONE',
+          effect: fakeEffect('REMEDY', 10),
+          mockedEffect: fakeEffect('REMEDY', 10),
+          resultHpEvent: new HitPointsEvent(9, 9),
+          energy: 4,
+          resultEpEvent: new EnergyPointsEvent(6, 6),
+          resultLog: `${createHPDidNotChangeMessage()} and ${createEnergyDidNotChangeMessage()}`,
+          hpEventEmitted: undefined,
+          epEventEmitted: undefined,
+        },
+        {
+          result: 'SUCCESS',
+          effect: undefined,
+          mockedEffect: fakeEffect('REMEDY', 10),
+          resultHpEvent: new HitPointsEvent(9, 9),
+          energy: -4,
+          resultEpEvent: new EnergyPointsEvent(6, 2),
+          resultLog: `${createEnergyDrainedMessage(4)}`,
+          hpEventEmitted: undefined,
+          epEventEmitted: new EnergyPointsEvent(6, 2),
+        },
+      ].forEach(
+        ({
+          result,
+          effect,
+          mockedEffect,
+          resultHpEvent,
+          energy,
+          resultEpEvent,
+          resultLog,
+          hpEventEmitted,
+          epEventEmitted,
+        }) => {
+          describe(`action was ${result}`, () => {
+            it('return result logs', () => {
+              when(
+                mockedActorBehavior.effectReceived(deepEqual(mockedEffect))
+              ).thenReturn(resultHpEvent);
 
-            const log = fakeActor().reactTo(
-              actionConsume,
-              result as ResultLiteral,
-              { effect: fakeEffect('REMEDY', 10) }
+              when(mockedActorBehavior.energyChange(energy)).thenReturn(
+                resultEpEvent
+              );
+
+              const log = fakeActor().reactTo(
+                actionConsume,
+                result as ResultLiteral,
+                { effect, energy }
+              );
+
+              expect(log).toEqual(resultLog);
+            });
+          });
+
+          it('should emit an HP event', (done) => {
+            let hpResult: HitPointsEvent | undefined;
+
+            when(
+              mockedActorBehavior.effectReceived(deepEqual(mockedEffect))
+            ).thenReturn(resultHpEvent);
+
+            when(mockedActorBehavior.energyChange(energy)).thenReturn(
+              resultEpEvent
             );
 
-            expect(log).toEqual(logHealed);
-          });
-        });
+            const char = fakeActor();
 
-        it('should emit an event', (done) => {
-          let hpResult: HitPointsEvent | undefined;
+            char.hpChanged$.pipe(take(10)).subscribe((event) => {
+              hpResult = event;
+            });
 
-          when(
-            mockedActorBehavior.effectReceived(
-              deepEqual(fakeEffect('REMEDY', 5))
-            )
-          ).thenReturn(new HitPointsEvent(6, 9));
+            char.reactTo(actionConsume, result as ResultLiteral, {
+              effect,
+              energy,
+            });
 
-          const char = fakeActor();
+            done();
 
-          char.hpChanged$.pipe(take(10)).subscribe((event) => {
-            hpResult = event;
+            expect(hpResult).toEqual(hpEventEmitted);
           });
 
-          char.reactTo(actionConsume, result as ResultLiteral, {
-            effect: fakeEffect('REMEDY', 5),
+          it('should emit an EP event', (done) => {
+            let epResult: EnergyPointsEvent | undefined;
+
+            when(
+              mockedActorBehavior.effectReceived(deepEqual(mockedEffect))
+            ).thenReturn(resultHpEvent);
+
+            when(mockedActorBehavior.energyChange(energy)).thenReturn(
+              resultEpEvent
+            );
+
+            const char = fakeActor();
+
+            char.epChanged$.pipe(take(10)).subscribe((event) => {
+              epResult = event;
+            });
+
+            char.reactTo(actionConsume, result as ResultLiteral, {
+              effect,
+              energy,
+            });
+
+            done();
+
+            expect(epResult).toEqual(epEventEmitted);
           });
-
-          done();
-
-          expect(hpResult).toEqual(new HitPointsEvent(6, 9));
-        });
-      });
+        }
+      );
 
       ['IMPOSSIBLE', 'FAILURE'].forEach((result) => {
         describe(`heal was ${result}`, () => {
@@ -215,7 +311,7 @@ describe('ActorEntity', () => {
               deepEqual({ effect: fakeEffect('REMEDY', 1) })
             );
 
-            expect(log).not.toBeDefined();
+            expect(log).toBeNull();
           });
         });
       });
@@ -316,8 +412,6 @@ const fakeActor = () =>
     instance(mockedEquipmentBehavior),
     emptyState
   );
-
-const logHealed = createEffectRestoredHPMessage('REMEDY', 5);
 
 const equipActorScenario = (
   character: ActorEntity,

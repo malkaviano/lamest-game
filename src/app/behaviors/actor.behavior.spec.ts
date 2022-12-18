@@ -1,6 +1,6 @@
 import { instance } from 'ts-mockito';
 
-import { HitPointsEvent } from '../events/hitpoints.event';
+import { HitPointsEvent } from '../events/hit-points.event';
 import { ActorBehavior } from './actor.behavior';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 
@@ -12,6 +12,7 @@ import {
   gameSettings,
 } from '../../../tests/fakes';
 import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
+import { EnergyPointsEvent } from '../events/energy-points.event';
 
 const fakeCharacteristicsAgi = (agi: number) => {
   return {
@@ -185,6 +186,30 @@ describe('ActorBehavior', () => {
     ].forEach(({ characteristics, expected }) => {
       it(`return ${expected}`, () => {
         expect(fakeBehavior(characteristics).dodgesPerRound).toEqual(expected);
+      });
+    });
+  });
+
+  describe('energyChange', () => {
+    describe('when energy is negative', () => {
+      it('return EnergyPointsEvent previous 13 current 0', () => {
+        const b = fakeBehavior();
+
+        const result = b.energyChange(-14);
+
+        expect(result).toEqual(new EnergyPointsEvent(13, 0));
+      });
+    });
+
+    describe('when energy is positive', () => {
+      it('return EnergyPointsEvent previous 0 current 13', () => {
+        const b = fakeBehavior();
+
+        b.energyChange(-14);
+
+        const result = b.energyChange(20);
+
+        expect(result).toEqual(new EnergyPointsEvent(0, 13));
       });
     });
   });

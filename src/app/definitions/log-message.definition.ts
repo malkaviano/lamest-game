@@ -19,9 +19,6 @@ export const createEffectRestoredHPMessage = (
   heal: number
 ) => `received ${effectType} effect, healed ${heal} hp`;
 
-export const createEnergizedMessage = (energy: number) =>
-  `restored ${energy} energy`;
-
 export const createEffectDamagedMessage = (
   damage: number,
   effectType: EffectTypeLiteral
@@ -140,3 +137,11 @@ export const createItemInspectedLogs = (actor: string, item: string) =>
 
 export const createOutOfDodgesLogMessage = (target: string) =>
   new LogMessageDefinition('ATTACKED', target, `was out of dodges`);
+
+export const createEnergizedMessage = (energy: number) =>
+  `restored ${energy} energy`;
+
+export const createEnergyDrainedMessage = (energy: number) =>
+  `lost ${energy} energy`;
+
+export const createEnergyDidNotChangeMessage = () => `EP did not change`;

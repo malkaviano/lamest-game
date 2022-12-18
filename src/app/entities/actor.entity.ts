@@ -12,11 +12,16 @@ import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-
 import {
   createEffectDamagedMessage,
   createEffectRestoredHPMessage,
+  createEnergizedMessage,
+  createEnergyDidNotChangeMessage,
+  createEnergyDrainedMessage,
   createHPDidNotChangeMessage,
 } from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
-import { HitPointsEvent } from '../events/hitpoints.event';
+import { EffectEvent } from '../events/effect.event';
+import { EnergyPointsEvent } from '../events/energy-points.event';
+import { HitPointsEvent } from '../events/hit-points.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
@@ -33,9 +38,13 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   private readonly weaponEquippedChanged: Subject<WeaponDefinition>;
 
+  private readonly epChanged: Subject<EnergyPointsEvent>;
+
   public readonly hpChanged$: Observable<HitPointsEvent>;
 
   public readonly weaponEquippedChanged$: Observable<WeaponDefinition>;
+
+  public readonly epChanged$: Observable<EnergyPointsEvent>;
 
   constructor(
     identity: ActorIdentityDefinition,
@@ -60,6 +69,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.weaponEquippedChanged = new Subject();
 
     this.weaponEquippedChanged$ = this.weaponEquippedChanged.asObservable();
+
+    this.epChanged = new Subject();
+
+    this.epChanged$ = this.epChanged.asObservable();
   }
 
   public get dodgesPerRound(): number {
@@ -130,10 +143,11 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     action: ActionableDefinition,
     result: ResultLiteral,
     values: ReactionValuesInterface
-  ): string | undefined {
+  ): string | null {
     const { actionable } = action;
 
-    let resultLog: string | undefined;
+    let resultHPLog: string | null = null;
+    let resultEPLog: string | null = null;
 
     if (this.situation === 'ALIVE') {
       if (
@@ -141,30 +155,72 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
         ((actionable === 'AFFECT' && result === 'SUCCESS') ||
           (actionable === 'CONSUME' && ['SUCCESS', 'NONE'].includes(result)))
       ) {
-        const result = this.actorBehavior.effectReceived(values.effect);
+        resultHPLog = this.effect(values.effect);
+      }
 
-        if (result.effective) {
-          this.hpChanged.next(result);
-        }
-
-        if (result.current > result.previous) {
-          resultLog = createEffectRestoredHPMessage(
-            values.effect.effectType,
-            result.effective
-          );
-        } else if (result.current < result.previous) {
-          resultLog = createEffectDamagedMessage(
-            result.effective,
-            values.effect.effectType
-          );
-        } else {
-          resultLog = createHPDidNotChangeMessage();
-        }
+      if (
+        values.energy &&
+        actionable === 'CONSUME' &&
+        ['SUCCESS', 'NONE'].includes(result)
+      ) {
+        resultEPLog = this.energy(values.energy);
       }
     }
 
     if (this.situation === 'DEAD') {
       this.publish(this.currentState.actions, this.killedState.actions);
+    }
+
+    const logs = [resultHPLog, resultEPLog].filter((log) => log);
+
+    if (logs.length) {
+      return logs.join(' and ');
+    }
+
+    return null;
+  }
+
+  private effect(effect: EffectEvent): string | null {
+    const result = this.actorBehavior.effectReceived(effect);
+
+    let resultLog: string | null;
+
+    if (result.effective) {
+      this.hpChanged.next(result);
+    }
+
+    if (result.current > result.previous) {
+      resultLog = createEffectRestoredHPMessage(
+        effect.effectType,
+        result.effective
+      );
+    } else if (result.current < result.previous) {
+      resultLog = createEffectDamagedMessage(
+        result.effective,
+        effect.effectType
+      );
+    } else {
+      resultLog = createHPDidNotChangeMessage();
+    }
+
+    return resultLog;
+  }
+
+  private energy(energy: number): string | null {
+    const result = this.actorBehavior.energyChange(energy);
+
+    let resultLog: string | null;
+
+    if (result.effective) {
+      this.epChanged.next(result);
+    }
+
+    if (result.current > result.previous) {
+      resultLog = createEnergizedMessage(result.effective);
+    } else if (result.current < result.previous) {
+      resultLog = createEnergyDrainedMessage(result.effective);
+    } else {
+      resultLog = createEnergyDidNotChangeMessage();
     }
 
     return resultLog;

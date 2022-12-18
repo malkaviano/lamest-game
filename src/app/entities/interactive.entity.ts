@@ -41,7 +41,7 @@ export class InteractiveEntity implements ActionReactiveInterface {
     action: ActionableDefinition,
     result: ResultLiteral,
     values: ReactionValuesInterface
-  ): string | undefined {
+  ): string | null {
     const oldActions = this.currentState.actions;
 
     const { state, log } = this.currentState.onResult(action, result, values);
@@ -52,7 +52,7 @@ export class InteractiveEntity implements ActionReactiveInterface {
 
     this.publish(oldActions, currentActions);
 
-    return log;
+    return log ?? null;
   }
 
   protected publish(

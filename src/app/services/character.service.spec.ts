@@ -6,7 +6,7 @@ import { instance, when } from 'ts-mockito';
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
-import { HitPointsEvent } from '../events/hitpoints.event';
+import { HitPointsEvent } from '../events/hit-points.event';
 
 import { simpleSword } from '../../../tests/fakes';
 import {
