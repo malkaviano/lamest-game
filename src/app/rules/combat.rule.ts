@@ -62,7 +62,7 @@ export class CombatRule implements RuleInterface {
     } = actor.weaponEquipped;
 
     if (actor.derivedAttributes.EP.value >= energyActivation) {
-      this.activate(energyActivation, actor, identity.label, logs);
+      this.activateItem(energyActivation, actor, identity.label, logs);
 
       const targetWasHit = this.checkSkill(
         actor,
@@ -73,11 +73,11 @@ export class CombatRule implements RuleInterface {
       );
 
       if (usability === 'DISPOSABLE') {
-        this.disposeWeapon(actor, identity.label, logs);
+        this.disposeItem(actor, identity.label, logs);
       }
 
       if (targetWasHit) {
-        dodged = this.checkDodge(target, dodgeable, extras, logs);
+        dodged = this.tryDodge(target, dodgeable, extras, logs);
 
         if (!dodged) {
           this.applyDamage(target, action.actionableDefinition, damage, logs);
@@ -90,7 +90,7 @@ export class CombatRule implements RuleInterface {
     return { logs, dodged };
   }
 
-  private disposeWeapon(
+  private disposeItem(
     actor: ActorInterface,
     label: string,
     logs: LogMessageDefinition[]
@@ -100,7 +100,7 @@ export class CombatRule implements RuleInterface {
     logs.push(createLostLogMessage(actor.name, label));
   }
 
-  private activate(
+  private activateItem(
     energyActivation: number,
     actor: ActorInterface,
     label: string,
@@ -148,7 +148,7 @@ export class CombatRule implements RuleInterface {
     return targetWasHit;
   }
 
-  private checkDodge(
+  private tryDodge(
     target: ActionReactiveInterface,
     dodgeable: boolean,
     extras: RuleExtrasInterface,
@@ -160,7 +160,7 @@ export class CombatRule implements RuleInterface {
 
     if (targetActor) {
       if (dodgeable) {
-        dodged = this.checkIfDodged(
+        dodged = this.checkDodged(
           targetActor,
           extras.targetDodgesPerformed ?? 0,
           logs
@@ -173,7 +173,7 @@ export class CombatRule implements RuleInterface {
     return dodged;
   }
 
-  private checkIfDodged(
+  private checkDodged(
     targetActor: ActorInterface,
     dodgesPerformed: number,
     logs: LogMessageDefinition[]
