@@ -1,12 +1,23 @@
 .card-box {
   min-width: 100px;
   max-width: 300px;
-  display: inline-block;
   margin: 5px 5px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .action {
   margin-bottom: 5px;
   margin-right: 5px;
   display: inline-block;
+}
+
+.action-button {
+  min-width: 100px;
+  max-width: 200px;
+  min-height: 40px;
+  height: auto;
 }

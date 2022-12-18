@@ -6,6 +6,7 @@
       <ng-template ngFor let-action [ngForOf]="actions.items">
         <div class="action">
           <button
+            class="action-button"
             mat-raised-button
             color="primary"
             (click)="onActionSelected(action)"
