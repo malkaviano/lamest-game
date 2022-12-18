@@ -1,3 +1,3 @@
 import { PreviousCurrentEvent } from './previous-current.event';
 
-export class HitPointsEvent extends PreviousCurrentEvent {}
+export class EnergyEvent extends PreviousCurrentEvent {}

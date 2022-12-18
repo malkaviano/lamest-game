@@ -74,7 +74,7 @@ export class ConsumeRule implements RuleInterface {
 
       const log = actor.reactTo(actionableDefinition, rollDefinition.result, {
         effect: new EffectEvent(consumable.effect, hp),
-        energyGained: energy,
+        energyGain: energy,
       });
 
       if (log) {

@@ -4,5 +4,5 @@ import { GameItemDefinition } from '../definitions/game-item.definition';
 export interface ReactionValuesInterface {
   readonly item?: GameItemDefinition;
   readonly effect?: EffectEvent;
-  readonly energyGained?: number;
+  readonly energyGain?: number;
 }
