@@ -48,7 +48,8 @@ export class ItemStore {
         item.name,
         new ConsumableDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
-          item.amount,
+          item.hp,
+          item.energy,
           item.effect,
           item.skillName
         )

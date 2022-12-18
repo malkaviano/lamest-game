@@ -54,10 +54,10 @@
       "label": "Halberd"
     },
     {
-      "key": "bubbleGum",
-      "name": "bubbleGum",
+      "key": "analgesic",
+      "name": "analgesic",
       "actionable": "PICK",
-      "label": "Bubble Gum"
+      "label": "Analgesic"
     },
     {
       "key": "molotov",

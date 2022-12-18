@@ -5,7 +5,8 @@ export interface ConsumableStoreInterface {
     readonly name: string;
     readonly label: string;
     readonly description: string;
-    readonly amount: number;
+    readonly hp: number;
+    readonly energy: number;
     readonly effect: EffectTypeLiteral;
     readonly skillName?: string;
   }[];

@@ -6,7 +6,7 @@ import { ArrayView } from '../views/array.view';
 import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 
-import { actionConsume, actionPickBubbleGum } from '../../../tests/fakes';
+import { actionConsume, actionPickAnalgesic } from '../../../tests/fakes';
 import {
   mockedActionableState,
   mockedActionableState2,
@@ -22,7 +22,7 @@ describe('InteractiveEntity', () => {
     );
 
     when(mockedActionableState2.actions).thenReturn(
-      ArrayView.create([actionPickBubbleGum])
+      ArrayView.create([actionPickAnalgesic])
     );
   });
 
@@ -54,11 +54,11 @@ describe('InteractiveEntity', () => {
         result = event;
       });
 
-      entity.reactTo(actionPickBubbleGum, 'NONE', {});
+      entity.reactTo(actionPickAnalgesic, 'NONE', {});
 
       done();
 
-      expect(result).toEqual(ArrayView.create([actionPickBubbleGum]));
+      expect(result).toEqual(ArrayView.create([actionPickAnalgesic]));
     });
   });
 
@@ -77,7 +77,7 @@ describe('InteractiveEntity', () => {
           result = event;
         });
 
-        entity.reactTo(actionPickBubbleGum, 'NONE', {});
+        entity.reactTo(actionPickAnalgesic, 'NONE', {});
 
         entity.reset();
 
@@ -101,13 +101,13 @@ describe('InteractiveEntity', () => {
           result = event;
         });
 
-        entity.reactTo(actionPickBubbleGum, 'NONE', {});
+        entity.reactTo(actionPickAnalgesic, 'NONE', {});
 
         entity.reset();
 
         done();
 
-        expect(result).toEqual(ArrayView.create([actionPickBubbleGum]));
+        expect(result).toEqual(ArrayView.create([actionPickAnalgesic]));
       });
     });
   });

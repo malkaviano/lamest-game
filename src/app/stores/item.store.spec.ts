@@ -37,7 +37,7 @@ describe('ItemStore', () => {
         identity: {
           name: 'knife',
           label: 'Hunting Knife',
-          description: 'gg',
+          description: 'Knife used for hunting',
         },
         dodgeable: true,
         skillName: 'Melee Weapon (Simple)',
@@ -46,11 +46,11 @@ describe('ItemStore', () => {
           fixed: 1,
         },
       },
-      bubbleGum: {
+      analgesic: {
         identity: {
-          name: 'bubbleGum',
-          label: 'Bubble Gum',
-          description: 'gg',
+          name: 'analgesic',
+          label: 'Analgesic',
+          description: 'recover 1 HP and 1 Energy',
         },
       },
     });
@@ -73,7 +73,7 @@ describe('ItemStore', () => {
 
     describe('when item did not have skill requirement', () => {
       it('return skill name', () => {
-        const result = service.itemSkill('bubbleGum');
+        const result = service.itemSkill('analgesic');
 
         expect(result).toBeNull();
       });

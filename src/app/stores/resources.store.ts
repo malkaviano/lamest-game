@@ -167,7 +167,8 @@ export class ResourcesStore {
         name: c.name,
         label: c.label,
         description: c.description,
-        amount: c.amount,
+        hp: c.hp,
+        energy: c.energy,
         effect: c.effect as EffectTypeLiteral,
         skillName: c.skillName,
       };

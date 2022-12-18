@@ -43,7 +43,7 @@ export class ConsumeRule implements RuleInterface {
         eventId
       );
 
-    const amount = consumable.amount;
+    const amount = consumable.hp;
 
     let rollDefinition: RollDefinition = new RollDefinition('NONE', 0);
 

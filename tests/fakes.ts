@@ -75,22 +75,16 @@ export const actionEquip = createActionableDefinition(
 export const actionUnEquip = (label: string) =>
   createActionableDefinition('UNEQUIP', 'unequip', label);
 
-export const bubbleGum = new ConsumableDefinition(
-  new ItemIdentityDefinition('bubbleGum', 'Bubble Gum', 'That is a bubble gum'),
-  1,
-  'REMEDY'
-);
-
 export const actionAttack = createActionableDefinition(
   'AFFECT',
   'affect',
   'Use Equipped'
 );
 
-export const actionPickBubbleGum = createActionableDefinition(
+export const actionPickAnalgesic = createActionableDefinition(
   'PICK',
-  'bubbleGum',
-  'Bubble Gum'
+  'analgesic',
+  'Analgesic'
 );
 
 export const actionAsk = createActionableDefinition(
@@ -218,7 +212,7 @@ export const fakeCharacterSheet = CharacterValuesView.create(
 );
 
 export const lootState = new DiscardState(
-  ArrayView.create([actionPickBubbleGum])
+  ArrayView.create([actionPickAnalgesic])
 );
 
 export const consumableFirstAid = new ConsumableDefinition(
@@ -228,6 +222,7 @@ export const consumableFirstAid = new ConsumableDefinition(
     'Very simple First Aid'
   ),
   5,
+  0,
   'REMEDY',
   'First Aid'
 );
@@ -235,6 +230,7 @@ export const consumableFirstAid = new ConsumableDefinition(
 export const consumableAnalgesic = new ConsumableDefinition(
   new ItemIdentityDefinition('analgesic', 'Analgesic', 'Relieves pain'),
   2,
+  1,
   'REMEDY'
 );
 

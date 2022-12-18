@@ -8,7 +8,6 @@ import { ArrayView } from '../views/array.view';
 import { InventoryService } from './inventory.service';
 
 import {
-  bubbleGum,
   consumableAnalgesic,
   greatSword,
   masterKey,
@@ -134,15 +133,19 @@ describe('InventoryService', () => {
       it('should push take InventoryEvent', (done) => {
         let result: InventoryEvent | undefined;
 
-        const expected = new InventoryEvent('TAKE', 'takeEvent', bubbleGum);
+        const expected = new InventoryEvent(
+          'TAKE',
+          'takeEvent',
+          consumableAnalgesic
+        );
 
         service.inventoryChanged$.pipe(take(10)).subscribe((event) => {
           result = event;
         });
 
-        service.store('takeEvent', bubbleGum);
+        service.store('takeEvent', consumableAnalgesic);
 
-        service.take('takeEvent', bubbleGum.identity.name);
+        service.take('takeEvent', consumableAnalgesic.identity.name);
 
         done();
 
