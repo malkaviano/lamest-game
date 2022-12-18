@@ -12,6 +12,7 @@ import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ProfessionStore } from '../stores/profession.store';
 import { ArrayView } from '../views/array.view';
 import { SkillStore } from '../stores/skill.store';
+import { SettingsStore } from '../stores/settings.store';
 
 import {
   mockedGeneratorService,
@@ -22,11 +23,10 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
+  actorSettings,
   fakeCharacteristics,
   fakeIdentity,
-  gameSettings,
 } from '../../../tests/fakes';
-import { SettingsStore } from '../stores/settings.store';
 
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
@@ -121,7 +121,7 @@ describe('RandomCharacterService', () => {
           fakeCharacteristics,
           distributedSkills,
           instance(mockedSkillStore),
-          gameSettings
+          actorSettings
         ),
         EquipmentBehavior.create()
       );

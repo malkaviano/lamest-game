@@ -4,7 +4,7 @@ import { DerivedAttributeDefinition } from '../definitions/derived-attribute.def
 import { EffectEvent } from '../events/effect.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';
 import { HitPointsEvent } from '../events/hit-points.event';
-import { GameSettingsInterface } from '../interfaces/game-settings.interface';
+import { ActorSettingsInterface } from '../interfaces/actor-settings.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { SkillStore } from '../stores/skill.store';
@@ -22,7 +22,7 @@ export class ActorBehavior {
     private readonly mCharacteristics: CharacteristicSetDefinition,
     private readonly mSkills: Map<string, number>,
     private readonly skillStore: SkillStore,
-    private readonly gameSettings: GameSettingsInterface
+    private readonly actorSettings: ActorSettingsInterface
   ) {
     this.maximumHP = Math.trunc(
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
@@ -66,7 +66,8 @@ export class ActorBehavior {
 
   public get dodgesPerRound(): number {
     const dodges = Math.trunc(
-      this.characteristics.AGI.value / this.gameSettings.oneDodgesEveryAgiAmount
+      this.characteristics.AGI.value /
+        this.actorSettings.oneDodgesEveryAgiAmount
     );
 
     return this.clamp(dodges, 1, Number.MAX_VALUE);
@@ -78,15 +79,13 @@ export class ActorBehavior {
     let value = 0;
 
     if (
-      !this.gameSettings.playerEffectDefenses.immunities.items.includes(
-        effectType
-      )
+      !this.actorSettings.effectDefenses.immunities.items.includes(effectType)
     ) {
       const isCure =
-        this.gameSettings.playerEffectDefenses.cures.items.includes(effectType);
+        this.actorSettings.effectDefenses.cures.items.includes(effectType);
 
       const isVulnerable =
-        this.gameSettings.playerEffectDefenses.vulnerabilities.items.includes(
+        this.actorSettings.effectDefenses.vulnerabilities.items.includes(
           effectType
         );
 
@@ -94,16 +93,14 @@ export class ActorBehavior {
         value += amount;
       } else {
         value -= isVulnerable
-          ? amount * this.gameSettings.vulnerabilityCoefficient
+          ? amount * this.actorSettings.vulnerabilityCoefficient
           : amount;
       }
 
       if (
-        this.gameSettings.playerEffectDefenses.resistances.items.includes(
-          effectType
-        )
+        this.actorSettings.effectDefenses.resistances.items.includes(effectType)
       ) {
-        value += value * this.gameSettings.resistanceCoefficient * -1;
+        value += value * this.actorSettings.resistanceCoefficient * -1;
       }
     }
 
@@ -124,9 +121,14 @@ export class ActorBehavior {
     characteristics: CharacteristicSetDefinition,
     skills: Map<string, number>,
     skillStore: SkillStore,
-    gameSettings: GameSettingsInterface
+    actorSettings: ActorSettingsInterface
   ): ActorBehavior {
-    return new ActorBehavior(characteristics, skills, skillStore, gameSettings);
+    return new ActorBehavior(
+      characteristics,
+      skills,
+      skillStore,
+      actorSettings
+    );
   }
 
   private modifyHealth(modified: number): HitPointsEvent {

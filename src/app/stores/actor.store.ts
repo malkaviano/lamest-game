@@ -9,7 +9,6 @@ import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
-import { SettingsStore } from './settings.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
 
@@ -24,8 +23,7 @@ export class ActorStore {
     stateStore: StatesStore,
     resourcesStore: ResourcesStore,
     itemStore: ItemStore,
-    skillStore: SkillStore,
-    settingsStore: SettingsStore
+    skillStore: SkillStore
   ) {
     this.store = new Map<string, ActorEntity>();
 
@@ -40,6 +38,7 @@ export class ActorStore {
         equippedWeapon,
         killedState,
         behaviorState,
+        actorSettings,
       }) => {
         const actor = new ActorEntity(
           new ActorIdentityDefinition(id, name, description),
@@ -49,7 +48,7 @@ export class ActorStore {
             characteristics,
             skills,
             skillStore,
-            settingsStore.settings
+            actorSettings
           ),
           EquipmentBehavior.create(),
           stateStore.states[killedState]

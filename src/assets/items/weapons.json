@@ -100,6 +100,20 @@
       "dodgeable": false,
       "usability": "PERMANENT",
       "energyActivation": 0
+    },
+    {
+      "name": "talisman",
+      "label": "Sacred Talisman",
+      "description": "Use your faith",
+      "skillName": "Knowledge (Religion)",
+      "damage": {
+        "dice": { "D6": 1 },
+        "fixed": 0,
+        "effect": "SACRED"
+      },
+      "dodgeable": false,
+      "usability": "PERMANENT",
+      "energyActivation": 2
     }
   ]
 }

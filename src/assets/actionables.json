@@ -88,6 +88,12 @@
       "name": "basicManual",
       "actionable": "PICK",
       "label": "Basic Manual"
+    },
+    {
+      "key": "talisman",
+      "name": "talisman",
+      "actionable": "PICK",
+      "label": "Sacred Talisman"
     }
   ]
 }

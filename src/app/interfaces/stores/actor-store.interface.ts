@@ -1,4 +1,5 @@
 import { CharacteristicSetDefinition } from '../../definitions/characteristic-set.definition';
+import { ActorSettingsInterface } from '../actor-settings.interface';
 
 export interface ActorStoreInterface {
   readonly actors: {
@@ -11,5 +12,6 @@ export interface ActorStoreInterface {
     readonly equippedWeapon: string;
     readonly killedState: string;
     readonly behaviorState: string;
+    readonly actorSettings: ActorSettingsInterface;
   }[];
 }

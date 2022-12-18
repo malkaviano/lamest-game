@@ -105,6 +105,10 @@
         {
           "name": "basicManual",
           "quantity": 1
+        },
+        {
+          "name": "talisman",
+          "quantity": 1
         }
       ]
     },

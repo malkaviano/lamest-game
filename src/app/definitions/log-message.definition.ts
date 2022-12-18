@@ -62,16 +62,11 @@ export const createUnEquippedLogMessage = (actor: string, equipment: string) =>
 export const createConsumedLogMessage = (actor: string, consumable: string) =>
   new LogMessageDefinition('CONSUMED', actor, `consumed ${consumable}`);
 
-export const createAttackedLogMessage = (
+export const createUsedItemLogMessage = (
   actor: string,
   target: string,
-  weapon: string
-) =>
-  new LogMessageDefinition(
-    'ATTACKED',
-    actor,
-    `attacked ${target} using ${weapon}`
-  );
+  item: string
+) => new LogMessageDefinition('ATTACKED', actor, `used ${item} on ${target}`);
 
 export const createFreeLogMessage = (actor: string, message: string) =>
   new LogMessageDefinition('FREE', actor, `${message}`);
@@ -145,3 +140,21 @@ export const createEnergyDrainedMessage = (energy: number) =>
   `lost ${energy} energy`;
 
 export const createEnergyDidNotChangeMessage = () => `EP did not change`;
+
+export const createNotEnoughEnergyLogMessage = (actor: string, item: string) =>
+  new LogMessageDefinition(
+    'ATTACKED',
+    actor,
+    `not enough energy to activate ${item}`
+  );
+
+export const createEnergySpentLogMessage = (
+  actor: string,
+  energySpent: string,
+  item: string
+) =>
+  new LogMessageDefinition(
+    'ATTACKED',
+    actor,
+    `${energySpent} to activate ${item}`
+  );

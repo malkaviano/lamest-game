@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import {
-  createAttackedLogMessage,
+  createUsedItemLogMessage,
   createCannotCheckLogMessage,
   createCheckLogMessage,
   createEffectDamagedMessage,
@@ -11,11 +11,15 @@ import {
   createLostLogMessage,
   createOutOfDodgesLogMessage,
   createUnDodgeableAttackLogMessage,
+  createNotEnoughEnergyLogMessage,
+  createEnergySpentLogMessage,
+  createEnergyDrainedMessage,
 } from '../definitions/log-message.definition';
 import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
 import { unarmedWeapon } from '../definitions/weapon.definition';
 import { EffectEvent } from '../events/effect.event';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import {
   mockedActorEntity,
@@ -33,10 +37,11 @@ import {
   interactiveInfo,
   molotov,
   playerInfo,
+  shadowDagger,
+  shadowSword,
   simpleSword,
   unDodgeableAxe,
 } from '../../../tests/fakes';
-import { ExtractorHelper } from '../helpers/extractor.helper';
 
 describe('CombatRule', () => {
   let service: CombatRule;
@@ -156,7 +161,7 @@ describe('CombatRule', () => {
 
             expect(result).toEqual({
               logs: [
-                createAttackedLogMessage(
+                createUsedItemLogMessage(
                   playerInfo.name,
                   name,
                   simpleSword.identity.label
@@ -190,7 +195,7 @@ describe('CombatRule', () => {
 
               expect(result).toEqual({
                 logs: [
-                  createAttackedLogMessage(
+                  createUsedItemLogMessage(
                     playerInfo.name,
                     name,
                     simpleSword.identity.label
@@ -225,7 +230,7 @@ describe('CombatRule', () => {
 
               expect(result).toEqual({
                 logs: [
-                  createAttackedLogMessage(
+                  createUsedItemLogMessage(
                     playerInfo.name,
                     name,
                     unDodgeableAxe.identity.label
@@ -261,7 +266,7 @@ describe('CombatRule', () => {
 
                 expect(result).toEqual({
                   logs: [
-                    createAttackedLogMessage(
+                    createUsedItemLogMessage(
                       playerInfo.name,
                       name,
                       simpleSword.identity.label
@@ -295,7 +300,7 @@ describe('CombatRule', () => {
 
                 expect(result).toEqual({
                   logs: [
-                    createAttackedLogMessage(
+                    createUsedItemLogMessage(
                       playerInfo.name,
                       name,
                       simpleSword.identity.label
@@ -313,7 +318,7 @@ describe('CombatRule', () => {
       });
     });
 
-    describe('disposable weapons', () => {
+    describe('when weapon was disposable', () => {
       it('should dispose weapon', () => {
         when(mockedPlayerEntity.weaponEquipped).thenReturn(molotov);
 
@@ -333,10 +338,6 @@ describe('CombatRule', () => {
       it('return logs', () => {
         when(mockedPlayerEntity.weaponEquipped).thenReturn(molotov);
 
-        when(mockedPlayerEntity.unEquip()).thenCall(() => {
-          when(mockedPlayerEntity.weaponEquipped).thenReturn(unarmedWeapon);
-        });
-
         const result = service.execute(
           instance(mockedPlayerEntity),
           eventAttackInteractive,
@@ -353,7 +354,7 @@ describe('CombatRule', () => {
       });
     });
 
-    describe('actor out of dodges', () => {
+    describe('when actor was out of dodges', () => {
       it('return actor is out of dodges', () => {
         const actor = instance(mockedActorEntity);
 
@@ -388,7 +389,7 @@ describe('CombatRule', () => {
 
         expect(result).toEqual({
           logs: [
-            createAttackedLogMessage(
+            createUsedItemLogMessage(
               actor.name,
               target.name,
               simpleSword.identity.label
@@ -401,6 +402,93 @@ describe('CombatRule', () => {
             ),
             createOutOfDodgesLogMessage(target.name),
             createFreeLogMessage(target.name, damageMessage2),
+          ],
+          dodged: false,
+        });
+      });
+    });
+
+    describe('when actor was out of energy', () => {
+      it('return log', () => {
+        when(mockedPlayerEntity.weaponEquipped).thenReturn(shadowSword);
+
+        const result = service.execute(
+          instance(mockedPlayerEntity),
+          eventAttackInteractive,
+          { target: instance(mockedActorEntity) }
+        );
+
+        expect(result).toEqual({
+          logs: [
+            createNotEnoughEnergyLogMessage(
+              playerInfo.name,
+              shadowSword.identity.label
+            ),
+          ],
+          dodged: false,
+        });
+      });
+    });
+
+    describe('when item requires energy to activate', () => {
+      it('return log', () => {
+        when(mockedPlayerEntity.weaponEquipped).thenReturn(shadowDagger);
+
+        when(
+          mockedRollService.actorSkillCheck(
+            instance(mockedPlayerEntity),
+            'Melee Weapon (Simple)'
+          )
+        ).thenReturn({ result: 'SUCCESS', roll: 10 });
+
+        when(
+          mockedRollService.actorSkillCheck(
+            instance(mockedActorEntity),
+            'Dodge'
+          )
+        ).thenReturn({ result: 'IMPOSSIBLE', roll: 0 });
+
+        when(
+          mockedPlayerEntity.reactTo(
+            service.activationAction,
+            'NONE',
+            deepEqual({
+              energy: -shadowDagger.energyActivation,
+            })
+          )
+        ).thenReturn(createEnergyDrainedMessage(shadowDagger.energyActivation));
+
+        when(
+          mockedActorEntity.reactTo(
+            deepEqual(eventAttackInteractive.actionableDefinition),
+            'SUCCESS',
+            deepEqual({
+              effect: new EffectEvent('PROFANE', 2),
+            })
+          )
+        ).thenReturn(damageMessage2);
+
+        const result = service.execute(
+          instance(mockedPlayerEntity),
+          eventAttackInteractive,
+          { target: instance(mockedActorEntity) }
+        );
+
+        expect(result).toEqual({
+          logs: [
+            createEnergySpentLogMessage(
+              playerInfo.name,
+              createEnergyDrainedMessage(shadowDagger.energyActivation),
+              shadowDagger.identity.label
+            ),
+            createUsedItemLogMessage(
+              playerInfo.name,
+              actorInfo.name,
+              shadowDagger.identity.label
+            ),
+            checkSuccessLog,
+            createCannotCheckLogMessage(actorInfo.name, 'Dodge'),
+            createFreeLogMessage(actorInfo.name, damageMessage2),
           ],
           dodged: false,
         });

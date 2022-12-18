@@ -220,6 +220,17 @@ export class ResourcesStore {
         equippedWeapon: a.equippedWeapon,
         killedState: a.killedState,
         behaviorState: a.behaviorState,
+        actorSettings: {
+          vulnerabilityCoefficient,
+          resistanceCoefficient,
+          effectDefenses: {
+            cures: ArrayView.create(a.cures),
+            immunities: ArrayView.create(a.immunities),
+            vulnerabilities: ArrayView.create(a.vulnerabilities),
+            resistances: ArrayView.create(a.resistances),
+          },
+          oneDodgesEveryAgiAmount,
+        },
       };
     });
 

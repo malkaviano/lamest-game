@@ -199,6 +199,8 @@ export const setupMocks = () => {
 
   when(mockedActorEntity.skills).thenReturn(fakeSkills);
 
+  when(mockedActorEntity.derivedAttributes).thenReturn(fakeDerivedAttributes);
+
   when(mockedActorEntity.classification).thenReturn('ACTOR');
 
   when(mockedActorEntity.situation).thenReturn('ALIVE');
@@ -219,13 +221,11 @@ export const setupMocks = () => {
 
   when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
-  when(mockedActorBehavior.characteristics).thenReturn(fakeCharacteristics);
+  when(mockedPlayerEntity.characteristics).thenReturn(fakeCharacteristics);
 
-  when(mockedActorBehavior.derivedAttributes).thenReturn(fakeDerivedAttributes);
+  when(mockedPlayerEntity.derivedAttributes).thenReturn(fakeDerivedAttributes);
 
-  when(mockedActorBehavior.skills).thenReturn(fakeSkills);
-
-  when(mockedActorBehavior.situation).thenReturn('ALIVE');
+  when(mockedPlayerEntity.skills).thenReturn(fakeSkills);
 
   const instanceActorEntity = instance(mockedActorEntity);
 
@@ -244,6 +244,8 @@ export const setupMocks = () => {
   when(mockedActorBehavior.skills).thenReturn(fakeSkills);
 
   when(mockedActorBehavior.derivedAttributes).thenReturn(fakeDerivedAttributes);
+
+  when(mockedActorBehavior.situation).thenReturn('ALIVE');
 
   when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
 

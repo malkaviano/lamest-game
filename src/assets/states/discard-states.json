@@ -10,7 +10,7 @@
     },
     {
       "id": "tableLoot",
-      "actionables": ["analgesic", "molotov", "basicManual"]
+      "actionables": ["analgesic", "molotov", "basicManual", "talisman"]
     },
     {
       "id": "lockedChestLoot",

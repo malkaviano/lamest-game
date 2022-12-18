@@ -27,13 +27,25 @@ export class RandomCharacterService {
     const identity = this.identity();
     const characteristics = this.characteristics();
 
+    const {
+      oneDodgesEveryAgiAmount,
+      playerEffectDefenses,
+      resistanceCoefficient,
+      vulnerabilityCoefficient,
+    } = this.settingsStore.settings;
+
     return new PlayerEntity(
       identity,
       ActorBehavior.create(
         characteristics,
         this.skills(identity.profession, characteristics.INT.value),
         this.skillStore,
-        this.settingsStore.settings
+        {
+          effectDefenses: playerEffectDefenses,
+          oneDodgesEveryAgiAmount,
+          resistanceCoefficient,
+          vulnerabilityCoefficient,
+        }
       ),
       EquipmentBehavior.create()
     );

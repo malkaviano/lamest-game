@@ -27,6 +27,7 @@ import { EffectEvent } from '../src/app/events/effect.event';
 import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/app/definitions/readable.definition';
 import { GameSettingsInterface } from '../src/app/interfaces/game-settings.interface';
+import { ActorSettingsInterface } from '../src/app/interfaces/actor-settings.interface';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
@@ -317,3 +318,33 @@ export const gameSettings: GameSettingsInterface = {
   intelligencePoints: 10,
   professionPoints: 300,
 };
+
+export const actorSettings: ActorSettingsInterface = {
+  effectDefenses: {
+    immunities: ArrayView.create<EffectTypeLiteral>(['ACID']),
+    cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
+    vulnerabilities: ArrayView.create<EffectTypeLiteral>(['PROFANE']),
+    resistances: ArrayView.create<EffectTypeLiteral>(['KINETIC', 'SACRED']),
+  },
+  resistanceCoefficient: 0.5,
+  vulnerabilityCoefficient: 1.5,
+  oneDodgesEveryAgiAmount: 8,
+};
+
+export const shadowSword = new WeaponDefinition(
+  new ItemIdentityDefinition('shadowSword', 'Shadow Sword', 'Unholy Sword'),
+  'Melee Weapon (Simple)',
+  new DamageDefinition(createDice(), 2, 'PROFANE'),
+  true,
+  'PERMANENT',
+  20
+);
+
+export const shadowDagger = new WeaponDefinition(
+  new ItemIdentityDefinition('shadowDagger', 'Shadow Dagger', 'Unholy Dagger'),
+  'Melee Weapon (Simple)',
+  new DamageDefinition(createDice(), 2, 'PROFANE'),
+  true,
+  'PERMANENT',
+  5
+);

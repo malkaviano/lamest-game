@@ -4,16 +4,21 @@ import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import {
   createFreeLogMessage,
-  createAttackedLogMessage,
+  createUsedItemLogMessage,
   LogMessageDefinition,
   createCheckLogMessage,
   createCannotCheckLogMessage,
   createUnDodgeableAttackLogMessage,
   createLostLogMessage,
   createOutOfDodgesLogMessage,
+  createNotEnoughEnergyLogMessage,
+  createEnergySpentLogMessage,
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
-import { ActionableDefinition } from '../definitions/actionable.definition';
+import {
+  ActionableDefinition,
+  createActionableDefinition,
+} from '../definitions/actionable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
@@ -26,10 +31,14 @@ import { ExtractorHelper } from '../helpers/extractor.helper';
   providedIn: 'root',
 })
 export class CombatRule implements RuleInterface {
+  public readonly activationAction: ActionableDefinition;
+
   constructor(
     private readonly rollRule: RollService,
     private readonly extractorHelper: ExtractorHelper
-  ) {}
+  ) {
+    this.activationAction = createActionableDefinition('CONSUME', '', '');
+  }
 
   public execute(
     actor: ActorInterface,
@@ -44,8 +53,79 @@ export class CombatRule implements RuleInterface {
 
     let dodged = false;
 
-    const { dodgeable, damage, skillName, identity, usability } =
-      actor.weaponEquipped;
+    const {
+      dodgeable,
+      damage,
+      skillName,
+      identity,
+      usability,
+      energyActivation,
+    } = actor.weaponEquipped;
+
+    if (actor.derivedAttributes.EP.value >= energyActivation) {
+      this.activate(energyActivation, actor, identity.label, logs);
+
+      const actionResult = this.tryAction(
+        actor,
+        skillName,
+        target,
+        identity.label,
+        dodgeable,
+        extras,
+        logs
+      );
+
+      targetHit = actionResult.targetHit;
+
+      dodged = actionResult.dodged;
+
+      if (usability === 'DISPOSABLE') {
+        actor.unEquip();
+
+        logs.push(createLostLogMessage(actor.name, identity.label));
+      }
+
+      if (targetHit) {
+        this.applyDamage(action.actionableDefinition, damage, target, logs);
+      }
+    } else {
+      logs.push(createNotEnoughEnergyLogMessage(actor.name, identity.label));
+    }
+
+    return { logs, dodged };
+  }
+
+  private activate(
+    energyActivation: number,
+    actor: ActorInterface,
+    label: string,
+    logs: LogMessageDefinition[]
+  ) {
+    if (energyActivation) {
+      const energySpentLog = actor.reactTo(this.activationAction, 'NONE', {
+        energy: -energyActivation,
+      });
+
+      if (energySpentLog) {
+        logs.push(
+          createEnergySpentLogMessage(actor.name, energySpentLog, label)
+        );
+      }
+    }
+  }
+
+  private tryAction(
+    actor: ActorInterface,
+    skillName: string,
+    target: ActionReactiveInterface,
+    weaponLabel: string,
+    dodgeable: boolean,
+    extras: RuleExtrasInterface,
+    logs: LogMessageDefinition[]
+  ): { targetHit: boolean; dodged: boolean } {
+    let targetHit = true;
+
+    let dodged = false;
 
     if (['ACTOR', 'PLAYER'].includes(target.classification)) {
       const targetActor = target as ActorInterface;
@@ -54,7 +134,7 @@ export class CombatRule implements RuleInterface {
         this.rollRule.actorSkillCheck(actor, skillName);
 
       logs.push(
-        createAttackedLogMessage(actor.name, targetActor.name, identity.label)
+        createUsedItemLogMessage(actor.name, targetActor.name, weaponLabel)
       );
 
       logs.push(
@@ -67,8 +147,8 @@ export class CombatRule implements RuleInterface {
         if (dodgeable) {
           dodged = this.checkIfDodged(
             targetActor,
-            logs,
-            extras.targetDodgesPerformed ?? 0
+            extras.targetDodgesPerformed ?? 0,
+            logs
           );
 
           targetHit = !dodged;
@@ -78,23 +158,13 @@ export class CombatRule implements RuleInterface {
       }
     }
 
-    if (usability === 'DISPOSABLE') {
-      actor.unEquip();
-
-      logs.push(createLostLogMessage(actor.name, identity.label));
-    }
-
-    if (targetHit) {
-      this.applyDamage(action.actionableDefinition, damage, target, logs);
-    }
-
-    return { logs, dodged };
+    return { targetHit, dodged };
   }
 
   private checkIfDodged(
     targetActor: ActorInterface,
-    logs: LogMessageDefinition[],
-    dodgesPerformed: number
+    dodgesPerformed: number,
+    logs: LogMessageDefinition[]
   ) {
     const maxDodges = targetActor.dodgesPerRound;
 
