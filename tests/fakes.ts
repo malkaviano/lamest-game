@@ -23,7 +23,7 @@ import { ActionableItemView } from '../src/app/views/actionable-item.view';
 import { GameItemDefinition } from '../src/app/definitions/game-item.definition';
 import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
 import { SkillDefinition } from '../src/app/definitions/skill.definition';
-import { EffectReceivedDefinition } from '../src/app/definitions/effect-received.definition';
+import { EffectEvent } from '../src/app/events/effect.event';
 import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/app/definitions/readable.definition';
 import { GameSettingsInterface } from '../src/app/interfaces/game-settings.interface';
@@ -281,7 +281,7 @@ export const actionableEvent = (action: ActionableDefinition, id: string) =>
   new ActionableEvent(action, id);
 
 export const fakeEffect = (effectType: EffectTypeLiteral, amount: number) =>
-  new EffectReceivedDefinition(effectType, amount);
+  new EffectEvent(effectType, amount);
 
 export const documentOpened = {
   title: 'Testing',

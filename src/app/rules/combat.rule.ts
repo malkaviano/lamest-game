@@ -18,7 +18,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { DamageDefinition } from '../definitions/damage.definition';
-import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
+import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
@@ -127,7 +127,7 @@ export class CombatRule implements RuleInterface {
     const damageAmount = this.rollRule.roll(damage.diceRoll) + damage.fixed;
 
     const log = target.reactTo(action, 'SUCCESS', {
-      effect: new EffectReceivedDefinition(damage.effectType, damageAmount),
+      effect: new EffectEvent(damage.effectType, damageAmount),
     });
 
     if (log) {

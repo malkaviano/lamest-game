@@ -15,7 +15,7 @@ import {
 import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
-import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
+import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
 @Injectable({
@@ -73,7 +73,7 @@ export class ConsumeRule implements RuleInterface {
       }
 
       const log = actor.reactTo(actionableDefinition, rollDefinition.result, {
-        effect: new EffectReceivedDefinition(consumable.effect, hp),
+        effect: new EffectEvent(consumable.effect, hp),
         energyGained: energy,
       });
 

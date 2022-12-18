@@ -1,7 +1,7 @@
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
-import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
+import { EffectEvent } from '../events/effect.event';
 import { HitPointsEvent } from '../events/hitpoints.event';
 import { GameSettingsInterface } from '../interfaces/game-settings.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -71,9 +71,7 @@ export class ActorBehavior {
     return this.clamp(dodges, 1, Number.MAX_VALUE);
   }
 
-  public effectReceived(
-    effectReceived: EffectReceivedDefinition
-  ): HitPointsEvent {
+  public effectReceived(effectReceived: EffectEvent): HitPointsEvent {
     const { effectType, amount } = effectReceived;
 
     let value = 0;

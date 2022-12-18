@@ -15,7 +15,7 @@ import {
 import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
 import { unarmedWeapon } from '../definitions/weapon.definition';
-import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
+import { EffectEvent } from '../events/effect.event';
 
 import {
   mockedActorEntity,
@@ -76,7 +76,7 @@ describe('CombatRule', () => {
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
-          effect: new EffectReceivedDefinition('KINETIC', 2),
+          effect: new EffectEvent('KINETIC', 2),
         })
       )
     ).thenReturn(damageMessage2);
@@ -86,7 +86,7 @@ describe('CombatRule', () => {
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
-          effect: new EffectReceivedDefinition('KINETIC', 2),
+          effect: new EffectEvent('KINETIC', 2),
         })
       )
     ).thenReturn(damageMessage2);
@@ -96,7 +96,7 @@ describe('CombatRule', () => {
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
-          effect: new EffectReceivedDefinition('FIRE', 2),
+          effect: new EffectEvent('FIRE', 2),
         })
       )
     ).thenReturn(damageMessage2);
@@ -106,7 +106,7 @@ describe('CombatRule', () => {
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
-          effect: new EffectReceivedDefinition('KINETIC', 2),
+          effect: new EffectEvent('KINETIC', 2),
         })
       )
     ).thenReturn(damageMessage2);
@@ -376,7 +376,7 @@ describe('CombatRule', () => {
             deepEqual(eventAttackPlayer.actionableDefinition),
             'SUCCESS',
             deepEqual({
-              effect: new EffectReceivedDefinition('KINETIC', 2),
+              effect: new EffectEvent('KINETIC', 2),
             })
           )
         ).thenReturn(damageMessage2);

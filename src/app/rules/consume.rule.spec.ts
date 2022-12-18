@@ -29,7 +29,7 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
-import { EffectReceivedDefinition } from '../definitions/effect-received.definition';
+import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 
@@ -140,7 +140,7 @@ describe('ConsumeRule', () => {
               deepEqual(actionConsume),
               'SUCCESS',
               deepEqual({
-                effect: new EffectReceivedDefinition('REMEDY', 5),
+                effect: new EffectEvent('REMEDY', 5),
                 energyGained: 0,
               })
             )
@@ -206,7 +206,7 @@ describe('ConsumeRule', () => {
             deepEqual(actionConsume),
             'NONE',
             deepEqual({
-              effect: new EffectReceivedDefinition('REMEDY', 2),
+              effect: new EffectEvent('REMEDY', 2),
               energyGained: 1,
             })
           )
