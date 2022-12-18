@@ -141,7 +141,7 @@ describe('ConsumeRule', () => {
               'SUCCESS',
               deepEqual({
                 effect: new EffectEvent('REMEDY', 5),
-                energyGain: 0,
+                energy: 0,
               })
             )
           ).thenReturn(logHeal5);
@@ -207,7 +207,7 @@ describe('ConsumeRule', () => {
             'NONE',
             deepEqual({
               effect: new EffectEvent('REMEDY', 2),
-              energyGain: 1,
+              energy: 1,
             })
           )
         ).thenReturn(logHeal2);
