@@ -26,6 +26,7 @@ import { DamageDefinition } from '../definitions/damage.definition';
 import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
+import { ActorEntity } from '../entities/actor.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -49,8 +50,6 @@ export class CombatRule implements RuleInterface {
 
     const logs: LogMessageDefinition[] = [];
 
-    let targetHit = true;
-
     let dodged = false;
 
     const {
@@ -65,34 +64,40 @@ export class CombatRule implements RuleInterface {
     if (actor.derivedAttributes.EP.value >= energyActivation) {
       this.activate(energyActivation, actor, identity.label, logs);
 
-      const actionResult = this.tryAction(
+      const targetWasHit = this.checkSkill(
         actor,
         skillName,
         target,
         identity.label,
-        dodgeable,
-        extras,
         logs
       );
 
-      targetHit = actionResult.targetHit;
-
-      dodged = actionResult.dodged;
-
       if (usability === 'DISPOSABLE') {
-        actor.unEquip();
-
-        logs.push(createLostLogMessage(actor.name, identity.label));
+        this.disposeWeapon(actor, identity.label, logs);
       }
 
-      if (targetHit) {
-        this.applyDamage(action.actionableDefinition, damage, target, logs);
+      if (targetWasHit) {
+        dodged = this.checkDodge(target, dodgeable, extras, logs);
+
+        if (!dodged) {
+          this.applyDamage(target, action.actionableDefinition, damage, logs);
+        }
       }
     } else {
       logs.push(createNotEnoughEnergyLogMessage(actor.name, identity.label));
     }
 
     return { logs, dodged };
+  }
+
+  private disposeWeapon(
+    actor: ActorInterface,
+    label: string,
+    logs: LogMessageDefinition[]
+  ): void {
+    actor.unEquip();
+
+    logs.push(createLostLogMessage(actor.name, label));
   }
 
   private activate(
@@ -114,22 +119,18 @@ export class CombatRule implements RuleInterface {
     }
   }
 
-  private tryAction(
+  private checkSkill(
     actor: ActorInterface,
     skillName: string,
     target: ActionReactiveInterface,
     weaponLabel: string,
-    dodgeable: boolean,
-    extras: RuleExtrasInterface,
     logs: LogMessageDefinition[]
-  ): { targetHit: boolean; dodged: boolean } {
-    let targetHit = true;
+  ): boolean {
+    let targetWasHit = true;
 
-    let dodged = false;
+    const targetActor = this.asActor(target);
 
-    if (['ACTOR', 'PLAYER'].includes(target.classification)) {
-      const targetActor = target as ActorInterface;
-
+    if (targetActor) {
       const { result: actorResult, roll: actorRoll } =
         this.rollRule.actorSkillCheck(actor, skillName);
 
@@ -141,24 +142,35 @@ export class CombatRule implements RuleInterface {
         createCheckLogMessage(actor.name, skillName, actorRoll, actorResult)
       );
 
-      targetHit = actorResult === 'SUCCESS';
+      targetWasHit = actorResult === 'SUCCESS';
+    }
 
-      if (targetHit) {
-        if (dodgeable) {
-          dodged = this.checkIfDodged(
-            targetActor,
-            extras.targetDodgesPerformed ?? 0,
-            logs
-          );
+    return targetWasHit;
+  }
 
-          targetHit = !dodged;
-        } else {
-          logs.push(createUnDodgeableAttackLogMessage(targetActor.name));
-        }
+  private checkDodge(
+    target: ActionReactiveInterface,
+    dodgeable: boolean,
+    extras: RuleExtrasInterface,
+    logs: LogMessageDefinition[]
+  ): boolean {
+    let dodged = false;
+
+    const targetActor = this.asActor(target);
+
+    if (targetActor) {
+      if (dodgeable) {
+        dodged = this.checkIfDodged(
+          targetActor,
+          extras.targetDodgesPerformed ?? 0,
+          logs
+        );
+      } else {
+        logs.push(createUnDodgeableAttackLogMessage(target.name));
       }
     }
 
-    return { targetHit, dodged };
+    return dodged;
   }
 
   private checkIfDodged(
@@ -189,11 +201,11 @@ export class CombatRule implements RuleInterface {
   }
 
   private applyDamage(
+    target: ActionReactiveInterface,
     action: ActionableDefinition,
     damage: DamageDefinition,
-    target: ActionReactiveInterface,
     logs: LogMessageDefinition[]
-  ) {
+  ): void {
     const damageAmount = this.rollRule.roll(damage.diceRoll) + damage.fixed;
 
     const log = target.reactTo(action, 'SUCCESS', {
@@ -203,5 +215,16 @@ export class CombatRule implements RuleInterface {
     if (log) {
       logs.push(createFreeLogMessage(target.name, log));
     }
+  }
+
+  private asActor(target: ActionReactiveInterface): ActorInterface | null {
+    if (
+      target instanceof ActorEntity &&
+      ['ACTOR', 'PLAYER'].includes(target.classification)
+    ) {
+      return target;
+    }
+
+    return null;
   }
 }

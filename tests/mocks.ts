@@ -219,6 +219,8 @@ export const setupMocks = () => {
 
   when(mockedTargetPlayerEntity.classification).thenReturn('PLAYER');
 
+  when(mockedTargetPlayerEntity.situation).thenReturn('ALIVE');
+
   when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
   when(mockedPlayerEntity.characteristics).thenReturn(fakeCharacteristics);
@@ -238,6 +240,11 @@ export const setupMocks = () => {
   Object.setPrototypeOf(instanceActorEntity2, ActorEntity.prototype);
 
   Object.setPrototypeOf(instancePlayerEntity, ActorEntity.prototype);
+
+  Object.setPrototypeOf(
+    instance(mockedTargetPlayerEntity),
+    ActorEntity.prototype
+  );
 
   when(mockedActorBehavior.characteristics).thenReturn(fakeCharacteristics);
 
