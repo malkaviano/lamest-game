@@ -3,7 +3,7 @@
     {
       "name": "huntingKnife",
       "label": "Hunting Knife",
-      "description": "A knife used by hunters mostly",
+      "description": "A knife used by hunters mostly. 1D6+1 kinetic damage",
       "skillName": "Melee Weapon (Simple)",
       "damage": {
         "dice": {
@@ -19,7 +19,7 @@
     {
       "name": "winchester88",
       "label": "Winchester 88",
-      "description": "A reliable rifle",
+      "description": "A reliable rifle. 2D6 kinetic damage",
       "skillName": "Firearm (Shooter)",
       "damage": {
         "dice": {
