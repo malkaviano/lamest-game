@@ -25,21 +25,21 @@ export class SkillRule implements RuleInterface {
 
   public execute(
     actor: ActorInterface,
-    action: ActionableEvent,
+    event: ActionableEvent,
     extras: RuleExtrasInterface
   ): RuleResultInterface {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     const logs: LogMessageDefinition[] = [];
 
-    const skillName = action.actionableDefinition.name;
+    const skillName = event.actionableDefinition.name;
 
     const { roll, result } = this.rollRule.actorSkillCheck(actor, skillName);
 
     if (result !== 'IMPOSSIBLE') {
       logs.push(createCheckLogMessage(actor.name, skillName, roll, result));
 
-      const log = target.reactTo(action.actionableDefinition, result, {
+      const log = target.reactTo(event.actionableDefinition, result, {
         actorVisibility: actor,
       });
 
