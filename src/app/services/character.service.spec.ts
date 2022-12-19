@@ -16,6 +16,7 @@ import {
   mockedRandomCharacterService,
   setupMocks,
 } from '../../../tests/mocks';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -41,6 +42,8 @@ describe('CharacterService', () => {
     when(mockedPlayerEntity.epChanged$).thenReturn(subjectEP);
 
     when(mockedPlayerEntity.weaponEquippedChanged$).thenReturn(subjectWeapon);
+
+    when(mockedPlayerEntity.visibilityChanged$).thenReturn(subjectVisibility);
 
     service = TestBed.inject(CharacterService);
   });
@@ -136,10 +139,28 @@ describe('CharacterService', () => {
       expect(result).toEqual(instance(mockedPlayerEntity));
     });
   });
+
+  describe('when character visibility change', () => {
+    it('should emit an event', (done) => {
+      let result: PlayerEntity | undefined;
+
+      service.characterChanged$.pipe(take(10)).subscribe((event) => {
+        result = event;
+      });
+
+      subjectVisibility.next('DISGUISED');
+
+      done();
+
+      expect(result).toEqual(instance(mockedPlayerEntity));
+    });
+  });
 });
 
 const subjectHP = new Subject<HitPointsEvent>();
 
 const subjectEP = new Subject<EnergyPointsEvent>();
+
+const subjectVisibility = new Subject<VisibilityLiteral>();
 
 const subjectWeapon = new Subject<WeaponDefinition>();

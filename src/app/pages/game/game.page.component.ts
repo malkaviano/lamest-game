@@ -65,6 +65,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
             this.formatterHelperService.characterToKeyValueDescription(
               character
             );
+
           this.equipped = character.weaponEquipped;
         }
       )

@@ -94,6 +94,12 @@
     },
 
     {
+      "key": "disguise",
+      "name": "Disguise",
+      "actionable": "SKILL"
+    },
+
+    {
       "key": "athleticism",
       "name": "Athleticism",
       "actionable": "SKILL"

@@ -43,11 +43,15 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   private readonly epChanged: Subject<EnergyPointsEvent>;
 
+  private readonly visibilityChanged: Subject<VisibilityLiteral>;
+
   public readonly hpChanged$: Observable<HitPointsEvent>;
 
   public readonly weaponEquippedChanged$: Observable<WeaponDefinition>;
 
   public readonly epChanged$: Observable<EnergyPointsEvent>;
+
+  public readonly visibilityChanged$: Observable<VisibilityLiteral>;
 
   constructor(
     identity: ActorIdentityDefinition,
@@ -78,6 +82,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.epChanged = new Subject();
 
     this.epChanged$ = this.epChanged.asObservable();
+
+    this.visibilityChanged = new Subject();
+
+    this.visibilityChanged$ = this.visibilityChanged.asObservable();
   }
 
   public get visibility(): VisibilityLiteral {
@@ -85,7 +93,13 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public set visibility(visibility: VisibilityLiteral) {
+    const old = this.visibility;
+
     this.mVisibility = visibility;
+
+    if (old !== this.visibility) {
+      this.visibilityChanged.next(this.visibility);
+    }
   }
 
   public get dodgesPerRound(): number {

@@ -52,7 +52,7 @@ describe('CharacterPageComponent', () => {
   });
 
   it('should have identity', () => {
-    expect(component.identityView.items.length).toBe(6);
+    expect(component.identityView.items.length).toBe(7);
   });
 
   it('should have attributes', () => {

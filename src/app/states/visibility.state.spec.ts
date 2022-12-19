@@ -82,11 +82,13 @@ describe('VisibilityState', () => {
     ].forEach(({ action, visibility, rollResult, expected, tries }) => {
       describe(`when visibility was ${visibility}`, () => {
         it('return state', () => {
+          const char = fakeCharacter();
+
           const result = fakeState(action, tries).onResult(
             action,
             rollResult as ResultLiteral,
             {
-              actorVisibility: fakeCharacter,
+              actorVisibility: char,
             }
           );
 
@@ -94,15 +96,17 @@ describe('VisibilityState', () => {
         });
 
         it('should set actor visibility', () => {
+          const char = fakeCharacter();
+
           fakeState(action, tries).onResult(
             action,
             rollResult as ResultLiteral,
             {
-              actorVisibility: fakeCharacter,
+              actorVisibility: char,
             }
           );
 
-          expect(fakeCharacter.visibility).toEqual(visibility);
+          expect(char.visibility).toEqual(visibility);
         });
       });
     });
@@ -131,13 +135,14 @@ const distributedSkills = new Map<string, number>([
   ['Survival', 5],
 ]);
 
-const fakeCharacter = new PlayerEntity(
-  fakeIdentity,
-  ActorBehavior.create(
-    fakeCharacteristics,
-    distributedSkills,
-    instance(mockedSkillStore),
-    actorSettings
-  ),
-  EquipmentBehavior.create()
-);
+const fakeCharacter = () =>
+  new PlayerEntity(
+    fakeIdentity,
+    ActorBehavior.create(
+      fakeCharacteristics,
+      distributedSkills,
+      instance(mockedSkillStore),
+      actorSettings
+    ),
+    EquipmentBehavior.create()
+  );

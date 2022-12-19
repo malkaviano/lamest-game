@@ -179,6 +179,11 @@ export const fakeCharacterSheetIdentity = ArrayView.create([
   KeyValueDescriptionView.create('RACE', 'HUMAN', 'Character race'),
   KeyValueDescriptionView.create('HEIGHT', 'SHORT', 'Character height'),
   KeyValueDescriptionView.create('WEIGHT', 'LIGHT', 'Character weight'),
+  KeyValueDescriptionView.create(
+    'VISIBILITY',
+    'VISIBLE',
+    'Character current visibility'
+  ),
 ]);
 
 export const fakeCharacterSheetCharacteristics = ArrayView.create([

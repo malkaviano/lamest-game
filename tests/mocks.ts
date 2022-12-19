@@ -223,6 +223,8 @@ export const setupMocks = () => {
 
   when(mockedPlayerEntity.situation).thenReturn('ALIVE');
 
+  when(mockedPlayerEntity.visibility).thenReturn('VISIBLE');
+
   when(mockedPlayerEntity.characteristics).thenReturn(fakeCharacteristics);
 
   when(mockedPlayerEntity.derivedAttributes).thenReturn(fakeDerivedAttributes);
@@ -269,6 +271,10 @@ export const setupMocks = () => {
   });
 
   when(mockedResourcesStore.skillStateStore).thenReturn({
+    states: [],
+  });
+
+  when(mockedResourcesStore.visibilityStateStore).thenReturn({
     states: [],
   });
 

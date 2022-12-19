@@ -1,0 +1,9 @@
+{
+  "states": [
+    {
+      "id": "disguiseVillager",
+      "actionable": "disguise",
+      "maximumTries": 1
+    }
+  ]
+}

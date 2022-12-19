@@ -87,6 +87,14 @@
     },
 
     {
+      "id": "disguiseVillager",
+      "name": "Disguise as Villager",
+      "description": "Try to disguise as a villager",
+      "state": "disguiseVillager",
+      "resettable": false
+    },
+
+    {
       "id": "npc1",
       "name": "NPC",
       "description": "Some random person",

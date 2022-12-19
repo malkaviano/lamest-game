@@ -47,6 +47,8 @@ import professionStore from '../../assets/professions.json';
 import skillStore from '../../assets/skills.json';
 import settingsStore from '../../assets/settings.json';
 import readableStore from '../../assets/items/readables.json';
+import visibilityStateStore from '../../assets/states/visibility-state.json';
+import { VisibilityStateStoreInterface } from '../interfaces/stores/visibility-state-store.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -90,6 +92,7 @@ export class ResourcesStore {
 
   public readonly readableStore: ReadableStoreInterface;
 
+  public readonly visibilityStateStore: VisibilityStateStoreInterface;
   constructor() {
     const {
       professionPoints,
@@ -135,6 +138,8 @@ export class ResourcesStore {
     this.sceneStore = sceneStore;
 
     this.skillStateStore = skillStateStore;
+
+    this.visibilityStateStore = visibilityStateStore;
 
     this.discardStateStore = discardStateStore;
 
