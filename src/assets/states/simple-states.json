@@ -24,11 +24,11 @@
       "id": "mainHouseBasementDoor",
       "actionables": ["mainHouseBasementDoor"]
     },
-
     {
-      "id": "corridorDoor",
-      "actionables": ["corridorDoor"]
+      "id": "hunterCabinDoor",
+      "actionables": ["hunterCabinDoor"]
     },
+
     {
       "id": "trainingDummy",
       "actionables": ["affect"]

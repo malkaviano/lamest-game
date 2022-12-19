@@ -24,23 +24,38 @@
     {
       "id": "mainHouseLibraryDoor",
       "name": "Library Door",
-      "description": "Enter / Exit the Library",
+      "description": "Enter / Exit Library",
       "state": "mainHouseLibraryDoor",
       "resettable": true
     },
     {
       "id": "mainHouseDiningDoor",
       "name": "Dining Room Door",
-      "description": "Enter / Exit the Dining Room",
+      "description": "Enter / Exit Dining Room",
       "state": "mainHouseDiningDoor",
       "resettable": true
     },
     {
       "id": "mainHouseBasementDoor",
       "name": "Basement Door",
-      "description": "Enter / Exit the Basement",
+      "description": "Enter / Exit Basement",
       "state": "mainHouseBasementDoor",
       "resettable": true
+    },
+    {
+      "id": "hunterCabinDoor",
+      "name": "Cabin Door",
+      "description": "Enter / Exit Cabin",
+      "state": "hunterCabinDoor",
+      "resettable": true
+    },
+
+    {
+      "id": "hunterCabinTable",
+      "name": "Table",
+      "description": "Common table",
+      "state": "tableLoot",
+      "resettable": false
     },
 
     {
@@ -62,20 +77,6 @@
       "name": "Wood Box",
       "description": "Old Wood Box",
       "state": "woodBox",
-      "resettable": false
-    },
-    {
-      "id": "corridorDoor",
-      "name": "Corridor",
-      "description": "Change to corridor",
-      "state": "corridorDoor",
-      "resettable": true
-    },
-    {
-      "id": "table",
-      "name": "Table",
-      "description": "Common table",
-      "state": "tableLoot",
       "resettable": false
     },
     {
@@ -121,7 +122,7 @@
       ]
     },
     {
-      "id": "table",
+      "id": "hunterCabinTable",
       "items": [
         {
           "name": "analgesic",
@@ -132,7 +133,15 @@
           "quantity": 1
         },
         {
-          "name": "basicManual",
+          "name": "hunterJournal1",
+          "quantity": 1
+        },
+        {
+          "name": "hunterJournal2",
+          "quantity": 1
+        },
+        {
+          "name": "hunterJournal3",
           "quantity": 1
         },
         {

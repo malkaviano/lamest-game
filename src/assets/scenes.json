@@ -19,9 +19,7 @@
         "villageGate",
         "npc1",
         "upperShelf",
-        "woodBox",
-        "corridorDoor",
-        "table"
+        "woodBox"
       ],
       "transitions": [
         {
@@ -39,6 +37,7 @@
       "description": "village",
       "interactives": [
         "villageGate",
+        "hunterCabinDoor",
         "mainHouseDoor",
         "trainingDummy",
         "lockedChest",
@@ -48,6 +47,10 @@
         {
           "name": "villageGate",
           "scene": "villageEntrance"
+        },
+        {
+          "name": "hunterCabinDoor",
+          "scene": "hunterCabin"
         },
         {
           "name": "mainHouseDoor",
@@ -113,6 +116,17 @@
         {
           "name": "mainHouseBasementDoor",
           "scene": "mainHouse"
+        }
+      ]
+    },
+    {
+      "name": "hunterCabin",
+      "description": "hunterCabin",
+      "interactives": ["hunterCabinDoor", "hunterCabinTable"],
+      "transitions": [
+        {
+          "name": "hunterCabinDoor",
+          "scene": "mainStreet"
         }
       ]
     }

@@ -1,16 +1,54 @@
 {
   "readables": [
     {
-      "name": "basicManual",
-      "label": "Basic Manual",
-      "description": "Some kind of manual. Read it!",
-      "title": "Basic Manual",
+      "name": "hunterJournal1",
+      "label": "Hunter's Journal #1",
+      "description": "Part of a journal",
+      "title": "Today was a good day",
       "text": [
-        "This manual is a test",
-        "The author should have used it to explain the game",
-        "But let's be honest, look at this crap.",
-        "What were you expecting?",
-        "Go figure stuff by yourself"
+        "Today I set out early in the morning to hunt elk in the mountains.",
+        "The weather was crisp and clear, and the forest was alive with the sounds of nature.",
+        "I hiked for hours, following the tracks of a large herd I had spotted the day before.",
+        "Finally, I caught sight of my prey, a majestic elk with a massive set of antlers.",
+        "I took careful aim and fired, and the elk fell to the ground with a thud.",
+        "It was a clean kill, and I was filled with a sense of satisfaction and accomplishment.",
+        "I field dressed the elk and began the long trek back to my cabin, loaded down with my prize.",
+        "I can't wait to share this story around the campfire tonight and savor the taste of fresh elk meat for dinner."
+      ]
+    },
+    {
+      "name": "hunterJournal2",
+      "label": "Hunter's Journal #2",
+      "description": "Part of a journal",
+      "title": "Something is off",
+      "text": [
+        "I set out today with the intention of hunting deer, but something felt off from the moment I stepped into the woods.",
+        "The animals were all spooked, fleeing at the slightest noise or movement. Even the birds seemed to have gone silent.",
+        "As I made my way deeper into the forest, I couldn't shake the feeling that I was being watched.",
+        "I heard footsteps behind me that I couldn't account for, and several times I turned around expecting to see someone there, but the woods were empty.",
+        "I couldn't shake the feeling that there was a presence in the forest with me, something unseen and malevolent.",
+        "My instincts were screaming at me to turn back, but I couldn't bring myself to do it.",
+        "I know I should have listened to my gut, but I was determined to hunt my prey.",
+        "In the end, I didn't even get a shot off. The deer were too skittish, and I couldn't get close enough.",
+        "I returned to my cabin empty-handed and shaken by the experience.",
+        "I don't know what to make of it, but I can't shake the feeling that something very wrong is happening in these woods."
+      ]
+    },
+    {
+      "name": "hunterJournal3",
+      "label": "Hunter's Journal #3",
+      "description": "Part of a journal",
+      "title": "Leaving as soon as possible",
+      "text": [
+        "I set out early this morning with high hopes of bringing home some game, but as I moved deeper into the forest, it became clear that there was nothing to be found.",
+        "The animal tracks that were once abundant have disappeared, and the woods are eerily quiet.",
+        "As I wandered further, I stumbled upon a strange and unsettling sight.",
+        "A dead animal carcass lay in the clearing, its body mutilated and twisted in a way that seemed almost unnatural.",
+        "I couldn't identify the species, as it appeared to be a grotesque hybrid of several different animals.",
+        "I knew I should leave the area and report what I had seen, but I couldn't shake the feeling that I was being watched.",
+        "I lingered for a moment, trying to make sense of what I was seeing, before turning and running back to my cabin as fast as I could.",
+        "I don't know what to make of this, but I can't shake the feeling that something very wrong is happening in these woods.",
+        "I'm not sure I want to stay here much longer."
       ]
     }
   ]

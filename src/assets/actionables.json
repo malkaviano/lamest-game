@@ -36,6 +36,12 @@
       "actionable": "SCENE",
       "label": "Use Door"
     },
+    {
+      "key": "hunterCabinDoor",
+      "name": "hunterCabinDoor",
+      "actionable": "SCENE",
+      "label": "Use Door"
+    },
 
     {
       "key": "athleticism",
@@ -66,12 +72,7 @@
       "actionable": "PICK",
       "label": "Wood Stick"
     },
-    {
-      "key": "corridorDoor",
-      "name": "corridorDoor",
-      "actionable": "SCENE",
-      "label": "Enter"
-    },
+
     {
       "key": "halberd",
       "name": "halberd",
@@ -109,10 +110,22 @@
       "label": "Glock 17"
     },
     {
-      "key": "basicManual",
-      "name": "basicManual",
+      "key": "hunterJournal1",
+      "name": "hunterJournal1",
       "actionable": "PICK",
-      "label": "Basic Manual"
+      "label": "Hunter's Journal #1"
+    },
+    {
+      "key": "hunterJournal2",
+      "name": "hunterJournal2",
+      "actionable": "PICK",
+      "label": "Hunter's Journal #2"
+    },
+    {
+      "key": "hunterJournal3",
+      "name": "hunterJournal3",
+      "actionable": "PICK",
+      "label": "Hunter's Journal #3"
     },
     {
       "key": "talisman",
