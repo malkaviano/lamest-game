@@ -173,7 +173,7 @@
       "description": "Use emergency kit to heal",
       "affinity": "NATURAL",
       "combat": false,
-      "influenced": ["int"]
+      "influenced": ["int", "int"]
     },
     {
       "name": "Streetwise",
