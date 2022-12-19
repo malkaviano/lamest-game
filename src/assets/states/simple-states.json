@@ -1,13 +1,30 @@
 {
   "states": [
     {
-      "id": "exitDoor",
-      "actionables": ["sceneExitDoor"]
+      "id": "forestTrail",
+      "actionables": ["forestTrail"]
     },
     {
-      "id": "enterDoor",
-      "actionables": ["enterSceneDoor"]
+      "id": "villageGate",
+      "actionables": ["villageGate"]
     },
+    {
+      "id": "mainHouseDoor",
+      "actionables": ["mainHouseDoor"]
+    },
+    {
+      "id": "mainHouseLibraryDoor",
+      "actionables": ["mainHouseLibraryDoor"]
+    },
+    {
+      "id": "mainHouseDiningDoor",
+      "actionables": ["mainHouseDiningDoor"]
+    },
+    {
+      "id": "mainHouseBasementDoor",
+      "actionables": ["mainHouseBasementDoor"]
+    },
+
     {
       "id": "corridorDoor",
       "actionables": ["corridorDoor"]

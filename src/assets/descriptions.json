@@ -1,31 +1,58 @@
 {
   "descriptions": [
     {
-      "sceneName": "scene1",
+      "sceneName": "clearing",
       "paragraphs": [
-        "The main room, it's a medium size room with white walls",
-        "You see the yard door behind you",
-        "There's an elevated shelf on the left wall, maybe you can reach it if you put some effort",
-        "In front of you, another door leads probably to the rest of the building",
-        "To the right, an old wood box, there's no way to know what's inside"
+        "In the small clearing, the remnants of a campfire lay in the center, the ashes and embers long since extinguished. The ground around the fire pit is slightly blackened, and there are a few logs and sticks scattered about. The air is still and quiet, the only sound the occasional rustle of leaves in the gentle breeze.",
+        "In the distance, a small village can be seen on the horizon. It is not too far away, just a short walk through the trees. The village is surrounded by wooden walls, and you can see some house roofs.",
+        "As the sun begins to set, the clearing takes on a peaceful and serene atmosphere. The light filters through the trees, casting long shadows across the ground. It is the perfect spot to rest and gather one's thoughts before continuing on one's journey."
       ]
     },
     {
-      "sceneName": "scene2",
+      "sceneName": "entrance",
       "paragraphs": [
-        "This is the outside yard",
-        "There's only garden around you and the door leading back to the room",
-        "The training dummy is acting strange, either destroy it or leave"
+        "As you approach the village, the forest grows denser and the air takes on a still, ethereal quality. The trees here seem taller and more twisted, their branches reaching out like gnarled fingers. The light is dim and diffuse, casting everything in a hazy, eerie glow.",
+        "The wooden gate at the entrance to the village is a formidable presence, adorned with flickering lanterns and intricate carvings. The stone lions that guard the gate seem to have come to life, their eyes following your every move.",
+        "Beyond the gate, the main street is shrouded in shadows. The houses here are larger and more grandiose, but their windows are shuttered and their gardens overgrown. The shops are abandoned and dilapidated, their signs hanging crookedly from their posts.",
+        "In the distance, you can see a clearing. It looks like a camping site, but without tents the fire pit is cold and abandoned.",
+        "The atmosphere here is unsettling, and you can't shake the feeling that something isn't quite right."
       ]
     },
     {
-      "sceneName": "scene3",
+      "sceneName": "village",
       "paragraphs": [
-        "A corridor presents itself before you",
-        "It appears that a door exists in the end, there's not too much light",
-        "A sound catches your attention, some nasty creature is staring you",
-        "Behind you the door to main room",
-        "GOOD LUCK!"
+        "As you enter the village, you find yourself on a narrow main street lined with houses and shops. The houses on either side are small and cozy, with thatched roofs and colorful gardens. Some of them seem well-maintained and inhabited, with smoke curling from their chimneys and curtains drawn in the windows. Others are in disrepair, with peeling paint and overgrown gardens.",
+        "One house stands out from the rest, with its white picket fence and well-manicured lawn. The curtains in the windows are always open, and you can see a grand entrance hall with a winding staircase leading up to the second floor. The garden is filled with flowering plants and a fountain that tinkles softly in the breeze. This house exudes an air of wealth and importance, and you get the sense that important events and gatherings are held here.",
+        "As you make your way down the main street, you can't help but feel the sense of community here. People are out and about, tending to their gardens, chatting with neighbors, and enjoying the simple pleasures of rural living. The air is filled with the sound of laughter and the smell of freshly baked goods from the local bakery. Despite its small size, this village has a big heart and a warm, welcoming atmosphere."
+      ]
+    },
+    {
+      "sceneName": "mainHouse",
+      "paragraphs": [
+        "As you approach, you can't shake the feeling that something is off. The peeling paint and sagging roof give it an unkempt appearance, and the windows are slightly crooked. The front porch is cluttered with broken pots and old furniture, and there's an uneasy feeling that lingers in the air.",
+        "As you enter the house, you see the maid moving about inside, sweeping the dimly-lit hallway with a tired expression on her face. There's something unsettling about the way she moves, almost as if she's trying to hide something. You can't shake the feeling that she knows more about the house and its secrets than she's letting on.",
+        "You make your way up the creaky stairs to the second floor, feeling like you're being watched. The air is heavy and oppressive, and you get the sense that something sinister is lurking just out of sight. The second floor is even dimmer than the first, with narrow corridors and cramped rooms. The furniture is old and worn, and there are cobwebs in the corners. You can't help but feel like you're intruding as you move through the space. The only sound is the creaking of the floorboards beneath your feet. You have the sense that this house has a history, and that it's not a happy one. You can't wait to leave this unsettling place behind."
+      ]
+    },
+    {
+      "sceneName": "mainHouseLibrary",
+      "paragraphs": [
+        "The library is a dark and cramped room. It's located on the second floor, at the end of a narrow corridor. The shelves are packed with dusty old books, and the air is musty and stagnant. There's a desk in the corner, covered in papers and books, and a small window that lets in a faint sliver of light. The room is so cluttered that it's difficult to move around.",
+        "Despite its cramped and cluttered appearance, there's something intriguing about the library. You can't help but feel drawn to the shelves, wondering what secrets and stories are hidden within the pages of the old books. As you move closer to the desk, you notice a ledger with strange symbols etched into the cover. It's almost as if the house is trying to communicate something to you, but you can't quite decipher the message. You can't shake the feeling that this library holds the key to understanding the unsettling atmosphere of the house and the village."
+      ]
+    },
+    {
+      "sceneName": "mainHouseDining",
+      "paragraphs": [
+        "The dining room is a gloomy, shadowy space. It's located on the ground floor, off the main hallway. The table is long and old, with intricate carvings on the legs and a scarred surface. The chairs are mismatched and worn, and the curtains covering the windows are heavy and threadbare. The room is dimly lit, with only a few flickering candles providing illumination.",
+        "Despite its uninviting appearance, there's something compelling about the dining room. You can't help but feel like you're being watched as you move through the space. The air is heavy and oppressive, and you get the sense that something sinister is lurking just out of sight. You can't shake the feeling that this house has a dark history, and that the dining room is at the center of it. You find yourself wanting to explore further, hoping to uncover the secrets that this unsettling place is hiding."
+      ]
+    },
+    {
+      "sceneName": "mainHouseBasement",
+      "paragraphs": [
+        "The basement is not like a typical basement. It's more like a laboratory, with rows of shelves lined with strange equipment and mysterious glass bottles. The room is dimly lit, with only a few flickering candles providing illumination. The air is heavy and still, and there's a faint smell of chemicals in the air.",
+        "As you move further into the room, you notice a long table in the center, covered in beakers and tubes. There are strange markings on the walls and the floor, and you can't shake the feeling that this place is used for something sinister. You start to feel uneasy and decide to leave the basement behind, but you can't shake the feeling that there's more to this unsettling house than meets the eye. You can't help but wonder what secrets this laboratory is hiding, and why it's been hidden away for so long. You can't wait to get out of this eerie place and leave its secrets behind."
       ]
     }
   ]

@@ -1,17 +1,53 @@
 {
   "interactives": [
     {
+      "id": "forestTrail",
+      "name": "Forest Trail",
+      "description": "Trail between the Village and Clearing",
+      "state": "forestTrail",
+      "resettable": true
+    },
+    {
+      "id": "villageGate",
+      "name": "Village Gate",
+      "description": "Village Main Gate",
+      "state": "villageGate",
+      "resettable": true
+    },
+    {
+      "id": "mainHouseDoor",
+      "name": "Main House Entrance",
+      "description": "Enter / Exit Main House",
+      "state": "mainHouseDoor",
+      "resettable": true
+    },
+    {
+      "id": "mainHouseLibraryDoor",
+      "name": "Library Door",
+      "description": "Enter / Exit the Library",
+      "state": "mainHouseLibraryDoor",
+      "resettable": true
+    },
+    {
+      "id": "mainHouseDiningDoor",
+      "name": "Dining Room Door",
+      "description": "Enter / Exit the Dining Room",
+      "state": "mainHouseDiningDoor",
+      "resettable": true
+    },
+    {
+      "id": "mainHouseBasementDoor",
+      "name": "Basement Door",
+      "description": "Enter / Exit the Basement",
+      "state": "mainHouseBasementDoor",
+      "resettable": true
+    },
+
+    {
       "id": "npc1",
       "name": "NPC",
       "description": "Some random person",
       "state": "npcConversation",
-      "resettable": true
-    },
-    {
-      "id": "sceneExitDoor",
-      "name": "Outside Door",
-      "description": "Need some fresh air?",
-      "state": "exitDoor",
       "resettable": true
     },
     {
@@ -20,13 +56,6 @@
       "description": "Very high on the wall",
       "state": "shelfJump",
       "resettable": false
-    },
-    {
-      "id": "enterSceneDoor",
-      "name": "Enter room",
-      "description": "Change to main room",
-      "state": "enterDoor",
-      "resettable": true
     },
     {
       "id": "woodBox",

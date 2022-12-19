@@ -1,11 +1,23 @@
 {
   "scenes": [
     {
-      "name": "scene1",
-      "description": "scene1",
+      "name": "clearing",
+      "description": "clearing",
+      "interactives": ["forestTrail"],
+      "transitions": [
+        {
+          "name": "forestTrail",
+          "scene": "villageEntrance"
+        }
+      ]
+    },
+    {
+      "name": "villageEntrance",
+      "description": "entrance",
       "interactives": [
+        "forestTrail",
+        "villageGate",
         "npc1",
-        "sceneExitDoor",
         "upperShelf",
         "woodBox",
         "corridorDoor",
@@ -13,45 +25,97 @@
       ],
       "transitions": [
         {
-          "name": "sceneExitDoor",
-          "scene": "scene2"
+          "name": "villageGate",
+          "scene": "mainStreet"
         },
         {
-          "name": "corridorDoor",
-          "scene": "scene3"
+          "name": "forestTrail",
+          "scene": "clearing"
         }
       ]
     },
     {
-      "name": "scene2",
-      "description": "scene2",
+      "name": "mainStreet",
+      "description": "village",
       "interactives": [
-        "enterSceneDoor",
+        "villageGate",
+        "mainHouseDoor",
         "trainingDummy",
         "lockedChest",
-        "lockPickingChest",
-        "goblin",
-        "goblin",
-        "goblin"
+        "lockPickingChest"
       ],
       "transitions": [
         {
-          "name": "enterSceneDoor",
-          "scene": "scene1"
+          "name": "villageGate",
+          "scene": "villageEntrance"
+        },
+        {
+          "name": "mainHouseDoor",
+          "scene": "mainHouse"
         }
       ]
     },
     {
-      "name": "scene3",
-      "description": "scene3",
-      "interactives": ["enterSceneDoor", "zombie"],
+      "name": "mainHouse",
+      "description": "mainHouse",
+      "interactives": [
+        "mainHouseDoor",
+        "mainHouseLibraryDoor",
+        "mainHouseDiningDoor",
+        "mainHouseBasementDoor"
+      ],
       "transitions": [
         {
-          "name": "enterSceneDoor",
-          "scene": "scene1"
+          "name": "mainHouseDoor",
+          "scene": "mainStreet"
+        },
+        {
+          "name": "mainHouseLibraryDoor",
+          "scene": "mainHouseLibrary"
+        },
+        {
+          "name": "mainHouseDiningDoor",
+          "scene": "mainHouseDining"
+        },
+        {
+          "name": "mainHouseBasementDoor",
+          "scene": "mainHouseBasement"
+        }
+      ]
+    },
+    {
+      "name": "mainHouseLibrary",
+      "description": "mainHouseLibrary",
+      "interactives": ["mainHouseLibraryDoor"],
+      "transitions": [
+        {
+          "name": "mainHouseLibraryDoor",
+          "scene": "mainHouse"
+        }
+      ]
+    },
+    {
+      "name": "mainHouseDining",
+      "description": "mainHouseDining",
+      "interactives": ["mainHouseDiningDoor"],
+      "transitions": [
+        {
+          "name": "mainHouseDiningDoor",
+          "scene": "mainHouse"
+        }
+      ]
+    },
+    {
+      "name": "mainHouseBasement",
+      "description": "mainHouseBasement",
+      "interactives": ["mainHouseBasementDoor"],
+      "transitions": [
+        {
+          "name": "mainHouseBasementDoor",
+          "scene": "mainHouse"
         }
       ]
     }
   ],
-  "initial": "scene1"
+  "initial": "clearing"
 }

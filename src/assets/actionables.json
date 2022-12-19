@@ -1,11 +1,42 @@
 {
   "actionables": [
     {
-      "key": "sceneExitDoor",
-      "name": "sceneExitDoor",
+      "key": "forestTrail",
+      "name": "forestTrail",
       "actionable": "SCENE",
-      "label": "Exit"
+      "label": "Follow Trail"
     },
+    {
+      "key": "villageGate",
+      "name": "villageGate",
+      "actionable": "SCENE",
+      "label": "Use Gate"
+    },
+    {
+      "key": "mainHouseDoor",
+      "name": "mainHouseDoor",
+      "actionable": "SCENE",
+      "label": "Use Door"
+    },
+    {
+      "key": "mainHouseLibraryDoor",
+      "name": "mainHouseLibraryDoor",
+      "actionable": "SCENE",
+      "label": "Use Door"
+    },
+    {
+      "key": "mainHouseDiningDoor",
+      "name": "mainHouseDiningDoor",
+      "actionable": "SCENE",
+      "label": "Use Door"
+    },
+    {
+      "key": "mainHouseBasementDoor",
+      "name": "mainHouseBasementDoor",
+      "actionable": "SCENE",
+      "label": "Use Door"
+    },
+
     {
       "key": "athleticism",
       "name": "Athleticism",
@@ -28,12 +59,6 @@
       "name": "firstAid",
       "actionable": "PICK",
       "label": "First Aid Kit"
-    },
-    {
-      "key": "enterSceneDoor",
-      "name": "enterSceneDoor",
-      "actionable": "SCENE",
-      "label": "Enter"
     },
     {
       "key": "club",
