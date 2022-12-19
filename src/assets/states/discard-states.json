@@ -1,24 +1,28 @@
 {
   "states": [
     {
+      "id": "hunterCabinTableLoot",
+      "actionables": [
+        "hunterJournal1",
+        "hunterJournal2",
+        "hunterJournal3",
+        "huntingKnife"
+      ]
+    },
+    {
+      "id": "hunterCabinWallLoot",
+      "actionables": ["winchester88"]
+    },
+
+    {
       "id": "shelfLoot",
-      "actionables": ["knife", "firstAid", "firstAid"]
+      "actionables": ["firstAid", "firstAid"]
     },
     {
       "id": "lootWoodBox",
       "actionables": ["club", "getMasterKey"]
     },
-    {
-      "id": "tableLoot",
-      "actionables": [
-        "analgesic",
-        "molotov",
-        "hunterJournal1",
-        "hunterJournal2",
-        "hunterJournal3",
-        "talisman"
-      ]
-    },
+
     {
       "id": "lockedChestLoot",
       "actionables": ["halberd"]

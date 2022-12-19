@@ -14,13 +14,7 @@
     {
       "name": "villageEntrance",
       "description": "entrance",
-      "interactives": [
-        "forestTrail",
-        "villageGate",
-        "npc1",
-        "upperShelf",
-        "woodBox"
-      ],
+      "interactives": ["forestTrail", "villageGate"],
       "transitions": [
         {
           "name": "villageGate",
@@ -35,14 +29,7 @@
     {
       "name": "mainStreet",
       "description": "village",
-      "interactives": [
-        "villageGate",
-        "hunterCabinDoor",
-        "mainHouseDoor",
-        "trainingDummy",
-        "lockedChest",
-        "lockPickingChest"
-      ],
+      "interactives": ["villageGate", "hunterCabinDoor", "mainHouseDoor"],
       "transitions": [
         {
           "name": "villageGate",
@@ -122,7 +109,11 @@
     {
       "name": "hunterCabin",
       "description": "hunterCabin",
-      "interactives": ["hunterCabinDoor", "hunterCabinTable"],
+      "interactives": [
+        "hunterCabinDoor",
+        "hunterCabinTable",
+        "hunterCabinWall"
+      ],
       "transitions": [
         {
           "name": "hunterCabinDoor",

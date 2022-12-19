@@ -44,6 +44,38 @@
     },
 
     {
+      "key": "hunterJournal1",
+      "name": "hunterJournal1",
+      "actionable": "PICK",
+      "label": "Hunter's Journal #1"
+    },
+    {
+      "key": "hunterJournal2",
+      "name": "hunterJournal2",
+      "actionable": "PICK",
+      "label": "Hunter's Journal #2"
+    },
+    {
+      "key": "hunterJournal3",
+      "name": "hunterJournal3",
+      "actionable": "PICK",
+      "label": "Hunter's Journal #3"
+    },
+
+    {
+      "key": "huntingKnife",
+      "name": "huntingKnife",
+      "actionable": "PICK",
+      "label": "Hunting Knife"
+    },
+    {
+      "key": "winchester88",
+      "name": "winchester88",
+      "actionable": "PICK",
+      "label": "Winchester 88"
+    },
+
+    {
       "key": "athleticism",
       "name": "Athleticism",
       "actionable": "SKILL"
@@ -54,12 +86,7 @@
       "actionable": "AFFECT",
       "label": "Use Equipped"
     },
-    {
-      "key": "knife",
-      "name": "knife",
-      "actionable": "PICK",
-      "label": "Hunting Knife"
-    },
+
     {
       "key": "firstAid",
       "name": "firstAid",
@@ -109,24 +136,7 @@
       "actionable": "PICK",
       "label": "Glock 17"
     },
-    {
-      "key": "hunterJournal1",
-      "name": "hunterJournal1",
-      "actionable": "PICK",
-      "label": "Hunter's Journal #1"
-    },
-    {
-      "key": "hunterJournal2",
-      "name": "hunterJournal2",
-      "actionable": "PICK",
-      "label": "Hunter's Journal #2"
-    },
-    {
-      "key": "hunterJournal3",
-      "name": "hunterJournal3",
-      "actionable": "PICK",
-      "label": "Hunter's Journal #3"
-    },
+
     {
       "key": "talisman",
       "name": "talisman",

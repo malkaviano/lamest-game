@@ -52,9 +52,16 @@
 
     {
       "id": "hunterCabinTable",
-      "name": "Table",
-      "description": "Common table",
-      "state": "tableLoot",
+      "name": "Wooden Table",
+      "description": "Made of sturdy wood",
+      "state": "hunterCabinTableLoot",
+      "resettable": false
+    },
+    {
+      "id": "hunterCabinWall",
+      "name": "Wooden Wall",
+      "description": "Trophies hanging on the wall",
+      "state": "hunterCabinWallLoot",
       "resettable": false
     },
 
@@ -96,12 +103,39 @@
   ],
   "inventoryItems": [
     {
-      "id": "upperShelf",
+      "id": "hunterCabinTable",
       "items": [
         {
-          "name": "knife",
+          "name": "hunterJournal1",
           "quantity": 1
         },
+        {
+          "name": "hunterJournal2",
+          "quantity": 1
+        },
+        {
+          "name": "hunterJournal3",
+          "quantity": 1
+        },
+        {
+          "name": "huntingKnife",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "hunterCabinWall",
+      "items": [
+        {
+          "name": "winchester88",
+          "quantity": 1
+        }
+      ]
+    },
+
+    {
+      "id": "upperShelf",
+      "items": [
         {
           "name": "firstAid",
           "quantity": 2
@@ -121,35 +155,7 @@
         }
       ]
     },
-    {
-      "id": "hunterCabinTable",
-      "items": [
-        {
-          "name": "analgesic",
-          "quantity": 1
-        },
-        {
-          "name": "molotov",
-          "quantity": 1
-        },
-        {
-          "name": "hunterJournal1",
-          "quantity": 1
-        },
-        {
-          "name": "hunterJournal2",
-          "quantity": 1
-        },
-        {
-          "name": "hunterJournal3",
-          "quantity": 1
-        },
-        {
-          "name": "talisman",
-          "quantity": 1
-        }
-      ]
-    },
+
     {
       "id": "lockedChest",
       "items": [

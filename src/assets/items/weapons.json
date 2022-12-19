@@ -1,7 +1,7 @@
 {
   "weapons": [
     {
-      "name": "knife",
+      "name": "huntingKnife",
       "label": "Hunting Knife",
       "description": "A knife used by hunters mostly",
       "skillName": "Melee Weapon (Simple)",
@@ -16,6 +16,23 @@
       "usability": "PERMANENT",
       "energyActivation": 0
     },
+    {
+      "name": "winchester88",
+      "label": "Winchester 88",
+      "description": "A reliable rifle",
+      "skillName": "Firearm (Shooter)",
+      "damage": {
+        "dice": {
+          "D6": 2
+        },
+        "fixed": 0,
+        "effect": "KINETIC"
+      },
+      "dodgeable": true,
+      "usability": "PERMANENT",
+      "energyActivation": 0
+    },
+
     {
       "name": "halberd",
       "label": "Halberd",

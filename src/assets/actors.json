@@ -1,34 +1,6 @@
 {
   "actors": [
     {
-      "id": "trainingDummy",
-      "name": "Training Dummy",
-      "description": "Try some attack moves here",
-      "resettable": false,
-      "characteristics": {
-        "STR": 5,
-        "VIT": 5,
-        "SIZ": 5,
-        "AGI": 5,
-        "INT": 0,
-        "ESN": 0,
-        "APP": 0
-      },
-      "skills": [
-        {
-          "name": "Melee Weapon (Simple)",
-          "value": 30
-        }
-      ],
-      "equippedWeapon": "bambooSword",
-      "killedState": "emptyState",
-      "behaviorState": "trainingDummy",
-      "immunities": [],
-      "cures": [],
-      "vulnerabilities": [],
-      "resistances": []
-    },
-    {
       "id": "zombie",
       "name": "Nasty Zombie",
       "description": "What the frack is that?",
