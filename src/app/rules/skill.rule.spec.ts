@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, deepEqual, instance, when } from 'ts-mockito';
+import { deepEqual, instance, when } from 'ts-mockito';
 
 import {
   createCannotCheckLogMessage,
@@ -9,6 +9,7 @@ import {
 } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
+import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import {
   mockedPlayerEntity,
@@ -23,7 +24,6 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
-import { ExtractorHelper } from '../helpers/extractor.helper';
 
 describe('SkillRule', () => {
   let service: SkillRule;
@@ -45,7 +45,11 @@ describe('SkillRule', () => {
     setupMocks();
 
     when(
-      mockedInteractiveEntity.reactTo(anything(), anything(), deepEqual({}))
+      mockedInteractiveEntity.reactTo(
+        actionSkillBrawl,
+        'SUCCESS',
+        deepEqual({ actorVisibility: instance(mockedPlayerEntity) })
+      )
     ).thenReturn('destroyed by xpto');
 
     service = TestBed.inject(SkillRule);
@@ -57,7 +61,7 @@ describe('SkillRule', () => {
 
   describe('execute', () => {
     describe('when skill has no value', () => {
-      it('return SKILL CANNOT BE ROLLED', () => {
+      it('return skill cannot be checked', () => {
         when(mockedPlayerEntity.skills).thenReturn({});
 
         when(
