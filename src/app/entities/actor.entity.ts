@@ -29,11 +29,14 @@ import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ClassificationLiteral } from '../literals/classification.literal';
 import { ResultLiteral } from '../literals/result.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
 import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
+  private mVisibility: VisibilityLiteral;
+
   private readonly hpChanged: Subject<HitPointsEvent>;
 
   private readonly weaponEquippedChanged: Subject<WeaponDefinition>;
@@ -62,6 +65,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       resettable
     );
 
+    this.mVisibility = 'VISIBLE';
+
     this.hpChanged = new Subject();
 
     this.hpChanged$ = this.hpChanged.asObservable();
@@ -73,6 +78,14 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.epChanged = new Subject();
 
     this.epChanged$ = this.epChanged.asObservable();
+  }
+
+  public get visibility(): VisibilityLiteral {
+    return this.mVisibility;
+  }
+
+  public set visibility(visibility: VisibilityLiteral) {
+    this.mVisibility = visibility;
   }
 
   public get dodgesPerRound(): number {
@@ -92,7 +105,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
   ): ActionableEvent | null {
     const player = sceneActorsInfo.items.find(
-      (a) => a.classification === 'PLAYER' && a.situation === 'ALIVE'
+      (a) =>
+        a.classification === 'PLAYER' &&
+        a.situation === 'ALIVE' &&
+        a.visibility === 'VISIBLE'
     );
 
     if (player) {

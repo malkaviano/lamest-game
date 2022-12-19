@@ -177,6 +177,7 @@ export class GameRoundService {
           id: a.id,
           situation: a.situation,
           classification: a.classification,
+          visibility: a.visibility,
         };
       })
     );

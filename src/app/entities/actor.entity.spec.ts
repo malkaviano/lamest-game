@@ -20,6 +20,7 @@ import {
   unarmedWeapon,
   WeaponDefinition,
 } from '../definitions/weapon.definition';
+import { EnergyPointsEvent } from '../events/energy-points.event';
 
 import {
   fakeCharacteristics,
@@ -38,7 +39,6 @@ import {
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
-import { EnergyPointsEvent } from '../events/energy-points.event';
 
 describe('ActorEntity', () => {
   beforeEach(() => {
@@ -399,6 +399,24 @@ describe('ActorEntity', () => {
   describe('dodgesPerRound', () => {
     it('return 1', () => {
       expect(fakeActor().dodgesPerRound).toEqual(1);
+    });
+  });
+
+  describe('visibility', () => {
+    describe('current', () => {
+      it('return VISIBLE', () => {
+        expect(fakeActor().visibility).toEqual('VISIBLE');
+      });
+    });
+
+    describe('set visibility', () => {
+      it('return DISGUISED', () => {
+        const actor = fakeActor();
+
+        actor.visibility = 'DISGUISED';
+
+        expect(actor.visibility).toEqual('DISGUISED');
+      });
     });
   });
 });

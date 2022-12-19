@@ -164,6 +164,7 @@ export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
       id: playerInfo.id,
       classification: 'PLAYER',
       situation: 'ALIVE',
+      visibility: 'VISIBLE',
     },
   ]);
 
