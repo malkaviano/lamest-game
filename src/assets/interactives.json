@@ -49,6 +49,27 @@
       "state": "hunterCabinDoor",
       "resettable": true
     },
+    {
+      "id": "mysteriousHouseDoor",
+      "name": "Mysterious House Door",
+      "description": "Enter / Exit House",
+      "state": "mysteriousHouseDoor",
+      "resettable": true
+    },
+    {
+      "id": "storageHangarDoor",
+      "name": "Storage Hangar Door",
+      "description": "Enter / Exit Hangar",
+      "state": "storageHangarDoor",
+      "resettable": true
+    },
+    {
+      "id": "ambulatoryTentEntrance",
+      "name": "Ambulatory Entrance",
+      "description": "Enter / Exit Ambulatory",
+      "state": "ambulatoryTentEntrance",
+      "resettable": true
+    },
 
     {
       "id": "hunterCabinTable",

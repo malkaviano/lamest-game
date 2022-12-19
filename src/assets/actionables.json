@@ -42,6 +42,24 @@
       "actionable": "SCENE",
       "label": "Use Door"
     },
+    {
+      "key": "ambulatoryTentEntrance",
+      "name": "ambulatoryTentEntrance",
+      "actionable": "SCENE",
+      "label": "Use Entrance"
+    },
+    {
+      "key": "mysteriousHouseDoor",
+      "name": "mysteriousHouseDoor",
+      "actionable": "SCENE",
+      "label": "Use Door"
+    },
+    {
+      "key": "storageHangarDoor",
+      "name": "storageHangarDoor",
+      "actionable": "SCENE",
+      "label": "Use Door"
+    },
 
     {
       "key": "hunterJournal1",

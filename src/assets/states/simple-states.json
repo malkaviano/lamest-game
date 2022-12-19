@@ -28,6 +28,18 @@
       "id": "hunterCabinDoor",
       "actionables": ["hunterCabinDoor"]
     },
+    {
+      "id": "mysteriousHouseDoor",
+      "actionables": ["mysteriousHouseDoor"]
+    },
+    {
+      "id": "storageHangarDoor",
+      "actionables": ["storageHangarDoor"]
+    },
+    {
+      "id": "ambulatoryTentEntrance",
+      "actionables": ["ambulatoryTentEntrance"]
+    },
 
     {
       "id": "zombie",

@@ -29,7 +29,14 @@
     {
       "name": "mainStreet",
       "description": "village",
-      "interactives": ["villageGate", "hunterCabinDoor", "mainHouseDoor"],
+      "interactives": [
+        "villageGate",
+        "hunterCabinDoor",
+        "mainHouseDoor",
+        "ambulatoryTentEntrance",
+        "storageHangarDoor",
+        "mysteriousHouseDoor"
+      ],
       "transitions": [
         {
           "name": "villageGate",
@@ -42,6 +49,18 @@
         {
           "name": "mainHouseDoor",
           "scene": "mainHouse"
+        },
+        {
+          "name": "mysteriousHouseDoor",
+          "scene": "mysteriousHouse"
+        },
+        {
+          "name": "ambulatoryTentEntrance",
+          "scene": "ambulatoryTent"
+        },
+        {
+          "name": "storageHangarDoor",
+          "scene": "storageHangar"
         }
       ]
     },
@@ -117,6 +136,39 @@
       "transitions": [
         {
           "name": "hunterCabinDoor",
+          "scene": "mainStreet"
+        }
+      ]
+    },
+    {
+      "name": "mysteriousHouse",
+      "description": "mysteriousHouse",
+      "interactives": ["mysteriousHouseDoor"],
+      "transitions": [
+        {
+          "name": "mysteriousHouseDoor",
+          "scene": "mainStreet"
+        }
+      ]
+    },
+    {
+      "name": "ambulatoryTent",
+      "description": "ambulatoryTent",
+      "interactives": ["ambulatoryTentEntrance"],
+      "transitions": [
+        {
+          "name": "ambulatoryTentEntrance",
+          "scene": "mainStreet"
+        }
+      ]
+    },
+    {
+      "name": "storageHangar",
+      "description": "storageHangar",
+      "interactives": ["storageHangarDoor"],
+      "transitions": [
+        {
+          "name": "storageHangarDoor",
           "scene": "mainStreet"
         }
       ]

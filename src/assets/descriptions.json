@@ -62,6 +62,32 @@
         "It's possible that the cabin was once home to a hunter, as there is hunting trophies or other evidence of this activity scattered about. There is an old hunting rifle leaning against one wall, and a collection of knives and other tools used for tracking and killing game.",
         "There is also a collection of old maps and journals, documenting the hunter's adventures in the wilderness. Despite its state of disrepair, the cabin could still hold a certain charm and nostalgia for those who appreciate the simpler, rustic way of life."
       ]
+    },
+    {
+      "sceneName": "mysteriousHouse",
+      "paragraphs": [
+        "This house is in a state of neglect and decay, with dingy walls and floors that were stained and dirty. The windows were covered with thick layers of grime, making it difficult to see inside. The furniture was old and worn, with ripped upholstery and sagging cushions. A musty smell hung heavy in the air, as if the house hadn't been cleaned in a long time.",
+        "There were strange noises coming from the basement and attic, and a feeling of unease settled over anyone who entered the house. It seemed as if someone or something was watching from the shadows, and there was a sense of danger lurking just around the corner.",
+        "Overall, the house had a grim and suspicious atmosphere, and most people would want to avoid it. It was a place of neglect and decay, with a sense of foreboding and danger that made it unsettling to be in."
+      ]
+    },
+    {
+      "sceneName": "ambulatoryTent",
+      "paragraphs": [
+        "The interior is divided into different sections, with each one serving a specific purpose.",
+        "One section seems to be set up as a triage area, with a nurse working to assess and treat patients. Another section is filled with beds, where patients are being treated and monitored. You can see medical personnel administering medications and taking vital signs.",
+        "There is also a section set up for procedures and surgeries, with tables and equipment arranged in a sterile environment. You can see a surgeon and a nurse working together, focused on their task at hand.",
+        "As you continue to walk through the tent, you notice that there are also areas set up for supplies and medication storage.",
+        "Overall, the tent is a well-organized and efficient space, designed to provide medical care to those in need. While smaller than other houses, it is clear that a lot of thought and planning has gone into creating this ambulatory medical facility, and it is a testament to the dedication and expertise of the medical professionals working there."
+      ]
+    },
+    {
+      "sceneName": "storageHangar",
+      "paragraphs": [
+        "It is a long, rectangular building with a thatched roof and stone walls. The doors at either end of the hangar are open, allowing a cool breeze to flow through the space.",
+        "Inside, the hangar is filled with rows of wooden shelves that stretch from one end to the other. The shelves are stocked with baskets of supplies, mostly food items such as dried beans, grains, and preserved fruits and vegetables. There are also barrels of water and other beverages stacked neatly against the walls.",
+        "In the center of the hangar, there is a small office space with a desk and a few chairs. A ledger and quill pen are set up on the desk, and there are a few chests and a small cupboard in the corner."
+      ]
     }
   ]
 }
