@@ -5,7 +5,6 @@ import { anyNumber, anything, instance, when } from 'ts-mockito';
 import { RandomCharacterService } from './random-character.service';
 import { GeneratorService } from './generator.service';
 import { PlayerEntity } from '../entities/player.entity';
-
 import { SkillService } from './skill.service';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
@@ -20,6 +19,7 @@ import {
   mockedSettingsStore,
   mockedSkillService,
   mockedSkillStore,
+  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -27,6 +27,7 @@ import {
   fakeCharacteristics,
   fakeIdentity,
 } from '../../../tests/fakes';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
@@ -54,6 +55,10 @@ describe('RandomCharacterService', () => {
           provide: SettingsStore,
           useValue: instance(mockedSettingsStore),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
@@ -76,29 +81,6 @@ describe('RandomCharacterService', () => {
 
   describe('character', () => {
     it('return new character', () => {
-      const distributedSkills = new Map<string, number>([
-        ['Firearm (Handgun)', 35],
-        ['First Aid', 35],
-        ['Manipulation', 35],
-        ['Detect', 35],
-        ['Research', 35],
-        ['Drive (Automobile)', 35],
-        ['Firearm (Shooter)', 35],
-        ['Brawl', 35],
-        ['Dodge', 35],
-        ['Athleticism', 5],
-        ['Appraise', 5],
-        ['Bargain', 5],
-        ['Disguise', 5],
-        ['Streetwise', 5],
-        ['Hide', 5],
-        ['Melee Weapon (Simple)', 5],
-        ['Ranged Weapon (Throw)', 5],
-        ['Performance', 5],
-        ['Sleight of Hand', 5],
-        ['Survival', 5],
-      ]);
-
       when(mockedSkillService.distribute(anything(), anyNumber()))
         .thenReturn(
           new Map([
@@ -115,20 +97,46 @@ describe('RandomCharacterService', () => {
         )
         .thenReturn(distributedSkills);
 
-      const expectedCharacter = new PlayerEntity(
-        fakeIdentity,
-        ActorBehavior.create(
-          fakeCharacteristics,
-          distributedSkills,
-          instance(mockedSkillStore),
-          actorSettings
-        ),
-        EquipmentBehavior.create()
-      );
-
       const character = service.character();
 
       expect(character).toEqual(expectedCharacter);
     });
   });
 });
+
+const fakeMessageStore = instance(mockedStringMessagesStoreService);
+
+const distributedSkills = new Map<string, number>([
+  ['Firearm (Handgun)', 35],
+  ['First Aid', 35],
+  ['Manipulation', 35],
+  ['Detect', 35],
+  ['Research', 35],
+  ['Drive (Automobile)', 35],
+  ['Firearm (Shooter)', 35],
+  ['Brawl', 35],
+  ['Dodge', 35],
+  ['Athleticism', 5],
+  ['Appraise', 5],
+  ['Bargain', 5],
+  ['Disguise', 5],
+  ['Streetwise', 5],
+  ['Hide', 5],
+  ['Melee Weapon (Simple)', 5],
+  ['Ranged Weapon (Throw)', 5],
+  ['Performance', 5],
+  ['Sleight of Hand', 5],
+  ['Survival', 5],
+]);
+
+const expectedCharacter = new PlayerEntity(
+  fakeIdentity,
+  ActorBehavior.create(
+    fakeCharacteristics,
+    distributedSkills,
+    instance(mockedSkillStore),
+    actorSettings
+  ),
+  EquipmentBehavior.create(),
+  fakeMessageStore
+);

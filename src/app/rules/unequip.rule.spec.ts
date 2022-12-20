@@ -2,15 +2,17 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { createUnEquippedLogMessage } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { UnEquipRule } from './unequip.rule';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 import {
   mockedPlayerEntity,
   mockedInventoryService,
   setupMocks,
+  mockedStringMessagesStoreService,
 } from '../../../tests/mocks';
 import {
   actionUnEquip,
@@ -28,10 +30,21 @@ describe('UnEquipRule', () => {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createUnEquippedLogMessage(
+        playerInfo.name,
+        unDodgeableAxe.identity.label
+      )
+    ).thenReturn(log);
 
     service = TestBed.inject(UnEquipRule);
   });
@@ -63,7 +76,8 @@ describe('UnEquipRule', () => {
   });
 });
 
-const log = createUnEquippedLogMessage(
+const log = new LogMessageDefinition(
+  'UNEQUIPPED',
   playerInfo.name,
   unDodgeableAxe.identity.label
 );

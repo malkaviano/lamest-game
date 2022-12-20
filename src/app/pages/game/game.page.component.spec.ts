@@ -11,9 +11,9 @@ import { ArrayView } from '../../views/array.view';
 import { GameBridgeService } from '../../services/game-bridge.service';
 import { ActionableEvent } from '../../events/actionable.event';
 import { ActionableItemView } from '../../views/actionable-item.view';
-import { createTookLogMessage } from '../../definitions/log-message.definition';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
+import { LogMessageDefinition } from '../../definitions/log-message.definition';
 
 import {
   mockedFormatterHelperService,
@@ -132,7 +132,7 @@ describe('GamePageComponent', () => {
   });
 
   it(`should have action log`, () => {
-    expect(component.logs).toEqual(ArrayView.create([log.toString()]));
+    expect(component.logs).toEqual(ArrayView.create(['player: Sword']));
   });
 
   it(`should have inventory`, () => {
@@ -158,4 +158,4 @@ describe('GamePageComponent', () => {
   });
 });
 
-const log = createTookLogMessage('player', 'test', 'Sword');
+const log = new LogMessageDefinition('ATTACKED', 'player', 'Sword');

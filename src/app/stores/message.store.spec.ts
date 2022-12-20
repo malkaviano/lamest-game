@@ -9,6 +9,7 @@ import { ResourcesStore } from './resources.store';
 import {
   mockedConverterHelper,
   mockedResourcesStore,
+  setupMocks,
 } from '../../../tests/mocks';
 
 describe('MessageStore', () => {
@@ -27,6 +28,8 @@ describe('MessageStore', () => {
         },
       ],
     });
+
+    setupMocks();
 
     when(mockedResourcesStore.messageStore).thenReturn({
       messages: [],

@@ -1,14 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
-import {
-  mockedConverterHelper,
-  mockedResourcesStore,
-} from '../../../tests/mocks';
 
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ActionableStore } from './actionable.store';
 import { ResourcesStore } from './resources.store';
+
+import {
+  mockedConverterHelper,
+  mockedResourcesStore,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('ActionableStore', () => {
   let service: ActionableStore;
@@ -26,6 +28,8 @@ describe('ActionableStore', () => {
         },
       ],
     });
+
+    setupMocks();
 
     when(mockedResourcesStore.actionableStore).thenReturn({
       actionables: [],

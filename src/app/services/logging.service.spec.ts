@@ -32,4 +32,4 @@ describe('LoggingService', () => {
   });
 });
 
-const log = new LogMessageDefinition('FREE', 'me', 'GG');
+const log = new LogMessageDefinition('CHECK', 'me', 'GG');

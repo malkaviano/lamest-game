@@ -6,6 +6,7 @@ import { emptyState } from '../states/empty.state';
 import { ActorEntity } from './actor.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 export class PlayerEntity extends ActorEntity {
   private playerAction: ActionableEvent | null;
@@ -13,7 +14,8 @@ export class PlayerEntity extends ActorEntity {
   constructor(
     public readonly identity: CharacterIdentityDefinition,
     actorBehavior: ActorBehavior,
-    equipmentBehavior: EquipmentBehavior
+    equipmentBehavior: EquipmentBehavior,
+    stringMessagesStoreService: StringMessagesStoreService
   ) {
     super(
       new ActorIdentityDefinition(identity.name, identity.name, ''),
@@ -21,7 +23,8 @@ export class PlayerEntity extends ActorEntity {
       false,
       actorBehavior,
       equipmentBehavior,
-      emptyState
+      emptyState,
+      stringMessagesStoreService
     );
 
     this.playerAction = null;

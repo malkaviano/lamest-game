@@ -5,10 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { RulesHelper } from '../helpers/rules.helper';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { CharacterService } from './character.service';
-import {
-  createActorIsDeadMessage,
-  LogMessageDefinition,
-} from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { NarrativeService } from './narrative.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActorEntity } from '../entities/actor.entity';
@@ -20,6 +17,7 @@ import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +45,8 @@ export class GameRoundService {
     private readonly rulesHelper: RulesHelper,
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
-    private readonly loggingService: LoggingService
+    private readonly loggingService: LoggingService,
+    private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
     this.dispatcher = {
       SKILL: this.rulesHelper.skillRule,
@@ -111,7 +110,11 @@ export class GameRoundService {
             target instanceof ActorEntity &&
             target.situation === 'DEAD'
           ) {
-            this.logging([createActorIsDeadMessage(target.name)]);
+            this.logging([
+              this.stringMessagesStoreService.createActorIsDeadLogMessage(
+                target.name
+              ),
+            ]);
           }
         }
       });

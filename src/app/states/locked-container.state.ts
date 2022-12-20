@@ -1,15 +1,16 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { createOpenedUsingMessage } from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
 export class LockedContainerState extends ActionableState {
   constructor(
     stateAction: ArrayView<ActionableDefinition>,
-    protected readonly openedState: LazyHelper<ActionableState>
+    protected readonly openedState: LazyHelper<ActionableState>,
+    protected readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
     super('LockedContainerState', stateAction);
   }
@@ -28,7 +29,9 @@ export class LockedContainerState extends ActionableState {
     ) {
       return {
         state: this.openedState.value,
-        log: createOpenedUsingMessage(item.identity.label),
+        log: this.stringMessagesStoreService.createOpenedUsingMessage(
+          item.identity.label
+        ),
       };
     }
     return { state: this };

@@ -2,15 +2,17 @@ import { TestBed } from '@angular/core/testing';
 
 import { deepEqual, instance, verify, when } from 'ts-mockito';
 
-import { createTookLogMessage } from '../definitions/log-message.definition';
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
+  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -36,10 +38,22 @@ describe('PickRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createTookLogMessage(
+        playerInfo.name,
+        interactiveInfo.name,
+        simpleSword.identity.label
+      )
+    ).thenReturn(log);
 
     service = TestBed.inject(PickRule);
   });
@@ -81,10 +95,10 @@ describe('PickRule', () => {
   });
 });
 
-const log = createTookLogMessage(
+const log = new LogMessageDefinition(
+  'TOOK',
   playerInfo.name,
-  interactiveInfo.name,
-  simpleSword.identity.label
+  `${interactiveInfo.name}-${simpleSword.identity.label}`
 );
 
 const eventPickSimpleSword = actionableEvent(

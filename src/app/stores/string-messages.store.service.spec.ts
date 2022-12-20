@@ -5,10 +5,10 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import {
   StringMessagesStoreService,
   stringMessagesUrl,
-  STRING_MESSAGES_URL_TOKEN,
+  STRING_MESSAGES_TOKEN,
 } from './string-messages.store.service';
 
-fdescribe('StringMessagesStoreService', () => {
+describe('StringMessagesStoreService', () => {
   let service: StringMessagesStoreService;
 
   beforeAll((done) => {
@@ -16,7 +16,7 @@ fdescribe('StringMessagesStoreService', () => {
       imports: [HttpClientModule],
       providers: [
         {
-          provide: STRING_MESSAGES_URL_TOKEN,
+          provide: STRING_MESSAGES_TOKEN,
           useValue: stringMessagesUrl,
         },
       ],
@@ -27,9 +27,7 @@ fdescribe('StringMessagesStoreService', () => {
     done();
   });
 
-  it('should be created', (done) => {
-    done();
-
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
@@ -37,7 +35,7 @@ fdescribe('StringMessagesStoreService', () => {
     it('return received REMEDY effect, healed 10 hp', (done) => {
       done();
 
-      expect(service.createEffectRestoredHPMessage('REMEDY', 10)).toEqual(
+      expect(service.createEffectRestoredHPMessage('REMEDY', '10')).toEqual(
         'received REMEDY effect, healed 10 hp'
       );
     });
@@ -45,7 +43,7 @@ fdescribe('StringMessagesStoreService', () => {
 
   describe('createEffectDamagedMessage', () => {
     it('return received 10 PROFANE damage', () => {
-      expect(service.createEffectDamagedMessage('PROFANE', 10)).toEqual(
+      expect(service.createEffectDamagedMessage('PROFANE', '10')).toEqual(
         'received 10 PROFANE damage'
       );
     });
@@ -61,7 +59,7 @@ fdescribe('StringMessagesStoreService', () => {
 
   describe('createDestroyedByDamageMessage', () => {
     it('return received 5 FIRE damage and was destroyed', () => {
-      expect(service.createDestroyedByDamageMessage('FIRE', 5)).toEqual(
+      expect(service.createDestroyedByDamageMessage('FIRE', '5')).toEqual(
         'received 5 FIRE damage and was destroyed'
       );
     });
@@ -118,7 +116,7 @@ fdescribe('StringMessagesStoreService', () => {
   describe('createSkillCheckLogMessage', () => {
     it('return Brawl skill checked and rolled 87, it was a FAILURE', () => {
       expect(
-        service.createSkillCheckLogMessage('player', 'Brawl', 87, 'FAILURE')
+        service.createSkillCheckLogMessage('player', 'Brawl', '87', 'FAILURE')
       ).toEqual(
         new LogMessageDefinition(
           'CHECK',
@@ -257,13 +255,17 @@ fdescribe('StringMessagesStoreService', () => {
 
   describe('createEnergizedMessage', () => {
     it('return restored 10 energy', () => {
-      expect(service.createEnergizedMessage(10)).toEqual('restored 10 energy');
+      expect(service.createEnergizedMessage('10')).toEqual(
+        'restored 10 energy'
+      );
     });
   });
 
   describe('createEnergyDrainedMessage', () => {
     it('return lost 10 energy', () => {
-      expect(service.createEnergyDrainedMessage(10)).toEqual('lost 10 energy');
+      expect(service.createEnergyDrainedMessage('10')).toEqual(
+        'lost 10 energy'
+      );
     });
   });
 
@@ -292,7 +294,7 @@ fdescribe('StringMessagesStoreService', () => {
   describe('createEnergySpentLogMessage', () => {
     it('return spent 5 EP to activate sprint', () => {
       expect(
-        service.createEnergySpentLogMessage('player', 5, 'sprint')
+        service.createEnergySpentLogMessage('player', '5', 'sprint')
       ).toEqual(
         new LogMessageDefinition(
           'ACTIVATION',

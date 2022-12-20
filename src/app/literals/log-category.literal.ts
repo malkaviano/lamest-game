@@ -4,7 +4,6 @@ export type LogCategoryLiteral =
   | 'CHECK'
   | 'CONSUMED'
   | 'ATTACKED'
-  | 'FREE'
   | 'EQUIP-ERROR'
   | 'TOOK'
   | 'SCENE'

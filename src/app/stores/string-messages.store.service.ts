@@ -9,7 +9,7 @@ import { ResultLiteral } from '../literals/result.literal';
 
 export const stringMessagesUrl = '../../assets/strings.json';
 
-export const STRING_MESSAGES_URL_TOKEN = new InjectionToken<string>(
+export const STRING_MESSAGES_TOKEN = new InjectionToken<string>(
   stringMessagesUrl
 );
 
@@ -20,7 +20,7 @@ export class StringMessagesStoreService {
   public strings: KeyValueInterface<string>;
 
   constructor(
-    @Inject(STRING_MESSAGES_URL_TOKEN)
+    @Inject(STRING_MESSAGES_TOKEN)
     private readonly stringMessagesUrl: string,
     private readonly httpClient: HttpClient
   ) {
@@ -33,216 +33,284 @@ export class StringMessagesStoreService {
       });
   }
 
-  public createEffectRestoredHPMessage = (
+  public createEffectRestoredHPMessage(
     effectType: EffectTypeLiteral,
-    heal: number
-  ) =>
-    this.strings['effectRestoredHPMessage']
+    heal: string
+  ): string {
+    return this.strings['effectRestoredHPMessage']
       .replace('${effectType}', effectType)
-      .replace('${heal}', heal.toString());
+      .replace('${heal}', heal);
+  }
 
-  public createEffectDamagedMessage = (
+  public createEffectDamagedMessage(
     effectType: EffectTypeLiteral,
-    damage: number
-  ) =>
-    this.strings['effectDamagedMessage']
-      .replace('${damage}', damage.toString())
+    damage: string
+  ): string {
+    return this.strings['effectDamagedMessage']
+      .replace('${damage}', damage)
       .replace('${effectType}', effectType);
+  }
 
-  public createHPDidNotChangeMessage = () =>
-    this.strings['hpDidNotChangeMessage'];
+  public createHPDidNotChangeMessage(): string {
+    return this.strings['hpDidNotChangeMessage'];
+  }
 
-  public createDestroyedByDamageMessage = (
+  public createDestroyedByDamageMessage(
     damageType: EffectTypeLiteral,
-    damage: number
-  ) =>
-    `${this.createEffectDamagedMessage(damageType, damage)} and ${
+    damage: string
+  ): string {
+    return `${this.createEffectDamagedMessage(damageType, damage)} and ${
       this.strings['destroyedMessage']
     }`;
+  }
 
-  public createActorIsDeadLogMessage = (actor: string) =>
-    new LogMessageDefinition('DIED', actor, this.strings['isDeadMessage']);
+  public createOpenedUsingMessage(item: string): string {
+    return this.strings['openedUsingMessage'].replace('${item}', item);
+  }
 
-  public createOpenedUsingMessage = (item: string) =>
-    this.strings['openedUsingMessage'].replace('${item}', item);
+  public createLockpickMovedMessage(direction: string): string {
+    return this.strings['lockpickMovedMessage'].replace(
+      '${direction}',
+      direction
+    );
+  }
 
-  public createLockpickMovedMessage = (direction: string) =>
-    this.strings['lockpickMovedMessage'].replace('${direction}', direction);
+  public createLockpickStuckMessage(direction: string): string {
+    return this.strings['lockpickStuckMessage'].replace(
+      '${direction}',
+      direction
+    );
+  }
 
-  public createLockpickStuckMessage = (direction: string) =>
-    this.strings['lockpickStuckMessage'].replace('${direction}', direction);
-
-  public createLockpickOpenedMessage = (direction: string) =>
-    `${this.createLockpickMovedMessage(direction)} and ${
+  public createLockpickOpenedMessage(direction: string): string {
+    return `${this.createLockpickMovedMessage(direction)} and ${
       this.strings['lockpickOpenedMessage']
     }`;
+  }
 
-  public createLockpickJammedMessage = (direction: string) =>
-    `${this.createLockpickStuckMessage(direction)} and ${
+  public createLockpickJammedMessage(direction: string): string {
+    return `${this.createLockpickStuckMessage(direction)} and ${
       this.strings['lockpickJammedMessage']
     }`;
+  }
 
-  public createSkillCheckLogMessage = (
+  public createEnergizedMessage(energy: string): string {
+    return this.strings['energizedMessage'].replace('${energy}', energy);
+  }
+
+  public createEnergyDrainedMessage(energy: string): string {
+    return this.strings['energyDrainedMessage'].replace('${energy}', energy);
+  }
+
+  public createEnergyDidNotChangeMessage(): string {
+    return this.strings['energyDidNotChangeMessage'];
+  }
+
+  public createSkillCheckLogMessage(
     actor: string,
     skill: string,
-    roll: number,
+    roll: string,
     result: ResultLiteral
-  ) =>
-    new LogMessageDefinition(
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'CHECK',
       actor,
       this.strings['skillCheckMessage']
         .replace('${skill}', skill)
-        .replace('${roll}', roll.toString())
+        .replace('${roll}', roll)
         .replace('${result}', result)
     );
+  }
 
-  public createCannotCheckSkillLogMessage = (actor: string, skill: string) =>
-    new LogMessageDefinition(
+  public createCannotCheckSkillLogMessage(
+    actor: string,
+    skill: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'CHECK',
       actor,
       this.strings['cannotCheckSkillMessage'].replace('${skill}', skill)
     );
+  }
 
-  public createEquippedLogMessage = (actor: string, equipment: string) =>
-    new LogMessageDefinition(
+  public createEquippedLogMessage(
+    actor: string,
+    equipment: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'EQUIPPED',
       actor,
       this.strings['equippedMessage'].replace('${equipment}', equipment)
     );
+  }
 
-  public createUnEquippedLogMessage = (actor: string, equipment: string) =>
-    new LogMessageDefinition(
+  public createUnEquippedLogMessage(
+    actor: string,
+    equipment: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'UNEQUIPPED',
       actor,
       this.strings['unEquippedMessage'].replace('${equipment}', equipment)
     );
+  }
 
-  public createConsumedLogMessage = (actor: string, consumable: string) =>
-    new LogMessageDefinition(
+  public createConsumedLogMessage(
+    actor: string,
+    consumable: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'CONSUMED',
       actor,
       this.strings['consumedMessage'].replace('${consumable}', consumable)
     );
+  }
 
-  public createUsedItemLogMessage = (
+  public createUsedItemLogMessage(
     actor: string,
     target: string,
     item: string
-  ) =>
-    new LogMessageDefinition(
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'USED',
       actor,
       this.strings['usedItemMessage']
         .replace('${target}', target)
         .replace('${item}', item)
     );
+  }
 
-  public createEquipErrorLogMessage = (
+  public createEquipErrorLogMessage(
     actor: string,
     skill: string,
     equipment: string
-  ) =>
-    new LogMessageDefinition(
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'EQUIP-ERROR',
       actor,
       this.strings['equipErrorMessage']
         .replace('${skill}', skill)
         .replace('${equipment}', equipment)
     );
+  }
 
-  public createTookLogMessage = (actor: string, from: string, item: string) =>
-    new LogMessageDefinition(
+  public createTookLogMessage(
+    actor: string,
+    from: string,
+    item: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'TOOK',
       actor,
       this.strings['tookMessage']
         .replace('${from}', from)
         .replace('${item}', item)
     );
+  }
 
-  public createSceneLogMessage = (
+  public createSceneLogMessage(
     actor: string,
     from: string,
     selection: string
-  ) =>
-    new LogMessageDefinition(
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'SCENE',
       actor,
       this.strings['sceneMessage']
         .replace('${from}', from)
         .replace('${selection}', selection)
     );
+  }
 
-  public createLostLogMessage = (actor: string, item: string) =>
-    new LogMessageDefinition(
+  public createLostLogMessage(
+    actor: string,
+    item: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'LOST',
       actor,
       this.strings['lostMessage'].replace('${item}', item)
     );
+  }
 
-  public createUnDodgeableAttackLogMessage = (target: string) =>
-    new LogMessageDefinition(
+  public createUnDodgeableAttackLogMessage(
+    target: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'ATTACKED',
       target,
       this.strings['unDodgeableAttackMessage']
     );
+  }
 
-  public createNotFoundLogMessage = (actor: string, label: string) =>
-    new LogMessageDefinition(
+  public createNotFoundLogMessage(
+    actor: string,
+    label: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'NOT-FOUND',
       actor,
       this.strings['notFoundMessage'].replace('${label}', label)
     );
+  }
 
-  public createItemInspectedLogMessage = (actor: string, item: string) =>
-    new LogMessageDefinition(
+  public createItemInspectedLogMessage(
+    actor: string,
+    item: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'INSPECTED',
       actor,
       this.strings['itemInspectedMessage'].replace('${item}', item)
     );
+  }
 
-  public createOutOfDodgesLogMessage = (target: string) =>
-    new LogMessageDefinition(
+  public createOutOfDodgesLogMessage(target: string): LogMessageDefinition {
+    return new LogMessageDefinition(
       'ATTACKED',
       target,
       this.strings['outOfDodgesMessage']
     );
+  }
 
-  public createEnergizedMessage = (energy: number) =>
-    this.strings['energizedMessage'].replace('${energy}', energy.toString());
-
-  public createEnergyDrainedMessage = (energy: number) =>
-    this.strings['energyDrainedMessage'].replace(
-      '${energy}',
-      energy.toString()
-    );
-
-  public createEnergyDidNotChangeMessage = () =>
-    this.strings['energyDidNotChangeMessage'];
-
-  public createNotEnoughEnergyLogMessage = (actor: string, item: string) =>
-    new LogMessageDefinition(
+  public createNotEnoughEnergyLogMessage(
+    actor: string,
+    item: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'ACTIVATION',
       actor,
       this.strings['notEnoughEnergyMessage'].replace('${item}', item)
     );
+  }
 
-  public createEnergySpentLogMessage = (
+  public createEnergySpentLogMessage(
     actor: string,
-    energySpent: number,
+    energySpent: string,
     item: string
-  ) =>
-    new LogMessageDefinition(
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
       'ACTIVATION',
       actor,
       this.strings['energySpentMessage']
-        .replace('${energySpent}', energySpent.toString())
+        .replace('${energySpent}', energySpent)
         .replace('${item}', item)
     );
+  }
 
-  public createFreeLogMessage = (
+  public createFreeLogMessage(
     category: LogCategoryLiteral,
     actor: string,
     message: string
-  ) => new LogMessageDefinition(category, actor, message);
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(category, actor, message);
+  }
+
+  public createActorIsDeadLogMessage(actor: string): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'DIED',
+      actor,
+      this.strings['isDeadMessage']
+    );
+  }
 }

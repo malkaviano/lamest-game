@@ -5,11 +5,12 @@ import { instance, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
 import { errorMessages } from '../definitions/error-messages.definition';
-import { createItemInspectedLogs } from '../definitions/log-message.definition';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 import {
   mockedInventoryService,
   mockedPlayerEntity,
+  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -19,6 +20,7 @@ import {
   readable,
   simpleSword,
 } from '../../../tests/fakes';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('InspectRule', () => {
   let service: InspectRule;
@@ -30,10 +32,21 @@ describe('InspectRule', () => {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createItemInspectedLogMessage(
+        playerInfo.name,
+        readable.identity.label
+      )
+    ).thenReturn(log);
 
     service = TestBed.inject(InspectRule);
   });
@@ -88,4 +101,8 @@ const eventInspectWrong = actionableEvent(
   simpleSword.identity.name
 );
 
-const log = createItemInspectedLogs(playerInfo.name, readable.identity.label);
+const log = new LogMessageDefinition(
+  'INSPECTED',
+  playerInfo.name,
+  readable.identity.label
+);

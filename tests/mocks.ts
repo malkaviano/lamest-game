@@ -170,7 +170,7 @@ export const mockedExtractorHelper = mock(ExtractorHelper);
 
 export const mockedHttpClient = mock(HttpClient);
 
-export const mockedStringMessagesHelperService = mock(
+export const mockedStringMessagesStoreService = mock(
   StringMessagesStoreService
 );
 
@@ -496,5 +496,5 @@ const resetMocks = () => {
 
   reset(mockedHttpClient);
 
-  reset(mockedStringMessagesHelperService);
+  reset(mockedStringMessagesStoreService);
 };

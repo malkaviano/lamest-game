@@ -2,14 +2,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import {
-  createCannotCheckLogMessage,
-  createCheckLogMessage,
-  createFreeLogMessage,
-} from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 import {
   mockedPlayerEntity,
@@ -17,6 +13,7 @@ import {
   mockedRollService,
   setupMocks,
   mockedExtractorHelper,
+  mockedStringMessagesStoreService,
 } from '../../../tests/mocks';
 import {
   actionableEvent,
@@ -24,6 +21,7 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('SkillRule', () => {
   let service: SkillRule;
@@ -39,10 +37,38 @@ describe('SkillRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createSkillCheckLogMessage(
+        playerInfo.name,
+        'Brawl',
+        '10',
+        'SUCCESS'
+      )
+    ).thenReturn(log1);
+
+    when(
+      mockedStringMessagesStoreService.createCannotCheckSkillLogMessage(
+        playerInfo.name,
+        'Brawl'
+      )
+    ).thenReturn(log2);
+
+    when(
+      mockedStringMessagesStoreService.createFreeLogMessage(
+        'CHECK',
+        interactiveInfo.name,
+        'destroyed by xpto'
+      )
+    ).thenReturn(log3);
 
     when(
       mockedInteractiveEntity.reactTo(
@@ -111,8 +137,16 @@ describe('SkillRule', () => {
 
 const eventSkillBrawl = actionableEvent(actionSkillBrawl, interactiveInfo.id);
 
-const log1 = createCheckLogMessage(playerInfo.name, 'Brawl', 10, 'SUCCESS');
+const log1 = new LogMessageDefinition(
+  'CHECK',
+  playerInfo.name,
+  'Brawl-SUCCESS-10'
+);
 
-const log2 = createCannotCheckLogMessage(playerInfo.name, 'Brawl');
+const log2 = new LogMessageDefinition('CHECK', playerInfo.name, 'NOP-Brawl');
 
-const log3 = createFreeLogMessage(interactiveInfo.name, 'destroyed by xpto');
+const log3 = new LogMessageDefinition(
+  'ATTACKED',
+  interactiveInfo.name,
+  'destroyed by xpto'
+);

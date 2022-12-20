@@ -4,6 +4,7 @@ import { instance, when } from 'ts-mockito';
 import {
   mockedConverterHelper,
   mockedResourcesStore,
+  setupMocks,
 } from '../../../tests/mocks';
 
 import { ConverterHelper } from '../helpers/converter.helper';
@@ -26,6 +27,8 @@ describe('DescriptionStore', () => {
         },
       ],
     });
+
+    setupMocks();
 
     when(mockedResourcesStore.descriptionStore).thenReturn({
       descriptions: [],

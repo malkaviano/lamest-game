@@ -4,14 +4,16 @@ import { anything, deepEqual, instance, when } from 'ts-mockito';
 
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { createFreeLogMessage } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { InteractionRule } from './interaction.rule';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedPlayerEntity,
+  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import { interactiveInfo, playerInfo } from '../../../tests/fakes';
@@ -26,10 +28,30 @@ describe('InteractionRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createFreeLogMessage(
+        'INSPECTED',
+        playerInfo.name,
+        'Hi'
+      )
+    ).thenReturn(log1);
+
+    when(
+      mockedStringMessagesStoreService.createFreeLogMessage(
+        'INSPECTED',
+        interactiveInfo.name,
+        'Hello'
+      )
+    ).thenReturn(log2);
 
     service = TestBed.inject(InteractionRule);
   });
@@ -60,6 +82,10 @@ describe('InteractionRule', () => {
   });
 });
 
-const log1 = createFreeLogMessage(playerInfo.name, 'Hi');
+const log1 = new LogMessageDefinition('INSPECTED', playerInfo.name, 'Hi');
 
-const log2 = createFreeLogMessage(interactiveInfo.name, 'Hello');
+const log2 = new LogMessageDefinition(
+  'INSPECTED',
+  interactiveInfo.name,
+  'Hello'
+);

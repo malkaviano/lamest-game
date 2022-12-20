@@ -3,22 +3,21 @@ import { TestBed } from '@angular/core/testing';
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { errorMessages } from '../definitions/error-messages.definition';
-import {
-  createCannotCheckLogMessage,
-  createCheckLogMessage,
-  createConsumedLogMessage,
-  createFreeLogMessage,
-  createEffectRestoredHPMessage,
-} from '../definitions/log-message.definition';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
 import { RollService } from '../services/roll.service';
+import { EffectEvent } from '../events/effect.event';
+import { ExtractorHelper } from '../helpers/extractor.helper';
+import { ConsumableDefinition } from '../definitions/consumable.definition';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
   mockedInventoryService,
   mockedPlayerEntity,
   mockedRollService,
+  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -29,9 +28,6 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
-import { EffectEvent } from '../events/effect.event';
-import { ExtractorHelper } from '../helpers/extractor.helper';
-import { ConsumableDefinition } from '../definitions/consumable.definition';
 
 describe('ConsumeRule', () => {
   let service: ConsumeRule;
@@ -51,10 +47,83 @@ describe('ConsumeRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createConsumedLogMessage(
+        playerInfo.name,
+        consumableAnalgesic.identity.label
+      )
+    ).thenReturn(logAnalgesic1);
+
+    when(
+      mockedStringMessagesStoreService.createEffectRestoredHPMessage(
+        consumableAnalgesic.effect,
+        '2'
+      )
+    ).thenReturn(logHeal2);
+
+    when(
+      mockedStringMessagesStoreService.createFreeLogMessage(
+        'CONSUMED',
+        playerInfo.name,
+        logHeal2
+      )
+    ).thenReturn(logAnalgesic2);
+
+    when(
+      mockedStringMessagesStoreService.createConsumedLogMessage(
+        playerInfo.name,
+        'First Aid Kit'
+      )
+    ).thenReturn(logFirstAid1);
+
+    when(
+      mockedStringMessagesStoreService.createSkillCheckLogMessage(
+        playerInfo.name,
+        'First Aid',
+        '10',
+        'SUCCESS'
+      )
+    ).thenReturn(logFirstAidSuccess);
+
+    when(
+      mockedStringMessagesStoreService.createEffectRestoredHPMessage(
+        consumableFirstAid.effect,
+        '5'
+      )
+    ).thenReturn(logHeal5);
+
+    when(
+      mockedStringMessagesStoreService.createFreeLogMessage(
+        'CONSUMED',
+        playerInfo.name,
+        logHeal5
+      )
+    ).thenReturn(logFirstAid3);
+
+    when(
+      mockedStringMessagesStoreService.createSkillCheckLogMessage(
+        playerInfo.name,
+        'First Aid',
+        '100',
+        'FAILURE'
+      )
+    ).thenReturn(logFirstAidFailure);
+
+    when(
+      mockedStringMessagesStoreService.createCannotCheckSkillLogMessage(
+        playerInfo.name,
+        'First Aid'
+      )
+    ).thenReturn(logError);
 
     service = TestBed.inject(ConsumeRule);
   });
@@ -225,36 +294,51 @@ describe('ConsumeRule', () => {
   });
 });
 
-const logAnalgesic1 = createConsumedLogMessage(
+const logAnalgesic1 = new LogMessageDefinition(
+  'CONSUMED',
   playerInfo.name,
   consumableAnalgesic.identity.label
 );
 
-const logHeal2 = createEffectRestoredHPMessage(consumableAnalgesic.effect, 2);
+const logHeal2 = `${consumableAnalgesic.effect}-2`;
 
-const logAnalgesic2 = createFreeLogMessage(playerInfo.name, logHeal2);
-
-const logFirstAid1 = createConsumedLogMessage(playerInfo.name, 'First Aid Kit');
-
-const logFirstAidSuccess = createCheckLogMessage(
+const logAnalgesic2 = new LogMessageDefinition(
+  'CONSUMED',
   playerInfo.name,
-  'First Aid',
-  10,
-  'SUCCESS'
+  logHeal2
 );
 
-const logHeal5 = createEffectRestoredHPMessage(consumableFirstAid.effect, 5);
-
-const logFirstAid3 = createFreeLogMessage(playerInfo.name, logHeal5);
-
-const logFirstAidFailure = createCheckLogMessage(
+const logFirstAid1 = new LogMessageDefinition(
+  'CONSUMED',
   playerInfo.name,
-  'First Aid',
-  100,
-  'FAILURE'
+  'First Aid Kit'
 );
 
-const logError = createCannotCheckLogMessage(playerInfo.name, 'First Aid');
+const logFirstAidSuccess = new LogMessageDefinition(
+  'CHECK',
+  playerInfo.name,
+  'First Aid-10-SUCCESS'
+);
+
+const logHeal5 = `${consumableFirstAid.effect}-5`;
+
+const logFirstAid3 = new LogMessageDefinition(
+  'CONSUMED',
+  playerInfo.name,
+  logHeal5
+);
+
+const logFirstAidFailure = new LogMessageDefinition(
+  'CHECK',
+  playerInfo.name,
+  'First Aid-100-FAILURE'
+);
+
+const logError = new LogMessageDefinition(
+  'CHECK',
+  playerInfo.name,
+  'First Aid'
+);
 
 const eventConsumeFirstAid = actionableEvent(
   actionConsume,

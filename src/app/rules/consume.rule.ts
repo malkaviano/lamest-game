@@ -5,18 +5,13 @@ import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
-import {
-  createCannotCheckLogMessage,
-  createCheckLogMessage,
-  createConsumedLogMessage,
-  createFreeLogMessage,
-  LogMessageDefinition,
-} from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +20,8 @@ export class ConsumeRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollRule: RollService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {}
 
   public execute(
@@ -58,15 +54,18 @@ export class ConsumeRule implements RuleInterface {
 
     if (rollDefinition.result !== 'IMPOSSIBLE') {
       logs.push(
-        createConsumedLogMessage(actor.name, consumable.identity.label)
+        this.stringMessagesStoreService.createConsumedLogMessage(
+          actor.name,
+          consumable.identity.label
+        )
       );
 
       if (rollDefinition.result !== 'NONE' && consumable.skillName) {
         logs.push(
-          createCheckLogMessage(
+          this.stringMessagesStoreService.createSkillCheckLogMessage(
             actor.name,
             consumable.skillName,
-            rollDefinition.roll,
+            rollDefinition.roll.toString(),
             rollDefinition.result
           )
         );
@@ -78,10 +77,21 @@ export class ConsumeRule implements RuleInterface {
       });
 
       if (log) {
-        logs.push(createFreeLogMessage(actor.name, log));
+        logs.push(
+          this.stringMessagesStoreService.createFreeLogMessage(
+            'CONSUMED',
+            actor.name,
+            log
+          )
+        );
       }
     } else if (consumable.skillName) {
-      logs.push(createCannotCheckLogMessage(actor.name, consumable.skillName));
+      logs.push(
+        this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
+          actor.name,
+          consumable.skillName
+        )
+      );
     }
 
     return { logs };

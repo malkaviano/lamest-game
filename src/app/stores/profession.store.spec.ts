@@ -9,6 +9,7 @@ import { ResourcesStore } from './resources.store';
 import {
   mockedConverterHelper,
   mockedResourcesStore,
+  setupMocks,
 } from '../../../tests/mocks';
 
 describe('ProfessionStore', () => {
@@ -27,6 +28,9 @@ describe('ProfessionStore', () => {
         },
       ],
     });
+
+    setupMocks();
+
     service = TestBed.inject(ProfessionStore);
   });
 

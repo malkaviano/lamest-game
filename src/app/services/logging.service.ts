@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { Observable, Subject } from 'rxjs';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 @Injectable({

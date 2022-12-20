@@ -4,13 +4,11 @@ import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { NarrativeService } from '../services/narrative.service';
-import {
-  createSceneLogMessage,
-  LogMessageDefinition,
-} from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +16,8 @@ import { ExtractorHelper } from '../helpers/extractor.helper';
 export class SceneRule implements RuleInterface {
   constructor(
     private readonly narrativeService: NarrativeService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {}
 
   public execute(
@@ -33,7 +32,7 @@ export class SceneRule implements RuleInterface {
     this.narrativeService.changeScene(action);
 
     logs.push(
-      createSceneLogMessage(
+      this.stringMessagesStoreService.createSceneLogMessage(
         actor.name,
         target.name,
         action.actionableDefinition.label

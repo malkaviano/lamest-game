@@ -1,7 +1,3 @@
-import {
-  createEffectDamagedMessage,
-  createDestroyedByDamageMessage,
-} from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../views/array.view';
 import { DestroyableState } from './destroyable.state';
@@ -12,8 +8,35 @@ import {
   actionPickSimpleSword,
   fakeEffect,
 } from '../../../tests/fakes';
+import { instance, when } from 'ts-mockito';
+import {
+  mockedStringMessagesStoreService,
+  setupMocks,
+} from '../../../tests/mocks';
+
+const logKinetic6 = 'KINETIC-6';
+
+const logKinetic12 = 'KINETIC-12';
 
 describe('DestroyableState', () => {
+  beforeEach(() => {
+    setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createEffectDamagedMessage(
+        'KINETIC',
+        '6'
+      )
+    ).thenReturn(logKinetic6);
+
+    when(
+      mockedStringMessagesStoreService.createDestroyedByDamageMessage(
+        'KINETIC',
+        '12'
+      )
+    ).thenReturn(logKinetic12);
+  });
+
   describe('when HP <= 0', () => {
     it('return DiscardState', () => {
       const result = state.onResult(actionAttack, 'SUCCESS', {
@@ -22,7 +45,7 @@ describe('DestroyableState', () => {
 
       expect(result).toEqual({
         state: discardedState,
-        log: log12,
+        log: logKinetic12,
       });
     });
   });
@@ -33,7 +56,7 @@ describe('DestroyableState', () => {
         effect: fakeEffect('KINETIC', 6),
       });
 
-      expect(result).toEqual({ state: state2, log: log6 });
+      expect(result).toEqual({ state: state2, log: logKinetic6 });
     });
   });
 
@@ -54,10 +77,18 @@ const f = () => discardedState;
 
 const lazy = new LazyHelper(f);
 
-const state = new DestroyableState(ArrayView.create([actionAttack]), lazy, 10);
+const fakeMessageStore = instance(mockedStringMessagesStoreService);
 
-const state2 = new DestroyableState(ArrayView.create([actionAttack]), lazy, 4);
+const state = new DestroyableState(
+  ArrayView.create([actionAttack]),
+  lazy,
+  10,
+  fakeMessageStore
+);
 
-const log6 = createEffectDamagedMessage(6, 'KINETIC');
-
-const log12 = createDestroyedByDamageMessage(12, 'KINETIC');
+const state2 = new DestroyableState(
+  ArrayView.create([actionAttack]),
+  lazy,
+  4,
+  fakeMessageStore
+);

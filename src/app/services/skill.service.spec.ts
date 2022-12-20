@@ -3,11 +3,10 @@ import { TestBed } from '@angular/core/testing';
 import { instance, when } from 'ts-mockito';
 
 import { ArrayView } from '../views/array.view';
-
 import { RandomIntService } from './random-int.service';
 import { SkillService } from './skill.service';
 
-import { mockedRandomIntService } from '../../../tests/mocks';
+import { mockedRandomIntService, setupMocks } from '../../../tests/mocks';
 
 describe('SkillService', () => {
   let service: SkillService;
@@ -21,6 +20,9 @@ describe('SkillService', () => {
         },
       ],
     });
+
+    setupMocks();
+
     service = TestBed.inject(SkillService);
   });
 

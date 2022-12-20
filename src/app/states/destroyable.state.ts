@@ -1,11 +1,8 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import {
-  createEffectDamagedMessage,
-  createDestroyedByDamageMessage,
-} from '../definitions/log-message.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
@@ -13,7 +10,8 @@ export class DestroyableState extends ActionableState {
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
     protected readonly destroyedState: LazyHelper<ActionableState>,
-    public readonly hitPoints: number
+    public readonly hitPoints: number,
+    protected readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
     super('DestroyableState', stateActions);
   }
@@ -37,15 +35,22 @@ export class DestroyableState extends ActionableState {
           state: new DestroyableState(
             this.stateActions,
             this.destroyedState,
-            hp
+            hp,
+            this.stringMessagesStoreService
           ),
-          log: createEffectDamagedMessage(dmg, values.effect.effectType),
+          log: this.stringMessagesStoreService.createEffectDamagedMessage(
+            values.effect.effectType,
+            dmg.toString()
+          ),
         };
       }
 
       return {
         state: this.destroyedState.value,
-        log: createDestroyedByDamageMessage(dmg, values.effect.effectType),
+        log: this.stringMessagesStoreService.createDestroyedByDamageMessage(
+          values.effect.effectType,
+          dmg.toString()
+        ),
       };
     }
 

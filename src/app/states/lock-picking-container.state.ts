@@ -1,19 +1,13 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { directionNamesDefinition } from '../definitions/directions.definition';
-import {
-  createLockpickOpenedMessage,
-  createLockpickMovedMessage,
-  createLockpickStuckMessage,
-  createLockpickJammedMessage,
-} from '../definitions/log-message.definition';
-
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { DirectionLiteral } from '../literals/direction.literal';
 import { ResultLiteral } from '../literals/result.literal';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
-import { LockedContainerState } from './locked-container';
+import { LockedContainerState } from './locked-container.state';
 
 export class LockPickingContainerState extends LockedContainerState {
   private lockPosition: number;
@@ -27,11 +21,13 @@ export class LockPickingContainerState extends LockedContainerState {
     private readonly jammedStateActions: ArrayView<ActionableDefinition>,
     openedState: LazyHelper<ActionableState>,
     private readonly lockSequence: ArrayView<DirectionLiteral>,
-    private readonly maximumTries: number
+    private readonly maximumTries: number,
+    stringMessagesStoreService: StringMessagesStoreService
   ) {
     super(
       ArrayView.create([...lockPickActions.items, ...jammedStateActions.items]),
-      openedState
+      openedState,
+      stringMessagesStoreService
     );
 
     this.lockPosition = 0;
@@ -60,11 +56,18 @@ export class LockPickingContainerState extends LockedContainerState {
         if (this.sequence === this.lockSequence.items.length) {
           return {
             state: this.openedState.value,
-            log: createLockpickOpenedMessage(direction),
+            log: this.stringMessagesStoreService.createLockpickOpenedMessage(
+              direction
+            ),
           };
         }
 
-        return { state: this, log: createLockpickMovedMessage(direction) };
+        return {
+          state: this,
+          log: this.stringMessagesStoreService.createLockpickMovedMessage(
+            direction
+          ),
+        };
       }
 
       this.lockPosition = 0;
@@ -77,13 +80,21 @@ export class LockPickingContainerState extends LockedContainerState {
         return {
           state: new LockedContainerState(
             this.jammedStateActions,
-            this.openedState
+            this.openedState,
+            this.stringMessagesStoreService
           ),
-          log: createLockpickJammedMessage(direction),
+          log: this.stringMessagesStoreService.createLockpickJammedMessage(
+            direction
+          ),
         };
       }
 
-      return { state: this, log: createLockpickStuckMessage(direction) };
+      return {
+        state: this,
+        log: this.stringMessagesStoreService.createLockpickStuckMessage(
+          direction
+        ),
+      };
     }
 
     return super.stateResult(action, result, values);

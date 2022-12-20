@@ -14,9 +14,11 @@ import {
   mockedResourcesStore,
   mockedSkillStore,
   mockedStatesStore,
+  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import { SkillStore } from './skill.store';
+import { StringMessagesStoreService } from './string-messages.store.service';
 
 describe('ActorStore', () => {
   let service: ActorStore;
@@ -43,6 +45,10 @@ describe('ActorStore', () => {
         {
           provide: SkillStore,
           useValue: instance(mockedSkillStore),
+        },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });

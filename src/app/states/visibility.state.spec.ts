@@ -17,7 +17,11 @@ import {
   fakeCharacteristics,
   fakeIdentity,
 } from '../../../tests/fakes';
-import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
+import {
+  mockedSkillStore,
+  mockedStringMessagesStoreService,
+  setupMocks,
+} from '../../../tests/mocks';
 
 const fakeState = (action: ActionableDefinition, tries: number) =>
   new VisibilityState(action, tries);
@@ -144,5 +148,6 @@ const fakeCharacter = () =>
       instance(mockedSkillStore),
       actorSettings
     ),
-    EquipmentBehavior.create()
+    EquipmentBehavior.create(),
+    instance(mockedStringMessagesStoreService)
   );

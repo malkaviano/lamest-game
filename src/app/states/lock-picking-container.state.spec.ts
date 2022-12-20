@@ -1,16 +1,11 @@
+import { instance, when } from 'ts-mockito';
+
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../views/array.view';
 import { DiscardState } from './discard.state';
 import { LockPickingContainerState } from './lock-picking-container.state';
-import {
-  createLockpickOpenedMessage,
-  createLockpickMovedMessage,
-  createLockpickStuckMessage,
-  createOpenedUsingMessage,
-  createLockpickJammedMessage,
-} from '../definitions/log-message.definition';
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { LockedContainerState } from './locked-container';
+import { LockedContainerState } from './locked-container.state';
 import { ActionableState } from './actionable.state';
 import {
   directionActionableDefinition,
@@ -18,12 +13,19 @@ import {
 } from '../definitions/directions.definition';
 
 import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';
+import {
+  mockedStringMessagesStoreService,
+  setupMocks,
+} from '../../../tests/mocks';
 
 const f = () => lootState;
 
+const fakeMessageStore = instance(mockedStringMessagesStoreService);
+
 const jammedState = new LockedContainerState(
   ArrayView.create([actionUseMasterKey]),
-  new LazyHelper<DiscardState>(f)
+  new LazyHelper<DiscardState>(f),
+  fakeMessageStore
 );
 
 const allDirectionsDefinition = ArrayView.create(
@@ -38,22 +40,51 @@ const fakeState = () =>
     ArrayView.create([actionUseMasterKey]),
     new LazyHelper<DiscardState>(f),
     ArrayView.create(['LEFT', 'DOWN']),
-    3
+    3,
+    fakeMessageStore
   );
 
-const logLeft = createLockpickMovedMessage('LEFT');
+const logLeft = 'createLockpickMovedMessage-LEFT';
 
-const logRight = createLockpickStuckMessage('RIGHT');
+const logRight = 'createLockpickStuckMessage-RIGHT';
 
-const logOpen = createLockpickOpenedMessage('DOWN');
+const logOpen = 'createLockpickOpenedMessage-DOWN';
 
-const logUp = createLockpickStuckMessage('UP');
+const logUp = 'createLockpickStuckMessage-UP';
 
-const logJammed = createLockpickJammedMessage('UP');
+const logJammed = 'createLockpickJammedMessage-UP';
 
-const log = createOpenedUsingMessage('Master Key');
+const log = 'createOpenedUsingMessage-Master Key';
 
 describe('LockPickingContainerState', () => {
+  beforeEach(() => {
+    setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createLockpickMovedMessage('LEFT')
+    ).thenReturn(logLeft);
+
+    when(
+      mockedStringMessagesStoreService.createLockpickStuckMessage('RIGHT')
+    ).thenReturn(logRight);
+
+    when(
+      mockedStringMessagesStoreService.createLockpickOpenedMessage('DOWN')
+    ).thenReturn(logOpen);
+
+    when(
+      mockedStringMessagesStoreService.createLockpickStuckMessage('UP')
+    ).thenReturn(logUp);
+
+    when(
+      mockedStringMessagesStoreService.createLockpickJammedMessage('UP')
+    ).thenReturn(logJammed);
+
+    when(
+      mockedStringMessagesStoreService.createOpenedUsingMessage('Master Key')
+    ).thenReturn(log);
+  });
+
   describe('when using a master key', () => {
     it('return discarded state and log', () => {
       const result = fakeState().onResult(actionUseMasterKey, 'USED', {

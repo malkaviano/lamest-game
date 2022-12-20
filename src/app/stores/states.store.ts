@@ -14,7 +14,7 @@ import { MessageStore } from './message.store';
 import { ArrayView } from '../views/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResourcesStore } from './resources.store';
-import { LockedContainerState } from '../states/locked-container';
+import { LockedContainerState } from '../states/locked-container.state';
 import { LockPickingContainerState } from '../states/lock-picking-container.state';
 import { GeneratorService } from '../services/generator.service';
 import {
@@ -22,6 +22,7 @@ import {
   directionNamesDefinition,
 } from '../definitions/directions.definition';
 import { VisibilityState } from '../states/visibility.state';
+import { StringMessagesStoreService } from './string-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,8 @@ export class StatesStore {
     messageStore: MessageStore,
     actionableStore: ActionableStore,
     resourcesStore: ResourcesStore,
-    generatorService: GeneratorService
+    generatorService: GeneratorService,
+    stringMessagesStoreService: StringMessagesStoreService
   ) {
     this.store = new Map<string, ActionableState>();
 
@@ -95,7 +97,8 @@ export class StatesStore {
         new DestroyableState(
           actionables,
           this.lazyState(state.destroyedState),
-          state.hitpoints
+          state.hitpoints,
+          stringMessagesStoreService
         )
       );
     });
@@ -117,11 +120,13 @@ export class StatesStore {
             ArrayView.create(
               generatorService.lockPickSequence(state.lockPicking.complexity)
             ),
-            state.lockPicking.maximumTries
+            state.lockPicking.maximumTries,
+            stringMessagesStoreService
           )
         : new LockedContainerState(
             actionables,
-            this.lazyState(state.openedState)
+            this.lazyState(state.openedState),
+            stringMessagesStoreService
           );
 
       this.store.set(state.id, locked);

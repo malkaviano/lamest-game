@@ -3,14 +3,6 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { HitPointsEvent } from '../events/hit-points.event';
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import {
-  createEffectDamagedMessage,
-  createEffectRestoredHPMessage,
-  createEnergizedMessage,
-  createEnergyDidNotChangeMessage,
-  createEnergyDrainedMessage,
-  createHPDidNotChangeMessage,
-} from '../definitions/log-message.definition';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActorEntity } from './actor.entity';
 import { emptyState } from '../states/empty.state';
@@ -37,12 +29,52 @@ import {
 import {
   mockedActorBehavior,
   mockedEquipmentBehavior,
+  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
+
+const remedy5Log = 'REMEDY-5';
+
+const energized4Log = 'energy-4';
+
+const hpNotChangedLog = 'HP not changed';
+
+const epNotChangedLog = 'EP not changed';
+
+const drained4Log = 'energy-drain-4';
+
+const acid9Log = 'ACID-9';
 
 describe('ActorEntity', () => {
   beforeEach(() => {
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createEffectRestoredHPMessage(
+        'REMEDY',
+        '5'
+      )
+    ).thenReturn(remedy5Log);
+
+    when(
+      mockedStringMessagesStoreService.createEffectDamagedMessage('ACID', '9')
+    ).thenReturn(acid9Log);
+
+    when(
+      mockedStringMessagesStoreService.createEnergizedMessage('4')
+    ).thenReturn(energized4Log);
+
+    when(
+      mockedStringMessagesStoreService.createHPDidNotChangeMessage()
+    ).thenReturn(hpNotChangedLog);
+
+    when(
+      mockedStringMessagesStoreService.createEnergyDidNotChangeMessage()
+    ).thenReturn(epNotChangedLog);
+
+    when(
+      mockedStringMessagesStoreService.createEnergyDrainedMessage('4')
+    ).thenReturn(drained4Log);
 
     when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
 
@@ -80,11 +112,11 @@ describe('ActorEntity', () => {
           [
             {
               event: new HitPointsEvent(9, 0),
-              log: createEffectDamagedMessage(9, 'ACID'),
+              log: acid9Log,
             },
             {
               event: new HitPointsEvent(9, 9),
-              log: createHPDidNotChangeMessage(),
+              log: hpNotChangedLog,
             },
           ].forEach(({ event, log }) => {
             it('return damage taken', () => {
@@ -174,7 +206,7 @@ describe('ActorEntity', () => {
           resultHpEvent: new HitPointsEvent(4, 9),
           energy: 0,
           resultEpEvent: new EnergyPointsEvent(6, 6),
-          resultLog: `${createEffectRestoredHPMessage('REMEDY', 5)}`,
+          resultLog: remedy5Log,
           hpEventEmitted: new HitPointsEvent(4, 9),
           epEventEmitted: undefined,
         },
@@ -185,10 +217,7 @@ describe('ActorEntity', () => {
           resultHpEvent: new HitPointsEvent(4, 9),
           energy: 4,
           resultEpEvent: new EnergyPointsEvent(2, 6),
-          resultLog: `${createEffectRestoredHPMessage(
-            'REMEDY',
-            5
-          )} and ${createEnergizedMessage(4)}`,
+          resultLog: `${remedy5Log} and ${energized4Log}`,
           hpEventEmitted: new HitPointsEvent(4, 9),
           epEventEmitted: new EnergyPointsEvent(2, 6),
         },
@@ -199,7 +228,7 @@ describe('ActorEntity', () => {
           resultHpEvent: new HitPointsEvent(9, 9),
           energy: 4,
           resultEpEvent: new EnergyPointsEvent(6, 6),
-          resultLog: `${createHPDidNotChangeMessage()} and ${createEnergyDidNotChangeMessage()}`,
+          resultLog: `${hpNotChangedLog} and ${epNotChangedLog}`,
           hpEventEmitted: undefined,
           epEventEmitted: undefined,
         },
@@ -210,7 +239,7 @@ describe('ActorEntity', () => {
           resultHpEvent: new HitPointsEvent(9, 9),
           energy: -4,
           resultEpEvent: new EnergyPointsEvent(6, 2),
-          resultLog: `${createEnergyDrainedMessage(4)}`,
+          resultLog: drained4Log,
           hpEventEmitted: undefined,
           epEventEmitted: new EnergyPointsEvent(6, 2),
         },
@@ -421,6 +450,8 @@ describe('ActorEntity', () => {
   });
 });
 
+const fakeMessageStore = instance(mockedStringMessagesStoreService);
+
 const fakeActor = () =>
   new ActorEntity(
     new ActorIdentityDefinition('id1', 'actor', 'Some Actor'),
@@ -428,7 +459,8 @@ const fakeActor = () =>
     false,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
-    emptyState
+    emptyState,
+    fakeMessageStore
   );
 
 const equipActorScenario = (

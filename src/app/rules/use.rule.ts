@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import {
-  createFreeLogMessage,
-  createLostLogMessage,
-  createNotFoundLogMessage,
-} from '../definitions/log-message.definition';
 import { UsableDefinition } from '../definitions/usable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
@@ -13,6 +8,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { InventoryService } from '../services/inventory.service';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +16,8 @@ import { InventoryService } from '../services/inventory.service';
 export class UseRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {}
 
   execute(
@@ -40,7 +37,10 @@ export class UseRule implements RuleInterface {
     if (!item) {
       return {
         logs: [
-          createNotFoundLogMessage(actor.name, actionableDefinition.label),
+          this.stringMessagesStoreService.createNotFoundLogMessage(
+            actor.name,
+            actionableDefinition.label
+          ),
         ],
       };
     }
@@ -50,10 +50,21 @@ export class UseRule implements RuleInterface {
     const log = target.reactTo(actionableDefinition, 'USED', { item });
 
     if (log) {
-      logs.push(createFreeLogMessage(target.name, log));
+      logs.push(
+        this.stringMessagesStoreService.createFreeLogMessage(
+          'USED',
+          target.name,
+          log
+        )
+      );
     }
 
-    logs.push(createLostLogMessage(actor.name, item.identity.label));
+    logs.push(
+      this.stringMessagesStoreService.createLostLogMessage(
+        actor.name,
+        item.identity.label
+      )
+    );
 
     return {
       logs,

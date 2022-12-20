@@ -1,16 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, verify } from 'ts-mockito';
+import { instance, verify, when } from 'ts-mockito';
 
-import { createSceneLogMessage } from '../definitions/log-message.definition';
 import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
+import { ExtractorHelper } from '../helpers/extractor.helper';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedNarrativeService,
   mockedPlayerEntity,
+  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -19,7 +22,6 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
-import { ExtractorHelper } from '../helpers/extractor.helper';
 
 describe('SceneRule', () => {
   let service: SceneRule;
@@ -35,10 +37,22 @@ describe('SceneRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createSceneLogMessage(
+        playerInfo.name,
+        interactiveInfo.name,
+        'Exit'
+      )
+    ).thenReturn(log);
 
     service = TestBed.inject(SceneRule);
   });
@@ -64,8 +78,4 @@ describe('SceneRule', () => {
 
 const event = actionableEvent(actionSceneExit, interactiveInfo.id);
 
-const log = createSceneLogMessage(
-  playerInfo.name,
-  interactiveInfo.name,
-  'Exit'
-);
+const log = new LogMessageDefinition('SCENE', playerInfo.name, 'Exit');

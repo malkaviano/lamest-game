@@ -3,17 +3,15 @@ import { TestBed } from '@angular/core/testing';
 import { anything, deepEqual, instance, when } from 'ts-mockito';
 import { of, take } from 'rxjs';
 
-import {
-  createActorIsDeadMessage,
-  createFreeLogMessage,
-  LogMessageDefinition,
-} from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RulesHelper } from '../helpers/rules.helper';
 import { CharacterService } from './character.service';
 import { GameRoundService } from './game-round.service';
 import { NarrativeService } from './narrative.service';
 import { LoggingService } from './logging.service';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { ArrayView } from '../views/array.view';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 import {
   actionableEvent,
@@ -35,17 +33,25 @@ import {
   mockedSceneEntity,
   setupMocks,
   mockedInteractiveEntity,
+  mockedStringMessagesStoreService,
 } from '../../../tests/mocks';
-import { ArrayView } from '../views/array.view';
+
+const actor = instance(mockedActorEntity);
+
+const actor2 = instance(mockedActorEntity2);
+
+const player = instance(mockedPlayerEntity);
+
+const log1 = new LogMessageDefinition('ATTACKED', playerInfo.name, 'logged1');
+
+const log2 = new LogMessageDefinition('ATTACKED', playerInfo.name, 'logged2');
+
+const log3 = new LogMessageDefinition('ATTACKED', playerInfo.name, 'logged3');
+
+const logDied = new LogMessageDefinition('DIED', playerInfo.name, 'dead');
 
 describe('GameRoundService', () => {
   let service: GameRoundService;
-
-  const actor = instance(mockedActorEntity);
-
-  const actor2 = instance(mockedActorEntity2);
-
-  const player = instance(mockedPlayerEntity);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -66,10 +72,18 @@ describe('GameRoundService', () => {
           provide: LoggingService,
           useValue: instance(mockedLoggingService),
         },
+        {
+          provide: StringMessagesStoreService,
+          useValue: instance(mockedStringMessagesStoreService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(
+      mockedStringMessagesStoreService.createActorIsDeadLogMessage
+    ).thenReturn(() => logDied);
 
     when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
 
@@ -231,14 +245,6 @@ describe('GameRoundService', () => {
     });
   });
 });
-
-const log1 = createFreeLogMessage(interactiveInfo.name, 'took some dmg');
-
-const log2 = createFreeLogMessage(playerInfo.name, 'dodged');
-
-const log3 = createFreeLogMessage(playerInfo.name, 'NOOOO');
-
-const logDied = createActorIsDeadMessage(playerInfo.name);
 
 const eventAttackPlayer = actionableEvent(actionAttack, playerInfo.id);
 

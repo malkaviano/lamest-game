@@ -13,6 +13,8 @@ import { ActionableItemView } from '../../views/actionable-item.view';
 import { ActionableEvent } from '../../events/actionable.event';
 import { unarmedWeapon } from '../../definitions/weapon.definition';
 
+import { instance } from 'ts-mockito';
+
 import {
   actionAsk,
   fakeCharacterSheet,
@@ -23,6 +25,10 @@ import {
   molotov,
   simpleSword,
 } from '../../../../tests/fakes';
+import {
+  mockedStringMessagesStoreService,
+  setupMocks,
+} from '../../../../tests/mocks';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;
@@ -34,6 +40,8 @@ describe('GameLayoutComponent', () => {
       declarations: [GameLayoutComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
+
+    setupMocks();
 
     fixture = TestBed.createComponent(GameLayoutComponent);
 
@@ -113,14 +121,7 @@ describe('GameLayoutComponent', () => {
       expect(result.properties['panelName']).toEqual('interactives');
 
       expect(result.properties['interactives']).toEqual(
-        ArrayView.create([
-          new InteractiveEntity(
-            'id1',
-            'props1',
-            'This is props1',
-            new SimpleState(ArrayView.create([actionAsk]))
-          ),
-        ])
+        ArrayView.create([fakeInteractive])
       );
     });
 
@@ -196,14 +197,18 @@ describe('GameLayoutComponent', () => {
   });
 });
 
+const fakeMessageStore = instance(mockedStringMessagesStoreService);
+
+const fakeInteractive = new InteractiveEntity(
+  'id1',
+  'props1',
+  'This is props1',
+  new SimpleState(ArrayView.create([actionAsk])),
+  true,
+  fakeMessageStore
+);
+
 const scene = new SceneDefinition(
   ArrayView.create(['this is a test', 'okay okay']),
-  ArrayView.create([
-    new InteractiveEntity(
-      'id1',
-      'props1',
-      'This is props1',
-      new SimpleState(ArrayView.create([actionAsk]))
-    ),
-  ])
+  ArrayView.create([fakeInteractive])
 );

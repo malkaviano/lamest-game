@@ -9,6 +9,7 @@ import { ResourcesStore } from './resources.store';
 import {
   mockedConverterHelper,
   mockedResourcesStore,
+  setupMocks,
 } from '../../../tests/mocks';
 
 describe('SkillStore', () => {
@@ -27,6 +28,8 @@ describe('SkillStore', () => {
         },
       ],
     });
+
+    setupMocks();
 
     when(mockedResourcesStore.skillStore).thenReturn({
       skills: [],

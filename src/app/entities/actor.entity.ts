@@ -9,14 +9,6 @@ import {
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
-import {
-  createEffectDamagedMessage,
-  createEffectRestoredHPMessage,
-  createEnergizedMessage,
-  createEnergyDidNotChangeMessage,
-  createEnergyDrainedMessage,
-  createHPDidNotChangeMessage,
-} from '../definitions/log-message.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { EffectEvent } from '../events/effect.event';
@@ -31,6 +23,7 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 
@@ -59,14 +52,16 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     resettable: boolean,
     protected readonly actorBehavior: ActorBehavior,
     protected readonly equipmentBehavior: EquipmentBehavior,
-    protected readonly killedState: ActionableState
+    protected readonly killedState: ActionableState,
+    stringMessagesStoreService: StringMessagesStoreService
   ) {
     super(
       identity.id,
       identity.name,
       identity.description,
       currentState,
-      resettable
+      resettable,
+      stringMessagesStoreService
     );
 
     this.mVisibility = 'VISIBLE';
@@ -220,17 +215,17 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     if (result.current > result.previous) {
-      resultLog = createEffectRestoredHPMessage(
+      resultLog = this.stringMessagesStoreService.createEffectRestoredHPMessage(
         effect.effectType,
-        result.effective
+        result.effective.toString()
       );
     } else if (result.current < result.previous) {
-      resultLog = createEffectDamagedMessage(
-        result.effective,
-        effect.effectType
+      resultLog = this.stringMessagesStoreService.createEffectDamagedMessage(
+        effect.effectType,
+        result.effective.toString()
       );
     } else {
-      resultLog = createHPDidNotChangeMessage();
+      resultLog = this.stringMessagesStoreService.createHPDidNotChangeMessage();
     }
 
     return resultLog;
@@ -246,11 +241,16 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     if (result.current > result.previous) {
-      resultLog = createEnergizedMessage(result.effective);
+      resultLog = this.stringMessagesStoreService.createEnergizedMessage(
+        result.effective.toString()
+      );
     } else if (result.current < result.previous) {
-      resultLog = createEnergyDrainedMessage(result.effective);
+      resultLog = this.stringMessagesStoreService.createEnergyDrainedMessage(
+        result.effective.toString()
+      );
     } else {
-      resultLog = createEnergyDidNotChangeMessage();
+      resultLog =
+        this.stringMessagesStoreService.createEnergyDidNotChangeMessage();
     }
 
     return resultLog;

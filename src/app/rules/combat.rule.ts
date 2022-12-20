@@ -2,18 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import {
-  createFreeLogMessage,
-  createUsedItemLogMessage,
-  LogMessageDefinition,
-  createCheckLogMessage,
-  createCannotCheckLogMessage,
-  createUnDodgeableAttackLogMessage,
-  createLostLogMessage,
-  createOutOfDodgesLogMessage,
-  createNotEnoughEnergyLogMessage,
-  createEnergySpentLogMessage,
-} from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import {
   ActionableDefinition,
@@ -27,6 +16,7 @@ import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorEntity } from '../entities/actor.entity';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +26,8 @@ export class CombatRule implements RuleInterface {
 
   constructor(
     private readonly rollRule: RollService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
     this.activationAction = createActionableDefinition('CONSUME', '', '');
   }
@@ -84,7 +75,12 @@ export class CombatRule implements RuleInterface {
         }
       }
     } else {
-      logs.push(createNotEnoughEnergyLogMessage(actor.name, identity.label));
+      logs.push(
+        this.stringMessagesStoreService.createNotEnoughEnergyLogMessage(
+          actor.name,
+          identity.label
+        )
+      );
     }
 
     return { logs, dodged };
@@ -97,7 +93,9 @@ export class CombatRule implements RuleInterface {
   ): void {
     actor.unEquip();
 
-    logs.push(createLostLogMessage(actor.name, label));
+    logs.push(
+      this.stringMessagesStoreService.createLostLogMessage(actor.name, label)
+    );
   }
 
   private activateItem(
@@ -113,7 +111,11 @@ export class CombatRule implements RuleInterface {
 
       if (energySpentLog) {
         logs.push(
-          createEnergySpentLogMessage(actor.name, energySpentLog, label)
+          this.stringMessagesStoreService.createEnergySpentLogMessage(
+            actor.name,
+            energySpentLog,
+            label
+          )
         );
       }
     }
@@ -135,11 +137,20 @@ export class CombatRule implements RuleInterface {
         this.rollRule.actorSkillCheck(actor, skillName);
 
       logs.push(
-        createUsedItemLogMessage(actor.name, targetActor.name, weaponLabel)
+        this.stringMessagesStoreService.createUsedItemLogMessage(
+          actor.name,
+          targetActor.name,
+          weaponLabel
+        )
       );
 
       logs.push(
-        createCheckLogMessage(actor.name, skillName, actorRoll, actorResult)
+        this.stringMessagesStoreService.createSkillCheckLogMessage(
+          actor.name,
+          skillName,
+          actorRoll.toString(),
+          actorResult
+        )
       );
 
       targetWasHit = actorResult === 'SUCCESS';
@@ -166,7 +177,11 @@ export class CombatRule implements RuleInterface {
           logs
         );
       } else {
-        logs.push(createUnDodgeableAttackLogMessage(target.name));
+        logs.push(
+          this.stringMessagesStoreService.createUnDodgeableAttackLogMessage(
+            target.name
+          )
+        );
       }
     }
 
@@ -186,15 +201,29 @@ export class CombatRule implements RuleInterface {
     let dodged = dodgeResult === 'SUCCESS';
 
     if (dodgeResult === 'IMPOSSIBLE') {
-      logs.push(createCannotCheckLogMessage(targetActor.name, 'Dodge'));
+      logs.push(
+        this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
+          targetActor.name,
+          'Dodge'
+        )
+      );
     } else if (dodgesPerformed < maxDodges) {
       logs.push(
-        createCheckLogMessage(targetActor.name, 'Dodge', dodgeRoll, dodgeResult)
+        this.stringMessagesStoreService.createSkillCheckLogMessage(
+          targetActor.name,
+          'Dodge',
+          dodgeRoll.toString(),
+          dodgeResult
+        )
       );
     } else {
       dodged = false;
 
-      logs.push(createOutOfDodgesLogMessage(targetActor.name));
+      logs.push(
+        this.stringMessagesStoreService.createOutOfDodgesLogMessage(
+          targetActor.name
+        )
+      );
     }
 
     return dodged;
@@ -213,7 +242,13 @@ export class CombatRule implements RuleInterface {
     });
 
     if (log) {
-      logs.push(createFreeLogMessage(target.name, log));
+      logs.push(
+        this.stringMessagesStoreService.createFreeLogMessage(
+          'ATTACKED',
+          target.name,
+          log
+        )
+      );
     }
   }
 

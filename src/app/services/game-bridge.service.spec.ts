@@ -145,7 +145,7 @@ describe('GameBridgeService', () => {
 const inventoryEventSubject = new Subject<InventoryEvent>();
 
 const log = new LogMessageDefinition(
-  'FREE',
+  'ATTACKED',
   playerInfo.name,
   unDodgeableAxe.identity.label
 );

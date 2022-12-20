@@ -4,13 +4,11 @@ import { ActionableEvent } from '../events/actionable.event';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
-import {
-  createTookLogMessage,
-  LogMessageDefinition,
-} from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +16,8 @@ import { ExtractorHelper } from '../helpers/extractor.helper';
 export class PickRule implements RuleInterface {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {}
 
   public execute(
@@ -41,7 +40,13 @@ export class PickRule implements RuleInterface {
     const log = target.reactTo(action.actionableDefinition, 'NONE', {});
 
     if (log) {
-      logs.push(createTookLogMessage(actor.name, target.name, log));
+      logs.push(
+        this.stringMessagesStoreService.createTookLogMessage(
+          actor.name,
+          target.name,
+          log
+        )
+      );
     }
 
     return { logs };
