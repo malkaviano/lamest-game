@@ -74,7 +74,10 @@ describe('SkillRule', () => {
       mockedInteractiveEntity.reactTo(
         actionSkillBrawl,
         'SUCCESS',
-        deepEqual({ actorVisibility: instance(mockedPlayerEntity) })
+        deepEqual({
+          actorVisibility: instance(mockedPlayerEntity),
+          target: instance(mockedInteractiveEntity),
+        })
       )
     ).thenReturn('destroyed by xpto');
 

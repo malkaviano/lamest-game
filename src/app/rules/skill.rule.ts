@@ -45,6 +45,7 @@ export class SkillRule implements RuleInterface {
 
       const log = target.reactTo(event.actionableDefinition, result, {
         actorVisibility: actor,
+        target,
       });
 
       if (log) {
