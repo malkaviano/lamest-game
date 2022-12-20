@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 
 import { of } from 'rxjs';
@@ -48,6 +49,10 @@ import { DescriptionStore } from '../src/app/stores/description.store';
 import { ActorStore } from '../src/app/stores/actor.store';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { SkillStore } from '../src/app/stores/skill.store';
+import { InspectRule } from '../src/app/rules/inspect.rule';
+import { SettingsStore } from '../src/app/stores/settings.store';
+import { ExtractorHelper } from '../src/app/helpers/extractor.helper';
+import { StringMessagesStoreService } from '../src/app/stores/string-messages.store.service';
 
 import {
   actorInfo,
@@ -62,9 +67,6 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { InspectRule } from '../src/app/rules/inspect.rule';
-import { SettingsStore } from '../src/app/stores/settings.store';
-import { ExtractorHelper } from '../src/app/helpers/extractor.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -165,6 +167,12 @@ export const mockedInspectRule = mock(InspectRule);
 export const mockedSettingsStore = mock(SettingsStore);
 
 export const mockedExtractorHelper = mock(ExtractorHelper);
+
+export const mockedHttpClient = mock(HttpClient);
+
+export const mockedStringMessagesHelperService = mock(
+  StringMessagesStoreService
+);
 
 export const setupMocks = () => {
   resetMocks();
@@ -485,4 +493,8 @@ const resetMocks = () => {
   reset(mockedActorEntity2);
 
   reset(mockedExtractorHelper);
+
+  reset(mockedHttpClient);
+
+  reset(mockedStringMessagesHelperService);
 };

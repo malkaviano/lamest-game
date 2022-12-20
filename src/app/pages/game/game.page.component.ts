@@ -12,6 +12,7 @@ import { ArrayView } from '../../views/array.view';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 import { DocumentOpenedInterface } from '../../interfaces/reader-dialog.interface';
+import { LogMessageDefinition } from '../../definitions/log-message.definition';
 
 @Component({
   selector: 'app-game-page',
@@ -79,7 +80,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     this.withSubscriptionHelper.addSubscription(
       this.gameManagerService.events.actionLogged$.subscribe((log) => {
-        this.gameLogs.unshift(log.toString());
+        this.gameLogs.unshift(this.printLog(log));
       })
     );
 
@@ -98,12 +99,16 @@ export class GamePageComponent implements OnInit, OnDestroy {
     );
   }
 
-  informActionSelected(action: ActionableEvent): void {
+  public informActionSelected(action: ActionableEvent): void {
     this.gameManagerService.actionableReceived(action);
   }
 
   public get logs(): ArrayView<string> {
     return ArrayView.create(this.gameLogs);
+  }
+
+  private printLog(logMessage: LogMessageDefinition): string {
+    return `${logMessage.actor}: ${logMessage.message}`;
   }
 
   private openReaderDialog(data: DocumentOpenedInterface): void {

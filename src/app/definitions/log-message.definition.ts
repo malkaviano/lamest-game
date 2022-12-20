@@ -8,10 +8,6 @@ export class LogMessageDefinition {
     public readonly actor: string,
     public readonly message: string
   ) {}
-
-  public toString(): string {
-    return `${this.actor}: ${this.message}`;
-  }
 }
 
 export const createEffectRestoredHPMessage = (
