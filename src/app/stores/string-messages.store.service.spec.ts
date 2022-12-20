@@ -2,29 +2,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import {
-  StringMessagesStoreService,
-  stringMessagesUrl,
-  STRING_MESSAGES_TOKEN,
-} from './string-messages.store.service';
+import { StringMessagesStoreService } from './string-messages.store.service';
 
 describe('StringMessagesStoreService', () => {
   let service: StringMessagesStoreService;
 
-  beforeAll((done) => {
+  beforeAll(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      providers: [
-        {
-          provide: STRING_MESSAGES_TOKEN,
-          useValue: stringMessagesUrl,
-        },
-      ],
     });
 
     service = TestBed.inject(StringMessagesStoreService);
-
-    done();
   });
 
   it('should be created', () => {
@@ -32,9 +20,7 @@ describe('StringMessagesStoreService', () => {
   });
 
   describe('createEffectRestoredHPMessage', () => {
-    it('return received REMEDY effect, healed 10 hp', (done) => {
-      done();
-
+    it('return received REMEDY effect, healed 10 hp', () => {
       expect(service.createEffectRestoredHPMessage('REMEDY', '10')).toEqual(
         'received REMEDY effect, healed 10 hp'
       );

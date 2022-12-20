@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
@@ -7,30 +6,20 @@ import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { LogCategoryLiteral } from '../literals/log-category.literal';
 import { ResultLiteral } from '../literals/result.literal';
 
-export const stringMessagesUrl = '../../assets/strings.json';
-
-export const STRING_MESSAGES_TOKEN = new InjectionToken<string>(
-  stringMessagesUrl
-);
+import stringMessages from '../../assets/strings.json';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StringMessagesStoreService {
-  public strings: KeyValueInterface<string>;
+  private mStrings: KeyValueInterface<string>;
 
-  constructor(
-    @Inject(STRING_MESSAGES_TOKEN)
-    private readonly stringMessagesUrl: string,
-    private readonly httpClient: HttpClient
-  ) {
-    this.strings = {};
+  constructor() {
+    this.mStrings = stringMessages;
+  }
 
-    this.httpClient
-      .get<KeyValueInterface<string>>(this.stringMessagesUrl)
-      .subscribe((data) => {
-        this.strings = data;
-      });
+  public get strings(): KeyValueInterface<string> {
+    return this.mStrings;
   }
 
   public createEffectRestoredHPMessage(

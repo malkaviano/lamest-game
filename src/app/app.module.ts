@@ -18,10 +18,6 @@ import { GameLayoutComponent } from './layouts/game/game.layout.component';
 import { InteractivePanelComponent } from './panels/interactive/interactive.panel.component';
 import { InventoryPanelComponent } from './panels/inventory/inventory.panel.component';
 import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component';
-import {
-  stringMessagesUrl,
-  STRING_MESSAGES_TOKEN,
-} from './stores/string-messages.store.service';
 
 @NgModule({
   declarations: [
@@ -45,12 +41,6 @@ import {
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-  ],
-  providers: [
-    {
-      provide: STRING_MESSAGES_TOKEN,
-      useValue: stringMessagesUrl,
-    },
   ],
   bootstrap: [AppComponent],
 })
