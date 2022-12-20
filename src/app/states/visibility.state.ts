@@ -1,5 +1,6 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
+import { ActorEntity } from '../entities/actor.entity';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
@@ -22,13 +23,27 @@ export class VisibilityState extends ActionableState {
   ): { state: ActionableState; log?: string } {
     const actor = values.actorVisibility;
 
-    if (!actor) {
+    const target = values.target;
+
+    if (!actor && ['Disguise', 'Hide'].includes(action.name)) {
       throw new Error(errorMessages['INVALID-OPERATION']);
     }
 
+    if (!(target instanceof ActorEntity) && ['Detect'].includes(action.name)) {
+      throw new Error(errorMessages['INVALID-OPERATION']);
+    }
+
+    const actorVisibility = this.actorVisibility(action.name);
+
     switch (result) {
       case 'SUCCESS':
-        actor.visibility = this.visibility(action.name);
+        if (actor && actorVisibility) {
+          actor.visibility = actorVisibility;
+        }
+
+        if (target instanceof ActorEntity && action.name === 'Detect') {
+          target.visibility = 'VISIBLE';
+        }
 
         return { state: emptyState };
       case 'FAILURE':
@@ -46,7 +61,7 @@ export class VisibilityState extends ActionableState {
     }
   }
 
-  private visibility(skillName: string): VisibilityLiteral {
+  private actorVisibility(skillName: string): VisibilityLiteral | null {
     if (skillName === 'Disguise') {
       return 'DISGUISED';
     }
@@ -55,6 +70,6 @@ export class VisibilityState extends ActionableState {
       return 'HIDDEN';
     }
 
-    return 'VISIBLE';
+    return null;
   }
 }

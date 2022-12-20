@@ -11,6 +11,7 @@ import { emptyState } from './empty.state';
 
 import {
   actionAsk,
+  actionDetect,
   actionDisguise,
   actionHide,
   actorSettings,
@@ -18,6 +19,7 @@ import {
   fakeIdentity,
 } from '../../../tests/fakes';
 import {
+  mockedPlayerEntity,
   mockedSkillStore,
   mockedStringMessagesStoreService,
   setupMocks,
@@ -32,10 +34,41 @@ describe('VisibilityState', () => {
   });
 
   describe('when actorVisibility was not defined', () => {
-    it('throw Invalid operation ocurred', () => {
-      expect(() =>
-        fakeState(actionDisguise, 1).onResult(actionDisguise, 'SUCCESS', {})
-      ).toThrowError(errorMessages['INVALID-OPERATION']);
+    [
+      {
+        action: actionDisguise,
+      },
+      {
+        action: actionHide,
+      },
+    ].forEach(({ action }) => {
+      describe(`when action was ${action}`, () => {
+        it('throw Invalid operation ocurred', () => {
+          expect(() =>
+            fakeState(action, 1).onResult(action, 'SUCCESS', {
+              target: instance(mockedPlayerEntity),
+            })
+          ).toThrowError(errorMessages['INVALID-OPERATION']);
+        });
+      });
+    });
+  });
+
+  describe('when target was not defined', () => {
+    [
+      {
+        action: actionDetect,
+      },
+    ].forEach(({ action }) => {
+      describe(`when action was ${action}`, () => {
+        it('throw Invalid operation ocurred', () => {
+          expect(() =>
+            fakeState(action, 1).onResult(action, 'SUCCESS', {
+              actorVisibility: instance(mockedPlayerEntity),
+            })
+          ).toThrowError(errorMessages['INVALID-OPERATION']);
+        });
+      });
     });
   });
 
@@ -84,34 +117,76 @@ describe('VisibilityState', () => {
         tries: 1,
       },
     ].forEach(({ action, visibility, rollResult, expected, tries }) => {
-      describe(`when visibility was ${visibility}`, () => {
-        it('return state', () => {
-          const char = fakeCharacter();
+      it('return state', () => {
+        const char = fakeCharacter();
 
-          const result = fakeState(action, tries).onResult(
-            action,
-            rollResult as ResultLiteral,
-            {
-              actorVisibility: char,
-            }
-          );
+        const result = fakeState(action, tries).onResult(
+          action,
+          rollResult as ResultLiteral,
+          {
+            actorVisibility: char,
+          }
+        );
 
-          expect(result).toEqual(expected);
+        expect(result).toEqual(expected);
+      });
+
+      it('should set actor visibility', () => {
+        const char = fakeCharacter();
+
+        fakeState(action, tries).onResult(action, rollResult as ResultLiteral, {
+          actorVisibility: char,
+          target: char,
         });
 
-        it('should set actor visibility', () => {
-          const char = fakeCharacter();
+        expect(char.visibility).toEqual(visibility);
+      });
+    });
+  });
 
-          fakeState(action, tries).onResult(
-            action,
-            rollResult as ResultLiteral,
-            {
-              actorVisibility: char,
-            }
-          );
+  describe('when target was defined', () => {
+    [
+      {
+        visibility: 'VISIBLE',
+        action: actionDetect,
+        rollResult: 'SUCCESS',
+        expected: { state: emptyState },
+        tries: 2,
+      },
+      {
+        visibility: 'HIDDEN',
+        action: actionDetect,
+        rollResult: 'FAILURE',
+        expected: { state: emptyState },
+        tries: 1,
+      },
+    ].forEach(({ action, visibility, rollResult, expected, tries }) => {
+      it('return state', () => {
+        const char = fakeCharacter();
 
-          expect(char.visibility).toEqual(visibility);
+        const result = fakeState(action, tries).onResult(
+          action,
+          rollResult as ResultLiteral,
+          {
+            actorVisibility: char,
+            target: char,
+          }
+        );
+
+        expect(result).toEqual(expected);
+      });
+
+      it('should set target visibility', () => {
+        const char = fakeCharacter();
+
+        char.visibility = 'HIDDEN';
+
+        fakeState(action, tries).onResult(action, rollResult as ResultLiteral, {
+          actorVisibility: char,
+          target: char,
         });
+
+        expect(char.visibility).toEqual(visibility);
       });
     });
   });
