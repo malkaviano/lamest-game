@@ -15,6 +15,11 @@
     },
 
     {
+      "id": "bushesLoot",
+      "actionables": ["friendNote"]
+    },
+
+    {
       "id": "shelfLoot",
       "actionables": ["firstAid", "firstAid"]
     },

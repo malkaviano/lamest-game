@@ -50,6 +50,19 @@
         "I don't know what to make of this, but I can't shake the feeling that something very wrong is happening in these woods.",
         "I'm not sure I want to stay here much longer."
       ]
+    },
+    {
+      "name": "friendNote",
+      "label": "Friend's Note",
+      "description": "Small Handwritten Note",
+      "title": "LATE!!!",
+      "text": [
+        "Unfortunately if you are reading this is because I had to move on before your arrival.",
+        "I gonna try to sneak into the Village, the guards are not that bad unless you try to enter building you're not supposed to.",
+        "I left some clothes around, maybe you can try them, guards may allow you inside building if you manage to disguise yourself.",
+        "Also, there're enough wood, just make fire when needed.",
+        "I'm glad you are not so idiotic to move on before reading my note, find me in the Village so we can talk."
+      ]
     }
   ]
 }

@@ -99,6 +99,13 @@
       "description": "Make some fire here",
       "state": "campFireOff",
       "resettable": true
+    },
+    {
+      "id": "bushes",
+      "name": "Bushes",
+      "description": "Looks like some branches are broken",
+      "state": "bushesDetect",
+      "resettable": false
     }
   ],
   "inventoryItems": [
@@ -134,42 +141,10 @@
     },
 
     {
-      "id": "upperShelf",
+      "id": "bushes",
       "items": [
         {
-          "name": "firstAid",
-          "quantity": 2
-        }
-      ]
-    },
-    {
-      "id": "woodBox",
-      "items": [
-        {
-          "name": "club",
-          "quantity": 1
-        },
-        {
-          "name": "masterKey",
-          "quantity": 1
-        }
-      ]
-    },
-
-    {
-      "id": "lockedChest",
-      "items": [
-        {
-          "name": "halberd",
-          "quantity": 1
-        }
-      ]
-    },
-    {
-      "id": "lockPickingChest",
-      "items": [
-        {
-          "name": "g17",
+          "name": "friendNote",
           "quantity": 1
         }
       ]

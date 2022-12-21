@@ -114,6 +114,20 @@
     },
 
     {
+      "key": "bushesDetect",
+      "name": "Detect",
+      "actionable": "SKILL",
+      "label": "Search"
+    },
+
+    {
+      "key": "friendNote",
+      "name": "friendNote",
+      "actionable": "PICK",
+      "label": "Friend's Note"
+    },
+
+    {
       "key": "athleticism",
       "name": "Athleticism",
       "actionable": "SKILL"

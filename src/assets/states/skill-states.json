@@ -5,6 +5,12 @@
       "actionable": "makeFire",
       "maximumTries": 100,
       "successState": "campFireOn"
+    },
+    {
+      "id": "bushesDetect",
+      "actionable": "bushesDetect",
+      "maximumTries": 100,
+      "successState": "bushesLoot"
     }
   ]
 }
