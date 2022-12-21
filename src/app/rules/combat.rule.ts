@@ -88,7 +88,7 @@ export class CombatRule extends MasterRuleService {
 
     this.checkIfTargetDied(target);
 
-    return { dodged };
+    return {};
   }
 
   private checkIfTargetDied(target: ActionReactiveInterface) {
@@ -208,7 +208,7 @@ export class CombatRule extends MasterRuleService {
     const { result: dodgeResult, roll: dodgeRoll } =
       this.rollRule.actorSkillCheck(targetActor, 'Dodge');
 
-    let dodged = dodgeResult === 'SUCCESS';
+    const dodged = dodgeResult === 'SUCCESS' && dodgesPerformed < maxDodges;
 
     if (dodgeResult === 'IMPOSSIBLE') {
       const logMessage =
@@ -218,7 +218,9 @@ export class CombatRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-    } else if (dodgesPerformed < maxDodges) {
+    } else if (dodged) {
+      this.actorDodged.next(targetActor.id);
+
       const logMessage =
         this.stringMessagesStoreService.createSkillCheckLogMessage(
           targetActor.name,
@@ -229,8 +231,6 @@ export class CombatRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     } else {
-      dodged = false;
-
       const logMessage =
         this.stringMessagesStoreService.createOutOfDodgesLogMessage(
           targetActor.name

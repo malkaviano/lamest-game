@@ -57,6 +57,10 @@ export class GameRoundService {
     this.documentOpened$ = this.documentOpened.asObservable();
 
     this.dodgesPerRound = new Map<string, number>();
+
+    this.ruleDispatcherService.actorDodged$.subscribe((actorId) => {
+      this.actorDodged(actorId);
+    });
   }
 
   public run(): void {
@@ -76,8 +80,6 @@ export class GameRoundService {
             targetDodgesPerformed: this.dodgesPerRound.get(target?.id),
           });
 
-          this.setDodges(result, target);
-
           this.inspect(result);
         }
       });
@@ -85,20 +87,15 @@ export class GameRoundService {
   }
 
   private inspect(result: RuleResultInterface) {
-    if (result.documentOpened) {
+    if (result?.documentOpened) {
       this.documentOpened.next(result.documentOpened);
     }
   }
 
-  private setDodges(
-    result: RuleResultInterface,
-    target: ActionReactiveInterface
-  ): void {
-    if (result.dodged) {
-      const dodges = this.dodgesPerRound.get(target.id) ?? 0;
+  private actorDodged(targetId: string): void {
+    const dodges = this.dodgesPerRound.get(targetId) ?? 0;
 
-      this.dodgesPerRound.set(target.id, dodges + 1);
-    }
+    this.dodgesPerRound.set(targetId, dodges + 1);
   }
 
   private isPlayerAlive(): boolean {

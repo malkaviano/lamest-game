@@ -13,12 +13,20 @@ import { RuleInterface } from '../interfaces/rule.interface';
 export abstract class MasterRuleService implements RuleInterface {
   protected readonly ruleLog: Subject<LogMessageDefinition>;
 
+  protected readonly actorDodged: Subject<string>;
+
   public readonly ruleLog$: Observable<LogMessageDefinition>;
+
+  public readonly actorDodged$: Observable<string>;
 
   constructor() {
     this.ruleLog = new Subject();
 
     this.ruleLog$ = this.ruleLog.asObservable();
+
+    this.actorDodged = new Subject();
+
+    this.actorDodged$ = this.actorDodged.asObservable();
   }
 
   public abstract execute(

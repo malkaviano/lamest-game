@@ -192,7 +192,7 @@ describe('CombatRule', () => {
           { target: instance(mockedInteractiveEntity) }
         );
 
-        expect(result).toEqual({ dodged: false });
+        expect(result).toEqual({});
       });
     });
 
@@ -217,9 +217,7 @@ describe('CombatRule', () => {
               target: instance(target),
             });
 
-            expect(result).toEqual({
-              dodged: false,
-            });
+            expect(result).toEqual({});
           });
         });
 
@@ -243,9 +241,7 @@ describe('CombatRule', () => {
                 { target: instance(target) }
               );
 
-              expect(result).toEqual({
-                dodged: false,
-              });
+              expect(result).toEqual({});
             });
           });
 
@@ -280,9 +276,7 @@ describe('CombatRule', () => {
                 { target: instance(target) }
               );
 
-              expect(result).toEqual({
-                dodged: false,
-              });
+              expect(result).toEqual({});
             });
           });
 
@@ -321,9 +315,7 @@ describe('CombatRule', () => {
                   target: instance(target),
                 });
 
-                expect(result).toEqual({
-                  dodged: true,
-                });
+                expect(result).toEqual({});
               });
             });
 
@@ -361,9 +353,7 @@ describe('CombatRule', () => {
                   { target: instance(target) }
                 );
 
-                expect(result).toEqual({
-                  dodged: false,
-                });
+                expect(result).toEqual({});
               });
             });
           });
@@ -397,9 +387,7 @@ describe('CombatRule', () => {
           { target: instance(mockedInteractiveEntity) }
         );
 
-        expect(result).toEqual({
-          dodged: false,
-        });
+        expect(result).toEqual({});
       });
     });
 
@@ -436,9 +424,7 @@ describe('CombatRule', () => {
           targetDodgesPerformed: 2,
         });
 
-        expect(result).toEqual({
-          dodged: false,
-        });
+        expect(result).toEqual({});
       });
     });
 
@@ -464,9 +450,7 @@ describe('CombatRule', () => {
           { target: instance(mockedActorEntity) }
         );
 
-        expect(result).toEqual({
-          dodged: false,
-        });
+        expect(result).toEqual({});
       });
     });
 
@@ -536,9 +520,7 @@ describe('CombatRule', () => {
           { target: instance(mockedActorEntity) }
         );
 
-        expect(result).toEqual({
-          dodged: false,
-        });
+        expect(result).toEqual({});
       });
     });
   });

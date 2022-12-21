@@ -25,6 +25,8 @@ export class RuleDispatcherService {
 
   public readonly logMessagePublished$: Observable<LogMessageDefinition>;
 
+  public readonly actorDodged$: Observable<string>;
+
   constructor(
     private readonly skillRule: SkillRule,
     private readonly pickRule: PickRule,
@@ -64,5 +66,7 @@ export class RuleDispatcherService {
       this.useRule.ruleLog$,
       this.inspectRule.ruleLog$
     );
+
+    this.actorDodged$ = this.combatRule.actorDodged$;
   }
 }

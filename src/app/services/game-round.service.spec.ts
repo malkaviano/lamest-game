@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, deepEqual, instance, when } from 'ts-mockito';
+import { anything, instance, when } from 'ts-mockito';
 import { of, take } from 'rxjs';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
@@ -9,11 +9,11 @@ import { GameRoundService } from './game-round.service';
 import { NarrativeService } from './narrative.service';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 import { ArrayView } from '../views/array.view';
+import { RuleDispatcherService } from './rule-dispatcher.service';
 
 import {
   actionableEvent,
   actionAttack,
-  actorInfo,
   documentOpened,
   interactiveInfo,
   playerInfo,
@@ -31,15 +31,10 @@ import {
   mockedInteractiveEntity,
   mockedStringMessagesStoreService,
 } from '../../../tests/mocks';
-import { RuleDispatcherService } from './rule-dispatcher.service';
 
 const actor = instance(mockedActorEntity);
 
 const actor2 = instance(mockedActorEntity2);
-
-const player = instance(mockedPlayerEntity);
-
-const log2 = new LogMessageDefinition('ATTACKED', playerInfo.name, 'logged2');
 
 const logDied = new LogMessageDefinition('DIED', playerInfo.name, 'dead');
 
@@ -80,6 +75,12 @@ describe('GameRoundService', () => {
       AFFECT: instance(mockedCombatRule),
     });
 
+    when(mockedRuleDispatcherService.logMessagePublished$).thenReturn(of());
+
+    when(mockedRuleDispatcherService.actorDodged$).thenReturn(
+      of(playerInfo.id)
+    );
+
     when(mockedSceneEntity.interactives).thenReturn(
       ArrayView.create([instance(mockedInteractiveEntity), actor, actor2])
     );
@@ -117,66 +118,10 @@ describe('GameRoundService', () => {
         expect(result).toEqual(documentOpened);
       });
     });
-
-    describe('when actor dodged', () => {
-      it('should increment actor dodges', () => {
-        when(mockedPlayerEntity.action).thenReturn(() => eventAttackActor);
-
-        when(
-          mockedCombatRule.execute(
-            player,
-            eventAttackActor,
-            deepEqual({
-              target: actor,
-              targetDodgesPerformed: undefined,
-            })
-          )
-        ).thenReturn({});
-
-        when(
-          mockedCombatRule.execute(
-            actor,
-            eventAttackPlayer,
-            deepEqual({
-              target: player,
-              targetDodgesPerformed: undefined,
-            })
-          )
-        ).thenReturn({
-          dodged: true,
-        });
-
-        let result = false;
-
-        when(
-          mockedCombatRule.execute(
-            actor2,
-            eventAttackPlayer,
-            deepEqual({
-              target: player,
-              targetDodgesPerformed: 1,
-            })
-          )
-        ).thenCall(() => {
-          result = true;
-
-          return {
-            logs: [log2],
-            dodged: true,
-          };
-        });
-
-        service.run();
-
-        expect(result).toEqual(true);
-      });
-    });
   });
 });
 
 const eventAttackPlayer = actionableEvent(actionAttack, playerInfo.id);
-
-const eventAttackActor = actionableEvent(actionAttack, actorInfo.id);
 
 const eventAttackInteractive = actionableEvent(
   actionAttack,
