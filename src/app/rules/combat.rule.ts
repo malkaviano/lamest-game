@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
@@ -17,11 +16,12 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorEntity } from '../entities/actor.entity';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CombatRule implements RuleInterface {
+export class CombatRule extends MasterRuleService {
   public readonly activationAction: ActionableDefinition;
 
   constructor(
@@ -29,6 +29,8 @@ export class CombatRule implements RuleInterface {
     private readonly extractorHelper: ExtractorHelper,
     private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
+    super();
+
     this.activationAction = createActionableDefinition('CONSUME', '', '');
   }
 
@@ -78,15 +80,32 @@ export class CombatRule implements RuleInterface {
         }
       }
     } else {
-      logs.push(
+      const logMessage =
         this.stringMessagesStoreService.createNotEnoughEnergyLogMessage(
           actor.name,
           identity.label
-        )
-      );
+        );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     }
 
+    this.checkIfTargetDied(target);
+
     return { logs, dodged };
+  }
+
+  private checkIfTargetDied(target: ActionReactiveInterface) {
+    if (
+      target &&
+      target instanceof ActorEntity &&
+      target.situation === 'DEAD'
+    ) {
+      this.ruleLog.next(
+        this.stringMessagesStoreService.createActorIsDeadLogMessage(target.name)
+      );
+    }
   }
 
   private disposeItem(
@@ -96,9 +115,14 @@ export class CombatRule implements RuleInterface {
   ): void {
     actor.unEquip();
 
-    logs.push(
-      this.stringMessagesStoreService.createLostLogMessage(actor.name, label)
+    const logMessage = this.stringMessagesStoreService.createLostLogMessage(
+      actor.name,
+      label
     );
+
+    this.ruleLog.next(logMessage);
+
+    logs.push(logMessage);
   }
 
   private activateItem(
@@ -113,13 +137,16 @@ export class CombatRule implements RuleInterface {
       });
 
       if (energySpentLog) {
-        logs.push(
+        const logMessage =
           this.stringMessagesStoreService.createEnergySpentLogMessage(
             actor.name,
             energySpentLog,
             label
-          )
-        );
+          );
+
+        this.ruleLog.next(logMessage);
+
+        logs.push(logMessage);
       }
     }
   }
@@ -139,22 +166,26 @@ export class CombatRule implements RuleInterface {
       const { result: actorResult, roll: actorRoll } =
         this.rollRule.actorSkillCheck(actor, skillName);
 
-      logs.push(
-        this.stringMessagesStoreService.createUsedItemLogMessage(
-          actor.name,
-          targetActor.name,
-          weaponLabel
-        )
+      let logMessage = this.stringMessagesStoreService.createUsedItemLogMessage(
+        actor.name,
+        targetActor.name,
+        weaponLabel
       );
 
-      logs.push(
-        this.stringMessagesStoreService.createSkillCheckLogMessage(
-          actor.name,
-          skillName,
-          actorRoll.toString(),
-          actorResult
-        )
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
+
+      logMessage = this.stringMessagesStoreService.createSkillCheckLogMessage(
+        actor.name,
+        skillName,
+        actorRoll.toString(),
+        actorResult
       );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
 
       targetWasHit = actorResult === 'SUCCESS';
     }
@@ -180,11 +211,14 @@ export class CombatRule implements RuleInterface {
           logs
         );
       } else {
-        logs.push(
+        const logMessage =
           this.stringMessagesStoreService.createUnDodgeableAttackLogMessage(
             target.name
-          )
-        );
+          );
+
+        this.ruleLog.next(logMessage);
+
+        logs.push(logMessage);
       }
     }
 
@@ -204,29 +238,38 @@ export class CombatRule implements RuleInterface {
     let dodged = dodgeResult === 'SUCCESS';
 
     if (dodgeResult === 'IMPOSSIBLE') {
-      logs.push(
+      const logMessage =
         this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
           targetActor.name,
           'Dodge'
-        )
-      );
+        );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     } else if (dodgesPerformed < maxDodges) {
-      logs.push(
+      const logMessage =
         this.stringMessagesStoreService.createSkillCheckLogMessage(
           targetActor.name,
           'Dodge',
           dodgeRoll.toString(),
           dodgeResult
-        )
-      );
+        );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     } else {
       dodged = false;
 
-      logs.push(
+      const logMessage =
         this.stringMessagesStoreService.createOutOfDodgesLogMessage(
           targetActor.name
-        )
-      );
+        );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     }
 
     return dodged;
@@ -245,13 +288,15 @@ export class CombatRule implements RuleInterface {
     });
 
     if (log) {
-      logs.push(
-        this.stringMessagesStoreService.createFreeLogMessage(
-          'ATTACKED',
-          target.name,
-          log
-        )
+      const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
+        'ATTACKED',
+        target.name,
+        log
       );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     }
   }
 

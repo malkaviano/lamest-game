@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
@@ -9,16 +8,19 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SkillRule implements RuleInterface {
+export class SkillRule extends MasterRuleService {
   constructor(
     private readonly rollRule: RollService,
     private readonly extractorHelper: ExtractorHelper,
     private readonly stringMessagesStoreService: StringMessagesStoreService
-  ) {}
+  ) {
+    super();
+  }
 
   public execute(
     actor: ActorInterface,
@@ -34,14 +36,17 @@ export class SkillRule implements RuleInterface {
     const { roll, result } = this.rollRule.actorSkillCheck(actor, skillName);
 
     if (result !== 'IMPOSSIBLE') {
-      logs.push(
+      const logMessage =
         this.stringMessagesStoreService.createSkillCheckLogMessage(
           actor.name,
           skillName,
           roll.toString(),
           result
-        )
-      );
+        );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
 
       const log = target.reactTo(event.actionableDefinition, result, {
         actorVisibility: actor,
@@ -49,21 +54,26 @@ export class SkillRule implements RuleInterface {
       });
 
       if (log) {
-        logs.push(
-          this.stringMessagesStoreService.createFreeLogMessage(
-            'CHECK',
-            target.name,
-            log
-          )
+        const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
+          'CHECK',
+          target.name,
+          log
         );
+
+        this.ruleLog.next(logMessage);
+
+        logs.push(logMessage);
       }
     } else {
-      logs.push(
+      const logMessage =
         this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
           actor.name,
           skillName
-        )
-      );
+        );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     }
 
     return { logs };

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { merge, Observable } from 'rxjs';
+
 import { ConsumeRule } from '../rules/consume.rule';
 import { InteractionRule } from '../rules/interaction.rule';
 import { CombatRule } from '../rules/combat.rule';
@@ -11,6 +13,7 @@ import { UnEquipRule } from '../rules/unequip.rule';
 import { UseRule } from '../rules/use.rule';
 import { InspectRule } from '../rules/inspect.rule';
 import { RuleInterface } from '../interfaces/rule.interface';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +22,8 @@ export class RuleDispatcherService {
   public readonly dispatcher: {
     [key: string]: RuleInterface;
   };
+
+  public readonly logMessagePublished$: Observable<LogMessageDefinition>;
 
   constructor(
     private readonly skillRule: SkillRule,
@@ -44,5 +49,20 @@ export class RuleDispatcherService {
       USE: this.useRule,
       INSPECT: this.inspectRule,
     };
+
+    this.logMessagePublished$ = merge(
+      this.useRule.ruleLog$,
+      this.unequipRule.ruleLog$,
+      this.skillRule.ruleLog$,
+      this.pickRule.ruleLog$,
+      this.equipRule.ruleLog$,
+      this.unequipRule.ruleLog$,
+      this.sceneRule.ruleLog$,
+      this.combatRule.ruleLog$,
+      this.consumableRule.ruleLog$,
+      this.interactionRule.ruleLog$,
+      this.useRule.ruleLog$,
+      this.inspectRule.ruleLog$
+    );
   }
 }

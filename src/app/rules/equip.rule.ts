@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleInterface } from '../interfaces/rule.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from '../stores/item.store';
@@ -10,17 +9,20 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EquipRule implements RuleInterface {
+export class EquipRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly itemStore: ItemStore,
     private readonly extractorHelper: ExtractorHelper,
     private readonly stringMessagesStoreService: StringMessagesStoreService
-  ) {}
+  ) {
+    super();
+  }
 
   public execute(
     actor: ActorInterface,
@@ -42,28 +44,37 @@ export class EquipRule implements RuleInterface {
       if (previous) {
         this.inventoryService.store(actor.id, previous);
 
-        logs.push(
+        const logMessage =
           this.stringMessagesStoreService.createUnEquippedLogMessage(
             actor.name,
             previous.identity.label
-          )
-        );
+          );
+
+        this.ruleLog.next(logMessage);
+
+        logs.push(logMessage);
       }
 
-      logs.push(
+      const logMessage =
         this.stringMessagesStoreService.createEquippedLogMessage(
           actor.name,
           weapon.identity.label
-        )
-      );
+        );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     } else if (skillName) {
-      logs.push(
+      const logMessage =
         this.stringMessagesStoreService.createEquipErrorLogMessage(
           actor.name,
           skillName,
           this.itemStore.itemLabel(action.eventId)
-        )
-      );
+        );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     }
 
     return { logs };

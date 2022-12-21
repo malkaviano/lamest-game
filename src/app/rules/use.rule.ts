@@ -6,21 +6,23 @@ import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { RuleInterface } from '../interfaces/rule.interface';
 import { InventoryService } from '../services/inventory.service';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UseRule implements RuleInterface {
+export class UseRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly extractorHelper: ExtractorHelper,
     private readonly stringMessagesStoreService: StringMessagesStoreService
-  ) {}
+  ) {
+    super();
+  }
 
-  execute(
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface
@@ -35,13 +37,16 @@ export class UseRule implements RuleInterface {
     );
 
     if (!item) {
+      const logMessage =
+        this.stringMessagesStoreService.createNotFoundLogMessage(
+          actor.name,
+          actionableDefinition.label
+        );
+
+      this.ruleLog.next(logMessage);
+
       return {
-        logs: [
-          this.stringMessagesStoreService.createNotFoundLogMessage(
-            actor.name,
-            actionableDefinition.label
-          ),
-        ],
+        logs: [logMessage],
       };
     }
 
@@ -50,21 +55,25 @@ export class UseRule implements RuleInterface {
     const log = target.reactTo(actionableDefinition, 'USED', { item });
 
     if (log) {
-      logs.push(
-        this.stringMessagesStoreService.createFreeLogMessage(
-          'USED',
-          target.name,
-          log
-        )
+      const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
+        'USED',
+        target.name,
+        log
       );
+
+      this.ruleLog.next(logMessage);
+
+      logs.push(logMessage);
     }
 
-    logs.push(
-      this.stringMessagesStoreService.createLostLogMessage(
-        actor.name,
-        item.identity.label
-      )
+    const logMessage = this.stringMessagesStoreService.createLostLogMessage(
+      actor.name,
+      item.identity.label
     );
+
+    this.ruleLog.next(logMessage);
+
+    logs.push(logMessage);
 
     return {
       logs,

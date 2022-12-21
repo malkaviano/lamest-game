@@ -3,19 +3,16 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { CharacterService } from './character.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { NarrativeService } from './narrative.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActorEntity } from '../entities/actor.entity';
 import { ArrayView } from '../views/array.view';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { PlayerEntity } from '../entities/player.entity';
-import { LoggingService } from './logging.service';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 
 @Injectable({
@@ -39,9 +36,7 @@ export class GameRoundService {
   constructor(
     private readonly ruleDispatcherService: RuleDispatcherService,
     private readonly characterService: CharacterService,
-    private readonly narrativeService: NarrativeService,
-    private readonly loggingService: LoggingService,
-    private readonly stringMessagesStoreService: StringMessagesStoreService
+    private readonly narrativeService: NarrativeService
   ) {
     this.player = this.characterService.currentCharacter;
 
@@ -81,23 +76,9 @@ export class GameRoundService {
             targetDodgesPerformed: this.dodgesPerRound.get(target?.id),
           });
 
-          this.logging(result.logs);
-
           this.setDodges(result, target);
 
           this.inspect(result);
-
-          if (
-            target &&
-            target instanceof ActorEntity &&
-            target.situation === 'DEAD'
-          ) {
-            this.logging([
-              this.stringMessagesStoreService.createActorIsDeadLogMessage(
-                target.name
-              ),
-            ]);
-          }
         }
       });
     }
@@ -118,10 +99,6 @@ export class GameRoundService {
 
       this.dodgesPerRound.set(target.id, dodges + 1);
     }
-  }
-
-  private logging(logs: LogMessageDefinition[]): void {
-    logs.forEach((log) => this.loggingService.log(log));
   }
 
   private isPlayerAlive(): boolean {

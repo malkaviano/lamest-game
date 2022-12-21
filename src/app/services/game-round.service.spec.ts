@@ -7,10 +7,8 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { CharacterService } from './character.service';
 import { GameRoundService } from './game-round.service';
 import { NarrativeService } from './narrative.service';
-import { LoggingService } from './logging.service';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 import { ArrayView } from '../views/array.view';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 import {
   actionableEvent,
@@ -67,14 +65,6 @@ describe('GameRoundService', () => {
         {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
-        },
-        {
-          provide: LoggingService,
-          useValue: instance(mockedLoggingService),
-        },
-        {
-          provide: StringMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });

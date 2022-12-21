@@ -14,9 +14,9 @@ import {
   createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { GameRoundService } from './game-round.service';
-import { LoggingService } from './logging.service';
 import { PlayerEntity } from '../entities/player.entity';
 import { GameItemDefinition } from '../definitions/game-item.definition';
+import { RuleDispatcherService } from './rule-dispatcher.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,11 +27,12 @@ export class GameBridgeService {
   public readonly events: GameEventsDefinition;
 
   constructor(
+    // TODO: This shouldn't be here, we must communicate by events. Next version.
     private readonly gameLoopService: GameRoundService,
     characterService: CharacterService,
     narrativeService: NarrativeService,
     inventoryService: InventoryService,
-    loggingService: LoggingService
+    ruleDispatcherService: RuleDispatcherService
   ) {
     this.player = characterService.currentCharacter;
 
@@ -46,7 +47,7 @@ export class GameBridgeService {
 
     this.events = new GameEventsDefinition(
       narrativeService.sceneChanged$,
-      loggingService.gameLog$,
+      ruleDispatcherService.logMessagePublished$,
       characterService.characterChanged$,
       inventoryChanged,
       this.gameLoopService.documentOpened$
