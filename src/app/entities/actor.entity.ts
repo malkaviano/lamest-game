@@ -87,7 +87,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return this.mVisibility;
   }
 
-  public set visibility(visibility: VisibilityLiteral) {
+  public changeVisibility(visibility: VisibilityLiteral): void {
     const old = this.visibility;
 
     this.mVisibility = visibility;

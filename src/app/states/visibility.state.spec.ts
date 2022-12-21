@@ -179,7 +179,7 @@ describe('VisibilityState', () => {
       it('should set target visibility', () => {
         const char = fakeCharacter();
 
-        char.visibility = 'HIDDEN';
+        char.changeVisibility('HIDDEN');
 
         fakeState(action, tries).onResult(action, rollResult as ResultLiteral, {
           actorVisibility: char,

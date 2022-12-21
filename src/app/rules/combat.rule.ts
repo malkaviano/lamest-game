@@ -43,6 +43,8 @@ export class CombatRule implements RuleInterface {
 
     let dodged = false;
 
+    actor.changeVisibility('VISIBLE');
+
     const {
       dodgeable,
       damage,

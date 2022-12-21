@@ -38,11 +38,11 @@ export class VisibilityState extends ActionableState {
     switch (result) {
       case 'SUCCESS':
         if (actor && actorVisibility) {
-          actor.visibility = actorVisibility;
+          actor.changeVisibility(actorVisibility);
         }
 
         if (target instanceof ActorEntity && action.name === 'Detect') {
-          target.visibility = 'VISIBLE';
+          target.changeVisibility('VISIBLE');
         }
 
         return { state: emptyState };

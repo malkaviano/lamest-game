@@ -442,7 +442,7 @@ describe('ActorEntity', () => {
       it('return DISGUISED', () => {
         const actor = fakeActor();
 
-        actor.visibility = 'DISGUISED';
+        actor.changeVisibility('DISGUISED');
 
         expect(actor.visibility).toEqual('DISGUISED');
       });
