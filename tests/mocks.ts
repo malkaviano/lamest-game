@@ -24,7 +24,6 @@ import { CharacterService } from '../src/app/services/character.service';
 import { GameRoundService } from '../src/app/services/game-round.service';
 import { GeneratorService } from '../src/app/services/generator.service';
 import { InventoryService } from '../src/app/services/inventory.service';
-import { LoggingService } from '../src/app/services/logging.service';
 import { NarrativeService } from '../src/app/services/narrative.service';
 import { RandomCharacterService } from '../src/app/services/random-character.service';
 import { RandomIntService } from '../src/app/services/random-int.service';
@@ -85,8 +84,6 @@ export const mockedItemStore = mock(ItemStore);
 export const mockedGameLoopService = mock(GameRoundService);
 
 export const mockedCharacterService = mock(CharacterService);
-
-export const mockedLoggingService = mock(LoggingService);
 
 export const mockedActorEntity = mock(ActorEntity);
 
@@ -417,8 +414,6 @@ const resetMocks = () => {
   reset(mockedGameLoopService);
 
   reset(mockedCharacterService);
-
-  reset(mockedLoggingService);
 
   reset(mockedActorEntity);
 

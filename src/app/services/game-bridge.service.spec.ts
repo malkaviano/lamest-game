@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { of, Subject, take } from 'rxjs';
+import { Subject, take } from 'rxjs';
 import { anyString, instance, when } from 'ts-mockito';
 
 import { ActionableItemView } from '../views/actionable-item.view';
@@ -12,14 +12,11 @@ import { GameRoundService } from './game-round.service';
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
-import { LoggingService } from './logging.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedCharacterService,
   mockedGameLoopService,
   mockedInventoryService,
-  mockedLoggingService,
   mockedNarrativeService,
   setupMocks,
 } from '../../../tests/mocks';
@@ -58,10 +55,6 @@ describe('GameBridgeService', () => {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
         },
-        {
-          provide: LoggingService,
-          useValue: instance(mockedLoggingService),
-        },
       ],
     });
 
@@ -70,8 +63,6 @@ describe('GameBridgeService', () => {
     when(mockedInventoryService.inventoryChanged$).thenReturn(
       inventoryEventSubject
     );
-
-    when(mockedLoggingService.gameLog$).thenReturn(of(log));
 
     service = TestBed.inject(GameBridgeService);
   });
@@ -143,12 +134,6 @@ describe('GameBridgeService', () => {
 });
 
 const inventoryEventSubject = new Subject<InventoryEvent>();
-
-const log = new LogMessageDefinition(
-  'ATTACKED',
-  playerInfo.name,
-  unDodgeableAxe.identity.label
-);
 
 const eventEquipUnDodgeableAxe = actionableEvent(
   actionEquip,
