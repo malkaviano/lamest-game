@@ -42,6 +42,11 @@
     },
 
     {
+      "id": "campFireOn",
+      "actionables": ["roastMeat"]
+    },
+
+    {
       "id": "zombie",
       "actionables": ["affect"]
     },

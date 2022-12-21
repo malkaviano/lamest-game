@@ -93,41 +93,12 @@
       "state": "disguiseVillager",
       "resettable": false
     },
-
     {
-      "id": "npc1",
-      "name": "NPC",
-      "description": "Some random person",
-      "state": "npcConversation",
+      "id": "campFire",
+      "name": "Campfire",
+      "description": "Make some fire here",
+      "state": "campFireOff",
       "resettable": true
-    },
-    {
-      "id": "upperShelf",
-      "name": "Shelf",
-      "description": "Very high on the wall",
-      "state": "shelfJump",
-      "resettable": false
-    },
-    {
-      "id": "woodBox",
-      "name": "Wood Box",
-      "description": "Old Wood Box",
-      "state": "woodBox",
-      "resettable": false
-    },
-    {
-      "id": "lockedChest",
-      "name": "Locked Chest",
-      "description": "Needs key to open",
-      "state": "lockedChest",
-      "resettable": false
-    },
-    {
-      "id": "lockPickingChest",
-      "name": "LockPicking Chest",
-      "description": "Try to lock pick",
-      "state": "lockPickingChest",
-      "resettable": false
     }
   ],
   "inventoryItems": [

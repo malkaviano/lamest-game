@@ -1,10 +1,10 @@
 {
   "states": [
     {
-      "id": "shelfJump",
-      "actionable": "athleticism",
-      "maximumTries": 2,
-      "successState": "shelfLoot"
+      "id": "campFireOff",
+      "actionable": "makeFire",
+      "maximumTries": 100,
+      "successState": "campFireOn"
     }
   ]
 }

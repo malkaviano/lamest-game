@@ -3,7 +3,7 @@
     {
       "name": "clearing",
       "description": "clearing",
-      "interactives": ["forestTrail", "disguiseVillager"],
+      "interactives": ["campFire", "forestTrail", "disguiseVillager"],
       "transitions": [
         {
           "name": "forestTrail",
