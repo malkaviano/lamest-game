@@ -51,7 +51,7 @@
       "actionables": ["affect"]
     },
     {
-      "id": "goblin",
+      "id": "affectable",
       "actionables": ["affect"]
     }
   ]
