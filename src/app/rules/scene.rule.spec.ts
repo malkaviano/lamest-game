@@ -60,18 +60,6 @@ describe('SceneRule', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  describe('execute', () => {
-    it('return logs', () => {
-      const result = service.execute(instance(mockedPlayerEntity), event, {
-        target: instance(mockedInteractiveEntity),
-      });
-
-      verify(mockedNarrativeService.changeScene(event)).once();
-
-      expect(result).toEqual({});
-    });
-  });
 });
 
 const event = actionableEvent(actionSceneExit, interactiveInfo.id);

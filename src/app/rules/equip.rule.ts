@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
+
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from '../stores/item.store';
 
@@ -24,10 +24,7 @@ export class EquipRule extends MasterRuleService {
     super();
   }
 
-  public execute(
-    actor: ActorInterface,
-    action: ActionableEvent
-  ): RuleResultInterface {
+  public execute(actor: ActorInterface, action: ActionableEvent): void {
     const skillName = this.itemStore.itemSkill(action.eventId);
 
     if (skillName && actor.skills[skillName] > 0) {
@@ -68,7 +65,5 @@ export class EquipRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     }
-
-    return {};
   }
 }

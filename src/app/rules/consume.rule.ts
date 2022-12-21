@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
+
 import { InventoryService } from '../services/inventory.service';
 
 import { RollService } from '../services/roll.service';
@@ -26,10 +26,7 @@ export class ConsumeRule extends MasterRuleService {
     super();
   }
 
-  public execute(
-    actor: ActorInterface,
-    event: ActionableEvent
-  ): RuleResultInterface {
+  public execute(actor: ActorInterface, event: ActionableEvent): void {
     const { actionableDefinition, eventId } = event;
 
     const consumable =
@@ -96,7 +93,5 @@ export class ConsumeRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     }
-
-    return {};
   }
 }

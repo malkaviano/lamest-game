@@ -82,48 +82,6 @@ describe('UseRule', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  describe('when item was not found', () => {
-    it('return item label not found', () => {
-      when(
-        mockedInventoryService.take(playerInfo.id, simpleSword.identity.name)
-      ).thenReturn(null);
-
-      const result = service.execute(
-        instance(mockedPlayerEntity),
-        eventUseMasterKey,
-        { target: instance(mockedInteractiveEntity) }
-      );
-
-      expect(result).toEqual({});
-    });
-  });
-
-  describe('when item was usable', () => {
-    it('return log', () => {
-      when(
-        mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
-      ).thenReturn(masterKey);
-
-      when(
-        mockedInteractiveEntity.reactTo(
-          actionUseMasterKey,
-          'USED',
-          deepEqual({
-            item: masterKey,
-          })
-        )
-      ).thenReturn(openedUsingLog);
-
-      const result = service.execute(
-        instance(mockedPlayerEntity),
-        eventUseMasterKey,
-        { target: instance(mockedInteractiveEntity) }
-      );
-
-      expect(result).toEqual({});
-    });
-  });
 });
 
 const notFoundLog = new LogMessageDefinition(

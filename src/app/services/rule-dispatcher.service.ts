@@ -14,6 +14,7 @@ import { UseRule } from '../rules/use.rule';
 import { InspectRule } from '../rules/inspect.rule';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,8 @@ export class RuleDispatcherService {
   public readonly logMessagePublished$: Observable<LogMessageDefinition>;
 
   public readonly actorDodged$: Observable<string>;
+
+  public readonly documentOpened$: Observable<DocumentOpenedInterface>;
 
   constructor(
     private readonly skillRule: SkillRule,
@@ -68,5 +71,7 @@ export class RuleDispatcherService {
     );
 
     this.actorDodged$ = this.combatRule.actorDodged$;
+
+    this.documentOpened$ = this.inspectRule.documentOpened$;
   }
 }

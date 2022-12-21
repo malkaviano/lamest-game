@@ -53,26 +53,6 @@ describe('UnEquipRule', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  describe('execute', () => {
-    it('return logs', () => {
-      when(
-        mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
-      ).thenReturn(1);
-
-      when(mockedPlayerEntity.unEquip()).thenReturn(unDodgeableAxe);
-
-      const logs = service.execute(
-        instance(mockedPlayerEntity),
-        new ActionableEvent(
-          actionUnEquip(unDodgeableAxe.identity.label),
-          unDodgeableAxe.identity.name
-        )
-      );
-
-      expect(logs).toEqual({});
-    });
-  });
 });
 
 const log = new LogMessageDefinition(

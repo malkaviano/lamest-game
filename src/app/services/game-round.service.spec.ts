@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { anything, instance, when } from 'ts-mockito';
-import { of, take } from 'rxjs';
+import { of, Subject, take } from 'rxjs';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { CharacterService } from './character.service';
@@ -81,6 +81,10 @@ describe('GameRoundService', () => {
       of(playerInfo.id)
     );
 
+    when(mockedRuleDispatcherService.documentOpened$).thenReturn(
+      documentSubject
+    );
+
     when(mockedSceneEntity.interactives).thenReturn(
       ArrayView.create([instance(mockedInteractiveEntity), actor, actor2])
     );
@@ -99,16 +103,19 @@ describe('GameRoundService', () => {
   describe('run', () => {
     describe('when documentOpened is returned', () => {
       it('should emit documentOpened event', (done) => {
-        let result: DocumentOpenedInterface | undefined;
+        when(
+          mockedCombatRule.execute(anything(), anything(), anything())
+        ).thenReturn();
 
-        when(mockedCombatRule.execute(anything(), anything(), anything()))
-          .thenReturn({
-            documentOpened: documentOpened,
-          })
-          .thenReturn({});
+        let result: DocumentOpenedInterface | undefined;
 
         service.documentOpened$.pipe(take(10)).subscribe((event) => {
           result = event;
+        });
+
+        documentSubject.next({
+          title: 'Testing',
+          text: ArrayView.create(['GG man']),
         });
 
         service.run();
@@ -127,3 +134,5 @@ const eventAttackInteractive = actionableEvent(
   actionAttack,
   interactiveInfo.id
 );
+
+const documentSubject = new Subject<DocumentOpenedInterface>();

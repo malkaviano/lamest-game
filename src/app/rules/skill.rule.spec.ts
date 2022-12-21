@@ -87,51 +87,6 @@ describe('SkillRule', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  describe('execute', () => {
-    describe('when skill has no value', () => {
-      it('return skill cannot be checked', () => {
-        when(mockedPlayerEntity.skills).thenReturn({});
-
-        when(
-          mockedRollService.actorSkillCheck(
-            instance(mockedPlayerEntity),
-            'Brawl'
-          )
-        ).thenReturn({
-          result: 'IMPOSSIBLE',
-          roll: 0,
-        });
-
-        const result = service.execute(
-          instance(mockedPlayerEntity),
-          eventSkillBrawl,
-          { target: instance(mockedInteractiveEntity) }
-        );
-
-        expect(result).toEqual({});
-      });
-    });
-
-    it('return logs', () => {
-      when(mockedPlayerEntity.skills).thenReturn({ Brawl: 45 });
-
-      when(
-        mockedRollService.actorSkillCheck(instance(mockedPlayerEntity), 'Brawl')
-      ).thenReturn({
-        result: 'SUCCESS',
-        roll: 10,
-      });
-
-      const result = service.execute(
-        instance(mockedPlayerEntity),
-        eventSkillBrawl,
-        { target: instance(mockedInteractiveEntity) }
-      );
-
-      expect(result).toEqual({});
-    });
-  });
 });
 
 const eventSkillBrawl = actionableEvent(actionSkillBrawl, interactiveInfo.id);

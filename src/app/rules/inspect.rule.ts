@@ -4,7 +4,7 @@ import { errorMessages } from '../definitions/error-messages.definition';
 import { ReadableDefinition } from '../definitions/readable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
+
 import { InventoryService } from '../services/inventory.service';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { MasterRuleService } from './master.rule.service';
@@ -20,10 +20,7 @@ export class InspectRule extends MasterRuleService {
     super();
   }
 
-  public execute(
-    actor: ActorInterface,
-    event: ActionableEvent
-  ): RuleResultInterface {
+  public execute(actor: ActorInterface, event: ActionableEvent): void {
     const itemName = event.eventId;
 
     const item = this.inventoryService.look<ReadableDefinition>(
@@ -43,11 +40,9 @@ export class InspectRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    return {
-      documentOpened: {
-        title: item.title,
-        text: item.text,
-      },
-    };
+    this.documentOpened.next({
+      title: item.title,
+      text: item.text,
+    });
   }
 }

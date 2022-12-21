@@ -61,36 +61,6 @@ describe('PickRule', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  describe('execute', () => {
-    it('return logs', () => {
-      when(
-        mockedInteractiveEntity.reactTo(
-          actionPickSimpleSword,
-          'NONE',
-          deepEqual({})
-        )
-      ).thenReturn(simpleSword.identity.label);
-
-      when(
-        mockedExtractorHelper.extractItemOrThrow(
-          instance(mockedInventoryService),
-          eventPickSimpleSword.eventId,
-          simpleSword.identity.name
-        )
-      ).thenReturn(simpleSword);
-
-      const result = service.execute(
-        instance(mockedPlayerEntity),
-        eventPickSimpleSword,
-        { target: instance(mockedInteractiveEntity) }
-      );
-
-      verify(mockedInventoryService.store(playerInfo.id, simpleSword)).once();
-
-      expect(result).toEqual({});
-    });
-  });
 });
 
 const log = new LogMessageDefinition(

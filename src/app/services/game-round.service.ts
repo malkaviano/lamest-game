@@ -12,7 +12,6 @@ import { PlayerEntity } from '../entities/player.entity';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 
 @Injectable({
@@ -61,6 +60,10 @@ export class GameRoundService {
     this.ruleDispatcherService.actorDodged$.subscribe((actorId) => {
       this.actorDodged(actorId);
     });
+
+    this.ruleDispatcherService.documentOpened$.subscribe((document) => {
+      this.inspect(document);
+    });
   }
 
   public run(): void {
@@ -73,23 +76,19 @@ export class GameRoundService {
         if (actor.situation === 'ALIVE' && action) {
           const target = this.actionReactives[action.eventId];
 
-          const result = this.ruleDispatcherService.dispatcher[
+          this.ruleDispatcherService.dispatcher[
             action.actionableDefinition.actionable
           ].execute(actor, action, {
             target,
             targetDodgesPerformed: this.dodgesPerRound.get(target?.id),
           });
-
-          this.inspect(result);
         }
       });
     }
   }
 
-  private inspect(result: RuleResultInterface) {
-    if (result?.documentOpened) {
-      this.documentOpened.next(result.documentOpened);
-    }
+  private inspect(document: DocumentOpenedInterface) {
+    this.documentOpened.next(document);
   }
 
   private actorDodged(targetId: string): void {

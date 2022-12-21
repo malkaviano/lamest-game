@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
+
 import { InventoryService } from '../services/inventory.service';
 
 import { ActorInterface } from '../interfaces/actor.interface';
@@ -26,7 +26,7 @@ export class PickRule extends MasterRuleService {
     actor: ActorInterface,
     action: ActionableEvent,
     extras: RuleExtrasInterface
-  ): RuleResultInterface {
+  ): void {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     const item = this.extractorHelper.extractItemOrThrow(
@@ -48,7 +48,5 @@ export class PickRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     }
-
-    return {};
   }
 }

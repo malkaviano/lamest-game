@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
+
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
@@ -18,10 +18,7 @@ export class UnEquipRule extends MasterRuleService {
     super();
   }
 
-  public execute(
-    actor: ActorInterface,
-    action: ActionableEvent
-  ): RuleResultInterface {
+  public execute(actor: ActorInterface, action: ActionableEvent): void {
     const weapon = actor.unEquip();
 
     if (weapon) {
@@ -35,7 +32,5 @@ export class UnEquipRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     }
-
-    return {};
   }
 }

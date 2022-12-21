@@ -5,7 +5,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
+
 import { InventoryService } from '../services/inventory.service';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { MasterRuleService } from './master.rule.service';
@@ -26,7 +26,7 @@ export class UseRule extends MasterRuleService {
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface
-  ): RuleResultInterface {
+  ): void {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     const { actionableDefinition } = event;
@@ -45,7 +45,7 @@ export class UseRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
 
-      return {};
+      return;
     }
 
     const log = target.reactTo(actionableDefinition, 'USED', { item });
@@ -66,7 +66,5 @@ export class UseRule extends MasterRuleService {
     );
 
     this.ruleLog.next(logMessage);
-
-    return {};
   }
 }

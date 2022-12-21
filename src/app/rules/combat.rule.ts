@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
-
 import { RollService } from '../services/roll.service';
 import {
   ActionableDefinition,
@@ -38,7 +36,7 @@ export class CombatRule extends MasterRuleService {
     actor: ActorInterface,
     action: ActionableEvent,
     extras: RuleExtrasInterface
-  ): RuleResultInterface {
+  ): void {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     let dodged = false;
@@ -87,8 +85,6 @@ export class CombatRule extends MasterRuleService {
     }
 
     this.checkIfTargetDied(target);
-
-    return {};
   }
 
   private checkIfTargetDied(target: ActionReactiveInterface) {

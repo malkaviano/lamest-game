@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
+
 import { NarrativeService } from '../services/narrative.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
@@ -25,7 +25,7 @@ export class SceneRule extends MasterRuleService {
     actor: ActorInterface,
     action: ActionableEvent,
     extras: RuleExtrasInterface
-  ): RuleResultInterface {
+  ): void {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     this.narrativeService.changeScene(action);
@@ -37,7 +37,5 @@ export class SceneRule extends MasterRuleService {
     );
 
     this.ruleLog.next(logMessage);
-
-    return {};
   }
 }

@@ -103,33 +103,7 @@ describe('EquipRule', () => {
   });
 
   describe('execute', () => {
-    describe('when skill value is above 0', () => {
-      it('return logs', () => {
-        when(mockedPlayerEntity.equip(simpleSword)).thenReturn(null);
-
-        when(
-          mockedInventoryService.take(playerInfo.id, simpleSword.identity.name)
-        ).thenReturn(simpleSword);
-
-        const result = service.execute(instance(mockedPlayerEntity), eventOk);
-
-        expect(result).toEqual({});
-      });
-    });
-
     describe('when a previous weapon was equipped', () => {
-      it('return logs', () => {
-        when(mockedPlayerEntity.equip(simpleSword)).thenReturn(simpleSword);
-
-        when(
-          mockedInventoryService.take(playerInfo.id, simpleSword.identity.name)
-        ).thenReturn(simpleSword);
-
-        const result = service.execute(instance(mockedPlayerEntity), eventOk);
-
-        expect(result).toEqual({});
-      });
-
       it('should store previous weapon', () => {
         let result = 0;
 
@@ -146,17 +120,6 @@ describe('EquipRule', () => {
         service.execute(instance(mockedPlayerEntity), eventOk);
 
         expect(result).toEqual(1);
-      });
-    });
-
-    describe('when skill value is 0', () => {
-      it('return logs', () => {
-        const result = service.execute(
-          instance(mockedPlayerEntity),
-          eventNoSkill
-        );
-
-        expect(result).toEqual({});
       });
     });
   });

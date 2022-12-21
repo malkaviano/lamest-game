@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-import { RuleResultInterface } from '../interfaces/rule-result.interface';
 
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
@@ -24,7 +23,7 @@ export class InteractionRule extends MasterRuleService {
     actor: ActorInterface,
     action: ActionableEvent,
     extras: RuleExtrasInterface
-  ): RuleResultInterface {
+  ): void {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
     const { actionableDefinition } = action;
@@ -48,7 +47,5 @@ export class InteractionRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     }
-
-    return {};
   }
 }

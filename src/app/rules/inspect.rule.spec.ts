@@ -67,26 +67,6 @@ describe('InspectRule', () => {
         ).toThrowError(errorMessages['WRONG-ITEM']);
       });
     });
-
-    describe('when item was READABLE', () => {
-      it('return log and documentOpened', () => {
-        when(
-          mockedInventoryService.look(playerInfo.id, readable.identity.name)
-        ).thenReturn(readable);
-
-        const result = service.execute(
-          instance(mockedPlayerEntity),
-          eventInspectReadable
-        );
-
-        expect(result).toEqual({
-          documentOpened: {
-            title: readable.title,
-            text: readable.text,
-          },
-        });
-      });
-    });
   });
 });
 

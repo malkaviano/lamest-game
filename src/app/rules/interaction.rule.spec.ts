@@ -59,25 +59,6 @@ describe('InteractionRule', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  describe('execute', () => {
-    it('return logs', () => {
-      when(
-        mockedInteractiveEntity.reactTo(anything(), 'NONE', deepEqual({}))
-      ).thenReturn('Hello');
-
-      const result = service.execute(
-        instance(mockedPlayerEntity),
-        new ActionableEvent(
-          createActionableDefinition('INTERACTION', 'hi', 'Hi'),
-          'id1'
-        ),
-        { target: instance(mockedInteractiveEntity) }
-      );
-
-      expect(result).toEqual({});
-    });
-  });
 });
 
 const log1 = new LogMessageDefinition('INSPECTED', playerInfo.name, 'Hi');
