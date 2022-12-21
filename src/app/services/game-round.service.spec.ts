@@ -4,7 +4,6 @@ import { anything, deepEqual, instance, when } from 'ts-mockito';
 import { of, take } from 'rxjs';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { RulesHelper } from '../helpers/rules.helper';
 import { CharacterService } from './character.service';
 import { GameRoundService } from './game-round.service';
 import { NarrativeService } from './narrative.service';
@@ -29,12 +28,13 @@ import {
   mockedLoggingService,
   mockedNarrativeService,
   mockedPlayerEntity,
-  mockedRulesHelper,
+  mockedRuleDispatcherService,
   mockedSceneEntity,
   setupMocks,
   mockedInteractiveEntity,
   mockedStringMessagesStoreService,
 } from '../../../tests/mocks';
+import { RuleDispatcherService } from './rule-dispatcher.service';
 
 const actor = instance(mockedActorEntity);
 
@@ -57,8 +57,8 @@ describe('GameRoundService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: RulesHelper,
-          useValue: instance(mockedRulesHelper),
+          provide: RuleDispatcherService,
+          useValue: instance(mockedRuleDispatcherService),
         },
         {
           provide: CharacterService,
@@ -91,7 +91,9 @@ describe('GameRoundService', () => {
 
     when(mockedPlayerEntity.action).thenReturn(() => eventAttackInteractive);
 
-    when(mockedRulesHelper.combatRule).thenReturn(instance(mockedCombatRule));
+    when(mockedRuleDispatcherService.dispatcher).thenReturn({
+      AFFECT: instance(mockedCombatRule),
+    });
 
     when(mockedSceneEntity.interactives).thenReturn(
       ArrayView.create([instance(mockedInteractiveEntity), actor, actor2])

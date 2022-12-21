@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { instance } from 'ts-mockito';
 
 import { SkillRule } from '../rules/skill.rule';
-import { RulesHelper } from './rules.helper';
+import { RuleDispatcherService } from './rule-dispatcher.service';
 import { PickRule } from '../rules/pick.rule';
 import { EquipRule } from '../rules/equip.rule';
 import { UnEquipRule } from '../rules/unequip.rule';
@@ -28,7 +28,7 @@ import { UseRule } from '../rules/use.rule';
 import { InspectRule } from '../rules/inspect.rule';
 
 describe('RulesHelper', () => {
-  let service: RulesHelper;
+  let service: RuleDispatcherService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -76,7 +76,7 @@ describe('RulesHelper', () => {
       ],
     });
 
-    service = TestBed.inject(RulesHelper);
+    service = TestBed.inject(RuleDispatcherService);
   });
 
   it('should be created', () => {

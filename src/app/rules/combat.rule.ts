@@ -43,6 +43,7 @@ export class CombatRule implements RuleInterface {
 
     let dodged = false;
 
+    // TODO: Write a test for this.
     actor.changeVisibility('VISIBLE');
 
     const {

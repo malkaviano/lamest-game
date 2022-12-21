@@ -11,7 +11,6 @@ import { InteractiveEntity } from '../src/app/entities/interactive.entity';
 import { PlayerEntity } from '../src/app/entities/player.entity';
 import { SceneEntity } from '../src/app/entities/scene.entity';
 import { ConverterHelper } from '../src/app/helpers/converter.helper';
-import { RulesHelper } from '../src/app/helpers/rules.helper';
 import { CombatRule } from '../src/app/rules/combat.rule';
 import { ConsumeRule } from '../src/app/rules/consume.rule';
 import { InteractionRule } from '../src/app/rules/interaction.rule';
@@ -67,6 +66,7 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
+import { RuleDispatcherService } from '../src/app/services/rule-dispatcher.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -118,7 +118,7 @@ export const mockedInteractionRule = mock(InteractionRule);
 
 export const mockedCombatRule = mock(CombatRule);
 
-export const mockedRulesHelper = mock(RulesHelper);
+export const mockedRuleDispatcherService = mock(RuleDispatcherService);
 
 export const mockedSceneStore = mock(SceneStore);
 
@@ -450,7 +450,7 @@ const resetMocks = () => {
 
   reset(mockedCombatRule);
 
-  reset(mockedRulesHelper);
+  reset(mockedRuleDispatcherService);
 
   reset(mockedSceneStore);
 

@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 
-import { RulesHelper } from '../helpers/rules.helper';
-import { RuleInterface } from '../interfaces/rule.interface';
 import { CharacterService } from './character.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { NarrativeService } from './narrative.service';
@@ -18,15 +16,12 @@ import { SceneDefinition } from '../definitions/scene.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { RuleDispatcherService } from './rule-dispatcher.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameRoundService {
-  private readonly dispatcher: {
-    [key: string]: RuleInterface;
-  };
-
   private readonly player: PlayerEntity;
 
   private currentScene!: SceneDefinition;
@@ -42,25 +37,12 @@ export class GameRoundService {
   public readonly documentOpened$: Observable<DocumentOpenedInterface>;
 
   constructor(
-    private readonly rulesHelper: RulesHelper,
+    private readonly ruleDispatcherService: RuleDispatcherService,
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
     private readonly loggingService: LoggingService,
     private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
-    this.dispatcher = {
-      SKILL: this.rulesHelper.skillRule,
-      PICK: this.rulesHelper.pickRule,
-      EQUIP: this.rulesHelper.equipRule,
-      UNEQUIP: this.rulesHelper.unequipRule,
-      SCENE: this.rulesHelper.sceneRule,
-      AFFECT: this.rulesHelper.combatRule,
-      CONSUME: this.rulesHelper.consumableRule,
-      INTERACTION: this.rulesHelper.interactionRule,
-      USE: this.rulesHelper.useRule,
-      INSPECT: this.rulesHelper.inspectRule,
-    };
-
     this.player = this.characterService.currentCharacter;
 
     this.actionReactives = {};
@@ -92,7 +74,7 @@ export class GameRoundService {
         if (actor.situation === 'ALIVE' && action) {
           const target = this.actionReactives[action.eventId];
 
-          const result = this.dispatcher[
+          const result = this.ruleDispatcherService.dispatcher[
             action.actionableDefinition.actionable
           ].execute(actor, action, {
             target,
