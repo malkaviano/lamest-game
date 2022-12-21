@@ -7,7 +7,6 @@ import { createActionableDefinition } from '../definitions/actionable.definition
 import { ActionableEvent } from '../events/actionable.event';
 import { InteractionRule } from './interaction.rule';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
@@ -17,6 +16,7 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import { interactiveInfo, playerInfo } from '../../../tests/fakes';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('InteractionRule', () => {
   let service: InteractionRule;
@@ -75,9 +75,7 @@ describe('InteractionRule', () => {
         { target: instance(mockedInteractiveEntity) }
       );
 
-      expect(result).toEqual({
-        logs: [log1, log2],
-      });
+      expect(result).toEqual({});
     });
   });
 });

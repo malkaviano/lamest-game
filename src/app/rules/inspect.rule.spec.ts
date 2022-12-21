@@ -80,7 +80,6 @@ describe('InspectRule', () => {
         );
 
         expect(result).toEqual({
-          logs: [log],
           documentOpened: {
             title: readable.title,
             text: readable.text,

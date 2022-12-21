@@ -8,7 +8,6 @@ import { unarmedWeapon } from '../definitions/weapon.definition';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedActorEntity,
@@ -31,6 +30,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../tests/fakes';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('CombatRule', () => {
   let service: CombatRule;
@@ -192,7 +192,7 @@ describe('CombatRule', () => {
           { target: instance(mockedInteractiveEntity) }
         );
 
-        expect(result).toEqual({ logs: [damageInteractiveLog], dodged: false });
+        expect(result).toEqual({ dodged: false });
       });
     });
 
@@ -218,7 +218,6 @@ describe('CombatRule', () => {
             });
 
             expect(result).toEqual({
-              logs: [usedItemLog, checkFailureLog],
               dodged: false,
             });
           });
@@ -245,12 +244,6 @@ describe('CombatRule', () => {
               );
 
               expect(result).toEqual({
-                logs: [
-                  usedItemLog,
-                  checkSuccessLog,
-                  cannotDodgeLog,
-                  resultDamageLog,
-                ],
                 dodged: false,
               });
             });
@@ -288,12 +281,6 @@ describe('CombatRule', () => {
               );
 
               expect(result).toEqual({
-                logs: [
-                  usedItemLog,
-                  checkSuccessLog,
-                  unDodgeableLog,
-                  resultDamageLog,
-                ],
                 dodged: false,
               });
             });
@@ -335,7 +322,6 @@ describe('CombatRule', () => {
                 });
 
                 expect(result).toEqual({
-                  logs: [usedItemLog, checkSuccessLog, dodgedLog],
                   dodged: true,
                 });
               });
@@ -376,12 +362,6 @@ describe('CombatRule', () => {
                 );
 
                 expect(result).toEqual({
-                  logs: [
-                    usedItemLog,
-                    checkSuccessLog,
-                    notDodgedLog,
-                    resultDamageLog,
-                  ],
                   dodged: false,
                 });
               });
@@ -418,7 +398,6 @@ describe('CombatRule', () => {
         );
 
         expect(result).toEqual({
-          logs: [lostItemLog, damageInteractiveLog],
           dodged: false,
         });
       });
@@ -458,7 +437,6 @@ describe('CombatRule', () => {
         });
 
         expect(result).toEqual({
-          logs: [usedItemLog, checkSuccessLog, outOfDodgesLog, resultDamageLog],
           dodged: false,
         });
       });
@@ -487,7 +465,6 @@ describe('CombatRule', () => {
         );
 
         expect(result).toEqual({
-          logs: [outOfEnergyLog],
           dodged: false,
         });
       });
@@ -560,13 +537,6 @@ describe('CombatRule', () => {
         );
 
         expect(result).toEqual({
-          logs: [
-            energySpentLog,
-            usedItemLog,
-            checkSuccessLog,
-            cannotDodgeLog,
-            resultDamageLog,
-          ],
           dodged: false,
         });
       });

@@ -4,7 +4,7 @@ import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+
 import { RollService } from '../services/roll.service';
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
@@ -30,8 +30,6 @@ export class ConsumeRule extends MasterRuleService {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {
-    const logs: LogMessageDefinition[] = [];
-
     const { actionableDefinition, eventId } = event;
 
     const consumable =
@@ -63,8 +61,6 @@ export class ConsumeRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
 
-      logs.push(logMessage);
-
       if (rollDefinition.result !== 'NONE' && consumable.skillName) {
         const logMessage =
           this.stringMessagesStoreService.createSkillCheckLogMessage(
@@ -75,8 +71,6 @@ export class ConsumeRule extends MasterRuleService {
           );
 
         this.ruleLog.next(logMessage);
-
-        logs.push(logMessage);
       }
 
       const log = actor.reactTo(actionableDefinition, rollDefinition.result, {
@@ -92,8 +86,6 @@ export class ConsumeRule extends MasterRuleService {
         );
 
         this.ruleLog.next(logMessage);
-
-        logs.push(logMessage);
       }
     } else if (consumable.skillName) {
       const logMessage =
@@ -103,10 +95,8 @@ export class ConsumeRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
-    return { logs };
+    return {};
   }
 }

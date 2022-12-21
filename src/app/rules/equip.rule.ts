@@ -4,7 +4,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from '../stores/item.store';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+
 import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ExtractorHelper } from '../helpers/extractor.helper';
@@ -28,8 +28,6 @@ export class EquipRule extends MasterRuleService {
     actor: ActorInterface,
     action: ActionableEvent
   ): RuleResultInterface {
-    const logs: LogMessageDefinition[] = [];
-
     const skillName = this.itemStore.itemSkill(action.eventId);
 
     if (skillName && actor.skills[skillName] > 0) {
@@ -51,8 +49,6 @@ export class EquipRule extends MasterRuleService {
           );
 
         this.ruleLog.next(logMessage);
-
-        logs.push(logMessage);
       }
 
       const logMessage =
@@ -62,8 +58,6 @@ export class EquipRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     } else if (skillName) {
       const logMessage =
         this.stringMessagesStoreService.createEquipErrorLogMessage(
@@ -73,10 +67,8 @@ export class EquipRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
-    return { logs };
+    return {};
   }
 }

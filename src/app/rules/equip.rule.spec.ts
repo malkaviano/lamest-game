@@ -8,7 +8,6 @@ import { EquipRule } from './equip.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
@@ -25,6 +24,7 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('EquipRule', () => {
   let service: EquipRule;
@@ -113,9 +113,7 @@ describe('EquipRule', () => {
 
         const result = service.execute(instance(mockedPlayerEntity), eventOk);
 
-        expect(result).toEqual({
-          logs: [logEquip],
-        });
+        expect(result).toEqual({});
       });
     });
 
@@ -129,9 +127,7 @@ describe('EquipRule', () => {
 
         const result = service.execute(instance(mockedPlayerEntity), eventOk);
 
-        expect(result).toEqual({
-          logs: [logUnEquip, logEquip],
-        });
+        expect(result).toEqual({});
       });
 
       it('should store previous weapon', () => {
@@ -160,9 +156,7 @@ describe('EquipRule', () => {
           eventNoSkill
         );
 
-        expect(result).toEqual({
-          logs: [logError],
-        });
+        expect(result).toEqual({});
       });
     });
   });

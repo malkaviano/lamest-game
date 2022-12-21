@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { NarrativeService } from '../services/narrative.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
@@ -29,8 +28,6 @@ export class SceneRule extends MasterRuleService {
   ): RuleResultInterface {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
-    const logs: LogMessageDefinition[] = [];
-
     this.narrativeService.changeScene(action);
 
     const logMessage = this.stringMessagesStoreService.createSceneLogMessage(
@@ -41,8 +38,6 @@ export class SceneRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    logs.push(logMessage);
-
-    return { logs };
+    return {};
   }
 }

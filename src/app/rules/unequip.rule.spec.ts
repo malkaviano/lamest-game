@@ -5,7 +5,7 @@ import { instance, when } from 'ts-mockito';
 import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { UnEquipRule } from './unequip.rule';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 
 import {
@@ -19,6 +19,7 @@ import {
   playerInfo,
   unDodgeableAxe,
 } from '../../../tests/fakes';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('UnEquipRule', () => {
   let service: UnEquipRule;
@@ -69,9 +70,7 @@ describe('UnEquipRule', () => {
         )
       );
 
-      expect(logs).toEqual({
-        logs: [log],
-      });
+      expect(logs).toEqual({});
     });
   });
 });

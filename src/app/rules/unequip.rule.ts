@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { MasterRuleService } from './master.rule.service';
@@ -23,8 +22,6 @@ export class UnEquipRule extends MasterRuleService {
     actor: ActorInterface,
     action: ActionableEvent
   ): RuleResultInterface {
-    const logs: LogMessageDefinition[] = [];
-
     const weapon = actor.unEquip();
 
     if (weapon) {
@@ -37,10 +34,8 @@ export class UnEquipRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
-    return { logs };
+    return {};
   }
 }

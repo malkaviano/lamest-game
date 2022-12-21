@@ -10,7 +10,6 @@ import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
@@ -28,6 +27,7 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('ConsumeRule', () => {
   let service: ConsumeRule;
@@ -178,9 +178,7 @@ describe('ConsumeRule', () => {
             eventConsumeFirstAid
           );
 
-          expect(result).toEqual({
-            logs: [logFirstAid1, logFirstAidFailure],
-          });
+          expect(result).toEqual({});
         });
       });
 
@@ -220,9 +218,7 @@ describe('ConsumeRule', () => {
             eventConsumeFirstAid
           );
 
-          expect(result).toEqual({
-            logs: [logFirstAid1, logFirstAidSuccess, logFirstAid3],
-          });
+          expect(result).toEqual({});
         });
       });
 
@@ -253,9 +249,7 @@ describe('ConsumeRule', () => {
             eventConsumeFirstAid
           );
 
-          expect(result).toEqual({
-            logs: [logError],
-          });
+          expect(result).toEqual({});
         });
       });
     });
@@ -286,9 +280,7 @@ describe('ConsumeRule', () => {
           eventConsumeAnalgesic
         );
 
-        expect(result).toEqual({
-          logs: [logAnalgesic1, logAnalgesic2],
-        });
+        expect(result).toEqual({});
       });
     });
   });

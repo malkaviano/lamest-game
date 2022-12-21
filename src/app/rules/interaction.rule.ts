@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
@@ -27,8 +27,6 @@ export class InteractionRule extends MasterRuleService {
   ): RuleResultInterface {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
-    const logs: LogMessageDefinition[] = [];
-
     const { actionableDefinition } = action;
 
     const log = target.reactTo(actionableDefinition, 'NONE', {});
@@ -41,8 +39,6 @@ export class InteractionRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    logs.push(logMessage);
-
     if (log) {
       const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
         'INSPECTED',
@@ -51,10 +47,8 @@ export class InteractionRule extends MasterRuleService {
       );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
-    return { logs };
+    return {};
   }
 }

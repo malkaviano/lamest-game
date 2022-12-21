@@ -109,9 +109,7 @@ describe('SkillRule', () => {
           { target: instance(mockedInteractiveEntity) }
         );
 
-        expect(result).toEqual({
-          logs: [log2],
-        });
+        expect(result).toEqual({});
       });
     });
 
@@ -131,9 +129,7 @@ describe('SkillRule', () => {
         { target: instance(mockedInteractiveEntity) }
       );
 
-      expect(result).toEqual({
-        logs: [log1, log3],
-      });
+      expect(result).toEqual({});
     });
   });
 });

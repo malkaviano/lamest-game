@@ -95,7 +95,7 @@ describe('UseRule', () => {
         { target: instance(mockedInteractiveEntity) }
       );
 
-      expect(result).toEqual({ logs: [notFoundLog] });
+      expect(result).toEqual({});
     });
   });
 
@@ -121,7 +121,7 @@ describe('UseRule', () => {
         { target: instance(mockedInteractiveEntity) }
       );
 
-      expect(result).toEqual({ logs: [usedLog, itemLostLog] });
+      expect(result).toEqual({});
     });
   });
 });

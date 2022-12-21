@@ -23,7 +23,6 @@ import {
   mockedActorEntity2,
   mockedCharacterService,
   mockedCombatRule,
-  mockedLoggingService,
   mockedNarrativeService,
   mockedPlayerEntity,
   mockedRuleDispatcherService,
@@ -40,11 +39,7 @@ const actor2 = instance(mockedActorEntity2);
 
 const player = instance(mockedPlayerEntity);
 
-const log1 = new LogMessageDefinition('ATTACKED', playerInfo.name, 'logged1');
-
 const log2 = new LogMessageDefinition('ATTACKED', playerInfo.name, 'logged2');
-
-const log3 = new LogMessageDefinition('ATTACKED', playerInfo.name, 'logged3');
 
 const logDied = new LogMessageDefinition('DIED', playerInfo.name, 'dead');
 
@@ -101,48 +96,15 @@ describe('GameRoundService', () => {
   });
 
   describe('run', () => {
-    it('return rule logs', () => {
-      when(mockedCombatRule.execute(anything(), anything(), anything()))
-        .thenReturn({
-          logs: [log1],
-        })
-        .thenReturn({
-          logs: [log2],
-        })
-        .thenReturn({
-          logs: [log3],
-        });
-      const result: LogMessageDefinition[] = [];
-
-      when(mockedLoggingService.log(deepEqual(log1))).thenCall(() => {
-        result.push(log1);
-      });
-
-      when(mockedLoggingService.log(deepEqual(log2))).thenCall(() => {
-        result.push(log2);
-      });
-
-      when(mockedLoggingService.log(deepEqual(log3))).thenCall(() => {
-        result.push(log3);
-      });
-
-      service.run();
-
-      expect(result).toEqual([log1, log2, log3]);
-    });
-
     describe('when documentOpened is returned', () => {
       it('should emit documentOpened event', (done) => {
         let result: DocumentOpenedInterface | undefined;
 
         when(mockedCombatRule.execute(anything(), anything(), anything()))
           .thenReturn({
-            logs: [log1],
             documentOpened: documentOpened,
           })
-          .thenReturn({
-            logs: [log2],
-          });
+          .thenReturn({});
 
         service.documentOpened$.pipe(take(10)).subscribe((event) => {
           result = event;
@@ -169,9 +131,7 @@ describe('GameRoundService', () => {
               targetDodgesPerformed: undefined,
             })
           )
-        ).thenReturn({
-          logs: [log1],
-        });
+        ).thenReturn({});
 
         when(
           mockedCombatRule.execute(
@@ -183,7 +143,6 @@ describe('GameRoundService', () => {
             })
           )
         ).thenReturn({
-          logs: [log2],
           dodged: true,
         });
 
@@ -205,29 +164,6 @@ describe('GameRoundService', () => {
             logs: [log2],
             dodged: true,
           };
-        });
-
-        service.run();
-
-        expect(result).toEqual(true);
-      });
-    });
-
-    describe('when player HP reaches 0', () => {
-      it('should log player died', () => {
-        when(mockedCombatRule.execute(anything(), anything(), anything()))
-          .thenReturn({ logs: [log1] })
-          .thenReturn({ logs: [log2] })
-          .thenCall(() => {
-            when(mockedPlayerEntity.situation).thenReturn('DEAD');
-
-            return { logs: [log3] };
-          });
-
-        let result = false;
-
-        when(mockedLoggingService.log(deepEqual(logDied))).thenCall(() => {
-          result = true;
         });
 
         service.run();

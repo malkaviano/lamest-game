@@ -44,7 +44,6 @@ export class InspectRule extends MasterRuleService {
     this.ruleLog.next(logMessage);
 
     return {
-      logs: [logMessage],
       documentOpened: {
         title: item.title,
         text: item.text,

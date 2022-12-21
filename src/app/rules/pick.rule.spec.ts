@@ -5,7 +5,6 @@ import { deepEqual, instance, verify, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
@@ -23,6 +22,7 @@ import {
   simpleSword,
 } from '../../../tests/fakes';
 import { ExtractorHelper } from '../helpers/extractor.helper';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('PickRule', () => {
   let service: PickRule;
@@ -88,9 +88,7 @@ describe('PickRule', () => {
 
       verify(mockedInventoryService.store(playerInfo.id, simpleSword)).once();
 
-      expect(result).toEqual({
-        logs: [log],
-      });
+      expect(result).toEqual({});
     });
   });
 });

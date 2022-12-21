@@ -45,12 +45,8 @@ export class UseRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
 
-      return {
-        logs: [logMessage],
-      };
+      return {};
     }
-
-    const logs = [];
 
     const log = target.reactTo(actionableDefinition, 'USED', { item });
 
@@ -62,8 +58,6 @@ export class UseRule extends MasterRuleService {
       );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
     const logMessage = this.stringMessagesStoreService.createLostLogMessage(
@@ -73,10 +67,6 @@ export class UseRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    logs.push(logMessage);
-
-    return {
-      logs,
-    };
+    return {};
   }
 }

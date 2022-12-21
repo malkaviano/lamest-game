@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
 import { InventoryService } from '../services/inventory.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
@@ -29,8 +29,6 @@ export class PickRule extends MasterRuleService {
   ): RuleResultInterface {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
-    const logs: LogMessageDefinition[] = [];
-
     const item = this.extractorHelper.extractItemOrThrow(
       this.inventoryService,
       action.eventId,
@@ -49,10 +47,8 @@ export class PickRule extends MasterRuleService {
       );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
-    return { logs };
+    return {};
   }
 }

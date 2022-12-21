@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
@@ -29,8 +28,6 @@ export class SkillRule extends MasterRuleService {
   ): RuleResultInterface {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
-    const logs: LogMessageDefinition[] = [];
-
     const skillName = event.actionableDefinition.name;
 
     const { roll, result } = this.rollRule.actorSkillCheck(actor, skillName);
@@ -46,8 +43,6 @@ export class SkillRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
 
-      logs.push(logMessage);
-
       const log = target.reactTo(event.actionableDefinition, result, {
         actorVisibility: actor,
         target,
@@ -61,8 +56,6 @@ export class SkillRule extends MasterRuleService {
         );
 
         this.ruleLog.next(logMessage);
-
-        logs.push(logMessage);
       }
     } else {
       const logMessage =
@@ -72,10 +65,8 @@ export class SkillRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
-    return { logs };
+    return {};
   }
 }

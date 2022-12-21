@@ -6,7 +6,6 @@ import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
@@ -22,6 +21,7 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('SceneRule', () => {
   let service: SceneRule;
@@ -69,9 +69,7 @@ describe('SceneRule', () => {
 
       verify(mockedNarrativeService.changeScene(event)).once();
 
-      expect(result).toEqual({
-        logs: [log],
-      });
+      expect(result).toEqual({});
     });
   });
 });

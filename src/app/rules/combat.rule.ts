@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { RuleResultInterface } from '../interfaces/rule-result.interface';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+
 import { RollService } from '../services/roll.service';
 import {
   ActionableDefinition,
@@ -41,8 +41,6 @@ export class CombatRule extends MasterRuleService {
   ): RuleResultInterface {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
-    const logs: LogMessageDefinition[] = [];
-
     let dodged = false;
 
     // TODO: Write a test for this.
@@ -58,25 +56,24 @@ export class CombatRule extends MasterRuleService {
     } = actor.weaponEquipped;
 
     if (actor.derivedAttributes.EP.value >= energyActivation) {
-      this.activateItem(energyActivation, actor, identity.label, logs);
+      this.activateItem(energyActivation, actor, identity.label);
 
       const targetWasHit = this.checkSkill(
         actor,
         skillName,
         target,
-        identity.label,
-        logs
+        identity.label
       );
 
       if (usability === 'DISPOSABLE') {
-        this.disposeItem(actor, identity.label, logs);
+        this.disposeItem(actor, identity.label);
       }
 
       if (targetWasHit) {
-        dodged = this.tryDodge(target, dodgeable, extras, logs);
+        dodged = this.tryDodge(target, dodgeable, extras);
 
         if (!dodged) {
-          this.applyDamage(target, action.actionableDefinition, damage, logs);
+          this.applyDamage(target, action.actionableDefinition, damage);
         }
       }
     } else {
@@ -87,13 +84,11 @@ export class CombatRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
     this.checkIfTargetDied(target);
 
-    return { logs, dodged };
+    return { dodged };
   }
 
   private checkIfTargetDied(target: ActionReactiveInterface) {
@@ -108,11 +103,7 @@ export class CombatRule extends MasterRuleService {
     }
   }
 
-  private disposeItem(
-    actor: ActorInterface,
-    label: string,
-    logs: LogMessageDefinition[]
-  ): void {
+  private disposeItem(actor: ActorInterface, label: string): void {
     actor.unEquip();
 
     const logMessage = this.stringMessagesStoreService.createLostLogMessage(
@@ -121,15 +112,12 @@ export class CombatRule extends MasterRuleService {
     );
 
     this.ruleLog.next(logMessage);
-
-    logs.push(logMessage);
   }
 
   private activateItem(
     energyActivation: number,
     actor: ActorInterface,
-    label: string,
-    logs: LogMessageDefinition[]
+    label: string
   ) {
     if (energyActivation) {
       const energySpentLog = actor.reactTo(this.activationAction, 'NONE', {
@@ -145,8 +133,6 @@ export class CombatRule extends MasterRuleService {
           );
 
         this.ruleLog.next(logMessage);
-
-        logs.push(logMessage);
       }
     }
   }
@@ -155,8 +141,7 @@ export class CombatRule extends MasterRuleService {
     actor: ActorInterface,
     skillName: string,
     target: ActionReactiveInterface,
-    weaponLabel: string,
-    logs: LogMessageDefinition[]
+    weaponLabel: string
   ): boolean {
     let targetWasHit = true;
 
@@ -174,8 +159,6 @@ export class CombatRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
 
-      logs.push(logMessage);
-
       logMessage = this.stringMessagesStoreService.createSkillCheckLogMessage(
         actor.name,
         skillName,
@@ -184,8 +167,6 @@ export class CombatRule extends MasterRuleService {
       );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
 
       targetWasHit = actorResult === 'SUCCESS';
     }
@@ -196,8 +177,7 @@ export class CombatRule extends MasterRuleService {
   private tryDodge(
     target: ActionReactiveInterface,
     dodgeable: boolean,
-    extras: RuleExtrasInterface,
-    logs: LogMessageDefinition[]
+    extras: RuleExtrasInterface
   ): boolean {
     let dodged = false;
 
@@ -207,8 +187,7 @@ export class CombatRule extends MasterRuleService {
       if (dodgeable) {
         dodged = this.checkDodged(
           targetActor,
-          extras.targetDodgesPerformed ?? 0,
-          logs
+          extras.targetDodgesPerformed ?? 0
         );
       } else {
         const logMessage =
@@ -217,19 +196,13 @@ export class CombatRule extends MasterRuleService {
           );
 
         this.ruleLog.next(logMessage);
-
-        logs.push(logMessage);
       }
     }
 
     return dodged;
   }
 
-  private checkDodged(
-    targetActor: ActorInterface,
-    dodgesPerformed: number,
-    logs: LogMessageDefinition[]
-  ) {
+  private checkDodged(targetActor: ActorInterface, dodgesPerformed: number) {
     const maxDodges = targetActor.dodgesPerRound;
 
     const { result: dodgeResult, roll: dodgeRoll } =
@@ -245,8 +218,6 @@ export class CombatRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     } else if (dodgesPerformed < maxDodges) {
       const logMessage =
         this.stringMessagesStoreService.createSkillCheckLogMessage(
@@ -257,8 +228,6 @@ export class CombatRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     } else {
       dodged = false;
 
@@ -268,8 +237,6 @@ export class CombatRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
 
     return dodged;
@@ -278,8 +245,7 @@ export class CombatRule extends MasterRuleService {
   private applyDamage(
     target: ActionReactiveInterface,
     action: ActionableDefinition,
-    damage: DamageDefinition,
-    logs: LogMessageDefinition[]
+    damage: DamageDefinition
   ): void {
     const damageAmount = this.rollRule.roll(damage.diceRoll) + damage.fixed;
 
@@ -295,8 +261,6 @@ export class CombatRule extends MasterRuleService {
       );
 
       this.ruleLog.next(logMessage);
-
-      logs.push(logMessage);
     }
   }
 
