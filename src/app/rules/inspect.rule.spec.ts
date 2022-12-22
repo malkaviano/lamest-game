@@ -1,11 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
+import { take } from 'rxjs';
 
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
 import { errorMessages } from '../definitions/error-messages.definition';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 
 import {
   mockedInventoryService,
@@ -20,7 +23,7 @@ import {
   readable,
   simpleSword,
 } from '../../../tests/fakes';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('InspectRule', () => {
   let service: InspectRule;
@@ -46,7 +49,7 @@ describe('InspectRule', () => {
         playerInfo.name,
         readable.identity.label
       )
-    ).thenReturn(log);
+    ).thenReturn(itemInspectedLog);
 
     service = TestBed.inject(InspectRule);
   });
@@ -56,7 +59,7 @@ describe('InspectRule', () => {
   });
 
   describe('execute', () => {
-    describe('when item was null', () => {
+    describe('when item could not be found', () => {
       it('throw Wrong item was used', () => {
         when(
           mockedInventoryService.look(playerInfo.id, eventInspectWrong.eventId)
@@ -67,8 +70,44 @@ describe('InspectRule', () => {
         ).toThrowError(errorMessages['WRONG-ITEM']);
       });
     });
+
+    describe('item was found', () => {
+      it('should log item was inspected', () => {
+        when(
+          mockedInventoryService.look(
+            playerInfo.id,
+            eventInspectReadable.eventId
+          )
+        ).thenReturn(readable);
+
+        ruleScenario(service, actor, eventInspectReadable, {}, [
+          itemInspectedLog,
+        ]);
+      });
+
+      it('should publish document opened', () => {
+        when(
+          mockedInventoryService.look(
+            playerInfo.id,
+            eventInspectReadable.eventId
+          )
+        ).thenReturn(readable);
+
+        let result: DocumentOpenedInterface | undefined;
+
+        service.documentOpened$.pipe(take(100)).subscribe((event) => {
+          result = event;
+        });
+
+        service.execute(actor, eventInspectReadable);
+
+        expect(result).toEqual(result);
+      });
+    });
   });
 });
+
+const actor = instance(mockedPlayerEntity);
 
 const eventInspectReadable = actionableEvent(
   actionInspect,
@@ -80,7 +119,7 @@ const eventInspectWrong = actionableEvent(
   simpleSword.identity.name
 );
 
-const log = new LogMessageDefinition(
+const itemInspectedLog = new LogMessageDefinition(
   'INSPECTED',
   playerInfo.name,
   readable.identity.label
