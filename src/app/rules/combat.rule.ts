@@ -23,13 +23,17 @@ export class CombatRule extends MasterRuleService {
   public readonly activationAction: ActionableDefinition;
 
   constructor(
-    private readonly rollRule: RollService,
+    private readonly rollService: RollService,
     private readonly extractorHelper: ExtractorHelper,
     private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
     super();
 
-    this.activationAction = createActionableDefinition('CONSUME', '', '');
+    this.activationAction = createActionableDefinition(
+      'CONSUME',
+      'activation',
+      'Activation'
+    );
   }
 
   public execute(
@@ -39,9 +43,7 @@ export class CombatRule extends MasterRuleService {
   ): void {
     const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
 
-    let dodged = false;
-
-    // TODO: Write a test for this.
+    // CHANGEME: This seems to be in the wrong place.
     actor.changeVisibility('VISIBLE');
 
     const {
@@ -54,21 +56,31 @@ export class CombatRule extends MasterRuleService {
     } = actor.weaponEquipped;
 
     if (actor.derivedAttributes.EP.value >= energyActivation) {
-      this.activateItem(energyActivation, actor, identity.label);
+      if (energyActivation) {
+        this.activateItem(energyActivation, actor, identity.label);
+      }
 
-      const targetWasHit = this.checkSkill(
-        actor,
-        skillName,
-        target,
-        identity.label
-      );
+      let targetWasHit = true;
+
+      const targetActor = this.asActor(target);
+
+      if (targetActor) {
+        targetWasHit = this.checkSkill(
+          actor,
+          skillName,
+          targetActor,
+          identity.label
+        );
+      }
 
       if (usability === 'DISPOSABLE') {
         this.disposeItem(actor, identity.label);
       }
 
       if (targetWasHit) {
-        dodged = this.tryDodge(target, dodgeable, extras);
+        // TODO: Ask the actor if it wants to dodge, new behavior
+        const dodged =
+          targetActor && this.tryDodge(targetActor, dodgeable, extras);
 
         if (!dodged) {
           this.applyDamage(target, action.actionableDefinition, damage);
@@ -115,117 +127,105 @@ export class CombatRule extends MasterRuleService {
     actor: ActorInterface,
     label: string
   ) {
-    if (energyActivation) {
-      const energySpentLog = actor.reactTo(this.activationAction, 'NONE', {
-        energy: -energyActivation,
-      });
+    const energySpentLog = actor.reactTo(this.activationAction, 'NONE', {
+      energy: -energyActivation,
+    });
 
-      if (energySpentLog) {
-        const logMessage =
-          this.stringMessagesStoreService.createEnergySpentLogMessage(
-            actor.name,
-            energySpentLog,
-            label
-          );
+    if (energySpentLog) {
+      const logMessage =
+        this.stringMessagesStoreService.createEnergySpentLogMessage(
+          actor.name,
+          energySpentLog,
+          label
+        );
 
-        this.ruleLog.next(logMessage);
-      }
+      this.ruleLog.next(logMessage);
     }
   }
 
   private checkSkill(
     actor: ActorInterface,
     skillName: string,
-    target: ActionReactiveInterface,
+    target: ActorInterface,
     weaponLabel: string
   ): boolean {
-    let targetWasHit = true;
+    const { result: actorResult, roll: actorRoll } =
+      this.rollService.actorSkillCheck(actor, skillName);
 
-    const targetActor = this.asActor(target);
+    /*
+      Due to future circumstances, the equipped item may require a current zero skill value
+      TODO: check for impossible
+     */
 
-    if (targetActor) {
-      const { result: actorResult, roll: actorRoll } =
-        this.rollRule.actorSkillCheck(actor, skillName);
+    let logMessage = this.stringMessagesStoreService.createUsedItemLogMessage(
+      actor.name,
+      target.name,
+      weaponLabel
+    );
 
-      let logMessage = this.stringMessagesStoreService.createUsedItemLogMessage(
-        actor.name,
-        targetActor.name,
-        weaponLabel
-      );
+    this.ruleLog.next(logMessage);
 
-      this.ruleLog.next(logMessage);
+    logMessage = this.stringMessagesStoreService.createSkillCheckLogMessage(
+      actor.name,
+      skillName,
+      actorRoll.toString(),
+      actorResult
+    );
 
-      logMessage = this.stringMessagesStoreService.createSkillCheckLogMessage(
-        actor.name,
-        skillName,
-        actorRoll.toString(),
-        actorResult
-      );
+    this.ruleLog.next(logMessage);
 
-      this.ruleLog.next(logMessage);
-
-      targetWasHit = actorResult === 'SUCCESS';
-    }
-
-    return targetWasHit;
+    return actorResult === 'SUCCESS';
   }
 
   private tryDodge(
-    target: ActionReactiveInterface,
+    target: ActorInterface,
     dodgeable: boolean,
     extras: RuleExtrasInterface
   ): boolean {
-    let dodged = false;
-
-    const targetActor = this.asActor(target);
-
-    if (targetActor) {
-      if (dodgeable) {
-        dodged = this.checkDodged(
-          targetActor,
-          extras.targetDodgesPerformed ?? 0
+    if (!dodgeable) {
+      const logMessage =
+        this.stringMessagesStoreService.createUnDodgeableAttackLogMessage(
+          target.name
         );
-      } else {
+
+      this.ruleLog.next(logMessage);
+    }
+
+    return (
+      dodgeable && this.checkDodged(target, extras.targetDodgesPerformed ?? 0)
+    );
+  }
+
+  private checkDodged(targetActor: ActorInterface, dodgesPerformed: number) {
+    let dodged = targetActor.dodgesPerRound > dodgesPerformed;
+
+    if (dodged) {
+      const { result: dodgeResult, roll: dodgeRoll } =
+        this.rollService.actorSkillCheck(targetActor, 'Dodge');
+
+      dodged = dodgeResult === 'SUCCESS';
+
+      if (dodged) {
+        this.actorDodged.next(targetActor.id);
+
         const logMessage =
-          this.stringMessagesStoreService.createUnDodgeableAttackLogMessage(
-            target.name
+          this.stringMessagesStoreService.createSkillCheckLogMessage(
+            targetActor.name,
+            'Dodge',
+            dodgeRoll.toString(),
+            dodgeResult
+          );
+
+        this.ruleLog.next(logMessage);
+      } else if (dodgeResult === 'IMPOSSIBLE') {
+        const logMessage =
+          this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
+            targetActor.name,
+            'Dodge'
           );
 
         this.ruleLog.next(logMessage);
       }
-    }
-
-    return dodged;
-  }
-
-  private checkDodged(targetActor: ActorInterface, dodgesPerformed: number) {
-    const maxDodges = targetActor.dodgesPerRound;
-
-    const { result: dodgeResult, roll: dodgeRoll } =
-      this.rollRule.actorSkillCheck(targetActor, 'Dodge');
-
-    const dodged = dodgeResult === 'SUCCESS' && dodgesPerformed < maxDodges;
-
-    if (dodgeResult === 'IMPOSSIBLE') {
-      const logMessage =
-        this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
-          targetActor.name,
-          'Dodge'
-        );
-
-      this.ruleLog.next(logMessage);
-    } else if (dodged) {
-      this.actorDodged.next(targetActor.id);
-
-      const logMessage =
-        this.stringMessagesStoreService.createSkillCheckLogMessage(
-          targetActor.name,
-          'Dodge',
-          dodgeRoll.toString(),
-          dodgeResult
-        );
-
-      this.ruleLog.next(logMessage);
     } else {
       const logMessage =
         this.stringMessagesStoreService.createOutOfDodgesLogMessage(
@@ -243,7 +243,7 @@ export class CombatRule extends MasterRuleService {
     action: ActionableDefinition,
     damage: DamageDefinition
   ): void {
-    const damageAmount = this.rollRule.roll(damage.diceRoll) + damage.fixed;
+    const damageAmount = this.rollService.roll(damage.diceRoll) + damage.fixed;
 
     const log = target.reactTo(action, 'SUCCESS', {
       effect: new EffectEvent(damage.effectType, damageAmount),

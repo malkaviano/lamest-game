@@ -36,7 +36,7 @@ export class RollService {
   ): RollDefinition {
     const skillValue = actor.skills[skillName] ?? 0;
 
-    if (skillValue === 0) {
+    if (skillValue <= 0) {
       return new RollDefinition('IMPOSSIBLE', 0);
     }
 
