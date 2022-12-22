@@ -11,6 +11,8 @@ import {
   mockedRandomIntService,
   setupMocks,
 } from '../../../tests/mocks';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { take } from 'rxjs';
 
 describe('RollService', () => {
   let service: RollService;
@@ -35,7 +37,7 @@ describe('RollService', () => {
   });
 
   describe('actorSkillCheck', () => {
-    describe('when skill value is undefined or zero', () => {
+    describe('when skill value is not set or zero', () => {
       it('return IMPOSSIBLE and 0', () => {
         const result = service.actorSkillCheck(
           instance(mockedActorEntity),
@@ -46,6 +48,26 @@ describe('RollService', () => {
 
         expect(result).toEqual(expected);
       });
+
+      it('should emit skillCheckLog log', () => {
+        let result: LogMessageDefinition | undefined;
+
+        service.skillCheckLog$.pipe(take(100)).subscribe((event) => {
+          result = event;
+        });
+
+        const actor = instance(mockedActorEntity);
+
+        service.actorSkillCheck(actor, 'Appraise');
+
+        const expected = new LogMessageDefinition(
+          'CHECK',
+          actor.name,
+          "Appraise skill couldn't be checked because it's value is zero"
+        );
+
+        expect(result).toEqual(expected);
+      });
     });
 
     describe('when skill value is above zero', () => {
@@ -53,12 +75,16 @@ describe('RollService', () => {
         {
           checkResult: 'FAILURE',
           roll: 80,
+          message:
+            'Melee Weapon (Simple) skill checked and rolled 80, it was a FAILURE',
         },
         {
           checkResult: 'SUCCESS',
           roll: 10,
+          message:
+            'Melee Weapon (Simple) skill checked and rolled 10, it was a SUCCESS',
         },
-      ].forEach(({ checkResult, roll }) => {
+      ].forEach(({ checkResult, roll, message }) => {
         it(`return ${checkResult} and ${roll}`, () => {
           when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(
             roll
@@ -72,6 +98,33 @@ describe('RollService', () => {
           const expected = new RollDefinition(
             checkResult as ResultLiteral,
             roll
+          );
+
+          expect(result).toEqual(expected);
+        });
+
+        it('should emit skillCheckLog log', () => {
+          let result: LogMessageDefinition | undefined;
+
+          service.skillCheckLog$.pipe(take(100)).subscribe((event) => {
+            result = event;
+          });
+
+          const actor = instance(mockedActorEntity);
+
+          when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(
+            roll
+          );
+
+          service.actorSkillCheck(
+            instance(mockedActorEntity),
+            'Melee Weapon (Simple)'
+          );
+
+          const expected = new LogMessageDefinition(
+            'CHECK',
+            actor.name,
+            message
           );
 
           expect(result).toEqual(expected);

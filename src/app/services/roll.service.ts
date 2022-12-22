@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 
+import { Observable, Subject } from 'rxjs';
+
 import { Dice } from '../definitions/dice.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { DiceLiteral } from '../literals/dice.literal';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 import { RandomIntService } from './random-int.service';
 
 @Injectable({
@@ -14,9 +18,9 @@ export class RollService {
     readonly [key in DiceLiteral]: { min: number; max: number };
   };
 
-  public readonly competencyChecks = 5;
+  private readonly skillCheckLog: Subject<LogMessageDefinition>;
 
-  public readonly competencyPasses = 3;
+  public readonly skillCheckLog$: Observable<LogMessageDefinition>;
 
   constructor(private readonly rngService: RandomIntService) {
     this.diceMap = {
@@ -28,6 +32,10 @@ export class RollService {
       D20: { min: 1, max: 20 },
       D100: { min: 1, max: 100 },
     };
+
+    this.skillCheckLog = new Subject();
+
+    this.skillCheckLog$ = this.skillCheckLog.asObservable();
   }
 
   public actorSkillCheck(
@@ -37,10 +45,29 @@ export class RollService {
     const skillValue = actor.skills[skillName] ?? 0;
 
     if (skillValue <= 0) {
+      const logMessage =
+        GameMessagesStoreService.createCannotCheckSkillLogMessage(
+          actor.name,
+          skillName
+        );
+
+      this.skillCheckLog.next(logMessage);
+
       return new RollDefinition('IMPOSSIBLE', 0);
     }
 
-    return this.skillCheck(skillValue);
+    const result = this.skillCheck(skillValue);
+
+    const logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
+      actor.name,
+      skillName,
+      result.roll.toString(),
+      result.result
+    );
+
+    this.skillCheckLog.next(logMessage);
+
+    return result;
   }
 
   public roll(roll: Dice): number {
