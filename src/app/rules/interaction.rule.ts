@@ -28,19 +28,19 @@ export class InteractionRule extends MasterRuleService {
 
     const { actionableDefinition } = action;
 
-    const log = target.reactTo(actionableDefinition, 'NONE', {});
-
     const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
-      'INSPECTED',
+      'INTERACTED',
       actor.name,
       actionableDefinition.label
     );
 
     this.ruleLog.next(logMessage);
 
+    const log = target.reactTo(actionableDefinition, 'NONE', {});
+
     if (log) {
       const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
-        'INSPECTED',
+        'INTERACTED',
         target.name,
         log
       );

@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { anything, deepEqual, instance, when } from 'ts-mockito';
+import { deepEqual, instance, when } from 'ts-mockito';
 
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { createActionableDefinition } from '../definitions/actionable.definition';
-import { ActionableEvent } from '../events/actionable.event';
 import { InteractionRule } from './interaction.rule';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
@@ -15,8 +14,14 @@ import {
   mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
-import { interactiveInfo, playerInfo } from '../../../tests/fakes';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import {
+  interactiveInfo,
+  playerInfo,
+  actionableEvent,
+  actionInspect,
+  readable,
+} from '../../../tests/fakes';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('InteractionRule', () => {
   let service: InteractionRule;
@@ -37,34 +42,67 @@ describe('InteractionRule', () => {
 
     setupMocks();
 
-    when(
-      mockedStringMessagesStoreService.createFreeLogMessage(
-        'INSPECTED',
-        playerInfo.name,
-        'Hi'
-      )
-    ).thenReturn(log1);
-
-    when(
-      mockedStringMessagesStoreService.createFreeLogMessage(
-        'INSPECTED',
-        interactiveInfo.name,
-        'Hello'
-      )
-    ).thenReturn(log2);
-
     service = TestBed.inject(InteractionRule);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  describe('execute', () => {
+    it('should log item inspected', () => {
+      when(
+        mockedInteractiveEntity.reactTo(
+          eventInspect.actionableDefinition,
+          'NONE',
+          deepEqual({})
+        )
+      ).thenReturn(inspectedMessage);
+
+      when(
+        mockedStringMessagesStoreService.createFreeLogMessage(
+          'INTERACTED',
+          playerInfo.name,
+          eventInspect.actionableDefinition.label
+        )
+      ).thenReturn(inspectActionLog);
+
+      when(
+        mockedStringMessagesStoreService.createFreeLogMessage(
+          'INTERACTED',
+          interactiveInfo.name,
+          inspectedMessage
+        )
+      ).thenReturn(inspectedLog);
+
+      ruleScenario(service, actor, eventInspect, extras, [
+        inspectActionLog,
+        inspectedLog,
+      ]);
+    });
+  });
 });
 
-const log1 = new LogMessageDefinition('INSPECTED', playerInfo.name, 'Hi');
+const actor = instance(mockedPlayerEntity);
 
-const log2 = new LogMessageDefinition(
-  'INSPECTED',
+const target = instance(mockedInteractiveEntity);
+
+const extras = {
+  target,
+};
+
+const eventInspect = actionableEvent(actionInspect, readable.identity.name);
+
+const inspectedMessage = 'inspected';
+
+const inspectActionLog = new LogMessageDefinition(
+  'INTERACTED',
+  playerInfo.name,
+  'Inspect'
+);
+
+const inspectedLog = new LogMessageDefinition(
+  'INTERACTED',
   interactiveInfo.name,
-  'Hello'
+  'Documented read'
 );

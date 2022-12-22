@@ -14,4 +14,5 @@ export type LogCategoryLiteral =
   | 'OPENED'
   | 'INSPECTED'
   | 'USED'
-  | 'ACTIVATION';
+  | 'ACTIVATION'
+  | 'INTERACTED';
