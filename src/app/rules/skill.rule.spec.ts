@@ -1,17 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
 import { deepEqual, instance, when } from 'ts-mockito';
-import { take } from 'rxjs';
 
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { MasterRuleService } from './master.rule.service';
-import { ActionableEvent } from '../events/actionable.event';
-import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-import { ActorInterface } from '../interfaces/actor.interface';
 import { RollDefinition } from '../definitions/roll.definition';
 
 import {
@@ -28,6 +23,7 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('SkillRule', () => {
   let service: SkillRule;
@@ -96,7 +92,7 @@ describe('SkillRule', () => {
         )
       ).thenReturn(reactedLog);
 
-      scenario(service, actor, eventSkillSurvival, extra, [
+      ruleScenario(service, actor, eventSkillSurvival, extras, [
         skillCheckLog,
         reactedLog,
       ]);
@@ -118,7 +114,9 @@ describe('SkillRule', () => {
           )
         ).thenReturn(impossibleLog);
 
-        scenario(service, actor, eventSkillSurvival, extra, [impossibleLog]);
+        ruleScenario(service, actor, eventSkillSurvival, extras, [
+          impossibleLog,
+        ]);
       });
     });
   });
@@ -128,7 +126,7 @@ const actor = instance(mockedPlayerEntity);
 
 const target = instance(mockedInteractiveEntity);
 
-const extra = {
+const extras = {
   actorVisibility: actor,
   target,
 };
@@ -157,21 +155,3 @@ const reactedLog = new LogMessageDefinition(
   interactiveInfo.name,
   reactToMessage
 );
-
-function scenario(
-  service: MasterRuleService,
-  actor: ActorInterface,
-  actionableEvent: ActionableEvent,
-  extras: RuleExtrasInterface,
-  expected: LogMessageDefinition[]
-) {
-  const result: LogMessageDefinition[] = [];
-
-  service.ruleLog$.pipe(take(100)).subscribe((event) => {
-    result.push(event);
-  });
-
-  service.execute(actor, actionableEvent, extras);
-
-  expect(result).toEqual(expected);
-}

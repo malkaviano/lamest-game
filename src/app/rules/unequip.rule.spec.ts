@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { take } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
@@ -20,6 +19,7 @@ import {
   playerInfo,
   unDodgeableAxe,
 } from '../../../tests/fakes';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UnEquipRule', () => {
   let service: UnEquipRule;
@@ -57,7 +57,9 @@ describe('UnEquipRule', () => {
 
     when(mockedPlayerEntity.unEquip()).thenReturn(unDodgeableAxe);
 
-    scenario(service, [unEquippedLog]);
+    ruleScenario(service, instance(mockedPlayerEntity), unEquipEvent, {}, [
+      unEquippedLog,
+    ]);
   });
 });
 
@@ -73,15 +75,3 @@ const unEquipEvent = new ActionableEvent(
   unEquipAction,
   unDodgeableAxe.identity.name
 );
-
-function scenario(service: UnEquipRule, expected: LogMessageDefinition[]) {
-  const result: LogMessageDefinition[] = [];
-
-  service.ruleLog$.pipe(take(100)).subscribe((event) => {
-    result.push(event);
-  });
-
-  service.execute(instance(mockedPlayerEntity), unEquipEvent);
-
-  expect(result).toEqual(expected);
-}

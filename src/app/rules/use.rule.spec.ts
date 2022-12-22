@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { take } from 'rxjs';
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
@@ -24,6 +23,7 @@ import {
   masterKey,
   actionableEvent,
 } from '../../../tests/fakes';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UseRule', () => {
   let service: UseRule;
@@ -65,7 +65,7 @@ describe('UseRule', () => {
           )
         ).thenReturn(notFoundLog);
 
-        scenario(service, [notFoundLog]);
+        ruleScenario(service, actor, eventUseMasterKey, extras, [notFoundLog]);
       });
     });
 
@@ -82,7 +82,7 @@ describe('UseRule', () => {
           mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
         ).thenReturn(masterKey);
 
-        scenario(service, [itemLostLog]);
+        ruleScenario(service, actor, eventUseMasterKey, extras, [itemLostLog]);
       });
 
       describe('when state returns log', () => {
@@ -116,7 +116,10 @@ describe('UseRule', () => {
             )
           ).thenReturn(openedUsingLog);
 
-          scenario(service, [usedLog, itemLostLog]);
+          ruleScenario(service, actor, eventUseMasterKey, extras, [
+            usedLog,
+            itemLostLog,
+          ]);
         });
       });
     });
@@ -148,16 +151,8 @@ const eventUseMasterKey = actionableEvent(
   interactiveInfo.id
 );
 
-function scenario(service: UseRule, expected: LogMessageDefinition[]) {
-  const result: LogMessageDefinition[] = [];
+const actor = instance(mockedPlayerEntity);
 
-  service.ruleLog$.pipe(take(100)).subscribe((event) => {
-    result.push(event);
-  });
-
-  service.execute(instance(mockedPlayerEntity), eventUseMasterKey, {
-    target: instance(mockedInteractiveEntity),
-  });
-
-  expect(result).toEqual(expected);
-}
+const extras = {
+  target: instance(mockedInteractiveEntity),
+};
