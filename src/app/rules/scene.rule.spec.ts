@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, verify, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
@@ -21,7 +22,7 @@ import {
   interactiveInfo,
   playerInfo,
 } from '../../../tests/fakes';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('SceneRule', () => {
   let service: SceneRule;
@@ -46,22 +47,36 @@ describe('SceneRule', () => {
 
     setupMocks();
 
-    when(
-      mockedStringMessagesStoreService.createSceneLogMessage(
-        playerInfo.name,
-        interactiveInfo.name,
-        'Exit'
-      )
-    ).thenReturn(log);
-
     service = TestBed.inject(SceneRule);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  describe('execute', () => {
+    it('should log scene changed', () => {
+      when(
+        mockedStringMessagesStoreService.createSceneLogMessage(
+          playerInfo.name,
+          interactiveInfo.name,
+          eventSceneExit.actionableDefinition.label
+        )
+      ).thenReturn(sceneChangedLog);
+
+      ruleScenario(service, actor, eventSceneExit, extras, [sceneChangedLog]);
+    });
+  });
 });
 
-const event = actionableEvent(actionSceneExit, interactiveInfo.id);
+const eventSceneExit = actionableEvent(actionSceneExit, interactiveInfo.id);
 
-const log = new LogMessageDefinition('SCENE', playerInfo.name, 'Exit');
+const sceneChangedLog = new LogMessageDefinition(
+  'SCENE',
+  playerInfo.name,
+  eventSceneExit.actionableDefinition.label
+);
+
+const actor = instance(mockedPlayerEntity);
+
+const extras = { target: instance(mockedInteractiveEntity) };
