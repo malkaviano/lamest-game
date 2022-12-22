@@ -12,21 +12,25 @@ import gameMessages from '../../assets/game-messages.json';
   providedIn: 'root',
 })
 export class GameMessagesStoreService {
-  private storedMessages: KeyValueInterface<string>;
+  private logMessagesStore: KeyValueInterface<string>;
+
+  private errorMessagesStore: KeyValueInterface<string>;
 
   constructor() {
-    this.storedMessages = gameMessages;
+    this.logMessagesStore = gameMessages.logs;
+
+    this.errorMessagesStore = gameMessages.errors;
   }
 
-  public get gameMessages(): KeyValueInterface<string> {
-    return this.storedMessages;
+  public get errorMessages(): KeyValueInterface<string> {
+    return this.errorMessagesStore;
   }
 
   public createEffectRestoredHPMessage(
     effectType: EffectTypeLiteral,
     heal: string
   ): string {
-    return this.gameMessages['effectRestoredHPMessage']
+    return this.logMessagesStore['effectRestoredHPMessage']
       .replace('${effectType}', effectType)
       .replace('${heal}', heal);
   }
@@ -35,13 +39,13 @@ export class GameMessagesStoreService {
     effectType: EffectTypeLiteral,
     damage: string
   ): string {
-    return this.gameMessages['effectDamagedMessage']
+    return this.logMessagesStore['effectDamagedMessage']
       .replace('${damage}', damage)
       .replace('${effectType}', effectType);
   }
 
   public createHPDidNotChangeMessage(): string {
-    return this.gameMessages['hpDidNotChangeMessage'];
+    return this.logMessagesStore['hpDidNotChangeMessage'];
   }
 
   public createDestroyedByDamageMessage(
@@ -49,23 +53,23 @@ export class GameMessagesStoreService {
     damage: string
   ): string {
     return `${this.createEffectDamagedMessage(damageType, damage)} and ${
-      this.gameMessages['destroyedMessage']
+      this.logMessagesStore['destroyedMessage']
     }`;
   }
 
   public createOpenedUsingMessage(item: string): string {
-    return this.gameMessages['openedUsingMessage'].replace('${item}', item);
+    return this.logMessagesStore['openedUsingMessage'].replace('${item}', item);
   }
 
   public createLockpickMovedMessage(direction: string): string {
-    return this.gameMessages['lockpickMovedMessage'].replace(
+    return this.logMessagesStore['lockpickMovedMessage'].replace(
       '${direction}',
       direction
     );
   }
 
   public createLockpickStuckMessage(direction: string): string {
-    return this.gameMessages['lockpickStuckMessage'].replace(
+    return this.logMessagesStore['lockpickStuckMessage'].replace(
       '${direction}',
       direction
     );
@@ -73,29 +77,32 @@ export class GameMessagesStoreService {
 
   public createLockpickOpenedMessage(direction: string): string {
     return `${this.createLockpickMovedMessage(direction)} and ${
-      this.gameMessages['lockpickOpenedMessage']
+      this.logMessagesStore['lockpickOpenedMessage']
     }`;
   }
 
   public createLockpickJammedMessage(direction: string): string {
     return `${this.createLockpickStuckMessage(direction)} and ${
-      this.gameMessages['lockpickJammedMessage']
+      this.logMessagesStore['lockpickJammedMessage']
     }`;
   }
 
   public createEnergizedMessage(energy: string): string {
-    return this.gameMessages['energizedMessage'].replace('${energy}', energy);
+    return this.logMessagesStore['energizedMessage'].replace(
+      '${energy}',
+      energy
+    );
   }
 
   public createEnergyDrainedMessage(energy: string): string {
-    return this.gameMessages['energyDrainedMessage'].replace(
+    return this.logMessagesStore['energyDrainedMessage'].replace(
       '${energy}',
       energy
     );
   }
 
   public createEnergyDidNotChangeMessage(): string {
-    return this.gameMessages['energyDidNotChangeMessage'];
+    return this.logMessagesStore['energyDidNotChangeMessage'];
   }
 
   public createSkillCheckLogMessage(
@@ -107,7 +114,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'CHECK',
       actor,
-      this.gameMessages['skillCheckMessage']
+      this.logMessagesStore['skillCheckMessage']
         .replace('${skill}', skill)
         .replace('${roll}', roll)
         .replace('${result}', result)
@@ -121,7 +128,10 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'CHECK',
       actor,
-      this.gameMessages['cannotCheckSkillMessage'].replace('${skill}', skill)
+      this.logMessagesStore['cannotCheckSkillMessage'].replace(
+        '${skill}',
+        skill
+      )
     );
   }
 
@@ -132,7 +142,10 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'EQUIPPED',
       actor,
-      this.gameMessages['equippedMessage'].replace('${equipment}', equipment)
+      this.logMessagesStore['equippedMessage'].replace(
+        '${equipment}',
+        equipment
+      )
     );
   }
 
@@ -143,7 +156,10 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'UNEQUIPPED',
       actor,
-      this.gameMessages['unEquippedMessage'].replace('${equipment}', equipment)
+      this.logMessagesStore['unEquippedMessage'].replace(
+        '${equipment}',
+        equipment
+      )
     );
   }
 
@@ -154,7 +170,10 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'CONSUMED',
       actor,
-      this.gameMessages['consumedMessage'].replace('${consumable}', consumable)
+      this.logMessagesStore['consumedMessage'].replace(
+        '${consumable}',
+        consumable
+      )
     );
   }
 
@@ -166,7 +185,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'USED',
       actor,
-      this.gameMessages['usedItemMessage']
+      this.logMessagesStore['usedItemMessage']
         .replace('${target}', target)
         .replace('${item}', item)
     );
@@ -180,7 +199,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'EQUIP-ERROR',
       actor,
-      this.gameMessages['equipErrorMessage']
+      this.logMessagesStore['equipErrorMessage']
         .replace('${skill}', skill)
         .replace('${equipment}', equipment)
     );
@@ -194,7 +213,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'TOOK',
       actor,
-      this.gameMessages['tookMessage']
+      this.logMessagesStore['tookMessage']
         .replace('${from}', from)
         .replace('${item}', item)
     );
@@ -208,7 +227,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'SCENE',
       actor,
-      this.gameMessages['sceneMessage']
+      this.logMessagesStore['sceneMessage']
         .replace('${from}', from)
         .replace('${selection}', selection)
     );
@@ -221,7 +240,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'LOST',
       actor,
-      this.gameMessages['lostMessage'].replace('${item}', item)
+      this.logMessagesStore['lostMessage'].replace('${item}', item)
     );
   }
 
@@ -231,7 +250,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'ATTACKED',
       target,
-      this.gameMessages['unDodgeableAttackMessage']
+      this.logMessagesStore['unDodgeableAttackMessage']
     );
   }
 
@@ -242,7 +261,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'NOT-FOUND',
       actor,
-      this.gameMessages['notFoundMessage'].replace('${label}', label)
+      this.logMessagesStore['notFoundMessage'].replace('${label}', label)
     );
   }
 
@@ -253,7 +272,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'INSPECTED',
       actor,
-      this.gameMessages['itemInspectedMessage'].replace('${item}', item)
+      this.logMessagesStore['itemInspectedMessage'].replace('${item}', item)
     );
   }
 
@@ -261,7 +280,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'ATTACKED',
       target,
-      this.gameMessages['outOfDodgesMessage']
+      this.logMessagesStore['outOfDodgesMessage']
     );
   }
 
@@ -272,7 +291,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'ACTIVATION',
       actor,
-      this.gameMessages['notEnoughEnergyMessage'].replace('${item}', item)
+      this.logMessagesStore['notEnoughEnergyMessage'].replace('${item}', item)
     );
   }
 
@@ -284,7 +303,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'ACTIVATION',
       actor,
-      this.gameMessages['energySpentMessage']
+      this.logMessagesStore['energySpentMessage']
         .replace('${energySpent}', energySpent)
         .replace('${item}', item)
     );
@@ -302,7 +321,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'DIED',
       actor,
-      this.gameMessages['isDeadMessage']
+      this.logMessagesStore['isDeadMessage']
     );
   }
 }
