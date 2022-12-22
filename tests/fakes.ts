@@ -279,7 +279,10 @@ export const actionPickSimpleSword = createActionableDefinition(
   simpleSword.identity.label
 );
 
-export const actionSkillBrawl = createActionableDefinition('SKILL', 'Brawl');
+export const actionSkillSurvival = createActionableDefinition(
+  'SKILL',
+  'Survival'
+);
 
 export const actionNoop = createActionableDefinition('NOOP', 'noop', 'NOOP');
 

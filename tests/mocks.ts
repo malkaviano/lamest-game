@@ -358,46 +358,7 @@ export const setupMocks = () => {
 
   when(mockedSettingsStore.settings).thenReturn(gameSettings);
 
-  when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
-      deepEqual({
-        target: instance(mockedInteractiveEntity),
-      })
-    )
-  ).thenReturn(instance(mockedInteractiveEntity));
-
-  when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
-      deepEqual({
-        target: instance(mockedActorEntity),
-      })
-    )
-  ).thenReturn(instance(mockedActorEntity));
-
-  when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
-      deepEqual({
-        target: instance(mockedPlayerEntity),
-      })
-    )
-  ).thenReturn(instance(mockedPlayerEntity));
-
-  when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
-      deepEqual({
-        target: instance(mockedTargetPlayerEntity),
-      })
-    )
-  ).thenReturn(instance(mockedTargetPlayerEntity));
-
-  when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
-      deepEqual({
-        target: instance(mockedPlayerEntity),
-        targetDodgesPerformed: 2,
-      })
-    )
-  ).thenReturn(instance(mockedPlayerEntity));
+  mockExtractorHelper();
 };
 
 const resetMocks = () => {
@@ -493,3 +454,55 @@ const resetMocks = () => {
 
   reset(mockedStringMessagesStoreService);
 };
+
+function mockExtractorHelper() {
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedInteractiveEntity),
+      })
+    )
+  ).thenReturn(instance(mockedInteractiveEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedInteractiveEntity),
+        actorVisibility: instance(mockedPlayerEntity),
+      })
+    )
+  ).thenReturn(instance(mockedInteractiveEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedActorEntity),
+      })
+    )
+  ).thenReturn(instance(mockedActorEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedPlayerEntity),
+      })
+    )
+  ).thenReturn(instance(mockedPlayerEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedTargetPlayerEntity),
+      })
+    )
+  ).thenReturn(instance(mockedTargetPlayerEntity));
+
+  when(
+    mockedExtractorHelper.extractRuleTargetOrThrow(
+      deepEqual({
+        target: instance(mockedPlayerEntity),
+        targetDodgesPerformed: 2,
+      })
+    )
+  ).thenReturn(instance(mockedPlayerEntity));
+}

@@ -14,7 +14,7 @@ import { MasterRuleService } from './master.rule.service';
 })
 export class SkillRule extends MasterRuleService {
   constructor(
-    private readonly rollRule: RollService,
+    private readonly rollService: RollService,
     private readonly extractorHelper: ExtractorHelper,
     private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
@@ -30,7 +30,7 @@ export class SkillRule extends MasterRuleService {
 
     const skillName = event.actionableDefinition.name;
 
-    const { roll, result } = this.rollRule.actorSkillCheck(actor, skillName);
+    const { roll, result } = this.rollService.actorSkillCheck(actor, skillName);
 
     if (result !== 'IMPOSSIBLE') {
       const logMessage =
