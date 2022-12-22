@@ -6,14 +6,13 @@ import { take } from 'rxjs';
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
 import { errorMessages } from '../definitions/error-messages.definition';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 
 import {
   mockedInventoryService,
   mockedPlayerEntity,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -35,21 +34,10 @@ describe('InspectRule', () => {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
         },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
-        },
       ],
     });
 
     setupMocks();
-
-    when(
-      mockedStringMessagesStoreService.createItemInspectedLogMessage(
-        playerInfo.name,
-        readable.identity.label
-      )
-    ).thenReturn(itemInspectedLog);
 
     service = TestBed.inject(InspectRule);
   });
@@ -122,5 +110,5 @@ const eventInspectWrong = actionableEvent(
 const itemInspectedLog = new LogMessageDefinition(
   'INSPECTED',
   playerInfo.name,
-  readable.identity.label
+  'inspected Book'
 );

@@ -29,52 +29,24 @@ import {
 import {
   mockedActorBehavior,
   mockedEquipmentBehavior,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 
-const remedy5Log = 'REMEDY-5';
+const remedy5Log = 'received REMEDY effect, healed 5 hp';
 
-const energized4Log = 'energy-4';
+const energized4Log = 'restored 4 energy';
 
-const hpNotChangedLog = 'HP not changed';
+const hpNotChangedLog = 'HP did not change';
 
-const epNotChangedLog = 'EP not changed';
+const epNotChangedLog = 'EP did not change';
 
-const drained4Log = 'energy-drain-4';
+const drained4Log = 'lost 4 energy';
 
-const acid9Log = 'ACID-9';
+const acid9Log = 'received 9 ACID damage';
 
 describe('ActorEntity', () => {
   beforeEach(() => {
     setupMocks();
-
-    when(
-      mockedStringMessagesStoreService.createEffectRestoredHPMessage(
-        'REMEDY',
-        '5'
-      )
-    ).thenReturn(remedy5Log);
-
-    when(
-      mockedStringMessagesStoreService.createEffectDamagedMessage('ACID', '9')
-    ).thenReturn(acid9Log);
-
-    when(
-      mockedStringMessagesStoreService.createEnergizedMessage('4')
-    ).thenReturn(energized4Log);
-
-    when(
-      mockedStringMessagesStoreService.createHPDidNotChangeMessage()
-    ).thenReturn(hpNotChangedLog);
-
-    when(
-      mockedStringMessagesStoreService.createEnergyDidNotChangeMessage()
-    ).thenReturn(epNotChangedLog);
-
-    when(
-      mockedStringMessagesStoreService.createEnergyDrainedMessage('4')
-    ).thenReturn(drained4Log);
 
     when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
 
@@ -450,8 +422,6 @@ describe('ActorEntity', () => {
   });
 });
 
-const fakeMessageStore = instance(mockedStringMessagesStoreService);
-
 const fakeActor = () =>
   new ActorEntity(
     new ActorIdentityDefinition('id1', 'actor', 'Some Actor'),
@@ -459,8 +429,7 @@ const fakeActor = () =>
     false,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
-    emptyState,
-    fakeMessageStore
+    emptyState
   );
 
 const equipActorScenario = (

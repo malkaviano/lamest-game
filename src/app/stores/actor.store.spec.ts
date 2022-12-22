@@ -7,6 +7,7 @@ import { ActorStore } from './actor.store';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { StatesStore } from './states.store';
+import { SkillStore } from './skill.store';
 
 import {
   mockedConverterHelper,
@@ -14,11 +15,8 @@ import {
   mockedResourcesStore,
   mockedSkillStore,
   mockedStatesStore,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
-import { SkillStore } from './skill.store';
-import { GameMessagesStoreService } from './game-messages.store.service';
 
 describe('ActorStore', () => {
   let service: ActorStore;
@@ -45,10 +43,6 @@ describe('ActorStore', () => {
         {
           provide: SkillStore,
           useValue: instance(mockedSkillStore),
-        },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });

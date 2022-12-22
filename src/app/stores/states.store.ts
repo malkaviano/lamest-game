@@ -22,7 +22,6 @@ import {
   directionNamesDefinition,
 } from '../definitions/directions.definition';
 import { VisibilityState } from '../states/visibility.state';
-import { GameMessagesStoreService } from './game-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,8 +34,7 @@ export class StatesStore {
     messageStore: MessageStore,
     actionableStore: ActionableStore,
     resourcesStore: ResourcesStore,
-    generatorService: GeneratorService,
-    stringMessagesStoreService: GameMessagesStoreService
+    generatorService: GeneratorService
   ) {
     this.store = new Map<string, ActionableState>();
 
@@ -97,8 +95,7 @@ export class StatesStore {
         new DestroyableState(
           actionables,
           this.lazyState(state.destroyedState),
-          state.hitpoints,
-          stringMessagesStoreService
+          state.hitpoints
         )
       );
     });
@@ -120,13 +117,11 @@ export class StatesStore {
             ArrayView.create(
               generatorService.lockPickSequence(state.lockPicking.complexity)
             ),
-            state.lockPicking.maximumTries,
-            stringMessagesStoreService
+            state.lockPicking.maximumTries
           )
         : new LockedContainerState(
             actionables,
-            this.lazyState(state.openedState),
-            stringMessagesStoreService
+            this.lazyState(state.openedState)
           );
 
       this.store.set(state.id, locked);

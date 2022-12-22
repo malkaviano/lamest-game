@@ -7,7 +7,6 @@ import { ConverterHelper } from '../helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 import { InventoryService } from '../services/inventory.service';
 import { ItemStore } from './item.store';
-import { GameMessagesStoreService } from './game-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +19,7 @@ export class InteractiveStore {
     inventoryService: InventoryService,
     stateStore: StatesStore,
     itemStore: ItemStore,
-    resourcesStore: ResourcesStore,
-    stringMessagesStoreService: GameMessagesStoreService
+    resourcesStore: ResourcesStore
   ) {
     this.store = new Map<string, InteractiveEntity>();
 
@@ -34,8 +32,7 @@ export class InteractiveStore {
             name,
             description,
             stateStore.states[state],
-            resettable,
-            stringMessagesStoreService
+            resettable
           )
         );
       }

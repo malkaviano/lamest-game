@@ -4,14 +4,13 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { InteractionRule } from './interaction.rule';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedPlayerEntity,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -32,10 +31,6 @@ describe('InteractionRule', () => {
         {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
-        },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });
@@ -58,22 +53,6 @@ describe('InteractionRule', () => {
           deepEqual({})
         )
       ).thenReturn(inspectedMessage);
-
-      when(
-        mockedStringMessagesStoreService.createFreeLogMessage(
-          'INTERACTED',
-          playerInfo.name,
-          eventInspect.actionableDefinition.label
-        )
-      ).thenReturn(inspectActionLog);
-
-      when(
-        mockedStringMessagesStoreService.createFreeLogMessage(
-          'INTERACTED',
-          interactiveInfo.name,
-          inspectedMessage
-        )
-      ).thenReturn(inspectedLog);
 
       ruleScenario(service, actor, eventInspect, extras, [
         inspectActionLog,
@@ -104,5 +83,5 @@ const inspectActionLog = new LogMessageDefinition(
 const inspectedLog = new LogMessageDefinition(
   'INTERACTED',
   interactiveInfo.name,
-  'Documented read'
+  'inspected'
 );

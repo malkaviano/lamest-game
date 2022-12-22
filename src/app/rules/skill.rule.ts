@@ -6,8 +6,9 @@ import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { MasterRuleService } from './master.rule.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,7 @@ import { MasterRuleService } from './master.rule.service';
 export class SkillRule extends MasterRuleService {
   constructor(
     private readonly rollService: RollService,
-    private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
+    private readonly extractorHelper: ExtractorHelper
   ) {
     super();
   }
@@ -33,13 +33,12 @@ export class SkillRule extends MasterRuleService {
     const { roll, result } = this.rollService.actorSkillCheck(actor, skillName);
 
     if (result !== 'IMPOSSIBLE') {
-      const logMessage =
-        this.stringMessagesStoreService.createSkillCheckLogMessage(
-          actor.name,
-          skillName,
-          roll.toString(),
-          result
-        );
+      const logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
+        actor.name,
+        skillName,
+        roll.toString(),
+        result
+      );
 
       this.ruleLog.next(logMessage);
 
@@ -49,7 +48,7 @@ export class SkillRule extends MasterRuleService {
       });
 
       if (log) {
-        const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
+        const logMessage = GameMessagesStoreService.createFreeLogMessage(
           'CHECK',
           target.name,
           log
@@ -59,7 +58,7 @@ export class SkillRule extends MasterRuleService {
       }
     } else {
       const logMessage =
-        this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
+        GameMessagesStoreService.createCannotCheckSkillLogMessage(
           actor.name,
           skillName
         );

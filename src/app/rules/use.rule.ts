@@ -7,7 +7,8 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 
 import { InventoryService } from '../services/inventory.service';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
+
 import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
@@ -16,8 +17,7 @@ import { MasterRuleService } from './master.rule.service';
 export class UseRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
+    private readonly extractorHelper: ExtractorHelper
   ) {
     super();
   }
@@ -37,11 +37,10 @@ export class UseRule extends MasterRuleService {
     );
 
     if (!item) {
-      const logMessage =
-        this.stringMessagesStoreService.createNotFoundLogMessage(
-          actor.name,
-          actionableDefinition.label
-        );
+      const logMessage = GameMessagesStoreService.createNotFoundLogMessage(
+        actor.name,
+        actionableDefinition.label
+      );
 
       this.ruleLog.next(logMessage);
 
@@ -51,7 +50,7 @@ export class UseRule extends MasterRuleService {
     const log = target.reactTo(actionableDefinition, 'USED', { item });
 
     if (log) {
-      const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
+      const logMessage = GameMessagesStoreService.createFreeLogMessage(
         'USED',
         target.name,
         log
@@ -60,7 +59,7 @@ export class UseRule extends MasterRuleService {
       this.ruleLog.next(logMessage);
     }
 
-    const logMessage = this.stringMessagesStoreService.createLostLogMessage(
+    const logMessage = GameMessagesStoreService.createLostLogMessage(
       actor.name,
       item.identity.label
     );

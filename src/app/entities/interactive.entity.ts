@@ -7,7 +7,6 @@ import { ResultLiteral } from '../literals/result.literal';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { ClassificationLiteral } from '../literals/classification.literal';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 
 export class InteractiveEntity implements ActionReactiveInterface {
   private readonly initialState: ActionableState;
@@ -23,8 +22,7 @@ export class InteractiveEntity implements ActionReactiveInterface {
     public readonly name: string,
     public readonly description: string,
     protected currentState: ActionableState,
-    protected readonly resettable: boolean,
-    protected readonly stringMessagesStoreService: GameMessagesStoreService
+    protected readonly resettable: boolean
   ) {
     this.initialState = this.currentState;
 

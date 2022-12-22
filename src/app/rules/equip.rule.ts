@@ -5,9 +5,10 @@ import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { MasterRuleService } from './master.rule.service';
 import { errorMessages } from '../definitions/error-messages.definition';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,7 @@ import { errorMessages } from '../definitions/error-messages.definition';
 export class EquipRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
+    private readonly extractorHelper: ExtractorHelper
   ) {
     super();
   }
@@ -45,29 +45,26 @@ export class EquipRule extends MasterRuleService {
       if (previous) {
         this.inventoryService.store(actor.id, previous);
 
-        const logMessage =
-          this.stringMessagesStoreService.createUnEquippedLogMessage(
-            actor.name,
-            previous.identity.label
-          );
+        const logMessage = GameMessagesStoreService.createUnEquippedLogMessage(
+          actor.name,
+          previous.identity.label
+        );
 
         this.ruleLog.next(logMessage);
       }
 
-      const logMessage =
-        this.stringMessagesStoreService.createEquippedLogMessage(
-          actor.name,
-          weapon.identity.label
-        );
+      const logMessage = GameMessagesStoreService.createEquippedLogMessage(
+        actor.name,
+        weapon.identity.label
+      );
 
       this.ruleLog.next(logMessage);
     } else {
-      const logMessage =
-        this.stringMessagesStoreService.createEquipErrorLogMessage(
-          actor.name,
-          skillName,
-          item.identity.label
-        );
+      const logMessage = GameMessagesStoreService.createEquipErrorLogMessage(
+        actor.name,
+        skillName,
+        item.identity.label
+      );
 
       this.ruleLog.next(logMessage);
     }

@@ -7,7 +7,6 @@ import { RollService } from '../services/roll.service';
 import { unarmedWeapon } from '../definitions/weapon.definition';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 
 import {
   mockedActorEntity,
@@ -15,7 +14,6 @@ import {
   mockedInteractiveEntity,
   mockedPlayerEntity,
   mockedRollService,
-  mockedStringMessagesStoreService,
   mockedTargetPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
@@ -46,47 +44,10 @@ describe('CombatRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
-        },
       ],
     });
 
     setupMocks();
-
-    when(
-      mockedStringMessagesStoreService.createSkillCheckLogMessage(
-        anyString(),
-        'Melee Weapon (Simple)',
-        '10',
-        'SUCCESS'
-      )
-    ).thenReturn(checkSuccessLog);
-
-    when(
-      mockedStringMessagesStoreService.createSkillCheckLogMessage(
-        anyString(),
-        'Melee Weapon (Simple)',
-        '90',
-        'FAILURE'
-      )
-    ).thenReturn(checkFailureLog);
-
-    when(
-      mockedStringMessagesStoreService.createFreeLogMessage(
-        'ATTACKED',
-        interactiveInfo.name,
-        damageMessage2
-      )
-    ).thenReturn(damageInteractiveLog);
-
-    when(
-      mockedStringMessagesStoreService.createEffectDamagedMessage(
-        simpleSword.damage.effectType,
-        '2'
-      )
-    ).thenReturn(damageMessage2);
 
     when(mockedRollService.roll(simpleSword.damage.diceRoll)).thenReturn(0);
 
@@ -141,40 +102,6 @@ describe('CombatRule', () => {
         })
       )
     ).thenReturn(damageMessage2);
-
-    when(
-      mockedStringMessagesStoreService.createUsedItemLogMessage(
-        anyString(),
-        anyString(),
-        anyString()
-      )
-    ).thenReturn(usedItemLog);
-
-    when(
-      mockedStringMessagesStoreService.createFreeLogMessage(
-        'ATTACKED',
-        anyString(),
-        damageMessage2
-      )
-    ).thenReturn(resultDamageLog);
-
-    when(
-      mockedStringMessagesStoreService.createCannotCheckSkillLogMessage(
-        anyString(),
-        'Dodge'
-      )
-    ).thenReturn(cannotDodgeLog);
-
-    when(
-      mockedStringMessagesStoreService.createLostLogMessage(
-        playerInfo.name,
-        molotov.identity.label
-      )
-    ).thenReturn(lostItemLog);
-
-    when(
-      mockedStringMessagesStoreService.createOutOfDodgesLogMessage(anyString())
-    ).thenReturn(outOfDodgesLog);
 
     service = TestBed.inject(CombatRule);
   });

@@ -8,7 +8,6 @@ import { InteractiveStore } from './interactive.store';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { StatesStore } from './states.store';
-import { GameMessagesStoreService } from './game-messages.store.service';
 
 import {
   mockedConverterHelper,
@@ -16,7 +15,6 @@ import {
   mockedItemStore,
   mockedResourcesStore,
   mockedStatesStore,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 
@@ -45,10 +43,6 @@ describe('InteractiveStore', () => {
         {
           provide: ItemStore,
           useValue: instance(mockedItemStore),
-        },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });

@@ -19,7 +19,6 @@ import {
   mockedSettingsStore,
   mockedSkillService,
   mockedSkillStore,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -27,7 +26,6 @@ import {
   fakeCharacteristics,
   fakeIdentity,
 } from '../../../tests/fakes';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
@@ -54,10 +52,6 @@ describe('RandomCharacterService', () => {
         {
           provide: SettingsStore,
           useValue: instance(mockedSettingsStore),
-        },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });
@@ -104,8 +98,6 @@ describe('RandomCharacterService', () => {
   });
 });
 
-const fakeMessageStore = instance(mockedStringMessagesStoreService);
-
 const distributedSkills = new Map<string, number>([
   ['Firearm (Handgun)', 35],
   ['First Aid', 35],
@@ -137,6 +129,5 @@ const expectedCharacter = new PlayerEntity(
     instance(mockedSkillStore),
     actorSettings
   ),
-  EquipmentBehavior.create(),
-  fakeMessageStore
+  EquipmentBehavior.create()
 );

@@ -6,8 +6,9 @@ import { NarrativeService } from '../services/narrative.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { MasterRuleService } from './master.rule.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,7 @@ import { MasterRuleService } from './master.rule.service';
 export class SceneRule extends MasterRuleService {
   constructor(
     private readonly narrativeService: NarrativeService,
-    private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
+    private readonly extractorHelper: ExtractorHelper
   ) {
     super();
   }
@@ -30,7 +30,7 @@ export class SceneRule extends MasterRuleService {
 
     this.narrativeService.changeScene(action);
 
-    const logMessage = this.stringMessagesStoreService.createSceneLogMessage(
+    const logMessage = GameMessagesStoreService.createSceneLogMessage(
       actor.name,
       target.name,
       action.actionableDefinition.label

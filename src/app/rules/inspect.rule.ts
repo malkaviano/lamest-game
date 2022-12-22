@@ -6,17 +6,15 @@ import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 
 import { InventoryService } from '../services/inventory.service';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
+
 import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InspectRule extends MasterRuleService {
-  constructor(
-    private readonly inventoryService: InventoryService,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
-  ) {
+  constructor(private readonly inventoryService: InventoryService) {
     super();
   }
 
@@ -32,11 +30,10 @@ export class InspectRule extends MasterRuleService {
       throw new Error(errorMessages['WRONG-ITEM']);
     }
 
-    const logMessage =
-      this.stringMessagesStoreService.createItemInspectedLogMessage(
-        actor.name,
-        item.identity.label
-      );
+    const logMessage = GameMessagesStoreService.createItemInspectedLogMessage(
+      actor.name,
+      item.identity.label
+    );
 
     this.ruleLog.next(logMessage);
 

@@ -13,8 +13,9 @@ import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorEntity } from '../entities/actor.entity';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { MasterRuleService } from './master.rule.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +25,7 @@ export class CombatRule extends MasterRuleService {
 
   constructor(
     private readonly rollService: RollService,
-    private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
+    private readonly extractorHelper: ExtractorHelper
   ) {
     super();
 
@@ -88,7 +88,7 @@ export class CombatRule extends MasterRuleService {
       }
     } else {
       const logMessage =
-        this.stringMessagesStoreService.createNotEnoughEnergyLogMessage(
+        GameMessagesStoreService.createNotEnoughEnergyLogMessage(
           actor.name,
           identity.label
         );
@@ -106,7 +106,7 @@ export class CombatRule extends MasterRuleService {
       target.situation === 'DEAD'
     ) {
       this.ruleLog.next(
-        this.stringMessagesStoreService.createActorIsDeadLogMessage(target.name)
+        GameMessagesStoreService.createActorIsDeadLogMessage(target.name)
       );
     }
   }
@@ -114,7 +114,7 @@ export class CombatRule extends MasterRuleService {
   private disposeItem(actor: ActorInterface, label: string): void {
     actor.unEquip();
 
-    const logMessage = this.stringMessagesStoreService.createLostLogMessage(
+    const logMessage = GameMessagesStoreService.createLostLogMessage(
       actor.name,
       label
     );
@@ -132,12 +132,11 @@ export class CombatRule extends MasterRuleService {
     });
 
     if (energySpentLog) {
-      const logMessage =
-        this.stringMessagesStoreService.createEnergySpentLogMessage(
-          actor.name,
-          energySpentLog,
-          label
-        );
+      const logMessage = GameMessagesStoreService.createEnergySpentLogMessage(
+        actor.name,
+        energySpentLog,
+        label
+      );
 
       this.ruleLog.next(logMessage);
     }
@@ -157,7 +156,7 @@ export class CombatRule extends MasterRuleService {
       TODO: check for impossible
      */
 
-    let logMessage = this.stringMessagesStoreService.createUsedItemLogMessage(
+    let logMessage = GameMessagesStoreService.createUsedItemLogMessage(
       actor.name,
       target.name,
       weaponLabel
@@ -165,7 +164,7 @@ export class CombatRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    logMessage = this.stringMessagesStoreService.createSkillCheckLogMessage(
+    logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
       actor.name,
       skillName,
       actorRoll.toString(),
@@ -184,9 +183,7 @@ export class CombatRule extends MasterRuleService {
   ): boolean {
     if (!dodgeable) {
       const logMessage =
-        this.stringMessagesStoreService.createUnDodgeableAttackLogMessage(
-          target.name
-        );
+        GameMessagesStoreService.createUnDodgeableAttackLogMessage(target.name);
 
       this.ruleLog.next(logMessage);
     }
@@ -208,18 +205,17 @@ export class CombatRule extends MasterRuleService {
       if (dodged) {
         this.actorDodged.next(targetActor.id);
 
-        const logMessage =
-          this.stringMessagesStoreService.createSkillCheckLogMessage(
-            targetActor.name,
-            'Dodge',
-            dodgeRoll.toString(),
-            dodgeResult
-          );
+        const logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
+          targetActor.name,
+          'Dodge',
+          dodgeRoll.toString(),
+          dodgeResult
+        );
 
         this.ruleLog.next(logMessage);
       } else if (dodgeResult === 'IMPOSSIBLE') {
         const logMessage =
-          this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
+          GameMessagesStoreService.createCannotCheckSkillLogMessage(
             targetActor.name,
             'Dodge'
           );
@@ -227,10 +223,9 @@ export class CombatRule extends MasterRuleService {
         this.ruleLog.next(logMessage);
       }
     } else {
-      const logMessage =
-        this.stringMessagesStoreService.createOutOfDodgesLogMessage(
-          targetActor.name
-        );
+      const logMessage = GameMessagesStoreService.createOutOfDodgesLogMessage(
+        targetActor.name
+      );
 
       this.ruleLog.next(logMessage);
     }
@@ -250,7 +245,7 @@ export class CombatRule extends MasterRuleService {
     });
 
     if (log) {
-      const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
+      const logMessage = GameMessagesStoreService.createFreeLogMessage(
         'ATTACKED',
         target.name,
         log

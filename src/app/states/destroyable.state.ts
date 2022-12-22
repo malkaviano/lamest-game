@@ -2,7 +2,8 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
+
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
@@ -10,8 +11,7 @@ export class DestroyableState extends ActionableState {
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
     protected readonly destroyedState: LazyHelper<ActionableState>,
-    public readonly hitPoints: number,
-    protected readonly stringMessagesStoreService: GameMessagesStoreService
+    public readonly hitPoints: number
   ) {
     super('DestroyableState', stateActions);
   }
@@ -35,10 +35,9 @@ export class DestroyableState extends ActionableState {
           state: new DestroyableState(
             this.stateActions,
             this.destroyedState,
-            hp,
-            this.stringMessagesStoreService
+            hp
           ),
-          log: this.stringMessagesStoreService.createEffectDamagedMessage(
+          log: GameMessagesStoreService.createEffectDamagedMessage(
             values.effect.effectType,
             dmg.toString()
           ),
@@ -47,7 +46,7 @@ export class DestroyableState extends ActionableState {
 
       return {
         state: this.destroyedState.value,
-        log: this.stringMessagesStoreService.createDestroyedByDamageMessage(
+        log: GameMessagesStoreService.createDestroyedByDamageMessage(
           values.effect.effectType,
           dmg.toString()
         ),

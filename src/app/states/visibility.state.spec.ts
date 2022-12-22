@@ -21,7 +21,6 @@ import {
 import {
   mockedPlayerEntity,
   mockedSkillStore,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 
@@ -223,6 +222,5 @@ const fakeCharacter = () =>
       instance(mockedSkillStore),
       actorSettings
     ),
-    EquipmentBehavior.create(),
-    instance(mockedStringMessagesStoreService)
+    EquipmentBehavior.create()
   );

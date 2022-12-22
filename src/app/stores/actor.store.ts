@@ -11,7 +11,6 @@ import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
-import { GameMessagesStoreService } from './game-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +23,7 @@ export class ActorStore {
     stateStore: StatesStore,
     resourcesStore: ResourcesStore,
     itemStore: ItemStore,
-    skillStore: SkillStore,
-    stringMessagesStoreService: GameMessagesStoreService
+    skillStore: SkillStore
   ) {
     this.store = new Map<string, ActorEntity>();
 
@@ -53,8 +51,7 @@ export class ActorStore {
             actorSettings
           ),
           EquipmentBehavior.create(),
-          stateStore.states[killedState],
-          stringMessagesStoreService
+          stateStore.states[killedState]
         );
 
         actor.equip(itemStore.items[equippedWeapon] as WeaponDefinition);

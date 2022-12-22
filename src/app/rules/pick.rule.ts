@@ -7,8 +7,9 @@ import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { MasterRuleService } from './master.rule.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +17,7 @@ import { MasterRuleService } from './master.rule.service';
 export class PickRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
+    private readonly extractorHelper: ExtractorHelper
   ) {
     super();
   }
@@ -40,7 +40,7 @@ export class PickRule extends MasterRuleService {
     const log = target.reactTo(action.actionableDefinition, 'NONE', {});
 
     if (log) {
-      const logMessage = this.stringMessagesStoreService.createTookLogMessage(
+      const logMessage = GameMessagesStoreService.createTookLogMessage(
         actor.name,
         target.name,
         log

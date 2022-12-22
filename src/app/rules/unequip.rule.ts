@@ -4,17 +4,15 @@ import { ActionableEvent } from '../events/actionable.event';
 
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { MasterRuleService } from './master.rule.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UnEquipRule extends MasterRuleService {
-  constructor(
-    private readonly inventoryService: InventoryService,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
-  ) {
+  constructor(private readonly inventoryService: InventoryService) {
     super();
   }
 
@@ -24,11 +22,10 @@ export class UnEquipRule extends MasterRuleService {
     if (weapon) {
       this.inventoryService.store(actor.name, weapon);
 
-      const logMessage =
-        this.stringMessagesStoreService.createUnEquippedLogMessage(
-          actor.name,
-          action.actionableDefinition.label
-        );
+      const logMessage = GameMessagesStoreService.createUnEquippedLogMessage(
+        actor.name,
+        action.actionableDefinition.label
+      );
 
       this.ruleLog.next(logMessage);
     }

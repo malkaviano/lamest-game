@@ -7,7 +7,6 @@ import { fakeIdentity, actionConsume } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
   mockedEquipmentBehavior,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 
@@ -43,12 +42,9 @@ describe('PlayerEntity', () => {
   });
 });
 
-const fakeMessageStore = instance(mockedStringMessagesStoreService);
-
 const fakeCharacter = () =>
   new PlayerEntity(
     fakeIdentity,
     instance(mockedActorBehavior),
-    instance(mockedEquipmentBehavior),
-    fakeMessageStore
+    instance(mockedEquipmentBehavior)
   );

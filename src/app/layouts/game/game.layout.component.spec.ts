@@ -13,8 +13,6 @@ import { ActionableItemView } from '../../views/actionable-item.view';
 import { ActionableEvent } from '../../events/actionable.event';
 import { unarmedWeapon } from '../../definitions/weapon.definition';
 
-import { instance } from 'ts-mockito';
-
 import {
   actionAsk,
   fakeCharacterSheet,
@@ -25,10 +23,7 @@ import {
   molotov,
   simpleSword,
 } from '../../../../tests/fakes';
-import {
-  mockedStringMessagesStoreService,
-  setupMocks,
-} from '../../../../tests/mocks';
+import { setupMocks } from '../../../../tests/mocks';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;
@@ -197,15 +192,12 @@ describe('GameLayoutComponent', () => {
   });
 });
 
-const fakeMessageStore = instance(mockedStringMessagesStoreService);
-
 const fakeInteractive = new InteractiveEntity(
   'id1',
   'props1',
   'This is props1',
   new SimpleState(ArrayView.create([actionAsk])),
-  true,
-  fakeMessageStore
+  true
 );
 
 const scene = new SceneDefinition(

@@ -9,7 +9,7 @@ import { RollService } from '../services/roll.service';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 
@@ -18,7 +18,6 @@ import {
   mockedInventoryService,
   mockedPlayerEntity,
   mockedRollService,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -47,10 +46,6 @@ describe('ConsumeRule', () => {
         {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
-        },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });
@@ -112,30 +107,6 @@ describe('ConsumeRule', () => {
           )
         ).thenReturn(logHeal5);
 
-        when(
-          mockedStringMessagesStoreService.createSkillCheckLogMessage(
-            playerInfo.name,
-            'First Aid',
-            '10',
-            'SUCCESS'
-          )
-        ).thenReturn(firstAidSuccessLog);
-
-        when(
-          mockedStringMessagesStoreService.createConsumedLogMessage(
-            playerInfo.name,
-            'First Aid Kit'
-          )
-        ).thenReturn(firstAidLog);
-
-        when(
-          mockedStringMessagesStoreService.createFreeLogMessage(
-            'CONSUMED',
-            playerInfo.name,
-            logHeal5
-          )
-        ).thenReturn(firstAidConsumedLog);
-
         ruleScenario(service, actor, eventConsumeFirstAid, extras, [
           firstAidSuccessLog,
           firstAidLog,
@@ -157,13 +128,6 @@ describe('ConsumeRule', () => {
             mockedRollService.actorSkillCheck(actor, 'First Aid')
           ).thenReturn(impossibleFirstAidRoll);
 
-          when(
-            mockedStringMessagesStoreService.createCannotCheckSkillLogMessage(
-              playerInfo.name,
-              'First Aid'
-            )
-          ).thenReturn(errorImpossibleCheckLog);
-
           ruleScenario(service, actor, eventConsumeFirstAid, extras, [
             errorImpossibleCheckLog,
           ]);
@@ -184,13 +148,13 @@ const impossibleFirstAidRoll = new RollDefinition('IMPOSSIBLE', 0);
 const firstAidLog = new LogMessageDefinition(
   'CONSUMED',
   playerInfo.name,
-  'First Aid Kit'
+  'consumed First Aid Kit'
 );
 
 const firstAidSuccessLog = new LogMessageDefinition(
   'CHECK',
   playerInfo.name,
-  'First Aid-10-SUCCESS'
+  'First Aid skill checked and rolled 10, it was a SUCCESS'
 );
 
 const logHeal5 = `${consumableFirstAid.effect}-5`;
@@ -204,7 +168,7 @@ const firstAidConsumedLog = new LogMessageDefinition(
 const errorImpossibleCheckLog = new LogMessageDefinition(
   'CHECK',
   playerInfo.name,
-  'First Aid'
+  "First Aid skill couldn't be checked because it's value is zero"
 );
 
 const eventConsumeFirstAid = actionableEvent(

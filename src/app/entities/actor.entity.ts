@@ -23,7 +23,8 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
+
 import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 
@@ -52,16 +53,14 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     resettable: boolean,
     protected readonly actorBehavior: ActorBehavior,
     protected readonly equipmentBehavior: EquipmentBehavior,
-    protected readonly killedState: ActionableState,
-    stringMessagesStoreService: GameMessagesStoreService
+    protected readonly killedState: ActionableState
   ) {
     super(
       identity.id,
       identity.name,
       identity.description,
       currentState,
-      resettable,
-      stringMessagesStoreService
+      resettable
     );
 
     this.mVisibility = 'VISIBLE';
@@ -215,17 +214,17 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     if (result.current > result.previous) {
-      resultLog = this.stringMessagesStoreService.createEffectRestoredHPMessage(
+      resultLog = GameMessagesStoreService.createEffectRestoredHPMessage(
         effect.effectType,
         result.effective.toString()
       );
     } else if (result.current < result.previous) {
-      resultLog = this.stringMessagesStoreService.createEffectDamagedMessage(
+      resultLog = GameMessagesStoreService.createEffectDamagedMessage(
         effect.effectType,
         result.effective.toString()
       );
     } else {
-      resultLog = this.stringMessagesStoreService.createHPDidNotChangeMessage();
+      resultLog = GameMessagesStoreService.createHPDidNotChangeMessage();
     }
 
     return resultLog;
@@ -241,16 +240,15 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     if (result.current > result.previous) {
-      resultLog = this.stringMessagesStoreService.createEnergizedMessage(
+      resultLog = GameMessagesStoreService.createEnergizedMessage(
         result.effective.toString()
       );
     } else if (result.current < result.previous) {
-      resultLog = this.stringMessagesStoreService.createEnergyDrainedMessage(
+      resultLog = GameMessagesStoreService.createEnergyDrainedMessage(
         result.effective.toString()
       );
     } else {
-      resultLog =
-        this.stringMessagesStoreService.createEnergyDidNotChangeMessage();
+      resultLog = GameMessagesStoreService.createEnergyDidNotChangeMessage();
     }
 
     return resultLog;

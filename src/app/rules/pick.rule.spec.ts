@@ -4,7 +4,7 @@ import { deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
@@ -13,7 +13,6 @@ import {
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -38,10 +37,6 @@ describe('PickRule', () => {
         {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
-        },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });
@@ -73,14 +68,6 @@ describe('PickRule', () => {
         )
       ).thenReturn(itemTookMessage);
 
-      when(
-        mockedStringMessagesStoreService.createTookLogMessage(
-          playerInfo.name,
-          interactiveInfo.name,
-          itemTookMessage
-        )
-      ).thenReturn(itemTookLog);
-
       ruleScenario(
         service,
         actor,
@@ -104,7 +91,7 @@ const itemTookMessage = `${interactiveInfo.name}-${simpleSword.identity.label}`;
 const itemTookLog = new LogMessageDefinition(
   'TOOK',
   playerInfo.name,
-  itemTookMessage
+  'took test-Sword from test'
 );
 
 const eventPickSimpleSword = actionableEvent(

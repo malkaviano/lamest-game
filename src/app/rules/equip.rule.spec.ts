@@ -6,7 +6,7 @@ import { InventoryService } from '../services/inventory.service';
 import { EquipRule } from './equip.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 
@@ -14,7 +14,6 @@ import {
   mockedExtractorHelper,
   mockedInventoryService,
   mockedPlayerEntity,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -41,10 +40,6 @@ describe('EquipRule', () => {
         {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
-        },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });
@@ -93,20 +88,6 @@ describe('EquipRule', () => {
 
         when(mockedPlayerEntity.equip(simpleSword)).thenReturn(unDodgeableAxe);
 
-        when(
-          mockedStringMessagesStoreService.createUnEquippedLogMessage(
-            playerInfo.name,
-            unDodgeableAxe.identity.label
-          )
-        ).thenReturn(unEquipLog);
-
-        when(
-          mockedStringMessagesStoreService.createEquippedLogMessage(
-            playerInfo.name,
-            simpleSword.identity.label
-          )
-        ).thenReturn(equipLog);
-
         ruleScenario(service, actor, eventOk, extras, [unEquipLog, equipLog]);
 
         // cheap side effect verification
@@ -125,14 +106,6 @@ describe('EquipRule', () => {
               greatSword.identity.name
             )
           ).thenReturn(greatSword);
-
-          when(
-            mockedStringMessagesStoreService.createEquipErrorLogMessage(
-              playerInfo.name,
-              greatSword.skillName,
-              greatSword.identity.label
-            )
-          ).thenReturn(errorLog);
 
           ruleScenario(service, actor, eventNoSkill, extras, [errorLog]);
 
@@ -164,17 +137,17 @@ const eventNoSkill = actionableEvent(actionEquip, greatSword.identity.name);
 const equipLog = new LogMessageDefinition(
   'EQUIPPED',
   playerInfo.name,
-  simpleSword.identity.label
+  'equipped Sword'
 );
 
 const unEquipLog = new LogMessageDefinition(
   'UNEQUIPPED',
   playerInfo.name,
-  unDodgeableAxe.identity.label
+  'un-equipped Axe'
 );
 
 const errorLog = new LogMessageDefinition(
   'EQUIP-ERROR',
   playerInfo.name,
-  `${greatSword.skillName}-${greatSword.identity.label}`
+  'Melee Weapon (Great) is required to equip Great Sword'
 );

@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { anything, instance, when } from 'ts-mockito';
 import { of, Subject, take } from 'rxjs';
 
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { CharacterService } from './character.service';
 import { GameRoundService } from './game-round.service';
 import { NarrativeService } from './narrative.service';
@@ -29,14 +28,11 @@ import {
   mockedSceneEntity,
   setupMocks,
   mockedInteractiveEntity,
-  mockedStringMessagesStoreService,
 } from '../../../tests/mocks';
 
 const actor = instance(mockedActorEntity);
 
 const actor2 = instance(mockedActorEntity2);
-
-const logDied = new LogMessageDefinition('DIED', playerInfo.name, 'dead');
 
 describe('GameRoundService', () => {
   let service: GameRoundService;
@@ -60,10 +56,6 @@ describe('GameRoundService', () => {
     });
 
     setupMocks();
-
-    when(
-      mockedStringMessagesStoreService.createActorIsDeadLogMessage
-    ).thenReturn(() => logDied);
 
     when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
 

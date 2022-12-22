@@ -7,10 +7,11 @@ import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { MasterRuleService } from './master.rule.service';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +20,7 @@ export class ConsumeRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollRule: RollService,
-    private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: GameMessagesStoreService
+    private readonly extractorHelper: ExtractorHelper
   ) {
     super();
   }
@@ -52,7 +52,7 @@ export class ConsumeRule extends MasterRuleService {
     actionableDefinition: ActionableDefinition,
     rollResult: ResultLiteral
   ) {
-    const logMessage = this.stringMessagesStoreService.createConsumedLogMessage(
+    const logMessage = GameMessagesStoreService.createConsumedLogMessage(
       actor.name,
       consumable.identity.label
     );
@@ -69,7 +69,7 @@ export class ConsumeRule extends MasterRuleService {
     });
 
     if (log) {
-      const logMessage = this.stringMessagesStoreService.createFreeLogMessage(
+      const logMessage = GameMessagesStoreService.createFreeLogMessage(
         'CONSUMED',
         actor.name,
         log
@@ -86,20 +86,19 @@ export class ConsumeRule extends MasterRuleService {
 
     if (rollDefinition.result === 'IMPOSSIBLE') {
       const logMessage =
-        this.stringMessagesStoreService.createCannotCheckSkillLogMessage(
+        GameMessagesStoreService.createCannotCheckSkillLogMessage(
           actor.name,
           skillName
         );
 
       this.ruleLog.next(logMessage);
     } else {
-      const logMessage =
-        this.stringMessagesStoreService.createSkillCheckLogMessage(
-          actor.name,
-          skillName,
-          rollDefinition.roll.toString(),
-          rollDefinition.result
-        );
+      const logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
+        actor.name,
+        skillName,
+        rollDefinition.roll.toString(),
+        rollDefinition.result
+      );
 
       this.ruleLog.next(logMessage);
     }

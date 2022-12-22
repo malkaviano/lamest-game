@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, when } from 'ts-mockito';
+import { instance } from 'ts-mockito';
 
 import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
@@ -13,7 +13,6 @@ import {
   mockedInteractiveEntity,
   mockedNarrativeService,
   mockedPlayerEntity,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -38,10 +37,6 @@ describe('SceneRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
-        },
       ],
     });
 
@@ -56,14 +51,6 @@ describe('SceneRule', () => {
 
   describe('execute', () => {
     it('should log scene changed', () => {
-      when(
-        mockedStringMessagesStoreService.createSceneLogMessage(
-          playerInfo.name,
-          interactiveInfo.name,
-          eventSceneExit.actionableDefinition.label
-        )
-      ).thenReturn(sceneChangedLog);
-
       ruleScenario(service, actor, eventSceneExit, extras, [sceneChangedLog]);
     });
   });
@@ -74,7 +61,7 @@ const eventSceneExit = actionableEvent(actionSceneExit, interactiveInfo.id);
 const sceneChangedLog = new LogMessageDefinition(
   'SCENE',
   playerInfo.name,
-  eventSceneExit.actionableDefinition.label
+  'selected Exit from test'
 );
 
 const actor = instance(mockedPlayerEntity);

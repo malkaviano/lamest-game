@@ -5,7 +5,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
@@ -13,7 +13,6 @@ import {
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -39,10 +38,6 @@ describe('UseRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
-        },
       ],
     });
 
@@ -58,26 +53,12 @@ describe('UseRule', () => {
   describe('execute', () => {
     describe('when item could not be found', () => {
       it('should log item not found', () => {
-        when(
-          mockedStringMessagesStoreService.createNotFoundLogMessage(
-            playerInfo.name,
-            masterKey.identity.label
-          )
-        ).thenReturn(notFoundLog);
-
         ruleScenario(service, actor, eventUseMasterKey, extras, [notFoundLog]);
       });
     });
 
     describe('when item could be found', () => {
       it('should log item lost', () => {
-        when(
-          mockedStringMessagesStoreService.createLostLogMessage(
-            playerInfo.name,
-            masterKey.identity.label
-          )
-        ).thenReturn(itemLostLog);
-
         when(
           mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
         ).thenReturn(masterKey);
@@ -88,23 +69,8 @@ describe('UseRule', () => {
       describe('when state returns log', () => {
         it('should log item lost', () => {
           when(
-            mockedStringMessagesStoreService.createLostLogMessage(
-              playerInfo.name,
-              masterKey.identity.label
-            )
-          ).thenReturn(itemLostLog);
-
-          when(
             mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
           ).thenReturn(masterKey);
-
-          when(
-            mockedStringMessagesStoreService.createFreeLogMessage(
-              'USED',
-              interactiveInfo.name,
-              openedUsingLog
-            )
-          ).thenReturn(usedLog);
 
           when(
             mockedInteractiveEntity.reactTo(
@@ -129,7 +95,7 @@ describe('UseRule', () => {
 const notFoundLog = new LogMessageDefinition(
   'NOT-FOUND',
   playerInfo.name,
-  masterKey.identity.label
+  'Master Key failed, required item was not found in inventory'
 );
 
 const openedUsingLog = `opened using ${masterKey.identity.name}`;
@@ -143,7 +109,7 @@ const usedLog = new LogMessageDefinition(
 const itemLostLog = new LogMessageDefinition(
   'LOST',
   playerInfo.name,
-  masterKey.identity.name
+  'lost Master Key'
 );
 
 const eventUseMasterKey = actionableEvent(

@@ -8,33 +8,15 @@ import {
   actionPickSimpleSword,
   fakeEffect,
 } from '../../../tests/fakes';
-import { instance, when } from 'ts-mockito';
-import {
-  mockedStringMessagesStoreService,
-  setupMocks,
-} from '../../../tests/mocks';
+import { setupMocks } from '../../../tests/mocks';
 
-const logKinetic6 = 'KINETIC-6';
+const logKinetic6 = 'received 6 KINETIC damage';
 
-const logKinetic12 = 'KINETIC-12';
+const logKinetic12 = 'received 12 KINETIC damage and was destroyed';
 
 describe('DestroyableState', () => {
   beforeEach(() => {
     setupMocks();
-
-    when(
-      mockedStringMessagesStoreService.createEffectDamagedMessage(
-        'KINETIC',
-        '6'
-      )
-    ).thenReturn(logKinetic6);
-
-    when(
-      mockedStringMessagesStoreService.createDestroyedByDamageMessage(
-        'KINETIC',
-        '12'
-      )
-    ).thenReturn(logKinetic12);
   });
 
   describe('when HP <= 0', () => {
@@ -77,18 +59,6 @@ const f = () => discardedState;
 
 const lazy = new LazyHelper(f);
 
-const fakeMessageStore = instance(mockedStringMessagesStoreService);
+const state = new DestroyableState(ArrayView.create([actionAttack]), lazy, 10);
 
-const state = new DestroyableState(
-  ArrayView.create([actionAttack]),
-  lazy,
-  10,
-  fakeMessageStore
-);
-
-const state2 = new DestroyableState(
-  ArrayView.create([actionAttack]),
-  lazy,
-  4,
-  fakeMessageStore
-);
+const state2 = new DestroyableState(ArrayView.create([actionAttack]), lazy, 4);

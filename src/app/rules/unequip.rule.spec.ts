@@ -4,7 +4,7 @@ import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UnEquipRule } from './unequip.rule';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { ActionableEvent } from '../events/actionable.event';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
@@ -12,7 +12,6 @@ import {
   mockedPlayerEntity,
   mockedInventoryService,
   setupMocks,
-  mockedStringMessagesStoreService,
 } from '../../../tests/mocks';
 import {
   actionUnEquip,
@@ -31,10 +30,6 @@ describe('UnEquipRule', () => {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
         },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
-        },
       ],
     });
 
@@ -48,13 +43,6 @@ describe('UnEquipRule', () => {
   });
 
   it('should log weapon unequipped', () => {
-    when(
-      mockedStringMessagesStoreService.createUnEquippedLogMessage(
-        playerInfo.name,
-        unDodgeableAxe.identity.label
-      )
-    ).thenReturn(unEquippedLog);
-
     when(mockedPlayerEntity.unEquip()).thenReturn(unDodgeableAxe);
 
     ruleScenario(service, instance(mockedPlayerEntity), unEquipEvent, {}, [
@@ -66,7 +54,7 @@ describe('UnEquipRule', () => {
 const unEquippedLog = new LogMessageDefinition(
   'UNEQUIPPED',
   playerInfo.name,
-  unDodgeableAxe.identity.label
+  'un-equipped Axe'
 );
 
 const unEquipAction = actionUnEquip(unDodgeableAxe.identity.label);

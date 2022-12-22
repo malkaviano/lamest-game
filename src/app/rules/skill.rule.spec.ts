@@ -5,7 +5,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { GameMessagesStoreService } from '../stores/game-messages.store.service';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 
@@ -15,7 +15,6 @@ import {
   mockedRollService,
   setupMocks,
   mockedExtractorHelper,
-  mockedStringMessagesStoreService,
 } from '../../../tests/mocks';
 import {
   actionableEvent,
@@ -38,10 +37,6 @@ describe('SkillRule', () => {
         {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
-        },
-        {
-          provide: GameMessagesStoreService,
-          useValue: instance(mockedStringMessagesStoreService),
         },
       ],
     });
@@ -75,23 +70,6 @@ describe('SkillRule', () => {
         )
       ).thenReturn(new RollDefinition('SUCCESS', 10));
 
-      when(
-        mockedStringMessagesStoreService.createSkillCheckLogMessage(
-          playerInfo.name,
-          eventSkillSurvival.actionableDefinition.name,
-          '10',
-          'SUCCESS'
-        )
-      ).thenReturn(skillCheckLog);
-
-      when(
-        mockedStringMessagesStoreService.createFreeLogMessage(
-          'CHECK',
-          interactiveInfo.name,
-          reactToMessage
-        )
-      ).thenReturn(reactedLog);
-
       ruleScenario(service, actor, eventSkillSurvival, extras, [
         skillCheckLog,
         reactedLog,
@@ -106,13 +84,6 @@ describe('SkillRule', () => {
             eventSkillSurvival.actionableDefinition.name
           )
         ).thenReturn(new RollDefinition('IMPOSSIBLE', 0));
-
-        when(
-          mockedStringMessagesStoreService.createCannotCheckSkillLogMessage(
-            playerInfo.name,
-            eventSkillSurvival.actionableDefinition.name
-          )
-        ).thenReturn(impossibleLog);
 
         ruleScenario(service, actor, eventSkillSurvival, extras, [
           impossibleLog,
@@ -139,19 +110,19 @@ const eventSkillSurvival = actionableEvent(
 const skillCheckLog = new LogMessageDefinition(
   'CHECK',
   playerInfo.name,
-  'Survival-SUCCESS-10'
+  'Survival skill checked and rolled 10, it was a SUCCESS'
 );
 
 const impossibleLog = new LogMessageDefinition(
   'CHECK',
   playerInfo.name,
-  'NOP-Survival'
+  "Survival skill couldn't be checked because it's value is zero"
 );
 
 const reactToMessage = 'survival success';
 
 const reactedLog = new LogMessageDefinition(
-  'ATTACKED',
+  'CHECK',
   interactiveInfo.name,
   reactToMessage
 );

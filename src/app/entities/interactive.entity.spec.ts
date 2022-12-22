@@ -10,7 +10,6 @@ import { actionConsume, actionPickAnalgesic } from '../../../tests/fakes';
 import {
   mockedActionableState,
   mockedActionableState2,
-  mockedStringMessagesStoreService,
   setupMocks,
 } from '../../../tests/mocks';
 
@@ -124,14 +123,11 @@ const state1 = instance(mockedActionableState);
 
 const state2 = instance(mockedActionableState2);
 
-const fakeMessageStore = instance(mockedStringMessagesStoreService);
-
 const fakeEntity = (resettable = true, state: ActionableState = state1) =>
   new InteractiveEntity(
     'id1',
     'SomeEntity',
     'Testing Entity',
     state,
-    resettable,
-    fakeMessageStore
+    resettable
   );

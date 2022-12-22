@@ -1,5 +1,3 @@
-import { instance, when } from 'ts-mockito';
-
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../views/array.view';
 import { DiscardState } from './discard.state';
@@ -13,19 +11,13 @@ import {
 } from '../definitions/directions.definition';
 
 import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';
-import {
-  mockedStringMessagesStoreService,
-  setupMocks,
-} from '../../../tests/mocks';
+import { setupMocks } from '../../../tests/mocks';
 
 const f = () => lootState;
 
-const fakeMessageStore = instance(mockedStringMessagesStoreService);
-
 const jammedState = new LockedContainerState(
   ArrayView.create([actionUseMasterKey]),
-  new LazyHelper<DiscardState>(f),
-  fakeMessageStore
+  new LazyHelper<DiscardState>(f)
 );
 
 const allDirectionsDefinition = ArrayView.create(
@@ -40,49 +32,25 @@ const fakeState = () =>
     ArrayView.create([actionUseMasterKey]),
     new LazyHelper<DiscardState>(f),
     ArrayView.create(['LEFT', 'DOWN']),
-    3,
-    fakeMessageStore
+    3
   );
 
-const logLeft = 'createLockpickMovedMessage-LEFT';
+const logLeft = 'lockpick moved LEFT';
 
-const logRight = 'createLockpickStuckMessage-RIGHT';
+const logRight = 'lockpick got stuck moving RIGHT';
 
-const logOpen = 'createLockpickOpenedMessage-DOWN';
+const logOpen = 'lockpick moved DOWN and opened the container';
 
-const logUp = 'createLockpickStuckMessage-UP';
+const logUp = 'lockpick got stuck moving UP';
 
-const logJammed = 'createLockpickJammedMessage-UP';
+const logJammed =
+  'lockpick got stuck moving UP and cannot be lockpicked anymore';
 
-const log = 'createOpenedUsingMessage-Master Key';
+const log = 'was opened using Master Key';
 
 describe('LockPickingContainerState', () => {
   beforeEach(() => {
     setupMocks();
-
-    when(
-      mockedStringMessagesStoreService.createLockpickMovedMessage('LEFT')
-    ).thenReturn(logLeft);
-
-    when(
-      mockedStringMessagesStoreService.createLockpickStuckMessage('RIGHT')
-    ).thenReturn(logRight);
-
-    when(
-      mockedStringMessagesStoreService.createLockpickOpenedMessage('DOWN')
-    ).thenReturn(logOpen);
-
-    when(
-      mockedStringMessagesStoreService.createLockpickStuckMessage('UP')
-    ).thenReturn(logUp);
-
-    when(
-      mockedStringMessagesStoreService.createLockpickJammedMessage('UP')
-    ).thenReturn(logJammed);
-
-    when(
-      mockedStringMessagesStoreService.createOpenedUsingMessage('Master Key')
-    ).thenReturn(log);
   });
 
   describe('when using a master key', () => {
