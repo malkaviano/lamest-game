@@ -1,9 +1,9 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../views/array.view';
-import { errorMessages } from '../definitions/error-messages.definition';
 import { StateLiteral } from '../literals/state.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 export abstract class ActionableState {
   constructor(
@@ -21,7 +21,7 @@ export abstract class ActionableState {
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
     if (!this.stateActions.items.some((a) => a.equals(action))) {
-      throw new Error(errorMessages['WRONG-ACTION']);
+      throw new Error(GameMessagesStoreService.errorMessages['WRONG-ACTION']);
     }
 
     return this.stateResult(action, result, values);

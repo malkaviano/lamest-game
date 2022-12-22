@@ -3,11 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { take } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
-import { errorMessages } from '../definitions/error-messages.definition';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { SceneStore } from '../stores/scene.store';
 import { NarrativeService } from './narrative.service';
 import { ArrayView } from '../views/array.view';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 import {
   mockedInteractiveEntity,
@@ -83,7 +83,7 @@ describe('NarrativeService', () => {
     describe('when a NON SCENE is received', () => {
       it('throw INVALID OPERATION', () => {
         expect(() => service.changeScene(eventSkillAthleticism)).toThrowError(
-          errorMessages['INVALID-OPERATION']
+          GameMessagesStoreService.errorMessages['INVALID-OPERATION']
         );
       });
     });

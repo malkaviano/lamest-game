@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { errorMessages } from '../definitions/error-messages.definition';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
 import { RollService } from '../services/roll.service';
@@ -67,14 +67,16 @@ describe('ConsumeRule', () => {
             playerInfo.id,
             simpleSword.identity.name
           )
-        ).thenThrow(new Error(errorMessages['WRONG-ITEM']));
+        ).thenThrow(
+          new Error(GameMessagesStoreService.errorMessages['WRONG-ITEM'])
+        );
 
         expect(() =>
           service.execute(
             instance(mockedPlayerEntity),
             actionableEvent(actionConsume, simpleSword.identity.name)
           )
-        ).toThrowError(errorMessages['WRONG-ITEM']);
+        ).toThrowError(GameMessagesStoreService.errorMessages['WRONG-ITEM']);
       });
     });
 

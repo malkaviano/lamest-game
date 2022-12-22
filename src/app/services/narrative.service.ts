@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { errorMessages } from '../definitions/error-messages.definition';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { SceneEntity } from '../entities/scene.entity';
 import { ActionableEvent } from '../events/actionable.event';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 import { SceneStore } from '../stores/scene.store';
 
 @Injectable({
@@ -28,7 +28,9 @@ export class NarrativeService {
 
   public changeScene(action: ActionableEvent): void {
     if (action.actionableDefinition.actionable !== 'SCENE') {
-      throw new Error(errorMessages['INVALID-OPERATION']);
+      throw new Error(
+        GameMessagesStoreService.errorMessages['INVALID-OPERATION']
+      );
     }
 
     const nextSceneName = this.currentScene.transitions[action.eventId];

@@ -7,7 +7,6 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import { MasterRuleService } from './master.rule.service';
-import { errorMessages } from '../definitions/error-messages.definition';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({
@@ -28,7 +27,7 @@ export class EquipRule extends MasterRuleService {
     );
 
     if (!item) {
-      throw new Error(errorMessages['WRONG-ITEM']);
+      throw new Error(GameMessagesStoreService.errorMessages['WRONG-ITEM']);
     }
 
     const skillName = item.skillName;

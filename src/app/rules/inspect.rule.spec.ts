@@ -5,7 +5,7 @@ import { take } from 'rxjs';
 
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
-import { errorMessages } from '../definitions/error-messages.definition';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
@@ -55,7 +55,7 @@ describe('InspectRule', () => {
 
         expect(() =>
           service.execute(instance(mockedPlayerEntity), eventInspectWrong)
-        ).toThrowError(errorMessages['WRONG-ITEM']);
+        ).toThrowError(GameMessagesStoreService.errorMessages['WRONG-ITEM']);
       });
     });
 

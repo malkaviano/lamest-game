@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { errorMessages } from '../definitions/error-messages.definition';
 import { ReadableDefinition } from '../definitions/readable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
@@ -27,7 +26,7 @@ export class InspectRule extends MasterRuleService {
     );
 
     if (!item) {
-      throw new Error(errorMessages['WRONG-ITEM']);
+      throw new Error(GameMessagesStoreService.errorMessages['WRONG-ITEM']);
     }
 
     const logMessage = GameMessagesStoreService.createItemInspectedLogMessage(

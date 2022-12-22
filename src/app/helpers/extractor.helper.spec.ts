@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { errorMessages } from '../definitions/error-messages.definition';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ExtractorHelper } from './extractor.helper';
 
@@ -32,7 +32,7 @@ describe('ExtractorHelper', () => {
     describe('when target was undefined', () => {
       it('throw Action should not happen', () => {
         expect(() => service.extractRuleTargetOrThrow({})).toThrowError(
-          errorMessages['SHOULD-NOT-HAPPEN']
+          GameMessagesStoreService.errorMessages['SHOULD-NOT-HAPPEN']
         );
       });
     });
@@ -55,7 +55,7 @@ describe('ExtractorHelper', () => {
             playerInfo.id,
             simpleSword.identity.name
           )
-        ).toThrowError(errorMessages['WRONG-ITEM']);
+        ).toThrowError(GameMessagesStoreService.errorMessages['WRONG-ITEM']);
       });
     });
 

@@ -2,12 +2,12 @@ import { instance } from 'ts-mockito';
 
 import { VisibilityState } from './visibility.state';
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { errorMessages } from '../definitions/error-messages.definition';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { PlayerEntity } from '../entities/player.entity';
 import { ResultLiteral } from '../literals/result.literal';
 import { emptyState } from './empty.state';
+import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 import {
   actionAsk,
@@ -47,7 +47,9 @@ describe('VisibilityState', () => {
             fakeState(action, 1).onResult(action, 'SUCCESS', {
               target: instance(mockedPlayerEntity),
             })
-          ).toThrowError(errorMessages['INVALID-OPERATION']);
+          ).toThrowError(
+            GameMessagesStoreService.errorMessages['INVALID-OPERATION']
+          );
         });
       });
     });
@@ -65,7 +67,9 @@ describe('VisibilityState', () => {
             fakeState(action, 1).onResult(action, 'SUCCESS', {
               actorVisibility: instance(mockedPlayerEntity),
             })
-          ).toThrowError(errorMessages['INVALID-OPERATION']);
+          ).toThrowError(
+            GameMessagesStoreService.errorMessages['INVALID-OPERATION']
+          );
         });
       });
     });
