@@ -10,6 +10,8 @@ import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { RollDefinition } from '../definitions/roll.definition';
 
 import {
   mockedExtractorHelper,
@@ -22,12 +24,11 @@ import {
 import {
   actionableEvent,
   actionConsume,
-  consumableAnalgesic,
   consumableFirstAid,
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('ConsumeRule', () => {
   let service: ConsumeRule;
@@ -56,75 +57,6 @@ describe('ConsumeRule', () => {
 
     setupMocks();
 
-    when(
-      mockedStringMessagesStoreService.createConsumedLogMessage(
-        playerInfo.name,
-        consumableAnalgesic.identity.label
-      )
-    ).thenReturn(logAnalgesic1);
-
-    when(
-      mockedStringMessagesStoreService.createEffectRestoredHPMessage(
-        consumableAnalgesic.effect,
-        '2'
-      )
-    ).thenReturn(logHeal2);
-
-    when(
-      mockedStringMessagesStoreService.createFreeLogMessage(
-        'CONSUMED',
-        playerInfo.name,
-        logHeal2
-      )
-    ).thenReturn(logAnalgesic2);
-
-    when(
-      mockedStringMessagesStoreService.createConsumedLogMessage(
-        playerInfo.name,
-        'First Aid Kit'
-      )
-    ).thenReturn(logFirstAid1);
-
-    when(
-      mockedStringMessagesStoreService.createSkillCheckLogMessage(
-        playerInfo.name,
-        'First Aid',
-        '10',
-        'SUCCESS'
-      )
-    ).thenReturn(logFirstAidSuccess);
-
-    when(
-      mockedStringMessagesStoreService.createEffectRestoredHPMessage(
-        consumableFirstAid.effect,
-        '5'
-      )
-    ).thenReturn(logHeal5);
-
-    when(
-      mockedStringMessagesStoreService.createFreeLogMessage(
-        'CONSUMED',
-        playerInfo.name,
-        logHeal5
-      )
-    ).thenReturn(logFirstAid3);
-
-    when(
-      mockedStringMessagesStoreService.createSkillCheckLogMessage(
-        playerInfo.name,
-        'First Aid',
-        '100',
-        'FAILURE'
-      )
-    ).thenReturn(logFirstAidFailure);
-
-    when(
-      mockedStringMessagesStoreService.createCannotCheckSkillLogMessage(
-        playerInfo.name,
-        'First Aid'
-      )
-    ).thenReturn(logError);
-
     service = TestBed.inject(ConsumeRule);
   });
 
@@ -151,30 +83,111 @@ describe('ConsumeRule', () => {
         ).toThrowError(errorMessages['WRONG-ITEM']);
       });
     });
+
+    describe('when item was a consumable', () => {
+      it('should log item consume', () => {
+        when(
+          mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
+            instance(mockedInventoryService),
+            playerInfo.id,
+            consumableFirstAid.identity.name
+          )
+        ).thenReturn(consumableFirstAid);
+
+        when(mockedRollService.actorSkillCheck(actor, 'First Aid')).thenReturn(
+          successFirstAidRoll
+        );
+
+        when(
+          mockedPlayerEntity.reactTo(
+            eventConsumeFirstAid.actionableDefinition,
+            'SUCCESS',
+            deepEqual({
+              effect: new EffectEvent(
+                consumableFirstAid.effect,
+                consumableFirstAid.hp
+              ),
+              energy: consumableFirstAid.energy,
+            })
+          )
+        ).thenReturn(logHeal5);
+
+        when(
+          mockedStringMessagesStoreService.createSkillCheckLogMessage(
+            playerInfo.name,
+            'First Aid',
+            '10',
+            'SUCCESS'
+          )
+        ).thenReturn(firstAidSuccessLog);
+
+        when(
+          mockedStringMessagesStoreService.createConsumedLogMessage(
+            playerInfo.name,
+            'First Aid Kit'
+          )
+        ).thenReturn(firstAidLog);
+
+        when(
+          mockedStringMessagesStoreService.createFreeLogMessage(
+            'CONSUMED',
+            playerInfo.name,
+            logHeal5
+          )
+        ).thenReturn(firstAidConsumedLog);
+
+        ruleScenario(service, actor, eventConsumeFirstAid, extras, [
+          firstAidSuccessLog,
+          firstAidLog,
+          firstAidConsumedLog,
+        ]);
+      });
+
+      describe('when skill is zero', () => {
+        it('should log impossible to consume', () => {
+          when(
+            mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
+              instance(mockedInventoryService),
+              playerInfo.id,
+              consumableFirstAid.identity.name
+            )
+          ).thenReturn(consumableFirstAid);
+
+          when(
+            mockedRollService.actorSkillCheck(actor, 'First Aid')
+          ).thenReturn(impossibleFirstAidRoll);
+
+          when(
+            mockedStringMessagesStoreService.createCannotCheckSkillLogMessage(
+              playerInfo.name,
+              'First Aid'
+            )
+          ).thenReturn(errorImpossibleCheckLog);
+
+          ruleScenario(service, actor, eventConsumeFirstAid, extras, [
+            errorImpossibleCheckLog,
+          ]);
+        });
+      });
+    });
   });
 });
 
-const logAnalgesic1 = new LogMessageDefinition(
-  'CONSUMED',
-  playerInfo.name,
-  consumableAnalgesic.identity.label
-);
+const actor = instance(mockedPlayerEntity);
 
-const logHeal2 = `${consumableAnalgesic.effect}-2`;
+const extras = {};
 
-const logAnalgesic2 = new LogMessageDefinition(
-  'CONSUMED',
-  playerInfo.name,
-  logHeal2
-);
+const successFirstAidRoll = new RollDefinition('SUCCESS', 10);
 
-const logFirstAid1 = new LogMessageDefinition(
+const impossibleFirstAidRoll = new RollDefinition('IMPOSSIBLE', 0);
+
+const firstAidLog = new LogMessageDefinition(
   'CONSUMED',
   playerInfo.name,
   'First Aid Kit'
 );
 
-const logFirstAidSuccess = new LogMessageDefinition(
+const firstAidSuccessLog = new LogMessageDefinition(
   'CHECK',
   playerInfo.name,
   'First Aid-10-SUCCESS'
@@ -182,19 +195,13 @@ const logFirstAidSuccess = new LogMessageDefinition(
 
 const logHeal5 = `${consumableFirstAid.effect}-5`;
 
-const logFirstAid3 = new LogMessageDefinition(
+const firstAidConsumedLog = new LogMessageDefinition(
   'CONSUMED',
   playerInfo.name,
   logHeal5
 );
 
-const logFirstAidFailure = new LogMessageDefinition(
-  'CHECK',
-  playerInfo.name,
-  'First Aid-100-FAILURE'
-);
-
-const logError = new LogMessageDefinition(
+const errorImpossibleCheckLog = new LogMessageDefinition(
   'CHECK',
   playerInfo.name,
   'First Aid'
@@ -203,9 +210,4 @@ const logError = new LogMessageDefinition(
 const eventConsumeFirstAid = actionableEvent(
   actionConsume,
   consumableFirstAid.identity.name
-);
-
-const eventConsumeAnalgesic = actionableEvent(
-  actionConsume,
-  consumableAnalgesic.identity.name
 );
