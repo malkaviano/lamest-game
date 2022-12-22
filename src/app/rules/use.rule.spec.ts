@@ -1,10 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
+import { take } from 'rxjs';
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
+import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedExtractorHelper,
@@ -19,11 +22,8 @@ import {
   interactiveInfo,
   actionUseMasterKey,
   masterKey,
-  simpleSword,
   actionableEvent,
 } from '../../../tests/fakes';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('UseRule', () => {
   let service: UseRule;
@@ -48,39 +48,78 @@ describe('UseRule', () => {
 
     setupMocks();
 
-    when(
-      mockedStringMessagesStoreService.createNotFoundLogMessage(
-        playerInfo.name,
-        masterKey.identity.label
-      )
-    ).thenReturn(notFoundLog);
-
-    when(
-      mockedStringMessagesStoreService.createOpenedUsingMessage(
-        masterKey.identity.label
-      )
-    ).thenReturn(openedUsingLog);
-
-    when(
-      mockedStringMessagesStoreService.createFreeLogMessage(
-        'USED',
-        interactiveInfo.name,
-        openedUsingLog
-      )
-    ).thenReturn(usedLog);
-
-    when(
-      mockedStringMessagesStoreService.createLostLogMessage(
-        playerInfo.name,
-        masterKey.identity.label
-      )
-    ).thenReturn(itemLostLog);
-
     service = TestBed.inject(UseRule);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  describe('execute', () => {
+    describe('when item could not be found', () => {
+      it('should log item not found', () => {
+        when(
+          mockedStringMessagesStoreService.createNotFoundLogMessage(
+            playerInfo.name,
+            masterKey.identity.label
+          )
+        ).thenReturn(notFoundLog);
+
+        scenario(service, [notFoundLog]);
+      });
+    });
+
+    describe('when item could be found', () => {
+      it('should log item lost', () => {
+        when(
+          mockedStringMessagesStoreService.createLostLogMessage(
+            playerInfo.name,
+            masterKey.identity.label
+          )
+        ).thenReturn(itemLostLog);
+
+        when(
+          mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
+        ).thenReturn(masterKey);
+
+        scenario(service, [itemLostLog]);
+      });
+
+      describe('when state returns log', () => {
+        it('should log item lost', () => {
+          when(
+            mockedStringMessagesStoreService.createLostLogMessage(
+              playerInfo.name,
+              masterKey.identity.label
+            )
+          ).thenReturn(itemLostLog);
+
+          when(
+            mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
+          ).thenReturn(masterKey);
+
+          when(
+            mockedStringMessagesStoreService.createFreeLogMessage(
+              'USED',
+              interactiveInfo.name,
+              openedUsingLog
+            )
+          ).thenReturn(usedLog);
+
+          when(
+            mockedInteractiveEntity.reactTo(
+              actionUseMasterKey,
+              'USED',
+              deepEqual({
+                item: masterKey,
+              })
+            )
+          ).thenReturn(openedUsingLog);
+
+          scenario(service, [usedLog, itemLostLog]);
+        });
+      });
+    });
   });
 });
 
@@ -108,3 +147,17 @@ const eventUseMasterKey = actionableEvent(
   actionUseMasterKey,
   interactiveInfo.id
 );
+
+function scenario(service: UseRule, expected: LogMessageDefinition[]) {
+  const result: LogMessageDefinition[] = [];
+
+  service.ruleLog$.pipe(take(100)).subscribe((event) => {
+    result.push(event);
+  });
+
+  service.execute(instance(mockedPlayerEntity), eventUseMasterKey, {
+    target: instance(mockedInteractiveEntity),
+  });
+
+  expect(result).toEqual(expected);
+}
