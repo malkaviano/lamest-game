@@ -50,7 +50,7 @@ import { SkillStore } from '../src/app/stores/skill.store';
 import { InspectRule } from '../src/app/rules/inspect.rule';
 import { SettingsStore } from '../src/app/stores/settings.store';
 import { ExtractorHelper } from '../src/app/helpers/extractor.helper';
-import { StringMessagesStoreService } from '../src/app/stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../src/app/stores/game-messages.store.service';
 
 import {
   actorInfo,
@@ -167,9 +167,7 @@ export const mockedExtractorHelper = mock(ExtractorHelper);
 
 export const mockedHttpClient = mock(HttpClient);
 
-export const mockedStringMessagesStoreService = mock(
-  StringMessagesStoreService
-);
+export const mockedStringMessagesStoreService = mock(GameMessagesStoreService);
 
 export const setupMocks = () => {
   resetMocks();

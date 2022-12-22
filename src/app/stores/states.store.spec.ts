@@ -9,7 +9,7 @@ import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';
 import { StatesStore } from './states.store';
-import { StringMessagesStoreService } from './string-messages.store.service';
+import { GameMessagesStoreService } from './game-messages.store.service';
 
 import {
   mockedActionableStore,
@@ -44,7 +44,7 @@ describe('StatesStore', () => {
           useValue: instance(mockedActionableStore),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],

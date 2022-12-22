@@ -7,7 +7,7 @@ import { RollService } from '../services/roll.service';
 import { unarmedWeapon } from '../definitions/weapon.definition';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 
 import {
   mockedActorEntity,
@@ -47,7 +47,7 @@ describe('CombatRule', () => {
           useValue: instance(mockedExtractorHelper),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],

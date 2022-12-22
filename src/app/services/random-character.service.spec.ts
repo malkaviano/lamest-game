@@ -27,7 +27,7 @@ import {
   fakeCharacteristics,
   fakeIdentity,
 } from '../../../tests/fakes';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
@@ -56,7 +56,7 @@ describe('RandomCharacterService', () => {
           useValue: instance(mockedSettingsStore),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],

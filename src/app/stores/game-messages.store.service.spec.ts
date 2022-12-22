@@ -2,17 +2,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { StringMessagesStoreService } from './string-messages.store.service';
+import { GameMessagesStoreService } from './game-messages.store.service';
 
-describe('StringMessagesStoreService', () => {
-  let service: StringMessagesStoreService;
+describe('GameMessagesStoreService', () => {
+  let service: GameMessagesStoreService;
 
   beforeAll(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
     });
 
-    service = TestBed.inject(StringMessagesStoreService);
+    service = TestBed.inject(GameMessagesStoreService);
   });
 
   it('should be created', () => {

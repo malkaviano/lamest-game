@@ -5,7 +5,7 @@ import { instance, when } from 'ts-mockito';
 import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
@@ -39,7 +39,7 @@ describe('SceneRule', () => {
           useValue: instance(mockedExtractorHelper),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],

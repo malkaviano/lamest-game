@@ -6,7 +6,7 @@ import { take } from 'rxjs';
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
 import { errorMessages } from '../definitions/error-messages.definition';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 
@@ -36,7 +36,7 @@ describe('InspectRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],

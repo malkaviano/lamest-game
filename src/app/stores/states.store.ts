@@ -22,7 +22,7 @@ import {
   directionNamesDefinition,
 } from '../definitions/directions.definition';
 import { VisibilityState } from '../states/visibility.state';
-import { StringMessagesStoreService } from './string-messages.store.service';
+import { GameMessagesStoreService } from './game-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +36,7 @@ export class StatesStore {
     actionableStore: ActionableStore,
     resourcesStore: ResourcesStore,
     generatorService: GeneratorService,
-    stringMessagesStoreService: StringMessagesStoreService
+    stringMessagesStoreService: GameMessagesStoreService
   ) {
     this.store = new Map<string, ActionableState>();
 

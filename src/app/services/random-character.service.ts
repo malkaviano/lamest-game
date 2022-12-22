@@ -10,7 +10,7 @@ import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ProfessionStore } from '../stores/profession.store';
 import { SkillStore } from '../stores/skill.store';
 import { SettingsStore } from '../stores/settings.store';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class RandomCharacterService {
     private readonly professionStore: ProfessionStore,
     private readonly skillStore: SkillStore,
     private readonly settingsStore: SettingsStore,
-    private readonly stringMessagesStoreService: StringMessagesStoreService
+    private readonly stringMessagesStoreService: GameMessagesStoreService
   ) {}
 
   public character(): PlayerEntity {

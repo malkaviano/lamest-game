@@ -13,7 +13,7 @@ import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorEntity } from '../entities/actor.entity';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class CombatRule extends MasterRuleService {
   constructor(
     private readonly rollService: RollService,
     private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: StringMessagesStoreService
+    private readonly stringMessagesStoreService: GameMessagesStoreService
   ) {
     super();
 

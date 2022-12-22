@@ -4,7 +4,7 @@ import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { DirectionLiteral } from '../literals/direction.literal';
 import { ResultLiteral } from '../literals/result.literal';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 import { LockedContainerState } from './locked-container.state';
@@ -22,7 +22,7 @@ export class LockPickingContainerState extends LockedContainerState {
     openedState: LazyHelper<ActionableState>,
     private readonly lockSequence: ArrayView<DirectionLiteral>,
     private readonly maximumTries: number,
-    stringMessagesStoreService: StringMessagesStoreService
+    stringMessagesStoreService: GameMessagesStoreService
   ) {
     super(
       ArrayView.create([...lockPickActions.items, ...jammedStateActions.items]),

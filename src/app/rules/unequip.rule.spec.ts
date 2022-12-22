@@ -4,7 +4,7 @@ import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UnEquipRule } from './unequip.rule';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { ActionableEvent } from '../events/actionable.event';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
@@ -32,7 +32,7 @@ describe('UnEquipRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],

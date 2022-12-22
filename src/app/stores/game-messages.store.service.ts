@@ -11,7 +11,7 @@ import stringMessages from '../../assets/strings.json';
 @Injectable({
   providedIn: 'root',
 })
-export class StringMessagesStoreService {
+export class GameMessagesStoreService {
   private mStrings: KeyValueInterface<string>;
 
   constructor() {

@@ -6,7 +6,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 
 import { InventoryService } from '../services/inventory.service';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ import { MasterRuleService } from './master.rule.service';
 export class InspectRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly stringMessagesStoreService: StringMessagesStoreService
+    private readonly stringMessagesStoreService: GameMessagesStoreService
   ) {
     super();
   }

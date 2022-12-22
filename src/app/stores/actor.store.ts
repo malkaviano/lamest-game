@@ -11,7 +11,7 @@ import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
-import { StringMessagesStoreService } from './string-messages.store.service';
+import { GameMessagesStoreService } from './game-messages.store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class ActorStore {
     resourcesStore: ResourcesStore,
     itemStore: ItemStore,
     skillStore: SkillStore,
-    stringMessagesStoreService: StringMessagesStoreService
+    stringMessagesStoreService: GameMessagesStoreService
   ) {
     this.store = new Map<string, ActorEntity>();
 

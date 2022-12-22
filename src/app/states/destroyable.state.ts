@@ -2,7 +2,7 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
@@ -11,7 +11,7 @@ export class DestroyableState extends ActionableState {
     stateActions: ArrayView<ActionableDefinition>,
     protected readonly destroyedState: LazyHelper<ActionableState>,
     public readonly hitPoints: number,
-    protected readonly stringMessagesStoreService: StringMessagesStoreService
+    protected readonly stringMessagesStoreService: GameMessagesStoreService
   ) {
     super('DestroyableState', stateActions);
   }

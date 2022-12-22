@@ -6,7 +6,7 @@ import { InventoryService } from '../services/inventory.service';
 import { EquipRule } from './equip.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { errorMessages } from '../definitions/error-messages.definition';
 
@@ -43,7 +43,7 @@ describe('EquipRule', () => {
           useValue: instance(mockedExtractorHelper),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],

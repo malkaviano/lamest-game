@@ -7,7 +7,7 @@ import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { MasterRuleService } from './master.rule.service';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class PickRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: StringMessagesStoreService
+    private readonly stringMessagesStoreService: GameMessagesStoreService
   ) {
     super();
   }

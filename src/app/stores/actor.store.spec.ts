@@ -18,7 +18,7 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import { SkillStore } from './skill.store';
-import { StringMessagesStoreService } from './string-messages.store.service';
+import { GameMessagesStoreService } from './game-messages.store.service';
 
 describe('ActorStore', () => {
   let service: ActorStore;
@@ -47,7 +47,7 @@ describe('ActorStore', () => {
           useValue: instance(mockedSkillStore),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],

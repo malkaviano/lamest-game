@@ -7,7 +7,7 @@ import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { MasterRuleService } from './master.rule.service';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';
@@ -20,7 +20,7 @@ export class ConsumeRule extends MasterRuleService {
     private readonly inventoryService: InventoryService,
     private readonly rollRule: RollService,
     private readonly extractorHelper: ExtractorHelper,
-    private readonly stringMessagesStoreService: StringMessagesStoreService
+    private readonly stringMessagesStoreService: GameMessagesStoreService
   ) {
     super();
   }

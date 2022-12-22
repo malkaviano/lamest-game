@@ -23,7 +23,7 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 
@@ -53,7 +53,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     protected readonly actorBehavior: ActorBehavior,
     protected readonly equipmentBehavior: EquipmentBehavior,
     protected readonly killedState: ActionableState,
-    stringMessagesStoreService: StringMessagesStoreService
+    stringMessagesStoreService: GameMessagesStoreService
   ) {
     super(
       identity.id,

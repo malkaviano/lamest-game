@@ -5,7 +5,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { GameMessagesStoreService } from '../stores/game-messages.store.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
@@ -40,7 +40,7 @@ describe('UseRule', () => {
           useValue: instance(mockedExtractorHelper),
         },
         {
-          provide: StringMessagesStoreService,
+          provide: GameMessagesStoreService,
           useValue: instance(mockedStringMessagesStoreService),
         },
       ],
