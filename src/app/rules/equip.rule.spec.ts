@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, when } from 'ts-mockito';
+import { instance, verify, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
-import { ItemStore } from '../stores/item.store';
 import { EquipRule } from './equip.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { errorMessages } from '../definitions/error-messages.definition';
 
 import {
   mockedExtractorHelper,
   mockedInventoryService,
-  mockedItemStore,
   mockedPlayerEntity,
   mockedStringMessagesStoreService,
   setupMocks,
@@ -20,11 +20,13 @@ import {
 import {
   actionableEvent,
   actionEquip,
+  consumableAnalgesic,
   greatSword,
   playerInfo,
   simpleSword,
+  unDodgeableAxe,
 } from '../../../tests/fakes';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('EquipRule', () => {
   let service: EquipRule;
@@ -35,10 +37,6 @@ describe('EquipRule', () => {
         {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: ItemStore,
-          useValue: instance(mockedItemStore),
         },
         {
           provide: ExtractorHelper,
@@ -53,48 +51,6 @@ describe('EquipRule', () => {
 
     setupMocks();
 
-    when(
-      mockedStringMessagesStoreService.createEquippedLogMessage(
-        playerInfo.name,
-        simpleSword.identity.label
-      )
-    ).thenReturn(logEquip);
-
-    when(
-      mockedStringMessagesStoreService.createUnEquippedLogMessage(
-        playerInfo.name,
-        simpleSword.identity.label
-      )
-    ).thenReturn(logUnEquip);
-
-    when(
-      mockedStringMessagesStoreService.createEquipErrorLogMessage(
-        playerInfo.name,
-        greatSword.skillName,
-        greatSword.identity.label
-      )
-    ).thenReturn(logError);
-
-    when(mockedItemStore.itemSkill(eventOk.eventId)).thenReturn(
-      'Melee Weapon (Simple)'
-    );
-
-    when(mockedItemStore.itemSkill(eventNoSkill.eventId)).thenReturn(
-      'Melee Weapon (Great)'
-    );
-
-    when(mockedItemStore.itemLabel(eventNoSkill.eventId)).thenReturn(
-      greatSword.identity.label
-    );
-
-    when(
-      mockedExtractorHelper.extractItemOrThrow<WeaponDefinition>(
-        instance(mockedInventoryService),
-        playerInfo.id,
-        simpleSword.identity.name
-      )
-    ).thenReturn(simpleSword);
-
     service = TestBed.inject(EquipRule);
   });
 
@@ -103,45 +59,121 @@ describe('EquipRule', () => {
   });
 
   describe('execute', () => {
-    describe('when a previous weapon was equipped', () => {
-      it('should store previous weapon', () => {
-        let result = 0;
-
-        when(mockedPlayerEntity.equip(simpleSword)).thenReturn(simpleSword);
-
+    describe('when item was not a weapon', () => {
+      it('throw Wrong item was used', () => {
         when(
-          mockedInventoryService.take(playerInfo.id, simpleSword.identity.name)
+          mockedInventoryService.look<WeaponDefinition>(
+            playerInfo.id,
+            consumableAnalgesic.identity.name
+          )
+        ).thenReturn(null);
+
+        expect(() =>
+          service.execute(instance(mockedPlayerEntity), eventWrong)
+        ).toThrowError(errorMessages['WRONG-ITEM']);
+      });
+    });
+
+    describe('when item was a weapon', () => {
+      it('should log item was equipped and produce side effects', () => {
+        when(
+          mockedInventoryService.look<WeaponDefinition>(
+            playerInfo.id,
+            simpleSword.identity.name
+          )
         ).thenReturn(simpleSword);
 
-        when(mockedInventoryService.store(playerInfo.id, simpleSword)).thenCall(
-          () => (result = 1)
-        );
+        when(
+          mockedExtractorHelper.extractItemOrThrow<WeaponDefinition>(
+            instance(mockedInventoryService),
+            actor.id,
+            simpleSword.identity.name
+          )
+        ).thenReturn(simpleSword);
 
-        service.execute(instance(mockedPlayerEntity), eventOk);
+        when(mockedPlayerEntity.equip(simpleSword)).thenReturn(unDodgeableAxe);
 
-        expect(result).toEqual(1);
+        when(
+          mockedStringMessagesStoreService.createUnEquippedLogMessage(
+            playerInfo.name,
+            unDodgeableAxe.identity.label
+          )
+        ).thenReturn(unEquipLog);
+
+        when(
+          mockedStringMessagesStoreService.createEquippedLogMessage(
+            playerInfo.name,
+            simpleSword.identity.label
+          )
+        ).thenReturn(equipLog);
+
+        ruleScenario(service, actor, eventOk, extras, [unEquipLog, equipLog]);
+
+        // cheap side effect verification
+        verify(mockedPlayerEntity.equip(simpleSword)).once();
+
+        verify(
+          mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
+        ).once();
+      });
+
+      describe('when skill value was zero or not set', () => {
+        it('should log error equipping and no side effects', () => {
+          when(
+            mockedInventoryService.look<WeaponDefinition>(
+              playerInfo.id,
+              greatSword.identity.name
+            )
+          ).thenReturn(greatSword);
+
+          when(
+            mockedStringMessagesStoreService.createEquipErrorLogMessage(
+              playerInfo.name,
+              greatSword.skillName,
+              greatSword.identity.label
+            )
+          ).thenReturn(errorLog);
+
+          ruleScenario(service, actor, eventNoSkill, extras, [errorLog]);
+
+          // cheap side effect verification
+          verify(mockedPlayerEntity.equip(greatSword)).never();
+
+          verify(
+            mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
+          ).never();
+        });
       });
     });
   });
 });
 
+const actor = instance(mockedPlayerEntity);
+
+const extras = {};
+
+const eventWrong = actionableEvent(
+  actionEquip,
+  consumableAnalgesic.identity.name
+);
+
 const eventOk = actionableEvent(actionEquip, simpleSword.identity.name);
 
 const eventNoSkill = actionableEvent(actionEquip, greatSword.identity.name);
 
-const logEquip = new LogMessageDefinition(
+const equipLog = new LogMessageDefinition(
   'EQUIPPED',
   playerInfo.name,
   simpleSword.identity.label
 );
 
-const logUnEquip = new LogMessageDefinition(
+const unEquipLog = new LogMessageDefinition(
   'UNEQUIPPED',
   playerInfo.name,
-  simpleSword.identity.label
+  unDodgeableAxe.identity.label
 );
 
-const logError = new LogMessageDefinition(
+const errorLog = new LogMessageDefinition(
   'EQUIP-ERROR',
   playerInfo.name,
   `${greatSword.skillName}-${greatSword.identity.label}`

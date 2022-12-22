@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-
 import { InventoryService } from '../services/inventory.service';
-import { ItemStore } from '../stores/item.store';
-
 import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { StringMessagesStoreService } from '../stores/string-messages.store.service';
 import { MasterRuleService } from './master.rule.service';
+import { errorMessages } from '../definitions/error-messages.definition';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +15,6 @@ import { MasterRuleService } from './master.rule.service';
 export class EquipRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly itemStore: ItemStore,
     private readonly extractorHelper: ExtractorHelper,
     private readonly stringMessagesStoreService: StringMessagesStoreService
   ) {
@@ -25,9 +22,18 @@ export class EquipRule extends MasterRuleService {
   }
 
   public execute(actor: ActorInterface, action: ActionableEvent): void {
-    const skillName = this.itemStore.itemSkill(action.eventId);
+    const item = this.inventoryService.look<WeaponDefinition>(
+      actor.id,
+      action.eventId
+    );
 
-    if (skillName && actor.skills[skillName] > 0) {
+    if (!item) {
+      throw new Error(errorMessages['WRONG-ITEM']);
+    }
+
+    const skillName = item.skillName;
+
+    if (actor.skills[skillName] > 0) {
       const weapon = this.extractorHelper.extractItemOrThrow<WeaponDefinition>(
         this.inventoryService,
         actor.id,
@@ -55,12 +61,12 @@ export class EquipRule extends MasterRuleService {
         );
 
       this.ruleLog.next(logMessage);
-    } else if (skillName) {
+    } else {
       const logMessage =
         this.stringMessagesStoreService.createEquipErrorLogMessage(
           actor.name,
           skillName,
-          this.itemStore.itemLabel(action.eventId)
+          item.identity.label
         );
 
       this.ruleLog.next(logMessage);
