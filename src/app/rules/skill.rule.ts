@@ -30,18 +30,9 @@ export class SkillRule extends MasterRuleService {
 
     const skillName = event.actionableDefinition.name;
 
-    const { roll, result } = this.rollService.actorSkillCheck(actor, skillName);
+    const { result } = this.rollService.actorSkillCheck(actor, skillName);
 
     if (result !== 'IMPOSSIBLE') {
-      const logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
-        actor.name,
-        skillName,
-        roll.toString(),
-        result
-      );
-
-      this.ruleLog.next(logMessage);
-
       const log = target.reactTo(event.actionableDefinition, result, {
         actorVisibility: actor,
         target,
@@ -49,21 +40,13 @@ export class SkillRule extends MasterRuleService {
 
       if (log) {
         const logMessage = GameMessagesStoreService.createFreeLogMessage(
-          'CHECK',
+          'INTERACTED',
           target.name,
           log
         );
 
         this.ruleLog.next(logMessage);
       }
-    } else {
-      const logMessage =
-        GameMessagesStoreService.createCannotCheckSkillLogMessage(
-          actor.name,
-          skillName
-        );
-
-      this.ruleLog.next(logMessage);
     }
   }
 }

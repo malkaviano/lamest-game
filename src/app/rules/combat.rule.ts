@@ -148,32 +148,24 @@ export class CombatRule extends MasterRuleService {
     target: ActorInterface,
     weaponLabel: string
   ): boolean {
-    const { result: actorResult, roll: actorRoll } =
-      this.rollService.actorSkillCheck(actor, skillName);
-
-    /*
-      Due to future circumstances, the equipped item may require a current zero skill value
-      TODO: check for impossible
-     */
-
-    let logMessage = GameMessagesStoreService.createUsedItemLogMessage(
-      actor.name,
-      target.name,
-      weaponLabel
+    const { result: actorResult } = this.rollService.actorSkillCheck(
+      actor,
+      skillName
     );
 
-    this.ruleLog.next(logMessage);
+    const result = actorResult === 'SUCCESS';
 
-    logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
-      actor.name,
-      skillName,
-      actorRoll.toString(),
-      actorResult
-    );
+    if (result) {
+      const logMessage = GameMessagesStoreService.createUsedItemLogMessage(
+        actor.name,
+        target.name,
+        weaponLabel
+      );
 
-    this.ruleLog.next(logMessage);
+      this.ruleLog.next(logMessage);
+    }
 
-    return actorResult === 'SUCCESS';
+    return result;
   }
 
   private tryDodge(
@@ -197,30 +189,15 @@ export class CombatRule extends MasterRuleService {
     let dodged = targetActor.dodgesPerRound > dodgesPerformed;
 
     if (dodged) {
-      const { result: dodgeResult, roll: dodgeRoll } =
-        this.rollService.actorSkillCheck(targetActor, 'Dodge');
+      const { result: dodgeResult } = this.rollService.actorSkillCheck(
+        targetActor,
+        'Dodge'
+      );
 
       dodged = dodgeResult === 'SUCCESS';
 
       if (dodged) {
         this.actorDodged.next(targetActor.id);
-
-        const logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
-          targetActor.name,
-          'Dodge',
-          dodgeRoll.toString(),
-          dodgeResult
-        );
-
-        this.ruleLog.next(logMessage);
-      } else if (dodgeResult === 'IMPOSSIBLE') {
-        const logMessage =
-          GameMessagesStoreService.createCannotCheckSkillLogMessage(
-            targetActor.name,
-            'Dodge'
-          );
-
-        this.ruleLog.next(logMessage);
       }
     } else {
       const logMessage = GameMessagesStoreService.createOutOfDodgesLogMessage(

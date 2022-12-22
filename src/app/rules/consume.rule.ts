@@ -38,7 +38,10 @@ export class ConsumeRule extends MasterRuleService {
     let rollResult: ResultLiteral = 'NONE';
 
     if (consumable.skillName) {
-      rollResult = this.checkSkill(actor, consumable.skillName);
+      rollResult = this.rollRule.actorSkillCheck(
+        actor,
+        consumable.skillName
+      ).result;
     }
 
     if (['NONE', 'SUCCESS'].includes(rollResult)) {
@@ -77,31 +80,5 @@ export class ConsumeRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     }
-  }
-
-  private checkSkill(actor: ActorInterface, skillName: string): ResultLiteral {
-    const rollDefinition = this.rollRule.actorSkillCheck(actor, skillName);
-
-    const rollResult = rollDefinition.result;
-
-    if (rollDefinition.result === 'IMPOSSIBLE') {
-      const logMessage =
-        GameMessagesStoreService.createCannotCheckSkillLogMessage(
-          actor.name,
-          skillName
-        );
-
-      this.ruleLog.next(logMessage);
-    } else {
-      const logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
-        actor.name,
-        skillName,
-        rollDefinition.roll.toString(),
-        rollDefinition.result
-      );
-
-      this.ruleLog.next(logMessage);
-    }
-    return rollResult;
   }
 }

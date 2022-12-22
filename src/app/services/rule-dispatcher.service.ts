@@ -15,6 +15,7 @@ import { InspectRule } from '../rules/inspect.rule';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { RollService } from './roll.service';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,8 @@ export class RuleDispatcherService {
     private readonly consumableRule: ConsumeRule,
     private readonly interactionRule: InteractionRule,
     private readonly useRule: UseRule,
-    private readonly inspectRule: InspectRule
+    private readonly inspectRule: InspectRule,
+    private readonly rollService: RollService
   ) {
     this.dispatcher = {
       SKILL: this.skillRule,
@@ -67,7 +69,8 @@ export class RuleDispatcherService {
       this.consumableRule.ruleLog$,
       this.interactionRule.ruleLog$,
       this.useRule.ruleLog$,
-      this.inspectRule.ruleLog$
+      this.inspectRule.ruleLog$,
+      this.rollService.skillCheckLog$
     );
 
     this.actorDodged$ = this.combatRule.actorDodged$;

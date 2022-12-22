@@ -9,7 +9,6 @@ import { RollService } from '../services/roll.service';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
-
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 
@@ -108,30 +107,9 @@ describe('ConsumeRule', () => {
         ).thenReturn(logHeal5);
 
         ruleScenario(service, actor, eventConsumeFirstAid, extras, [
-          firstAidSuccessLog,
           firstAidLog,
           firstAidConsumedLog,
         ]);
-      });
-
-      describe('when skill is zero', () => {
-        it('should log impossible to consume', () => {
-          when(
-            mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
-              instance(mockedInventoryService),
-              playerInfo.id,
-              consumableFirstAid.identity.name
-            )
-          ).thenReturn(consumableFirstAid);
-
-          when(
-            mockedRollService.actorSkillCheck(actor, 'First Aid')
-          ).thenReturn(impossibleFirstAidRoll);
-
-          ruleScenario(service, actor, eventConsumeFirstAid, extras, [
-            errorImpossibleCheckLog,
-          ]);
-        });
       });
     });
   });
@@ -143,18 +121,10 @@ const extras = {};
 
 const successFirstAidRoll = new RollDefinition('SUCCESS', 10);
 
-const impossibleFirstAidRoll = new RollDefinition('IMPOSSIBLE', 0);
-
 const firstAidLog = new LogMessageDefinition(
   'CONSUMED',
   playerInfo.name,
   'consumed First Aid Kit'
-);
-
-const firstAidSuccessLog = new LogMessageDefinition(
-  'CHECK',
-  playerInfo.name,
-  'First Aid skill checked and rolled 10, it was a SUCCESS'
 );
 
 const logHeal5 = `${consumableFirstAid.effect}-5`;
@@ -163,12 +133,6 @@ const firstAidConsumedLog = new LogMessageDefinition(
   'CONSUMED',
   playerInfo.name,
   logHeal5
-);
-
-const errorImpossibleCheckLog = new LogMessageDefinition(
-  'CHECK',
-  playerInfo.name,
-  "First Aid skill couldn't be checked because it's value is zero"
 );
 
 const eventConsumeFirstAid = actionableEvent(

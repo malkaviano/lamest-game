@@ -5,9 +5,8 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedPlayerEntity,
@@ -20,7 +19,6 @@ import {
   actionableEvent,
   actionSkillSurvival,
   interactiveInfo,
-  playerInfo,
 } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
 
@@ -62,7 +60,7 @@ describe('SkillRule', () => {
   });
 
   describe('execute', () => {
-    it('should log skill check result', () => {
+    it('should log target log', () => {
       when(
         mockedRollService.actorSkillCheck(
           actor,
@@ -70,25 +68,7 @@ describe('SkillRule', () => {
         )
       ).thenReturn(new RollDefinition('SUCCESS', 10));
 
-      ruleScenario(service, actor, eventSkillSurvival, extras, [
-        skillCheckLog,
-        reactedLog,
-      ]);
-    });
-
-    describe('when skill value was zero', () => {
-      it('should log cannot check skill', () => {
-        when(
-          mockedRollService.actorSkillCheck(
-            actor,
-            eventSkillSurvival.actionableDefinition.name
-          )
-        ).thenReturn(new RollDefinition('IMPOSSIBLE', 0));
-
-        ruleScenario(service, actor, eventSkillSurvival, extras, [
-          impossibleLog,
-        ]);
-      });
+      ruleScenario(service, actor, eventSkillSurvival, extras, [reactedLog]);
     });
   });
 });
@@ -107,22 +87,10 @@ const eventSkillSurvival = actionableEvent(
   interactiveInfo.id
 );
 
-const skillCheckLog = new LogMessageDefinition(
-  'CHECK',
-  playerInfo.name,
-  'Survival skill checked and rolled 10, it was a SUCCESS'
-);
-
-const impossibleLog = new LogMessageDefinition(
-  'CHECK',
-  playerInfo.name,
-  "Survival skill couldn't be checked because it's value is zero"
-);
-
 const reactToMessage = 'survival success';
 
 const reactedLog = new LogMessageDefinition(
-  'CHECK',
+  'INTERACTED',
   interactiveInfo.name,
   reactToMessage
 );
