@@ -420,6 +420,14 @@ describe('ActorEntity', () => {
       });
     });
   });
+
+  describe('wannaDodge', () => {
+    it('return true', () => {
+      when(mockedActorBehavior.wannaDodge('FIRE')).thenReturn(true);
+
+      expect(fakeActor().wannaDodge('FIRE')).toEqual(true);
+    });
+  });
 });
 
 const fakeActor = () =>

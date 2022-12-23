@@ -20,6 +20,7 @@ import { ReactionValuesInterface } from '../interfaces/reaction-values.interface
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ClassificationLiteral } from '../literals/classification.literal';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
@@ -106,6 +107,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public override get classification(): ClassificationLiteral {
     return 'ACTOR';
+  }
+
+  public wannaDodge(effect: EffectTypeLiteral): boolean {
+    return this.actorBehavior.wannaDodge(effect);
   }
 
   // TODO: implement some AI behavior
