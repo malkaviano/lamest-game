@@ -11,7 +11,7 @@ import { ActionReactiveInterface } from '../interfaces/action-reactive.interface
 import { PlayerEntity } from '../entities/player.entity';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { SceneDefinition } from '../definitions/scene.definition';
-import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { ReadableInterface } from '../interfaces/readable.interface';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class GameRoundService {
 
   private readonly dodgedThisRound: Map<string, number>;
 
-  public readonly documentOpened$: Observable<DocumentOpenedInterface>;
+  public readonly documentOpened$: Observable<ReadableInterface>;
 
   constructor(
     private readonly ruleDispatcherService: RuleDispatcherService,

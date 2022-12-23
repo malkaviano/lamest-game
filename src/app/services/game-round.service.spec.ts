@@ -6,7 +6,7 @@ import { of, Subject, take } from 'rxjs';
 import { CharacterService } from './character.service';
 import { GameRoundService } from './game-round.service';
 import { NarrativeService } from './narrative.service';
-import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { ReadableInterface } from '../interfaces/readable.interface';
 import { ArrayView } from '../views/array.view';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 
@@ -99,7 +99,7 @@ describe('GameRoundService', () => {
           mockedCombatRule.execute(anything(), anything(), anything())
         ).thenReturn();
 
-        let result: DocumentOpenedInterface | undefined;
+        let result: ReadableInterface | undefined;
 
         service.documentOpened$.pipe(take(10)).subscribe((event) => {
           result = event;
@@ -127,4 +127,4 @@ const eventAttackInteractive = actionableEvent(
   interactiveInfo.id
 );
 
-const documentSubject = new Subject<DocumentOpenedInterface>();
+const documentSubject = new Subject<ReadableInterface>();

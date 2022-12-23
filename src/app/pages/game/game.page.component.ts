@@ -11,7 +11,7 @@ import { GameBridgeService } from '../../services/game-bridge.service';
 import { ArrayView } from '../../views/array.view';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
-import { DocumentOpenedInterface } from '../../interfaces/reader-dialog.interface';
+import { ReadableInterface } from '../../interfaces/readable.interface';
 import { LogMessageDefinition } from '../../definitions/log-message.definition';
 
 @Component({
@@ -111,7 +111,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     return `${logMessage.actor}: ${logMessage.message}`;
   }
 
-  private openReaderDialog(data: DocumentOpenedInterface): void {
+  private openReaderDialog(data: ReadableInterface): void {
     this.dialog.open(ReaderDialogComponent, {
       data,
     });

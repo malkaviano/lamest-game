@@ -2,25 +2,30 @@ import { merge, Observable, Subject } from 'rxjs';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
+import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
 import { ActorInterface } from '../interfaces/actor.interface';
+import { DocumentOpenedInterface } from '../interfaces/document-opened.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
-import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { ReadableInterface } from '../interfaces/readable.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-
 import { RuleInterface } from '../interfaces/rule.interface';
 
 export abstract class MasterRuleService
-  implements RuleInterface, LoggerInterface
+  implements
+    RuleInterface,
+    LoggerInterface,
+    ActorDodgedInterface,
+    DocumentOpenedInterface
 {
   protected readonly ruleLog: Subject<LogMessageDefinition>;
 
   protected readonly actorDodged: Subject<string>;
 
-  protected readonly documentOpened: Subject<DocumentOpenedInterface>;
+  protected readonly documentOpened: Subject<ReadableInterface>;
 
   public readonly actorDodged$: Observable<string>;
 
-  public readonly documentOpened$: Observable<DocumentOpenedInterface>;
+  public readonly documentOpened$: Observable<ReadableInterface>;
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 

@@ -8,7 +8,7 @@ import { InspectRule } from './inspect.rule';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { ReadableInterface } from '../interfaces/readable.interface';
 
 import {
   mockedInventoryService,
@@ -81,7 +81,7 @@ describe('InspectRule', () => {
           )
         ).thenReturn(readable);
 
-        let result: DocumentOpenedInterface | undefined;
+        let result: ReadableInterface | undefined;
 
         service.documentOpened$.pipe(take(100)).subscribe((event) => {
           result = event;

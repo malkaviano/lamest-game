@@ -14,13 +14,17 @@ import { UseRule } from '../rules/use.rule';
 import { InspectRule } from '../rules/inspect.rule';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
+import { ReadableInterface } from '../interfaces/readable.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
+import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
+import { DocumentOpenedInterface } from '../interfaces/document-opened.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RuleDispatcherService implements LoggerInterface {
+export class RuleDispatcherService
+  implements LoggerInterface, ActorDodgedInterface, DocumentOpenedInterface
+{
   public readonly dispatcher: {
     [key: string]: RuleInterface;
   };
@@ -29,7 +33,7 @@ export class RuleDispatcherService implements LoggerInterface {
 
   public readonly actorDodged$: Observable<string>;
 
-  public readonly documentOpened$: Observable<DocumentOpenedInterface>;
+  public readonly documentOpened$: Observable<ReadableInterface>;
 
   constructor(
     skillRule: SkillRule,

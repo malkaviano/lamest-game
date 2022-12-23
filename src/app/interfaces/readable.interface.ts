@@ -1,6 +1,6 @@
 import { ArrayView } from '../views/array.view';
 
-export interface DocumentOpenedInterface {
+export interface ReadableInterface {
   readonly title: string;
   readonly text: ArrayView<string>;
 }
