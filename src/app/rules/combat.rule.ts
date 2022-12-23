@@ -156,7 +156,7 @@ export class CombatRule extends MasterRuleService {
 
     if (log) {
       const logMessage = GameMessagesStore.createFreeLogMessage(
-        'ATTACKED',
+        'AFFECTED',
         target.name,
         log
       );

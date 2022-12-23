@@ -130,7 +130,7 @@ const firstAidLog = new LogMessageDefinition(
 const logHeal5 = `${consumableFirstAid.effect}-5`;
 
 const firstAidConsumedLog = new LogMessageDefinition(
-  'CONSUMED',
+  'AFFECTED',
   playerInfo.name,
   logHeal5
 );

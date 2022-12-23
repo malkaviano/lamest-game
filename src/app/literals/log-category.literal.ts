@@ -3,7 +3,6 @@ export type LogCategoryLiteral =
   | 'UNEQUIPPED'
   | 'CHECK'
   | 'CONSUMED'
-  | 'ATTACKED'
   | 'EQUIP-ERROR'
   | 'TOOK'
   | 'SCENE'
@@ -15,4 +14,6 @@ export type LogCategoryLiteral =
   | 'INSPECTED'
   | 'USED'
   | 'ACTIVATION'
-  | 'INTERACTED';
+  | 'INTERACTED'
+  | 'AFFECTED'
+  | 'DENIED';

@@ -158,4 +158,4 @@ describe('GamePageComponent', () => {
   });
 });
 
-const log = new LogMessageDefinition('ATTACKED', 'player', 'Sword');
+const log = new LogMessageDefinition('AFFECTED', 'player', 'Sword');

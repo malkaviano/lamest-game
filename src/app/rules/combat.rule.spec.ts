@@ -114,7 +114,7 @@ describe('CombatRule', () => {
 const damageMessage2 = `${simpleSword.damage.effectType}-2`;
 
 const damageInteractiveLog = new LogMessageDefinition(
-  'ATTACKED',
+  'AFFECTED',
   'somebody',
   damageMessage2
 );
@@ -138,25 +138,25 @@ const usedItemLog = new LogMessageDefinition(
 );
 
 const resultDamageLog = new LogMessageDefinition(
-  'ATTACKED',
+  'AFFECTED',
   'somebody',
   damageMessage2
 );
 
 const cannotDodgeLog = new LogMessageDefinition(
-  'ATTACKED',
+  'AFFECTED',
   'target',
   'Yo cannot dodge'
 );
 
 const outOfDodgesLog = new LogMessageDefinition(
-  'ATTACKED',
+  'AFFECTED',
   'somebody',
   'out of dodges'
 );
 
 const lostItemLog = new LogMessageDefinition(
-  'ATTACKED',
+  'AFFECTED',
   playerInfo.name,
   molotov.identity.label
 );

@@ -243,7 +243,7 @@ export class GameMessagesStore {
     target: string
   ): LogMessageDefinition {
     return new LogMessageDefinition(
-      'ATTACKED',
+      'DENIED',
       target,
       GameMessagesStore.logMessagesStore['unDodgeableAttackMessage']
     );
@@ -281,7 +281,7 @@ export class GameMessagesStore {
     target: string
   ): LogMessageDefinition {
     return new LogMessageDefinition(
-      'ATTACKED',
+      'DENIED',
       target,
       GameMessagesStore.logMessagesStore['outOfDodgesMessage']
     );

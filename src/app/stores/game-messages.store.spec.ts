@@ -215,7 +215,7 @@ describe('GameMessagesStoreService', () => {
           GameMessagesStore.createUnDodgeableAttackLogMessage('player')
         ).toEqual(
           new LogMessageDefinition(
-            'ATTACKED',
+            'DENIED',
             'player',
             'attack is not dodgeable'
           )
@@ -250,7 +250,7 @@ describe('GameMessagesStoreService', () => {
     describe('createOutOfDodgesLogMessage', () => {
       it('return was out of dodges', () => {
         expect(GameMessagesStore.createOutOfDodgesLogMessage('player')).toEqual(
-          new LogMessageDefinition('ATTACKED', 'player', 'was out of dodges')
+          new LogMessageDefinition('DENIED', 'player', 'was out of dodges')
         );
       });
     });

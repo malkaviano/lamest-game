@@ -73,7 +73,7 @@ export class ConsumeRule extends MasterRuleService {
 
     if (log) {
       const logMessage = GameMessagesStore.createFreeLogMessage(
-        'CONSUMED',
+        'AFFECTED',
         actor.name,
         log
       );
