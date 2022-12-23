@@ -1,5 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 import { emptyState } from './empty.state';
 
 describe('EmptyState', () => {
@@ -11,7 +11,7 @@ describe('EmptyState', () => {
           'NONE',
           {}
         )
-      ).toThrowError(GameMessagesStoreService.errorMessages['WRONG-ACTION']);
+      ).toThrowError(GameMessagesStore.errorMessages['WRONG-ACTION']);
     });
   });
 });

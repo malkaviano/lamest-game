@@ -7,7 +7,7 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 
 import { InventoryService } from '../services/inventory.service';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 import { MasterRuleService } from './master.rule';
 
@@ -37,7 +37,7 @@ export class UseRule extends MasterRuleService {
     );
 
     if (!item) {
-      const logMessage = GameMessagesStoreService.createNotFoundLogMessage(
+      const logMessage = GameMessagesStore.createNotFoundLogMessage(
         actor.name,
         actionableDefinition.label
       );
@@ -50,7 +50,7 @@ export class UseRule extends MasterRuleService {
     const log = target.reactTo(actionableDefinition, 'USED', { item });
 
     if (log) {
-      const logMessage = GameMessagesStoreService.createFreeLogMessage(
+      const logMessage = GameMessagesStore.createFreeLogMessage(
         'USED',
         target.name,
         log
@@ -59,7 +59,7 @@ export class UseRule extends MasterRuleService {
       this.ruleLog.next(logMessage);
     }
 
-    const logMessage = GameMessagesStoreService.createLostLogMessage(
+    const logMessage = GameMessagesStore.createLostLogMessage(
       actor.name,
       item.identity.label
     );

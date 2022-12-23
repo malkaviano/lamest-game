@@ -4,7 +4,7 @@ import { GameItemDefinition } from '../definitions/game-item.definition';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +16,7 @@ export class ExtractorHelper {
     const target = ruleExtrasInterface.target;
 
     if (!target) {
-      throw new Error(
-        GameMessagesStoreService.errorMessages['SHOULD-NOT-HAPPEN']
-      );
+      throw new Error(GameMessagesStore.errorMessages['SHOULD-NOT-HAPPEN']);
     }
 
     return target;
@@ -32,7 +30,7 @@ export class ExtractorHelper {
     const item = inventoryService.take<T>(actorId, itemName);
 
     if (!item) {
-      throw new Error(GameMessagesStoreService.errorMessages['WRONG-ITEM']);
+      throw new Error(GameMessagesStore.errorMessages['WRONG-ITEM']);
     }
 
     return item;

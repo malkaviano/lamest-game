@@ -8,7 +8,7 @@ import { ExtractorHelper } from '../helpers/extractor.helper';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 import {
   mockedExtractorHelper,
@@ -65,7 +65,7 @@ describe('EquipRule', () => {
 
         expect(() =>
           service.execute(instance(mockedPlayerEntity), eventWrong)
-        ).toThrowError(GameMessagesStoreService.errorMessages['WRONG-ITEM']);
+        ).toThrowError(GameMessagesStore.errorMessages['WRONG-ITEM']);
       });
     });
 

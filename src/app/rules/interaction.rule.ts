@@ -7,7 +7,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class InteractionRule extends MasterRuleService {
 
     const { actionableDefinition } = action;
 
-    const logMessage = GameMessagesStoreService.createFreeLogMessage(
+    const logMessage = GameMessagesStore.createFreeLogMessage(
       'INTERACTED',
       actor.name,
       actionableDefinition.label
@@ -37,7 +37,7 @@ export class InteractionRule extends MasterRuleService {
     const log = target.reactTo(actionableDefinition, 'NONE', {});
 
     if (log) {
-      const logMessage = GameMessagesStoreService.createFreeLogMessage(
+      const logMessage = GameMessagesStore.createFreeLogMessage(
         'INTERACTED',
         target.name,
         log

@@ -8,7 +8,7 @@ import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
 import { DiceLiteral } from '../literals/dice.literal';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 import { RandomIntService } from './random-int.service';
 
 @Injectable({
@@ -46,11 +46,10 @@ export class RollService implements LoggerInterface {
     const skillValue = actor.skills[skillName] ?? 0;
 
     if (skillValue <= 0) {
-      const logMessage =
-        GameMessagesStoreService.createCannotCheckSkillLogMessage(
-          actor.name,
-          skillName
-        );
+      const logMessage = GameMessagesStore.createCannotCheckSkillLogMessage(
+        actor.name,
+        skillName
+      );
 
       this.skillCheckLog.next(logMessage);
 
@@ -59,7 +58,7 @@ export class RollService implements LoggerInterface {
 
     const result = this.skillCheck(skillValue);
 
-    const logMessage = GameMessagesStoreService.createSkillCheckLogMessage(
+    const logMessage = GameMessagesStore.createSkillCheckLogMessage(
       actor.name,
       skillName,
       result.roll.toString(),

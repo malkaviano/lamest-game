@@ -3,7 +3,7 @@ import { ActorEntity } from '../entities/actor.entity';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
@@ -26,15 +26,11 @@ export class VisibilityState extends ActionableState {
     const target = values.target;
 
     if (!actor && ['Disguise', 'Hide'].includes(action.name)) {
-      throw new Error(
-        GameMessagesStoreService.errorMessages['INVALID-OPERATION']
-      );
+      throw new Error(GameMessagesStore.errorMessages['INVALID-OPERATION']);
     }
 
     if (!(target instanceof ActorEntity) && ['Detect'].includes(action.name)) {
-      throw new Error(
-        GameMessagesStoreService.errorMessages['INVALID-OPERATION']
-      );
+      throw new Error(GameMessagesStore.errorMessages['INVALID-OPERATION']);
     }
 
     const actorVisibility = this.actorVisibility(action.name);

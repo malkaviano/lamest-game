@@ -5,7 +5,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 
 import { InventoryService } from '../services/inventory.service';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 import { MasterRuleService } from './master.rule';
 
@@ -26,10 +26,10 @@ export class InspectRule extends MasterRuleService {
     );
 
     if (!item) {
-      throw new Error(GameMessagesStoreService.errorMessages['WRONG-ITEM']);
+      throw new Error(GameMessagesStore.errorMessages['WRONG-ITEM']);
     }
 
-    const logMessage = GameMessagesStoreService.createItemInspectedLogMessage(
+    const logMessage = GameMessagesStore.createItemInspectedLogMessage(
       actor.name,
       item.identity.label
     );

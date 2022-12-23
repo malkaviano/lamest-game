@@ -6,7 +6,7 @@ import { ResultLiteral } from '../literals/result.literal';
 
 import gameMessages from '../../assets/game-messages.json';
 
-export class GameMessagesStoreService {
+export class GameMessagesStore {
   private static logMessagesStore: KeyValueInterface<string> =
     gameMessages.logs;
 
@@ -14,14 +14,14 @@ export class GameMessagesStoreService {
     gameMessages.errors;
 
   public static get errorMessages(): KeyValueInterface<string> {
-    return GameMessagesStoreService.errorMessagesStore;
+    return GameMessagesStore.errorMessagesStore;
   }
 
   public static createEffectRestoredHPMessage(
     effectType: EffectTypeLiteral,
     heal: string
   ): string {
-    return GameMessagesStoreService.logMessagesStore['effectRestoredHPMessage']
+    return GameMessagesStore.logMessagesStore['effectRestoredHPMessage']
       .replace('${effectType}', effectType)
       .replace('${heal}', heal);
   }
@@ -30,75 +30,74 @@ export class GameMessagesStoreService {
     effectType: EffectTypeLiteral,
     damage: string
   ): string {
-    return GameMessagesStoreService.logMessagesStore['effectDamagedMessage']
+    return GameMessagesStore.logMessagesStore['effectDamagedMessage']
       .replace('${damage}', damage)
       .replace('${effectType}', effectType);
   }
 
   public static createHPDidNotChangeMessage(): string {
-    return GameMessagesStoreService.logMessagesStore['hpDidNotChangeMessage'];
+    return GameMessagesStore.logMessagesStore['hpDidNotChangeMessage'];
   }
 
   public static createDestroyedByDamageMessage(
     damageType: EffectTypeLiteral,
     damage: string
   ): string {
-    return `${GameMessagesStoreService.createEffectDamagedMessage(
+    return `${GameMessagesStore.createEffectDamagedMessage(
       damageType,
       damage
-    )} and ${GameMessagesStoreService.logMessagesStore['destroyedMessage']}`;
+    )} and ${GameMessagesStore.logMessagesStore['destroyedMessage']}`;
   }
 
   public static createOpenedUsingMessage(item: string): string {
-    return GameMessagesStoreService.logMessagesStore[
-      'openedUsingMessage'
-    ].replace('${item}', item);
+    return GameMessagesStore.logMessagesStore['openedUsingMessage'].replace(
+      '${item}',
+      item
+    );
   }
 
   public static createLockpickMovedMessage(direction: string): string {
-    return GameMessagesStoreService.logMessagesStore[
-      'lockpickMovedMessage'
-    ].replace('${direction}', direction);
+    return GameMessagesStore.logMessagesStore['lockpickMovedMessage'].replace(
+      '${direction}',
+      direction
+    );
   }
 
   public static createLockpickStuckMessage(direction: string): string {
-    return GameMessagesStoreService.logMessagesStore[
-      'lockpickStuckMessage'
-    ].replace('${direction}', direction);
+    return GameMessagesStore.logMessagesStore['lockpickStuckMessage'].replace(
+      '${direction}',
+      direction
+    );
   }
 
   public static createLockpickOpenedMessage(direction: string): string {
-    return `${GameMessagesStoreService.createLockpickMovedMessage(
-      direction
-    )} and ${
-      GameMessagesStoreService.logMessagesStore['lockpickOpenedMessage']
+    return `${GameMessagesStore.createLockpickMovedMessage(direction)} and ${
+      GameMessagesStore.logMessagesStore['lockpickOpenedMessage']
     }`;
   }
 
   public static createLockpickJammedMessage(direction: string): string {
-    return `${GameMessagesStoreService.createLockpickStuckMessage(
-      direction
-    )} and ${
-      GameMessagesStoreService.logMessagesStore['lockpickJammedMessage']
+    return `${GameMessagesStore.createLockpickStuckMessage(direction)} and ${
+      GameMessagesStore.logMessagesStore['lockpickJammedMessage']
     }`;
   }
 
   public static createEnergizedMessage(energy: string): string {
-    return GameMessagesStoreService.logMessagesStore[
-      'energizedMessage'
-    ].replace('${energy}', energy);
+    return GameMessagesStore.logMessagesStore['energizedMessage'].replace(
+      '${energy}',
+      energy
+    );
   }
 
   public static createEnergyDrainedMessage(energy: string): string {
-    return GameMessagesStoreService.logMessagesStore[
-      'energyDrainedMessage'
-    ].replace('${energy}', energy);
+    return GameMessagesStore.logMessagesStore['energyDrainedMessage'].replace(
+      '${energy}',
+      energy
+    );
   }
 
   public static createEnergyDidNotChangeMessage(): string {
-    return GameMessagesStoreService.logMessagesStore[
-      'energyDidNotChangeMessage'
-    ];
+    return GameMessagesStore.logMessagesStore['energyDidNotChangeMessage'];
   }
 
   public static createSkillCheckLogMessage(
@@ -110,7 +109,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'CHECK',
       actor,
-      GameMessagesStoreService.logMessagesStore['skillCheckMessage']
+      GameMessagesStore.logMessagesStore['skillCheckMessage']
         .replace('${skill}', skill)
         .replace('${roll}', roll)
         .replace('${result}', result)
@@ -124,9 +123,10 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'CHECK',
       actor,
-      GameMessagesStoreService.logMessagesStore[
-        'cannotCheckSkillMessage'
-      ].replace('${skill}', skill)
+      GameMessagesStore.logMessagesStore['cannotCheckSkillMessage'].replace(
+        '${skill}',
+        skill
+      )
     );
   }
 
@@ -137,7 +137,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'EQUIPPED',
       actor,
-      GameMessagesStoreService.logMessagesStore['equippedMessage'].replace(
+      GameMessagesStore.logMessagesStore['equippedMessage'].replace(
         '${equipment}',
         equipment
       )
@@ -151,7 +151,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'UNEQUIPPED',
       actor,
-      GameMessagesStoreService.logMessagesStore['unEquippedMessage'].replace(
+      GameMessagesStore.logMessagesStore['unEquippedMessage'].replace(
         '${equipment}',
         equipment
       )
@@ -165,7 +165,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'CONSUMED',
       actor,
-      GameMessagesStoreService.logMessagesStore['consumedMessage'].replace(
+      GameMessagesStore.logMessagesStore['consumedMessage'].replace(
         '${consumable}',
         consumable
       )
@@ -180,7 +180,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'USED',
       actor,
-      GameMessagesStoreService.logMessagesStore['usedItemMessage']
+      GameMessagesStore.logMessagesStore['usedItemMessage']
         .replace('${target}', target)
         .replace('${item}', item)
     );
@@ -194,7 +194,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'EQUIP-ERROR',
       actor,
-      GameMessagesStoreService.logMessagesStore['equipErrorMessage']
+      GameMessagesStore.logMessagesStore['equipErrorMessage']
         .replace('${skill}', skill)
         .replace('${equipment}', equipment)
     );
@@ -208,7 +208,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'TOOK',
       actor,
-      GameMessagesStoreService.logMessagesStore['tookMessage']
+      GameMessagesStore.logMessagesStore['tookMessage']
         .replace('${from}', from)
         .replace('${item}', item)
     );
@@ -222,7 +222,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'SCENE',
       actor,
-      GameMessagesStoreService.logMessagesStore['sceneMessage']
+      GameMessagesStore.logMessagesStore['sceneMessage']
         .replace('${from}', from)
         .replace('${selection}', selection)
     );
@@ -235,10 +235,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'LOST',
       actor,
-      GameMessagesStoreService.logMessagesStore['lostMessage'].replace(
-        '${item}',
-        item
-      )
+      GameMessagesStore.logMessagesStore['lostMessage'].replace('${item}', item)
     );
   }
 
@@ -248,7 +245,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'ATTACKED',
       target,
-      GameMessagesStoreService.logMessagesStore['unDodgeableAttackMessage']
+      GameMessagesStore.logMessagesStore['unDodgeableAttackMessage']
     );
   }
 
@@ -259,7 +256,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'NOT-FOUND',
       actor,
-      GameMessagesStoreService.logMessagesStore['notFoundMessage'].replace(
+      GameMessagesStore.logMessagesStore['notFoundMessage'].replace(
         '${label}',
         label
       )
@@ -273,7 +270,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'INSPECTED',
       actor,
-      GameMessagesStoreService.logMessagesStore['itemInspectedMessage'].replace(
+      GameMessagesStore.logMessagesStore['itemInspectedMessage'].replace(
         '${item}',
         item
       )
@@ -286,7 +283,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'ATTACKED',
       target,
-      GameMessagesStoreService.logMessagesStore['outOfDodgesMessage']
+      GameMessagesStore.logMessagesStore['outOfDodgesMessage']
     );
   }
 
@@ -297,9 +294,10 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'ACTIVATION',
       actor,
-      GameMessagesStoreService.logMessagesStore[
-        'notEnoughEnergyMessage'
-      ].replace('${item}', item)
+      GameMessagesStore.logMessagesStore['notEnoughEnergyMessage'].replace(
+        '${item}',
+        item
+      )
     );
   }
 
@@ -311,7 +309,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'ACTIVATION',
       actor,
-      GameMessagesStoreService.logMessagesStore['energySpentMessage']
+      GameMessagesStore.logMessagesStore['energySpentMessage']
         .replace('${energySpent}', energySpent)
         .replace('${item}', item)
     );
@@ -331,7 +329,7 @@ export class GameMessagesStoreService {
     return new LogMessageDefinition(
       'DIED',
       actor,
-      GameMessagesStoreService.logMessagesStore['isDeadMessage']
+      GameMessagesStore.logMessagesStore['isDeadMessage']
     );
   }
 }

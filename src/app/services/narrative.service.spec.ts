@@ -7,7 +7,7 @@ import { SceneDefinition } from '../definitions/scene.definition';
 import { SceneStore } from '../stores/scene.store';
 import { NarrativeService } from './narrative.service';
 import { ArrayView } from '../views/array.view';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 import {
   mockedInteractiveEntity,
@@ -83,7 +83,7 @@ describe('NarrativeService', () => {
     describe('when a NON SCENE is received', () => {
       it('throw INVALID OPERATION', () => {
         expect(() => service.changeScene(eventSkillAthleticism)).toThrowError(
-          GameMessagesStoreService.errorMessages['INVALID-OPERATION']
+          GameMessagesStore.errorMessages['INVALID-OPERATION']
         );
       });
     });

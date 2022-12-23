@@ -2,7 +2,7 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -37,7 +37,7 @@ export class DestroyableState extends ActionableState {
             this.destroyedState,
             hp
           ),
-          log: GameMessagesStoreService.createEffectDamagedMessage(
+          log: GameMessagesStore.createEffectDamagedMessage(
             values.effect.effectType,
             dmg.toString()
           ),
@@ -46,7 +46,7 @@ export class DestroyableState extends ActionableState {
 
       return {
         state: this.destroyedState.value,
-        log: GameMessagesStoreService.createDestroyedByDamageMessage(
+        log: GameMessagesStore.createDestroyedByDamageMessage(
           values.effect.effectType,
           dmg.toString()
         ),

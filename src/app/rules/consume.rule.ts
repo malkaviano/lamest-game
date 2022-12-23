@@ -11,7 +11,7 @@ import { ExtractorHelper } from '../helpers/extractor.helper';
 import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +55,7 @@ export class ConsumeRule extends MasterRuleService {
     actionableDefinition: ActionableDefinition,
     rollResult: ResultLiteral
   ) {
-    const logMessage = GameMessagesStoreService.createConsumedLogMessage(
+    const logMessage = GameMessagesStore.createConsumedLogMessage(
       actor.name,
       consumable.identity.label
     );
@@ -72,7 +72,7 @@ export class ConsumeRule extends MasterRuleService {
     });
 
     if (log) {
-      const logMessage = GameMessagesStoreService.createFreeLogMessage(
+      const logMessage = GameMessagesStore.createFreeLogMessage(
         'CONSUMED',
         actor.name,
         log

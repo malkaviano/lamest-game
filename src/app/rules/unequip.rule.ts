@@ -6,7 +6,7 @@ import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class UnEquipRule extends MasterRuleService {
     if (weapon) {
       this.inventoryService.store(actor.name, weapon);
 
-      const logMessage = GameMessagesStoreService.createUnEquippedLogMessage(
+      const logMessage = GameMessagesStore.createUnEquippedLogMessage(
         actor.name,
         action.actionableDefinition.label
       );

@@ -11,7 +11,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorEntity } from '../entities/actor.entity';
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 import { ActivationAxiomService } from './axioms/activation.axiom.service';
 import { DodgeAxiomService } from './axioms/dodge.axiom.service';
 
@@ -99,7 +99,7 @@ export class CombatRule extends MasterRuleService {
       target.situation === 'DEAD'
     ) {
       this.ruleLog.next(
-        GameMessagesStoreService.createActorIsDeadLogMessage(target.name)
+        GameMessagesStore.createActorIsDeadLogMessage(target.name)
       );
     }
   }
@@ -107,7 +107,7 @@ export class CombatRule extends MasterRuleService {
   private disposeItem(actor: ActorInterface, label: string): void {
     actor.unEquip();
 
-    const logMessage = GameMessagesStoreService.createLostLogMessage(
+    const logMessage = GameMessagesStore.createLostLogMessage(
       actor.name,
       label
     );
@@ -129,7 +129,7 @@ export class CombatRule extends MasterRuleService {
     const result = actorResult === 'SUCCESS';
 
     if (result) {
-      const logMessage = GameMessagesStoreService.createUsedItemLogMessage(
+      const logMessage = GameMessagesStore.createUsedItemLogMessage(
         actor.name,
         target.name,
         weaponLabel
@@ -153,7 +153,7 @@ export class CombatRule extends MasterRuleService {
     });
 
     if (log) {
-      const logMessage = GameMessagesStoreService.createFreeLogMessage(
+      const logMessage = GameMessagesStore.createFreeLogMessage(
         'ATTACKED',
         target.name,
         log

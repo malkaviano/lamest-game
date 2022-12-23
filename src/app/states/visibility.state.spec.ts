@@ -7,7 +7,7 @@ import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { PlayerEntity } from '../entities/player.entity';
 import { ResultLiteral } from '../literals/result.literal';
 import { emptyState } from './empty.state';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 import {
   actionAsk,
@@ -47,9 +47,7 @@ describe('VisibilityState', () => {
             fakeState(action, 1).onResult(action, 'SUCCESS', {
               target: instance(mockedPlayerEntity),
             })
-          ).toThrowError(
-            GameMessagesStoreService.errorMessages['INVALID-OPERATION']
-          );
+          ).toThrowError(GameMessagesStore.errorMessages['INVALID-OPERATION']);
         });
       });
     });
@@ -67,9 +65,7 @@ describe('VisibilityState', () => {
             fakeState(action, 1).onResult(action, 'SUCCESS', {
               actorVisibility: instance(mockedPlayerEntity),
             })
-          ).toThrowError(
-            GameMessagesStoreService.errorMessages['INVALID-OPERATION']
-          );
+          ).toThrowError(GameMessagesStore.errorMessages['INVALID-OPERATION']);
         });
       });
     });

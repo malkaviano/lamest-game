@@ -9,7 +9,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +40,7 @@ export class PickRule extends MasterRuleService {
     const log = target.reactTo(action.actionableDefinition, 'NONE', {});
 
     if (log) {
-      const logMessage = GameMessagesStoreService.createTookLogMessage(
+      const logMessage = GameMessagesStore.createTookLogMessage(
         actor.name,
         target.name,
         log

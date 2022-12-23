@@ -24,7 +24,7 @@ import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
@@ -219,17 +219,17 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     if (result.current > result.previous) {
-      resultLog = GameMessagesStoreService.createEffectRestoredHPMessage(
+      resultLog = GameMessagesStore.createEffectRestoredHPMessage(
         effect.effectType,
         result.effective.toString()
       );
     } else if (result.current < result.previous) {
-      resultLog = GameMessagesStoreService.createEffectDamagedMessage(
+      resultLog = GameMessagesStore.createEffectDamagedMessage(
         effect.effectType,
         result.effective.toString()
       );
     } else {
-      resultLog = GameMessagesStoreService.createHPDidNotChangeMessage();
+      resultLog = GameMessagesStore.createHPDidNotChangeMessage();
     }
 
     return resultLog;
@@ -245,15 +245,15 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     if (result.current > result.previous) {
-      resultLog = GameMessagesStoreService.createEnergizedMessage(
+      resultLog = GameMessagesStore.createEnergizedMessage(
         result.effective.toString()
       );
     } else if (result.current < result.previous) {
-      resultLog = GameMessagesStoreService.createEnergyDrainedMessage(
+      resultLog = GameMessagesStore.createEnergyDrainedMessage(
         result.effective.toString()
       );
     } else {
-      resultLog = GameMessagesStoreService.createEnergyDidNotChangeMessage();
+      resultLog = GameMessagesStore.createEnergyDidNotChangeMessage();
     }
 
     return resultLog;

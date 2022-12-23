@@ -7,7 +7,7 @@ import { ActorDodgedInterface } from '../../interfaces/actor-dodged.interface';
 import { ActorInterface } from '../../interfaces/actor.interface';
 import { LoggerInterface } from '../../interfaces/logger.interface';
 import { RollService } from '../../services/roll.service';
-import { GameMessagesStoreService } from '../../stores/game-messages.store';
+import { GameMessagesStore } from '../../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -42,12 +42,13 @@ export class DodgeAxiomService
     const canDodge = target.dodgesPerRound > dodgesPerformed;
 
     if (!dodgeable) {
-      const logMessage =
-        GameMessagesStoreService.createUnDodgeableAttackLogMessage(target.name);
+      const logMessage = GameMessagesStore.createUnDodgeableAttackLogMessage(
+        target.name
+      );
 
       this.logMessageProduced.next(logMessage);
     } else if (!canDodge) {
-      const logMessage = GameMessagesStoreService.createOutOfDodgesLogMessage(
+      const logMessage = GameMessagesStore.createOutOfDodgesLogMessage(
         target.name
       );
 

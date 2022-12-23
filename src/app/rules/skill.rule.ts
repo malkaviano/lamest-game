@@ -8,7 +8,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,7 @@ export class SkillRule extends MasterRuleService {
       });
 
       if (log) {
-        const logMessage = GameMessagesStoreService.createFreeLogMessage(
+        const logMessage = GameMessagesStore.createFreeLogMessage(
           'INTERACTED',
           target.name,
           log
