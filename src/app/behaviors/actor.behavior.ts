@@ -7,6 +7,7 @@ import { HitPointsEvent } from '../events/hit-points.event';
 import { ActorSettingsInterface } from '../interfaces/actor-settings.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { SkillStore } from '../stores/skill.store';
 
 export class ActorBehavior {
@@ -71,6 +72,15 @@ export class ActorBehavior {
     );
 
     return this.clamp(dodges, 1, Number.MAX_VALUE);
+  }
+
+  public wannaDodge(effect: EffectTypeLiteral): boolean {
+    return !(
+      this.actorSettings.effectDefenses.immunities.items.some(
+        (i) => i === effect
+      ) ||
+      this.actorSettings.effectDefenses.cures.items.some((i) => i === effect)
+    );
   }
 
   public effectReceived(effectReceived: EffectEvent): HitPointsEvent {

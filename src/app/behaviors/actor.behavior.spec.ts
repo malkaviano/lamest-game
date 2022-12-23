@@ -13,6 +13,7 @@ import {
   fakeMapSkills,
 } from '../../../tests/fakes';
 import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
 
 const fakeCharacteristicsAgi = (agi: number) => {
   return {
@@ -210,6 +211,45 @@ describe('ActorBehavior', () => {
         const result = b.energyChange(20);
 
         expect(result).toEqual(new EnergyPointsEvent(0, 13));
+      });
+    });
+  });
+
+  describe('wannaDodge', () => {
+    [
+      {
+        effect: 'KINETIC',
+        expected: true,
+      },
+      {
+        effect: 'PROFANE',
+        expected: true,
+      },
+      {
+        effect: 'SACRED',
+        expected: false,
+      },
+      {
+        effect: 'FIRE',
+        expected: true,
+      },
+      {
+        effect: 'ARCANE',
+        expected: true,
+      },
+      {
+        effect: 'ACID',
+        expected: false,
+      },
+      {
+        effect: 'REMEDY',
+        expected: false,
+      },
+    ].forEach(({ effect, expected }) => {
+      it(`return ${expected}`, () => {
+        expect(fakeBehavior().wannaDodge(effect as EffectTypeLiteral)).toEqual(
+          expected
+        );
       });
     });
   });
