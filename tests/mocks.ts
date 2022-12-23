@@ -65,6 +65,7 @@ import {
 } from './fakes';
 import { RuleDispatcherService } from '../src/app/services/rule-dispatcher.service';
 import { ActivationAxiomService } from '../src/app/rules/axioms/activation.axiom.service';
+import { LoggingHubHelperService } from '../src/app/helpers/logging-hub.helper.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -165,6 +166,8 @@ export const mockedSettingsStore = mock(SettingsStore);
 export const mockedExtractorHelper = mock(ExtractorHelper);
 
 export const mockedActivationAxiomService = mock(ActivationAxiomService);
+
+export const mockedLoggingHubHelperService = mock(LoggingHubHelperService);
 
 export const setupMocks = () => {
   resetMocks();
@@ -446,6 +449,8 @@ const resetMocks = () => {
   reset(mockedExtractorHelper);
 
   reset(mockedActivationAxiomService);
+
+  reset(mockedLoggingHubHelperService);
 };
 
 function mockExtractorHelper() {
