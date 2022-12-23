@@ -16,7 +16,7 @@ import {
 import { GameRoundService } from './game-round.service';
 import { PlayerEntity } from '../entities/player.entity';
 import { GameItemDefinition } from '../definitions/game-item.definition';
-import { LoggingHubHelperService } from '../helpers/logging-hub.helper.service';
+import { RuleDispatcherService } from './rule-dispatcher.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export class GameBridgeService {
     characterService: CharacterService,
     narrativeService: NarrativeService,
     inventoryService: InventoryService,
-    loggingHubHelperService: LoggingHubHelperService
+    ruleDispatcherService: RuleDispatcherService
   ) {
     this.player = characterService.currentCharacter;
 
@@ -46,7 +46,7 @@ export class GameBridgeService {
 
     this.events = new GameEventsDefinition(
       narrativeService.sceneChanged$,
-      loggingHubHelperService.logMessageProduced$,
+      ruleDispatcherService.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
       this.gameRoundService.documentOpened$

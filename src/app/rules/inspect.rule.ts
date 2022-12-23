@@ -7,7 +7,7 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
 
-import { MasterRuleService } from './master.rule.service';
+import { MasterRuleService } from './master.rule';
 
 @Injectable({
   providedIn: 'root',

@@ -6,7 +6,7 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
-import { MasterRuleService } from './master.rule.service';
+import { MasterRuleService } from './master.rule';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({

@@ -15,7 +15,6 @@ import { InspectRule } from '../rules/inspect.rule';
 import { RuleInterface } from '../interfaces/rule.interface';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
-import { RollService } from './roll.service';
 import { LoggerInterface } from '../interfaces/logger.interface';
 
 @Injectable({
@@ -33,49 +32,47 @@ export class RuleDispatcherService implements LoggerInterface {
   public readonly documentOpened$: Observable<DocumentOpenedInterface>;
 
   constructor(
-    private readonly skillRule: SkillRule,
-    private readonly pickRule: PickRule,
-    private readonly equipRule: EquipRule,
-    private readonly unequipRule: UnEquipRule,
-    private readonly sceneRule: SceneRule,
-    private readonly combatRule: CombatRule,
-    private readonly consumableRule: ConsumeRule,
-    private readonly interactionRule: InteractionRule,
-    private readonly useRule: UseRule,
-    private readonly inspectRule: InspectRule,
-    private readonly rollService: RollService
+    skillRule: SkillRule,
+    pickRule: PickRule,
+    equipRule: EquipRule,
+    unequipRule: UnEquipRule,
+    sceneRule: SceneRule,
+    combatRule: CombatRule,
+    consumableRule: ConsumeRule,
+    interactionRule: InteractionRule,
+    useRule: UseRule,
+    inspectRule: InspectRule
   ) {
     this.dispatcher = {
-      SKILL: this.skillRule,
-      PICK: this.pickRule,
-      EQUIP: this.equipRule,
-      UNEQUIP: this.unequipRule,
-      SCENE: this.sceneRule,
-      AFFECT: this.combatRule,
-      CONSUME: this.consumableRule,
-      INTERACTION: this.interactionRule,
-      USE: this.useRule,
-      INSPECT: this.inspectRule,
+      SKILL: skillRule,
+      PICK: pickRule,
+      EQUIP: equipRule,
+      UNEQUIP: unequipRule,
+      SCENE: sceneRule,
+      AFFECT: combatRule,
+      CONSUME: consumableRule,
+      INTERACTION: interactionRule,
+      USE: useRule,
+      INSPECT: inspectRule,
     };
 
     this.logMessageProduced$ = merge(
-      this.useRule.ruleLog$,
-      this.unequipRule.ruleLog$,
-      this.skillRule.ruleLog$,
-      this.pickRule.ruleLog$,
-      this.equipRule.ruleLog$,
-      this.unequipRule.ruleLog$,
-      this.sceneRule.ruleLog$,
-      this.combatRule.ruleLog$,
-      this.consumableRule.ruleLog$,
-      this.interactionRule.ruleLog$,
-      this.useRule.ruleLog$,
-      this.inspectRule.ruleLog$,
-      this.rollService.skillCheckLog$
+      useRule.logMessageProduced$,
+      unequipRule.logMessageProduced$,
+      skillRule.logMessageProduced$,
+      pickRule.logMessageProduced$,
+      equipRule.logMessageProduced$,
+      unequipRule.logMessageProduced$,
+      sceneRule.logMessageProduced$,
+      combatRule.logMessageProduced$,
+      consumableRule.logMessageProduced$,
+      interactionRule.logMessageProduced$,
+      useRule.logMessageProduced$,
+      inspectRule.logMessageProduced$
     );
 
-    this.actorDodged$ = this.combatRule.actorDodged$;
+    this.actorDodged$ = combatRule.actorDodged$;
 
-    this.documentOpened$ = this.inspectRule.documentOpened$;
+    this.documentOpened$ = inspectRule.documentOpened$;
   }
 }

@@ -5,7 +5,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 
-import { MasterRuleService } from './master.rule.service';
+import { MasterRuleService } from './master.rule';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
 
 @Injectable({

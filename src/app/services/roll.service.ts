@@ -6,6 +6,7 @@ import { Dice } from '../definitions/dice.definition';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
+import { LoggerInterface } from '../interfaces/logger.interface';
 import { DiceLiteral } from '../literals/dice.literal';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
 import { RandomIntService } from './random-int.service';
@@ -13,14 +14,14 @@ import { RandomIntService } from './random-int.service';
 @Injectable({
   providedIn: 'root',
 })
-export class RollService {
+export class RollService implements LoggerInterface {
   private readonly diceMap: {
     readonly [key in DiceLiteral]: { min: number; max: number };
   };
 
   private readonly skillCheckLog: Subject<LogMessageDefinition>;
 
-  public readonly skillCheckLog$: Observable<LogMessageDefinition>;
+  public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
   constructor(private readonly rngService: RandomIntService) {
     this.diceMap = {
@@ -35,7 +36,7 @@ export class RollService {
 
     this.skillCheckLog = new Subject();
 
-    this.skillCheckLog$ = this.skillCheckLog.asObservable();
+    this.logMessageProduced$ = this.skillCheckLog.asObservable();
   }
 
   public actorSkillCheck(

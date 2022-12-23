@@ -12,14 +12,14 @@ import { GameRoundService } from './game-round.service';
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
-import { LoggingHubHelperService } from '../helpers/logging-hub.helper.service';
+import { RuleDispatcherService } from './rule-dispatcher.service';
 
 import {
   mockedCharacterService,
   mockedGameLoopService,
   mockedInventoryService,
-  mockedLoggingHubHelperService,
   mockedNarrativeService,
+  mockedRuleDispatcherService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -58,8 +58,8 @@ describe('GameBridgeService', () => {
           useValue: instance(mockedNarrativeService),
         },
         {
-          provide: LoggingHubHelperService,
-          useValue: instance(mockedLoggingHubHelperService),
+          provide: RuleDispatcherService,
+          useValue: instance(mockedRuleDispatcherService),
         },
       ],
     });

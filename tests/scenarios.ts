@@ -4,7 +4,7 @@ import { LogMessageDefinition } from '../src/app/definitions/log-message.definit
 import { ActionableEvent } from '../src/app/events/actionable.event';
 import { ActorInterface } from '../src/app/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../src/app/interfaces/rule-extras.interface';
-import { MasterRuleService } from '../src/app/rules/master.rule.service';
+import { MasterRuleService } from '../src/app/rules/master.rule';
 
 export const ruleScenario = (
   service: MasterRuleService,
@@ -15,7 +15,7 @@ export const ruleScenario = (
 ) => {
   const result: LogMessageDefinition[] = [];
 
-  service.ruleLog$.pipe(take(100)).subscribe((event) => {
+  service.logMessageProduced$.pipe(take(100)).subscribe((event) => {
     result.push(event);
   });
 

@@ -1,18 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 
+import { take } from 'rxjs';
+import { instance, when } from 'ts-mockito';
+
 import { RollDefinition } from '../definitions/roll.definition';
 import { ResultLiteral } from '../literals/result.literal';
 import { RandomIntService } from '../services/random-int.service';
 import { RollService } from './roll.service';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
-import { instance, when } from 'ts-mockito';
 import {
   mockedActorEntity,
   mockedRandomIntService,
   setupMocks,
 } from '../../../tests/mocks';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { take } from 'rxjs';
 
 describe('RollService', () => {
   let service: RollService;
@@ -52,7 +53,7 @@ describe('RollService', () => {
       it('should emit skillCheckLog log', () => {
         let result: LogMessageDefinition | undefined;
 
-        service.skillCheckLog$.pipe(take(100)).subscribe((event) => {
+        service.logMessageProduced$.pipe(take(100)).subscribe((event) => {
           result = event;
         });
 
@@ -106,7 +107,7 @@ describe('RollService', () => {
         it('should emit skillCheckLog log', () => {
           let result: LogMessageDefinition | undefined;
 
-          service.skillCheckLog$.pipe(take(100)).subscribe((event) => {
+          service.logMessageProduced$.pipe(take(100)).subscribe((event) => {
             result = event;
           });
 

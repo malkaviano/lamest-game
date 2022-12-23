@@ -8,7 +8,7 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectEvent } from '../events/effect.event';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
-import { MasterRuleService } from './master.rule.service';
+import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { GameMessagesStoreService } from '../stores/game-messages.store';

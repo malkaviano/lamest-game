@@ -1,33 +1,36 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { merge, Observable, Subject } from 'rxjs';
+
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
+import { LoggerInterface } from '../interfaces/logger.interface';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 
 import { RuleInterface } from '../interfaces/rule.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
-export abstract class MasterRuleService implements RuleInterface {
+export abstract class MasterRuleService
+  implements RuleInterface, LoggerInterface
+{
   protected readonly ruleLog: Subject<LogMessageDefinition>;
 
   protected readonly actorDodged: Subject<string>;
 
   protected readonly documentOpened: Subject<DocumentOpenedInterface>;
 
-  public readonly ruleLog$: Observable<LogMessageDefinition>;
-
   public readonly actorDodged$: Observable<string>;
 
   public readonly documentOpened$: Observable<DocumentOpenedInterface>;
 
-  constructor() {
+  public readonly logMessageProduced$: Observable<LogMessageDefinition>;
+
+  constructor(observables: Observable<LogMessageDefinition>[] = []) {
     this.ruleLog = new Subject();
 
-    this.ruleLog$ = this.ruleLog.asObservable();
+    this.logMessageProduced$ = merge(
+      this.ruleLog.asObservable(),
+      ...observables
+    );
 
     this.actorDodged = new Subject();
 

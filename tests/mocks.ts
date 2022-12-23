@@ -49,6 +49,8 @@ import { SkillStore } from '../src/app/stores/skill.store';
 import { InspectRule } from '../src/app/rules/inspect.rule';
 import { SettingsStore } from '../src/app/stores/settings.store';
 import { ExtractorHelper } from '../src/app/helpers/extractor.helper';
+import { RuleDispatcherService } from '../src/app/services/rule-dispatcher.service';
+import { ActivationAxiomService } from '../src/app/rules/axioms/activation.axiom.service';
 
 import {
   actorInfo,
@@ -63,9 +65,7 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { RuleDispatcherService } from '../src/app/services/rule-dispatcher.service';
-import { ActivationAxiomService } from '../src/app/rules/axioms/activation.axiom.service';
-import { LoggingHubHelperService } from '../src/app/helpers/logging-hub.helper.service';
+import { AxiomHubService } from '../src/app/rules/axioms/axiom-hub.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -167,7 +167,7 @@ export const mockedExtractorHelper = mock(ExtractorHelper);
 
 export const mockedActivationAxiomService = mock(ActivationAxiomService);
 
-export const mockedLoggingHubHelperService = mock(LoggingHubHelperService);
+export const mockedAxiomHubService = mock(AxiomHubService);
 
 export const setupMocks = () => {
   resetMocks();
@@ -450,7 +450,7 @@ const resetMocks = () => {
 
   reset(mockedActivationAxiomService);
 
-  reset(mockedLoggingHubHelperService);
+  reset(mockedAxiomHubService);
 };
 
 function mockExtractorHelper() {

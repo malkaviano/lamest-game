@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
@@ -26,9 +26,7 @@ export class GameRoundService {
 
   private actors: ArrayView<ActorInterface>;
 
-  private readonly dodgesPerRound: Map<string, number>;
-
-  private readonly documentOpened: Subject<DocumentOpenedInterface>;
+  private readonly dodgedThisRound: Map<string, number>;
 
   public readonly documentOpened$: Observable<DocumentOpenedInterface>;
 
@@ -51,24 +49,18 @@ export class GameRoundService {
       this.setActors();
     });
 
-    this.documentOpened = new Subject();
+    this.documentOpened$ = this.ruleDispatcherService.documentOpened$;
 
-    this.documentOpened$ = this.documentOpened.asObservable();
-
-    this.dodgesPerRound = new Map<string, number>();
+    this.dodgedThisRound = new Map<string, number>();
 
     this.ruleDispatcherService.actorDodged$.subscribe((actorId) => {
       this.actorDodged(actorId);
-    });
-
-    this.ruleDispatcherService.documentOpened$.subscribe((document) => {
-      this.inspect(document);
     });
   }
 
   public run(): void {
     if (this.isPlayerAlive()) {
-      this.dodgesPerRound.clear();
+      this.dodgedThisRound.clear();
 
       this.actors.items.forEach((actor) => {
         const action = actor.action(this.sceneActorsInfo);
@@ -80,21 +72,17 @@ export class GameRoundService {
             action.actionableDefinition.actionable
           ].execute(actor, action, {
             target,
-            targetDodgesPerformed: this.dodgesPerRound.get(target?.id),
+            targetDodgesPerformed: this.dodgedThisRound.get(target?.id),
           });
         }
       });
     }
   }
 
-  private inspect(document: DocumentOpenedInterface) {
-    this.documentOpened.next(document);
-  }
-
   private actorDodged(targetId: string): void {
-    const dodges = this.dodgesPerRound.get(targetId) ?? 0;
+    const dodges = this.dodgedThisRound.get(targetId) ?? 0;
 
-    this.dodgesPerRound.set(targetId, dodges + 1);
+    this.dodgedThisRound.set(targetId, dodges + 1);
   }
 
   private isPlayerAlive(): boolean {

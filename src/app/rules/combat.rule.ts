@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { RollService } from '../services/roll.service';
-import {
-  ActionableDefinition,
-  createActionableDefinition,
-} from '../definitions/actionable.definition';
+import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
@@ -13,7 +10,7 @@ import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorEntity } from '../entities/actor.entity';
-import { MasterRuleService } from './master.rule.service';
+import { MasterRuleService } from './master.rule';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
 import { ActivationAxiomService } from './axioms/activation.axiom.service';
 
@@ -21,20 +18,15 @@ import { ActivationAxiomService } from './axioms/activation.axiom.service';
   providedIn: 'root',
 })
 export class CombatRule extends MasterRuleService {
-  public readonly activationAction: ActionableDefinition;
-
   constructor(
     private readonly rollService: RollService,
     private readonly extractorHelper: ExtractorHelper,
     private readonly activationAxiomService: ActivationAxiomService
   ) {
-    super();
-
-    this.activationAction = createActionableDefinition(
-      'CONSUME',
-      'activation',
-      'Activation'
-    );
+    super([
+      rollService.logMessageProduced$,
+      activationAxiomService.logMessageProduced$,
+    ]);
   }
 
   public execute(
