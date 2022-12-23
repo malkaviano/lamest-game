@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 
 import { of } from 'rxjs';
@@ -65,6 +64,7 @@ import {
   simpleSword,
 } from './fakes';
 import { RuleDispatcherService } from '../src/app/services/rule-dispatcher.service';
+import { ActivationAxiomService } from '../src/app/rules/axioms/activation.axiom.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -164,7 +164,7 @@ export const mockedSettingsStore = mock(SettingsStore);
 
 export const mockedExtractorHelper = mock(ExtractorHelper);
 
-export const mockedHttpClient = mock(HttpClient);
+export const mockedActivationAxiomService = mock(ActivationAxiomService);
 
 export const setupMocks = () => {
   resetMocks();
@@ -445,7 +445,7 @@ const resetMocks = () => {
 
   reset(mockedExtractorHelper);
 
-  reset(mockedHttpClient);
+  reset(mockedActivationAxiomService);
 };
 
 function mockExtractorHelper() {
