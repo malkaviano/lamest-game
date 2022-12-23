@@ -13,6 +13,7 @@ import { ActorEntity } from '../entities/actor.entity';
 import { MasterRuleService } from './master.rule';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
 import { ActivationAxiomService } from './axioms/activation.axiom.service';
+import { DodgeAxiomService } from './axioms/dodge.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +22,13 @@ export class CombatRule extends MasterRuleService {
   constructor(
     private readonly rollService: RollService,
     private readonly extractorHelper: ExtractorHelper,
-    private readonly activationAxiomService: ActivationAxiomService
+    private readonly activationAxiomService: ActivationAxiomService,
+    private readonly dodgeAxiomService: DodgeAxiomService
   ) {
     super([
       rollService.logMessageProduced$,
       activationAxiomService.logMessageProduced$,
+      dodgeAxiomService.logMessageProduced$,
     ]);
   }
 
@@ -74,7 +77,11 @@ export class CombatRule extends MasterRuleService {
       if (targetWasHit) {
         // TODO: Ask the actor if it wants to dodge, new behavior
         const dodged =
-          targetActor && this.tryDodge(targetActor, dodgeable, extras);
+          targetActor &&
+          this.dodgeAxiomService.dodge(targetActor, {
+            dodgeable,
+            dodgesPerformed: extras.targetDodgesPerformed ?? 0,
+          });
 
         if (!dodged) {
           this.applyDamage(target, action.actionableDefinition, damage);
@@ -132,48 +139,6 @@ export class CombatRule extends MasterRuleService {
     }
 
     return result;
-  }
-
-  private tryDodge(
-    target: ActorInterface,
-    dodgeable: boolean,
-    extras: RuleExtrasInterface
-  ): boolean {
-    if (!dodgeable) {
-      const logMessage =
-        GameMessagesStoreService.createUnDodgeableAttackLogMessage(target.name);
-
-      this.ruleLog.next(logMessage);
-    }
-
-    return (
-      dodgeable && this.checkDodged(target, extras.targetDodgesPerformed ?? 0)
-    );
-  }
-
-  private checkDodged(targetActor: ActorInterface, dodgesPerformed: number) {
-    let dodged = targetActor.dodgesPerRound > dodgesPerformed;
-
-    if (dodged) {
-      const { result: dodgeResult } = this.rollService.actorSkillCheck(
-        targetActor,
-        'Dodge'
-      );
-
-      dodged = dodgeResult === 'SUCCESS';
-
-      if (dodged) {
-        this.actorDodged.next(targetActor.id);
-      }
-    } else {
-      const logMessage = GameMessagesStoreService.createOutOfDodgesLogMessage(
-        targetActor.name
-      );
-
-      this.ruleLog.next(logMessage);
-    }
-
-    return dodged;
   }
 
   private applyDamage(

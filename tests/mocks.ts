@@ -65,7 +65,6 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { AxiomHubService } from '../src/app/rules/axioms/axiom-hub.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -166,8 +165,6 @@ export const mockedSettingsStore = mock(SettingsStore);
 export const mockedExtractorHelper = mock(ExtractorHelper);
 
 export const mockedActivationAxiomService = mock(ActivationAxiomService);
-
-export const mockedAxiomHubService = mock(AxiomHubService);
 
 export const setupMocks = () => {
   resetMocks();
@@ -449,8 +446,6 @@ const resetMocks = () => {
   reset(mockedExtractorHelper);
 
   reset(mockedActivationAxiomService);
-
-  reset(mockedAxiomHubService);
 };
 
 function mockExtractorHelper() {
