@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
+import { ActorEntity } from '../entities/actor.entity';
 
+import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
+import { ActorInterface } from '../interfaces/actor.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 
 @Injectable({
@@ -17,5 +20,12 @@ export class ConverterHelper {
       },
       {}
     );
+  }
+
+  public asActor(target: ActionReactiveInterface): ActorInterface | null {
+    return target instanceof ActorEntity &&
+      ['ACTOR', 'PLAYER'].includes(target.classification)
+      ? target
+      : null;
   }
 }

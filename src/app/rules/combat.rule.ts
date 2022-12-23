@@ -14,6 +14,7 @@ import { MasterRuleService } from './master.rule';
 import { GameMessagesStore } from '../stores/game-messages.store';
 import { ActivationAxiomService } from './axioms/activation.axiom.service';
 import { DodgeAxiomService } from './axioms/dodge.axiom.service';
+import { ConverterHelper } from '../helpers/converter.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,8 @@ export class CombatRule extends MasterRuleService {
     private readonly rollService: RollService,
     private readonly extractorHelper: ExtractorHelper,
     private readonly activationAxiomService: ActivationAxiomService,
-    private readonly dodgeAxiomService: DodgeAxiomService
+    private readonly dodgeAxiomService: DodgeAxiomService,
+    private readonly converterHelper: ConverterHelper
   ) {
     super([
       rollService.logMessageProduced$,
@@ -59,7 +61,7 @@ export class CombatRule extends MasterRuleService {
     ) {
       let targetWasHit = true;
 
-      const targetActor = this.asActor(target);
+      const targetActor = this.converterHelper.asActor(target);
 
       if (targetActor) {
         targetWasHit = this.checkSkill(
@@ -161,16 +163,5 @@ export class CombatRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     }
-  }
-
-  private asActor(target: ActionReactiveInterface): ActorInterface | null {
-    if (
-      target instanceof ActorEntity &&
-      ['ACTOR', 'PLAYER'].includes(target.classification)
-    ) {
-      return target;
-    }
-
-    return null;
   }
 }
