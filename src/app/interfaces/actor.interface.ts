@@ -3,6 +3,7 @@ import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ArrayView } from '../views/array.view';
 import { ActionReactiveInterface } from './action-reactive.interface';
 import { ActorDefenseInterface } from './actor-defense.interface';
+import { ActorEventsInterface } from './actor-events.interface';
 import { ActorVisibilityInterface } from './actor-visibility.interface';
 import { SceneActorsInfoInterface } from './scene-actors.interface';
 import { WeaponEquippedInterface } from './weapon-equipped.interface';
@@ -17,7 +18,8 @@ export interface ActorInterface
     WeaponEquippedInterface,
     ActionReactiveInterface,
     ActorDefenseInterface,
-    ActorVisibilityInterface {
+    ActorVisibilityInterface,
+    ActorEventsInterface {
   action(
     sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
   ): ActionableEvent | null;

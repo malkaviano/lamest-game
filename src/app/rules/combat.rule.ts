@@ -13,9 +13,9 @@ import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ActorEntity } from '../entities/actor.entity';
-
 import { MasterRuleService } from './master.rule.service';
 import { GameMessagesStoreService } from '../stores/game-messages.store';
+import { ActivationAxiomService } from './axioms/activation.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,8 @@ export class CombatRule extends MasterRuleService {
 
   constructor(
     private readonly rollService: RollService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly activationAxiomService: ActivationAxiomService
   ) {
     super();
 
@@ -55,11 +56,12 @@ export class CombatRule extends MasterRuleService {
       energyActivation,
     } = actor.weaponEquipped;
 
-    if (actor.derivedAttributes.EP.value >= energyActivation) {
-      if (energyActivation) {
-        this.activateItem(energyActivation, actor, identity.label);
-      }
-
+    if (
+      this.activationAxiomService.activation(actor, {
+        identity,
+        energyActivation,
+      })
+    ) {
       let targetWasHit = true;
 
       const targetActor = this.asActor(target);
@@ -86,14 +88,6 @@ export class CombatRule extends MasterRuleService {
           this.applyDamage(target, action.actionableDefinition, damage);
         }
       }
-    } else {
-      const logMessage =
-        GameMessagesStoreService.createNotEnoughEnergyLogMessage(
-          actor.name,
-          identity.label
-        );
-
-      this.ruleLog.next(logMessage);
     }
 
     this.checkIfTargetDied(target);
@@ -120,26 +114,6 @@ export class CombatRule extends MasterRuleService {
     );
 
     this.ruleLog.next(logMessage);
-  }
-
-  private activateItem(
-    energyActivation: number,
-    actor: ActorInterface,
-    label: string
-  ) {
-    const energySpentLog = actor.reactTo(this.activationAction, 'NONE', {
-      energy: -energyActivation,
-    });
-
-    if (energySpentLog) {
-      const logMessage = GameMessagesStoreService.createEnergySpentLogMessage(
-        actor.name,
-        energySpentLog,
-        label
-      );
-
-      this.ruleLog.next(logMessage);
-    }
   }
 
   private checkSkill(

@@ -67,7 +67,7 @@ describe('GameRoundService', () => {
       AFFECT: instance(mockedCombatRule),
     });
 
-    when(mockedRuleDispatcherService.logMessagePublished$).thenReturn(of());
+    when(mockedRuleDispatcherService.logMessageProduced$).thenReturn(of());
 
     when(mockedRuleDispatcherService.actorDodged$).thenReturn(
       of(playerInfo.id)

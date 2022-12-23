@@ -16,16 +16,17 @@ import { RuleInterface } from '../interfaces/rule.interface';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { DocumentOpenedInterface } from '../interfaces/reader-dialog.interface';
 import { RollService } from './roll.service';
+import { LoggerInterface } from '../interfaces/logger.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RuleDispatcherService {
+export class RuleDispatcherService implements LoggerInterface {
   public readonly dispatcher: {
     [key: string]: RuleInterface;
   };
 
-  public readonly logMessagePublished$: Observable<LogMessageDefinition>;
+  public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
   public readonly actorDodged$: Observable<string>;
 
@@ -57,7 +58,7 @@ export class RuleDispatcherService {
       INSPECT: this.inspectRule,
     };
 
-    this.logMessagePublished$ = merge(
+    this.logMessageProduced$ = merge(
       this.useRule.ruleLog$,
       this.unequipRule.ruleLog$,
       this.skillRule.ruleLog$,

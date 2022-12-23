@@ -27,7 +27,6 @@ export class GameBridgeService {
   public readonly events: GameEventsDefinition;
 
   constructor(
-    // TODO: This shouldn't be here, we must communicate by events. Next version.
     private readonly gameLoopService: GameRoundService,
     characterService: CharacterService,
     narrativeService: NarrativeService,
@@ -47,7 +46,7 @@ export class GameBridgeService {
 
     this.events = new GameEventsDefinition(
       narrativeService.sceneChanged$,
-      ruleDispatcherService.logMessagePublished$,
+      ruleDispatcherService.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
       this.gameLoopService.documentOpened$
@@ -57,6 +56,7 @@ export class GameBridgeService {
   public actionableReceived(action: ActionableEvent): void {
     this.player.playerDecision(action);
 
+    // TODO: This shouldn't be here, we must communicate by (timed) events. Next version.
     this.gameLoopService.run();
   }
 
