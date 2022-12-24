@@ -74,7 +74,7 @@ export class CombatRule extends MasterRuleService {
         );
       }
 
-      if (usability === 'DISPOSABLE') {
+      if (usability === 'THROWABLE') {
         this.disposeItem(actor, identity.label);
       }
 
