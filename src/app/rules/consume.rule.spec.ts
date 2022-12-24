@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { Subject } from 'rxjs';
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { GameMessagesStore } from '../stores/game-messages.store';
@@ -11,8 +12,10 @@ import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
+import { AffectedAxiomService } from './axioms/affected.axiom.service';
 
 import {
+  mockedAffectedAxiomService,
   mockedExtractorHelper,
   mockedInventoryService,
   mockedPlayerEntity,
@@ -26,7 +29,6 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
-import { ruleScenario } from '../../../tests/scenarios';
 
 describe('ConsumeRule', () => {
   let service: ConsumeRule;
@@ -46,10 +48,18 @@ describe('ConsumeRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
+        {
+          provide: AffectedAxiomService,
+          useValue: instance(mockedAffectedAxiomService),
+        },
       ],
     });
 
     setupMocks();
+
+    when(mockedAffectedAxiomService.logMessageProduced$).thenReturn(
+      subject.asObservable()
+    );
 
     service = TestBed.inject(ConsumeRule);
   });
@@ -79,7 +89,7 @@ describe('ConsumeRule', () => {
     });
 
     describe('when item was a consumable', () => {
-      it('should log item consume', () => {
+      it('should log item consume', (done) => {
         when(
           mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
@@ -106,18 +116,25 @@ describe('ConsumeRule', () => {
           )
         ).thenReturn(logHeal5);
 
-        ruleScenario(service, actor, eventConsumeFirstAid, extras, [
-          firstAidLog,
-          firstAidConsumedLog,
-        ]);
+        const result: LogMessageDefinition[] = [];
+
+        service.logMessageProduced$.subscribe((event) => {
+          result.push(event);
+        });
+
+        service.execute(actor, eventConsumeFirstAid);
+
+        subject.next(firstAidConsumedLog);
+
+        done();
+
+        expect(result).toEqual([firstAidLog, firstAidConsumedLog]);
       });
     });
   });
 });
 
 const actor = instance(mockedPlayerEntity);
-
-const extras = {};
 
 const successFirstAidRoll = new RollDefinition('SUCCESS', 10);
 
@@ -139,3 +156,5 @@ const eventConsumeFirstAid = actionableEvent(
   actionConsume,
   consumableFirstAid.identity.name
 );
+
+const subject = new Subject<LogMessageDefinition>();

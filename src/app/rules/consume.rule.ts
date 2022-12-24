@@ -12,6 +12,7 @@ import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { GameMessagesStore } from '../stores/game-messages.store';
+import { AffectedAxiomService } from './axioms/affected.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +21,10 @@ export class ConsumeRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollRule: RollService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly affectedAxiom: AffectedAxiomService
   ) {
-    super();
+    super([affectedAxiom.logMessageProduced$]);
   }
 
   public execute(actor: ActorInterface, event: ActionableEvent): void {
@@ -66,19 +68,9 @@ export class ConsumeRule extends MasterRuleService {
 
     const energy = consumable.energy;
 
-    const log = actor.reactTo(actionableDefinition, rollResult, {
+    this.affectedAxiom.affectWith(actor, actionableDefinition, rollResult, {
       effect: new EffectEvent(consumable.effect, hp),
       energy,
     });
-
-    if (log) {
-      const logMessage = GameMessagesStore.createFreeLogMessage(
-        'AFFECTED',
-        actor.name,
-        log
-      );
-
-      this.ruleLog.next(logMessage);
-    }
   }
 }
