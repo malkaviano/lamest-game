@@ -29,6 +29,7 @@ import {
   playerInfo,
   simpleSword,
 } from '../../../tests/fakes';
+import { ruleScenario } from '../../../tests/scenarios';
 
 describe('ConsumeRule', () => {
   let service: ConsumeRule;
@@ -114,17 +115,14 @@ describe('ConsumeRule', () => {
           )
         ).thenReturn(logHeal5);
 
-        const result: LogMessageDefinition[] = [];
-
-        service.logMessageProduced$.subscribe((event) => {
-          result.push(event);
-        });
-
-        service.execute(actor, eventConsumeFirstAid);
-
-        done();
-
-        expect(result).toEqual([firstAidLog]);
+        ruleScenario(
+          service,
+          actor,
+          eventConsumeFirstAid,
+          {},
+          [firstAidLog],
+          done
+        );
       });
     });
   });
