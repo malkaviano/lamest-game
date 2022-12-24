@@ -1,14 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { deepEqual, instance, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
-
+import { AffectAxiomService } from './axioms/affect.axiom.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
+  mockedAffectedAxiomService,
   mockedExtractorHelper,
   mockedInteractiveEntity,
   mockedInventoryService,
@@ -37,6 +38,10 @@ describe('UseRule', () => {
         {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
+        },
+        {
+          provide: AffectAxiomService,
+          useValue: instance(mockedAffectedAxiomService),
         },
       ],
     });
@@ -79,33 +84,6 @@ describe('UseRule', () => {
           done
         );
       });
-
-      describe('when state returns log', () => {
-        it('should log item lost', (done) => {
-          when(
-            mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
-          ).thenReturn(masterKey);
-
-          when(
-            mockedInteractiveEntity.reactTo(
-              actionUseMasterKey,
-              'USED',
-              deepEqual({
-                item: masterKey,
-              })
-            )
-          ).thenReturn(openedUsingLog);
-
-          ruleScenario(
-            service,
-            actor,
-            eventUseMasterKey,
-            extras,
-            [usedLog, itemLostLog],
-            done
-          );
-        });
-      });
     });
   });
 });
@@ -114,14 +92,6 @@ const notFoundLog = new LogMessageDefinition(
   'NOT-FOUND',
   playerInfo.name,
   'Master Key failed, required item was not found in inventory'
-);
-
-const openedUsingLog = `opened using ${masterKey.identity.name}`;
-
-const usedLog = new LogMessageDefinition(
-  'USED',
-  interactiveInfo.name,
-  openedUsingLog
 );
 
 const itemLostLog = new LogMessageDefinition(

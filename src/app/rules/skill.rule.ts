@@ -8,7 +8,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { AffectAxiomService } from './axioms/affect.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +16,10 @@ import { GameMessagesStore } from '../stores/game-messages.store';
 export class SkillRule extends MasterRuleService {
   constructor(
     private readonly rollService: RollService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly affectAxiomService: AffectAxiomService
   ) {
-    super();
+    super([affectAxiomService.logMessageProduced$]);
   }
 
   public execute(
@@ -33,20 +34,15 @@ export class SkillRule extends MasterRuleService {
     const { result } = this.rollService.actorSkillCheck(actor, skillName);
 
     if (result !== 'IMPOSSIBLE') {
-      const log = target.reactTo(event.actionableDefinition, result, {
-        actorVisibility: actor,
+      this.affectAxiomService.affectWith(
         target,
-      });
-
-      if (log) {
-        const logMessage = GameMessagesStore.createFreeLogMessage(
-          'INTERACTED',
-          target.name,
-          log
-        );
-
-        this.ruleLog.next(logMessage);
-      }
+        event.actionableDefinition,
+        result,
+        {
+          actorVisibility: actor,
+          target,
+        }
+      );
     }
   }
 }

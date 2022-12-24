@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { deepEqual, instance, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 import { RollDefinition } from '../definitions/roll.definition';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { AffectAxiomService } from './axioms/affect.axiom.service';
 
 import {
   mockedPlayerEntity,
@@ -14,13 +14,13 @@ import {
   mockedRollService,
   setupMocks,
   mockedExtractorHelper,
+  mockedAffectedAxiomService,
 } from '../../../tests/mocks';
 import {
   actionableEvent,
   actionSkillSurvival,
   interactiveInfo,
 } from '../../../tests/fakes';
-import { ruleScenario } from '../../../tests/scenarios';
 
 describe('SkillRule', () => {
   let service: SkillRule;
@@ -36,21 +36,14 @@ describe('SkillRule', () => {
           provide: ExtractorHelper,
           useValue: instance(mockedExtractorHelper),
         },
+        {
+          provide: AffectAxiomService,
+          useValue: instance(mockedAffectedAxiomService),
+        },
       ],
     });
 
     setupMocks();
-
-    when(
-      mockedInteractiveEntity.reactTo(
-        actionSkillSurvival,
-        'SUCCESS',
-        deepEqual({
-          actorVisibility: actor,
-          target,
-        })
-      )
-    ).thenReturn(reactToMessage);
 
     service = TestBed.inject(SkillRule);
   });
@@ -60,7 +53,7 @@ describe('SkillRule', () => {
   });
 
   describe('execute', () => {
-    it('should log target log', (done) => {
+    it('should log target log', () => {
       when(
         mockedRollService.actorSkillCheck(
           actor,
@@ -68,14 +61,11 @@ describe('SkillRule', () => {
         )
       ).thenReturn(new RollDefinition('SUCCESS', 10));
 
-      ruleScenario(
-        service,
-        actor,
-        eventSkillSurvival,
-        extras,
-        [reactedLog],
-        done
-      );
+      const spy = spyOn(instance(mockedAffectedAxiomService), 'affectWith');
+
+      service.execute(actor, eventSkillSurvival, extras);
+
+      expect(spy).toHaveBeenCalled();
     });
   });
 });
@@ -92,12 +82,4 @@ const extras = {
 const eventSkillSurvival = actionableEvent(
   actionSkillSurvival,
   interactiveInfo.id
-);
-
-const reactToMessage = 'survival success';
-
-const reactedLog = new LogMessageDefinition(
-  'INTERACTED',
-  interactiveInfo.name,
-  reactToMessage
 );

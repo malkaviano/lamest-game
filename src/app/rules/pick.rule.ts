@@ -9,7 +9,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { ExtractorHelper } from '../helpers/extractor.helper';
 
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { AffectAxiomService } from './axioms/affect.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +17,10 @@ import { GameMessagesStore } from '../stores/game-messages.store';
 export class PickRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly extractorHelper: ExtractorHelper,
+    private readonly affectAxiomService: AffectAxiomService
   ) {
-    super();
+    super([affectAxiomService.logMessageProduced$]);
   }
 
   public execute(
@@ -37,16 +38,11 @@ export class PickRule extends MasterRuleService {
 
     this.inventoryService.store(actor.id, item);
 
-    const log = target.reactTo(action.actionableDefinition, 'NONE', {});
-
-    if (log) {
-      const logMessage = GameMessagesStore.createTookLogMessage(
-        actor.name,
-        target.name,
-        log
-      );
-
-      this.ruleLog.next(logMessage);
-    }
+    this.affectAxiomService.affectWith(
+      target,
+      action.actionableDefinition,
+      'NONE',
+      {}
+    );
   }
 }

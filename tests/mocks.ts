@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material/dialog';
 
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
 import { ActorBehavior } from '../src/app/behaviors/actor.behavior';
@@ -355,6 +355,8 @@ export const setupMocks = () => {
   when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
 
   when(mockedSettingsStore.settings).thenReturn(gameSettings);
+
+  when(mockedAffectedAxiomService.logMessageProduced$).thenReturn(EMPTY);
 
   mockExtractorHelper();
 };
