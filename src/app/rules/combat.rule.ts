@@ -15,6 +15,7 @@ import { GameMessagesStore } from '../stores/game-messages.store';
 import { ActivationAxiomService } from './axioms/activation.axiom.service';
 import { DodgeAxiomService } from './axioms/dodge.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
+import { AffectAxiomService } from './axioms/affect.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,7 @@ export class CombatRule extends MasterRuleService {
     private readonly extractorHelper: ExtractorHelper,
     private readonly activationAxiomService: ActivationAxiomService,
     private readonly dodgeAxiomService: DodgeAxiomService,
+    private readonly affectedAxiomService: AffectAxiomService,
     private readonly converterHelper: ConverterHelper
   ) {
     super([
@@ -77,9 +79,9 @@ export class CombatRule extends MasterRuleService {
       }
 
       if (targetWasHit) {
-        // TODO: Ask the actor if it wants to dodge, new behavior
         const dodged =
           targetActor &&
+          targetActor.wannaDodge(damage.effectType) &&
           this.dodgeAxiomService.dodge(targetActor, {
             dodgeable,
             dodgesPerformed: extras.targetDodgesPerformed ?? 0,
@@ -150,18 +152,8 @@ export class CombatRule extends MasterRuleService {
   ): void {
     const damageAmount = this.rollService.roll(damage.diceRoll) + damage.fixed;
 
-    const log = target.reactTo(action, 'SUCCESS', {
+    this.affectedAxiomService.affectWith(target, action, 'SUCCESS', {
       effect: new EffectEvent(damage.effectType, damageAmount),
     });
-
-    if (log) {
-      const logMessage = GameMessagesStore.createFreeLogMessage(
-        'AFFECTED',
-        target.name,
-        log
-      );
-
-      this.ruleLog.next(logMessage);
-    }
   }
 }

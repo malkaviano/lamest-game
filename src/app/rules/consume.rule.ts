@@ -12,7 +12,7 @@ import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { GameMessagesStore } from '../stores/game-messages.store';
-import { AffectedAxiomService } from './axioms/affected.axiom.service';
+import { AffectAxiomService } from './axioms/affect.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +22,9 @@ export class ConsumeRule extends MasterRuleService {
     private readonly inventoryService: InventoryService,
     private readonly rollRule: RollService,
     private readonly extractorHelper: ExtractorHelper,
-    private readonly affectedAxiom: AffectedAxiomService
+    private readonly affectAxiom: AffectAxiomService
   ) {
-    super([affectedAxiom.logMessageProduced$]);
+    super([affectAxiom.logMessageProduced$]);
   }
 
   public execute(actor: ActorInterface, event: ActionableEvent): void {
@@ -68,7 +68,7 @@ export class ConsumeRule extends MasterRuleService {
 
     const energy = consumable.energy;
 
-    this.affectedAxiom.affectWith(actor, actionableDefinition, rollResult, {
+    this.affectAxiom.affectWith(actor, actionableDefinition, rollResult, {
       effect: new EffectEvent(consumable.effect, hp),
       energy,
     });

@@ -13,7 +13,7 @@ import { GameMessagesStore } from '../../stores/game-messages.store';
 @Injectable({
   providedIn: 'root',
 })
-export class AffectedAxiomService implements LoggerInterface {
+export class AffectAxiomService implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;

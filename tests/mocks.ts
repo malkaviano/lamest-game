@@ -51,7 +51,7 @@ import { SettingsStore } from '../src/app/stores/settings.store';
 import { ExtractorHelper } from '../src/app/helpers/extractor.helper';
 import { RuleDispatcherService } from '../src/app/services/rule-dispatcher.service';
 import { ActivationAxiomService } from '../src/app/rules/axioms/activation.axiom.service';
-import { AffectedAxiomService } from '../src/app/rules/axioms/affected.axiom.service';
+import { AffectAxiomService } from '../src/app/rules/axioms/affect.axiom.service';
 
 import {
   actorInfo,
@@ -167,7 +167,7 @@ export const mockedExtractorHelper = mock(ExtractorHelper);
 
 export const mockedActivationAxiomService = mock(ActivationAxiomService);
 
-export const mockedAffectedAxiomService = mock(AffectedAxiomService);
+export const mockedAffectedAxiomService = mock(AffectAxiomService);
 
 export const setupMocks = () => {
   resetMocks();

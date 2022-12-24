@@ -12,7 +12,7 @@ import { ExtractorHelper } from '../helpers/extractor.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
-import { AffectedAxiomService } from './axioms/affected.axiom.service';
+import { AffectAxiomService } from './axioms/affect.axiom.service';
 
 import {
   mockedAffectedAxiomService,
@@ -49,7 +49,7 @@ describe('ConsumeRule', () => {
           useValue: instance(mockedExtractorHelper),
         },
         {
-          provide: AffectedAxiomService,
+          provide: AffectAxiomService,
           useValue: instance(mockedAffectedAxiomService),
         },
       ],

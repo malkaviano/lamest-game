@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AffectedAxiomService } from './affected.axiom.service';
+import { AffectAxiomService } from './affect.axiom.service';
 
 describe('AffectedAxiomService', () => {
-  let service: AffectedAxiomService;
+  let service: AffectAxiomService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AffectedAxiomService);
+    service = TestBed.inject(AffectAxiomService);
   });
 
   it('should be created', () => {
