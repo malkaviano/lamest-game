@@ -37,6 +37,13 @@ export class ConsumeRule extends MasterRuleService {
         eventId
       );
 
+    const logMessage = GameMessagesStore.createConsumedLogMessage(
+      actor.name,
+      consumable.identity.label
+    );
+
+    this.ruleLog.next(logMessage);
+
     let rollResult: ResultLiteral = 'NONE';
 
     if (consumable.skillName) {
@@ -57,13 +64,6 @@ export class ConsumeRule extends MasterRuleService {
     actionableDefinition: ActionableDefinition,
     rollResult: ResultLiteral
   ) {
-    const logMessage = GameMessagesStore.createConsumedLogMessage(
-      actor.name,
-      consumable.identity.label
-    );
-
-    this.ruleLog.next(logMessage);
-
     const hp = consumable.hp;
 
     const energy = consumable.energy;
