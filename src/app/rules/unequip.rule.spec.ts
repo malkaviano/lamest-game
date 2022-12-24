@@ -42,12 +42,17 @@ describe('UnEquipRule', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should log weapon unequipped', () => {
+  it('should log weapon unequipped', (done) => {
     when(mockedPlayerEntity.unEquip()).thenReturn(unDodgeableAxe);
 
-    ruleScenario(service, instance(mockedPlayerEntity), unEquipEvent, {}, [
-      unEquippedLog,
-    ]);
+    ruleScenario(
+      service,
+      instance(mockedPlayerEntity),
+      unEquipEvent,
+      {},
+      [unEquippedLog],
+      done
+    );
   });
 });
 

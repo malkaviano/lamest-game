@@ -70,7 +70,7 @@ describe('EquipRule', () => {
     });
 
     describe('when item was a weapon', () => {
-      it('should log item was equipped and produce side effects', () => {
+      it('should log item was equipped and produce side effects', (done) => {
         when(
           mockedInventoryService.look<WeaponDefinition>(
             playerInfo.id,
@@ -88,7 +88,14 @@ describe('EquipRule', () => {
 
         when(mockedPlayerEntity.equip(simpleSword)).thenReturn(unDodgeableAxe);
 
-        ruleScenario(service, actor, eventOk, extras, [unEquipLog, equipLog]);
+        ruleScenario(
+          service,
+          actor,
+          eventOk,
+          extras,
+          [unEquipLog, equipLog],
+          done
+        );
 
         // cheap side effect verification
         verify(mockedPlayerEntity.equip(simpleSword)).once();
@@ -99,7 +106,7 @@ describe('EquipRule', () => {
       });
 
       describe('when skill value was zero or not set', () => {
-        it('should log error equipping and no side effects', () => {
+        it('should log error equipping and no side effects', (done) => {
           when(
             mockedInventoryService.look<WeaponDefinition>(
               playerInfo.id,
@@ -107,7 +114,7 @@ describe('EquipRule', () => {
             )
           ).thenReturn(greatSword);
 
-          ruleScenario(service, actor, eventNoSkill, extras, [errorLog]);
+          ruleScenario(service, actor, eventNoSkill, extras, [errorLog], done);
 
           // cheap side effect verification
           verify(mockedPlayerEntity.equip(greatSword)).never();

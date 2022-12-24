@@ -60,7 +60,7 @@ describe('SkillRule', () => {
   });
 
   describe('execute', () => {
-    it('should log target log', () => {
+    it('should log target log', (done) => {
       when(
         mockedRollService.actorSkillCheck(
           actor,
@@ -68,7 +68,14 @@ describe('SkillRule', () => {
         )
       ).thenReturn(new RollDefinition('SUCCESS', 10));
 
-      ruleScenario(service, actor, eventSkillSurvival, extras, [reactedLog]);
+      ruleScenario(
+        service,
+        actor,
+        eventSkillSurvival,
+        extras,
+        [reactedLog],
+        done
+      );
     });
   });
 });

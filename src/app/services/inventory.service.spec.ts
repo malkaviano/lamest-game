@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { take } from 'rxjs';
-
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { InventoryEvent } from '../events/inventory.event';
 import { ArrayView } from '../views/array.view';
@@ -64,7 +62,7 @@ describe('InventoryService', () => {
 
       const expected = new InventoryEvent('STORE', 'storeEvent', greatSword);
 
-      service.inventoryChanged$.pipe(take(10)).subscribe((event) => {
+      service.inventoryChanged$.subscribe((event) => {
         result = event;
       });
 
@@ -139,7 +137,7 @@ describe('InventoryService', () => {
           consumableAnalgesic
         );
 
-        service.inventoryChanged$.pipe(take(10)).subscribe((event) => {
+        service.inventoryChanged$.subscribe((event) => {
           result = event;
         });
 

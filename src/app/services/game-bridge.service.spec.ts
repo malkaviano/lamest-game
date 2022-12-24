@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Subject, take } from 'rxjs';
+import { Subject } from 'rxjs';
 import { anyString, instance, when } from 'ts-mockito';
 
 import { ActionableItemView } from '../views/actionable-item.view';
@@ -111,7 +111,7 @@ describe('GameBridgeService', () => {
           ArrayView.create([new ItemStoredDefinition(item, 1)])
         );
 
-        service.events.playerInventory$.pipe(take(10)).subscribe((event) => {
+        service.events.playerInventory$.subscribe((event) => {
           result = event;
         });
 

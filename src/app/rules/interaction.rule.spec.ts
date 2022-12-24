@@ -45,7 +45,7 @@ describe('InteractionRule', () => {
   });
 
   describe('execute', () => {
-    it('should log item inspected', () => {
+    it('should log item inspected', (done) => {
       when(
         mockedInteractiveEntity.reactTo(
           eventInspect.actionableDefinition,
@@ -54,10 +54,14 @@ describe('InteractionRule', () => {
         )
       ).thenReturn(inspectedMessage);
 
-      ruleScenario(service, actor, eventInspect, extras, [
-        inspectActionLog,
-        inspectedLog,
-      ]);
+      ruleScenario(
+        service,
+        actor,
+        eventInspect,
+        extras,
+        [inspectActionLog, inspectedLog],
+        done
+      );
     });
   });
 });

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { anything, instance, when } from 'ts-mockito';
-import { of, Subject, take } from 'rxjs';
+import { EMPTY, of, Subject } from 'rxjs';
 
 import { CharacterService } from './character.service';
 import { GameRoundService } from './game-round.service';
@@ -67,7 +67,7 @@ describe('GameRoundService', () => {
       AFFECT: instance(mockedCombatRule),
     });
 
-    when(mockedRuleDispatcherService.logMessageProduced$).thenReturn(of());
+    when(mockedRuleDispatcherService.logMessageProduced$).thenReturn(EMPTY);
 
     when(mockedRuleDispatcherService.actorDodged$).thenReturn(
       of(playerInfo.id)
@@ -92,30 +92,26 @@ describe('GameRoundService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('run', () => {
-    describe('when documentOpened is returned', () => {
-      it('should emit documentOpened event', (done) => {
-        when(
-          mockedCombatRule.execute(anything(), anything(), anything())
-        ).thenReturn();
+  describe('when documentOpened is returned', () => {
+    it('should emit documentOpened event', (done) => {
+      when(
+        mockedCombatRule.execute(anything(), anything(), anything())
+      ).thenReturn();
 
-        let result: ReadableInterface | undefined;
+      let result: ReadableInterface | undefined;
 
-        service.documentOpened$.pipe(take(10)).subscribe((event) => {
-          result = event;
-        });
-
-        documentSubject.next({
-          title: 'Testing',
-          text: ArrayView.create(['GG man']),
-        });
-
-        service.run();
-
-        done();
-
-        expect(result).toEqual(documentOpened);
+      service.documentOpened$.subscribe((event) => {
+        result = event;
       });
+
+      documentSubject.next({
+        title: 'Testing',
+        text: ArrayView.create(['GG man']),
+      });
+
+      done();
+
+      expect(result).toEqual(documentOpened);
     });
   });
 });

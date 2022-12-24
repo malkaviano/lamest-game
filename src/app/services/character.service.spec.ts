@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Subject, take } from 'rxjs';
+import { Subject } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { PlayerEntity } from '../entities/player.entity';
@@ -53,7 +53,7 @@ describe('CharacterService', () => {
       it('should emit an event', (done) => {
         let result: PlayerEntity | undefined;
 
-        service.characterChanged$.pipe(take(10)).subscribe((event) => {
+        service.characterChanged$.subscribe((event) => {
           result = event;
         });
 
@@ -67,7 +67,7 @@ describe('CharacterService', () => {
       it('should emit an event', (done) => {
         let result: PlayerEntity | undefined;
 
-        service.characterChanged$.pipe(take(10)).subscribe((event) => {
+        service.characterChanged$.subscribe((event) => {
           result = event;
         });
 
@@ -83,7 +83,7 @@ describe('CharacterService', () => {
       it('should emit an event', (done) => {
         let result: PlayerEntity | undefined;
 
-        service.characterChanged$.pipe(take(10)).subscribe((event) => {
+        service.characterChanged$.subscribe((event) => {
           result = event;
         });
 
@@ -128,7 +128,7 @@ describe('CharacterService', () => {
     it('should emit an event', (done) => {
       let result: PlayerEntity | undefined;
 
-      service.characterChanged$.pipe(take(10)).subscribe((event) => {
+      service.characterChanged$.subscribe((event) => {
         result = event;
       });
 
@@ -144,7 +144,7 @@ describe('CharacterService', () => {
     it('should emit an event', (done) => {
       let result: PlayerEntity | undefined;
 
-      service.characterChanged$.pipe(take(10)).subscribe((event) => {
+      service.characterChanged$.subscribe((event) => {
         result = event;
       });
 

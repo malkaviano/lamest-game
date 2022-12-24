@@ -1,4 +1,3 @@
-import { first, take } from 'rxjs';
 import { anyString, anything, instance, when } from 'ts-mockito';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
@@ -32,7 +31,7 @@ describe('InteractiveEntity', () => {
 
       const entity = fakeEntity();
 
-      entity.actionsChanged$.pipe(first()).subscribe((event) => {
+      entity.actionsChanged$.subscribe((event) => {
         expect(event).toEqual(expected);
       });
 
@@ -50,7 +49,7 @@ describe('InteractiveEntity', () => {
 
       let result: ArrayView<ActionableDefinition> | undefined;
 
-      entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
+      entity.actionsChanged$.subscribe((event) => {
         result = event;
       });
 
@@ -73,7 +72,7 @@ describe('InteractiveEntity', () => {
 
         let result: ArrayView<ActionableDefinition> | undefined;
 
-        entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
+        entity.actionsChanged$.subscribe((event) => {
           result = event;
         });
 
@@ -97,7 +96,7 @@ describe('InteractiveEntity', () => {
 
         let result: ArrayView<ActionableDefinition> | undefined;
 
-        entity.actionsChanged$.pipe(take(10)).subscribe((event) => {
+        entity.actionsChanged$.subscribe((event) => {
           result = event;
         });
 

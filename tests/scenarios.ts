@@ -1,5 +1,3 @@
-import { take } from 'rxjs';
-
 import { LogMessageDefinition } from '../src/app/definitions/log-message.definition';
 import { ActionableEvent } from '../src/app/events/actionable.event';
 import { ActorInterface } from '../src/app/interfaces/actor.interface';
@@ -11,15 +9,18 @@ export const ruleScenario = (
   actor: ActorInterface,
   actionableEvent: ActionableEvent,
   extras: RuleExtrasInterface,
-  expected: LogMessageDefinition[]
+  expected: LogMessageDefinition[],
+  done: () => void
 ) => {
   const result: LogMessageDefinition[] = [];
 
-  service.logMessageProduced$.pipe(take(100)).subscribe((event) => {
+  service.logMessageProduced$.subscribe((event) => {
     result.push(event);
   });
 
   service.execute(actor, actionableEvent, extras);
+
+  done();
 
   expect(result).toEqual(expected);
 };

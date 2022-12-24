@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { take } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { RollDefinition } from '../definitions/roll.definition';
@@ -50,10 +49,10 @@ describe('RollService', () => {
         expect(result).toEqual(expected);
       });
 
-      it('should emit skillCheckLog log', () => {
+      it('should emit skillCheckLog log', (done) => {
         let result: LogMessageDefinition | undefined;
 
-        service.logMessageProduced$.pipe(take(100)).subscribe((event) => {
+        service.logMessageProduced$.subscribe((event) => {
           result = event;
         });
 
@@ -66,6 +65,8 @@ describe('RollService', () => {
           actor.name,
           "Appraise skill couldn't be checked because it's value is zero"
         );
+
+        done();
 
         expect(result).toEqual(expected);
       });
@@ -104,10 +105,10 @@ describe('RollService', () => {
           expect(result).toEqual(expected);
         });
 
-        it('should emit skillCheckLog log', () => {
+        it('should emit skillCheckLog log', (done) => {
           let result: LogMessageDefinition | undefined;
 
-          service.logMessageProduced$.pipe(take(100)).subscribe((event) => {
+          service.logMessageProduced$.subscribe((event) => {
             result = event;
           });
 
@@ -127,6 +128,8 @@ describe('RollService', () => {
             actor.name,
             message
           );
+
+          done();
 
           expect(result).toEqual(expected);
         });

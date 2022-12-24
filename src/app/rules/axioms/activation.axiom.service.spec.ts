@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { take } from 'rxjs';
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { ActivationAxiomService } from './activation.axiom.service';
@@ -59,7 +58,7 @@ describe('ActivationAxiomService', () => {
           expect(result).toEqual(expected);
         });
 
-        it(`should produce logs ${expected}`, () => {
+        it(`should produce logs ${expected}`, (done) => {
           when(
             mockedPlayerEntity.reactTo(
               deepEqual(
@@ -78,11 +77,13 @@ describe('ActivationAxiomService', () => {
 
           let result: LogMessageDefinition | undefined;
 
-          service.logMessageProduced$.pipe(take(100)).subscribe((event) => {
+          service.logMessageProduced$.subscribe((event) => {
             result = event;
           });
 
           service.activation(instance(mockedPlayerEntity), item);
+
+          done();
 
           expect(result).toEqual(log);
         });

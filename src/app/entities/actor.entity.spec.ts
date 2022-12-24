@@ -1,4 +1,3 @@
-import { take } from 'rxjs';
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { HitPointsEvent } from '../events/hit-points.event';
@@ -107,7 +106,7 @@ describe('ActorEntity', () => {
           });
 
           it('should emit an event', (done) => {
-            let result: HitPointsEvent | undefined;
+            const result: HitPointsEvent[] = [];
 
             when(
               mockedActorBehavior.effectReceived(
@@ -117,8 +116,8 @@ describe('ActorEntity', () => {
 
             const char = fakeActor();
 
-            char.hpChanged$.pipe(take(10)).subscribe((event) => {
-              result = event;
+            char.hpChanged$.subscribe((event) => {
+              result.push(event);
             });
 
             char.reactTo(actionAttack, 'SUCCESS', {
@@ -127,7 +126,7 @@ describe('ActorEntity', () => {
 
             done();
 
-            expect(result).toEqual(new HitPointsEvent(9, 3));
+            expect(result).toEqual([new HitPointsEvent(9, 3)]);
           });
         });
 
@@ -155,7 +154,7 @@ describe('ActorEntity', () => {
 
         const char = fakeActor();
 
-        char.actionsChanged$.pipe(take(10)).subscribe((event) => {
+        char.actionsChanged$.subscribe((event) => {
           result = event;
         });
 
@@ -260,7 +259,7 @@ describe('ActorEntity', () => {
 
             const char = fakeActor();
 
-            char.hpChanged$.pipe(take(10)).subscribe((event) => {
+            char.hpChanged$.subscribe((event) => {
               hpResult = event;
             });
 
@@ -287,7 +286,7 @@ describe('ActorEntity', () => {
 
             const char = fakeActor();
 
-            char.epChanged$.pipe(take(10)).subscribe((event) => {
+            char.epChanged$.subscribe((event) => {
               epResult = event;
             });
 
@@ -343,7 +342,7 @@ describe('ActorEntity', () => {
 
       const char = fakeActor();
 
-      char.weaponEquippedChanged$.pipe(take(10)).subscribe((event) => {
+      char.weaponEquippedChanged$.subscribe((event) => {
         result = event;
       });
 
@@ -373,7 +372,7 @@ describe('ActorEntity', () => {
 
       const char = fakeActor();
 
-      char.weaponEquippedChanged$.pipe(take(10)).subscribe((event) => {
+      char.weaponEquippedChanged$.subscribe((event) => {
         result = event;
       });
 

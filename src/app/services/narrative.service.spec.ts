@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { take } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { SceneDefinition } from '../definitions/scene.definition';
@@ -68,7 +67,7 @@ describe('NarrativeService', () => {
       it('change the current scene', (done) => {
         let result: SceneDefinition | undefined;
 
-        service.sceneChanged$.pipe(take(10)).subscribe((scene) => {
+        service.sceneChanged$.subscribe((scene) => {
           result = scene;
         });
 

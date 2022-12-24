@@ -52,22 +52,36 @@ describe('UseRule', () => {
 
   describe('execute', () => {
     describe('when item could not be found', () => {
-      it('should log item not found', () => {
-        ruleScenario(service, actor, eventUseMasterKey, extras, [notFoundLog]);
+      it('should log item not found', (done) => {
+        ruleScenario(
+          service,
+          actor,
+          eventUseMasterKey,
+          extras,
+          [notFoundLog],
+          done
+        );
       });
     });
 
     describe('when item could be found', () => {
-      it('should log item lost', () => {
+      it('should log item lost', (done) => {
         when(
           mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
         ).thenReturn(masterKey);
 
-        ruleScenario(service, actor, eventUseMasterKey, extras, [itemLostLog]);
+        ruleScenario(
+          service,
+          actor,
+          eventUseMasterKey,
+          extras,
+          [itemLostLog],
+          done
+        );
       });
 
       describe('when state returns log', () => {
-        it('should log item lost', () => {
+        it('should log item lost', (done) => {
           when(
             mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
           ).thenReturn(masterKey);
@@ -82,10 +96,14 @@ describe('UseRule', () => {
             )
           ).thenReturn(openedUsingLog);
 
-          ruleScenario(service, actor, eventUseMasterKey, extras, [
-            usedLog,
-            itemLostLog,
-          ]);
+          ruleScenario(
+            service,
+            actor,
+            eventUseMasterKey,
+            extras,
+            [usedLog, itemLostLog],
+            done
+          );
         });
       });
     });

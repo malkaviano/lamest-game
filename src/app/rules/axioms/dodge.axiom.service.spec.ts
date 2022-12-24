@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { take } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { LogMessageDefinition } from '../../definitions/log-message.definition';
@@ -92,7 +91,7 @@ describe('DodgeAxiomService', () => {
         expect(result).toEqual(expected);
       });
 
-      it('should emit log', () => {
+      it('should emit log', (done) => {
         when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
 
         when(mockedRollService.actorSkillCheck(target, 'Dodge')).thenReturn(
@@ -101,7 +100,7 @@ describe('DodgeAxiomService', () => {
 
         const result: LogMessageDefinition[] = [];
 
-        service.logMessageProduced$.pipe(take(100)).subscribe((event) => {
+        service.logMessageProduced$.subscribe((event) => {
           result.push(event);
         });
 
@@ -110,10 +109,12 @@ describe('DodgeAxiomService', () => {
           dodgesPerformed,
         });
 
+        done();
+
         expect(result).toEqual(log);
       });
 
-      it('should emit dodged', () => {
+      it('should emit dodged', (done) => {
         when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
 
         when(mockedRollService.actorSkillCheck(target, 'Dodge')).thenReturn(
@@ -122,7 +123,7 @@ describe('DodgeAxiomService', () => {
 
         const result: string[] = [];
 
-        service.actorDodged$.pipe(take(100)).subscribe((event) => {
+        service.actorDodged$.subscribe((event) => {
           result.push(event);
         });
 
@@ -130,6 +131,8 @@ describe('DodgeAxiomService', () => {
           dodgeable,
           dodgesPerformed,
         });
+
+        done();
 
         expect(result).toEqual(dodged);
       });

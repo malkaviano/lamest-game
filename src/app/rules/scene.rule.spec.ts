@@ -50,8 +50,15 @@ describe('SceneRule', () => {
   });
 
   describe('execute', () => {
-    it('should log scene changed', () => {
-      ruleScenario(service, actor, eventSceneExit, extras, [sceneChangedLog]);
+    it('should log scene changed', (done) => {
+      ruleScenario(
+        service,
+        actor,
+        eventSceneExit,
+        extras,
+        [sceneChangedLog],
+        done
+      );
     });
   });
 });

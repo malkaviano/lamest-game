@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Subject } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { GameMessagesStore } from '../stores/game-messages.store';
@@ -57,9 +57,7 @@ describe('ConsumeRule', () => {
 
     setupMocks();
 
-    when(mockedAffectedAxiomService.logMessageProduced$).thenReturn(
-      subject.asObservable()
-    );
+    when(mockedAffectedAxiomService.logMessageProduced$).thenReturn(EMPTY);
 
     service = TestBed.inject(ConsumeRule);
   });
@@ -124,11 +122,9 @@ describe('ConsumeRule', () => {
 
         service.execute(actor, eventConsumeFirstAid);
 
-        subject.next(firstAidConsumedLog);
-
         done();
 
-        expect(result).toEqual([firstAidLog, firstAidConsumedLog]);
+        expect(result).toEqual([firstAidLog]);
       });
     });
   });
@@ -146,15 +142,7 @@ const firstAidLog = new LogMessageDefinition(
 
 const logHeal5 = `${consumableFirstAid.effect}-5`;
 
-const firstAidConsumedLog = new LogMessageDefinition(
-  'AFFECTED',
-  playerInfo.name,
-  logHeal5
-);
-
 const eventConsumeFirstAid = actionableEvent(
   actionConsume,
   consumableFirstAid.identity.name
 );
-
-const subject = new Subject<LogMessageDefinition>();

@@ -51,7 +51,7 @@ describe('PickRule', () => {
   });
 
   describe('execute', () => {
-    it('should log item picked', () => {
+    it('should log item picked', (done) => {
       when(
         mockedExtractorHelper.extractItemOrThrow(
           instance(mockedInventoryService),
@@ -75,7 +75,8 @@ describe('PickRule', () => {
         {
           target: instance(mockedInteractiveEntity),
         },
-        [itemTookLog]
+        [itemTookLog],
+        done
       );
 
       // Cheap side effect check, instead of another test case

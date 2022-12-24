@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
-import { take } from 'rxjs';
 
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
@@ -60,7 +59,7 @@ describe('InspectRule', () => {
     });
 
     describe('item was found', () => {
-      it('should log item was inspected', () => {
+      it('should log item was inspected', (done) => {
         when(
           mockedInventoryService.look(
             playerInfo.id,
@@ -68,12 +67,17 @@ describe('InspectRule', () => {
           )
         ).thenReturn(readable);
 
-        ruleScenario(service, actor, eventInspectReadable, {}, [
-          itemInspectedLog,
-        ]);
+        ruleScenario(
+          service,
+          actor,
+          eventInspectReadable,
+          {},
+          [itemInspectedLog],
+          done
+        );
       });
 
-      it('should publish document opened', () => {
+      it('should publish document opened', (done) => {
         when(
           mockedInventoryService.look(
             playerInfo.id,
@@ -83,11 +87,13 @@ describe('InspectRule', () => {
 
         let result: ReadableInterface | undefined;
 
-        service.documentOpened$.pipe(take(100)).subscribe((event) => {
+        service.documentOpened$.subscribe((event) => {
           result = event;
         });
 
         service.execute(actor, eventInspectReadable);
+
+        done();
 
         expect(result).toEqual(result);
       });
