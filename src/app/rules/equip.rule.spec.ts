@@ -4,7 +4,7 @@ import { instance, verify, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { EquipRule } from './equip.rule';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
@@ -38,7 +38,7 @@ describe('EquipRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: ExtractorHelper,
+          provide: CheckedHelper,
           useValue: instance(mockedExtractorHelper),
         },
       ],

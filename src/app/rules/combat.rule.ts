@@ -8,7 +8,7 @@ import { ActionReactiveInterface } from '../interfaces/action-reactive.interface
 import { DamageDefinition } from '../definitions/damage.definition';
 import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 import { ActorEntity } from '../entities/actor.entity';
 import { MasterRuleService } from './master.rule';
 import { GameMessagesStore } from '../stores/game-messages.store';
@@ -16,6 +16,8 @@ import { ActivationAxiomService } from './axioms/activation.axiom.service';
 import { DodgeAxiomService } from './axioms/dodge.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { AffectAxiomService } from './axioms/affect.axiom.service';
+import { ResultLiteral } from '../literals/result.literal';
+import { ItemUsabilityLiteral } from '../literals/item-usability';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +25,7 @@ import { AffectAxiomService } from './axioms/affect.axiom.service';
 export class CombatRule extends MasterRuleService {
   constructor(
     private readonly rollService: RollService,
-    private readonly extractorHelper: ExtractorHelper,
+    private readonly checkedHelper: CheckedHelper,
     private readonly activationAxiomService: ActivationAxiomService,
     private readonly dodgeAxiomService: DodgeAxiomService,
     private readonly affectedAxiomService: AffectAxiomService,
@@ -41,7 +43,7 @@ export class CombatRule extends MasterRuleService {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): void {
-    const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
+    const target = this.checkedHelper.getRuleTargetOrThrow(extras);
 
     // CHANGEME: This seems to be in the wrong place.
     actor.changeVisibility('VISIBLE');
@@ -66,16 +68,16 @@ export class CombatRule extends MasterRuleService {
       const targetActor = this.converterHelper.asActor(target);
 
       if (targetActor) {
-        targetWasHit = this.checkSkill(
+        const actionResult = this.checkSkill(
           actor,
           skillName,
           targetActor,
           identity.label
         );
-      }
 
-      if (usability === 'DISPOSABLE') {
-        this.disposeItem(actor, identity.label);
+        targetWasHit = actionResult === 'SUCCESS';
+
+        this.disposeItem(actor, usability, identity.label, actionResult);
       }
 
       if (targetWasHit) {
@@ -108,15 +110,22 @@ export class CombatRule extends MasterRuleService {
     }
   }
 
-  private disposeItem(actor: ActorInterface, label: string): void {
-    actor.unEquip();
+  private disposeItem(
+    actor: ActorInterface,
+    usability: ItemUsabilityLiteral,
+    label: string,
+    actionResult: ResultLiteral
+  ): void {
+    if (usability === 'DISPOSABLE' && actionResult !== 'IMPOSSIBLE') {
+      actor.unEquip();
 
-    const logMessage = GameMessagesStore.createLostLogMessage(
-      actor.name,
-      label
-    );
+      const logMessage = GameMessagesStore.createLostLogMessage(
+        actor.name,
+        label
+      );
 
-    this.ruleLog.next(logMessage);
+      this.ruleLog.next(logMessage);
+    }
   }
 
   private checkSkill(
@@ -124,15 +133,10 @@ export class CombatRule extends MasterRuleService {
     skillName: string,
     target: ActorInterface,
     weaponLabel: string
-  ): boolean {
-    const { result: actorResult } = this.rollService.actorSkillCheck(
-      actor,
-      skillName
-    );
+  ): ResultLiteral {
+    const { result } = this.rollService.actorSkillCheck(actor, skillName);
 
-    const result = actorResult === 'SUCCESS';
-
-    if (result) {
+    if (result === 'SUCCESS') {
       const logMessage = GameMessagesStore.createUsedItemLogMessage(
         actor.name,
         target.name,

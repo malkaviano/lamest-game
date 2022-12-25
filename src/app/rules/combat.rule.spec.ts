@@ -6,7 +6,7 @@ import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
 import { unarmedWeapon } from '../definitions/weapon.definition';
 import { EffectEvent } from '../events/effect.event';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 
 import {
   mockedActorEntity,
@@ -41,7 +41,7 @@ describe('CombatRule', () => {
           useValue: instance(mockedRollService),
         },
         {
-          provide: ExtractorHelper,
+          provide: CheckedHelper,
           useValue: instance(mockedExtractorHelper),
         },
       ],

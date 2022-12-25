@@ -48,7 +48,7 @@ import { FormatterHelperService } from '../src/app/helpers/formatter.helper.serv
 import { SkillStore } from '../src/app/stores/skill.store';
 import { InspectRule } from '../src/app/rules/inspect.rule';
 import { SettingsStore } from '../src/app/stores/settings.store';
-import { ExtractorHelper } from '../src/app/helpers/extractor.helper';
+import { CheckedHelper } from '../src/app/helpers/checked.helper';
 import { RuleDispatcherService } from '../src/app/services/rule-dispatcher.service';
 import { ActivationAxiomService } from '../src/app/rules/axioms/activation.axiom.service';
 import { AffectAxiomService } from '../src/app/rules/axioms/affect.axiom.service';
@@ -163,7 +163,7 @@ export const mockedInspectRule = mock(InspectRule);
 
 export const mockedSettingsStore = mock(SettingsStore);
 
-export const mockedExtractorHelper = mock(ExtractorHelper);
+export const mockedExtractorHelper = mock(CheckedHelper);
 
 export const mockedActivationAxiomService = mock(ActivationAxiomService);
 
@@ -457,7 +457,7 @@ const resetMocks = () => {
 
 function mockExtractorHelper() {
   when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
+    mockedExtractorHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedInteractiveEntity),
       })
@@ -465,7 +465,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedInteractiveEntity));
 
   when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
+    mockedExtractorHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedInteractiveEntity),
         actorVisibility: instance(mockedPlayerEntity),
@@ -474,7 +474,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedInteractiveEntity));
 
   when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
+    mockedExtractorHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedActorEntity),
       })
@@ -482,7 +482,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedActorEntity));
 
   when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
+    mockedExtractorHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedPlayerEntity),
       })
@@ -490,7 +490,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedPlayerEntity));
 
   when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
+    mockedExtractorHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedTargetPlayerEntity),
       })
@@ -498,7 +498,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedTargetPlayerEntity));
 
   when(
-    mockedExtractorHelper.extractRuleTargetOrThrow(
+    mockedExtractorHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedPlayerEntity),
         targetDodgesPerformed: 2,

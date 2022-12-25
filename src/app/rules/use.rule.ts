@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { UsableDefinition } from '../definitions/usable.definition';
 import { ActionableEvent } from '../events/actionable.event';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 
@@ -18,7 +18,7 @@ import { MasterRuleService } from './master.rule';
 export class UseRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper,
+    private readonly checkedHelper: CheckedHelper,
     private readonly affectAxiomService: AffectAxiomService
   ) {
     super([affectAxiomService.logMessageProduced$]);
@@ -29,7 +29,7 @@ export class UseRule extends MasterRuleService {
     event: ActionableEvent,
     extras: RuleExtrasInterface
   ): void {
-    const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
+    const target = this.checkedHelper.getRuleTargetOrThrow(extras);
 
     const { actionableDefinition } = event;
 

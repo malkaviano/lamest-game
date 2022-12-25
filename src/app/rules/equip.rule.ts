@@ -4,7 +4,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 
 import { MasterRuleService } from './master.rule';
 import { GameMessagesStore } from '../stores/game-messages.store';
@@ -15,7 +15,7 @@ import { GameMessagesStore } from '../stores/game-messages.store';
 export class EquipRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper
+    private readonly checkedHelper: CheckedHelper
   ) {
     super();
   }
@@ -33,7 +33,7 @@ export class EquipRule extends MasterRuleService {
     const skillName = item.skillName;
 
     if (actor.skills[skillName] > 0) {
-      const weapon = this.extractorHelper.extractItemOrThrow<WeaponDefinition>(
+      const weapon = this.checkedHelper.extractItemOrThrow<WeaponDefinition>(
         this.inventoryService,
         actor.id,
         action.eventId

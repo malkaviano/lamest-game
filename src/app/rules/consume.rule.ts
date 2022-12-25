@@ -6,7 +6,7 @@ import { InventoryService } from '../services/inventory.service';
 import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectEvent } from '../events/effect.event';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 
 import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../literals/result.literal';
@@ -21,7 +21,7 @@ export class ConsumeRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollRule: RollService,
-    private readonly extractorHelper: ExtractorHelper,
+    private readonly checkedHelper: CheckedHelper,
     private readonly affectAxiom: AffectAxiomService
   ) {
     super([affectAxiom.logMessageProduced$]);
@@ -31,7 +31,7 @@ export class ConsumeRule extends MasterRuleService {
     const { actionableDefinition, eventId } = event;
 
     const consumable =
-      this.extractorHelper.extractItemOrThrow<ConsumableDefinition>(
+      this.checkedHelper.extractItemOrThrow<ConsumableDefinition>(
         this.inventoryService,
         actor.id,
         eventId

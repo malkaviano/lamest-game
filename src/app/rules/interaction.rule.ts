@@ -4,7 +4,7 @@ import { ActionableEvent } from '../events/actionable.event';
 
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 
 import { MasterRuleService } from './master.rule';
 import { GameMessagesStore } from '../stores/game-messages.store';
@@ -13,7 +13,7 @@ import { GameMessagesStore } from '../stores/game-messages.store';
   providedIn: 'root',
 })
 export class InteractionRule extends MasterRuleService {
-  constructor(private readonly extractorHelper: ExtractorHelper) {
+  constructor(private readonly checkedHelper: CheckedHelper) {
     super();
   }
 
@@ -22,7 +22,7 @@ export class InteractionRule extends MasterRuleService {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): void {
-    const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
+    const target = this.checkedHelper.getRuleTargetOrThrow(extras);
 
     const { actionableDefinition } = action;
 

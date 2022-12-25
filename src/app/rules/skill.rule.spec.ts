@@ -4,7 +4,7 @@ import { instance, when } from 'ts-mockito';
 
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 import { RollDefinition } from '../definitions/roll.definition';
 import { AffectAxiomService } from './axioms/affect.axiom.service';
 
@@ -33,7 +33,7 @@ describe('SkillRule', () => {
           useValue: instance(mockedRollService),
         },
         {
-          provide: ExtractorHelper,
+          provide: CheckedHelper,
           useValue: instance(mockedExtractorHelper),
         },
         {

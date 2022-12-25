@@ -6,7 +6,7 @@ import { InventoryService } from '../services/inventory.service';
 
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 
 import { MasterRuleService } from './master.rule';
 import { AffectAxiomService } from './axioms/affect.axiom.service';
@@ -17,7 +17,7 @@ import { AffectAxiomService } from './axioms/affect.axiom.service';
 export class PickRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly extractorHelper: ExtractorHelper,
+    private readonly checkedHelper: CheckedHelper,
     private readonly affectAxiomService: AffectAxiomService
   ) {
     super([affectAxiomService.logMessageProduced$]);
@@ -28,9 +28,9 @@ export class PickRule extends MasterRuleService {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): void {
-    const target = this.extractorHelper.extractRuleTargetOrThrow(extras);
+    const target = this.checkedHelper.getRuleTargetOrThrow(extras);
 
-    const item = this.extractorHelper.extractItemOrThrow(
+    const item = this.checkedHelper.extractItemOrThrow(
       this.inventoryService,
       action.eventId,
       action.actionableDefinition.name

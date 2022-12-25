@@ -4,7 +4,7 @@ import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 import { AffectAxiomService } from './axioms/affect.axiom.service';
 
 import {
@@ -32,7 +32,7 @@ describe('PickRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: ExtractorHelper,
+          provide: CheckedHelper,
           useValue: instance(mockedExtractorHelper),
         },
         {

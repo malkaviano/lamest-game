@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 import { InteractionRule } from './interaction.rule';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
@@ -29,7 +29,7 @@ describe('InteractionRule', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: ExtractorHelper,
+          provide: CheckedHelper,
           useValue: instance(mockedExtractorHelper),
         },
       ],

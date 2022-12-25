@@ -4,7 +4,7 @@ import { instance, when } from 'ts-mockito';
 
 import { GameMessagesStore } from '../stores/game-messages.store';
 import { WeaponDefinition } from '../definitions/weapon.definition';
-import { ExtractorHelper } from './extractor.helper';
+import { CheckedHelper } from './checked.helper';
 
 import { playerInfo, simpleSword } from '../../../tests/fakes';
 import {
@@ -13,25 +13,25 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 
-describe('ExtractorHelper', () => {
-  let service: ExtractorHelper;
+describe('CheckedHelper', () => {
+  let service: CheckedHelper;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
 
     setupMocks();
 
-    service = TestBed.inject(ExtractorHelper);
+    service = TestBed.inject(CheckedHelper);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('extractRuleTarget', () => {
+  describe('getRuleTargetOrThrow', () => {
     describe('when target was undefined', () => {
       it('throw Action should not happen', () => {
-        expect(() => service.extractRuleTargetOrThrow({})).toThrowError(
+        expect(() => service.getRuleTargetOrThrow({})).toThrowError(
           GameMessagesStore.errorMessages['SHOULD-NOT-HAPPEN']
         );
       });
@@ -40,7 +40,7 @@ describe('ExtractorHelper', () => {
     describe('when target is defined', () => {
       it('return target', () => {
         expect(
-          service.extractRuleTargetOrThrow({ target: mockedActorEntity })
+          service.getRuleTargetOrThrow({ target: mockedActorEntity })
         ).toEqual(mockedActorEntity);
       });
     });

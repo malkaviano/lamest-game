@@ -8,7 +8,7 @@ import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
 import { RollService } from '../services/roll.service';
 import { EffectEvent } from '../events/effect.event';
-import { ExtractorHelper } from '../helpers/extractor.helper';
+import { CheckedHelper } from '../helpers/checked.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
@@ -46,7 +46,7 @@ describe('ConsumeRule', () => {
           useValue: instance(mockedRollService),
         },
         {
-          provide: ExtractorHelper,
+          provide: CheckedHelper,
           useValue: instance(mockedExtractorHelper),
         },
         {

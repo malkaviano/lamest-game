@@ -9,8 +9,8 @@ import { GameMessagesStore } from '../stores/game-messages.store';
 @Injectable({
   providedIn: 'root',
 })
-export class ExtractorHelper {
-  public extractRuleTargetOrThrow(
+export class CheckedHelper {
+  public getRuleTargetOrThrow(
     ruleExtrasInterface: RuleExtrasInterface
   ): ActionReactiveInterface {
     const target = ruleExtrasInterface.target;
