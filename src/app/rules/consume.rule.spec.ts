@@ -16,7 +16,7 @@ import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 import {
   mockedAffectedAxiomService,
-  mockedExtractorHelper,
+  mockedCheckedHelper,
   mockedInventoryService,
   mockedPlayerEntity,
   mockedRollService,
@@ -47,7 +47,7 @@ describe('ConsumeRule', () => {
         },
         {
           provide: CheckedHelper,
-          useValue: instance(mockedExtractorHelper),
+          useValue: instance(mockedCheckedHelper),
         },
         {
           provide: AffectAxiomService,
@@ -71,7 +71,7 @@ describe('ConsumeRule', () => {
     describe('when item was not a consumable', () => {
       it('throw Wrong item was used', () => {
         when(
-          mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
+          mockedCheckedHelper.extractItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             simpleSword.identity.name
@@ -90,7 +90,7 @@ describe('ConsumeRule', () => {
     describe('when item was a consumable', () => {
       it('should log item consume', (done) => {
         when(
-          mockedExtractorHelper.extractItemOrThrow<ConsumableDefinition>(
+          mockedCheckedHelper.extractItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             consumableFirstAid.identity.name

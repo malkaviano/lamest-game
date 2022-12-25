@@ -11,7 +11,7 @@ describe('DiscardState', () => {
         ArrayView.create([knifeAction, firstAidAction])
       );
 
-      expect(result).toEqual({ state: expected, log: knifeAction.label });
+      expect(result).toEqual({ state: expected });
     });
   });
 });

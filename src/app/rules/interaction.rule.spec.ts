@@ -8,7 +8,7 @@ import { InteractionRule } from './interaction.rule';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
-  mockedExtractorHelper,
+  mockedCheckedHelper,
   mockedInteractiveEntity,
   mockedPlayerEntity,
   setupMocks,
@@ -30,7 +30,7 @@ describe('InteractionRule', () => {
       providers: [
         {
           provide: CheckedHelper,
-          useValue: instance(mockedExtractorHelper),
+          useValue: instance(mockedCheckedHelper),
         },
       ],
     });

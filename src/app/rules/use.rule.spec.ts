@@ -10,7 +10,7 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedAffectedAxiomService,
-  mockedExtractorHelper,
+  mockedCheckedHelper,
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
@@ -37,7 +37,7 @@ describe('UseRule', () => {
         },
         {
           provide: CheckedHelper,
-          useValue: instance(mockedExtractorHelper),
+          useValue: instance(mockedCheckedHelper),
         },
         {
           provide: AffectAxiomService,

@@ -13,7 +13,7 @@ import {
   mockedInteractiveEntity,
   mockedRollService,
   setupMocks,
-  mockedExtractorHelper,
+  mockedCheckedHelper,
   mockedAffectedAxiomService,
 } from '../../../tests/mocks';
 import {
@@ -34,7 +34,7 @@ describe('SkillRule', () => {
         },
         {
           provide: CheckedHelper,
-          useValue: instance(mockedExtractorHelper),
+          useValue: instance(mockedCheckedHelper),
         },
         {
           provide: AffectAxiomService,

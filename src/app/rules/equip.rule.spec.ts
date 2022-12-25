@@ -11,7 +11,7 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { GameMessagesStore } from '../stores/game-messages.store';
 
 import {
-  mockedExtractorHelper,
+  mockedCheckedHelper,
   mockedInventoryService,
   mockedPlayerEntity,
   setupMocks,
@@ -39,7 +39,7 @@ describe('EquipRule', () => {
         },
         {
           provide: CheckedHelper,
-          useValue: instance(mockedExtractorHelper),
+          useValue: instance(mockedCheckedHelper),
         },
       ],
     });
@@ -79,7 +79,7 @@ describe('EquipRule', () => {
         ).thenReturn(simpleSword);
 
         when(
-          mockedExtractorHelper.extractItemOrThrow<WeaponDefinition>(
+          mockedCheckedHelper.extractItemOrThrow<WeaponDefinition>(
             instance(mockedInventoryService),
             actor.id,
             simpleSword.identity.name

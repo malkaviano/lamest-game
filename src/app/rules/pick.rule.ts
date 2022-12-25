@@ -10,6 +10,7 @@ import { CheckedHelper } from '../helpers/checked.helper';
 
 import { MasterRuleService } from './master.rule';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,14 @@ export class PickRule extends MasterRuleService {
     );
 
     this.inventoryService.store(actor.id, item);
+
+    this.ruleLog.next(
+      GameMessagesStore.createTookLogMessage(
+        actor.name,
+        target.name,
+        item.identity.label
+      )
+    );
 
     this.affectAxiomService.affectWith(
       target,

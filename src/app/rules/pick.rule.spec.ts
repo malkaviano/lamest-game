@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance, when } from 'ts-mockito';
+import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
@@ -9,7 +9,8 @@ import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 import {
   mockedAffectedAxiomService,
-  mockedExtractorHelper,
+  mockedCheckedHelper,
+  mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
   setupMocks,
@@ -33,7 +34,7 @@ describe('PickRule', () => {
         },
         {
           provide: CheckedHelper,
-          useValue: instance(mockedExtractorHelper),
+          useValue: instance(mockedCheckedHelper),
         },
         {
           provide: AffectAxiomService,
@@ -44,6 +45,20 @@ describe('PickRule', () => {
 
     setupMocks();
 
+    when(
+      mockedCheckedHelper.extractItemOrThrow(
+        instance(mockedInventoryService),
+        eventPickSimpleSword.eventId,
+        eventPickSimpleSword.actionableDefinition.name
+      )
+    ).thenReturn(simpleSword);
+
+    when(
+      mockedCheckedHelper.getRuleTargetOrThrow(
+        deepEqual({ target: instance(mockedInteractiveEntity) })
+      )
+    ).thenReturn(instance(mockedInteractiveEntity));
+
     service = TestBed.inject(PickRule);
   });
 
@@ -53,33 +68,21 @@ describe('PickRule', () => {
 
   describe('execute', () => {
     it('should store the item', () => {
-      when(
-        mockedExtractorHelper.extractItemOrThrow(
-          instance(mockedInventoryService),
-          eventPickSimpleSword.eventId,
-          eventPickSimpleSword.actionableDefinition.name
-        )
-      ).thenReturn(simpleSword);
-
       const spy = spyOn(instance(mockedInventoryService), 'store');
 
-      service.execute(actor, eventPickSimpleSword, {});
+      service.execute(actor, eventPickSimpleSword, {
+        target: instance(mockedInteractiveEntity),
+      });
 
       expect(spy).toHaveBeenCalledWith(actor.id, simpleSword);
     });
 
     it('should react to the action', () => {
-      when(
-        mockedExtractorHelper.extractItemOrThrow(
-          instance(mockedInventoryService),
-          eventPickSimpleSword.eventId,
-          eventPickSimpleSword.actionableDefinition.name
-        )
-      ).thenReturn(simpleSword);
-
       const spy = spyOn(instance(mockedAffectedAxiomService), 'affectWith');
 
-      service.execute(actor, eventPickSimpleSword, {});
+      service.execute(actor, eventPickSimpleSword, {
+        target: instance(mockedInteractiveEntity),
+      });
 
       expect(spy).toHaveBeenCalled();
     });

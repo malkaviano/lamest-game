@@ -10,7 +10,7 @@ import { CheckedHelper } from '../helpers/checked.helper';
 
 import {
   mockedActorEntity,
-  mockedExtractorHelper,
+  mockedCheckedHelper,
   mockedInteractiveEntity,
   mockedPlayerEntity,
   mockedRollService,
@@ -42,7 +42,7 @@ describe('CombatRule', () => {
         },
         {
           provide: CheckedHelper,
-          useValue: instance(mockedExtractorHelper),
+          useValue: instance(mockedCheckedHelper),
         },
       ],
     });

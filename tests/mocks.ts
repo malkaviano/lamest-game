@@ -166,7 +166,7 @@ export const mockedInspectRule = mock(InspectRule);
 
 export const mockedSettingsStore = mock(SettingsStore);
 
-export const mockedExtractorHelper = mock(CheckedHelper);
+export const mockedCheckedHelper = mock(CheckedHelper);
 
 export const mockedActivationAxiomService = mock(ActivationAxiomService);
 
@@ -457,7 +457,7 @@ const resetMocks = () => {
 
   reset(mockedActorEntity2);
 
-  reset(mockedExtractorHelper);
+  reset(mockedCheckedHelper);
 
   reset(mockedActivationAxiomService);
 
@@ -472,7 +472,7 @@ const resetMocks = () => {
 
 function mockExtractorHelper() {
   when(
-    mockedExtractorHelper.getRuleTargetOrThrow(
+    mockedCheckedHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedInteractiveEntity),
       })
@@ -480,7 +480,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedInteractiveEntity));
 
   when(
-    mockedExtractorHelper.getRuleTargetOrThrow(
+    mockedCheckedHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedInteractiveEntity),
         actorVisibility: instance(mockedPlayerEntity),
@@ -489,7 +489,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedInteractiveEntity));
 
   when(
-    mockedExtractorHelper.getRuleTargetOrThrow(
+    mockedCheckedHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedActorEntity),
       })
@@ -497,7 +497,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedActorEntity));
 
   when(
-    mockedExtractorHelper.getRuleTargetOrThrow(
+    mockedCheckedHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedPlayerEntity),
       })
@@ -505,7 +505,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedPlayerEntity));
 
   when(
-    mockedExtractorHelper.getRuleTargetOrThrow(
+    mockedCheckedHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedTargetPlayerEntity),
       })
@@ -513,7 +513,7 @@ function mockExtractorHelper() {
   ).thenReturn(instance(mockedTargetPlayerEntity));
 
   when(
-    mockedExtractorHelper.getRuleTargetOrThrow(
+    mockedCheckedHelper.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedPlayerEntity),
         targetDodgesPerformed: 2,

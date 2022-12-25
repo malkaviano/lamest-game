@@ -15,13 +15,10 @@ export class DiscardState extends ActionableState {
 
     const index = actions.indexOf(action);
 
-    const discarded = actions[index];
-
     return {
       state: new DiscardState(
         ArrayView.create(actions.filter((_, i) => i !== index))
       ),
-      log: discarded.label,
     };
   }
 }
