@@ -20,7 +20,7 @@ export class ReadAxiomService implements DocumentOpenedInterface {
     this.documentOpened$ = this.documentOpened.asObservable();
   }
 
-  public readDocument(item: ReadableDefinition): void {
+  public openDocument(item: ReadableDefinition): void {
     this.documentOpened.next({
       title: item.title,
       text: item.text,

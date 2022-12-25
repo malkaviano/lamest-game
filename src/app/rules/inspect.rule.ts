@@ -40,6 +40,6 @@ export class InspectRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    this.readAxiomService.readDocument(item);
+    this.readAxiomService.openDocument(item);
   }
 }
