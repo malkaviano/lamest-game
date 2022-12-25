@@ -5,13 +5,13 @@ import { instance, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
 import { GameMessagesStore } from '../stores/game-messages.store';
-
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { ReadableInterface } from '../interfaces/readable.interface';
+import { ReadAxiomService } from '../axioms/read.axiom.service';
 
 import {
   mockedInventoryService,
   mockedPlayerEntity,
+  mockedReadAxiomService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -32,6 +32,10 @@ describe('InspectRule', () => {
         {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
+        },
+        {
+          provide: ReadAxiomService,
+          useValue: instance(mockedReadAxiomService),
         },
       ],
     });
@@ -75,27 +79,6 @@ describe('InspectRule', () => {
           [itemInspectedLog],
           done
         );
-      });
-
-      it('should publish document opened', (done) => {
-        when(
-          mockedInventoryService.look(
-            playerInfo.id,
-            eventInspectReadable.eventId
-          )
-        ).thenReturn(readable);
-
-        let result: ReadableInterface | undefined;
-
-        service.documentOpened$.subscribe((event) => {
-          result = event;
-        });
-
-        service.execute(actor, eventInspectReadable);
-
-        done();
-
-        expect(result).toEqual(result);
       });
     });
   });

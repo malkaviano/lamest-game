@@ -68,6 +68,7 @@ import {
 } from './fakes';
 import { DodgeAxiomService } from '../src/app/axioms/dodge.axiom.service';
 import { EventHubHelperService } from '../src/app/helpers/event-hub.helper.service';
+import { ReadAxiomService } from '../src/app/axioms/read.axiom.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -174,6 +175,8 @@ export const mockedAffectedAxiomService = mock(AffectAxiomService);
 export const mockedDodgeAxiomService = mock(DodgeAxiomService);
 
 export const mockedEventHubHelperService = mock(EventHubHelperService);
+
+export const mockedReadAxiomService = mock(ReadAxiomService);
 
 export const setupMocks = () => {
   resetMocks();
@@ -463,6 +466,8 @@ const resetMocks = () => {
   reset(mockedDodgeAxiomService);
 
   reset(mockedEventHubHelperService);
+
+  reset(mockedReadAxiomService);
 };
 
 function mockExtractorHelper() {

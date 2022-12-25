@@ -3,6 +3,7 @@ import { merge, Observable } from 'rxjs';
 import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
+import { ReadAxiomService } from '../axioms/read.axiom.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
 import { DocumentOpenedInterface } from '../interfaces/document-opened.interface';
@@ -28,7 +29,8 @@ export class EventHubHelperService
     ruleDispatcherService: RuleDispatcherService,
     dodgeAxiomService: DodgeAxiomService,
     activationAxiomService: ActivationAxiomService,
-    affectAxiomService: AffectAxiomService
+    affectAxiomService: AffectAxiomService,
+    readAxiomService: ReadAxiomService
   ) {
     this.logMessageProduced$ = merge(
       ruleDispatcherService.logMessageProduced$,
@@ -40,6 +42,6 @@ export class EventHubHelperService
 
     this.actorDodged$ = dodgeAxiomService.actorDodged$;
 
-    this.documentOpened$ = ruleDispatcherService.documentOpened$;
+    this.documentOpened$ = readAxiomService.documentOpened$;
   }
 }

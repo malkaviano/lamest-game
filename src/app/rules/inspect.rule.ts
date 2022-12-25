@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ReadAxiomService } from '../axioms/read.axiom.service';
 
 import { ReadableDefinition } from '../definitions/readable.definition';
 import { ActionableEvent } from '../events/actionable.event';
@@ -13,7 +14,10 @@ import { MasterRuleService } from './master.rule';
   providedIn: 'root',
 })
 export class InspectRule extends MasterRuleService {
-  constructor(private readonly inventoryService: InventoryService) {
+  constructor(
+    private readonly inventoryService: InventoryService,
+    private readonly readAxiomService: ReadAxiomService
+  ) {
     super();
   }
 
@@ -36,9 +40,6 @@ export class InspectRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    this.documentOpened.next({
-      title: item.title,
-      text: item.text,
-    });
+    this.readAxiomService.readDocument(item);
   }
 }
