@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ActorEntity } from '../entities/actor.entity';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
@@ -40,6 +41,16 @@ export class AffectAxiomService implements LoggerInterface {
       );
 
       this.logMessageProduced.next(logMessage);
+
+      if (
+        target &&
+        target instanceof ActorEntity &&
+        target.situation === 'DEAD'
+      ) {
+        this.logMessageProduced.next(
+          GameMessagesStore.createActorIsDeadLogMessage(target.name)
+        );
+      }
     }
   }
 }

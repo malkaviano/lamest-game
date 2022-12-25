@@ -9,7 +9,6 @@ import { DamageDefinition } from '../definitions/damage.definition';
 import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
-import { ActorEntity } from '../entities/actor.entity';
 import { MasterRuleService } from './master.rule';
 import { GameMessagesStore } from '../stores/game-messages.store';
 import { ActivationAxiomService } from '../axioms/activation.axiom.service';
@@ -89,20 +88,6 @@ export class CombatRule extends MasterRuleService {
           this.applyDamage(target, action.actionableDefinition, damage);
         }
       }
-    }
-
-    this.checkIfTargetDied(target);
-  }
-
-  private checkIfTargetDied(target: ActionReactiveInterface) {
-    if (
-      target &&
-      target instanceof ActorEntity &&
-      target.situation === 'DEAD'
-    ) {
-      this.ruleLog.next(
-        GameMessagesStore.createActorIsDeadLogMessage(target.name)
-      );
     }
   }
 

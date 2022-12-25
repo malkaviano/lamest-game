@@ -24,37 +24,42 @@ describe('AffectedAxiomService', () => {
   describe('affectWith', () => {
     const effect = new EffectEvent('KINETIC', 5);
 
-    it('should log effect', (done) => {
-      const result: LogMessageDefinition[] = [];
+    describe('when actor dies', () => {
+      it('should log effects and actor died', (done) => {
+        const result: LogMessageDefinition[] = [];
 
-      service.logMessageProduced$.subscribe((event) => {
-        result.push(event);
-      });
+        service.logMessageProduced$.subscribe((event) => {
+          result.push(event);
+        });
 
-      when(
-        mockedPlayerEntity.reactTo(
+        when(
+          mockedPlayerEntity.reactTo(
+            actionAttack,
+            'SUCCESS',
+            deepEqual({
+              effect,
+            })
+          )
+        ).thenReturn('test ok');
+
+        when(mockedPlayerEntity.situation).thenReturn('DEAD');
+
+        service.affectWith(
+          instance(mockedPlayerEntity),
           actionAttack,
           'SUCCESS',
-          deepEqual({
+          {
             effect,
-          })
-        )
-      ).thenReturn('test ok');
+          }
+        );
 
-      service.affectWith(
-        instance(mockedPlayerEntity),
-        actionAttack,
-        'SUCCESS',
-        {
-          effect,
-        }
-      );
+        done();
 
-      done();
-
-      expect(result).toEqual([
-        new LogMessageDefinition('AFFECTED', 'Some Name', 'test ok'),
-      ]);
+        expect(result).toEqual([
+          new LogMessageDefinition('AFFECTED', 'Some Name', 'test ok'),
+          new LogMessageDefinition('DIED', 'Some Name', 'is dead'),
+        ]);
+      });
     });
   });
 });
