@@ -51,6 +51,7 @@ export class ItemStore {
           item.hp,
           item.energy,
           item.effect,
+          item.usability,
           item.skillName
         )
       );
@@ -60,7 +61,8 @@ export class ItemStore {
       this.store.set(
         item.name,
         new UsableDefinition(
-          new ItemIdentityDefinition(item.name, item.label, item.description)
+          new ItemIdentityDefinition(item.name, item.label, item.description),
+          item.usability
         )
       );
     });
@@ -71,7 +73,8 @@ export class ItemStore {
         new ReadableDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
           item.title,
-          ArrayView.create(item.text)
+          ArrayView.create(item.text),
+          item.usability
         )
       );
     });

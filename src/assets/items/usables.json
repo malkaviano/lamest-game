@@ -3,7 +3,14 @@
     {
       "name": "masterKey",
       "label": "Master Key",
-      "description": "Use to open locked containers"
+      "description": "Use to open locked containers",
+      "usability": "PERMANENT"
+    },
+    {
+      "name": "lockPick",
+      "label": "Lock Pick",
+      "description": "Use to open locked containers",
+      "usability": "DISPOSABLE"
     }
   ]
 }

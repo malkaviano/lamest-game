@@ -235,6 +235,7 @@ export const consumableFirstAid = new ConsumableDefinition(
   5,
   0,
   'REMEDY',
+  'DISPOSABLE',
   'First Aid'
 );
 
@@ -242,7 +243,8 @@ export const consumableAnalgesic = new ConsumableDefinition(
   new ItemIdentityDefinition('analgesic', 'Analgesic', 'Relieves pain'),
   2,
   1,
-  'REMEDY'
+  'REMEDY',
+  'DISPOSABLE'
 );
 
 export const actionConsume = createActionableDefinition(
@@ -264,7 +266,8 @@ export const actionSkillAthleticism = createActionableDefinition(
 );
 
 export const masterKey = new UsableDefinition(
-  new ItemIdentityDefinition('masterKey', 'Master Key', 'Opens stuff')
+  new ItemIdentityDefinition('masterKey', 'Master Key', 'Opens stuff'),
+  'DISPOSABLE'
 );
 
 export const actionUseMasterKey = createActionableDefinition(
@@ -311,7 +314,8 @@ export const actionInspect = createActionableDefinition(
 export const readable = new ReadableDefinition(
   new ItemIdentityDefinition('book', 'Book', 'Some book'),
   'BOOK',
-  ArrayView.create(['GG'])
+  ArrayView.create(['GG']),
+  'PERMANENT'
 );
 
 export const gameSettings: GameSettingsInterface = {

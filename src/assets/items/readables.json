@@ -14,7 +14,8 @@
         "It was a clean kill, and I was filled with a sense of satisfaction and accomplishment.",
         "I field dressed the elk and began the long trek back to my cabin, loaded down with my prize.",
         "I can't wait to share this story around the campfire tonight and savor the taste of fresh elk meat for dinner."
-      ]
+      ],
+      "usability": "PERMANENT"
     },
     {
       "name": "hunterJournal2",
@@ -32,7 +33,8 @@
         "In the end, I didn't even get a shot off. The deer were too skittish, and I couldn't get close enough.",
         "I returned to my cabin empty-handed and shaken by the experience.",
         "I don't know what to make of it, but I can't shake the feeling that something very wrong is happening in these woods."
-      ]
+      ],
+      "usability": "PERMANENT"
     },
     {
       "name": "hunterJournal3",
@@ -49,7 +51,8 @@
         "I lingered for a moment, trying to make sense of what I was seeing, before turning and running back to my cabin as fast as I could.",
         "I don't know what to make of this, but I can't shake the feeling that something very wrong is happening in these woods.",
         "I'm not sure I want to stay here much longer."
-      ]
+      ],
+      "usability": "PERMANENT"
     },
     {
       "name": "friendNote",
@@ -63,7 +66,8 @@
         "Also, there're enough wood in the campfire, just make fire when needed.",
         "I'm glad you are not so idiotic to move on before reading my note, find me in the Village so we can talk.",
         "Last, if you get in trouble and think it's too dangerous to fight, just go away, live to fight another day."
-      ]
+      ],
+      "usability": "PERMANENT"
     }
   ]
 }

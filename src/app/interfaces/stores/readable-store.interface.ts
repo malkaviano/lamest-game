@@ -1,3 +1,5 @@
+import { ItemUsabilityLiteral } from '../../literals/item-usability';
+
 export interface ReadableStoreInterface {
   readonly readables: {
     readonly name: string;
@@ -5,5 +7,6 @@ export interface ReadableStoreInterface {
     readonly description: string;
     readonly title: string;
     readonly text: string[];
+    readonly usability: ItemUsabilityLiteral;
   }[];
 }

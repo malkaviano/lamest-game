@@ -1,4 +1,4 @@
-import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
+import { ItemUsabilityLiteral } from '../literals/item-usability';
 import { DamageDefinition } from './damage.definition';
 import { createDice } from './dice.definition';
 import { ItemIdentityDefinition } from './item-identity.definition';
@@ -10,10 +10,10 @@ export class WeaponDefinition extends SkillItemDefinition {
     skillName: string,
     public readonly damage: DamageDefinition,
     public readonly dodgeable: boolean,
-    public readonly usability: WeaponUsabilityLiteral,
+    usability: ItemUsabilityLiteral,
     public readonly energyActivation: number
   ) {
-    super('WEAPON', identity, skillName);
+    super('WEAPON', identity, skillName, usability);
   }
 }
 

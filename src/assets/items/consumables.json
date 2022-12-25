@@ -7,7 +7,8 @@
       "hp": 4,
       "energy": 0,
       "effect": "REMEDY",
-      "skillName": "First Aid"
+      "skillName": "First Aid",
+      "usability": "DISPOSABLE"
     },
     {
       "name": "analgesic",
@@ -15,7 +16,8 @@
       "description": "Use to recover HP and Energy",
       "hp": 1,
       "energy": 1,
-      "effect": "REMEDY"
+      "effect": "REMEDY",
+      "usability": "DISPOSABLE"
     }
   ]
 }

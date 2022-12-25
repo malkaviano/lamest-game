@@ -16,7 +16,7 @@ import { ActionableLiteral } from '../literals/actionable.literal';
 import { MessageStoreInterface } from '../interfaces/stores/message-store.interface';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { WeaponUsabilityLiteral } from '../literals/weapon-usability';
+import { ItemUsabilityLiteral } from '../literals/item-usability';
 import { ActorStoreInterface } from '../interfaces/stores/actor-store.interface';
 import { UsablesStoreInterface } from '../interfaces/stores/item-store.interface';
 import { LockedContainerStateStoreInterface } from '../interfaces/stores/locked-container-state-store';
@@ -27,6 +27,7 @@ import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { SettingsStoreInterface } from '../interfaces/stores/settings-store.interface';
 import { ArrayView } from '../views/array.view';
 import { ReadableStoreInterface } from '../interfaces/stores/readable-store.interface';
+import { VisibilityStateStoreInterface } from '../interfaces/stores/visibility-state-store.interface';
 
 import sceneStore from '../../assets/scenes.json';
 import skillStateStore from '../../assets/states/skill-states.json';
@@ -48,7 +49,6 @@ import skillStore from '../../assets/skills.json';
 import settingsStore from '../../assets/settings.json';
 import readableStore from '../../assets/items/readables.json';
 import visibilityStateStore from '../../assets/states/visibility-state.json';
-import { VisibilityStateStoreInterface } from '../interfaces/stores/visibility-state-store.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -161,7 +161,7 @@ export class ResourcesStore {
           effect: w.damage.effect as EffectTypeLiteral,
         },
         dodgeable: w.dodgeable,
-        usability: w.usability as WeaponUsabilityLiteral,
+        usability: w.usability as ItemUsabilityLiteral,
         energyActivation: w.energyActivation,
       };
     });
@@ -176,6 +176,7 @@ export class ResourcesStore {
         hp: c.hp,
         energy: c.energy,
         effect: c.effect as EffectTypeLiteral,
+        usability: c.usability as ItemUsabilityLiteral,
         skillName: c.skillName,
       };
     });
@@ -241,7 +242,16 @@ export class ResourcesStore {
 
     this.actorStore = { actors };
 
-    this.usablesStore = usablesStore;
+    const usables = usablesStore.usables.map((u) => {
+      return {
+        name: u.name,
+        label: u.label,
+        description: u.description,
+        usability: u.usability as ItemUsabilityLiteral,
+      };
+    });
+
+    this.usablesStore = { usables };
 
     this.lockedContainerStateStore = lockedContainerStateStore;
 
@@ -259,6 +269,17 @@ export class ResourcesStore {
 
     this.skillStore = { skills };
 
-    this.readableStore = readableStore;
+    const readables = readableStore.readables.map((r) => {
+      return {
+        name: r.name,
+        label: r.label,
+        description: r.description,
+        title: r.title,
+        text: r.text,
+        usability: r.usability as ItemUsabilityLiteral,
+      };
+    });
+
+    this.readableStore = { readables };
   }
 }
