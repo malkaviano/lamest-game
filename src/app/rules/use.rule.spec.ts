@@ -5,7 +5,7 @@ import { instance, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
-import { AffectAxiomService } from './axioms/affect.axiom.service';
+import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {

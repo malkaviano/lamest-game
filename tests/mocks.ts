@@ -50,8 +50,8 @@ import { InspectRule } from '../src/app/rules/inspect.rule';
 import { SettingsStore } from '../src/app/stores/settings.store';
 import { CheckedHelper } from '../src/app/helpers/checked.helper';
 import { RuleDispatcherService } from '../src/app/services/rule-dispatcher.service';
-import { ActivationAxiomService } from '../src/app/rules/axioms/activation.axiom.service';
-import { AffectAxiomService } from '../src/app/rules/axioms/affect.axiom.service';
+import { ActivationAxiomService } from '../src/app/axioms/activation.axiom.service';
+import { AffectAxiomService } from '../src/app/axioms/affect.axiom.service';
 
 import {
   actorInfo,
@@ -66,6 +66,8 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
+import { DodgeAxiomService } from '../src/app/axioms/dodge.axiom.service';
+import { EventHubHelperService } from '../src/app/helpers/event-hub.helper.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -168,6 +170,10 @@ export const mockedExtractorHelper = mock(CheckedHelper);
 export const mockedActivationAxiomService = mock(ActivationAxiomService);
 
 export const mockedAffectedAxiomService = mock(AffectAxiomService);
+
+export const mockedDodgeAxiomService = mock(DodgeAxiomService);
+
+export const mockedEventHubHelperService = mock(EventHubHelperService);
 
 export const setupMocks = () => {
   resetMocks();
@@ -453,6 +459,10 @@ const resetMocks = () => {
   reset(mockedActivationAxiomService);
 
   reset(mockedAffectedAxiomService);
+
+  reset(mockedDodgeAxiomService);
+
+  reset(mockedEventHubHelperService);
 };
 
 function mockExtractorHelper() {

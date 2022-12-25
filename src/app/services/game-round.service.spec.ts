@@ -28,7 +28,9 @@ import {
   mockedSceneEntity,
   setupMocks,
   mockedInteractiveEntity,
+  mockedEventHubHelperService,
 } from '../../../tests/mocks';
+import { EventHubHelperService } from '../helpers/event-hub.helper.service';
 
 const actor = instance(mockedActorEntity);
 
@@ -52,6 +54,10 @@ describe('GameRoundService', () => {
           provide: NarrativeService,
           useValue: instance(mockedNarrativeService),
         },
+        {
+          provide: EventHubHelperService,
+          useValue: instance(mockedEventHubHelperService),
+        },
       ],
     });
 
@@ -67,13 +73,13 @@ describe('GameRoundService', () => {
       AFFECT: instance(mockedCombatRule),
     });
 
-    when(mockedRuleDispatcherService.logMessageProduced$).thenReturn(EMPTY);
+    when(mockedEventHubHelperService.logMessageProduced$).thenReturn(EMPTY);
 
-    when(mockedRuleDispatcherService.actorDodged$).thenReturn(
+    when(mockedEventHubHelperService.actorDodged$).thenReturn(
       of(playerInfo.id)
     );
 
-    when(mockedRuleDispatcherService.documentOpened$).thenReturn(
+    when(mockedEventHubHelperService.documentOpened$).thenReturn(
       documentSubject
     );
 

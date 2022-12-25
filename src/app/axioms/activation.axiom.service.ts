@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 
-import { createActionableDefinition } from '../../definitions/actionable.definition';
-import { ItemIdentityDefinition } from '../../definitions/item-identity.definition';
-import { LogMessageDefinition } from '../../definitions/log-message.definition';
-import { ActorInterface } from '../../interfaces/actor.interface';
-import { LoggerInterface } from '../../interfaces/logger.interface';
-import { GameMessagesStore } from '../../stores/game-messages.store';
+import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ActorInterface } from '../interfaces/actor.interface';
+import { LoggerInterface } from '../interfaces/logger.interface';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',

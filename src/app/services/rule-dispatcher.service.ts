@@ -16,22 +16,19 @@ import { RuleInterface } from '../interfaces/rule.interface';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ReadableInterface } from '../interfaces/readable.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
-import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
 import { DocumentOpenedInterface } from '../interfaces/document-opened.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RuleDispatcherService
-  implements LoggerInterface, ActorDodgedInterface, DocumentOpenedInterface
+  implements LoggerInterface, DocumentOpenedInterface
 {
   public readonly dispatcher: {
     [key: string]: RuleInterface;
   };
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
-
-  public readonly actorDodged$: Observable<string>;
 
   public readonly documentOpened$: Observable<ReadableInterface>;
 
@@ -74,8 +71,6 @@ export class RuleDispatcherService
       useRule.logMessageProduced$,
       inspectRule.logMessageProduced$
     );
-
-    this.actorDodged$ = combatRule.actorDodged$;
 
     this.documentOpened$ = inspectRule.documentOpened$;
   }

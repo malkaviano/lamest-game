@@ -2,12 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { LogMessageDefinition } from '../../definitions/log-message.definition';
-import { EffectEvent } from '../../events/effect.event';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { EffectEvent } from '../events/effect.event';
 import { AffectAxiomService } from './affect.axiom.service';
 
-import { actionAttack } from '../../../../tests/fakes';
-import { mockedPlayerEntity } from '../../../../tests/mocks';
+import { actionAttack } from '../../../tests/fakes';
+import { mockedPlayerEntity } from '../../../tests/mocks';
 
 describe('AffectedAxiomService', () => {
   let service: AffectAxiomService;

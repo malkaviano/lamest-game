@@ -13,6 +13,7 @@ import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { ReadableInterface } from '../interfaces/readable.interface';
 import { RuleDispatcherService } from './rule-dispatcher.service';
+import { EventHubHelperService } from '../helpers/event-hub.helper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,8 @@ export class GameRoundService {
   constructor(
     private readonly ruleDispatcherService: RuleDispatcherService,
     private readonly characterService: CharacterService,
-    private readonly narrativeService: NarrativeService
+    private readonly narrativeService: NarrativeService,
+    private readonly eventHubHelperService: EventHubHelperService
   ) {
     this.player = this.characterService.currentCharacter;
 
@@ -49,11 +51,11 @@ export class GameRoundService {
       this.setActors();
     });
 
-    this.documentOpened$ = this.ruleDispatcherService.documentOpened$;
+    this.documentOpened$ = this.eventHubHelperService.documentOpened$;
 
     this.dodgedThisRound = new Map<string, number>();
 
-    this.ruleDispatcherService.actorDodged$.subscribe((actorId) => {
+    this.eventHubHelperService.actorDodged$.subscribe((actorId) => {
       this.actorDodged(actorId);
     });
   }

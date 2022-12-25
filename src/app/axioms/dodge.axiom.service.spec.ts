@@ -2,18 +2,18 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { LogMessageDefinition } from '../../definitions/log-message.definition';
-import { RollDefinition } from '../../definitions/roll.definition';
-import { RollService } from '../../services/roll.service';
-import { GameMessagesStore } from '../../stores/game-messages.store';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { RollDefinition } from '../definitions/roll.definition';
+import { RollService } from '../services/roll.service';
+import { GameMessagesStore } from '../stores/game-messages.store';
 import { DodgeAxiomService } from './dodge.axiom.service';
 
 import {
   mockedPlayerEntity,
   mockedRollService,
   setupMocks,
-} from '../../../../tests/mocks';
-import { playerInfo } from '../../../../tests/fakes';
+} from '../../../tests/mocks';
+import { playerInfo } from '../../../tests/fakes';
 
 describe('DodgeAxiomService', () => {
   let service: DodgeAxiomService;

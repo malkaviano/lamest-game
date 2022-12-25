@@ -8,7 +8,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 
 import { InventoryService } from '../services/inventory.service';
 import { GameMessagesStore } from '../stores/game-messages.store';
-import { AffectAxiomService } from './axioms/affect.axiom.service';
+import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 import { MasterRuleService } from './master.rule';
 
@@ -21,7 +21,7 @@ export class UseRule extends MasterRuleService {
     private readonly checkedHelper: CheckedHelper,
     private readonly affectAxiomService: AffectAxiomService
   ) {
-    super([affectAxiomService.logMessageProduced$]);
+    super();
   }
 
   public override execute(

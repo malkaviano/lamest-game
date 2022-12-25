@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 
-import { ActionableDefinition } from '../../definitions/actionable.definition';
-import { LogMessageDefinition } from '../../definitions/log-message.definition';
-import { ActionReactiveInterface } from '../../interfaces/action-reactive.interface';
-import { LoggerInterface } from '../../interfaces/logger.interface';
-import { ReactionValuesInterface } from '../../interfaces/reaction-values.interface';
-import { ResultLiteral } from '../../literals/result.literal';
-import { GameMessagesStore } from '../../stores/game-messages.store';
+import { ActionableDefinition } from '../definitions/actionable.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
+import { LoggerInterface } from '../interfaces/logger.interface';
+import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
+import { ResultLiteral } from '../literals/result.literal';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',

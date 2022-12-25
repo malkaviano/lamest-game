@@ -12,10 +12,10 @@ import { CheckedHelper } from '../helpers/checked.helper';
 import { ActorEntity } from '../entities/actor.entity';
 import { MasterRuleService } from './master.rule';
 import { GameMessagesStore } from '../stores/game-messages.store';
-import { ActivationAxiomService } from './axioms/activation.axiom.service';
-import { DodgeAxiomService } from './axioms/dodge.axiom.service';
+import { ActivationAxiomService } from '../axioms/activation.axiom.service';
+import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
-import { AffectAxiomService } from './axioms/affect.axiom.service';
+import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { ResultLiteral } from '../literals/result.literal';
 import { ItemUsabilityLiteral } from '../literals/item-usability';
 
@@ -31,11 +31,7 @@ export class CombatRule extends MasterRuleService {
     private readonly affectedAxiomService: AffectAxiomService,
     private readonly converterHelper: ConverterHelper
   ) {
-    super([
-      rollService.logMessageProduced$,
-      activationAxiomService.logMessageProduced$,
-      dodgeAxiomService.logMessageProduced$,
-    ]);
+    super();
   }
 
   public execute(

@@ -12,7 +12,7 @@ import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { GameMessagesStore } from '../stores/game-messages.store';
-import { AffectAxiomService } from './axioms/affect.axiom.service';
+import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class ConsumeRule extends MasterRuleService {
     private readonly checkedHelper: CheckedHelper,
     private readonly affectAxiom: AffectAxiomService
   ) {
-    super([affectAxiom.logMessageProduced$]);
+    super();
   }
 
   public execute(actor: ActorInterface, event: ActionableEvent): void {

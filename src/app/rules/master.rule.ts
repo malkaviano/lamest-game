@@ -1,4 +1,4 @@
-import { merge, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActionableEvent } from '../events/actionable.event';
@@ -29,13 +29,10 @@ export abstract class MasterRuleService
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
-  constructor(observables: Observable<LogMessageDefinition>[] = []) {
+  constructor() {
     this.ruleLog = new Subject();
 
-    this.logMessageProduced$ = merge(
-      this.ruleLog.asObservable(),
-      ...observables
-    );
+    this.logMessageProduced$ = this.ruleLog.asObservable();
 
     this.actorDodged = new Subject();
 

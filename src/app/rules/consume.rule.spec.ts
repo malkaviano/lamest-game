@@ -12,7 +12,7 @@ import { CheckedHelper } from '../helpers/checked.helper';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
-import { AffectAxiomService } from './axioms/affect.axiom.service';
+import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 import {
   mockedAffectedAxiomService,

@@ -12,14 +12,13 @@ import { GameRoundService } from './game-round.service';
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
-import { RuleDispatcherService } from './rule-dispatcher.service';
 
 import {
   mockedCharacterService,
+  mockedEventHubHelperService,
   mockedGameLoopService,
   mockedInventoryService,
   mockedNarrativeService,
-  mockedRuleDispatcherService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -34,6 +33,7 @@ import {
   readable,
   actionInspect,
 } from '../../../tests/fakes';
+import { EventHubHelperService } from '../helpers/event-hub.helper.service';
 
 describe('GameBridgeService', () => {
   let service: GameBridgeService;
@@ -58,8 +58,8 @@ describe('GameBridgeService', () => {
           useValue: instance(mockedNarrativeService),
         },
         {
-          provide: RuleDispatcherService,
-          useValue: instance(mockedRuleDispatcherService),
+          provide: EventHubHelperService,
+          useValue: instance(mockedEventHubHelperService),
         },
       ],
     });

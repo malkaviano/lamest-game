@@ -8,7 +8,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 
 import { MasterRuleService } from './master.rule';
-import { AffectAxiomService } from './axioms/affect.axiom.service';
+import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class SkillRule extends MasterRuleService {
     private readonly checkedHelper: CheckedHelper,
     private readonly affectAxiomService: AffectAxiomService
   ) {
-    super([affectAxiomService.logMessageProduced$]);
+    super();
   }
 
   public execute(

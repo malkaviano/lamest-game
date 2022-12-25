@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 
-import { LogMessageDefinition } from '../../definitions/log-message.definition';
-import { ActorDodgedInterface } from '../../interfaces/actor-dodged.interface';
-import { ActorInterface } from '../../interfaces/actor.interface';
-import { LoggerInterface } from '../../interfaces/logger.interface';
-import { RollService } from '../../services/roll.service';
-import { GameMessagesStore } from '../../stores/game-messages.store';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
+import { ActorInterface } from '../interfaces/actor.interface';
+import { LoggerInterface } from '../interfaces/logger.interface';
+import { RollService } from '../services/roll.service';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 @Injectable({
   providedIn: 'root',
