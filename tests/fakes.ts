@@ -67,7 +67,7 @@ export const molotov = new WeaponDefinition(
   'Ranged Weapon (Throw)',
   new DamageDefinition(createDice(), 2, 'FIRE'),
   false,
-  'THROWABLE',
+  'DISPOSABLE',
   0
 );
 

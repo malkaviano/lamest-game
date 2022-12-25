@@ -101,7 +101,7 @@
         "effect": "FIRE"
       },
       "dodgeable": false,
-      "usability": "THROWABLE",
+      "usability": "DISPOSABLE",
       "energyActivation": 0
     },
     {

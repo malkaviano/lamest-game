@@ -1,1 +1,1 @@
-export type WeaponUsabilityLiteral = 'PERMANENT' | 'THROWABLE';
+export type WeaponUsabilityLiteral = 'PERMANENT' | 'DISPOSABLE';
