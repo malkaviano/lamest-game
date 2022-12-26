@@ -124,6 +124,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
   ): ActionableEvent | null {
     if (this.cooldownBehavior.canAct) {
+      this.cooldownBehavior.acted();
+
       const player = sceneActorsInfo.items.find(
         (a) =>
           a.classification === 'PLAYER' &&
