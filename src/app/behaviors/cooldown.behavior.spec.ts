@@ -3,19 +3,29 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { CooldownBehavior } from './cooldown.behavior';
 
 describe('CooldownBehavior', () => {
-  describe('canAct', () => {
-    it('return true then false', fakeAsync(() => {
-      expect(behavior.canAct).toEqual(true);
+  it('should throw', () => {
+    const b = behavior();
 
-      expect(behavior.canAct).toEqual(false);
+    expect(b.canAct).toEqual(true);
 
-      tick(500);
+    b.acted();
 
-      expect(behavior.canAct).toEqual(true);
-
-      tick(1000);
-    }));
+    expect(() => b.acted()).toThrowError('Wrong action executed');
   });
+
+  it('should set cooldown', fakeAsync(() => {
+    const b = behavior();
+
+    expect(b.canAct).toEqual(true);
+
+    b.acted();
+
+    expect(b.canAct).toEqual(false);
+
+    tick(600);
+
+    expect(b.canAct).toEqual(true);
+  }));
 });
 
-const behavior = CooldownBehavior.create(500);
+const behavior = () => CooldownBehavior.create(500);

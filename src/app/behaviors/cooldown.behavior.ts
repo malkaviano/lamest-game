@@ -1,4 +1,5 @@
 import { Observable, Subject } from 'rxjs';
+import { GameMessagesStore } from '../stores/game-messages.store';
 
 export class CooldownBehavior {
   private mCanAct: boolean;
@@ -16,13 +17,15 @@ export class CooldownBehavior {
   }
 
   public get canAct(): boolean {
-    if (this.mCanAct) {
-      this.timeout();
+    return this.mCanAct;
+  }
 
-      return true;
+  public acted(): void {
+    if (!this.canAct) {
+      throw new Error(GameMessagesStore.errorMessages['WRONG-ACTION']);
     }
 
-    return false;
+    this.timeout();
   }
 
   private timeout() {

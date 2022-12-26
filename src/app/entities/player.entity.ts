@@ -40,6 +40,8 @@ export class PlayerEntity extends ActorEntity {
 
       this.playerAction = null;
 
+      this.cooldownBehavior.acted();
+
       return tmp;
     }
 
