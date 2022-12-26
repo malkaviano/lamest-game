@@ -46,11 +46,11 @@ describe('CheckedHelper', () => {
     });
   });
 
-  describe('extractItemOrThrow', () => {
+  describe('takeItemOrThrow', () => {
     describe('when item was not found', () => {
       it('throw Action should not happen', () => {
         expect(() =>
-          service.extractItemOrThrow<WeaponDefinition>(
+          service.takeItemOrThrow<WeaponDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             simpleSword.identity.name
@@ -69,7 +69,40 @@ describe('CheckedHelper', () => {
         ).thenReturn(simpleSword);
 
         expect(
-          service.extractItemOrThrow<WeaponDefinition>(
+          service.takeItemOrThrow<WeaponDefinition>(
+            instance(mockedInventoryService),
+            playerInfo.id,
+            simpleSword.identity.name
+          )
+        ).toEqual(simpleSword);
+      });
+    });
+  });
+
+  describe('takeItemOrThrow', () => {
+    describe('when item was not found', () => {
+      it('throw Action should not happen', () => {
+        expect(() =>
+          service.lookItemOrThrow<WeaponDefinition>(
+            instance(mockedInventoryService),
+            playerInfo.id,
+            simpleSword.identity.name
+          )
+        ).toThrowError(GameMessagesStore.errorMessages['WRONG-ITEM']);
+      });
+    });
+
+    describe('when item was found', () => {
+      it('return item', () => {
+        when(
+          mockedInventoryService.look<WeaponDefinition>(
+            playerInfo.id,
+            simpleSword.identity.name
+          )
+        ).thenReturn(simpleSword);
+
+        expect(
+          service.lookItemOrThrow<WeaponDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             simpleSword.identity.name

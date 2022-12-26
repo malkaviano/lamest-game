@@ -79,7 +79,7 @@ describe('EquipRule', () => {
         ).thenReturn(simpleSword);
 
         when(
-          mockedCheckedHelper.extractItemOrThrow<WeaponDefinition>(
+          mockedCheckedHelper.takeItemOrThrow<WeaponDefinition>(
             instance(mockedInventoryService),
             actor.id,
             simpleSword.identity.name

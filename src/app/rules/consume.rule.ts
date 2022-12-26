@@ -30,19 +30,11 @@ export class ConsumeRule extends MasterRuleService {
   public execute(actor: ActorInterface, event: ActionableEvent): void {
     const { actionableDefinition, eventId } = event;
 
-    const consumable =
-      this.checkedHelper.extractItemOrThrow<ConsumableDefinition>(
-        this.inventoryService,
-        actor.id,
-        eventId
-      );
-
-    const logMessage = GameMessagesStore.createConsumedLogMessage(
-      actor.name,
-      consumable.identity.label
+    const consumable = this.checkedHelper.lookItemOrThrow<ConsumableDefinition>(
+      this.inventoryService,
+      actor.id,
+      eventId
     );
-
-    this.ruleLog.next(logMessage);
 
     let rollResult: ResultLiteral = 'NONE';
 
@@ -56,6 +48,21 @@ export class ConsumeRule extends MasterRuleService {
     if (['NONE', 'SUCCESS'].includes(rollResult)) {
       this.consume(actor, consumable, actionableDefinition, rollResult);
     }
+
+    if (rollResult !== 'IMPOSSIBLE' && consumable.usability === 'DISPOSABLE') {
+      this.checkedHelper.takeItemOrThrow<ConsumableDefinition>(
+        this.inventoryService,
+        actor.id,
+        eventId
+      );
+
+      const logMessage = GameMessagesStore.createLostLogMessage(
+        actor.name,
+        consumable.identity.label
+      );
+
+      this.ruleLog.next(logMessage);
+    }
   }
 
   private consume(
@@ -64,6 +71,13 @@ export class ConsumeRule extends MasterRuleService {
     actionableDefinition: ActionableDefinition,
     rollResult: ResultLiteral
   ) {
+    const logMessage = GameMessagesStore.createConsumedLogMessage(
+      actor.name,
+      consumable.identity.label
+    );
+
+    this.ruleLog.next(logMessage);
+
     const hp = consumable.hp;
 
     const energy = consumable.energy;

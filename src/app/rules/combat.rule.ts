@@ -72,7 +72,9 @@ export class CombatRule extends MasterRuleService {
 
         targetWasHit = actionResult === 'SUCCESS';
 
-        this.disposeItem(actor, usability, identity.label, actionResult);
+        if (actionResult !== 'IMPOSSIBLE') {
+          this.disposeItem(actor, usability, identity.label);
+        }
       }
 
       if (targetWasHit) {
@@ -94,10 +96,9 @@ export class CombatRule extends MasterRuleService {
   private disposeItem(
     actor: ActorInterface,
     usability: ItemUsabilityLiteral,
-    label: string,
-    actionResult: ResultLiteral
+    label: string
   ): void {
-    if (usability === 'DISPOSABLE' && actionResult !== 'IMPOSSIBLE') {
+    if (usability === 'DISPOSABLE') {
       actor.unEquip();
 
       const logMessage = GameMessagesStore.createLostLogMessage(

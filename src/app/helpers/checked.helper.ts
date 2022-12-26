@@ -22,12 +22,26 @@ export class CheckedHelper {
     return target;
   }
 
-  public extractItemOrThrow<T extends GameItemDefinition>(
+  public takeItemOrThrow<T extends GameItemDefinition>(
     inventoryService: InventoryService,
     actorId: string,
     itemName: string
   ): T {
     const item = inventoryService.take<T>(actorId, itemName);
+
+    if (!item) {
+      throw new Error(GameMessagesStore.errorMessages['WRONG-ITEM']);
+    }
+
+    return item;
+  }
+
+  public lookItemOrThrow<T extends GameItemDefinition>(
+    inventoryService: InventoryService,
+    actorId: string,
+    itemName: string
+  ): T {
+    const item = inventoryService.look<T>(actorId, itemName);
 
     if (!item) {
       throw new Error(GameMessagesStore.errorMessages['WRONG-ITEM']);

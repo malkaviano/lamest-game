@@ -71,7 +71,7 @@ describe('ConsumeRule', () => {
     describe('when item was not a consumable', () => {
       it('throw Wrong item was used', () => {
         when(
-          mockedCheckedHelper.extractItemOrThrow<ConsumableDefinition>(
+          mockedCheckedHelper.lookItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             simpleSword.identity.name
@@ -90,7 +90,15 @@ describe('ConsumeRule', () => {
     describe('when item was a consumable', () => {
       it('should log item consume', (done) => {
         when(
-          mockedCheckedHelper.extractItemOrThrow<ConsumableDefinition>(
+          mockedCheckedHelper.takeItemOrThrow<ConsumableDefinition>(
+            instance(mockedInventoryService),
+            playerInfo.id,
+            consumableFirstAid.identity.name
+          )
+        ).thenReturn(consumableFirstAid);
+
+        when(
+          mockedCheckedHelper.lookItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             consumableFirstAid.identity.name
@@ -120,9 +128,27 @@ describe('ConsumeRule', () => {
           actor,
           eventConsumeFirstAid,
           {},
-          [firstAidLog],
+          [consumedFirstAidLog, lostFirstAidLog],
           done
         );
+      });
+
+      describe('when skill could not be checked', () => {
+        it('should log item consume', (done) => {
+          when(
+            mockedCheckedHelper.lookItemOrThrow<ConsumableDefinition>(
+              instance(mockedInventoryService),
+              playerInfo.id,
+              consumableFirstAid.identity.name
+            )
+          ).thenReturn(consumableFirstAid);
+
+          when(
+            mockedRollService.actorSkillCheck(actor, 'First Aid')
+          ).thenReturn(impossibleFirstAidRoll);
+
+          ruleScenario(service, actor, eventConsumeFirstAid, {}, [], done);
+        });
       });
     });
   });
@@ -132,10 +158,18 @@ const actor = instance(mockedPlayerEntity);
 
 const successFirstAidRoll = new RollDefinition('SUCCESS', 10);
 
-const firstAidLog = new LogMessageDefinition(
+const impossibleFirstAidRoll = new RollDefinition('IMPOSSIBLE', 0);
+
+const consumedFirstAidLog = new LogMessageDefinition(
   'CONSUMED',
   playerInfo.name,
   'consumed First Aid Kit'
+);
+
+const lostFirstAidLog = new LogMessageDefinition(
+  'LOST',
+  playerInfo.name,
+  'lost First Aid Kit'
 );
 
 const logHeal5 = `${consumableFirstAid.effect}-5`;

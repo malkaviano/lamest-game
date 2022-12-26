@@ -46,7 +46,7 @@ describe('PickRule', () => {
     setupMocks();
 
     when(
-      mockedCheckedHelper.extractItemOrThrow(
+      mockedCheckedHelper.takeItemOrThrow(
         instance(mockedInventoryService),
         eventPickSimpleSword.eventId,
         eventPickSimpleSword.actionableDefinition.name

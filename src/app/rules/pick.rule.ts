@@ -31,7 +31,7 @@ export class PickRule extends MasterRuleService {
   ): void {
     const target = this.checkedHelper.getRuleTargetOrThrow(extras);
 
-    const item = this.checkedHelper.extractItemOrThrow(
+    const item = this.checkedHelper.takeItemOrThrow(
       this.inventoryService,
       action.eventId,
       action.actionableDefinition.name

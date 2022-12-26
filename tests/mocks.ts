@@ -367,7 +367,7 @@ export const setupMocks = () => {
 
   when(mockedAffectedAxiomService.logMessageProduced$).thenReturn(EMPTY);
 
-  mockExtractorHelper();
+  mockCheckedHelper();
 };
 
 const resetMocks = () => {
@@ -470,7 +470,7 @@ const resetMocks = () => {
   reset(mockedReadAxiomService);
 };
 
-function mockExtractorHelper() {
+function mockCheckedHelper() {
   when(
     mockedCheckedHelper.getRuleTargetOrThrow(
       deepEqual({

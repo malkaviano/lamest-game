@@ -33,7 +33,7 @@ export class EquipRule extends MasterRuleService {
     const skillName = item.skillName;
 
     if (actor.skills[skillName] > 0) {
-      const weapon = this.checkedHelper.extractItemOrThrow<WeaponDefinition>(
+      const weapon = this.checkedHelper.takeItemOrThrow<WeaponDefinition>(
         this.inventoryService,
         actor.id,
         action.eventId
