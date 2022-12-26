@@ -13,4 +13,5 @@ export interface GameSettingsInterface {
     readonly resistances: ArrayView<EffectTypeLiteral>;
   };
   readonly oneDodgesEveryAgiAmount: number;
+  readonly actionCooldown: number;
 }

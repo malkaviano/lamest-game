@@ -93,6 +93,7 @@ export class ResourcesStore {
   public readonly readableStore: ReadableStoreInterface;
 
   public readonly visibilityStateStore: VisibilityStateStoreInterface;
+
   constructor() {
     const {
       professionPoints,
@@ -101,6 +102,7 @@ export class ResourcesStore {
       resistanceCoefficient,
       playerEffectDefenses,
       oneDodgesEveryAgiAmount,
+      actionCooldown,
     } = settingsStore.settings;
 
     const cures = ArrayView.create(
@@ -132,6 +134,7 @@ export class ResourcesStore {
           resistances,
           vulnerabilities,
         },
+        actionCooldown,
       },
     };
 

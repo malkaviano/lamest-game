@@ -1,6 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 
 import { ActorBehavior } from '../behaviors/actor.behavior';
+import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import {
   ActionableDefinition,
@@ -54,7 +55,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     resettable: boolean,
     protected readonly actorBehavior: ActorBehavior,
     protected readonly equipmentBehavior: EquipmentBehavior,
-    protected readonly killedState: ActionableState
+    protected readonly killedState: ActionableState,
+    protected readonly cooldownBehavior: CooldownBehavior
   ) {
     super(
       identity.id,
@@ -117,18 +119,20 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public action(
     sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
   ): ActionableEvent | null {
-    const player = sceneActorsInfo.items.find(
-      (a) =>
-        a.classification === 'PLAYER' &&
-        a.situation === 'ALIVE' &&
-        a.visibility === 'VISIBLE'
-    );
-
-    if (player) {
-      return new ActionableEvent(
-        createActionableDefinition('AFFECT', 'affect', 'Use Equipped'),
-        player.id
+    if (this.cooldownBehavior.canAct) {
+      const player = sceneActorsInfo.items.find(
+        (a) =>
+          a.classification === 'PLAYER' &&
+          a.situation === 'ALIVE' &&
+          a.visibility === 'VISIBLE'
       );
+
+      if (player) {
+        return new ActionableEvent(
+          createActionableDefinition('AFFECT', 'affect', 'Use Equipped'),
+          player.id
+        );
+      }
     }
 
     return null;

@@ -13,6 +13,7 @@
       ],
       "vulnerabilities": [],
       "resistances": []
-    }
+    },
+    "actionCooldown": 5000
   }
 }

@@ -14,6 +14,7 @@ import { SkillStore } from '../stores/skill.store';
 import { SettingsStore } from '../stores/settings.store';
 
 import {
+  mockedCooldownBehavior,
   mockedGeneratorService,
   mockedProfessionStore,
   mockedSettingsStore,
@@ -129,5 +130,6 @@ const expectedCharacter = new PlayerEntity(
     instance(mockedSkillStore),
     actorSettings
   ),
-  EquipmentBehavior.create()
+  EquipmentBehavior.create(),
+  instance(mockedCooldownBehavior)
 );

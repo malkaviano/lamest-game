@@ -27,6 +27,7 @@ import {
 } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
+  mockedCooldownBehavior,
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
@@ -436,7 +437,8 @@ const fakeActor = () =>
     false,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
-    emptyState
+    emptyState,
+    instance(mockedCooldownBehavior)
   );
 
 const equipActorScenario = (

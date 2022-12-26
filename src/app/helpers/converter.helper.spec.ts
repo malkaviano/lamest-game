@@ -7,6 +7,7 @@ import { emptyState } from '../states/empty.state';
 
 import {
   mockedActorBehavior,
+  mockedCooldownBehavior,
   mockedEquipmentBehavior,
   mockedInteractiveEntity,
   setupMocks,
@@ -20,7 +21,8 @@ const actor = new ActorEntity(
   false,
   instance(mockedActorBehavior),
   instance(mockedEquipmentBehavior),
-  emptyState
+  emptyState,
+  instance(mockedCooldownBehavior)
 );
 
 describe('ConverterHelper', () => {

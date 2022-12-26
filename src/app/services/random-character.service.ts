@@ -10,6 +10,7 @@ import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ProfessionStore } from '../stores/profession.store';
 import { SkillStore } from '../stores/skill.store';
 import { SettingsStore } from '../stores/settings.store';
+import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,7 @@ export class RandomCharacterService {
       playerEffectDefenses,
       resistanceCoefficient,
       vulnerabilityCoefficient,
+      actionCooldown,
     } = this.settingsStore.settings;
 
     return new PlayerEntity(
@@ -47,7 +49,8 @@ export class RandomCharacterService {
           vulnerabilityCoefficient,
         }
       ),
-      EquipmentBehavior.create()
+      EquipmentBehavior.create(),
+      CooldownBehavior.create(actionCooldown)
     );
   }
 

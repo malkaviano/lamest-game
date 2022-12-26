@@ -14,5 +14,6 @@ export interface SettingsStoreInterface {
       readonly resistances: ArrayView<EffectTypeLiteral>;
     };
     readonly oneDodgesEveryAgiAmount: number;
+    readonly actionCooldown: number;
   };
 }

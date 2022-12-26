@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActorBehavior } from '../behaviors/actor.behavior';
+import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
@@ -9,6 +10,7 @@ import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
+import { SettingsStore } from './settings.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
 
@@ -23,7 +25,8 @@ export class ActorStore {
     stateStore: StatesStore,
     resourcesStore: ResourcesStore,
     itemStore: ItemStore,
-    skillStore: SkillStore
+    skillStore: SkillStore,
+    settingsStore: SettingsStore
   ) {
     this.store = new Map<string, ActorEntity>();
 
@@ -51,7 +54,8 @@ export class ActorStore {
             actorSettings
           ),
           EquipmentBehavior.create(),
-          stateStore.states[killedState]
+          stateStore.states[killedState],
+          CooldownBehavior.create(settingsStore.settings.actionCooldown)
         );
 
         actor.equip(itemStore.items[equippedWeapon] as WeaponDefinition);

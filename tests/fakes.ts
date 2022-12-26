@@ -330,6 +330,7 @@ export const gameSettings: GameSettingsInterface = {
   oneDodgesEveryAgiAmount: 8,
   intelligencePoints: 10,
   professionPoints: 300,
+  actionCooldown: 0,
 };
 
 export const actorSettings: ActorSettingsInterface = {

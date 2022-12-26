@@ -6,6 +6,7 @@ import { emptyState } from '../states/empty.state';
 import { ActorEntity } from './actor.entity';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
+import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 
 export class PlayerEntity extends ActorEntity {
   private playerAction: ActionableEvent | null;
@@ -13,7 +14,8 @@ export class PlayerEntity extends ActorEntity {
   constructor(
     public readonly identity: CharacterIdentityDefinition,
     actorBehavior: ActorBehavior,
-    equipmentBehavior: EquipmentBehavior
+    equipmentBehavior: EquipmentBehavior,
+    cooldownBehavior: CooldownBehavior
   ) {
     super(
       new ActorIdentityDefinition(identity.name, identity.name, ''),
@@ -21,7 +23,8 @@ export class PlayerEntity extends ActorEntity {
       false,
       actorBehavior,
       equipmentBehavior,
-      emptyState
+      emptyState,
+      cooldownBehavior
     );
 
     this.playerAction = null;
@@ -32,7 +35,15 @@ export class PlayerEntity extends ActorEntity {
   }
 
   public override action(): ActionableEvent | null {
-    return this.playerAction;
+    if (this.playerAction && this.cooldownBehavior.canAct) {
+      const tmp = this.playerAction;
+
+      this.playerAction = null;
+
+      return tmp;
+    }
+
+    return null;
   }
 
   public playerDecision(event: ActionableEvent | null): void {

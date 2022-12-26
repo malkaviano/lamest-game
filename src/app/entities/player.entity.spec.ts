@@ -6,6 +6,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { fakeIdentity, actionConsume } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
+  mockedCooldownBehavior,
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
@@ -46,5 +47,6 @@ const fakeCharacter = () =>
   new PlayerEntity(
     fakeIdentity,
     instance(mockedActorBehavior),
-    instance(mockedEquipmentBehavior)
+    instance(mockedEquipmentBehavior),
+    instance(mockedCooldownBehavior)
   );

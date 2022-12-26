@@ -27,7 +27,7 @@ export class GameBridgeService {
   public readonly events: GameEventsDefinition;
 
   constructor(
-    private readonly gameRoundService: GameRoundService,
+    gameRoundService: GameRoundService,
     characterService: CharacterService,
     narrativeService: NarrativeService,
     inventoryService: InventoryService,
@@ -49,15 +49,17 @@ export class GameBridgeService {
       eventHubHelperService.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
-      this.gameRoundService.documentOpened$
+      gameRoundService.documentOpened$
     );
+
+    (() =>
+      setInterval(() => {
+        gameRoundService.run();
+      }, 200))();
   }
 
   public actionableReceived(action: ActionableEvent): void {
     this.player.playerDecision(action);
-
-    // TODO: This shouldn't be here, we must communicate by (timed) events. Next version.
-    this.gameRoundService.run();
   }
 
   private playerInventory(
