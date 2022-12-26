@@ -39,7 +39,7 @@ export class SkillRule extends MasterRuleService {
         event.actionableDefinition,
         result,
         {
-          actorVisibility: actor,
+          actor,
           target,
         }
       );

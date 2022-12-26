@@ -40,9 +40,6 @@ export class CombatRule extends MasterRuleService {
   ): void {
     const target = this.checkedHelper.getRuleTargetOrThrow(extras);
 
-    // CHANGEME: This seems to be in the wrong place.
-    actor.changeVisibility('VISIBLE');
-
     const {
       dodgeable,
       damage,
@@ -90,6 +87,8 @@ export class CombatRule extends MasterRuleService {
           this.applyDamage(target, action.actionableDefinition, damage);
         }
       }
+
+      actor.changeVisibility('VISIBLE');
     }
   }
 

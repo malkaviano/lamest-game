@@ -21,7 +21,7 @@ export class VisibilityState extends ActionableState {
     result: ResultLiteral,
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
-    const actor = values.actorVisibility;
+    const actor = values.actor;
 
     const target = values.target;
 

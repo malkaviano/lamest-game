@@ -63,7 +63,7 @@ describe('VisibilityState', () => {
         it('throw Invalid operation ocurred', () => {
           expect(() =>
             fakeState(action, 1).onResult(action, 'SUCCESS', {
-              actorVisibility: instance(mockedPlayerEntity),
+              actor: instance(mockedPlayerEntity),
             })
           ).toThrowError(GameMessagesStore.errorMessages['INVALID-OPERATION']);
         });
@@ -123,7 +123,7 @@ describe('VisibilityState', () => {
           action,
           rollResult as ResultLiteral,
           {
-            actorVisibility: char,
+            actor: char,
           }
         );
 
@@ -134,7 +134,7 @@ describe('VisibilityState', () => {
         const char = fakeCharacter();
 
         fakeState(action, tries).onResult(action, rollResult as ResultLiteral, {
-          actorVisibility: char,
+          actor: char,
           target: char,
         });
 
@@ -167,7 +167,7 @@ describe('VisibilityState', () => {
           action,
           rollResult as ResultLiteral,
           {
-            actorVisibility: char,
+            actor: char,
             target: char,
           }
         );
@@ -181,7 +181,7 @@ describe('VisibilityState', () => {
         char.changeVisibility('HIDDEN');
 
         fakeState(action, tries).onResult(action, rollResult as ResultLiteral, {
-          actorVisibility: char,
+          actor: char,
           target: char,
         });
 
