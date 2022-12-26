@@ -101,7 +101,7 @@ export class CombatRule extends MasterRuleService {
     if (usability === 'DISPOSABLE') {
       actor.unEquip();
 
-      const logMessage = GameMessagesStore.createLostLogMessage(
+      const logMessage = GameMessagesStore.createLostItemLogMessage(
         actor.name,
         label
       );

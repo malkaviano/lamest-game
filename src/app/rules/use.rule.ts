@@ -46,7 +46,7 @@ export class UseRule extends MasterRuleService {
 
       this.ruleLog.next(logMessage);
     } else {
-      const logMessage = GameMessagesStore.createLostLogMessage(
+      const logMessage = GameMessagesStore.createLostItemLogMessage(
         actor.name,
         item.identity.label
       );

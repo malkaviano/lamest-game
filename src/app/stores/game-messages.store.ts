@@ -228,7 +228,7 @@ export class GameMessagesStore {
     );
   }
 
-  public static createLostLogMessage(
+  public static createLostItemLogMessage(
     actor: string,
     item: string
   ): LogMessageDefinition {

@@ -203,9 +203,9 @@ describe('GameMessagesStoreService', () => {
 
     describe('createLostLogMessage', () => {
       it('return lost key', () => {
-        expect(GameMessagesStore.createLostLogMessage('player', 'key')).toEqual(
-          new LogMessageDefinition('LOST', 'player', 'lost key')
-        );
+        expect(
+          GameMessagesStore.createLostItemLogMessage('player', 'key')
+        ).toEqual(new LogMessageDefinition('LOST', 'player', 'lost key'));
       });
     });
 

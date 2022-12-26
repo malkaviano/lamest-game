@@ -56,7 +56,7 @@ export class ConsumeRule extends MasterRuleService {
         eventId
       );
 
-      const logMessage = GameMessagesStore.createLostLogMessage(
+      const logMessage = GameMessagesStore.createLostItemLogMessage(
         actor.name,
         consumable.identity.label
       );
