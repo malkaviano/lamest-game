@@ -2,7 +2,7 @@
   "states": [
     {
       "id": "campFireOff",
-      "actionable": "makeFire",
+      "actionable": "skillMakeFire",
       "maximumTries": 100,
       "successState": "campFireOn"
     },

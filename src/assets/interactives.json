@@ -148,6 +148,24 @@
           "quantity": 1
         }
       ]
+    },
+
+    {
+      "id": "wannabeGuard",
+      "items": [
+        {
+          "name": "bambooSword",
+          "quantity": 1
+        },
+        {
+          "name": "lockPick",
+          "quantity": 1
+        },
+        {
+          "name": "rawMeat",
+          "quantity": 2
+        }
+      ]
     }
   ]
 }

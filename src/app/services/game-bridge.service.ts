@@ -58,7 +58,7 @@ export class GameBridgeService {
     (() =>
       setInterval(() => {
         gameRoundService.run();
-      }, 200))();
+      }, 100))();
   }
 
   public actionableReceived(action: ActionableEvent): void {

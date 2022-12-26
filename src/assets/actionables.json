@@ -62,55 +62,63 @@
     },
 
     {
-      "key": "hunterJournal1",
+      "key": "pickHunterJournal1",
       "name": "hunterJournal1",
       "actionable": "PICK",
-      "label": "Hunter's Journal #1"
+      "label": "PICK Hunter's Journal #1"
     },
     {
-      "key": "hunterJournal2",
+      "key": "pickHunterJournal2",
       "name": "hunterJournal2",
       "actionable": "PICK",
-      "label": "Hunter's Journal #2"
+      "label": "PICK Hunter's Journal #2"
     },
     {
-      "key": "hunterJournal3",
+      "key": "pickHunterJournal3",
       "name": "hunterJournal3",
       "actionable": "PICK",
-      "label": "Hunter's Journal #3"
+      "label": "PICK Hunter's Journal #3"
     },
 
     {
-      "key": "huntingKnife",
+      "key": "pickHuntingKnife",
       "name": "huntingKnife",
       "actionable": "PICK",
-      "label": "Hunting Knife"
+      "label": "PICK Hunting Knife"
     },
     {
-      "key": "winchester88",
+      "key": "pickWinchester88",
       "name": "winchester88",
       "actionable": "PICK",
-      "label": "Winchester 88"
+      "label": "PICK Winchester 88"
     },
 
     {
-      "key": "disguise",
+      "key": "skillDisguise",
       "name": "Disguise",
-      "actionable": "SKILL"
+      "actionable": "SKILL",
+      "label": "Use Disguise"
     },
 
     {
-      "key": "makeFire",
+      "key": "skillMakeFire",
       "name": "Survival",
       "actionable": "SKILL",
       "label": "Make Fire"
     },
 
     {
+      "key": "pickRawMeat",
+      "name": "rawMeat",
+      "actionable": "PICK",
+      "label": "PICK Raw Meat"
+    },
+
+    {
       "key": "roastMeat",
-      "name": "roastMeat",
+      "name": "rawMeat",
       "actionable": "USE",
-      "label": "Roast Meat"
+      "label": "Rost Meat"
     },
 
     {
@@ -121,17 +129,12 @@
     },
 
     {
-      "key": "friendNote",
+      "key": "pickFriendNote",
       "name": "friendNote",
       "actionable": "PICK",
-      "label": "Friend's Note"
+      "label": "PICK Friend's Note"
     },
 
-    {
-      "key": "athleticism",
-      "name": "Athleticism",
-      "actionable": "SKILL"
-    },
     {
       "key": "affect",
       "name": "affect",
@@ -140,35 +143,37 @@
     },
 
     {
-      "key": "firstAid",
+      "key": "pickFirstAid",
       "name": "firstAid",
       "actionable": "PICK",
-      "label": "First Aid Kit"
-    },
-    {
-      "key": "club",
-      "name": "club",
-      "actionable": "PICK",
-      "label": "Wood Stick"
+      "label": "PICK Kit"
     },
 
     {
-      "key": "halberd",
-      "name": "halberd",
+      "key": "pickBambooSword",
+      "name": "bambooSword",
       "actionable": "PICK",
-      "label": "Halberd"
+      "label": "PICK Bamboo Sword"
     },
+
     {
-      "key": "analgesic",
+      "key": "pickLockPick",
+      "name": "lockPick",
+      "actionable": "PICK",
+      "label": "PICK Lockpick"
+    },
+
+    {
+      "key": "pickAnalgesic",
       "name": "analgesic",
       "actionable": "PICK",
-      "label": "Analgesic"
+      "label": "PICK Analgesic"
     },
     {
-      "key": "molotov",
+      "key": "pickMolotov",
       "name": "molotov",
       "actionable": "PICK",
-      "label": "Molotov"
+      "label": "PICK Molotov"
     },
     {
       "key": "useMasterKey",
@@ -177,23 +182,23 @@
       "label": "Use Master Key"
     },
     {
-      "key": "getMasterKey",
+      "key": "pickMasterKey",
       "name": "masterKey",
       "actionable": "PICK",
-      "label": "Master Key"
+      "label": "PICK Master Key"
     },
     {
-      "key": "glock17",
+      "key": "pickGlock17",
       "name": "g17",
       "actionable": "PICK",
-      "label": "Glock 17"
+      "label": "PICK Glock 17"
     },
 
     {
-      "key": "talisman",
+      "key": "pickTalisman",
       "name": "talisman",
       "actionable": "PICK",
-      "label": "Sacred Talisman"
+      "label": "PICK Talisman"
     }
   ]
 }

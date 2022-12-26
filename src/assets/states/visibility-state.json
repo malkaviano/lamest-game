@@ -2,8 +2,8 @@
   "states": [
     {
       "id": "disguiseVillager",
-      "actionable": "disguise",
-      "maximumTries": 1
+      "actionable": "skillDisguise",
+      "maximumTries": 3
     }
   ]
 }

@@ -3,38 +3,34 @@
     {
       "id": "hunterCabinTableLoot",
       "actionables": [
-        "hunterJournal1",
-        "hunterJournal2",
-        "hunterJournal3",
-        "huntingKnife"
+        "pickHunterJournal1",
+        "pickHunterJournal2",
+        "pickHunterJournal3",
+        "pickHuntingKnife"
       ]
     },
     {
       "id": "hunterCabinWallLoot",
-      "actionables": ["winchester88"]
+      "actionables": ["pickWinchester88"]
     },
 
     {
       "id": "bushesLoot",
-      "actionables": ["friendNote"]
+      "actionables": ["pickFriendNote"]
     },
 
     {
-      "id": "shelfLoot",
-      "actionables": ["firstAid", "firstAid"]
-    },
-    {
-      "id": "lootWoodBox",
-      "actionables": ["club", "getMasterKey"]
-    },
-
-    {
-      "id": "lockedChestLoot",
-      "actionables": ["halberd"]
+      "id": "wannabeGuardLoot",
+      "actionables": [
+        "pickBambooSword",
+        "pickLockPick",
+        "pickRawMeat",
+        "pickRawMeat"
+      ]
     },
     {
       "id": "lockPickingChestLoot",
-      "actionables": ["glock17"]
+      "actionables": ["pickGlock17"]
     }
   ]
 }

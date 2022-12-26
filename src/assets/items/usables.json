@@ -11,6 +11,12 @@
       "label": "Lock Pick",
       "description": "Use to open locked containers",
       "usability": "DISPOSABLE"
+    },
+    {
+      "name": "rawMeat",
+      "label": "Raw Meat",
+      "description": "Can be roasted",
+      "usability": "DISPOSABLE"
     }
   ]
 }

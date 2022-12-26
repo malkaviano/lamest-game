@@ -50,7 +50,7 @@
         }
       ],
       "equippedWeapon": "bambooSword",
-      "killedState": "emptyState",
+      "killedState": "wannabeGuardLoot",
       "behaviorState": "affectable",
       "immunities": [],
       "cures": [],
