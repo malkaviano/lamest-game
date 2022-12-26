@@ -193,26 +193,24 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     let resultHPLog: string | null = null;
     let resultEPLog: string | null = null;
 
-    if (this.situation === 'ALIVE') {
-      if (
-        values.effect &&
-        ((actionable === 'AFFECT' && result === 'SUCCESS') ||
-          (actionable === 'CONSUME' && ['SUCCESS', 'NONE'].includes(result)))
-      ) {
-        resultHPLog = this.effect(values.effect);
-      }
-
-      if (
-        values.energy &&
-        actionable === 'CONSUME' &&
-        ['SUCCESS', 'NONE'].includes(result)
-      ) {
-        resultEPLog = this.energy(values.energy);
-      }
+    if (this.situation === 'DEAD') {
+      return super.reactTo(action, result, values);
     }
 
-    if (this.situation === 'DEAD') {
-      this.publish(this.currentState.actions, this.killedState.actions);
+    if (
+      values.effect &&
+      ((actionable === 'AFFECT' && result === 'SUCCESS') ||
+        (actionable === 'CONSUME' && ['SUCCESS', 'NONE'].includes(result)))
+    ) {
+      resultHPLog = this.effect(values.effect);
+    }
+
+    if (
+      values.energy &&
+      actionable === 'CONSUME' &&
+      ['SUCCESS', 'NONE'].includes(result)
+    ) {
+      resultEPLog = this.energy(values.energy);
     }
 
     const logs = [resultHPLog, resultEPLog].filter((log) => log);
@@ -226,6 +224,12 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   private effect(effect: EffectEvent): string | null {
     const result = this.actorBehavior.effectReceived(effect);
+
+    if (this.situation === 'DEAD') {
+      this.publish(this.currentState.actions, this.killedState.actions);
+
+      this.currentState = this.killedState;
+    }
 
     let resultLog: string | null;
 

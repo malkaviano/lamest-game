@@ -1,10 +1,8 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { HitPointsEvent } from '../events/hit-points.event';
-import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActorEntity } from './actor.entity';
-import { emptyState } from '../states/empty.state';
 import { ArrayView } from '../views/array.view';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import {
@@ -24,8 +22,11 @@ import {
   actionConsume,
   playerInfo,
   actionableEvent,
+  actionPickAnalgesic,
 } from '../../../tests/fakes';
 import {
+  mockedActionableState,
+  mockedActionableState2,
   mockedActorBehavior,
   mockedAiBehavior,
   mockedCooldownBehavior,
@@ -59,6 +60,10 @@ describe('ActorEntity', () => {
         deepEqual([playerInfo.id])
       )
     ).thenReturn(eventAttackPlayer);
+
+    when(mockedActionableState.actions).thenReturn(ArrayView.create([]));
+
+    when(mockedActionableState2.actions).thenReturn(ArrayView.create([]));
   });
 
   describe('derivedAttributes', () => {
@@ -156,24 +161,26 @@ describe('ActorEntity', () => {
     });
 
     describe('when DEAD', () => {
-      it('should emit actions changed event', (done) => {
+      it('should invoke interactive reactTo', () => {
         when(mockedActorBehavior.situation).thenReturn('DEAD');
-
-        let result: ArrayView<ActionableDefinition> | undefined;
 
         const char = fakeActor();
 
-        char.actionsChanged$.subscribe((event) => {
-          result = event;
-        });
+        when(mockedActionableState.actions).thenReturn(
+          ArrayView.create([actionPickAnalgesic])
+        );
 
-        char.reactTo(actionAttack, 'SUCCESS', {
-          effect: fakeEffect('ACID', 6),
-        });
+        when(
+          mockedActionableState.onResult(
+            actionPickAnalgesic,
+            'NONE',
+            deepEqual({})
+          )
+        ).thenReturn({ state: killedState, log: 'invoked' });
 
-        done();
+        const result = char.reactTo(actionPickAnalgesic, 'NONE', {});
 
-        expect(result).toEqual(ArrayView.create([]));
+        expect(result).toEqual('invoked');
       });
     });
 
@@ -325,6 +332,28 @@ describe('ActorEntity', () => {
         });
       });
     });
+
+    describe('when died', () => {
+      it('should change to killed state', () => {
+        when(mockedActorBehavior.situation).thenReturn('ALIVE');
+
+        when(
+          mockedActorBehavior.effectReceived(deepEqual(fakeEffect('ACID', 10)))
+        ).thenCall(() => {
+          when(mockedActorBehavior.situation).thenReturn('DEAD');
+
+          return new HitPointsEvent(10, 0);
+        });
+
+        const char = fakeActor();
+
+        char.reactTo(actionAttack, 'SUCCESS', {
+          effect: fakeEffect('ACID', 10),
+        });
+
+        expect(char.situation).toEqual('DEAD');
+      });
+    });
   });
 
   describe('weaponEquipped', () => {
@@ -452,14 +481,16 @@ describe('ActorEntity', () => {
   });
 });
 
+const killedState = instance(mockedActionableState2);
+
 const fakeActor = () =>
   new ActorEntity(
     new ActorIdentityDefinition('id1', 'actor', 'Some Actor'),
-    emptyState,
+    instance(mockedActionableState),
     false,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
-    emptyState,
+    killedState,
     {
       cooldownBehavior: instance(mockedCooldownBehavior),
       aiBehavior: instance(mockedAiBehavior),
