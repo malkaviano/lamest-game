@@ -49,6 +49,7 @@ import skillStore from '../../assets/skills.json';
 import settingsStore from '../../assets/settings.json';
 import readableStore from '../../assets/items/readables.json';
 import visibilityStateStore from '../../assets/states/visibility-state.json';
+import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -240,6 +241,7 @@ export class ResourcesStore {
           },
           oneDodgesEveryAgiAmount,
         },
+        aiBehavior: a.aiBehavior as AiBehaviorLiteral,
       };
     });
 

@@ -26,5 +26,7 @@ export interface ActorInterface
     sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
   ): ActionableEvent | null;
 
+  afflictedBy(actorId: string): void;
+
   get situation(): ActorSituationLiteral;
 }

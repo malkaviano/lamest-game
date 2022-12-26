@@ -1,1 +1,1 @@
-export type EnemyBehaviorLiteral = 'RETALIATE' | 'AGGRESSIVE';
+export type AiBehaviorLiteral = 'RETALIATE' | 'AGGRESSIVE' | 'PASSIVE';

@@ -1,12 +1,10 @@
 import { Observable, Subject } from 'rxjs';
 
 import { ActorBehavior } from '../behaviors/actor.behavior';
+import { AiBehavior } from '../behaviors/ai.behavior';
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
-import {
-  ActionableDefinition,
-  createActionableDefinition,
-} from '../definitions/actionable.definition';
+import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
@@ -26,12 +24,13 @@ import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
 import { GameMessagesStore } from '../stores/game-messages.store';
-
 import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
+
+  private readonly mAfflictedBy: Set<string>;
 
   private readonly hpChanged: Subject<HitPointsEvent>;
 
@@ -40,6 +39,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private readonly epChanged: Subject<EnergyPointsEvent>;
 
   private readonly visibilityChanged: Subject<VisibilityLiteral>;
+
+  protected readonly cooldownBehavior: CooldownBehavior;
+
+  protected readonly aiBehavior: AiBehavior;
 
   public readonly hpChanged$: Observable<HitPointsEvent>;
 
@@ -58,7 +61,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     protected readonly actorBehavior: ActorBehavior,
     protected readonly equipmentBehavior: EquipmentBehavior,
     protected readonly killedState: ActionableState,
-    protected readonly cooldownBehavior: CooldownBehavior
+    behaviors: {
+      readonly cooldownBehavior: CooldownBehavior;
+      readonly aiBehavior: AiBehavior;
+    }
   ) {
     super(
       identity.id,
@@ -68,7 +74,13 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       resettable
     );
 
+    this.cooldownBehavior = behaviors.cooldownBehavior;
+
+    this.aiBehavior = behaviors.aiBehavior;
+
     this.mVisibility = 'VISIBLE';
+
+    this.mAfflictedBy = new Set();
 
     this.hpChanged = new Subject();
 
@@ -89,20 +101,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.canActChanged$ = this.cooldownBehavior.canActChanged$;
   }
 
-  public get visibility(): VisibilityLiteral {
-    return this.mVisibility;
-  }
-
-  public changeVisibility(visibility: VisibilityLiteral): void {
-    const old = this.visibility;
-
-    this.mVisibility = visibility;
-
-    if (old !== this.visibility) {
-      this.visibilityChanged.next(this.visibility);
-    }
-  }
-
   public get dodgesPerRound(): number {
     return this.actorBehavior.dodgesPerRound;
   }
@@ -113,35 +111,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public override get classification(): ClassificationLiteral {
     return 'ACTOR';
-  }
-
-  public wannaDodge(effect: EffectTypeLiteral): boolean {
-    return this.actorBehavior.wannaDodge(effect);
-  }
-
-  // TODO: implement some AI behavior
-  public action(
-    sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
-  ): ActionableEvent | null {
-    if (this.cooldownBehavior.canAct) {
-      this.cooldownBehavior.acted();
-
-      const player = sceneActorsInfo.items.find(
-        (a) =>
-          a.classification === 'PLAYER' &&
-          a.situation === 'ALIVE' &&
-          a.visibility === 'VISIBLE'
-      );
-
-      if (player) {
-        return new ActionableEvent(
-          createActionableDefinition('AFFECT', 'affect', 'Use Equipped'),
-          player.id
-        );
-      }
-    }
-
-    return null;
   }
 
   public get weaponEquipped(): WeaponDefinition {
@@ -158,6 +127,42 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public get skills(): KeyValueInterface<number> {
     return this.actorBehavior.skills;
+  }
+
+  public get visibility(): VisibilityLiteral {
+    return this.mVisibility;
+  }
+
+  public changeVisibility(visibility: VisibilityLiteral): void {
+    const old = this.visibility;
+
+    this.mVisibility = visibility;
+
+    if (old !== this.visibility) {
+      this.visibilityChanged.next(this.visibility);
+    }
+  }
+
+  public wannaDodge(effect: EffectTypeLiteral): boolean {
+    return this.actorBehavior.wannaDodge(effect);
+  }
+
+  public action(
+    sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
+  ): ActionableEvent | null {
+    if (this.cooldownBehavior.canAct) {
+      this.cooldownBehavior.acted();
+
+      return this.aiBehavior.action(sceneActorsInfo, [
+        ...this.mAfflictedBy.values(),
+      ]);
+    }
+
+    return null;
+  }
+
+  public afflictedBy(actorId: string): void {
+    this.mAfflictedBy.add(actorId);
   }
 
   public equip(weapon: WeaponDefinition): WeaponDefinition | null {

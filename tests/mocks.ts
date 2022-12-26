@@ -70,6 +70,7 @@ import { DodgeAxiomService } from '../src/app/axioms/dodge.axiom.service';
 import { EventHubHelperService } from '../src/app/helpers/event-hub.helper.service';
 import { ReadAxiomService } from '../src/app/axioms/read.axiom.service';
 import { CooldownBehavior } from '../src/app/behaviors/cooldown.behavior';
+import { AiBehavior } from '../src/app/behaviors/ai.behavior';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -180,6 +181,8 @@ export const mockedEventHubHelperService = mock(EventHubHelperService);
 export const mockedReadAxiomService = mock(ReadAxiomService);
 
 export const mockedCooldownBehavior = mock(CooldownBehavior);
+
+export const mockedAiBehavior = mock(AiBehavior);
 
 export const setupMocks = () => {
   resetMocks();
@@ -476,6 +479,8 @@ const resetMocks = () => {
   reset(mockedReadAxiomService);
 
   reset(mockedCooldownBehavior);
+
+  reset(mockedAiBehavior);
 };
 
 function mockCheckedHelper() {

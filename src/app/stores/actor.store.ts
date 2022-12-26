@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ActorBehavior } from '../behaviors/actor.behavior';
+import { AiBehavior } from '../behaviors/ai.behavior';
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
@@ -42,6 +43,7 @@ export class ActorStore {
         killedState,
         behaviorState,
         actorSettings,
+        aiBehavior,
       }) => {
         const actor = new ActorEntity(
           new ActorIdentityDefinition(id, name, description),
@@ -55,7 +57,12 @@ export class ActorStore {
           ),
           EquipmentBehavior.create(),
           stateStore.states[killedState],
-          CooldownBehavior.create(settingsStore.settings.actionCooldown)
+          {
+            cooldownBehavior: CooldownBehavior.create(
+              settingsStore.settings.actionCooldown
+            ),
+            aiBehavior: AiBehavior.create(aiBehavior),
+          }
         );
 
         actor.equip(itemStore.items[equippedWeapon] as WeaponDefinition);

@@ -27,6 +27,7 @@ import {
 } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
+  mockedAiBehavior,
   mockedCooldownBehavior,
   mockedEquipmentBehavior,
   setupMocks,
@@ -51,6 +52,13 @@ describe('ActorEntity', () => {
     when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
 
     when(mockedActorBehavior.dodgesPerRound).thenReturn(1);
+
+    when(
+      mockedAiBehavior.action(
+        deepEqual(fakeSceneActorsInfo),
+        deepEqual([playerInfo.id])
+      )
+    ).thenReturn(eventAttackPlayer);
   });
 
   describe('derivedAttributes', () => {
@@ -387,13 +395,27 @@ describe('ActorEntity', () => {
 
   describe('action', () => {
     it('return action attack', () => {
-      expect(fakeActor().action(fakeSceneActorsInfo)).toEqual(
-        eventAttackPlayer
-      );
+      const actor = fakeActor();
+
+      actor.afflictedBy(playerInfo.id);
+
+      expect(actor.action(fakeSceneActorsInfo)).toEqual(eventAttackPlayer);
     });
 
     it('return action null', () => {
       expect(fakeActor().action(ArrayView.create([]))).toBeNull();
+    });
+
+    describe('when canAct is false', () => {
+      it('return action null', () => {
+        const actor = fakeActor();
+
+        actor.afflictedBy(playerInfo.id);
+
+        when(mockedCooldownBehavior.canAct).thenReturn(false);
+
+        expect(actor.action(fakeSceneActorsInfo)).toBeNull();
+      });
     });
   });
 
@@ -438,7 +460,10 @@ const fakeActor = () =>
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
     emptyState,
-    instance(mockedCooldownBehavior)
+    {
+      cooldownBehavior: instance(mockedCooldownBehavior),
+      aiBehavior: instance(mockedAiBehavior),
+    }
   );
 
 const equipActorScenario = (
