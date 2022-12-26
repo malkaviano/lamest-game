@@ -52,8 +52,6 @@ export class RuleDispatcherService implements LoggerInterface {
     };
 
     this.logMessageProduced$ = merge(
-      useRule.logMessageProduced$,
-      unequipRule.logMessageProduced$,
       skillRule.logMessageProduced$,
       pickRule.logMessageProduced$,
       equipRule.logMessageProduced$,
