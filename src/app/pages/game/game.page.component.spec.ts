@@ -86,6 +86,8 @@ describe('GamePageComponent', () => {
       })
     );
 
+    when(mockedGameEventsService.canActChanged$).thenReturn(of(true));
+
     fixture = TestBed.createComponent(GamePageComponent);
 
     component = fixture.componentInstance;

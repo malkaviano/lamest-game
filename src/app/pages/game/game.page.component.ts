@@ -31,8 +31,10 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public equipped!: GameItemDefinition;
 
+  public canAct: boolean;
+
   constructor(
-    private readonly gameManagerService: GameBridgeService,
+    private readonly gameBridgeService: GameBridgeService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly formatterHelperService: FormatterHelperService,
     private readonly dialog: MatDialog
@@ -52,6 +54,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
       ArrayView.create([]),
       ArrayView.create([])
     );
+
+    this.canAct = true;
   }
 
   ngOnDestroy(): void {
@@ -60,47 +64,49 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.withSubscriptionHelper.addSubscription(
-      this.gameManagerService.events.characterChanged$.subscribe(
-        (character) => {
-          this.characterValues =
-            this.formatterHelperService.characterToKeyValueDescription(
-              character
-            );
+      this.gameBridgeService.events.characterChanged$.subscribe((character) => {
+        this.characterValues =
+          this.formatterHelperService.characterToKeyValueDescription(character);
 
-          this.equipped = character.weaponEquipped;
-        }
-      )
+        this.equipped = character.weaponEquipped;
+      })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameManagerService.events.sceneChanged$.subscribe(
+      this.gameBridgeService.events.sceneChanged$.subscribe(
         (scene) => (this.scene = scene)
       )
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameManagerService.events.actionLogged$.subscribe((log) => {
+      this.gameBridgeService.events.actionLogged$.subscribe((log) => {
         this.gameLogs.unshift(this.printLog(log));
       })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameManagerService.events.playerInventory$.subscribe((inventory) => {
+      this.gameBridgeService.events.playerInventory$.subscribe((inventory) => {
         this.inventory = inventory.items;
       })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameManagerService.events.documentOpened$.subscribe(
+      this.gameBridgeService.events.documentOpened$.subscribe(
         (documentText) => {
           this.openReaderDialog(documentText);
         }
       )
     );
+
+    this.withSubscriptionHelper.addSubscription(
+      this.gameBridgeService.events.canActChanged$.subscribe((canAct) => {
+        this.canAct = canAct;
+      })
+    );
   }
 
   public informActionSelected(action: ActionableEvent): void {
-    this.gameManagerService.actionableReceived(action);
+    this.gameBridgeService.actionableReceived(action);
   }
 
   public get logs(): ArrayView<string> {

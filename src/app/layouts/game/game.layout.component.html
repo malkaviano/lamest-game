@@ -76,6 +76,14 @@
   </div>
   <div class="section box-width base-margin-right">
     <div class="main-box">
+      <mat-slide-toggle
+        class="cooldown-slider"
+        [color]="color"
+        [checked]="canAct"
+        [disabled]="disabled"
+      >
+        Character ready to act
+      </mat-slide-toggle>
       <div class="title-border">
         <mat-toolbar>
           <span class="title-text">Inventory</span>

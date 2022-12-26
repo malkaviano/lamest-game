@@ -49,6 +49,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public readonly visibilityChanged$: Observable<VisibilityLiteral>;
 
+  public readonly canActChanged$: Observable<boolean>;
+
   constructor(
     identity: ActorIdentityDefinition,
     currentState: ActionableState,
@@ -83,6 +85,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.visibilityChanged = new Subject();
 
     this.visibilityChanged$ = this.visibilityChanged.asObservable();
+
+    this.canActChanged$ = this.cooldownBehavior.canActChanged$;
   }
 
   public get visibility(): VisibilityLiteral {

@@ -49,7 +49,8 @@ export class GameBridgeService {
       eventHubHelperService.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
-      gameRoundService.documentOpened$
+      gameRoundService.documentOpened$,
+      this.player.canActChanged$
     );
 
     gameRoundService.run();

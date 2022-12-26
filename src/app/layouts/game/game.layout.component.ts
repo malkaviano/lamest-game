@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 
 import { ActionableItemView } from '../../views/actionable-item.view';
 import { CharacterValuesView } from '../../views/character-values.view';
@@ -13,6 +14,12 @@ import { ArrayView } from '../../views/array.view';
   styleUrls: ['./game.layout.component.css'],
 })
 export class GameLayoutComponent {
+  color: ThemePalette = 'accent';
+
+  disabled = true;
+
+  @Input() canAct = true;
+
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
   @Input() logs!: ArrayView<string>;

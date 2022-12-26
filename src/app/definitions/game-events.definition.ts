@@ -13,6 +13,7 @@ export class GameEventsDefinition {
     public readonly actionLogged$: Observable<LogMessageDefinition>,
     public readonly characterChanged$: Observable<PlayerEntity>, // ActorInterface?
     public readonly playerInventory$: Observable<ArrayView<ActionableItemView>>,
-    public readonly documentOpened$: Observable<ReadableInterface>
+    public readonly documentOpened$: Observable<ReadableInterface>,
+    public readonly canActChanged$: Observable<boolean>
   ) {}
 }
