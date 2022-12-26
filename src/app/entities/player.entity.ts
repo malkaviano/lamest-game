@@ -49,6 +49,8 @@ export class PlayerEntity extends ActorEntity {
   }
 
   public playerDecision(event: ActionableEvent | null): void {
-    this.playerAction = event;
+    if (this.cooldownBehavior.canAct) {
+      this.playerAction = event;
+    }
   }
 }
