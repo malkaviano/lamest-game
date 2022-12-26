@@ -12,9 +12,9 @@ import { ProfessionStore } from '../stores/profession.store';
 import { ArrayView } from '../views/array.view';
 import { SkillStore } from '../stores/skill.store';
 import { SettingsStore } from '../stores/settings.store';
+import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 
 import {
-  mockedCooldownBehavior,
   mockedGeneratorService,
   mockedProfessionStore,
   mockedSettingsStore,
@@ -131,5 +131,5 @@ const expectedCharacter = new PlayerEntity(
     actorSettings
   ),
   EquipmentBehavior.create(),
-  instance(mockedCooldownBehavior)
+  CooldownBehavior.create(0)
 );

@@ -85,7 +85,7 @@ export const mockedNarrativeService = mock(NarrativeService);
 
 export const mockedItemStore = mock(ItemStore);
 
-export const mockedGameLoopService = mock(GameRoundService);
+export const mockedGameRoundService = mock(GameRoundService);
 
 export const mockedCharacterService = mock(CharacterService);
 
@@ -371,6 +371,8 @@ export const setupMocks = () => {
 
   when(mockedAffectedAxiomService.logMessageProduced$).thenReturn(EMPTY);
 
+  when(mockedCooldownBehavior.canAct).thenReturn(true);
+
   mockCheckedHelper();
 };
 
@@ -385,7 +387,7 @@ const resetMocks = () => {
 
   reset(mockedNarrativeService);
 
-  reset(mockedGameLoopService);
+  reset(mockedGameRoundService);
 
   reset(mockedCharacterService);
 

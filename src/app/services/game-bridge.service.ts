@@ -52,6 +52,8 @@ export class GameBridgeService {
       gameRoundService.documentOpened$
     );
 
+    gameRoundService.run();
+
     (() =>
       setInterval(() => {
         gameRoundService.run();

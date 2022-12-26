@@ -16,9 +16,10 @@ import { NarrativeService } from './narrative.service';
 import {
   mockedCharacterService,
   mockedEventHubHelperService,
-  mockedGameLoopService,
+  mockedGameRoundService,
   mockedInventoryService,
   mockedNarrativeService,
+  mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -38,6 +39,8 @@ import { EventHubHelperService } from '../helpers/event-hub.helper.service';
 describe('GameBridgeService', () => {
   let service: GameBridgeService;
 
+  let running = false;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -47,7 +50,7 @@ describe('GameBridgeService', () => {
         },
         {
           provide: GameRoundService,
-          useValue: instance(mockedGameLoopService),
+          useValue: instance(mockedGameRoundService),
         },
         {
           provide: CharacterService,
@@ -70,11 +73,17 @@ describe('GameBridgeService', () => {
       inventoryEventSubject
     );
 
+    when(mockedGameRoundService.run()).thenCall(() => (running = true));
+
     service = TestBed.inject(GameBridgeService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should invoke game round service', () => {
+    expect(running).toEqual(true);
   });
 
   describe('when player inventory changes', () => {
@@ -125,10 +134,12 @@ describe('GameBridgeService', () => {
   });
 
   describe('actionableReceived', () => {
-    it('should invoke GameLoopService run', (done) => {
+    it('should invoke player action', (done) => {
       let result = false;
 
-      when(mockedGameLoopService.run()).thenCall(() => (result = true));
+      when(
+        mockedPlayerEntity.playerDecision(eventEquipUnDodgeableAxe)
+      ).thenCall(() => (result = true));
 
       service.actionableReceived(eventEquipUnDodgeableAxe);
 
