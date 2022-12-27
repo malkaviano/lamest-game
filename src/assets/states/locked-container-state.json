@@ -13,6 +13,15 @@
         "complexity": 3,
         "maximumTries": 4
       }
+    },
+    {
+      "id": "storageLocked1",
+      "actionables": ["useLockPick"],
+      "openedState": "storageLocked1Loot",
+      "lockPicking": {
+        "complexity": 4,
+        "maximumTries": 5
+      }
     }
   ]
 }

@@ -41,6 +41,25 @@
         "pickAnalgesic",
         "pickAnalgesic"
       ]
+    },
+    {
+      "id": "storageGuardLoot",
+      "actionables": [
+        "pickBaton",
+        "pickLockPick",
+        "pickLockPick",
+        "pickAnalgesic",
+        "pickAnalgesic"
+      ]
+    },
+    {
+      "id": "storageLocked1Loot",
+      "actionables": [
+        "pickMolotov",
+        "pickMolotov",
+        "pickMolotov",
+        "pickGlock17"
+      ]
     }
   ]
 }

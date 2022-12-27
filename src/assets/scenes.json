@@ -170,7 +170,11 @@
     {
       "name": "storageHangar",
       "description": "storageHangar",
-      "interactives": ["storageHangarDoor"],
+      "interactives": [
+        "storageHangarDoor",
+        "storageGuard",
+        "storageLockedCabinet1"
+      ],
       "transitions": [
         {
           "name": "storageHangarDoor",

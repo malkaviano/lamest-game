@@ -206,6 +206,13 @@
       "name": "talisman",
       "actionable": "PICK",
       "label": "PICK Talisman"
+    },
+
+    {
+      "key": "pickBaton",
+      "name": "baton",
+      "actionable": "PICK",
+      "label": "PICK Baton"
     }
   ]
 }

@@ -127,6 +127,13 @@
       "description": "Treats people in ambulatory",
       "state": "medicConversation",
       "resettable": true
+    },
+    {
+      "id": "storageLockedCabinet1",
+      "name": "Locked Cabinet",
+      "description": "Maybe some good stuff inside",
+      "state": "storageLocked1",
+      "resettable": false
     }
   ],
   "inventoryItems": [
@@ -203,6 +210,36 @@
         {
           "name": "analgesicBottle",
           "quantity": 5
+        }
+      ]
+    },
+    {
+      "id": "storageGuard",
+      "items": [
+        {
+          "name": "analgesicBottle",
+          "quantity": 2
+        },
+        {
+          "name": "lockPick",
+          "quantity": 2
+        },
+        {
+          "name": "baton",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "storageLockedCabinet1",
+      "items": [
+        {
+          "name": "molotov",
+          "quantity": 3
+        },
+        {
+          "name": "g17",
+          "quantity": 1
         }
       ]
     }

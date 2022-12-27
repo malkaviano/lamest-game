@@ -8,7 +8,6 @@
       "characteristics": {
         "STR": 10,
         "VIT": 10,
-        "SIZ": 10,
         "AGI": 10,
         "INT": 3,
         "ESN": 3,
@@ -38,7 +37,6 @@
       "characteristics": {
         "STR": 5,
         "VIT": 5,
-        "SIZ": 5,
         "AGI": 5,
         "INT": 5,
         "ESN": 5,
@@ -58,6 +56,39 @@
       "vulnerabilities": [],
       "resistances": [],
       "aiBehavior": "RETALIATE",
+      "ignores": ["HIDDEN", "DISGUISED"]
+    },
+    {
+      "id": "storageGuard",
+      "name": "Storage Guard",
+      "description": "Competent guard",
+      "resettable": false,
+      "characteristics": {
+        "STR": 8,
+        "VIT": 8,
+        "AGI": 8,
+        "INT": 5,
+        "ESN": 5,
+        "APP": 5
+      },
+      "skills": [
+        {
+          "name": "Firearm (Handgun)",
+          "value": 40
+        },
+        {
+          "name": "Dodge",
+          "value": 40
+        }
+      ],
+      "equippedWeapon": "baton",
+      "killedState": "storageGuardLoot",
+      "behaviorState": "affectable",
+      "immunities": [],
+      "cures": [],
+      "vulnerabilities": [],
+      "resistances": [],
+      "aiBehavior": "AGGRESSIVE",
       "ignores": ["HIDDEN", "DISGUISED"]
     }
   ]
