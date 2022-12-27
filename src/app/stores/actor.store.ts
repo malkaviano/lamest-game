@@ -9,6 +9,7 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActorEntity } from '../entities/actor.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { ArrayView } from '../views/array.view';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { SettingsStore } from './settings.store';
@@ -44,6 +45,7 @@ export class ActorStore {
         behaviorState,
         actorSettings,
         aiBehavior,
+        ignores,
       }) => {
         const actor = new ActorEntity(
           new ActorIdentityDefinition(id, name, description),
@@ -61,7 +63,10 @@ export class ActorStore {
             cooldownBehavior: CooldownBehavior.create(
               settingsStore.settings.actionCooldown
             ),
-            aiBehavior: AiBehavior.create(aiBehavior),
+            aiBehavior: AiBehavior.create(
+              aiBehavior,
+              ArrayView.create(ignores)
+            ),
           }
         );
 

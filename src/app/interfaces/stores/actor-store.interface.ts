@@ -1,5 +1,6 @@
 import { CharacteristicSetDefinition } from '../../definitions/characteristic-set.definition';
 import { AiBehaviorLiteral } from '../../literals/enemy-behavior.literal';
+import { VisibilityLiteral } from '../../literals/visibility.literal';
 import { ActorSettingsInterface } from '../actor-settings.interface';
 
 export interface ActorStoreInterface {
@@ -15,5 +16,6 @@ export interface ActorStoreInterface {
     readonly behaviorState: string;
     readonly actorSettings: ActorSettingsInterface;
     readonly aiBehavior: AiBehaviorLiteral;
+    readonly ignores: VisibilityLiteral[];
   }[];
 }

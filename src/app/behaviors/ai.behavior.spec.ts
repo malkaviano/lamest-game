@@ -108,7 +108,7 @@ describe('AiBehavior', () => {
 });
 
 const behavior = (aiBehavior: AiBehaviorLiteral) =>
-  AiBehavior.create(aiBehavior);
+  AiBehavior.create(aiBehavior, ArrayView.create(['HIDDEN']));
 
 function scenario(
   playerActorInfo: {

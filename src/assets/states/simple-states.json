@@ -47,10 +47,6 @@
     },
 
     {
-      "id": "zombie",
-      "actionables": ["affect"]
-    },
-    {
       "id": "affectable",
       "actionables": ["affect"]
     }

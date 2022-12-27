@@ -2,10 +2,14 @@ import { createActionableDefinition } from '../definitions/actionable.definition
 import { ActionableEvent } from '../events/actionable.event';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ArrayView } from '../views/array.view';
 
 export class AiBehavior {
-  constructor(public readonly aiBehavior: AiBehaviorLiteral) {}
+  constructor(
+    public readonly aiBehavior: AiBehaviorLiteral,
+    public readonly ignores: ArrayView<VisibilityLiteral>
+  ) {}
 
   public action(
     sceneActorsInfo: ArrayView<SceneActorsInfoInterface>,
@@ -15,7 +19,7 @@ export class AiBehavior {
       (a) =>
         a.classification === 'PLAYER' &&
         a.situation === 'ALIVE' &&
-        a.visibility === 'VISIBLE'
+        !this.ignores.items.includes(a.visibility)
     );
 
     if (player) {
@@ -35,7 +39,10 @@ export class AiBehavior {
     return null;
   }
 
-  public static create(aiBehavior: AiBehaviorLiteral): AiBehavior {
-    return new AiBehavior(aiBehavior);
+  public static create(
+    aiBehavior: AiBehaviorLiteral,
+    ignores: ArrayView<VisibilityLiteral>
+  ): AiBehavior {
+    return new AiBehavior(aiBehavior, ignores);
   }
 }

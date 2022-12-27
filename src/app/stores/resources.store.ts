@@ -50,6 +50,7 @@ import settingsStore from '../../assets/settings.json';
 import readableStore from '../../assets/items/readables.json';
 import visibilityStateStore from '../../assets/states/visibility-state.json';
 import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 
 @Injectable({
   providedIn: 'root',
@@ -242,6 +243,7 @@ export class ResourcesStore {
           oneDodgesEveryAgiAmount,
         },
         aiBehavior: a.aiBehavior as AiBehaviorLiteral,
+        ignores: a.ignores.map((i) => i as VisibilityLiteral),
       };
     });
 

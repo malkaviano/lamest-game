@@ -3,8 +3,8 @@
     {
       "name": "firstAid",
       "label": "First Aid Kit",
-      "description": "Use to recover HP",
-      "hp": 4,
+      "description": "Use to recover HP (8) on skill check success",
+      "hp": 8,
       "energy": 0,
       "effect": "REMEDY",
       "skillName": "First Aid",
@@ -13,9 +13,18 @@
     {
       "name": "analgesic",
       "label": "Analgesic",
-      "description": "Use to recover HP and Energy",
-      "hp": 1,
-      "energy": 1,
+      "description": "Use to recover HP (2) and Energy (2)",
+      "hp": 2,
+      "energy": 2,
+      "effect": "REMEDY",
+      "usability": "DISPOSABLE"
+    },
+    {
+      "name": "adrenaline",
+      "label": "Adrenaline Injection",
+      "description": "Use to recover HP (4)",
+      "hp": 4,
+      "energy": 0,
       "effect": "REMEDY",
       "usability": "DISPOSABLE"
     }

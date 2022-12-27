@@ -8,6 +8,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { AiBehavior } from '../behaviors/ai.behavior';
+import { ArrayView } from '../views/array.view';
 
 export class PlayerEntity extends ActorEntity {
   private playerAction: ActionableEvent | null;
@@ -27,7 +28,7 @@ export class PlayerEntity extends ActorEntity {
       emptyState,
       {
         cooldownBehavior,
-        aiBehavior: AiBehavior.create('PASSIVE'),
+        aiBehavior: AiBehavior.create('PASSIVE', ArrayView.create([])),
       }
     );
 
