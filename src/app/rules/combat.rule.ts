@@ -91,6 +91,8 @@ export class CombatRule extends MasterRuleService {
       actor.changeVisibility('VISIBLE');
 
       targetActor?.afflictedBy(actor.id);
+
+      targetActor?.changeVisibility('VISIBLE');
     }
   }
 
