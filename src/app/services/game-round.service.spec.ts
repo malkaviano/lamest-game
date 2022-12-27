@@ -1,6 +1,6 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { anything, instance, when } from 'ts-mockito';
+import { anyString, anything, instance, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
 
 import { CharacterService } from './character.service';
@@ -9,13 +9,22 @@ import { NarrativeService } from './narrative.service';
 import { ReadableInterface } from '../interfaces/readable.interface';
 import { ArrayView } from '../views/array.view';
 import { RuleDispatcherService } from './rule-dispatcher.service';
+import { EventHubHelperService } from '../helpers/event-hub.helper.service';
+import { InventoryEvent } from '../events/inventory.event';
 
 import {
   actionableEvent,
   actionAttack,
-  documentOpened,
   interactiveInfo,
   playerInfo,
+  unDodgeableAxe,
+  actionEquip,
+  actionConsume,
+  consumableFirstAid,
+  masterKey,
+  actionNoop,
+  readable,
+  actionInspect,
 } from '../../../tests/fakes';
 import {
   mockedActorEntity,
@@ -29,8 +38,11 @@ import {
   setupMocks,
   mockedInteractiveEntity,
   mockedEventHubHelperService,
+  mockedInventoryService,
 } from '../../../tests/mocks';
-import { EventHubHelperService } from '../helpers/event-hub.helper.service';
+import { ActionableItemView } from '../views/actionable-item.view';
+import { ItemStoredDefinition } from '../definitions/item-storage.definition';
+import { InventoryService } from './inventory.service';
 
 const actor = instance(mockedActorEntity);
 
@@ -57,6 +69,10 @@ describe('GameRoundService', () => {
         {
           provide: EventHubHelperService,
           useValue: instance(mockedEventHubHelperService),
+        },
+        {
+          provide: InventoryService,
+          useValue: instance(mockedInventoryService),
         },
       ],
     });
@@ -91,34 +107,15 @@ describe('GameRoundService', () => {
       of(instance(mockedSceneEntity))
     );
 
+    when(mockedInventoryService.inventoryChanged$).thenReturn(
+      inventoryEventSubject
+    );
+
     service = TestBed.inject(GameRoundService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('when documentOpened is returned', () => {
-    it('should emit documentOpened event', (done) => {
-      when(
-        mockedCombatRule.execute(anything(), anything(), anything())
-      ).thenReturn();
-
-      let result: ReadableInterface | undefined;
-
-      service.documentOpened$.subscribe((event) => {
-        result = event;
-      });
-
-      documentSubject.next({
-        title: 'Testing',
-        text: ArrayView.create(['GG man']),
-      });
-
-      done();
-
-      expect(result).toEqual(documentOpened);
-    });
   });
 
   describe('start', () => {
@@ -134,6 +131,67 @@ describe('GameRoundService', () => {
       service.stop();
     }));
   });
+
+  describe('when player inventory changes', () => {
+    [
+      {
+        invEvent: new InventoryEvent(
+          'STORE',
+          playerInfo.id,
+          consumableFirstAid
+        ),
+        expected: ActionableItemView.create(consumableFirstAid, actionConsume),
+        item: consumableFirstAid,
+      },
+      {
+        invEvent: new InventoryEvent('STORE', playerInfo.id, unDodgeableAxe),
+        expected: ActionableItemView.create(unDodgeableAxe, actionEquip),
+        item: unDodgeableAxe,
+      },
+      {
+        invEvent: new InventoryEvent('STORE', playerInfo.id, masterKey),
+        expected: ActionableItemView.create(masterKey, actionNoop),
+        item: masterKey,
+      },
+      {
+        invEvent: new InventoryEvent('STORE', playerInfo.id, readable),
+        expected: ActionableItemView.create(readable, actionInspect),
+        item: readable,
+      },
+    ].forEach(({ invEvent, expected, item }) => {
+      it(`should emit event ${invEvent.eventName}`, (done) => {
+        let result: ArrayView<ActionableItemView> | undefined;
+
+        when(mockedInventoryService.list(anyString())).thenReturn(
+          ArrayView.create([new ItemStoredDefinition(item, 1)])
+        );
+
+        service.events.playerInventory$.subscribe((event) => {
+          result = event;
+        });
+
+        inventoryEventSubject.next(invEvent);
+
+        done();
+
+        expect(result).toEqual(ArrayView.create([expected]));
+      });
+    });
+  });
+
+  describe('actionableReceived', () => {
+    it('should invoke player action', () => {
+      let result = false;
+
+      when(
+        mockedPlayerEntity.playerDecision(eventEquipUnDodgeableAxe)
+      ).thenCall(() => (result = true));
+
+      service.actionableReceived(eventEquipUnDodgeableAxe);
+
+      expect(result).toEqual(true);
+    });
+  });
 });
 
 const eventAttackPlayer = actionableEvent(actionAttack, playerInfo.id);
@@ -144,3 +202,10 @@ const eventAttackInteractive = actionableEvent(
 );
 
 const documentSubject = new Subject<ReadableInterface>();
+
+const inventoryEventSubject = new Subject<InventoryEvent>();
+
+const eventEquipUnDodgeableAxe = actionableEvent(
+  actionEquip,
+  unDodgeableAxe.identity.name
+);

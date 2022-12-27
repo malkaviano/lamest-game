@@ -8,7 +8,6 @@ import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
 import { ArrayView } from '../../views/array.view';
-import { GameBridgeService } from '../../services/game-bridge.service';
 import { ActionableEvent } from '../../events/actionable.event';
 import { ActionableItemView } from '../../views/actionable-item.view';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
@@ -17,8 +16,8 @@ import { LogMessageDefinition } from '../../definitions/log-message.definition';
 
 import {
   mockedFormatterHelperService,
-  mockedGameBridgeService,
   mockedGameEventsService,
+  mockedGameRoundService,
   mockedInteractiveEntity,
   mockedMatDialog,
   mockedWithSubscriptionHelper,
@@ -35,6 +34,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
+import { GameRoundService } from '../../services/game-round.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;
@@ -48,8 +48,8 @@ describe('GamePageComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
-          provide: GameBridgeService,
-          useValue: instance(mockedGameBridgeService),
+          provide: GameRoundService,
+          useValue: instance(mockedGameRoundService),
         },
         {
           provide: WithSubscriptionHelper,
@@ -148,10 +148,7 @@ describe('GamePageComponent', () => {
     it('should send an ActionableEvent', () => {
       const event = new ActionableEvent(actionConsume, 'id1');
 
-      const spy = spyOn(
-        instance(mockedGameBridgeService),
-        'actionableReceived'
-      );
+      const spy = spyOn(instance(mockedGameRoundService), 'actionableReceived');
 
       component.informActionSelected(event);
 

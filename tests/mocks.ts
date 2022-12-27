@@ -36,7 +36,6 @@ import { MessageStore } from '../src/app/stores/message.store';
 import { ResourcesStore } from '../src/app/stores/resources.store';
 import { SceneStore } from '../src/app/stores/scene.store';
 import { StatesStore } from '../src/app/stores/states.store';
-import { GameBridgeService } from '../src/app/services/game-bridge.service';
 import { GameEventsDefinition } from '../src/app/definitions/game-events.definition';
 import { SceneDefinition } from '../src/app/definitions/scene.definition';
 import { ArrayView } from '../src/app/views/array.view';
@@ -145,8 +144,6 @@ export const mockedSkillService = mock(SkillService);
 export const mockedSceneEntity = mock(SceneEntity);
 
 export const mockedUseRule = mock(UseRule);
-
-export const mockedGameBridgeService = mock(GameBridgeService);
 
 export const mockedGameEventsService = mock(GameEventsDefinition);
 
@@ -343,7 +340,7 @@ export const setupMocks = () => {
     fakeCharacteristics
   );
 
-  when(mockedGameBridgeService.events).thenReturn(
+  when(mockedGameRoundService.events).thenReturn(
     instance(mockedGameEventsService)
   );
 
@@ -441,8 +438,6 @@ const resetMocks = () => {
   reset(mockedSceneEntity);
 
   reset(mockedUseRule);
-
-  reset(mockedGameBridgeService);
 
   reset(mockedGameEventsService);
 

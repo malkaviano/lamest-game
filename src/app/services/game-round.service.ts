@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs';
 
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
@@ -11,9 +11,17 @@ import { ActionReactiveInterface } from '../interfaces/action-reactive.interface
 import { PlayerEntity } from '../entities/player.entity';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { SceneDefinition } from '../definitions/scene.definition';
-import { ReadableInterface } from '../interfaces/readable.interface';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 import { EventHubHelperService } from '../helpers/event-hub.helper.service';
+import { InventoryService } from './inventory.service';
+import { GameEventsDefinition } from '../definitions/game-events.definition';
+import {
+  ActionableDefinition,
+  createActionableDefinition,
+} from '../definitions/actionable.definition';
+import { GameItemDefinition } from '../definitions/game-item.definition';
+import { ActionableItemView } from '../views/actionable-item.view';
+import { ActionableEvent } from '../events/actionable.event';
 
 @Injectable({
   providedIn: 'root',
@@ -31,13 +39,14 @@ export class GameRoundService {
 
   private readonly dodgedThisRound: Map<string, number>;
 
-  public readonly documentOpened$: Observable<ReadableInterface>;
+  public readonly events: GameEventsDefinition;
 
   constructor(
     private readonly ruleDispatcherService: RuleDispatcherService,
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
-    private readonly eventHubHelperService: EventHubHelperService
+    private readonly eventHubHelperService: EventHubHelperService,
+    private readonly inventoryService: InventoryService
   ) {
     this.player = this.characterService.currentCharacter;
 
@@ -53,13 +62,29 @@ export class GameRoundService {
       this.setActors();
     });
 
-    this.documentOpened$ = this.eventHubHelperService.documentOpened$;
-
     this.dodgedThisRound = new Map<string, number>();
 
     this.eventHubHelperService.actorDodged$.subscribe((actorId) => {
       this.actorDodged(actorId);
     });
+
+    const inventoryChanged = inventoryService.inventoryChanged$.pipe(
+      filter((event) => event.storageName === this.player.id),
+      map(() => {
+        const items = this.playerInventory(inventoryService);
+
+        return items;
+      })
+    );
+
+    this.events = new GameEventsDefinition(
+      narrativeService.sceneChanged$,
+      eventHubHelperService.logMessageProduced$,
+      characterService.characterChanged$,
+      inventoryChanged,
+      this.eventHubHelperService.documentOpened$,
+      this.player.canActChanged$
+    );
   }
 
   public start(): void {
@@ -139,5 +164,48 @@ export class GameRoundService {
         };
       })
     );
+  }
+
+  public actionableReceived(action: ActionableEvent): void {
+    this.player.playerDecision(action);
+  }
+
+  private playerInventory(
+    inventoryService: InventoryService
+  ): ArrayView<ActionableItemView> {
+    const playerItems = inventoryService.list(this.player.id);
+
+    const inventoryView: ActionableItemView[] = [];
+
+    const items = playerItems.items.reduce((acc, itemStorage) => {
+      for (let index = 0; index < itemStorage.quantity; index++) {
+        acc.push(
+          ActionableItemView.create(
+            itemStorage.item,
+            this.inventoryAction(itemStorage.item)
+          )
+        );
+      }
+
+      return acc;
+    }, inventoryView);
+
+    return ArrayView.create([...items]);
+  }
+
+  private inventoryAction(item: GameItemDefinition): ActionableDefinition {
+    if (item.category === 'WEAPON') {
+      return createActionableDefinition('EQUIP', 'equip', 'Equip');
+    }
+
+    if (item.category === 'CONSUMABLE') {
+      return createActionableDefinition('CONSUME', 'consume', 'Consume');
+    }
+
+    if (item.category === 'READABLE') {
+      return createActionableDefinition('INSPECT', 'inspect', 'Inspect');
+    }
+
+    return createActionableDefinition('NOOP', 'noop', 'NOOP');
   }
 }

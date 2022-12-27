@@ -7,7 +7,6 @@ import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { GameBridgeService } from '../../services/game-bridge.service';
 import { ArrayView } from '../../views/array.view';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
@@ -35,7 +34,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   public canAct: boolean;
 
   constructor(
-    private readonly gameBridgeService: GameBridgeService,
+    // private readonly gameRoundService: gameRoundService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly formatterHelperService: FormatterHelperService,
     private readonly dialog: MatDialog,
@@ -68,7 +67,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.withSubscriptionHelper.addSubscription(
-      this.gameBridgeService.events.characterChanged$.subscribe((character) => {
+      this.gameRoundService.events.characterChanged$.subscribe((character) => {
         this.characterValues =
           this.formatterHelperService.characterToKeyValueDescription(character);
 
@@ -77,33 +76,31 @@ export class GamePageComponent implements OnInit, OnDestroy {
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameBridgeService.events.sceneChanged$.subscribe(
+      this.gameRoundService.events.sceneChanged$.subscribe(
         (scene) => (this.scene = scene)
       )
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameBridgeService.events.actionLogged$.subscribe((log) => {
+      this.gameRoundService.events.actionLogged$.subscribe((log) => {
         this.gameLogs.unshift(this.printLog(log));
       })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameBridgeService.events.playerInventory$.subscribe((inventory) => {
+      this.gameRoundService.events.playerInventory$.subscribe((inventory) => {
         this.inventory = inventory.items;
       })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameBridgeService.events.documentOpened$.subscribe(
-        (documentText) => {
-          this.openReaderDialog(documentText);
-        }
-      )
+      this.gameRoundService.events.documentOpened$.subscribe((documentText) => {
+        this.openReaderDialog(documentText);
+      })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameBridgeService.events.canActChanged$.subscribe((canAct) => {
+      this.gameRoundService.events.canActChanged$.subscribe((canAct) => {
         this.canAct = canAct;
       })
     );
@@ -112,7 +109,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   public informActionSelected(action: ActionableEvent): void {
-    this.gameBridgeService.actionableReceived(action);
+    this.gameRoundService.actionableReceived(action);
   }
 
   public get logs(): ArrayView<string> {
