@@ -13,6 +13,7 @@ import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 import { ReadableInterface } from '../../interfaces/readable.interface';
 import { LogMessageDefinition } from '../../definitions/log-message.definition';
+import { GameRoundService } from '../../services/game-round.service';
 
 @Component({
   selector: 'app-game-page',
@@ -37,7 +38,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
     private readonly gameBridgeService: GameBridgeService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly formatterHelperService: FormatterHelperService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly gameRoundService: GameRoundService
   ) {
     this.gameLogs = [];
 
@@ -59,6 +61,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.gameRoundService.stop();
+
     this.withSubscriptionHelper.unsubscribeAll();
   }
 
@@ -103,6 +107,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
         this.canAct = canAct;
       })
     );
+
+    this.gameRoundService.start();
   }
 
   public informActionSelected(action: ActionableEvent): void {

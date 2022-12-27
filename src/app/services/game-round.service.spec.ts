@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { anything, instance, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
@@ -119,6 +119,20 @@ describe('GameRoundService', () => {
 
       expect(result).toEqual(documentOpened);
     });
+  });
+
+  describe('start', () => {
+    it('should invoke run', fakeAsync(() => {
+      when(mockedActorEntity.action(ArrayView.create([]))).thenReturn(null);
+
+      when(mockedActorEntity2.action(ArrayView.create([]))).thenReturn(null);
+
+      service.start();
+
+      tick(1000);
+
+      service.stop();
+    }));
   });
 });
 

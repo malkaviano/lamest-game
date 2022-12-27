@@ -39,8 +39,6 @@ import { EventHubHelperService } from '../helpers/event-hub.helper.service';
 describe('GameBridgeService', () => {
   let service: GameBridgeService;
 
-  let running = false;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -73,17 +71,11 @@ describe('GameBridgeService', () => {
       inventoryEventSubject
     );
 
-    when(mockedGameRoundService.run()).thenCall(() => (running = true));
-
     service = TestBed.inject(GameBridgeService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  it('should invoke game round service', () => {
-    expect(running).toEqual(true);
   });
 
   describe('when player inventory changes', () => {
@@ -134,7 +126,7 @@ describe('GameBridgeService', () => {
   });
 
   describe('actionableReceived', () => {
-    it('should invoke player action', (done) => {
+    it('should invoke player action', () => {
       let result = false;
 
       when(
@@ -142,8 +134,6 @@ describe('GameBridgeService', () => {
       ).thenCall(() => (result = true));
 
       service.actionableReceived(eventEquipUnDodgeableAxe);
-
-      done();
 
       expect(result).toEqual(true);
     });

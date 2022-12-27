@@ -19,6 +19,8 @@ import { EventHubHelperService } from '../helpers/event-hub.helper.service';
   providedIn: 'root',
 })
 export class GameRoundService {
+  private timer: NodeJS.Timer | undefined;
+
   private readonly player: PlayerEntity;
 
   private currentScene!: SceneDefinition;
@@ -60,7 +62,15 @@ export class GameRoundService {
     });
   }
 
-  public run(): void {
+  public start(): void {
+    this.timer = setInterval(() => this.run(), 100);
+  }
+
+  public stop(): void {
+    clearInterval(this.timer);
+  }
+
+  private run(): void {
     if (this.isPlayerAlive()) {
       this.dodgedThisRound.clear();
 

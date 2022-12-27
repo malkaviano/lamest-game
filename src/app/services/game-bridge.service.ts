@@ -52,13 +52,6 @@ export class GameBridgeService {
       gameRoundService.documentOpened$,
       this.player.canActChanged$
     );
-
-    gameRoundService.run();
-
-    (() =>
-      setInterval(() => {
-        gameRoundService.run();
-      }, 100))();
   }
 
   public actionableReceived(action: ActionableEvent): void {
