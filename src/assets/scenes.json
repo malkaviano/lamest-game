@@ -143,7 +143,7 @@
     {
       "name": "mysteriousHouse",
       "description": "mysteriousHouse",
-      "interactives": ["mysteriousHouseDoor"],
+      "interactives": ["mysteriousHouseDoor", "zombie"],
       "transitions": [
         {
           "name": "mysteriousHouseDoor",
