@@ -83,7 +83,7 @@ describe('GameLoopService', () => {
 
     when(mockedActorEntity2.action(anything())).thenReturn(eventAttackPlayer);
 
-    when(mockedPlayerEntity.action).thenReturn(() => eventAttackInteractive);
+    when(mockedPlayerEntity.action()).thenReturn(eventAttackInteractive);
 
     when(mockedRuleDispatcherService.dispatcher).thenReturn({
       AFFECT: instance(mockedCombatRule),
@@ -124,11 +124,23 @@ describe('GameLoopService', () => {
 
       when(mockedActorEntity2.action(ArrayView.create([]))).thenReturn(null);
 
+      const spy1 = spyOn(instance(mockedPlayerEntity), 'action');
+
+      const spy2 = spyOn(instance(mockedActorEntity), 'action');
+
+      const spy3 = spyOn(instance(mockedActorEntity2), 'action');
+
       service.start();
 
       tick(1000);
 
       service.stop();
+
+      expect(spy1).toHaveBeenCalled();
+
+      expect(spy2).toHaveBeenCalled();
+
+      expect(spy3).toHaveBeenCalled();
     }));
   });
 
