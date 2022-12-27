@@ -144,7 +144,7 @@
 
     {
       "key": "pickFirstAid",
-      "name": "firstAid",
+      "name": "firstAidKit",
       "actionable": "PICK",
       "label": "PICK Kit"
     },
@@ -164,10 +164,17 @@
     },
 
     {
+      "key": "useLockPick",
+      "name": "lockPick",
+      "actionable": "USE",
+      "label": "USE Lockpick"
+    },
+
+    {
       "key": "pickAnalgesic",
-      "name": "analgesic",
+      "name": "analgesicBottle",
       "actionable": "PICK",
-      "label": "PICK Analgesic"
+      "label": "PICK Analgesics"
     },
     {
       "key": "pickMolotov",

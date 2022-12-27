@@ -14,9 +14,9 @@
           "answer": "So so, day by day"
         },
         {
-          "name": "bar",
-          "label": "Next bar",
-          "answer": "Around the corner",
+          "name": "stuff",
+          "label": "About stuff around",
+          "answer": "What about it?",
           "change": "map2"
         }
       ]
@@ -25,9 +25,9 @@
       "id": "map2",
       "options": [
         {
-          "name": "drink",
-          "label": "Wanna a drink?",
-          "answer": "Fuck off",
+          "name": "items",
+          "label": "May I help myself?",
+          "answer": "Sure, go ahead",
           "change": "map1"
         }
       ]

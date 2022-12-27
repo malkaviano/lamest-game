@@ -106,6 +106,27 @@
       "description": "Looks like some branches are broken",
       "state": "bushesDetect",
       "resettable": false
+    },
+    {
+      "id": "ambulatoryLockedCabinet1",
+      "name": "Locked Cabinet",
+      "description": "Maybe some good stuff inside",
+      "state": "ambulatoryLocked1",
+      "resettable": false
+    },
+    {
+      "id": "ambulatoryMetalShelves1",
+      "name": "Metal Shelves",
+      "description": "Easy access to medicaments",
+      "state": "ambulatoryStorage1",
+      "resettable": false
+    },
+    {
+      "id": "medicNPC",
+      "name": "Medic",
+      "description": "Treats people in ambulatory",
+      "state": "medicConversation",
+      "resettable": true
     }
   ],
   "inventoryItems": [
@@ -164,6 +185,24 @@
         {
           "name": "rawMeat",
           "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "ambulatoryLockedCabinet1",
+      "items": [
+        {
+          "name": "firstAidKit",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "id": "ambulatoryMetalShelves1",
+      "items": [
+        {
+          "name": "analgesicBottle",
+          "quantity": 5
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "states": [
     {
-      "id": "npcConversation",
+      "id": "medicConversation",
       "maps": ["map1", "map2"],
       "initialMap": "map1"
     }

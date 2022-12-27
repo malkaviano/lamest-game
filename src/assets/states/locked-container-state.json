@@ -6,9 +6,9 @@
       "openedState": "lockedChestLoot"
     },
     {
-      "id": "lockPickingChest",
-      "actionables": ["useMasterKey"],
-      "openedState": "lockPickingChestLoot",
+      "id": "ambulatoryLocked1",
+      "actionables": ["useLockPick"],
+      "openedState": "ambulatoryLocked1Loot",
       "lockPicking": {
         "complexity": 3,
         "maximumTries": 4

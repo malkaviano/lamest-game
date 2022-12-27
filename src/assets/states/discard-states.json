@@ -29,8 +29,18 @@
       ]
     },
     {
-      "id": "lockPickingChestLoot",
-      "actionables": ["pickGlock17"]
+      "id": "ambulatoryLocked1Loot",
+      "actionables": ["pickFirstAid", "pickFirstAid", "pickFirstAid"]
+    },
+    {
+      "id": "ambulatoryStorage1",
+      "actionables": [
+        "pickAnalgesic",
+        "pickAnalgesic",
+        "pickAnalgesic",
+        "pickAnalgesic",
+        "pickAnalgesic"
+      ]
     }
   ]
 }

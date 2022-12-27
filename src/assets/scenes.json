@@ -154,7 +154,12 @@
     {
       "name": "ambulatoryTent",
       "description": "ambulatoryTent",
-      "interactives": ["ambulatoryTentEntrance"],
+      "interactives": [
+        "ambulatoryTentEntrance",
+        "medicNPC",
+        "ambulatoryLockedCabinet1",
+        "ambulatoryMetalShelves1"
+      ],
       "transitions": [
         {
           "name": "ambulatoryTentEntrance",

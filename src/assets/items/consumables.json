@@ -1,7 +1,7 @@
 {
   "consumables": [
     {
-      "name": "firstAid",
+      "name": "firstAidKit",
       "label": "First Aid Kit",
       "description": "Use to recover HP (8) on skill check success",
       "hp": 8,
@@ -11,8 +11,8 @@
       "usability": "DISPOSABLE"
     },
     {
-      "name": "analgesic",
-      "label": "Analgesic",
+      "name": "analgesicBottle",
+      "label": "Analgesics",
       "description": "Use to recover HP (2) and Energy (2)",
       "hp": 2,
       "energy": 2,
