@@ -46,7 +46,7 @@ export class GameLoopService {
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
     private readonly eventHubHelperService: EventHubHelperService,
-    private readonly inventoryService: InventoryService
+    inventoryService: InventoryService
   ) {
     this.player = this.characterService.currentCharacter;
 

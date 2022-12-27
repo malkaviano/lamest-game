@@ -11,6 +11,9 @@ import { ArrayView } from '../views/array.view';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 import { EventHubHelperService } from '../helpers/event-hub.helper.service';
 import { InventoryEvent } from '../events/inventory.event';
+import { ActionableItemView } from '../views/actionable-item.view';
+import { ItemStoredDefinition } from '../definitions/item-storage.definition';
+import { InventoryService } from './inventory.service';
 
 import {
   actionableEvent,
@@ -40,9 +43,6 @@ import {
   mockedEventHubHelperService,
   mockedInventoryService,
 } from '../../../tests/mocks';
-import { ActionableItemView } from '../views/actionable-item.view';
-import { ItemStoredDefinition } from '../definitions/item-storage.definition';
-import { InventoryService } from './inventory.service';
 
 const actor = instance(mockedActorEntity);
 
@@ -79,16 +79,6 @@ describe('GameLoopService', () => {
 
     setupMocks();
 
-    when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
-
-    when(mockedActorEntity2.action(anything())).thenReturn(eventAttackPlayer);
-
-    when(mockedPlayerEntity.action()).thenReturn(eventAttackInteractive);
-
-    when(mockedRuleDispatcherService.dispatcher).thenReturn({
-      AFFECT: instance(mockedCombatRule),
-    });
-
     when(mockedEventHubHelperService.logMessageProduced$).thenReturn(EMPTY);
 
     when(mockedEventHubHelperService.actorDodged$).thenReturn(
@@ -120,27 +110,27 @@ describe('GameLoopService', () => {
 
   describe('start', () => {
     it('should invoke run', fakeAsync(() => {
-      when(mockedActorEntity.action(ArrayView.create([]))).thenReturn(null);
+      when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
 
-      when(mockedActorEntity2.action(ArrayView.create([]))).thenReturn(null);
+      when(mockedActorEntity2.action(anything())).thenReturn(eventAttackPlayer);
 
-      const spy1 = spyOn(instance(mockedPlayerEntity), 'action');
+      when(mockedPlayerEntity.action()).thenReturn(eventAttackInteractive);
 
-      const spy2 = spyOn(instance(mockedActorEntity), 'action');
+      let result = false;
 
-      const spy3 = spyOn(instance(mockedActorEntity2), 'action');
+      when(mockedRuleDispatcherService.dispatcher).thenCall(() => {
+        result = true;
+
+        return { AFFECT: instance(mockedCombatRule) };
+      });
 
       service.start();
 
-      tick(1000);
+      tick(100);
 
       service.stop();
 
-      expect(spy1).toHaveBeenCalled();
-
-      expect(spy2).toHaveBeenCalled();
-
-      expect(spy3).toHaveBeenCalled();
+      expect(result).toEqual(true);
     }));
   });
 

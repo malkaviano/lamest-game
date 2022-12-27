@@ -240,6 +240,10 @@ export const setupMocks = () => {
 
   when(mockedPlayerEntity.visibility).thenReturn('VISIBLE');
 
+  when(mockedActorEntity.visibility).thenReturn('VISIBLE');
+
+  when(mockedActorEntity2.visibility).thenReturn('VISIBLE');
+
   when(mockedPlayerEntity.characteristics).thenReturn(fakeCharacteristics);
 
   when(mockedPlayerEntity.derivedAttributes).thenReturn(fakeDerivedAttributes);
