@@ -26,7 +26,7 @@ import { ActionableEvent } from '../events/actionable.event';
 @Injectable({
   providedIn: 'root',
 })
-export class GameRoundService {
+export class GameLoopService {
   private timer: NodeJS.Timer | undefined;
 
   private readonly player: PlayerEntity;

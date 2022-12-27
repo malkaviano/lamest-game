@@ -20,7 +20,7 @@ import { SkillRule } from '../src/app/rules/skill.rule';
 import { UnEquipRule } from '../src/app/rules/unequip.rule';
 import { UseRule } from '../src/app/rules/use.rule';
 import { CharacterService } from '../src/app/services/character.service';
-import { GameRoundService } from '../src/app/services/game-round.service';
+import { GameLoopService } from '../src/app/services/game-loop.service';
 import { GeneratorService } from '../src/app/services/generator.service';
 import { InventoryService } from '../src/app/services/inventory.service';
 import { NarrativeService } from '../src/app/services/narrative.service';
@@ -85,7 +85,7 @@ export const mockedNarrativeService = mock(NarrativeService);
 
 export const mockedItemStore = mock(ItemStore);
 
-export const mockedGameRoundService = mock(GameRoundService);
+export const mockedGameLoopService = mock(GameLoopService);
 
 export const mockedCharacterService = mock(CharacterService);
 
@@ -340,7 +340,7 @@ export const setupMocks = () => {
     fakeCharacteristics
   );
 
-  when(mockedGameRoundService.events).thenReturn(
+  when(mockedGameLoopService.events).thenReturn(
     instance(mockedGameEventsService)
   );
 
@@ -387,7 +387,7 @@ const resetMocks = () => {
 
   reset(mockedNarrativeService);
 
-  reset(mockedGameRoundService);
+  reset(mockedGameLoopService);
 
   reset(mockedCharacterService);
 

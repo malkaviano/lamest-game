@@ -4,7 +4,7 @@ import { anyString, anything, instance, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
 
 import { CharacterService } from './character.service';
-import { GameRoundService } from './game-round.service';
+import { GameLoopService } from './game-loop.service';
 import { NarrativeService } from './narrative.service';
 import { ReadableInterface } from '../interfaces/readable.interface';
 import { ArrayView } from '../views/array.view';
@@ -48,8 +48,8 @@ const actor = instance(mockedActorEntity);
 
 const actor2 = instance(mockedActorEntity2);
 
-describe('GameRoundService', () => {
-  let service: GameRoundService;
+describe('GameLoopService', () => {
+  let service: GameLoopService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -111,7 +111,7 @@ describe('GameRoundService', () => {
       inventoryEventSubject
     );
 
-    service = TestBed.inject(GameRoundService);
+    service = TestBed.inject(GameLoopService);
   });
 
   it('should be created', () => {

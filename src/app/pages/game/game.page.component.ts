@@ -12,7 +12,7 @@ import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 import { ReadableInterface } from '../../interfaces/readable.interface';
 import { LogMessageDefinition } from '../../definitions/log-message.definition';
-import { GameRoundService } from '../../services/game-round.service';
+import { GameLoopService } from '../../services/game-loop.service';
 
 @Component({
   selector: 'app-game-page',
@@ -34,11 +34,11 @@ export class GamePageComponent implements OnInit, OnDestroy {
   public canAct: boolean;
 
   constructor(
-    // private readonly gameRoundService: gameRoundService,
+    // private readonly gameLoopService: gameLoopService,
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly formatterHelperService: FormatterHelperService,
     private readonly dialog: MatDialog,
-    private readonly gameRoundService: GameRoundService
+    private readonly gameLoopService: GameLoopService
   ) {
     this.gameLogs = [];
 
@@ -60,14 +60,14 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.gameRoundService.stop();
+    this.gameLoopService.stop();
 
     this.withSubscriptionHelper.unsubscribeAll();
   }
 
   ngOnInit(): void {
     this.withSubscriptionHelper.addSubscription(
-      this.gameRoundService.events.characterChanged$.subscribe((character) => {
+      this.gameLoopService.events.characterChanged$.subscribe((character) => {
         this.characterValues =
           this.formatterHelperService.characterToKeyValueDescription(character);
 
@@ -76,40 +76,40 @@ export class GamePageComponent implements OnInit, OnDestroy {
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameRoundService.events.sceneChanged$.subscribe(
+      this.gameLoopService.events.sceneChanged$.subscribe(
         (scene) => (this.scene = scene)
       )
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameRoundService.events.actionLogged$.subscribe((log) => {
+      this.gameLoopService.events.actionLogged$.subscribe((log) => {
         this.gameLogs.unshift(this.printLog(log));
       })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameRoundService.events.playerInventory$.subscribe((inventory) => {
+      this.gameLoopService.events.playerInventory$.subscribe((inventory) => {
         this.inventory = inventory.items;
       })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameRoundService.events.documentOpened$.subscribe((documentText) => {
+      this.gameLoopService.events.documentOpened$.subscribe((documentText) => {
         this.openReaderDialog(documentText);
       })
     );
 
     this.withSubscriptionHelper.addSubscription(
-      this.gameRoundService.events.canActChanged$.subscribe((canAct) => {
+      this.gameLoopService.events.canActChanged$.subscribe((canAct) => {
         this.canAct = canAct;
       })
     );
 
-    this.gameRoundService.start();
+    this.gameLoopService.start();
   }
 
   public informActionSelected(action: ActionableEvent): void {
-    this.gameRoundService.actionableReceived(action);
+    this.gameLoopService.actionableReceived(action);
   }
 
   public get logs(): ArrayView<string> {

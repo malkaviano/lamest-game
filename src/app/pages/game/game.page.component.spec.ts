@@ -17,7 +17,7 @@ import { LogMessageDefinition } from '../../definitions/log-message.definition';
 import {
   mockedFormatterHelperService,
   mockedGameEventsService,
-  mockedGameRoundService,
+  mockedGameLoopService,
   mockedInteractiveEntity,
   mockedMatDialog,
   mockedWithSubscriptionHelper,
@@ -34,7 +34,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
-import { GameRoundService } from '../../services/game-round.service';
+import { GameLoopService } from '../../services/game-loop.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;
@@ -48,8 +48,8 @@ describe('GamePageComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
-          provide: GameRoundService,
-          useValue: instance(mockedGameRoundService),
+          provide: GameLoopService,
+          useValue: instance(mockedGameLoopService),
         },
         {
           provide: WithSubscriptionHelper,
@@ -148,7 +148,7 @@ describe('GamePageComponent', () => {
     it('should send an ActionableEvent', () => {
       const event = new ActionableEvent(actionConsume, 'id1');
 
-      const spy = spyOn(instance(mockedGameRoundService), 'actionableReceived');
+      const spy = spyOn(instance(mockedGameLoopService), 'actionableReceived');
 
       component.informActionSelected(event);
 
