@@ -213,6 +213,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       resultEPLog = this.energy(values.energy);
     }
 
+    this.changeVisibility('VISIBLE');
+
     const logs = [resultHPLog, resultEPLog].filter((log) => log);
 
     if (logs.length) {
