@@ -193,11 +193,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     let resultHPLog: string | null = null;
     let resultEPLog: string | null = null;
 
-    if (this.situation === 'DEAD') {
-      return super.reactTo(action, result, values);
-    }
-
-    if (['AFFECT', 'CONSUME'].includes(actionable)) {
+    if (
+      this.situation === 'ALIVE' &&
+      ['AFFECT', 'CONSUME'].includes(actionable)
+    ) {
       if (values.effect) {
         resultHPLog = this.effect(values.effect);
       }
@@ -211,6 +210,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       if (logs.length) {
         return logs.join(' and ');
       }
+    } else {
+      return super.reactTo(action, result, values);
     }
 
     return null;
@@ -219,16 +220,16 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private effect(effect: EffectEvent): string | null {
     const result = this.actorBehavior.effectReceived(effect);
 
-    if (this.situation === 'DEAD') {
-      this.publish(this.currentState.actions, this.killedState.actions);
-
-      this.currentState = this.killedState;
-    }
-
     let resultLog: string | null;
 
     if (result.effective) {
       this.hpChanged.next(result);
+
+      if (this.situation === 'DEAD') {
+        this.publish(this.currentState.actions, this.killedState.actions);
+
+        this.currentState = this.killedState;
+      }
     }
 
     if (result.current > result.previous) {
