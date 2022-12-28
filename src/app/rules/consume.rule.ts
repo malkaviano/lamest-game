@@ -45,23 +45,23 @@ export class ConsumeRule extends MasterRuleService {
       ).result;
     }
 
-    if (['NONE', 'SUCCESS'].includes(rollResult)) {
+    if (rollResult !== 'IMPOSSIBLE') {
       this.consume(actor, consumable, actionableDefinition, rollResult);
-    }
 
-    if (rollResult !== 'IMPOSSIBLE' && consumable.usability === 'DISPOSABLE') {
-      this.checkedHelper.takeItemOrThrow<ConsumableDefinition>(
-        this.inventoryService,
-        actor.id,
-        eventId
-      );
+      if (consumable.usability === 'DISPOSABLE') {
+        this.checkedHelper.takeItemOrThrow<ConsumableDefinition>(
+          this.inventoryService,
+          actor.id,
+          eventId
+        );
 
-      const logMessage = GameMessagesStore.createLostItemLogMessage(
-        actor.name,
-        consumable.identity.label
-      );
+        const logMessage = GameMessagesStore.createLostItemLogMessage(
+          actor.name,
+          consumable.identity.label
+        );
 
-      this.ruleLog.next(logMessage);
+        this.ruleLog.next(logMessage);
+      }
     }
   }
 
@@ -78,10 +78,15 @@ export class ConsumeRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    const hp = consumable.hp;
+    const hp =
+      rollResult === 'FAILURE' ? Math.trunc(consumable.hp / 2) : consumable.hp;
 
-    const energy = consumable.energy;
+    const energy =
+      rollResult === 'FAILURE'
+        ? Math.trunc(consumable.energy / 2)
+        : consumable.energy;
 
+    console.log(hp, energy);
     this.affectAxiom.affectWith(actor, actionableDefinition, rollResult, {
       effect: new EffectEvent(consumable.effect, hp),
       energy,

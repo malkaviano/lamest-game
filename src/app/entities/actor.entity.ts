@@ -200,16 +200,12 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     if (
       values.effect &&
       ((actionable === 'AFFECT' && result === 'SUCCESS') ||
-        (actionable === 'CONSUME' && ['SUCCESS', 'NONE'].includes(result)))
+        actionable === 'CONSUME')
     ) {
       resultHPLog = this.effect(values.effect);
     }
 
-    if (
-      values.energy &&
-      actionable === 'CONSUME' &&
-      ['SUCCESS', 'NONE'].includes(result)
-    ) {
+    if (values.energy && actionable === 'CONSUME') {
       resultEPLog = this.energy(values.energy);
     }
 

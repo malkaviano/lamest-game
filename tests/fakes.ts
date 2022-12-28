@@ -233,7 +233,7 @@ export const consumableFirstAid = new ConsumableDefinition(
     'Very simple First Aid'
   ),
   5,
-  0,
+  2,
   'REMEDY',
   'DISPOSABLE',
   'First Aid'

@@ -109,20 +109,6 @@ describe('ConsumeRule', () => {
           successFirstAidRoll
         );
 
-        when(
-          mockedPlayerEntity.reactTo(
-            eventConsumeFirstAid.actionableDefinition,
-            'SUCCESS',
-            deepEqual({
-              effect: new EffectEvent(
-                consumableFirstAid.effect,
-                consumableFirstAid.hp
-              ),
-              energy: consumableFirstAid.energy,
-            })
-          )
-        ).thenReturn(logHeal5);
-
         ruleScenario(
           service,
           actor,
@@ -131,6 +117,53 @@ describe('ConsumeRule', () => {
           [consumedFirstAidLog, lostFirstAidLog],
           done
         );
+      });
+
+      describe('when skill check failed', () => {
+        it('should should receive half effect', () => {
+          when(
+            mockedCheckedHelper.takeItemOrThrow<ConsumableDefinition>(
+              instance(mockedInventoryService),
+              playerInfo.id,
+              consumableFirstAid.identity.name
+            )
+          ).thenReturn(consumableFirstAid);
+
+          when(
+            mockedCheckedHelper.lookItemOrThrow<ConsumableDefinition>(
+              instance(mockedInventoryService),
+              playerInfo.id,
+              consumableFirstAid.identity.name
+            )
+          ).thenReturn(consumableFirstAid);
+
+          when(
+            mockedRollService.actorSkillCheck(actor, 'First Aid')
+          ).thenReturn(failureFirstAidRoll);
+
+          let result = false;
+
+          when(
+            mockedAffectedAxiomService.affectWith(
+              actor,
+              eventConsumeFirstAid.actionableDefinition,
+              failureFirstAidRoll.result,
+              deepEqual({
+                effect: new EffectEvent(
+                  consumableFirstAid.effect,
+                  Math.trunc(consumableFirstAid.hp / 2)
+                ),
+                energy: Math.trunc(consumableFirstAid.energy / 2),
+              })
+            )
+          ).thenCall(() => {
+            result = true;
+          });
+
+          service.execute(actor, eventConsumeFirstAid);
+
+          expect(result).toEqual(true);
+        });
       });
 
       describe('when skill could not be checked', () => {
@@ -158,6 +191,8 @@ const actor = instance(mockedPlayerEntity);
 
 const successFirstAidRoll = new RollDefinition('SUCCESS', 10);
 
+const failureFirstAidRoll = new RollDefinition('FAILURE', 90);
+
 const impossibleFirstAidRoll = new RollDefinition('IMPOSSIBLE', 0);
 
 const consumedFirstAidLog = new LogMessageDefinition(
@@ -171,8 +206,6 @@ const lostFirstAidLog = new LogMessageDefinition(
   playerInfo.name,
   'lost First Aid Kit'
 );
-
-const logHeal5 = `${consumableFirstAid.effect}-5`;
 
 const eventConsumeFirstAid = actionableEvent(
   actionConsume,
