@@ -33,10 +33,10 @@
       "energyActivation": 0
     },
     {
-      "name": "bambooSword",
-      "label": "Bamboo Sword",
-      "description": "Training weapon",
-      "skillName": "Melee Weapon (Simple)",
+      "name": "martialArts",
+      "label": "Martial Arts",
+      "description": "Mix of punches and kicks",
+      "skillName": "Brawl",
       "damage": {
         "dice": {},
         "fixed": 1,

@@ -30,8 +30,8 @@
       "ignores": ["HIDDEN"]
     },
     {
-      "id": "wannabeGuard",
-      "name": "Wannabe Guard",
+      "id": "villager",
+      "name": "Villager",
       "description": "Punny villager trying to impress",
       "resettable": false,
       "characteristics": {
@@ -44,12 +44,12 @@
       },
       "skills": [
         {
-          "name": "Melee Weapon (Simple)",
+          "name": "Brawl",
           "value": 20
         }
       ],
-      "equippedWeapon": "bambooSword",
-      "killedState": "wannabeGuardLoot",
+      "equippedWeapon": "martialArts",
+      "killedState": "villagerLoot",
       "behaviorState": "affectable",
       "immunities": [],
       "cures": [],

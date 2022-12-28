@@ -20,13 +20,8 @@
     },
 
     {
-      "id": "wannabeGuardLoot",
-      "actionables": [
-        "pickBambooSword",
-        "pickLockPick",
-        "pickRawMeat",
-        "pickRawMeat"
-      ]
+      "id": "villagerLoot",
+      "actionables": ["pickLockPick", "pickRawMeat", "pickRawMeat"]
     },
     {
       "id": "ambulatoryLocked1Loot",

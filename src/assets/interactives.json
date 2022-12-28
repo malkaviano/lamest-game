@@ -179,12 +179,8 @@
     },
 
     {
-      "id": "wannabeGuard",
+      "id": "villager",
       "items": [
-        {
-          "name": "bambooSword",
-          "quantity": 1
-        },
         {
           "name": "lockPick",
           "quantity": 1

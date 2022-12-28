@@ -14,7 +14,7 @@
     {
       "name": "villageEntrance",
       "description": "entrance",
-      "interactives": ["forestTrail", "wannabeGuard", "villageGate"],
+      "interactives": ["forestTrail", "villager", "villageGate"],
       "transitions": [
         {
           "name": "villageGate",

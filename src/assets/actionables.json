@@ -150,13 +150,6 @@
     },
 
     {
-      "key": "pickBambooSword",
-      "name": "bambooSword",
-      "actionable": "PICK",
-      "label": "PICK Bamboo Sword"
-    },
-
-    {
       "key": "pickLockPick",
       "name": "lockPick",
       "actionable": "PICK",
