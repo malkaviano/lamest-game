@@ -1,28 +1,18 @@
 <div class="header mat-headline" role="header">
   <mat-toolbar color="primary">
-    <button
-      mat-icon-button
-      class="sidenav-icon"
-      aria-label="Sidenav icon-button with menu icon"
-      (click)="sidenav.toggle()"
-    >
-      <mat-icon>menu</mat-icon>
-    </button>
     <span>Lamest Game</span>
     <span class="span-spacer"></span>
     <button
       mat-icon-button
-      class="example-icon favorite-icon"
-      aria-label="Example icon-button with heart icon"
+      aria-label="source code"
+      (click)="goToLink('https://github.com/malkaviano/lamest-game')"
+      data-testid="github"
     >
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      class="example-icon"
-      aria-label="Example icon-button with share icon"
-    >
-      <mat-icon>share</mat-icon>
+      <img
+        class="github"
+        alt="github"
+        src="../assets/icons/github-mark-white.png"
+      />
     </button>
   </mat-toolbar>
 </div>

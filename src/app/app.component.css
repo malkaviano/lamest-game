@@ -1,3 +1,8 @@
 .span-spacer {
   flex: 1 1 auto;
 }
+
+.github {
+  height: 24px;
+  width: 24px;
+}
