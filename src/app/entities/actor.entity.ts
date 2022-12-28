@@ -197,22 +197,20 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       return super.reactTo(action, result, values);
     }
 
-    if (
-      values.effect &&
-      ((actionable === 'AFFECT' && result === 'SUCCESS') ||
-        actionable === 'CONSUME')
-    ) {
-      resultHPLog = this.effect(values.effect);
-    }
+    if (['AFFECT', 'CONSUME'].includes(actionable)) {
+      if (values.effect) {
+        resultHPLog = this.effect(values.effect);
+      }
 
-    if (values.energy && actionable === 'CONSUME') {
-      resultEPLog = this.energy(values.energy);
-    }
+      if (values.energy) {
+        resultEPLog = this.energy(values.energy);
+      }
 
-    const logs = [resultHPLog, resultEPLog].filter((log) => log);
+      const logs = [resultHPLog, resultEPLog].filter((log) => log);
 
-    if (logs.length) {
-      return logs.join(' and ');
+      if (logs.length) {
+        return logs.join(' and ');
+      }
     }
 
     return null;
