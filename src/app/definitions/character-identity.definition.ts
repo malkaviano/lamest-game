@@ -1,6 +1,5 @@
 import { AgeLiteral } from '../literals/age.literal';
 import { HeightLiteral } from '../literals/height.literal';
-import { CharacterIdentityLiteral } from '../literals/character-identity.literal';
 import { RaceLiteral } from '../literals/race.literal';
 import { WeightLiteral } from '../literals/weight.literal';
 
@@ -14,14 +13,3 @@ export class CharacterIdentityDefinition {
     public readonly weight: WeightLiteral
   ) {}
 }
-
-export const characterIdentityDefinitions: {
-  [key in CharacterIdentityLiteral]: string;
-} = {
-  name: 'Character name',
-  profession: 'Character profession',
-  age: 'Character age',
-  race: 'Character race',
-  height: 'Character height',
-  weight: 'Character weight',
-};

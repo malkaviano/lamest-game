@@ -5,7 +5,6 @@ import {
   DerivedAttributeDefinition,
   derivedAttributeDefinitions,
 } from '../definitions/derived-attribute.definition';
-import { characterIdentityDefinitions } from '../definitions/character-identity.definition';
 import { CharacterValuesView } from '../views/character-values.view';
 import {
   CharacteristicDefinition,
@@ -14,7 +13,9 @@ import {
 import { KeyValueDescriptionView } from '../views/key-value-description.view';
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacterIdentityLiteral } from '../literals/character-identity.literal';
+
 import { SkillStore } from '../stores/skill.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',
@@ -31,15 +32,14 @@ export class FormatterHelperService {
           return KeyValueDescriptionView.create(
             key.toUpperCase(),
             value,
-            characterIdentityDefinitions[key as CharacterIdentityLiteral]
+            GameStringsStore.descriptions[key as CharacterIdentityLiteral]
           );
         })
-        // TODO: Move this string to proper place
         .concat(
           KeyValueDescriptionView.create(
             'VISIBILITY',
             character.visibility,
-            'Character current visibility'
+            GameStringsStore.descriptions['visibility']
           )
         )
     );

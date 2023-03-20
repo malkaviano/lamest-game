@@ -13,8 +13,15 @@ export class GameStringsStore {
   private static errorMessagesStore: KeyValueInterface<string> =
     gameMessages.errors;
 
+  private static descriptionsStore: KeyValueInterface<string> =
+    gameMessages.descriptions;
+
   public static get errorMessages(): KeyValueInterface<string> {
     return GameStringsStore.errorMessagesStore;
+  }
+
+  public static get descriptions(): KeyValueInterface<string> {
+    return GameStringsStore.descriptionsStore;
   }
 
   public static createEffectRestoredHPMessage(
