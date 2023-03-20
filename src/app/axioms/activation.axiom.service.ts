@@ -7,7 +7,7 @@ import { ItemIdentityDefinition } from '../definitions/item-identity.definition'
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +47,7 @@ export class ActivationAxiomService implements LoggerInterface {
         );
 
         if (log) {
-          const logMessage = GameMessagesStore.createEnergySpentLogMessage(
+          const logMessage = GameStringsStore.createEnergySpentLogMessage(
             actor.name,
             log,
             activatable.identity.label
@@ -57,7 +57,7 @@ export class ActivationAxiomService implements LoggerInterface {
         }
       }
     } else {
-      const logMessage = GameMessagesStore.createNotEnoughEnergyLogMessage(
+      const logMessage = GameStringsStore.createNotEnoughEnergyLogMessage(
         actor.name,
         activatable.identity.label
       );

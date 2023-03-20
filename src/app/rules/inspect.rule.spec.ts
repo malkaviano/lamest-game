@@ -4,7 +4,7 @@ import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ReadAxiomService } from '../axioms/read.axiom.service';
 
@@ -58,7 +58,7 @@ describe('InspectRule', () => {
 
         expect(() =>
           service.execute(instance(mockedPlayerEntity), eventInspectWrong)
-        ).toThrowError(GameMessagesStore.errorMessages['WRONG-ITEM']);
+        ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
       });
     });
 

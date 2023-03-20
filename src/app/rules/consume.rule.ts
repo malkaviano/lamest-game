@@ -11,7 +11,7 @@ import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 @Injectable({
@@ -55,7 +55,7 @@ export class ConsumeRule extends MasterRuleService {
           eventId
         );
 
-        const logMessage = GameMessagesStore.createLostItemLogMessage(
+        const logMessage = GameStringsStore.createLostItemLogMessage(
           actor.name,
           consumable.identity.label
         );
@@ -71,7 +71,7 @@ export class ConsumeRule extends MasterRuleService {
     actionableDefinition: ActionableDefinition,
     rollResult: ResultLiteral
   ) {
-    const logMessage = GameMessagesStore.createConsumedLogMessage(
+    const logMessage = GameStringsStore.createConsumedLogMessage(
       actor.name,
       consumable.identity.label
     );

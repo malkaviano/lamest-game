@@ -4,7 +4,7 @@ import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { DirectionLiteral } from '../literals/direction.literal';
 import { ResultLiteral } from '../literals/result.literal';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
@@ -55,13 +55,13 @@ export class LockPickingContainerState extends LockedContainerState {
         if (this.sequence === this.lockSequence.items.length) {
           return {
             state: this.openedState.value,
-            log: GameMessagesStore.createLockpickOpenedMessage(direction),
+            log: GameStringsStore.createLockpickOpenedMessage(direction),
           };
         }
 
         return {
           state: this,
-          log: GameMessagesStore.createLockpickMovedMessage(direction),
+          log: GameStringsStore.createLockpickMovedMessage(direction),
         };
       }
 
@@ -77,13 +77,13 @@ export class LockPickingContainerState extends LockedContainerState {
             this.jammedStateActions,
             this.openedState
           ),
-          log: GameMessagesStore.createLockpickJammedMessage(direction),
+          log: GameStringsStore.createLockpickJammedMessage(direction),
         };
       }
 
       return {
         state: this,
-        log: GameMessagesStore.createLockpickStuckMessage(direction),
+        log: GameStringsStore.createLockpickStuckMessage(direction),
       };
     }
 

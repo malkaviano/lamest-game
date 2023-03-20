@@ -10,7 +10,7 @@ import { EffectEvent } from '../events/effect.event';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
@@ -104,7 +104,7 @@ export class CombatRule extends MasterRuleService {
     if (usability === 'DISPOSABLE') {
       actor.unEquip();
 
-      const logMessage = GameMessagesStore.createLostItemLogMessage(
+      const logMessage = GameStringsStore.createLostItemLogMessage(
         actor.name,
         label
       );
@@ -122,7 +122,7 @@ export class CombatRule extends MasterRuleService {
     const { result } = this.rollService.actorSkillCheck(actor, skillName);
 
     if (result === 'SUCCESS') {
-      const logMessage = GameMessagesStore.createUsedItemLogMessage(
+      const logMessage = GameStringsStore.createUsedItemLogMessage(
         actor.name,
         target.name,
         weaponLabel

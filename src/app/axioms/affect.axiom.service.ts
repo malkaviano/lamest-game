@@ -9,7 +9,7 @@ import { ActionReactiveInterface } from '../interfaces/action-reactive.interface
 import { LoggerInterface } from '../interfaces/logger.interface';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +34,7 @@ export class AffectAxiomService implements LoggerInterface {
     const log = actor.reactTo(action, rollResult, values);
 
     if (log) {
-      const logMessage = GameMessagesStore.createFreeLogMessage(
+      const logMessage = GameStringsStore.createFreeLogMessage(
         'AFFECTED',
         actor.name,
         log
@@ -44,7 +44,7 @@ export class AffectAxiomService implements LoggerInterface {
 
       if (actor && actor instanceof ActorEntity && actor.situation === 'DEAD') {
         this.logMessageProduced.next(
-          GameMessagesStore.createActorIsDeadLogMessage(actor.name)
+          GameStringsStore.createActorIsDeadLogMessage(actor.name)
         );
       }
     }

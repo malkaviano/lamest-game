@@ -7,7 +7,7 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 
 import { InventoryService } from '../services/inventory.service';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 import { MasterRuleService } from './master.rule';
@@ -39,14 +39,14 @@ export class UseRule extends MasterRuleService {
     );
 
     if (!item) {
-      const logMessage = GameMessagesStore.createNotFoundLogMessage(
+      const logMessage = GameStringsStore.createNotFoundLogMessage(
         actor.name,
         actionableDefinition.label
       );
 
       this.ruleLog.next(logMessage);
     } else {
-      const logMessage = GameMessagesStore.createLostItemLogMessage(
+      const logMessage = GameStringsStore.createLostItemLogMessage(
         actor.name,
         item.identity.label
       );

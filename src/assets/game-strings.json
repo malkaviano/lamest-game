@@ -36,5 +36,14 @@
     "SHOULD-NOT-HAPPEN": "Action should not happen",
     "WRONG-ITEM": "Wrong item was used",
     "INVALID-NAME": "Invalid name was used"
+  },
+  "descriptions": {
+    "name": "Character name",
+    "profession": "Character profession",
+    "age": "Character age",
+    "race": "Character race",
+    "height": "Character height",
+    "weight": "Character weight",
+    "visibility": "Character current visibility"
   }
 }

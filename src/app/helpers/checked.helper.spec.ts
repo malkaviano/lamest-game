@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CheckedHelper } from './checked.helper';
 
@@ -32,7 +32,7 @@ describe('CheckedHelper', () => {
     describe('when target was undefined', () => {
       it('throw Action should not happen', () => {
         expect(() => service.getRuleTargetOrThrow({})).toThrowError(
-          GameMessagesStore.errorMessages['SHOULD-NOT-HAPPEN']
+          GameStringsStore.errorMessages['SHOULD-NOT-HAPPEN']
         );
       });
     });
@@ -55,7 +55,7 @@ describe('CheckedHelper', () => {
             playerInfo.id,
             simpleSword.identity.name
           )
-        ).toThrowError(GameMessagesStore.errorMessages['WRONG-ITEM']);
+        ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
       });
     });
 
@@ -88,7 +88,7 @@ describe('CheckedHelper', () => {
             playerInfo.id,
             simpleSword.identity.name
           )
-        ).toThrowError(GameMessagesStore.errorMessages['WRONG-ITEM']);
+        ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
       });
     });
 

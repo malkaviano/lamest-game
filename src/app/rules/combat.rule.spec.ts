@@ -11,7 +11,7 @@ import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ruleScenario } from '../../../tests/scenarios';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { RollDefinition } from '../definitions/roll.definition';
 
 import {
@@ -259,18 +259,18 @@ const target = instance(mockedActorEntity);
 
 const damageMessage2 = `${simpleSword.damage.effectType}-2`;
 
-const usedMolotovLog = GameMessagesStore.createUsedItemLogMessage(
+const usedMolotovLog = GameStringsStore.createUsedItemLogMessage(
   playerInfo.name,
   actorInfo.name,
   molotov.identity.label
 );
 
-const lostMolotovLog = GameMessagesStore.createLostItemLogMessage(
+const lostMolotovLog = GameStringsStore.createLostItemLogMessage(
   playerInfo.name,
   molotov.identity.label
 );
 
-const usedSwordLog = GameMessagesStore.createUsedItemLogMessage(
+const usedSwordLog = GameStringsStore.createUsedItemLogMessage(
   playerInfo.name,
   actorInfo.name,
   simpleSword.identity.label

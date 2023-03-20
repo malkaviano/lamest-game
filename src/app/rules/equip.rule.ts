@@ -7,7 +7,7 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CheckedHelper } from '../helpers/checked.helper';
 
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class EquipRule extends MasterRuleService {
     );
 
     if (!item) {
-      throw new Error(GameMessagesStore.errorMessages['WRONG-ITEM']);
+      throw new Error(GameStringsStore.errorMessages['WRONG-ITEM']);
     }
 
     const skillName = item.skillName;
@@ -44,7 +44,7 @@ export class EquipRule extends MasterRuleService {
       if (previous) {
         this.inventoryService.store(actor.id, previous);
 
-        const logMessage = GameMessagesStore.createUnEquippedLogMessage(
+        const logMessage = GameStringsStore.createUnEquippedLogMessage(
           actor.name,
           previous.identity.label
         );
@@ -52,14 +52,14 @@ export class EquipRule extends MasterRuleService {
         this.ruleLog.next(logMessage);
       }
 
-      const logMessage = GameMessagesStore.createEquippedLogMessage(
+      const logMessage = GameStringsStore.createEquippedLogMessage(
         actor.name,
         weapon.identity.label
       );
 
       this.ruleLog.next(logMessage);
     } else {
-      const logMessage = GameMessagesStore.createEquipErrorLogMessage(
+      const logMessage = GameStringsStore.createEquipErrorLogMessage(
         actor.name,
         skillName,
         item.identity.label
