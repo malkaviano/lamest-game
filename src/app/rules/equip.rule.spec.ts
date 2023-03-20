@@ -8,7 +8,7 @@ import { CheckedHelper } from '../helpers/checked.helper';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 import {
   mockedCheckedHelper,
@@ -65,7 +65,7 @@ describe('EquipRule', () => {
 
         expect(() =>
           service.execute(instance(mockedPlayerEntity), eventWrong)
-        ).toThrowError(GameMessagesStore.errorMessages['WRONG-ITEM']);
+        ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
       });
     });
 

@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { SceneEntity } from '../entities/scene.entity';
 import { ActionableEvent } from '../events/actionable.event';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { SceneStore } from '../stores/scene.store';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class NarrativeService {
 
   public changeScene(action: ActionableEvent): void {
     if (action.actionableDefinition.actionable !== 'SCENE') {
-      throw new Error(GameMessagesStore.errorMessages['INVALID-OPERATION']);
+      throw new Error(GameStringsStore.errorMessages['INVALID-OPERATION']);
     }
 
     const nextSceneName = this.currentScene.transitions[action.eventId];

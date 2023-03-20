@@ -4,7 +4,7 @@ import { GameItemDefinition } from '../definitions/game-item.definition';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class CheckedHelper {
     const target = ruleExtrasInterface.target;
 
     if (!target) {
-      throw new Error(GameMessagesStore.errorMessages['SHOULD-NOT-HAPPEN']);
+      throw new Error(GameStringsStore.errorMessages['SHOULD-NOT-HAPPEN']);
     }
 
     return target;
@@ -30,7 +30,7 @@ export class CheckedHelper {
     const item = inventoryService.take<T>(actorId, itemName);
 
     if (!item) {
-      throw new Error(GameMessagesStore.errorMessages['WRONG-ITEM']);
+      throw new Error(GameStringsStore.errorMessages['WRONG-ITEM']);
     }
 
     return item;
@@ -44,7 +44,7 @@ export class CheckedHelper {
     const item = inventoryService.look<T>(actorId, itemName);
 
     if (!item) {
-      throw new Error(GameMessagesStore.errorMessages['WRONG-ITEM']);
+      throw new Error(GameStringsStore.errorMessages['WRONG-ITEM']);
     }
 
     return item;

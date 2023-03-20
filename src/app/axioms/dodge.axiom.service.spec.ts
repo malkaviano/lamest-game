@@ -5,7 +5,7 @@ import { instance, when } from 'ts-mockito';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 import { RollService } from '../services/roll.service';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { DodgeAxiomService } from './dodge.axiom.service';
 
 import {
@@ -47,7 +47,7 @@ describe('DodgeAxiomService', () => {
         roll: new RollDefinition('IMPOSSIBLE', 0),
         expected: false,
         log: [
-          GameMessagesStore.createUnDodgeableAttackLogMessage(playerInfo.name),
+          GameStringsStore.createUnDodgeableAttackLogMessage(playerInfo.name),
         ],
         dodged: [],
       },
@@ -56,7 +56,7 @@ describe('DodgeAxiomService', () => {
         dodgesPerformed: 2,
         roll: new RollDefinition('IMPOSSIBLE', 0),
         expected: false,
-        log: [GameMessagesStore.createOutOfDodgesLogMessage(playerInfo.name)],
+        log: [GameStringsStore.createOutOfDodgesLogMessage(playerInfo.name)],
         dodged: [],
       },
       {

@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 export class CooldownBehavior {
   private mCanAct: boolean;
@@ -22,7 +22,7 @@ export class CooldownBehavior {
 
   public acted(): void {
     if (!this.canAct) {
-      throw new Error(GameMessagesStore.errorMessages['WRONG-ACTION']);
+      throw new Error(GameStringsStore.errorMessages['WRONG-ACTION']);
     }
 
     this.timeout();

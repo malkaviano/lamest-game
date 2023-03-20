@@ -8,7 +8,7 @@ import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 
 import { MasterRuleService } from './master.rule';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class SceneRule extends MasterRuleService {
 
     this.narrativeService.changeScene(action);
 
-    const logMessage = GameMessagesStore.createSceneLogMessage(
+    const logMessage = GameStringsStore.createSceneLogMessage(
       actor.name,
       target.name,
       action.actionableDefinition.label

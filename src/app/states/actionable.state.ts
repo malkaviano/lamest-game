@@ -3,7 +3,7 @@ import { ArrayView } from '../views/array.view';
 import { StateLiteral } from '../literals/state.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 
 export abstract class ActionableState {
   constructor(
@@ -21,7 +21,7 @@ export abstract class ActionableState {
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
     if (!this.stateActions.items.some((a) => a.equals(action))) {
-      throw new Error(GameMessagesStore.errorMessages['WRONG-ACTION']);
+      throw new Error(GameStringsStore.errorMessages['WRONG-ACTION']);
     }
 
     return this.stateResult(action, result, values);

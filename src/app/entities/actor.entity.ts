@@ -23,7 +23,7 @@ import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { ArrayView } from '../views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 
@@ -233,17 +233,17 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     if (result.current > result.previous) {
-      resultLog = GameMessagesStore.createEffectRestoredHPMessage(
+      resultLog = GameStringsStore.createEffectRestoredHPMessage(
         effect.effectType,
         result.effective.toString()
       );
     } else if (result.current < result.previous) {
-      resultLog = GameMessagesStore.createEffectDamagedMessage(
+      resultLog = GameStringsStore.createEffectDamagedMessage(
         effect.effectType,
         result.effective.toString()
       );
     } else {
-      resultLog = GameMessagesStore.createHPDidNotChangeMessage();
+      resultLog = GameStringsStore.createHPDidNotChangeMessage();
     }
 
     return resultLog;
@@ -259,15 +259,15 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     if (result.current > result.previous) {
-      resultLog = GameMessagesStore.createEnergizedMessage(
+      resultLog = GameStringsStore.createEnergizedMessage(
         result.effective.toString()
       );
     } else if (result.current < result.previous) {
-      resultLog = GameMessagesStore.createEnergyDrainedMessage(
+      resultLog = GameStringsStore.createEnergyDrainedMessage(
         result.effective.toString()
       );
     } else {
-      resultLog = GameMessagesStore.createEnergyDidNotChangeMessage();
+      resultLog = GameStringsStore.createEnergyDidNotChangeMessage();
     }
 
     return resultLog;

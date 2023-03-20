@@ -2,7 +2,7 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
@@ -28,7 +28,7 @@ export class LockedContainerState extends ActionableState {
     ) {
       return {
         state: this.openedState.value,
-        log: GameMessagesStore.createOpenedUsingMessage(item.identity.label),
+        log: GameStringsStore.createOpenedUsingMessage(item.identity.label),
       };
     }
     return { state: this };

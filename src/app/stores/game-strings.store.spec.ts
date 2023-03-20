@@ -1,12 +1,12 @@
 import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { GameMessagesStore } from './game-messages.store';
+import { GameStringsStore } from './game-strings.store';
 
-describe('GameMessagesStoreService', () => {
+describe('GameStringsStoreService', () => {
   describe('log functions', () => {
     describe('createEffectRestoredHPMessage', () => {
       it('return received REMEDY effect, healed 10 hp', () => {
         expect(
-          GameMessagesStore.createEffectRestoredHPMessage('REMEDY', '10')
+          GameStringsStore.createEffectRestoredHPMessage('REMEDY', '10')
         ).toEqual('received REMEDY effect, healed 10 hp');
       });
     });
@@ -14,14 +14,14 @@ describe('GameMessagesStoreService', () => {
     describe('createEffectDamagedMessage', () => {
       it('return received 10 PROFANE damage', () => {
         expect(
-          GameMessagesStore.createEffectDamagedMessage('PROFANE', '10')
+          GameStringsStore.createEffectDamagedMessage('PROFANE', '10')
         ).toEqual('received 10 PROFANE damage');
       });
     });
 
     describe('createHPDidNotChangeMessage', () => {
       it('return HP did not change', () => {
-        expect(GameMessagesStore.createHPDidNotChangeMessage()).toEqual(
+        expect(GameStringsStore.createHPDidNotChangeMessage()).toEqual(
           'HP did not change'
         );
       });
@@ -30,14 +30,14 @@ describe('GameMessagesStoreService', () => {
     describe('createDestroyedByDamageMessage', () => {
       it('return received 5 FIRE damage and was destroyed', () => {
         expect(
-          GameMessagesStore.createDestroyedByDamageMessage('FIRE', '5')
+          GameStringsStore.createDestroyedByDamageMessage('FIRE', '5')
         ).toEqual('received 5 FIRE damage and was destroyed');
       });
     });
 
     describe('createActorIsDeadLogMessage', () => {
       it('return player: is dead', () => {
-        expect(GameMessagesStore.createActorIsDeadLogMessage('player')).toEqual(
+        expect(GameStringsStore.createActorIsDeadLogMessage('player')).toEqual(
           new LogMessageDefinition('DIED', 'player', 'is dead')
         );
       });
@@ -45,7 +45,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createOpenedUsingMessage', () => {
       it('return was opened using ${item}', () => {
-        expect(GameMessagesStore.createOpenedUsingMessage('key')).toEqual(
+        expect(GameStringsStore.createOpenedUsingMessage('key')).toEqual(
           'was opened using key'
         );
       });
@@ -53,7 +53,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createLockpickMovedMessage', () => {
       it('return lockpick moved LEFT', () => {
-        expect(GameMessagesStore.createLockpickMovedMessage('LEFT')).toEqual(
+        expect(GameStringsStore.createLockpickMovedMessage('LEFT')).toEqual(
           'lockpick moved LEFT'
         );
       });
@@ -61,7 +61,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createLockpickStuckMessage', () => {
       it('return lockpick got stuck moving UP', () => {
-        expect(GameMessagesStore.createLockpickStuckMessage('UP')).toEqual(
+        expect(GameStringsStore.createLockpickStuckMessage('UP')).toEqual(
           'lockpick got stuck moving UP'
         );
       });
@@ -69,7 +69,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createLockpickOpenedMessage', () => {
       it('return lockpick got stuck moving DOWN', () => {
-        expect(GameMessagesStore.createLockpickOpenedMessage('DOWN')).toEqual(
+        expect(GameStringsStore.createLockpickOpenedMessage('DOWN')).toEqual(
           'lockpick moved DOWN and opened the container'
         );
       });
@@ -77,7 +77,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createLockpickJammedMessage', () => {
       it('return lockpick got stuck moving RIGHT and cannot be lockpicked anymore', () => {
-        expect(GameMessagesStore.createLockpickJammedMessage('RIGHT')).toEqual(
+        expect(GameStringsStore.createLockpickJammedMessage('RIGHT')).toEqual(
           'lockpick got stuck moving RIGHT and cannot be lockpicked anymore'
         );
       });
@@ -86,7 +86,7 @@ describe('GameMessagesStoreService', () => {
     describe('createSkillCheckLogMessage', () => {
       it('return Brawl skill checked and rolled 87, it was a FAILURE', () => {
         expect(
-          GameMessagesStore.createSkillCheckLogMessage(
+          GameStringsStore.createSkillCheckLogMessage(
             'player',
             'Brawl',
             '87',
@@ -105,7 +105,7 @@ describe('GameMessagesStoreService', () => {
     describe('createCannotCheckSkillLogMessage', () => {
       it("return Disguise skill couldn't be checked because it's value is zero", () => {
         expect(
-          GameMessagesStore.createCannotCheckSkillLogMessage(
+          GameStringsStore.createCannotCheckSkillLogMessage(
             'player',
             'Disguise'
           )
@@ -122,7 +122,7 @@ describe('GameMessagesStoreService', () => {
     describe('createEquippedLogMessage', () => {
       it('return equipped sword', () => {
         expect(
-          GameMessagesStore.createEquippedLogMessage('player', 'sword')
+          GameStringsStore.createEquippedLogMessage('player', 'sword')
         ).toEqual(
           new LogMessageDefinition('EQUIPPED', 'player', 'equipped sword')
         );
@@ -132,7 +132,7 @@ describe('GameMessagesStoreService', () => {
     describe('createUnEquippedLogMessage', () => {
       it('return un-equipped sword', () => {
         expect(
-          GameMessagesStore.createUnEquippedLogMessage('player', 'sword')
+          GameStringsStore.createUnEquippedLogMessage('player', 'sword')
         ).toEqual(
           new LogMessageDefinition('UNEQUIPPED', 'player', 'un-equipped sword')
         );
@@ -142,7 +142,7 @@ describe('GameMessagesStoreService', () => {
     describe('createConsumedLogMessage', () => {
       it('return consumed drink', () => {
         expect(
-          GameMessagesStore.createConsumedLogMessage('player', 'drink')
+          GameStringsStore.createConsumedLogMessage('player', 'drink')
         ).toEqual(
           new LogMessageDefinition('CONSUMED', 'player', 'consumed drink')
         );
@@ -152,11 +152,7 @@ describe('GameMessagesStoreService', () => {
     describe('createUsedItemLogMessage', () => {
       it('return used weapon on actor', () => {
         expect(
-          GameMessagesStore.createUsedItemLogMessage(
-            'player',
-            'actor',
-            'weapon'
-          )
+          GameStringsStore.createUsedItemLogMessage('player', 'actor', 'weapon')
         ).toEqual(
           new LogMessageDefinition('USED', 'player', 'used weapon on actor')
         );
@@ -166,7 +162,7 @@ describe('GameMessagesStoreService', () => {
     describe('createEquipErrorLogMessage', () => {
       it('return SkillX is required to equip weapon', () => {
         expect(
-          GameMessagesStore.createEquipErrorLogMessage(
+          GameStringsStore.createEquipErrorLogMessage(
             'player',
             'SkillX',
             'weapon'
@@ -184,7 +180,7 @@ describe('GameMessagesStoreService', () => {
     describe('createTookLogMessage', () => {
       it('return took weapon from table', () => {
         expect(
-          GameMessagesStore.createTookLogMessage('player', 'table', 'weapon')
+          GameStringsStore.createTookLogMessage('player', 'table', 'weapon')
         ).toEqual(
           new LogMessageDefinition('TOOK', 'player', 'took weapon from table')
         );
@@ -194,7 +190,7 @@ describe('GameMessagesStoreService', () => {
     describe('createSceneLogMessage', () => {
       it('return selected door from exit', () => {
         expect(
-          GameMessagesStore.createSceneLogMessage('player', 'exit', 'door')
+          GameStringsStore.createSceneLogMessage('player', 'exit', 'door')
         ).toEqual(
           new LogMessageDefinition('SCENE', 'player', 'selected door from exit')
         );
@@ -204,7 +200,7 @@ describe('GameMessagesStoreService', () => {
     describe('createLostLogMessage', () => {
       it('return lost key', () => {
         expect(
-          GameMessagesStore.createLostItemLogMessage('player', 'key')
+          GameStringsStore.createLostItemLogMessage('player', 'key')
         ).toEqual(new LogMessageDefinition('LOST', 'player', 'lost key'));
       });
     });
@@ -212,7 +208,7 @@ describe('GameMessagesStoreService', () => {
     describe('createUnDodgeableAttackLogMessage', () => {
       it('return attack is not dodgeable', () => {
         expect(
-          GameMessagesStore.createUnDodgeableAttackLogMessage('player')
+          GameStringsStore.createUnDodgeableAttackLogMessage('player')
         ).toEqual(
           new LogMessageDefinition(
             'DENIED',
@@ -226,7 +222,7 @@ describe('GameMessagesStoreService', () => {
     describe('createNotFoundLogMessage', () => {
       it('return inspect failed, required item was not found in inventory', () => {
         expect(
-          GameMessagesStore.createNotFoundLogMessage('player', 'inspect')
+          GameStringsStore.createNotFoundLogMessage('player', 'inspect')
         ).toEqual(
           new LogMessageDefinition(
             'NOT-FOUND',
@@ -240,7 +236,7 @@ describe('GameMessagesStoreService', () => {
     describe('createItemInspectedLogMessage', () => {
       it('return inspected diary', () => {
         expect(
-          GameMessagesStore.createItemInspectedLogMessage('player', 'diary')
+          GameStringsStore.createItemInspectedLogMessage('player', 'diary')
         ).toEqual(
           new LogMessageDefinition('INSPECTED', 'player', 'inspected diary')
         );
@@ -249,7 +245,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createOutOfDodgesLogMessage', () => {
       it('return was out of dodges', () => {
-        expect(GameMessagesStore.createOutOfDodgesLogMessage('player')).toEqual(
+        expect(GameStringsStore.createOutOfDodgesLogMessage('player')).toEqual(
           new LogMessageDefinition('DENIED', 'player', 'was out of dodges')
         );
       });
@@ -257,7 +253,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createEnergizedMessage', () => {
       it('return restored 10 energy', () => {
-        expect(GameMessagesStore.createEnergizedMessage('10')).toEqual(
+        expect(GameStringsStore.createEnergizedMessage('10')).toEqual(
           'restored 10 energy'
         );
       });
@@ -265,7 +261,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createEnergyDrainedMessage', () => {
       it('return lost 10 energy', () => {
-        expect(GameMessagesStore.createEnergyDrainedMessage('10')).toEqual(
+        expect(GameStringsStore.createEnergyDrainedMessage('10')).toEqual(
           'lost 10 energy'
         );
       });
@@ -273,7 +269,7 @@ describe('GameMessagesStoreService', () => {
 
     describe('createEnergyDidNotChangeMessage', () => {
       it('return EP did not change', () => {
-        expect(GameMessagesStore.createEnergyDidNotChangeMessage()).toEqual(
+        expect(GameStringsStore.createEnergyDidNotChangeMessage()).toEqual(
           'EP did not change'
         );
       });
@@ -282,7 +278,7 @@ describe('GameMessagesStoreService', () => {
     describe('createNotEnoughEnergyLogMessage', () => {
       it('return not enough energy to activate sprint', () => {
         expect(
-          GameMessagesStore.createNotEnoughEnergyLogMessage('player', 'sprint')
+          GameStringsStore.createNotEnoughEnergyLogMessage('player', 'sprint')
         ).toEqual(
           new LogMessageDefinition(
             'ACTIVATION',
@@ -296,7 +292,7 @@ describe('GameMessagesStoreService', () => {
     describe('createEnergySpentLogMessage', () => {
       it('return spent 5 EP to activate sprint', () => {
         expect(
-          GameMessagesStore.createEnergySpentLogMessage('player', '5', 'sprint')
+          GameStringsStore.createEnergySpentLogMessage('player', '5', 'sprint')
         ).toEqual(
           new LogMessageDefinition(
             'ACTIVATION',
@@ -310,7 +306,7 @@ describe('GameMessagesStoreService', () => {
     describe('createFreeLogMessage', () => {
       it('return any message type', () => {
         expect(
-          GameMessagesStore.createFreeLogMessage(
+          GameStringsStore.createFreeLogMessage(
             'ACTIVATION',
             'player',
             'any message type'
@@ -325,7 +321,7 @@ describe('GameMessagesStoreService', () => {
   describe('error messages', () => {
     describe('INVALID-OPERATION', () => {
       it('return Invalid operation ocurred', () => {
-        expect(GameMessagesStore.errorMessages['INVALID-OPERATION']).toEqual(
+        expect(GameStringsStore.errorMessages['INVALID-OPERATION']).toEqual(
           'Invalid operation ocurred'
         );
       });

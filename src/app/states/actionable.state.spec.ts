@@ -1,5 +1,5 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { GameMessagesStore } from '../stores/game-messages.store';
+import { GameStringsStore } from '../stores/game-strings.store';
 import { ArrayView } from '../views/array.view';
 import { ActionableState } from './actionable.state';
 
@@ -8,7 +8,7 @@ describe('ActionableState', () => {
     describe('when unknown message received', () => {
       it('throw "WRONG-ACTION"', () => {
         expect(() => state.onResult(unknownAction, 'NONE', {})).toThrowError(
-          GameMessagesStore.errorMessages['WRONG-ACTION']
+          GameStringsStore.errorMessages['WRONG-ACTION']
         );
       });
     });
