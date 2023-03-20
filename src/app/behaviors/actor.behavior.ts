@@ -4,6 +4,7 @@ import { DerivedAttributeDefinition } from '../definitions/derived-attribute.def
 import { EffectEvent } from '../events/effect.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';
 import { HitPointsEvent } from '../events/hit-points.event';
+import { MathHelper } from '../helpers/math.helper';
 import { ActorSettingsInterface } from '../interfaces/actor-settings.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
@@ -71,7 +72,7 @@ export class ActorBehavior {
         this.actorSettings.oneDodgesEveryAgiAmount
     );
 
-    return this.clamp(dodges, 1, Number.MAX_VALUE);
+    return MathHelper.clamp(dodges, 1, Number.MAX_VALUE);
   }
 
   public wannaDodge(effect: EffectTypeLiteral): boolean {
@@ -122,7 +123,7 @@ export class ActorBehavior {
 
     this.currentEP += energy;
 
-    this.currentEP = this.clamp(this.currentEP, 0, this.maximumEP);
+    this.currentEP = MathHelper.clamp(this.currentEP, 0, this.maximumEP);
 
     return new EnergyPointsEvent(previousEP, this.currentEP);
   }
@@ -146,13 +147,8 @@ export class ActorBehavior {
 
     this.currentHP += modified;
 
-    this.currentHP = this.clamp(this.currentHP, 0, this.maximumHP);
+    this.currentHP = MathHelper.clamp(this.currentHP, 0, this.maximumHP);
 
     return new HitPointsEvent(previousHP, this.currentHP);
-  }
-
-  // TODO: Move this to helper
-  private clamp(num: number, min: number, max: number): number {
-    return Math.min(Math.max(num, min), max);
   }
 }
