@@ -155,7 +155,8 @@ export const fakeIdentity = new CharacterIdentityDefinition(
   'YOUNG',
   'HUMAN',
   'SHORT',
-  'LIGHT'
+  'LIGHT',
+  'VISIBLE'
 );
 
 export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =

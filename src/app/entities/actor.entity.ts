@@ -78,7 +78,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     this.aiBehavior = behaviors.aiBehavior;
 
-    this.mVisibility = 'VISIBLE';
+    this.mVisibility = identity.visibility;
 
     this.mAfflictedBy = new Set();
 
@@ -134,11 +134,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public changeVisibility(visibility: VisibilityLiteral): void {
-    const old = this.visibility;
+    if (visibility !== this.visibility) {
+      this.mVisibility = visibility;
 
-    this.mVisibility = visibility;
-
-    if (old !== this.visibility) {
       this.visibilityChanged.next(this.visibility);
     }
   }

@@ -121,5 +121,6 @@ const expectedIdentity = new CharacterIdentityDefinition(
   ages[0],
   races[0],
   heights[0],
-  weights[0]
+  weights[0],
+  'VISIBLE'
 );

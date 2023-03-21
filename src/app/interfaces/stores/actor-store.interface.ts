@@ -17,5 +17,6 @@ export interface ActorStoreInterface {
     readonly actorSettings: ActorSettingsInterface;
     readonly aiBehavior: AiBehaviorLiteral;
     readonly ignores: VisibilityLiteral[];
+    readonly visibility: VisibilityLiteral;
   }[];
 }
