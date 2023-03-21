@@ -4,61 +4,61 @@
       "key": "forestTrail",
       "name": "forestTrail",
       "actionable": "SCENE",
-      "label": "Follow Trail"
+      "label": "FOLLOW Trail"
     },
     {
       "key": "villageGate",
       "name": "villageGate",
       "actionable": "SCENE",
-      "label": "Use Gate"
+      "label": "USE Gate"
     },
     {
       "key": "mainHouseDoor",
       "name": "mainHouseDoor",
       "actionable": "SCENE",
-      "label": "Use Door"
+      "label": "USE Door"
     },
     {
       "key": "mainHouseLibraryDoor",
       "name": "mainHouseLibraryDoor",
       "actionable": "SCENE",
-      "label": "Use Door"
+      "label": "USE Door"
     },
     {
       "key": "mainHouseDiningDoor",
       "name": "mainHouseDiningDoor",
       "actionable": "SCENE",
-      "label": "Use Door"
+      "label": "USE Door"
     },
     {
       "key": "mainHouseBasementDoor",
       "name": "mainHouseBasementDoor",
       "actionable": "SCENE",
-      "label": "Use Door"
+      "label": "USE Door"
     },
     {
       "key": "hunterCabinDoor",
       "name": "hunterCabinDoor",
       "actionable": "SCENE",
-      "label": "Use Door"
+      "label": "USE Door"
     },
     {
       "key": "ambulatoryTentEntrance",
       "name": "ambulatoryTentEntrance",
       "actionable": "SCENE",
-      "label": "Use Entrance"
+      "label": "USE Entrance"
     },
     {
       "key": "mysteriousHouseDoor",
       "name": "mysteriousHouseDoor",
       "actionable": "SCENE",
-      "label": "Use Door"
+      "label": "USE Door"
     },
     {
       "key": "storageHangarDoor",
       "name": "storageHangarDoor",
       "actionable": "SCENE",
-      "label": "Use Door"
+      "label": "USE Door"
     },
 
     {
@@ -97,14 +97,14 @@
       "key": "skillDisguise",
       "name": "Disguise",
       "actionable": "SKILL",
-      "label": "Use Disguise"
+      "label": "USE Disguise"
     },
 
     {
       "key": "skillMakeFire",
       "name": "Survival",
       "actionable": "SKILL",
-      "label": "Make Fire"
+      "label": "MAKE Fire"
     },
 
     {
@@ -118,14 +118,14 @@
       "key": "roastMeat",
       "name": "rawMeat",
       "actionable": "USE",
-      "label": "Rost Meat"
+      "label": "ROST Meat"
     },
 
     {
       "key": "bushesDetect",
       "name": "Detect",
       "actionable": "SKILL",
-      "label": "Search"
+      "label": "SEARCH Bushes"
     },
 
     {
@@ -139,7 +139,7 @@
       "key": "affect",
       "name": "affect",
       "actionable": "AFFECT",
-      "label": "Use Equipped"
+      "label": "USE Equipped"
     },
 
     {
@@ -179,7 +179,7 @@
       "key": "useMasterKey",
       "name": "masterKey",
       "actionable": "USE",
-      "label": "Use Master Key"
+      "label": "USE Master Key"
     },
     {
       "key": "pickMasterKey",
