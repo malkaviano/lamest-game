@@ -9,18 +9,37 @@ import { ActorIdentityDefinition } from '../definitions/actor-identity.definitio
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { AiBehavior } from '../behaviors/ai.behavior';
 import { ArrayView } from '../views/array.view';
+import { AgeLiteral } from '../literals/age.literal';
+import { RaceLiteral } from '../literals/race.literal';
+import { HeightLiteral } from '../literals/height.literal';
+import { WeightLiteral } from '../literals/weight.literal';
 
 export class PlayerEntity extends ActorEntity {
   private playerAction: ActionableEvent | null;
 
+  private profession: string;
+
+  private age: AgeLiteral;
+
+  private race: RaceLiteral;
+
+  private height: HeightLiteral;
+
+  private weight: WeightLiteral;
+
   constructor(
-    public readonly identity: CharacterIdentityDefinition,
+    identity: CharacterIdentityDefinition,
     actorBehavior: ActorBehavior,
     equipmentBehavior: EquipmentBehavior,
     cooldownBehavior: CooldownBehavior
   ) {
     super(
-      new ActorIdentityDefinition(identity.name, identity.name, ''),
+      new ActorIdentityDefinition(
+        identity.name,
+        identity.name,
+        identity.name,
+        identity.visibility
+      ),
       emptyState,
       false,
       actorBehavior,
@@ -33,6 +52,28 @@ export class PlayerEntity extends ActorEntity {
     );
 
     this.playerAction = null;
+
+    this.profession = identity.profession;
+
+    this.age = identity.age;
+
+    this.race = identity.race;
+
+    this.weight = identity.weight;
+
+    this.height = identity.height;
+  }
+
+  public get identity(): CharacterIdentityDefinition {
+    return new CharacterIdentityDefinition(
+      this.name,
+      this.profession,
+      this.age,
+      this.race,
+      this.height,
+      this.weight,
+      this.visibility
+    );
   }
 
   public override get classification(): ClassificationLiteral {

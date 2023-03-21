@@ -27,7 +27,8 @@
       "vulnerabilities": [],
       "resistances": [],
       "aiBehavior": "AGGRESSIVE",
-      "ignores": ["HIDDEN"]
+      "ignores": ["HIDDEN"],
+      "visibility": "VISIBLE"
     },
     {
       "id": "villager",
@@ -56,7 +57,8 @@
       "vulnerabilities": [],
       "resistances": [],
       "aiBehavior": "RETALIATE",
-      "ignores": ["HIDDEN", "DISGUISED"]
+      "ignores": ["HIDDEN", "DISGUISED"],
+      "visibility": "VISIBLE"
     },
     {
       "id": "storageGuard",
@@ -89,7 +91,8 @@
       "vulnerabilities": [],
       "resistances": [],
       "aiBehavior": "AGGRESSIVE",
-      "ignores": ["HIDDEN", "DISGUISED"]
+      "ignores": ["HIDDEN", "DISGUISED"],
+      "visibility": "VISIBLE"
     }
   ]
 }

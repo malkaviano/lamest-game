@@ -46,9 +46,10 @@ export class ActorStore {
         actorSettings,
         aiBehavior,
         ignores,
+        visibility,
       }) => {
         const actor = new ActorEntity(
-          new ActorIdentityDefinition(id, name, description),
+          new ActorIdentityDefinition(id, name, description, visibility),
           stateStore.states[behaviorState],
           resettable,
           ActorBehavior.create(

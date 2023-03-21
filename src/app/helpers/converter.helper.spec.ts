@@ -17,7 +17,7 @@ import {
 const helper = new ConverterHelper();
 
 const actor = new ActorEntity(
-  new ActorIdentityDefinition('id1', 'actor', 'Some Actor'),
+  new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
   emptyState,
   false,
   instance(mockedActorBehavior),

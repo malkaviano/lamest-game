@@ -86,7 +86,6 @@ export class ConsumeRule extends MasterRuleService {
         ? Math.trunc(consumable.energy / 2)
         : consumable.energy;
 
-    console.log(hp, energy);
     this.affectAxiom.affectWith(actor, actionableDefinition, rollResult, {
       effect: new EffectEvent(consumable.effect, hp),
       energy,

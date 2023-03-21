@@ -33,6 +33,7 @@ import {
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 
 const remedy5Log = 'received REMEDY effect, healed 5 hp';
 
@@ -469,6 +470,21 @@ describe('ActorEntity', () => {
 
         expect(actor.visibility).toEqual('DISGUISED');
       });
+
+      it('emits DISGUISED', (done) => {
+        const actor = fakeActor();
+
+        let result: VisibilityLiteral = 'VISIBLE';
+
+        actor.visibilityChanged$.subscribe((event) => {
+          result = event;
+          done();
+        });
+
+        actor.changeVisibility('DISGUISED');
+
+        expect(result).toEqual('DISGUISED');
+      });
     });
   });
 
@@ -485,7 +501,7 @@ const killedState = instance(mockedActionableState2);
 
 const fakeActor = () =>
   new ActorEntity(
-    new ActorIdentityDefinition('id1', 'actor', 'Some Actor'),
+    new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
     instance(mockedActionableState),
     false,
     instance(mockedActorBehavior),

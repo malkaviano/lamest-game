@@ -39,7 +39,8 @@ export class GeneratorService {
       this.age(),
       this.race(),
       this.height(),
-      this.weight()
+      this.weight(),
+      'VISIBLE'
     );
   }
 

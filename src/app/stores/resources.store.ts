@@ -244,6 +244,7 @@ export class ResourcesStore {
         },
         aiBehavior: a.aiBehavior as AiBehaviorLiteral,
         ignores: a.ignores.map((i) => i as VisibilityLiteral),
+        visibility: a.visibility as VisibilityLiteral,
       };
     });
 

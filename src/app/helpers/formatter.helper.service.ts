@@ -24,21 +24,13 @@ export class FormatterHelperService {
     character: PlayerEntity
   ): CharacterValuesView {
     const identity = ArrayView.create(
-      Object.entries(character.identity)
-        .map(([key, value]) => {
-          return KeyValueDescriptionView.create(
-            key.toUpperCase(),
-            value,
-            GameStringsStore.descriptions[key as CharacterIdentityLiteral]
-          );
-        })
-        .concat(
-          KeyValueDescriptionView.create(
-            'VISIBILITY',
-            character.visibility,
-            GameStringsStore.descriptions['visibility']
-          )
-        )
+      Object.entries(character.identity).map(([key, value]) => {
+        return KeyValueDescriptionView.create(
+          key.toUpperCase(),
+          value,
+          GameStringsStore.descriptions[key as CharacterIdentityLiteral]
+        );
+      })
     );
 
     const characteristics = ArrayView.create(
