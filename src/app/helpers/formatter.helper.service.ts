@@ -6,10 +6,7 @@ import {
   derivedAttributeDefinitions,
 } from '../definitions/derived-attribute.definition';
 import { CharacterValuesView } from '../views/character-values.view';
-import {
-  CharacteristicDefinition,
-  characteristicsDefinitions,
-} from '../definitions/characteristic.definition';
+import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { KeyValueDescriptionView } from '../views/key-value-description.view';
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacterIdentityLiteral } from '../literals/character-identity.literal';
@@ -50,7 +47,7 @@ export class FormatterHelperService {
           return KeyValueDescriptionView.create(
             c.key,
             c.value.toString(),
-            characteristicsDefinitions[c.key]
+            GameStringsStore.descriptions[c.key]
           );
         }
       )

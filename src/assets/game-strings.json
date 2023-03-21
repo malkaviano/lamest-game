@@ -44,6 +44,12 @@
     "race": "Character race",
     "height": "Character height",
     "weight": "Character weight",
-    "visibility": "Character current visibility"
+    "visibility": "Character current visibility",
+    "STR": "The character physical force",
+    "VIT": "The character vitality",
+    "AGI": "The character agility",
+    "INT": "The character intelligence",
+    "ESN": "The character essence",
+    "APP": "The character looks"
   }
 }
