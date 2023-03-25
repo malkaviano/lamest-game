@@ -2,7 +2,11 @@
   matTooltip="{{ keyValue.description }}"
   attr.data-testid="tooltip-{{ keyValue.key }}"
 >
-  <span attr.data-testid="key-{{ keyValue.key }}">{{ keyValue.key }}</span>
+  <span attr.data-testid="key-{{ keyValue.key }}">{{
+    keyValue.key | titlecase
+  }}</span>
   <span>:&nbsp;&nbsp;</span>
-  <span attr.data-testid="value-{{ keyValue.key }}">{{ keyValue.value }}</span>
+  <span attr.data-testid="value-{{ keyValue.key }}">{{
+    keyValue.value | titlecase
+  }}</span>
 </div>

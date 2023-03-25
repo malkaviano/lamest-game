@@ -34,7 +34,7 @@ describe('WindowPanelComponent', () => {
   it('should have name', async () => {
     const input = fixture.debugElement.query(By.css('[data-testid="key-STR"]'));
 
-    expect(input.nativeElement.innerHTML).toEqual('STR');
+    expect(input.nativeElement.innerHTML).toEqual('Str');
   });
 
   it('should have value', async () => {
