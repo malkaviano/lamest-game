@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ArrayView } from '../../views/array.view';
+import { ArrayView } from '../../model-views/array.view';
 
 @Component({
   selector: 'app-text-area-panel',

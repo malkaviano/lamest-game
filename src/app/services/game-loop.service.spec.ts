@@ -7,11 +7,11 @@ import { CharacterService } from './character.service';
 import { GameLoopService } from './game-loop.service';
 import { NarrativeService } from './narrative.service';
 import { ReadableInterface } from '../interfaces/readable.interface';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 import { EventHubHelperService } from '../helpers/event-hub.helper.service';
 import { InventoryEvent } from '../events/inventory.event';
-import { ActionableItemView } from '../views/actionable-item.view';
+import { ActionableItemView } from '../model-views/actionable-item.view';
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { InventoryService } from './inventory.service';
 

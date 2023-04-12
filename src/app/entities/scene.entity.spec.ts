@@ -1,6 +1,6 @@
 import { instance } from 'ts-mockito';
 
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { SceneEntity } from './scene.entity';
 
 import { mockedInteractiveEntity, setupMocks } from '../../../tests/mocks';

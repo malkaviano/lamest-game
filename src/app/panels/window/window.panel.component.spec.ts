@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
 import { WindowPanelComponent } from './window.panel.component';
-import { KeyValueDescriptionView } from '../../views/key-value-description.view';
+import { KeyValueDescriptionView } from '../../model-views/key-value-description.view';
 
 describe('WindowPanelComponent', () => {
   let fixture: ComponentFixture<WindowPanelComponent>;

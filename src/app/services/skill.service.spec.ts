@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { RandomIntService } from './random-int.service';
 import { SkillService } from './skill.service';
 

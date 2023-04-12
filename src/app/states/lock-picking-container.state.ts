@@ -6,7 +6,7 @@ import { DirectionLiteral } from '../literals/direction.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { GameStringsStore } from '../stores/game-strings.store';
 
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { ActionableState } from './actionable.state';
 import { LockedContainerState } from './locked-container.state';
 

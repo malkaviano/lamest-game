@@ -1,5 +1,5 @@
 import { LazyHelper } from '../helpers/lazy.helper';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { DiscardState } from './discard.state';
 import { LockPickingContainerState } from './lock-picking-container.state';
 import { createActionableDefinition } from '../definitions/actionable.definition';

@@ -5,8 +5,8 @@ import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
 import { KeyValueDescriptionPanelComponent } from './key-value-description.panel.component';
-import { KeyValueDescriptionView } from '../../views/key-value-description.view';
-import { ArrayView } from '../../views/array.view';
+import { KeyValueDescriptionView } from '../../model-views/key-value-description.view';
+import { ArrayView } from '../../model-views/array.view';
 
 describe('KeyValueDescriptionPanelComponent', () => {
   let component: KeyValueDescriptionPanelComponent;

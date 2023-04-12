@@ -8,7 +8,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { AiBehavior } from '../behaviors/ai.behavior';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { AgeLiteral } from '../literals/age.literal';
 import { RaceLiteral } from '../literals/race.literal';
 import { HeightLiteral } from '../literals/height.literal';

@@ -24,7 +24,7 @@ import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
 import { GameStringsStore } from '../stores/game-strings.store';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { InteractiveEntity } from './interactive.entity';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {

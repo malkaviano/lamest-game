@@ -4,12 +4,12 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { ArrayView } from '../../views/array.view';
+import { ArrayView } from '../../model-views/array.view';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
 import { GameLayoutComponent } from './game.layout.component';
-import { ActionableItemView } from '../../views/actionable-item.view';
+import { ActionableItemView } from '../../model-views/actionable-item.view';
 import { ActionableEvent } from '../../events/actionable.event';
 import { unarmedWeapon } from '../../definitions/weapon.definition';
 

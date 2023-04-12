@@ -1,5 +1,5 @@
 import { ItemUsabilityLiteral } from '../literals/item-usability';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { GameItemDefinition } from './game-item.definition';
 import { ItemIdentityDefinition } from './item-identity.definition';
 

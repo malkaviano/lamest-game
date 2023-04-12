@@ -6,7 +6,7 @@ import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { ActorEntity } from '../entities/actor.entity';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
 import { PlayerEntity } from '../entities/player.entity';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
@@ -20,7 +20,7 @@ import {
   createActionableDefinition,
 } from '../definitions/actionable.definition';
 import { GameItemDefinition } from '../definitions/game-item.definition';
-import { ActionableItemView } from '../views/actionable-item.view';
+import { ActionableItemView } from '../model-views/actionable-item.view';
 import { ActionableEvent } from '../events/actionable.event';
 
 @Injectable({

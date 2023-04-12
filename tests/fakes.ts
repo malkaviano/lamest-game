@@ -13,13 +13,13 @@ import { CharacterIdentityDefinition } from '../src/app/definitions/character-id
 import { ActionableEvent } from '../src/app/events/actionable.event';
 import { KeyValueInterface } from '../src/app/interfaces/key-value.interface';
 import { SceneActorsInfoInterface } from '../src/app/interfaces/scene-actors.interface';
-import { ArrayView } from '../src/app/views/array.view';
-import { CharacterValuesView } from '../src/app/views/character-values.view';
-import { KeyValueDescriptionView } from '../src/app/views/key-value-description.view';
+import { ArrayView } from '../src/app/model-views/array.view';
+import { CharacterValuesView } from '../src/app/model-views/character-values.view';
+import { KeyValueDescriptionView } from '../src/app/model-views/key-value-description.view';
 import { DiscardState } from '../src/app/states/discard.state';
 import { UsableDefinition } from '../src/app/definitions/usable.definition';
 import { ItemIdentityDefinition } from '../src/app/definitions/item-identity.definition';
-import { ActionableItemView } from '../src/app/views/actionable-item.view';
+import { ActionableItemView } from '../src/app/model-views/actionable-item.view';
 import { GameItemDefinition } from '../src/app/definitions/game-item.definition';
 import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
 import { SkillDefinition } from '../src/app/definitions/skill.definition';
