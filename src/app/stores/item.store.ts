@@ -11,7 +11,7 @@ import { UsableDefinition } from '../definitions/usable.definition';
 import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ReadableDefinition } from '../definitions/readable.definition';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,7 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResultLiteral } from '../literals/result.literal';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 

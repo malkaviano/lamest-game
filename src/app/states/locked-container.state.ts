@@ -3,7 +3,7 @@ import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { GameStringsStore } from '../stores/game-strings.store';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { ActionableState } from './actionable.state';
 
 export class LockedContainerState extends ActionableState {

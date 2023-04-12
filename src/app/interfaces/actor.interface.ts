@@ -1,6 +1,6 @@
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { ActionReactiveInterface } from './action-reactive.interface';
 import { ActorCooldownInterface } from './actor-cooldown.interface';
 import { ActorDefenseInterface } from './actor-defense.interface';

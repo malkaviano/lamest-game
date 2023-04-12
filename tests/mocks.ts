@@ -38,7 +38,7 @@ import { SceneStore } from '../src/app/stores/scene.store';
 import { StatesStore } from '../src/app/stores/states.store';
 import { GameEventsDefinition } from '../src/app/definitions/game-events.definition';
 import { SceneDefinition } from '../src/app/definitions/scene.definition';
-import { ArrayView } from '../src/app/views/array.view';
+import { ArrayView } from '../src/app/model-views/array.view';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { ProfessionStore } from '../src/app/stores/profession.store';
 import { DescriptionStore } from '../src/app/stores/description.store';

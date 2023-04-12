@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { KeyValueDescriptionView } from '../../views/key-value-description.view';
+import { KeyValueDescriptionView } from '../../model-views/key-value-description.view';
 
 @Component({
   selector: 'app-window-panel',

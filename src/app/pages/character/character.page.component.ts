@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ArrayView } from '../../views/array.view';
-import { KeyValueDescriptionView } from '../../views/key-value-description.view';
+import { ArrayView } from '../../model-views/array.view';
+import { KeyValueDescriptionView } from '../../model-views/key-value-description.view';
 import { CharacterService } from '../../services/character.service';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 

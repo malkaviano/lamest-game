@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { RandomIntService } from './random-int.service';
 
 @Injectable({

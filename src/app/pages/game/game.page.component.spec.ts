@@ -7,9 +7,9 @@ import { instance, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
-import { ArrayView } from '../../views/array.view';
+import { ArrayView } from '../../model-views/array.view';
 import { ActionableEvent } from '../../events/actionable.event';
-import { ActionableItemView } from '../../views/actionable-item.view';
+import { ActionableItemView } from '../../model-views/actionable-item.view';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { LogMessageDefinition } from '../../definitions/log-message.definition';

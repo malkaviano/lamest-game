@@ -4,7 +4,7 @@ import { anything, instance, when } from 'ts-mockito';
 
 import { ConverterHelper } from '../helpers/converter.helper';
 import { SimpleState } from '../states/simple.state';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';

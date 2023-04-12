@@ -3,7 +3,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 
 export class AiBehavior {
   constructor(

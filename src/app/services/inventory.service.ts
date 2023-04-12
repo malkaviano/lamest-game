@@ -9,7 +9,7 @@ import { ReadableDefinition } from '../definitions/readable.definition';
 import { UsableDefinition } from '../definitions/usable.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { InventoryEvent } from '../events/inventory.event';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 
 @Injectable({
   providedIn: 'root',

@@ -5,7 +5,7 @@ import { instance, when } from 'ts-mockito';
 import { SceneDefinition } from '../definitions/scene.definition';
 import { SceneStore } from '../stores/scene.store';
 import { NarrativeService } from './narrative.service';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { GameStringsStore } from '../stores/game-strings.store';
 
 import {

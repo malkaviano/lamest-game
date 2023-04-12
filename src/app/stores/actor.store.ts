@@ -9,7 +9,7 @@ import { WeaponDefinition } from '../definitions/weapon.definition';
 import { ActorEntity } from '../entities/actor.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { SettingsStore } from './settings.store';

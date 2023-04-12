@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { TextAreaPanelComponent } from './text-area.panel.component';
-import { ArrayView } from '../../views/array.view';
+import { ArrayView } from '../../model-views/array.view';
 
 describe('TextAreaPanelComponent', () => {
   let component: TextAreaPanelComponent;

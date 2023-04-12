@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { ActionableDefinition } from '../../definitions/actionable.definition';
-import { ArrayView } from '../../views/array.view';
+import { ArrayView } from '../../model-views/array.view';
 
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';

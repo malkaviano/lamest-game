@@ -1,4 +1,4 @@
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { ActionableState } from './actionable.state';
 
 class EmptyState extends ActionableState {

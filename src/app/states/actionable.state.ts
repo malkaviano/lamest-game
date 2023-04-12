@@ -1,5 +1,5 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ArrayView } from '../views/array.view';
+import { ArrayView } from '../model-views/array.view';
 import { StateLiteral } from '../literals/state.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
