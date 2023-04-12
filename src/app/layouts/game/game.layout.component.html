@@ -6,30 +6,63 @@
       </mat-toolbar>
     </div>
     <div class="main-box vertical-scrollable" data-testid="character">
-      <div data-testid="identity" class="border-orange">
-        <app-key-value-description-panel
-          [panelName]="'identity'"
-          [items]="characterValues.identity"
-        ></app-key-value-description-panel>
-      </div>
-      <div data-testid="characteristics" class="border-orange">
-        <app-key-value-description-panel
-          [panelName]="'characteristics'"
-          [items]="characterValues.characteristics"
-        ></app-key-value-description-panel>
-      </div>
-      <div data-testid="derived-attributes" class="border-orange">
-        <app-key-value-description-panel
-          [panelName]="'derived-attributes'"
-          [items]="characterValues.derivedAttributes"
-        ></app-key-value-description-panel>
-      </div>
-      <div data-testid="skills" class="border-orange">
-        <app-key-value-description-panel
-          [panelName]="'skills'"
-          [items]="characterValues.skills"
-        ></app-key-value-description-panel>
-      </div>
+      <mat-accordion multi="true">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Identity</mat-panel-title>
+            <mat-panel-description>
+              cosmetic values for role play purposes
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div data-testid="identity" class="border-orange">
+            <app-key-value-description-panel
+              [panelName]="'identity'"
+              [items]="characterValues.identity"
+            ></app-key-value-description-panel>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Characteristics</mat-panel-title>
+            <mat-panel-description
+              >Physical and mental features</mat-panel-description
+            >
+          </mat-expansion-panel-header>
+          <div data-testid="characteristics" class="border-orange">
+            <app-key-value-description-panel
+              [panelName]="'characteristics'"
+              [items]="characterValues.characteristics"
+            ></app-key-value-description-panel>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Derived Attributes</mat-panel-title>
+            <mat-panel-description
+              >Derived from Characteristics</mat-panel-description
+            >
+          </mat-expansion-panel-header>
+          <div data-testid="derived-attributes" class="border-orange">
+            <app-key-value-description-panel
+              [panelName]="'derived-attributes'"
+              [items]="characterValues.derivedAttributes"
+            ></app-key-value-description-panel>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Skills</mat-panel-title>
+            <mat-panel-description>Known Abilities</mat-panel-description>
+          </mat-expansion-panel-header>
+          <div data-testid="skills" class="border-orange">
+            <app-key-value-description-panel
+              [panelName]="'skills'"
+              [items]="characterValues.skills"
+            ></app-key-value-description-panel>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
   </div>
   <div class="section box-width">
