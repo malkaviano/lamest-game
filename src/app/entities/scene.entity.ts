@@ -1,4 +1,4 @@
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { InteractiveEntity } from './interactive.entity';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 

@@ -4,21 +4,21 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 
 import { MaterialModule } from '../../../material/material.module';
-import { WindowPanelComponent } from './window.panel.component';
-import { KeyValueDescriptionView } from '../../model-views/key-value-description.view';
+import { WindowWidgetComponent } from './window.widget.component';
+import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 
-describe('WindowPanelComponent', () => {
-  let fixture: ComponentFixture<WindowPanelComponent>;
-  let component: WindowPanelComponent;
+describe('WindowWidgetComponent', () => {
+  let fixture: ComponentFixture<WindowWidgetComponent>;
+  let component: WindowWidgetComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WindowPanelComponent],
+      declarations: [WindowWidgetComponent],
       imports: [MaterialModule, NoopAnimationsModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WindowPanelComponent);
+    fixture = TestBed.createComponent(WindowWidgetComponent);
 
     fixture.componentInstance.keyValue = characteristic('STR', '8', 'Strength');
 

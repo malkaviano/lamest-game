@@ -12,7 +12,7 @@ import { GeneratorService } from './generator.service';
 import { RandomIntService } from './random-int.service';
 import { DirectionLiteral } from '../literals/direction.literal';
 import { ProfessionStore } from '../stores/profession.store';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 
 import {
   mockedProfessionStore,

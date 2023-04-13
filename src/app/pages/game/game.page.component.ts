@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ActionableItemView } from '../../model-views/actionable-item.view';
-import { CharacterValuesView } from '../../model-views/character-values.view';
+import { ActionableItemView } from '../../view-models/actionable-item.view';
+import { CharacterValuesView } from '../../view-models/character-values.view';
 import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ArrayView } from '../../model-views/array.view';
+import { ArrayView } from '../../view-models/array.view';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 import { ReadableInterface } from '../../interfaces/readable.interface';

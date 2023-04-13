@@ -1,5 +1,5 @@
 import { LazyHelper } from '../helpers/lazy.helper';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { DestroyableState } from './destroyable.state';
 import { DiscardState } from './discard.state';
 
