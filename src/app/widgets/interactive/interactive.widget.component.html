@@ -1,6 +1,6 @@
 <div class="card-box">
   <mat-card attr.data-testid="interactive-{{ interactive.id }}">
-    <mat-card-title>{{ interactive.name }}</mat-card-title>
+    <mat-card-title class="card-title">{{ interactive.name }}</mat-card-title>
     <mat-card-content>{{ interactive.description }}</mat-card-content>
     <mat-card-actions>
       <ng-template ngFor let-action [ngForOf]="actions.items">
