@@ -3,7 +3,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
@@ -21,7 +20,7 @@ import { CharacterStatusView } from '../../view-models/character-status.view';
   templateUrl: './game.layout.component.html',
   styleUrls: ['./game.layout.component.css'],
 })
-export class GameLayoutComponent implements OnChanges, OnInit {
+export class GameLayoutComponent implements OnChanges {
   color: ThemePalette = 'accent';
 
   disabled = true;
@@ -47,10 +46,6 @@ export class GameLayoutComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(): void {
-    this.updateStatus();
-  }
-
-  ngOnInit(): void {
     this.updateStatus();
   }
 
