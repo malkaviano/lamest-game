@@ -2,11 +2,11 @@
   <app-status-bar-widget [status]="characterStatus"></app-status-bar-widget>
 </div>
 <div class="flex-panel">
-  <div class="section box-width base-margin-left">
+  <div class="section content-box">
     <div class="title-text">
       <span class="mat-h3">Character</span>
     </div>
-    <div class="main-box vertical-scrollable" data-testid="character">
+    <div data-testid="character">
       <mat-accordion multi="true">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -77,18 +77,9 @@
           alt="{{ scene.description }}"
         />
       </div>
-      <div class="title-text">
-        <span class="mat-h3">Action Logs</span>
-      </div>
-      <div class="half-box vertical-scrollable">
-        <app-text-area-widget
-          [paragraphs]="logs"
-          data-testid="log"
-        ></app-text-area-widget>
-      </div>
     </div>
   </div>
-  <div class="section">
+  <div class="section large-box">
     <div class="title-text">
       <span class="mat-h3">Scene Interactives</span>
     </div>
@@ -100,12 +91,23 @@
           [interactives]="scene.interactives"
           (actionSelected)="actionSelected.emit($event)"
         ></app-interactive-panel>
-        <mat-spinner *ngIf="!canAct" class="box-width"></mat-spinner>
+        <mat-spinner *ngIf="!canAct"></mat-spinner>
       </div>
     </div>
   </div>
-  <div class="section box-width base-margin-right">
-    <div class="main-box">
+  <div class="section content-box">
+    <div class="title-text">
+      <span class="mat-h3">Action Logs</span>
+    </div>
+    <div class="vertical-scrollable">
+      <app-text-area-widget
+        [paragraphs]="logs"
+        data-testid="log"
+      ></app-text-area-widget>
+    </div>
+  </div>
+  <div class="section content-box">
+    <div>
       <div class="title-text">
         <span class="mat-h3">Inventory</span>
       </div>

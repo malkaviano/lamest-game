@@ -1,8 +1,7 @@
 .flex-panel {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-content: space-around;
 }
 
 .vertical-scrollable {
@@ -21,19 +20,18 @@
   padding: 10px;
 }
 
-.main-box {
+.content-box {
   min-height: 200px;
   max-height: 600px;
-}
-
-.half-box {
-  min-height: 100px;
-  max-height: 200px;
-}
-
-.box-width {
   min-width: 200px;
   max-width: 400px;
+}
+
+.large-box {
+  min-height: 200px;
+  max-height: 600px;
+  min-width: 400px;
+  max-width: 600px;
 }
 
 .image {
