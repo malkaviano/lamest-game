@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReadableInterface } from '../../interfaces/readable.interface';
 
 @Component({
-  selector: 'app-reader.dialog',
+  selector: 'app-reader-dialog',
   templateUrl: './reader.dialog.component.html',
   styleUrls: ['./reader.dialog.component.css'],
 })
