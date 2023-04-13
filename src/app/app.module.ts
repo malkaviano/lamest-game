@@ -13,7 +13,6 @@ import { CharacterPageComponent } from './pages/character/character.page.compone
 import { TextAreaWidgetComponent } from './widgets/text-area/text-area.widget.component';
 import { WindowWidgetComponent } from './widgets/window/window.widget.component';
 import { EquipmentWidgetComponent } from './widgets/equipment/equipment.widget.component';
-import { EquippedWidgetComponent } from './widgets/equipped/equipped.widget.component';
 import { GameLayoutComponent } from './layouts/game/game.layout.component';
 import { InteractivePanelComponent } from './panels/interactive/interactive.panel.component';
 import { InventoryPanelComponent } from './panels/inventory/inventory.panel.component';
@@ -30,7 +29,6 @@ import { StatusBarWidgetComponent } from './widgets/status-bar/status-bar.widget
     CharacterPageComponent,
     WindowWidgetComponent,
     EquipmentWidgetComponent,
-    EquippedWidgetComponent,
     GameLayoutComponent,
     InteractivePanelComponent,
     InventoryPanelComponent,

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ActionableItemView } from '../../view-models/actionable-item.view';
-import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 
 @Component({
@@ -13,8 +12,6 @@ export class InventoryPanelComponent {
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
   @Input() inventory: ActionableItemView[];
-
-  @Input() equipped!: GameItemDefinition;
 
   @Input() panelName: string;
 
