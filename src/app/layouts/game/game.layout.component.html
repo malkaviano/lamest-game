@@ -94,23 +94,17 @@
     <div class="main-box vertical-scrollable">
       <div data-testid="interactives">
         <app-interactive-panel
+          *ngIf="canAct"
           [panelName]="'interactives'"
           [interactives]="scene.interactives"
           (actionSelected)="actionSelected.emit($event)"
         ></app-interactive-panel>
+        <mat-spinner *ngIf="!canAct" class="box-width"></mat-spinner>
       </div>
     </div>
   </div>
   <div class="section box-width base-margin-right">
     <div class="main-box">
-      <mat-slide-toggle
-        class="cooldown-slider"
-        [color]="color"
-        [checked]="canAct"
-        [disabled]="disabled"
-      >
-        Character ready to act
-      </mat-slide-toggle>
       <div class="title-text">
         <span class="mat-h3">Inventory</span>
       </div>
