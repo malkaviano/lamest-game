@@ -4,6 +4,7 @@ import { ArrayView } from '../view-models/array.view';
 export class SceneDefinition {
   constructor(
     public readonly description: ArrayView<string>,
-    public readonly interactives: ArrayView<InteractiveEntity>
+    public readonly interactives: ArrayView<InteractiveEntity>,
+    public readonly image: string
   ) {}
 }

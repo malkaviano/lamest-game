@@ -356,7 +356,8 @@ export const setupMocks = () => {
     of(
       new SceneDefinition(
         ArrayView.create(['this is a test', 'okay okay']),
-        ArrayView.create([instance(mockedInteractiveEntity)])
+        ArrayView.create([instance(mockedInteractiveEntity)]),
+        'gg.jpg'
       )
     )
   );

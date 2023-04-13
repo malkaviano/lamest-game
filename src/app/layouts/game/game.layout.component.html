@@ -65,16 +65,17 @@
       </mat-accordion>
     </div>
   </div>
-  <div class="section box-width">
-    <div class="main-box">
+  <div class="section">
+    <div>
       <div class="title-text">
-        <span class="mat-h3">Scene Description</span>
+        <span class="mat-h3">Scene</span>
       </div>
-      <div class="half-box vertical-scrollable">
-        <app-text-area-widget
-          [paragraphs]="scene.description"
-          data-testid="description"
-        ></app-text-area-widget>
+      <div class="image">
+        <img
+          data-testid="image"
+          src="assets/images/{{ scene.image }}"
+          alt="scene image"
+        />
       </div>
       <div class="title-text">
         <span class="mat-h3">Action Logs</span>
