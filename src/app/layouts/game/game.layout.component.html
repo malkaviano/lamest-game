@@ -1,9 +1,7 @@
 <div class="flex-panel">
   <div class="section box-width base-margin-left">
-    <div class="title-border">
-      <mat-toolbar>
-        <span class="mat-h3">Character</span>
-      </mat-toolbar>
+    <div class="title-text">
+      <span class="mat-h3">Character</span>
     </div>
     <div class="main-box vertical-scrollable" data-testid="character">
       <mat-accordion multi="true">
@@ -14,7 +12,7 @@
               cosmetic values for role play purposes
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div data-testid="identity" class="border-orange">
+          <div data-testid="identity">
             <app-key-value-description-panel
               [panelName]="'identity'"
               [items]="characterValues.identity"
@@ -28,7 +26,7 @@
               >physical and mental features</mat-panel-description
             >
           </mat-expansion-panel-header>
-          <div data-testid="characteristics" class="border-orange">
+          <div data-testid="characteristics">
             <app-key-value-description-panel
               [panelName]="'characteristics'"
               [items]="characterValues.characteristics"
@@ -42,20 +40,19 @@
               >derived from characteristics</mat-panel-description
             >
           </mat-expansion-panel-header>
-          <div data-testid="derived-attributes" class="border-orange">
+          <div data-testid="derived-attributes">
             <app-key-value-description-panel
               [panelName]="'derived-attributes'"
               [items]="characterValues.derivedAttributes"
             ></app-key-value-description-panel>
           </div>
         </mat-expansion-panel>
-
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>Skills</mat-panel-title>
             <mat-panel-description>known abilities</mat-panel-description>
           </mat-expansion-panel-header>
-          <div data-testid="skills" class="border-orange">
+          <div data-testid="skills">
             <app-key-value-description-panel
               [panelName]="'skills'"
               [items]="characterValues.skills"
@@ -67,23 +64,19 @@
   </div>
   <div class="section box-width">
     <div class="main-box">
-      <div class="title-border">
-        <mat-toolbar>
-          <span class="mat-h3">Scene Description</span>
-        </mat-toolbar>
+      <div class="title-text">
+        <span class="mat-h3">Scene Description</span>
       </div>
-      <div class="half-box vertical-scrollable border-blue">
+      <div class="half-box vertical-scrollable">
         <app-text-area-panel
           [paragraphs]="scene.description"
           data-testid="description"
         ></app-text-area-panel>
       </div>
-      <div class="title-border">
-        <mat-toolbar>
-          <span class="mat-h3">What happened?</span>
-        </mat-toolbar>
+      <div class="title-text">
+        <span class="mat-h3">Action Logs</span>
       </div>
-      <div class="half-box vertical-scrollable border-yellow">
+      <div class="half-box vertical-scrollable">
         <app-text-area-panel
           [paragraphs]="logs"
           data-testid="log"
@@ -92,12 +85,10 @@
     </div>
   </div>
   <div class="section">
-    <div class="title-border">
-      <mat-toolbar>
-        <span class="mat-h3">Scene objects</span>
-      </mat-toolbar>
+    <div class="title-text">
+      <span class="mat-h3">Scene Interactives</span>
     </div>
-    <div class="main-box vertical-scrollable border-aqua">
+    <div class="main-box vertical-scrollable">
       <div data-testid="interactives">
         <app-interactive-panel
           [panelName]="'interactives'"
@@ -117,12 +108,10 @@
       >
         Character ready to act
       </mat-slide-toggle>
-      <div class="title-border">
-        <mat-toolbar>
-          <span class="mat-h3">Inventory</span>
-        </mat-toolbar>
+      <div class="title-text">
+        <span class="mat-h3">Inventory</span>
       </div>
-      <div class="vertical-scrollable border-violet">
+      <div class="vertical-scrollable">
         <div data-testid="inventory">
           <app-inventory-panel
             [equipped]="equipped"
