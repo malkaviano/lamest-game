@@ -18,6 +18,7 @@ import { InteractivePanelComponent } from './panels/interactive/interactive.pane
 import { InventoryPanelComponent } from './panels/inventory/inventory.panel.component';
 import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component';
 import { StatusBarWidgetComponent } from './widgets/status-bar/status-bar.widget.component';
+import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { StatusBarWidgetComponent } from './widgets/status-bar/status-bar.widget
     InventoryPanelComponent,
     ReaderDialogComponent,
     StatusBarWidgetComponent,
+    SheetPanelComponent,
   ],
   imports: [
     BrowserModule,

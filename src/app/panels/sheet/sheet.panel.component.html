@@ -1,0 +1,58 @@
+<div class="sheet vertical-scrollable">
+  <mat-accordion multi="true">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Identity</mat-panel-title>
+        <mat-panel-description>
+          cosmetic values for role play purposes
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div data-testid="identity">
+        <app-key-value-description-panel
+          [panelName]="'identity'"
+          [items]="characterValues.identity"
+        ></app-key-value-description-panel>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Characteristics</mat-panel-title>
+        <mat-panel-description
+          >physical and mental features</mat-panel-description
+        >
+      </mat-expansion-panel-header>
+      <div data-testid="characteristics">
+        <app-key-value-description-panel
+          [panelName]="'characteristics'"
+          [items]="characterValues.characteristics"
+        ></app-key-value-description-panel>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Derived Attributes</mat-panel-title>
+        <mat-panel-description
+          >derived from characteristics</mat-panel-description
+        >
+      </mat-expansion-panel-header>
+      <div data-testid="derived-attributes">
+        <app-key-value-description-panel
+          [panelName]="'derived-attributes'"
+          [items]="characterValues.derivedAttributes"
+        ></app-key-value-description-panel>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Skills</mat-panel-title>
+        <mat-panel-description>known abilities</mat-panel-description>
+      </mat-expansion-panel-header>
+      <div data-testid="skills">
+        <app-key-value-description-panel
+          [panelName]="'skills'"
+          [items]="characterValues.skills"
+        ></app-key-value-description-panel>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
