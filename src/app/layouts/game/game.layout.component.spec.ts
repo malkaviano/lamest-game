@@ -24,6 +24,7 @@ import {
   simpleSword,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
+import { CharacterStatusView } from '../../model-views/character-status';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;
@@ -190,6 +191,14 @@ describe('GameLayoutComponent', () => {
       ArrayView.create(['OMG', 'This is not happening', 'GG'])
     );
   });
+
+  describe('Status Bar', () => {
+    describe('when initialized', () => {
+      it('has character status', () => {
+        expect(component.characterStatus).toEqual(fakeCharacterStatus);
+      });
+    });
+  });
 });
 
 const fakeInteractive = new InteractiveEntity(
@@ -203,4 +212,10 @@ const fakeInteractive = new InteractiveEntity(
 const scene = new SceneDefinition(
   ArrayView.create(['this is a test', 'okay okay']),
   ArrayView.create([fakeInteractive])
+);
+
+const fakeCharacterStatus = CharacterStatusView.create(
+  fakeCharacterSheetDerivedAttributes,
+  unarmedWeapon,
+  'VISIBLE'
 );
