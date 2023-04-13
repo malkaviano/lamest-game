@@ -3,6 +3,7 @@
     {
       "name": "clearing",
       "description": "clearing",
+      "image": "clearing.jpg",
       "interactives": ["campFire", "forestTrail", "bushes", "disguiseVillager"],
       "transitions": [
         {
@@ -14,6 +15,7 @@
     {
       "name": "villageEntrance",
       "description": "entrance",
+      "image": "gate.jpg",
       "interactives": ["forestTrail", "villager", "villageGate"],
       "transitions": [
         {
@@ -29,6 +31,7 @@
     {
       "name": "mainStreet",
       "description": "village",
+      "image": "village.jpg",
       "interactives": [
         "villageGate",
         "hunterCabinDoor",
@@ -67,6 +70,7 @@
     {
       "name": "mainHouse",
       "description": "mainHouse",
+      "image": "main.jpg",
       "interactives": [
         "mainHouseDoor",
         "mainHouseLibraryDoor",
@@ -95,6 +99,7 @@
     {
       "name": "mainHouseLibrary",
       "description": "mainHouseLibrary",
+      "image": "library.jpg",
       "interactives": ["mainHouseLibraryDoor"],
       "transitions": [
         {
@@ -106,6 +111,7 @@
     {
       "name": "mainHouseDining",
       "description": "mainHouseDining",
+      "image": "dining.jpg",
       "interactives": ["mainHouseDiningDoor"],
       "transitions": [
         {
@@ -117,6 +123,7 @@
     {
       "name": "mainHouseBasement",
       "description": "mainHouseBasement",
+      "image": "basement.jpg",
       "interactives": ["mainHouseBasementDoor"],
       "transitions": [
         {
@@ -128,6 +135,7 @@
     {
       "name": "hunterCabin",
       "description": "hunterCabin",
+      "image": "cabin.jpg",
       "interactives": [
         "hunterCabinDoor",
         "hunterCabinTable",
@@ -143,6 +151,7 @@
     {
       "name": "mysteriousHouse",
       "description": "mysteriousHouse",
+      "image": "mysterious.jpg",
       "interactives": ["mysteriousHouseDoor", "zombie"],
       "transitions": [
         {
@@ -154,6 +163,7 @@
     {
       "name": "ambulatoryTent",
       "description": "ambulatoryTent",
+      "image": "ambulatory.jpg",
       "interactives": [
         "ambulatoryTentEntrance",
         "medicNPC",
@@ -170,6 +180,7 @@
     {
       "name": "storageHangar",
       "description": "storageHangar",
+      "image": "warehouse.jpg",
       "interactives": [
         "storageHangarDoor",
         "storageGuard",
