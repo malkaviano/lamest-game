@@ -25,7 +25,7 @@ import { SkillStoreInterface } from '../interfaces/stores/skill-store.interface'
 import { SkillAffinityLiteral } from '../literals/skill-category.literal';
 import { EffectTypeLiteral } from '../literals/effect-type.literal';
 import { SettingsStoreInterface } from '../interfaces/stores/settings-store.interface';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { ReadableStoreInterface } from '../interfaces/stores/readable-store.interface';
 import { VisibilityStateStoreInterface } from '../interfaces/stores/visibility-state-store.interface';
 

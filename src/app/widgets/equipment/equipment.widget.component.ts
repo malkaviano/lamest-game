@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ActionableItemView } from '../../model-views/actionable-item.view';
+import { ActionableItemView } from '../../view-models/actionable-item.view';
 import { ActionableDefinition } from '../../definitions/actionable.definition';
 import { ActionableEvent } from '../../events/actionable.event';
 

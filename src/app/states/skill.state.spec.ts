@@ -1,6 +1,6 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 import { SimpleState } from './simple.state';

@@ -11,7 +11,7 @@ import { SimpleState } from '../states/simple.state';
 import { SkillState } from '../states/skill.state';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResourcesStore } from './resources.store';
 import { LockedContainerState } from '../states/locked-container.state';

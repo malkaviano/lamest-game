@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ItemStoredDefinition } from '../definitions/item-storage.definition';
 import { InventoryEvent } from '../events/inventory.event';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { InventoryService } from './inventory.service';
 
 import {

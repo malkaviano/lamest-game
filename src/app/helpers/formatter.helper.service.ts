@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import {
   DerivedAttributeDefinition,
   derivedAttributeDefinitions,
 } from '../definitions/derived-attribute.definition';
-import { CharacterValuesView } from '../model-views/character-values.view';
+import { CharacterValuesView } from '../view-models/character-values.view';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { KeyValueDescriptionView } from '../model-views/key-value-description.view';
+import { KeyValueDescriptionView } from '../view-models/key-value-description.view';
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacterIdentityLiteral } from '../literals/character-identity.literal';
 

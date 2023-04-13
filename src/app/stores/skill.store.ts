@@ -4,7 +4,7 @@ import { CharacteristicSetDefinition } from '../definitions/characteristic-set.d
 import { SkillDefinition } from '../definitions/skill.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { ResourcesStore } from './resources.store';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { EffectTypeLiteral } from '../../literals/effect-type.literal';
-import { ArrayView } from '../../model-views/array.view';
+import { ArrayView } from '../../view-models/array.view';
 
 export interface SettingsStoreInterface {
   readonly settings: {

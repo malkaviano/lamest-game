@@ -2,21 +2,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { TextAreaPanelComponent } from './text-area.panel.component';
-import { ArrayView } from '../../model-views/array.view';
+import { TextAreaWidgetComponent } from './text-area.widget.component';
+import { ArrayView } from '../../view-models/array.view';
 
-describe('TextAreaPanelComponent', () => {
-  let component: TextAreaPanelComponent;
-  let fixture: ComponentFixture<TextAreaPanelComponent>;
+describe('TextAreaWidgetComponent', () => {
+  let component: TextAreaWidgetComponent;
+  let fixture: ComponentFixture<TextAreaWidgetComponent>;
   const paragraphs = ArrayView.create(['p1', 'p2', 'p3', 'p4']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TextAreaPanelComponent],
+      declarations: [TextAreaWidgetComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TextAreaPanelComponent);
+    fixture = TestBed.createComponent(TextAreaWidgetComponent);
     component = fixture.componentInstance;
 
     fixture.componentInstance.paragraphs = paragraphs;

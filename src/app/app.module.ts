@@ -10,32 +10,32 @@ import { InteractiveWidgetComponent } from './widgets/interactive/interactive.wi
 import { GamePageComponent } from './pages/game/game.page.component';
 import { KeyValueDescriptionPanelComponent } from './panels/key-value-description/key-value-description.panel.component';
 import { CharacterPageComponent } from './pages/character/character.page.component';
-import { TextAreaPanelComponent } from './panels/text-area/text-area.panel.component';
-import { WindowPanelComponent } from './panels/window/window.panel.component';
+import { TextAreaWidgetComponent } from './widgets/text-area/text-area.widget.component';
+import { WindowWidgetComponent } from './widgets/window/window.widget.component';
 import { EquipmentWidgetComponent } from './widgets/equipment/equipment.widget.component';
 import { EquippedWidgetComponent } from './widgets/equipped/equipped.widget.component';
 import { GameLayoutComponent } from './layouts/game/game.layout.component';
 import { InteractivePanelComponent } from './panels/interactive/interactive.panel.component';
 import { InventoryPanelComponent } from './panels/inventory/inventory.panel.component';
 import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component';
-import { StatusBarComponent } from './widgets/status-bar/status-bar.component';
+import { StatusBarWidgetComponent } from './widgets/status-bar/status-bar.widget.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InteractiveWidgetComponent,
-    TextAreaPanelComponent,
+    TextAreaWidgetComponent,
     GamePageComponent,
     KeyValueDescriptionPanelComponent,
     CharacterPageComponent,
-    WindowPanelComponent,
+    WindowWidgetComponent,
     EquipmentWidgetComponent,
     EquippedWidgetComponent,
     GameLayoutComponent,
     InteractivePanelComponent,
     InventoryPanelComponent,
     ReaderDialogComponent,
-    StatusBarComponent,
+    StatusBarWidgetComponent,
   ],
   imports: [
     BrowserModule,

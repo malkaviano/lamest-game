@@ -8,13 +8,13 @@ import {
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 
-import { ActionableItemView } from '../../model-views/actionable-item.view';
-import { CharacterValuesView } from '../../model-views/character-values.view';
+import { ActionableItemView } from '../../view-models/actionable-item.view';
+import { CharacterValuesView } from '../../view-models/character-values.view';
 import { GameItemDefinition } from '../../definitions/game-item.definition';
 import { SceneDefinition } from '../../definitions/scene.definition';
 import { ActionableEvent } from '../../events/actionable.event';
-import { ArrayView } from '../../model-views/array.view';
-import { CharacterStatusView } from '../../model-views/character-status';
+import { ArrayView } from '../../view-models/array.view';
+import { CharacterStatusView } from '../../view-models/character-status.view';
 
 @Component({
   selector: 'app-game-layout',

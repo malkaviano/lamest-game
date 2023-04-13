@@ -11,7 +11,7 @@ import { InteractiveWidgetComponent } from './interactive.widget.component';
 import { MaterialModule } from '../../../material/material.module';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { createActionableDefinition } from '../../definitions/actionable.definition';
-import { ArrayView } from '../../model-views/array.view';
+import { ArrayView } from '../../view-models/array.view';
 import { ActionableEvent } from '../../events/actionable.event';
 
 describe('InteractiveWidgetComponent', () => {

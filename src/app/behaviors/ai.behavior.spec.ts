@@ -10,7 +10,7 @@ import { VisibilityLiteral } from '../literals/visibility.literal';
 import { AiBehavior } from './ai.behavior';
 
 import { playerInfo } from '../../../tests/fakes';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 
 describe('AiBehavior', () => {
   beforeEach(() => {

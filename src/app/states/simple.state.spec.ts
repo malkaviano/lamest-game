@@ -1,5 +1,5 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { SimpleState } from './simple.state';
 
 describe('SimpleState', () => {

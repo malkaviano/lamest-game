@@ -3,7 +3,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { HitPointsEvent } from '../events/hit-points.event';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActorEntity } from './actor.entity';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import {
   unarmedWeapon,

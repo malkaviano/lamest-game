@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { SceneEntity } from '../entities/scene.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ArrayView } from '../model-views/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { ActorStore } from './actor.store';
 import { DescriptionStore } from './description.store';
 import { InteractiveStore } from './interactive.store';
