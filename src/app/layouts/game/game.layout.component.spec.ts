@@ -56,6 +56,8 @@ describe('GameLayoutComponent', () => {
 
     component.equipped = unarmedWeapon;
 
+    component.ngOnChanges();
+
     fixture.detectChanges();
   });
 
@@ -198,6 +200,18 @@ describe('GameLayoutComponent', () => {
         expect(component.characterStatus).toEqual(fakeCharacterStatus);
       });
     });
+
+    describe('when status change', () => {
+      it('updates the status', () => {
+        component.equipped = simpleSword;
+
+        component.ngOnChanges();
+
+        fixture.detectChanges();
+
+        expect(component.characterStatus).toEqual(fakeCharacterStatusChanged);
+      });
+    });
   });
 });
 
@@ -217,5 +231,11 @@ const scene = new SceneDefinition(
 const fakeCharacterStatus = CharacterStatusView.create(
   fakeCharacterSheetDerivedAttributes,
   unarmedWeapon,
+  'VISIBLE'
+);
+
+const fakeCharacterStatusChanged = CharacterStatusView.create(
+  fakeCharacterSheetDerivedAttributes,
+  simpleSword,
   'VISIBLE'
 );
