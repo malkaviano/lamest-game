@@ -3,13 +3,19 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { SheetPanelComponent } from './sheet.panel.component';
+
 import {
+  actionAsk,
   fakeCharacterSheet,
   fakeCharacterSheetCharacteristics,
   fakeCharacterSheetDerivedAttributes,
   fakeCharacterSheetIdentity,
   fakeCharacterSheetSkills,
+  molotov,
+  simpleSword,
 } from '../../../../tests/fakes';
+import { ActionableItemView } from '../../view-models/actionable-item.view';
+import { ActionableEvent } from '../../events/actionable.event';
 
 describe('SheetPanelComponent', () => {
   let component: SheetPanelComponent;
@@ -26,6 +32,11 @@ describe('SheetPanelComponent', () => {
     component = fixture.componentInstance;
 
     component.characterValues = fakeCharacterSheet;
+
+    component.inventory = [
+      ActionableItemView.create(simpleSword, actionAsk),
+      ActionableItemView.create(molotov, actionAsk),
+    ];
 
     fixture.detectChanges();
   });
@@ -76,5 +87,35 @@ describe('SheetPanelComponent', () => {
     expect(result.properties['panelName']).toEqual('skills');
 
     expect(result.properties['items']).toEqual(fakeCharacterSheetSkills);
+  });
+
+  describe('inventory panel', () => {
+    it(`should have items`, () => {
+      const result = fixture.debugElement
+        .query(By.css('[data-testid="inventory"]'))
+        .queryAll(By.css('app-equipment-widget'));
+
+      expect(result.length).toEqual(2);
+    });
+
+    it('should send an ActionableEvent', (done) => {
+      const event = new ActionableEvent(actionAsk, 'id1');
+
+      const panel = fixture.debugElement
+        .query(By.css('[data-testid="inventory"]'))
+        .query(By.css('app-equipment-widget'));
+
+      let result: ActionableEvent | undefined;
+
+      component.actionSelected.asObservable().subscribe((event) => {
+        result = event;
+
+        done();
+      });
+
+      panel.triggerEventHandler('actionSelected', event);
+
+      expect(result).toEqual(event);
+    });
   });
 });

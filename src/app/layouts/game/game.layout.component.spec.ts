@@ -9,7 +9,6 @@ import { SceneDefinition } from '../../definitions/scene.definition';
 import { InteractiveEntity } from '../../entities/interactive.entity';
 import { SimpleState } from '../../states/simple.state';
 import { GameLayoutComponent } from './game.layout.component';
-import { ActionableItemView } from '../../view-models/actionable-item.view';
 import { ActionableEvent } from '../../events/actionable.event';
 import { unarmedWeapon } from '../../definitions/weapon.definition';
 import { CharacterStatusView } from '../../view-models/character-status.view';
@@ -18,7 +17,6 @@ import {
   actionAsk,
   fakeCharacterSheet,
   fakeCharacterSheetDerivedAttributes,
-  molotov,
   simpleSword,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
@@ -45,11 +43,6 @@ describe('GameLayoutComponent', () => {
     component.scene = scene;
 
     component.logs = ArrayView.create(['OMG', 'This is not happening', 'GG']);
-
-    component.inventory = [
-      ActionableItemView.create(simpleSword, actionAsk),
-      ActionableItemView.create(molotov, actionAsk),
-    ];
 
     component.equipped = unarmedWeapon;
 
@@ -79,37 +72,6 @@ describe('GameLayoutComponent', () => {
       const event = new ActionableEvent(actionAsk, 'id1');
 
       const panel = fixture.debugElement.query(By.css(`app-interactive-panel`));
-
-      let result: ActionableEvent | undefined;
-
-      component.actionSelected.asObservable().subscribe((event) => {
-        result = event;
-      });
-
-      panel.triggerEventHandler('actionSelected', event);
-
-      done();
-
-      expect(result).toEqual(event);
-    });
-  });
-
-  describe('inventory panel', () => {
-    it(`should have items`, () => {
-      const result = fixture.debugElement.query(By.css('app-inventory-panel'));
-
-      expect(result.properties['panelName']).toEqual('inventory');
-
-      expect(result.properties['inventory']).toEqual([
-        ActionableItemView.create(simpleSword, actionAsk),
-        ActionableItemView.create(molotov, actionAsk),
-      ]);
-    });
-
-    it('should send an ActionableEvent', (done) => {
-      const event = new ActionableEvent(actionAsk, 'id1');
-
-      const panel = fixture.debugElement.query(By.css(`app-inventory-panel`));
 
       let result: ActionableEvent | undefined;
 

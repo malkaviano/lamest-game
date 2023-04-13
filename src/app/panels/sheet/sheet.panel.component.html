@@ -54,5 +54,19 @@
         ></app-key-value-description-panel>
       </div>
     </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Inventory</mat-panel-title>
+        <mat-panel-description>Itens collected so far</mat-panel-description>
+      </mat-expansion-panel-header>
+      <div data-testid="inventory">
+        <app-equipment-widget
+          *ngFor="let equipment of inventory"
+          [equipment]="equipment"
+          (actionSelected)="actionSelected.emit($event)"
+        ></app-equipment-widget>
+      </div>
+    </mat-expansion-panel>
   </mat-accordion>
 </div>
