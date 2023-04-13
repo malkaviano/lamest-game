@@ -32,7 +32,7 @@
     <div class="title-text">
       <span class="mat-h3">Scene Interactives</span>
     </div>
-    <div class="main-box vertical-scrollable">
+    <div class="vertical-scrollable">
       <div data-testid="interactives">
         <app-interactive-panel
           *ngIf="canAct"
@@ -40,9 +40,14 @@
           [interactives]="scene.interactives"
           (actionSelected)="actionSelected.emit($event)"
         ></app-interactive-panel>
-        <mat-spinner *ngIf="!canAct"></mat-spinner>
       </div>
     </div>
+
+    <mat-spinner
+      *ngIf="!canAct"
+      style="margin: 0 auto"
+      diameter="200"
+    ></mat-spinner>
   </div>
   <div class="section content-box">
     <div class="title-text">
