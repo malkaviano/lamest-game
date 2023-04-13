@@ -28,22 +28,9 @@
   max-width: 400px;
 }
 
-.border-blue {
-  border: 3px solid blue;
-}
-
-.border-violet {
-  border: 3px solid palevioletred;
-}
-
-.border-aqua {
-  border: 3px solid rgb(112, 216, 187);
-}
-
-.border-yellow {
-  border: 3px solid rgb(213, 216, 112);
-}
-
-.border-orange {
-  border: 1px solid rgb(216, 174, 112);
+.title-text {
+  color: rgb(255, 235, 59);
+  /* border: 5px solid rgb(255, 87, 34);
+  border-radius: 25px; */
+  text-align: center;
 }
