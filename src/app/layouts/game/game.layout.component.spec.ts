@@ -152,8 +152,6 @@ describe('GameLayoutComponent', () => {
         ActionableItemView.create(simpleSword, actionAsk),
         ActionableItemView.create(molotov, actionAsk),
       ]);
-
-      expect(result.properties['equipped']).toEqual(unarmedWeapon);
     });
 
     it('should send an ActionableEvent', (done) => {
