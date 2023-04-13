@@ -4,7 +4,7 @@ import { KeyValueInterface } from '../interfaces/key-value.interface';
 
 export class SceneEntity {
   constructor(
-    public readonly description: ArrayView<string>,
+    public readonly description: string,
     public readonly interactives: ArrayView<InteractiveEntity>,
     public readonly transitions: KeyValueInterface<string>,
     public readonly image: string

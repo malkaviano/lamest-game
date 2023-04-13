@@ -10,7 +10,6 @@ import { WeaponStoreInterface } from '../interfaces/stores/weapon-store.interfac
 import { createDice } from '../definitions/dice.definition';
 import { ConsumableStoreInterface } from '../interfaces/stores/consumable-store.interface';
 import { InteractiveStoreInterface } from '../interfaces/stores/interactive-store.interface';
-import { DescriptionStoreInterface } from '../interfaces/stores/description-store.interface';
 import { ActionableStoreInterface } from '../interfaces/stores/actionable-store.interface';
 import { ActionableLiteral } from '../literals/actionable.literal';
 import { MessageStoreInterface } from '../interfaces/stores/message-store.interface';
@@ -38,7 +37,6 @@ import destroyableStateStore from '../../assets/states/destroyable-states.json';
 import weaponStore from '../../assets/items/weapons.json';
 import consumableStore from '../../assets/items/consumables.json';
 import interactiveStore from '../../assets/interactives.json';
-import descriptionStore from '../../assets/descriptions.json';
 import actionableStore from '../../assets/actionables.json';
 import messageStore from '../../assets/messages.json';
 import actorStore from '../../assets/actors.json';
@@ -75,8 +73,6 @@ export class ResourcesStore {
   public readonly interactiveStore: InteractiveStoreInterface;
 
   public readonly actorStore: ActorStoreInterface;
-
-  public readonly descriptionStore: DescriptionStoreInterface;
 
   public readonly actionableStore: ActionableStoreInterface;
 
@@ -189,8 +185,6 @@ export class ResourcesStore {
     this.consumableStore = { consumables };
 
     this.interactiveStore = interactiveStore;
-
-    this.descriptionStore = descriptionStore;
 
     const actionables = actionableStore.actionables.map((a) => {
       return {

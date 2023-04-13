@@ -41,7 +41,6 @@ import { SceneDefinition } from '../src/app/definitions/scene.definition';
 import { ArrayView } from '../src/app/view-models/array.view';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { ProfessionStore } from '../src/app/stores/profession.store';
-import { DescriptionStore } from '../src/app/stores/description.store';
 import { ActorStore } from '../src/app/stores/actor.store';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { SkillStore } from '../src/app/stores/skill.store';
@@ -150,8 +149,6 @@ export const mockedGameEventsService = mock(GameEventsDefinition);
 export const mockedWithSubscriptionHelper = mock(WithSubscriptionHelper);
 
 export const mockedProfessionStore = mock(ProfessionStore);
-
-export const mockedDescriptionStore = mock(DescriptionStore);
 
 export const mockedActorStore = mock(ActorStore);
 
@@ -355,7 +352,7 @@ export const setupMocks = () => {
   when(mockedGameEventsService.sceneChanged$).thenReturn(
     of(
       new SceneDefinition(
-        ArrayView.create(['this is a test', 'okay okay']),
+        'this is a test',
         ArrayView.create([instance(mockedInteractiveEntity)]),
         'gg.jpg'
       )
@@ -449,8 +446,6 @@ const resetMocks = () => {
   reset(mockedWithSubscriptionHelper);
 
   reset(mockedProfessionStore);
-
-  reset(mockedDescriptionStore);
 
   reset(mockedActorStore);
 

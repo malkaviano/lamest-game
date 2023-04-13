@@ -219,7 +219,7 @@ const fakeInteractive = new InteractiveEntity(
 );
 
 const scene = new SceneDefinition(
-  ArrayView.create(['this is a test', 'okay okay']),
+  'this is a test',
   ArrayView.create([fakeInteractive]),
   'gg.jpg'
 );

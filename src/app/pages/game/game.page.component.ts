@@ -51,11 +51,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
       ArrayView.create([])
     );
 
-    this.scene = new SceneDefinition(
-      ArrayView.create([]),
-      ArrayView.create([]),
-      ''
-    );
+    this.scene = new SceneDefinition('', ArrayView.create([]), '');
 
     this.canAct = true;
   }
