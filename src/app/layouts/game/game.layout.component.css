@@ -4,10 +4,6 @@
   align-content: space-around;
 }
 
-.vertical-scrollable {
-  overflow-y: auto;
-}
-
 .main-bar {
   display: flex;
   flex-wrap: nowrap;
@@ -21,15 +17,11 @@
 }
 
 .content-box {
-  min-height: 200px;
-  max-height: 600px;
   min-width: 200px;
   max-width: 400px;
 }
 
 .large-box {
-  min-height: 200px;
-  max-height: 600px;
   min-width: 400px;
   max-width: 600px;
 }

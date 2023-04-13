@@ -2,9 +2,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: baseline;
-}
-
-.panel-item {
-  padding: 5px;
-  margin: 2px;
+  min-height: 300px;
+  max-height: 500px;
 }
