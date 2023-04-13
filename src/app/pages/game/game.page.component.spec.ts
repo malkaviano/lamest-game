@@ -122,9 +122,7 @@ describe('GamePageComponent', () => {
   });
 
   it(`should have description`, () => {
-    expect(component.scene.description).toEqual(
-      ArrayView.create(['this is a test', 'okay okay'])
-    );
+    expect(component.scene.description).toEqual('this is a test');
   });
 
   it(`should have interactives`, () => {

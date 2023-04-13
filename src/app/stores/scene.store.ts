@@ -5,7 +5,6 @@ import { ConverterHelper } from '../helpers/converter.helper';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ArrayView } from '../view-models/array.view';
 import { ActorStore } from './actor.store';
-import { DescriptionStore } from './description.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';
 
@@ -18,7 +17,6 @@ export class SceneStore {
   public readonly initial: string;
 
   constructor(
-    descriptionsStore: DescriptionStore,
     interactiveStore: InteractiveStore,
     actorStore: ActorStore,
     resourcesStore: ResourcesStore,
@@ -42,9 +40,10 @@ export class SceneStore {
       this.store.set(
         scene.name,
         new SceneEntity(
-          descriptionsStore.descriptions[scene.description],
+          scene.description,
           ArrayView.create(interactives),
-          transitions
+          transitions,
+          scene.image
         )
       );
     });

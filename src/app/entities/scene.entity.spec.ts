@@ -11,7 +11,7 @@ describe('SceneEntity', () => {
   });
 
   it('should have description', () => {
-    expect(entity.description).toEqual(descriptions);
+    expect(entity.description).toEqual('GG');
   });
 
   describe('reset', () => {
@@ -25,12 +25,11 @@ describe('SceneEntity', () => {
   });
 });
 
-const descriptions = ArrayView.create(['GG']);
-
 const interactive = instance(mockedInteractiveEntity);
 
 const entity = new SceneEntity(
-  descriptions,
+  'GG',
   ArrayView.create([interactive]),
-  {}
+  {},
+  'gg.jpg'
 );

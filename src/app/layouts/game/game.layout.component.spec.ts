@@ -12,6 +12,7 @@ import { GameLayoutComponent } from './game.layout.component';
 import { ActionableItemView } from '../../view-models/actionable-item.view';
 import { ActionableEvent } from '../../events/actionable.event';
 import { unarmedWeapon } from '../../definitions/weapon.definition';
+import { CharacterStatusView } from '../../view-models/character-status.view';
 
 import {
   actionAsk,
@@ -24,7 +25,6 @@ import {
   simpleSword,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
-import { CharacterStatusView } from '../../view-models/character-status.view';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;
@@ -173,13 +173,10 @@ describe('GameLayoutComponent', () => {
     });
   });
 
-  it(`should have description`, () => {
-    const result = fixture.debugElement.query(
-      By.css('[data-testid="description"]')
-    );
-    expect(result).not.toBeNull();
+  it(`should have image`, () => {
+    const result = fixture.debugElement.query(By.css('[data-testid="image"]'));
 
-    expect(component.scene.description.items.length).toEqual(2);
+    expect(result).not.toBeNull();
   });
 
   it(`should have action log`, () => {
@@ -222,8 +219,9 @@ const fakeInteractive = new InteractiveEntity(
 );
 
 const scene = new SceneDefinition(
-  ArrayView.create(['this is a test', 'okay okay']),
-  ArrayView.create([fakeInteractive])
+  'this is a test',
+  ArrayView.create([fakeInteractive]),
+  'gg.jpg'
 );
 
 const fakeCharacterStatus = CharacterStatusView.create(

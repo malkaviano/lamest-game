@@ -4,7 +4,6 @@ import { instance, when } from 'ts-mockito';
 
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ActorStore } from './actor.store';
-import { DescriptionStore } from './description.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';
 import { SceneStore } from './scene.store';
@@ -12,7 +11,6 @@ import { SceneStore } from './scene.store';
 import {
   mockedActorStore,
   mockedConverterHelper,
-  mockedDescriptionStore,
   mockedInteractiveStore,
   mockedResourcesStore,
   setupMocks,
@@ -33,10 +31,6 @@ describe('SceneStore', () => {
           useValue: instance(mockedResourcesStore),
         },
         {
-          provide: DescriptionStore,
-          useValue: instance(mockedDescriptionStore),
-        },
-        {
           provide: InteractiveStore,
           useValue: instance(mockedInteractiveStore),
         },
@@ -53,8 +47,6 @@ describe('SceneStore', () => {
       scenes: [],
       initial: '',
     });
-
-    when(mockedDescriptionStore.descriptions).thenReturn({});
 
     when(mockedInteractiveStore.interactives).thenReturn({});
 

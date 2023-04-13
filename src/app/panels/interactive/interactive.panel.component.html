@@ -1,4 +1,7 @@
-<div class="flex-panel" attr.data-testid="key-value-panel-{{ panelName }}">
+<div
+  class="flex-panel vertical-scrollable"
+  attr.data-testid="key-value-panel-{{ panelName }}"
+>
   <app-interactive-widget
     *ngFor="let interactive of interactives.items"
     [interactive]="interactive"

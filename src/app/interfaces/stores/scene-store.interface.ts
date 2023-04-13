@@ -7,6 +7,7 @@ export interface SceneStoreInterface {
       readonly name: string;
       readonly scene: string;
     }[];
+    readonly image: string;
   }[];
   readonly initial: string;
 }
