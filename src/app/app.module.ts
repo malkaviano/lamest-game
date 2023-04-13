@@ -15,7 +15,6 @@ import { WindowWidgetComponent } from './widgets/window/window.widget.component'
 import { EquipmentWidgetComponent } from './widgets/equipment/equipment.widget.component';
 import { GameLayoutComponent } from './layouts/game/game.layout.component';
 import { InteractivePanelComponent } from './panels/interactive/interactive.panel.component';
-import { InventoryPanelComponent } from './panels/inventory/inventory.panel.component';
 import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component';
 import { StatusBarWidgetComponent } from './widgets/status-bar/status-bar.widget.component';
 import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
@@ -32,7 +31,6 @@ import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
     EquipmentWidgetComponent,
     GameLayoutComponent,
     InteractivePanelComponent,
-    InventoryPanelComponent,
     ReaderDialogComponent,
     StatusBarWidgetComponent,
     SheetPanelComponent,

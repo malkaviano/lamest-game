@@ -7,7 +7,11 @@
       <span class="mat-h3">Character</span>
     </div>
     <div data-testid="character">
-      <app-sheet-panel [characterValues]="characterValues"></app-sheet-panel>
+      <app-sheet-panel
+        [characterValues]="characterValues"
+        [inventory]="inventory"
+        (actionSelected)="actionSelected.emit($event)"
+      ></app-sheet-panel>
     </div>
   </div>
   <div class="section">
@@ -49,22 +53,6 @@
         [paragraphs]="logs"
         data-testid="log"
       ></app-text-area-widget>
-    </div>
-  </div>
-  <div class="section content-box">
-    <div>
-      <div class="title-text">
-        <span class="mat-h3">Inventory</span>
-      </div>
-      <div class="vertical-scrollable">
-        <div data-testid="inventory">
-          <app-inventory-panel
-            [inventory]="inventory"
-            [panelName]="'inventory'"
-            (actionSelected)="actionSelected.emit($event)"
-          ></app-inventory-panel>
-        </div>
-      </div>
     </div>
   </div>
 </div>
