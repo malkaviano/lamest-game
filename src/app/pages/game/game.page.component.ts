@@ -123,6 +123,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   private openReaderDialog(data: ReadableInterface): void {
     this.dialog.open(ReaderDialogComponent, {
       data,
+      autoFocus: false,
     });
   }
 }

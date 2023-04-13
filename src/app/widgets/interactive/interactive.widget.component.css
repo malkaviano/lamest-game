@@ -4,16 +4,21 @@
   text-align: center;
   display: flex;
   flex-wrap: wrap;
+  align-content: space-around;
 }
 
 .action {
-  margin-right: 5px;
   display: inline-block;
 }
 
 .action-button {
+  margin: 0px 5px;
   min-width: 100px;
   max-width: 200px;
   min-height: 40px;
   height: auto;
+}
+
+.card-title {
+  padding: 15px;
 }
