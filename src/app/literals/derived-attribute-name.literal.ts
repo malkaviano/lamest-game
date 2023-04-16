@@ -1,1 +1,6 @@
-export type DerivedAttributeNameLiteral = 'HP' | 'EP' | 'MOV';
+export type DerivedAttributeNameLiteral =
+  | 'CURRENT HP'
+  | 'CURRENT EP'
+  | 'MAX HP'
+  | 'MAX EP'
+  | 'MOV';

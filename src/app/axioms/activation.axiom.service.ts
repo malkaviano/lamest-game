@@ -32,7 +32,8 @@ export class ActivationAxiomService implements LoggerInterface {
   ): boolean {
     const energyActivation = Math.abs(activatable.energyActivation);
 
-    const canActivate = actor.derivedAttributes.EP.value >= energyActivation;
+    const canActivate =
+      actor.derivedAttributes['CURRENT EP'].value >= energyActivation;
 
     if (canActivate) {
       if (energyActivation > 0) {

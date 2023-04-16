@@ -43,8 +43,16 @@ export class ActorBehavior {
 
   public get derivedAttributes(): DerivedAttributeSetDefinition {
     return {
-      HP: new DerivedAttributeDefinition('HP', this.currentHP),
-      EP: new DerivedAttributeDefinition('EP', this.currentEP),
+      'MAX HP': new DerivedAttributeDefinition('MAX HP', this.maximumHP),
+      'MAX EP': new DerivedAttributeDefinition('MAX EP', this.maximumEP),
+      'CURRENT HP': new DerivedAttributeDefinition(
+        'CURRENT HP',
+        this.currentHP
+      ),
+      'CURRENT EP': new DerivedAttributeDefinition(
+        'CURRENT EP',
+        this.currentEP
+      ),
       MOV: new DerivedAttributeDefinition('MOV', 10),
     };
   }

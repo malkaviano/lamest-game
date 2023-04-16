@@ -108,8 +108,10 @@ export const fakeCharacteristics: CharacteristicSetDefinition = {
 };
 
 export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
-  HP: new DerivedAttributeDefinition('HP', 8),
-  EP: new DerivedAttributeDefinition('EP', 13),
+  'MAX HP': new DerivedAttributeDefinition('MAX HP', 8),
+  'MAX EP': new DerivedAttributeDefinition('MAX EP', 13),
+  'CURRENT HP': new DerivedAttributeDefinition('CURRENT HP', 8),
+  'CURRENT EP': new DerivedAttributeDefinition('CURRENT EP', 13),
   MOV: new DerivedAttributeDefinition('MOV', 10),
 };
 
@@ -197,8 +199,26 @@ export const fakeCharacterSheetCharacteristics = ArrayView.create([
 ]);
 
 export const fakeCharacterSheetDerivedAttributes = ArrayView.create([
-  KeyValueDescriptionView.create('HP', '8', 'The character hit points'),
-  KeyValueDescriptionView.create('EP', '13', 'The character energy points'),
+  KeyValueDescriptionView.create(
+    'MAX HP',
+    '8',
+    'The character maximum hit points'
+  ),
+  KeyValueDescriptionView.create(
+    'MAX EP',
+    '13',
+    'The character maximum energy points'
+  ),
+  KeyValueDescriptionView.create(
+    'CURRENT HP',
+    '8',
+    'The character current hit points'
+  ),
+  KeyValueDescriptionView.create(
+    'CURRENT EP',
+    '13',
+    'The character current energy points'
+  ),
   KeyValueDescriptionView.create('MOV', '10', 'The character movement'),
 ]);
 

@@ -56,6 +56,6 @@ describe('CharacterPageComponent', () => {
   });
 
   it('should have attributes', () => {
-    expect(component.derivedAttributesView.items.length).toBe(3);
+    expect(component.derivedAttributesView.items.length).toBe(5);
   });
 });
