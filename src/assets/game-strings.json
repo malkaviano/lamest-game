@@ -50,6 +50,9 @@
     "AGI": "The character agility",
     "INT": "The character intelligence",
     "ESN": "The character essence",
-    "APP": "The character looks"
+    "APP": "The character looks",
+    "HP": "The character hit points",
+    "EP": "The character energy points",
+    "MOV": "The character movement"
   }
 }

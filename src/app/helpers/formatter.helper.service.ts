@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ArrayView } from '../view-models/array.view';
-import {
-  DerivedAttributeDefinition,
-  derivedAttributeDefinitions,
-} from '../definitions/derived-attribute.definition';
+import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 import { CharacterValuesView } from '../view-models/character-values.view';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { KeyValueDescriptionView } from '../view-models/key-value-description.view';
@@ -51,7 +48,7 @@ export class FormatterHelperService {
           return KeyValueDescriptionView.create(
             da.key,
             da.value.toString(),
-            derivedAttributeDefinitions[da.key]
+            GameStringsStore.descriptions[da.key]
           );
         }
       )
