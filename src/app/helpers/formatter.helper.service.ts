@@ -4,11 +4,11 @@ import { ArrayView } from '../../core/view-models/array.view';
 import { DerivedAttributeDefinition } from '../../core/definitions/derived-attribute.definition';
 import { CharacteristicDefinition } from '../../core/definitions/characteristic.definition';
 import { CharacterIdentityLiteral } from '../../core/literals/character-identity.literal';
-import { SkillStore } from '../stores/skill.store';
-import { GameStringsStore } from '../stores/game-strings.store';
 import { CharacterValuesView } from '../../core/view-models/character-values.view';
 import { KeyValueDescriptionView } from '../../core/view-models/key-value-description.view';
 import { PlayerInterface } from '../../core/interfaces/player.interface';
+import { SkillStore } from '../../backend/stores/skill.store';
+import { GameStringsStore } from '../../backend/stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',

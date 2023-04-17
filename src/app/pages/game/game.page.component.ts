@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { WithSubscriptionHelper } from '../../../backend/helpers/with-subscription.helper';
 import { SceneDefinition } from '../../../core/definitions/scene.definition';
 import { CharacterValuesView } from '../../../core/view-models/character-values.view';
 import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
 import { GameItemDefinition } from '../../../core/definitions/game-item.definition';
 import { CharacterStatusView } from '../../../core/view-models/character-status.view';
-import { FormatterHelperService } from '../../../backend/helpers/formatter.helper.service';
 import { GameLoopService } from '../../../backend/services/game-loop.service';
 import { ArrayView } from '../../../core/view-models/array.view';
 import { KeyValueDescriptionView } from '../../../core/view-models/key-value-description.view';
@@ -16,6 +14,8 @@ import { ActionableEvent } from '../../../core/events/actionable.event';
 import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
 import { ReadableInterface } from '../../../core/interfaces/readable.interface';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
+import { FormatterHelperService } from '../../helpers/formatter.helper.service';
+import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
 @Component({
   selector: 'app-game-page',

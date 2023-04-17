@@ -7,11 +7,11 @@ import {
   Output,
 } from '@angular/core';
 
-import { WithSubscriptionHelper } from '../../../backend/helpers/with-subscription.helper';
 import { ActionableDefinition } from '../../../core/definitions/actionable.definition';
 import { ActionableEvent } from '../../../core/events/actionable.event';
 import { ArrayView } from '../../../core/view-models/array.view';
 import { InteractiveInterface } from '../../../core/interfaces/interactive.interface';
+import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
 @Component({
   selector: 'app-interactive-widget',

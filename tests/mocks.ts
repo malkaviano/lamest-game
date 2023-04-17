@@ -42,7 +42,6 @@ import { ArrayView } from '../src/core/view-models/array.view';
 import { WithSubscriptionHelper } from '../src/backend/helpers/with-subscription.helper';
 import { ProfessionStore } from '../src/backend/stores/profession.store';
 import { ActorStore } from '../src/backend/stores/actor.store';
-import { FormatterHelperService } from '../src/backend/helpers/formatter.helper.service';
 import { SkillStore } from '../src/backend/stores/skill.store';
 import { InspectRule } from '../src/backend/rules/inspect.rule';
 import { SettingsStore } from '../src/backend/stores/settings.store';
@@ -69,6 +68,7 @@ import { EventHubHelperService } from '../src/backend/helpers/event-hub.helper.s
 import { ReadAxiomService } from '../src/backend/axioms/read.axiom.service';
 import { CooldownBehavior } from '../src/backend/behaviors/cooldown.behavior';
 import { AiBehavior } from '../src/backend/behaviors/ai.behavior';
+import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
