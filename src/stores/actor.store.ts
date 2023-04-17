@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ActorIdentityDefinition } from '../core/definitions/actor-identity.definition';
 import { WeaponDefinition } from '../core/definitions/weapon.definition';
-import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
@@ -23,7 +23,6 @@ export class ActorStore {
   private readonly store: Map<string, ActorEntity>;
 
   constructor(
-    private readonly converterHelper: ConverterHelper,
     stateStore: StatesStore,
     resourcesStore: ResourcesStore,
     itemStore: ItemStore,
@@ -79,6 +78,6 @@ export class ActorStore {
   }
 
   public get actors(): KeyValueInterface<ActorEntity> {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

@@ -4,7 +4,7 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '../core/definitions/actionable.definition';
-import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
 
@@ -14,10 +14,7 @@ import { ResourcesStore } from './resources.store';
 export class ActionableStore {
   private readonly store: Map<string, ActionableDefinition>;
 
-  constructor(
-    private readonly converterHelper: ConverterHelper,
-    resourcesStore: ResourcesStore
-  ) {
+  constructor(resourcesStore: ResourcesStore) {
     this.store = new Map<string, ActionableDefinition>();
 
     resourcesStore.actionableStore.actionables.forEach((actionable) => {
@@ -33,6 +30,6 @@ export class ActionableStore {
   }
 
   public get actionables(): KeyValueInterface<ActionableDefinition> {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

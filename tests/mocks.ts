@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { EMPTY, of } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
-import { ConverterHelper } from '../src/backend/helpers/converter.helper';
 import { CombatRule } from '../src/backend/rules/combat.rule';
 import { ConsumeRule } from '../src/backend/rules/consume.rule';
 import { InteractionRule } from '../src/backend/rules/interaction.rule';
@@ -95,8 +94,6 @@ export const mockedActorEntity2 = mock(ActorEntity);
 export const mockedActorBehavior = mock(ActorBehavior);
 
 export const mockedEquipmentBehavior = mock(EquipmentBehavior);
-
-export const mockedConverterHelper = mock(ConverterHelper);
 
 export const mockedResourcesStore = mock(ResourcesStore);
 
@@ -400,8 +397,6 @@ const resetMocks = () => {
   reset(mockedActorBehavior);
 
   reset(mockedEquipmentBehavior);
-
-  reset(mockedConverterHelper);
 
   reset(mockedResourcesStore);
 

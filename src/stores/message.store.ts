@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { MessageMapDefinition } from '../core/definitions/message-map.definition';
-import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 
 type payload = {
@@ -14,10 +14,7 @@ type payload = {
 export class MessageStore {
   private readonly store: Map<string, payload>;
 
-  constructor(
-    resourcesStore: ResourcesStore,
-    private readonly converterHelper: ConverterHelper
-  ) {
+  constructor(resourcesStore: ResourcesStore) {
     this.store = new Map<string, payload>();
 
     resourcesStore.messageStore.messages.forEach(({ id, options }) => {
@@ -35,6 +32,6 @@ export class MessageStore {
   }
 
   public get messages(): MessageMapDefinition {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

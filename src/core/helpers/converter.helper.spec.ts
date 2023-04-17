@@ -1,9 +1,9 @@
 import { instance } from 'ts-mockito';
 
 import { ConverterHelper } from './converter.helper';
-import { ActorEntity } from '../../core/entities/actor.entity';
-import { ActorIdentityDefinition } from '../../core/definitions/actor-identity.definition';
-import { emptyState } from '../../core/states/empty.state';
+import { ActorEntity } from '../entities/actor.entity';
+import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
+import { emptyState } from '../states/empty.state';
 
 import {
   mockedActorBehavior,
@@ -13,8 +13,6 @@ import {
   mockedInteractiveEntity,
   setupMocks,
 } from '../../../tests/mocks';
-
-const helper = new ConverterHelper();
 
 const actor = new ActorEntity(
   new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
@@ -41,7 +39,7 @@ describe('ConverterHelper', () => {
       map.set('gg', 12);
       map.set('xpto', 100);
 
-      const result = helper.mapToKeyValueInterface(map);
+      const result = ConverterHelper.mapToKeyValueInterface(map);
 
       expect(result).toEqual({
         gg: 12,
@@ -62,7 +60,7 @@ describe('ConverterHelper', () => {
       },
     ].forEach(({ actor, expected }) => {
       it(`return ${expected}`, () => {
-        expect(helper.asActor(actor)).toEqual(expected);
+        expect(ConverterHelper.asActor(actor)).toEqual(expected);
       });
     });
   });

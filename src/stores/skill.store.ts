@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CharacteristicSetDefinition } from '../core/definitions/characteristic-set.definition';
 import { SkillDefinition } from '../core/definitions/skill.definition';
-import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
 import { ArrayView } from '../core/view-models/array.view';
@@ -13,10 +13,7 @@ import { ArrayView } from '../core/view-models/array.view';
 export class SkillStore {
   private readonly store: Map<string, SkillDefinition>;
 
-  constructor(
-    private readonly converterHelper: ConverterHelper,
-    resourcesStore: ResourcesStore
-  ) {
+  constructor(resourcesStore: ResourcesStore) {
     this.store = new Map<string, SkillDefinition>();
 
     resourcesStore.skillStore.skills.forEach((skill) => {
@@ -45,7 +42,7 @@ export class SkillStore {
   }
 
   public get skills(): KeyValueInterface<SkillDefinition> {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 
   public get naturalSkills(): ArrayView<string> {
