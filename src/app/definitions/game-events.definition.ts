@@ -11,7 +11,7 @@ export class GameEventsDefinition {
   constructor(
     public readonly sceneChanged$: Observable<SceneDefinition>,
     public readonly actionLogged$: Observable<LogMessageDefinition>,
-    public readonly characterChanged$: Observable<PlayerEntity>, // ActorInterface?
+    public readonly playerChanged$: Observable<PlayerEntity>,
     public readonly playerInventory$: Observable<ArrayView<ActionableItemView>>,
     public readonly documentOpened$: Observable<ReadableInterface>,
     public readonly canActChanged$: Observable<boolean>

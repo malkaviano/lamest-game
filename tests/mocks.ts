@@ -345,7 +345,7 @@ export const setupMocks = () => {
     instance(mockedGameEventsService)
   );
 
-  when(mockedGameEventsService.characterChanged$).thenReturn(
+  when(mockedGameEventsService.playerChanged$).thenReturn(
     of(instance(mockedPlayerEntity))
   );
 

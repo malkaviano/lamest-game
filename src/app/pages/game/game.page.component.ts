@@ -68,7 +68,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.withSubscriptionHelper.addSubscription(
-      this.gameLoopService.events.characterChanged$.subscribe((character) => {
+      this.gameLoopService.events.playerChanged$.subscribe((character) => {
         this.characterValues =
           this.formatterHelperService.characterToKeyValueDescription(character);
 
