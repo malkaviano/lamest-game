@@ -1,17 +1,12 @@
-import { Injectable } from '@angular/core';
-
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { MasterRuleService } from './master.rule';
-import { AffectAxiom } from '../axioms/affect.axiom';
+import { AffectAxiom } from '../../core/axioms/affect.axiom';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class PickRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,

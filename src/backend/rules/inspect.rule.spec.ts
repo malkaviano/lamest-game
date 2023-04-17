@@ -6,7 +6,7 @@ import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { ReadAxiom } from '../axioms/read.axiom';
+import { ReadAxiom } from '../../core/axioms/read.axiom';
 
 import {
   mockedInventoryService,

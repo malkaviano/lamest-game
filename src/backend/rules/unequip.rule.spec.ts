@@ -1,8 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
-import { InventoryService } from '../services/inventory.service';
 import { UnEquipRule } from './unequip.rule';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { ActionableEvent } from '../../core/events/actionable.event';
@@ -20,32 +17,21 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UnEquipRule', () => {
-  let service: UnEquipRule;
+  const rule = new UnEquipRule(instance(mockedInventoryService));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: InventoryService,
-          useValue: instance(mockedInventoryService),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(UnEquipRule);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(rule).toBeTruthy();
   });
 
   it('should log weapon unequipped', (done) => {
     when(mockedPlayerEntity.unEquip()).thenReturn(unDodgeableAxe);
 
     ruleScenario(
-      service,
+      rule,
       instance(mockedPlayerEntity),
       unEquipEvent,
       {},

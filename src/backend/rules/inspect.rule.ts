@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReadAxiom } from '../axioms/read.axiom';
+import { ReadAxiom } from '../../core/axioms/read.axiom';
 
 import { ReadableDefinition } from '../../core/definitions/readable.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';

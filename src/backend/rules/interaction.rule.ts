@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { MasterRuleService } from './master.rule';
@@ -7,9 +5,6 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class InteractionRule extends MasterRuleService {
   constructor(private readonly checkedService: CheckedService) {
     super();

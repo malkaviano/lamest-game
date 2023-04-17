@@ -1,8 +1,8 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { AffectAxiom } from './affect.axiom';
-import { EffectEvent } from '../../core/events/effect.event';
+import { EffectEvent } from '../events/effect.event';
 
 import { actionAttack } from '../../../tests/fakes';
 import { mockedPlayerEntity } from '../../../tests/mocks';

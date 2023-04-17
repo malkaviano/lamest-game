@@ -1,25 +1,20 @@
-import { Injectable } from '@angular/core';
-
 import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
 import { InventoryService } from '../services/inventory.service';
-import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { AffectAxiom } from '../axioms/affect.axiom';
+import { AffectAxiom } from '../../core/axioms/affect.axiom';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
 import { CheckedService } from '../services/checked.service';
+import { RollHelper } from '../../core/helpers/roll.helper';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ConsumeRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly rollRule: RollService,
+    private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,
     private readonly affectAxiom: AffectAxiom
   ) {
@@ -39,7 +34,7 @@ export class ConsumeRule extends MasterRuleService {
     let rollResult: ResultLiteral = 'NONE';
 
     if (consumable.skillName) {
-      rollResult = this.rollRule.actorSkillCheck(
+      rollResult = this.rollHelper.actorSkillCheck(
         actor,
         consumable.skillName
       ).result;

@@ -8,8 +8,7 @@ import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
 import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
 import { SceneDefinition } from '../../core/definitions/scene.definition';
-import { RuleDispatcherService } from '../../backend/services/rule-dispatcher.service';
-import { EventHubHelperService } from '../../backend/helpers/event-hub.helper';
+import { RulesHub } from '../../backend/services/rules.hub';
 import { InventoryService } from '../../backend/services/inventory.service';
 import { GameEventsDefinition } from '../../core/definitions/game-events.definition';
 import {
@@ -22,6 +21,7 @@ import { ActionableItemView } from '../../core/view-models/actionable-item.view'
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorEntity } from '../../core/entities/actor.entity';
+import { EventsHub } from '../../backend/services/events.hub';
 
 @Injectable({
   providedIn: 'root',
@@ -42,10 +42,10 @@ export class GameLoopService {
   public readonly events: GameEventsDefinition;
 
   constructor(
-    private readonly ruleDispatcherService: RuleDispatcherService,
+    private readonly ruleDispatcherService: RulesHub,
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
-    private readonly eventHubHelperService: EventHubHelperService,
+    private readonly eventHub: EventsHub,
     inventoryService: InventoryService
   ) {
     this.player = this.characterService.currentCharacter;
@@ -64,7 +64,7 @@ export class GameLoopService {
 
     this.dodgedThisRound = new Map<string, number>();
 
-    this.eventHubHelperService.actorDodged$.subscribe((actorId) => {
+    this.eventHub.actorDodged$.subscribe((actorId) => {
       this.actorDodged(actorId);
     });
 
@@ -79,10 +79,10 @@ export class GameLoopService {
 
     this.events = new GameEventsDefinition(
       narrativeService.sceneChanged$,
-      eventHubHelperService.logMessageProduced$,
+      eventHub.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
-      this.eventHubHelperService.documentOpened$,
+      this.eventHub.documentOpened$,
       this.player.canActChanged$
     );
   }

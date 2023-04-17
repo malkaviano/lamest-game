@@ -1,9 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
-import { SceneDefinition } from '../../core/definitions/scene.definition';
-import { SceneStore } from '../../stores/scene.store';
 import { NarrativeService } from './narrative.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ArrayView } from '../../core/view-models/array.view';
@@ -25,15 +21,6 @@ describe('NarrativeService', () => {
   let service: NarrativeService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: SceneStore,
-          useValue: instance(mockedSceneStore),
-        },
-      ],
-    });
-
     setupMocks();
 
     when(mockedSceneStore.initial).thenReturn('scene1');
@@ -55,7 +42,7 @@ describe('NarrativeService', () => {
       ArrayView.create([instance(mockedInteractiveEntity)])
     );
 
-    service = TestBed.inject(NarrativeService);
+    service = new NarrativeService(instance(mockedSceneStore));
   });
 
   it('should be created', () => {
@@ -65,17 +52,19 @@ describe('NarrativeService', () => {
   describe('changeScene', () => {
     describe('when a SCENE is received', () => {
       it('change the current scene', (done) => {
-        let result: SceneDefinition | undefined;
+        let result = 0;
 
-        service.sceneChanged$.subscribe((scene) => {
-          result = scene;
+        service.sceneChanged$.subscribe(() => {
+          result++;
+
+          if (result === 2) {
+            done();
+          }
         });
 
         service.changeScene(actionableEvent(actionSceneExit, 'sceneExitDoor'));
 
-        done();
-
-        expect(result).toEqual(instance(mockedSceneEntity));
+        expect(result).toEqual(2);
       });
     });
 

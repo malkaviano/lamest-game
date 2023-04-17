@@ -1,8 +1,8 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { ActivationAxiom } from './activation.axiom';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { createActionableDefinition } from '../../core/definitions/actionable.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { createActionableDefinition } from '../definitions/actionable.definition';
 
 import { shadowDagger, shadowSword, simpleSword } from '../../../tests/fakes';
 import { mockedPlayerEntity } from '../../../tests/mocks';

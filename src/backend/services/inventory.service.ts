@@ -25,7 +25,8 @@ export class InventoryService {
 
     this.inventoryChanged$ = this.inventoryChanged.asObservable();
 
-    Object.keys(interactiveStore.interactives).forEach((id) => {
+    Object.keys(interactiveStore.interactiveItems).forEach((id) => {
+      console.log(id, interactiveStore.interactiveItems);
       interactiveStore.interactiveItems[id].forEach(({ name, quantity }) => {
         for (let index = 0; index < quantity; index++) {
           this.putInInventory(id, itemStore.items[name]);

@@ -1,8 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { CheckedService } from '../services/checked.service';
 import { InteractionRule } from './interaction.rule';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 
@@ -22,25 +19,14 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('InteractionRule', () => {
-  let service: InteractionRule;
+  const rule = new InteractionRule(instance(mockedCheckedService));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: CheckedService,
-          useValue: instance(mockedCheckedService),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(InteractionRule);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(rule).toBeTruthy();
   });
 
   describe('execute', () => {
@@ -54,7 +40,7 @@ describe('InteractionRule', () => {
       ).thenReturn(inspectedMessage);
 
       ruleScenario(
-        service,
+        rule,
         actor,
         eventInspect,
         extras,

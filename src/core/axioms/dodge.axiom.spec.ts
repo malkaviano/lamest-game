@@ -1,19 +1,19 @@
 import { instance, when } from 'ts-mockito';
 
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { RollDefinition } from '../../core/definitions/roll.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { RollDefinition } from '../definitions/roll.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { DodgeAxiom } from './dodge.axiom';
 
 import {
   mockedPlayerEntity,
-  mockedRollService,
+  mockedRollHelper,
   setupMocks,
 } from '../../../tests/mocks';
 import { playerInfo } from '../../../tests/fakes';
 
 describe('DodgeAxiom', () => {
-  const axiom = new DodgeAxiom(instance(mockedRollService));
+  const axiom = new DodgeAxiom(instance(mockedRollHelper));
 
   const target = instance(mockedPlayerEntity);
 
@@ -65,7 +65,7 @@ describe('DodgeAxiom', () => {
       it(`return ${expected}`, () => {
         when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
 
-        when(mockedRollService.actorSkillCheck(target, 'Dodge')).thenReturn(
+        when(mockedRollHelper.actorSkillCheck(target, 'Dodge')).thenReturn(
           roll
         );
 
@@ -80,7 +80,7 @@ describe('DodgeAxiom', () => {
       it('should emit log', (done) => {
         when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
 
-        when(mockedRollService.actorSkillCheck(target, 'Dodge')).thenReturn(
+        when(mockedRollHelper.actorSkillCheck(target, 'Dodge')).thenReturn(
           roll
         );
 
@@ -103,7 +103,7 @@ describe('DodgeAxiom', () => {
       it('should emit dodged', (done) => {
         when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
 
-        when(mockedRollService.actorSkillCheck(target, 'Dodge')).thenReturn(
+        when(mockedRollHelper.actorSkillCheck(target, 'Dodge')).thenReturn(
           roll
         );
 

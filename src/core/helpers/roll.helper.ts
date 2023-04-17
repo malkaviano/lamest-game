@@ -1,15 +1,15 @@
 import { Observable, Subject } from 'rxjs';
 
-import { Dice } from '../../core/definitions/dice.definition';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { RollDefinition } from '../../core/definitions/roll.definition';
-import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { LoggerInterface } from '../../core/interfaces/logger.interface';
-import { DiceLiteral } from '../../core/literals/dice.literal';
+import { Dice } from '../definitions/dice.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { RollDefinition } from '../definitions/roll.definition';
+import { ActorInterface } from '../interfaces/actor.interface';
+import { LoggerInterface } from '../interfaces/logger.interface';
+import { DiceLiteral } from '../literals/dice.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { RandomIntHelper } from '../../core/helpers/random-int.helper';
+import { RandomIntHelper } from './random-int.helper';
 
-export class RollService implements LoggerInterface {
+export class RollHelper implements LoggerInterface {
   private readonly diceMap: {
     readonly [key in DiceLiteral]: { min: number; max: number };
   };
@@ -18,7 +18,7 @@ export class RollService implements LoggerInterface {
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
-  constructor(private readonly rngService: RandomIntHelper) {
+  constructor(private readonly randomIntHelper: RandomIntHelper) {
     this.diceMap = {
       D4: { min: 1, max: 4 },
       D6: { min: 1, max: 6 },
@@ -77,7 +77,7 @@ export class RollService implements LoggerInterface {
         for (let index = 0; index < amount; index++) {
           const { min, max } = this.diceMap[dice];
 
-          acc += this.rngService.getRandomInterval(min, max);
+          acc += this.randomIntHelper.getRandomInterval(min, max);
         }
       }
     }
@@ -86,7 +86,7 @@ export class RollService implements LoggerInterface {
   }
 
   private skillCheck(skillValue: number): RollDefinition {
-    const rolled = this.rngService.getRandomInterval(1, 100);
+    const rolled = this.randomIntHelper.getRandomInterval(1, 100);
 
     const result = rolled <= skillValue ? 'SUCCESS' : 'FAILURE';
 

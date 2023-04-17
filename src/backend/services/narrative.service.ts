@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SceneDefinition } from '../../core/definitions/scene.definition';
@@ -8,9 +6,6 @@ import { SceneStore } from '../../stores/scene.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { SceneEntity } from '../../core/entities/scene.entity';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class NarrativeService {
   private currentScene: SceneEntity;
 

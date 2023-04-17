@@ -1,11 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
-import { CheckedService } from '../services/checked.service';
-import { AffectAxiom } from '../axioms/affect.axiom';
 
 import {
   mockedAffectedAxiomService,
@@ -23,26 +18,13 @@ import {
 } from '../../../tests/fakes';
 
 describe('PickRule', () => {
-  let service: PickRule;
+  const rule = new PickRule(
+    instance(mockedInventoryService),
+    instance(mockedCheckedService),
+    instance(mockedAffectedAxiomService)
+  );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: InventoryService,
-          useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: CheckedService,
-          useValue: instance(mockedCheckedService),
-        },
-        {
-          provide: AffectAxiom,
-          useValue: instance(mockedAffectedAxiomService),
-        },
-      ],
-    });
-
     setupMocks();
 
     when(
@@ -58,19 +40,17 @@ describe('PickRule', () => {
         deepEqual({ target: instance(mockedInteractiveEntity) })
       )
     ).thenReturn(instance(mockedInteractiveEntity));
-
-    service = TestBed.inject(PickRule);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(rule).toBeTruthy();
   });
 
   describe('execute', () => {
     it('should store the item', () => {
       const spy = spyOn(instance(mockedInventoryService), 'store');
 
-      service.execute(actor, eventPickSimpleSword, {
+      rule.execute(actor, eventPickSimpleSword, {
         target: instance(mockedInteractiveEntity),
       });
 
@@ -80,7 +60,7 @@ describe('PickRule', () => {
     it('should react to the action', () => {
       const spy = spyOn(instance(mockedAffectedAxiomService), 'affectWith');
 
-      service.execute(actor, eventPickSimpleSword, {
+      rule.execute(actor, eventPickSimpleSword, {
         target: instance(mockedInteractiveEntity),
       });
 

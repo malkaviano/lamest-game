@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
@@ -8,9 +6,6 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class EquipRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,

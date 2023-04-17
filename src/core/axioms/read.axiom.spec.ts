@@ -1,4 +1,4 @@
-import { ReadableInterface } from '../../core/interfaces/readable.interface';
+import { ReadableInterface } from '../interfaces/readable.interface';
 import { ReadAxiom } from './read.axiom';
 
 import { readable } from '../../../tests/fakes';

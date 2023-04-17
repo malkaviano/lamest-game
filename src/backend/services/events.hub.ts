@@ -1,23 +1,18 @@
-import { Injectable } from '@angular/core';
-
 import { merge, Observable } from 'rxjs';
 
-import { ActivationAxiom } from '../axioms/activation.axiom';
-import { AffectAxiom } from '../axioms/affect.axiom';
-import { DodgeAxiom } from '../axioms/dodge.axiom';
-import { ReadAxiom } from '../axioms/read.axiom';
+import { ActivationAxiom } from '../../core/axioms/activation.axiom';
+import { AffectAxiom } from '../../core/axioms/affect.axiom';
+import { DodgeAxiom } from '../../core/axioms/dodge.axiom';
+import { ReadAxiom } from '../../core/axioms/read.axiom';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { ActorDodgedInterface } from '../../core/interfaces/actor-dodged.interface';
 import { DocumentOpenedInterface } from '../../core/interfaces/document-opened.interface';
 import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { ReadableInterface } from '../../core/interfaces/readable.interface';
-import { RollService } from '../services/roll.service';
-import { RuleDispatcherService } from '../services/rule-dispatcher.service';
+import { RulesHub } from './rules.hub';
+import { RollHelper } from '../../core/helpers/roll.helper';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class EventHubHelperService
+export class EventsHub
   implements LoggerInterface, ActorDodgedInterface, DocumentOpenedInterface
 {
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
@@ -27,8 +22,8 @@ export class EventHubHelperService
   public readonly documentOpened$: Observable<ReadableInterface>;
 
   constructor(
-    rollService: RollService,
-    ruleDispatcherService: RuleDispatcherService,
+    rollService: RollHelper,
+    ruleDispatcherService: RulesHub,
     dodgeAxiomService: DodgeAxiom,
     activationAxiomService: ActivationAxiom,
     affectAxiomService: AffectAxiom,

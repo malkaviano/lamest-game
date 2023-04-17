@@ -6,6 +6,14 @@ import { EMPTY, of, Subject } from 'rxjs';
 import { GameLoopService } from './game-loop.service';
 import { ReadableInterface } from '../../core/interfaces/readable.interface';
 import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
+import { ArrayView } from '../../core/view-models/array.view';
+import { ActionableItemView } from '../../core/view-models/actionable-item.view';
+import { InventoryEvent } from '../../core/events/inventory.event';
+import { RulesHub } from '../../backend/services/rules.hub';
+import { CharacterService } from '../../backend/services/character.service';
+import { NarrativeService } from '../../backend/services/narrative.service';
+import { InventoryService } from '../../backend/services/inventory.service';
+import { EventsHub } from '../../backend/services/events.hub';
 
 import {
   actionableEvent,
@@ -32,17 +40,9 @@ import {
   mockedSceneEntity,
   setupMocks,
   mockedInteractiveEntity,
-  mockedEventHubHelperService,
+  mockedEventHubService,
   mockedInventoryService,
 } from '../../../tests/mocks';
-import { ArrayView } from '../../core/view-models/array.view';
-import { ActionableItemView } from '../../core/view-models/actionable-item.view';
-import { InventoryEvent } from '../../core/events/inventory.event';
-import { RuleDispatcherService } from '../../backend/services/rule-dispatcher.service';
-import { CharacterService } from '../../backend/services/character.service';
-import { NarrativeService } from '../../backend/services/narrative.service';
-import { EventHubHelperService } from '../../backend/helpers/event-hub.helper';
-import { InventoryService } from '../../backend/services/inventory.service';
 
 const actor = instance(mockedActorEntity);
 
@@ -55,7 +55,7 @@ describe('GameLoopService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: RuleDispatcherService,
+          provide: RulesHub,
           useValue: instance(mockedRuleDispatcherService),
         },
         {
@@ -67,8 +67,8 @@ describe('GameLoopService', () => {
           useValue: instance(mockedNarrativeService),
         },
         {
-          provide: EventHubHelperService,
-          useValue: instance(mockedEventHubHelperService),
+          provide: EventsHub,
+          useValue: instance(mockedEventHubService),
         },
         {
           provide: InventoryService,
@@ -79,15 +79,11 @@ describe('GameLoopService', () => {
 
     setupMocks();
 
-    when(mockedEventHubHelperService.logMessageProduced$).thenReturn(EMPTY);
+    when(mockedEventHubService.logMessageProduced$).thenReturn(EMPTY);
 
-    when(mockedEventHubHelperService.actorDodged$).thenReturn(
-      of(playerInfo.id)
-    );
+    when(mockedEventHubService.actorDodged$).thenReturn(of(playerInfo.id));
 
-    when(mockedEventHubHelperService.documentOpened$).thenReturn(
-      documentSubject
-    );
+    when(mockedEventHubService.documentOpened$).thenReturn(documentSubject);
 
     when(mockedSceneEntity.interactives).thenReturn(
       ArrayView.create([instance(mockedInteractiveEntity), actor, actor2])

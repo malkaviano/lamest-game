@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { merge, Observable } from 'rxjs';
 
 import { ConsumeRule } from '../rules/consume.rule';
@@ -16,10 +14,7 @@ import { RuleInterface } from '../../core/interfaces/rule.interface';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { LoggerInterface } from '../../core/interfaces/logger.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class RuleDispatcherService implements LoggerInterface {
+export class RulesHub implements LoggerInterface {
   public readonly dispatcher: {
     [key: string]: RuleInterface;
   };

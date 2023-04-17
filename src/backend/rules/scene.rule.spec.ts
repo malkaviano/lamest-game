@@ -1,11 +1,7 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance } from 'ts-mockito';
 
-import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { CheckedService } from '../services/checked.service';
 
 import {
   mockedCheckedService,
@@ -23,35 +19,23 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('SceneRule', () => {
-  let service: SceneRule;
+  const rule = new SceneRule(
+    instance(mockedNarrativeService),
+    instance(mockedCheckedService)
+  );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: NarrativeService,
-          useValue: instance(mockedNarrativeService),
-        },
-        {
-          provide: CheckedService,
-          useValue: instance(mockedCheckedService),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(SceneRule);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(rule).toBeTruthy();
   });
 
   describe('execute', () => {
     it('should log scene changed', (done) => {
       ruleScenario(
-        service,
+        rule,
         actor,
         eventSceneExit,
         extras,

@@ -1,9 +1,9 @@
 import { instance, when } from 'ts-mockito';
 
-import { RollDefinition } from '../../core/definitions/roll.definition';
-import { ResultLiteral } from '../../core/literals/result.literal';
-import { RollService } from './roll.service';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { RollDefinition } from '../definitions/roll.definition';
+import { ResultLiteral } from '../literals/result.literal';
+import { RollHelper } from './roll.helper';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedActorEntity,
@@ -11,21 +11,21 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 
-describe('RollService', () => {
-  const service = new RollService(instance(mockedRandomIntHelper));
+describe('RollHelper', () => {
+  const helper = new RollHelper(instance(mockedRandomIntHelper));
 
   beforeEach(() => {
     setupMocks();
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(helper).toBeTruthy();
   });
 
   describe('actorSkillCheck', () => {
     describe('when skill value is not set or zero', () => {
       it('return IMPOSSIBLE and 0', () => {
-        const result = service.actorSkillCheck(
+        const result = helper.actorSkillCheck(
           instance(mockedActorEntity),
           'Appraise'
         );
@@ -38,13 +38,13 @@ describe('RollService', () => {
       it('should emit skillCheckLog log', (done) => {
         let result: LogMessageDefinition | undefined;
 
-        service.logMessageProduced$.subscribe((event) => {
+        helper.logMessageProduced$.subscribe((event) => {
           result = event;
         });
 
         const actor = instance(mockedActorEntity);
 
-        service.actorSkillCheck(actor, 'Appraise');
+        helper.actorSkillCheck(actor, 'Appraise');
 
         const expected = new LogMessageDefinition(
           'CHECK',
@@ -78,7 +78,7 @@ describe('RollService', () => {
             roll
           );
 
-          const result = service.actorSkillCheck(
+          const result = helper.actorSkillCheck(
             instance(mockedActorEntity),
             'Melee Weapon (Simple)'
           );
@@ -94,7 +94,7 @@ describe('RollService', () => {
         it('should emit skillCheckLog log', (done) => {
           let result: LogMessageDefinition | undefined;
 
-          service.logMessageProduced$.subscribe((event) => {
+          helper.logMessageProduced$.subscribe((event) => {
             result = event;
           });
 
@@ -104,7 +104,7 @@ describe('RollService', () => {
             roll
           );
 
-          service.actorSkillCheck(
+          helper.actorSkillCheck(
             instance(mockedActorEntity),
             'Melee Weapon (Simple)'
           );
@@ -133,7 +133,7 @@ describe('RollService', () => {
       when(mockedRandomIntHelper.getRandomInterval(1, 6)).thenReturn(3);
       when(mockedRandomIntHelper.getRandomInterval(1, 4)).thenReturn(2);
 
-      const result = service.roll({
+      const result = helper.roll({
         D4: 1,
         D6: 1,
         D8: 1,

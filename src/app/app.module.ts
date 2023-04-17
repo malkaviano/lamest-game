@@ -17,7 +17,7 @@ import { InteractivePanelComponent } from './panels/interactive/interactive.pane
 import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component';
 import { StatusBarPanelComponent } from './panels/status-bar/status-bar.panel.component';
 import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
-import { ProvidersModule } from './helpers/providers.module';
+import { ProvidersModule } from './providers/provider.module';
 
 @NgModule({
   declarations: [

@@ -1,12 +1,7 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
-import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
-import { AffectAxiom } from '../axioms/affect.axiom';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { CheckedService } from '../services/checked.service';
 
 import {
   mockedAffectedAxiomService,
@@ -26,40 +21,25 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UseRule', () => {
-  let service: UseRule;
+  const rule = new UseRule(
+    instance(mockedInventoryService),
+    instance(mockedCheckedService),
+    instance(mockedAffectedAxiomService)
+  );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: InventoryService,
-          useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: CheckedService,
-          useValue: instance(mockedCheckedService),
-        },
-        {
-          provide: AffectAxiom,
-          useValue: instance(mockedAffectedAxiomService),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(UseRule);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(rule).toBeTruthy();
   });
 
   describe('execute', () => {
     describe('when item could not be found', () => {
       it('should log item not found', (done) => {
         ruleScenario(
-          service,
+          rule,
           actor,
           eventUseMasterKey,
           extras,
@@ -76,7 +56,7 @@ describe('UseRule', () => {
         ).thenReturn(masterKey);
 
         ruleScenario(
-          service,
+          rule,
           actor,
           eventUseMasterKey,
           extras,

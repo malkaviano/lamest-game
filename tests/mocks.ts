@@ -18,7 +18,6 @@ import { GeneratorService } from '../src/backend/services/generator.service';
 import { InventoryService } from '../src/backend/services/inventory.service';
 import { NarrativeService } from '../src/backend/services/narrative.service';
 import { RandomCharacterService } from '../src/backend/services/random-character.service';
-import { RollService } from '../src/backend/services/roll.service';
 import { SkillService } from '../src/backend/services/skill.service';
 import { ActionableState } from '../src/core/states/actionable.state';
 import { ActionableStore } from '../src/stores/actionable.store';
@@ -36,12 +35,11 @@ import { ActorStore } from '../src/stores/actor.store';
 import { SkillStore } from '../src/stores/skill.store';
 import { InspectRule } from '../src/backend/rules/inspect.rule';
 import { SettingsStore } from '../src/stores/settings.store';
-import { RuleDispatcherService } from '../src/backend/services/rule-dispatcher.service';
-import { ActivationAxiom } from '../src/backend/axioms/activation.axiom';
-import { AffectAxiom } from '../src/backend/axioms/affect.axiom';
-import { DodgeAxiom } from '../src/backend/axioms/dodge.axiom';
-import { EventHubHelperService } from '../src/backend/helpers/event-hub.helper';
-import { ReadAxiom } from '../src/backend/axioms/read.axiom';
+import { RulesHub } from '../src/backend/services/rules.hub';
+import { ActivationAxiom } from '../src/core/axioms/activation.axiom';
+import { AffectAxiom } from '../src/core/axioms/affect.axiom';
+import { DodgeAxiom } from '../src/core/axioms/dodge.axiom';
+import { ReadAxiom } from '../src/core/axioms/read.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { CooldownBehavior } from '../src/core/behaviors/cooldown.behavior';
@@ -68,6 +66,8 @@ import {
 } from './fakes';
 import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
 import { CheckedService } from '../src/backend/services/checked.service';
+import { EventsHub } from '../src/backend/services/events.hub';
+import { RollHelper } from '../src/core/helpers/roll.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -77,7 +77,7 @@ export const mockedTargetPlayerEntity = mock(PlayerEntity);
 
 export const mockedInteractiveEntity = mock(InteractiveEntity);
 
-export const mockedRollService = mock(RollService);
+export const mockedRollHelper = mock(RollHelper);
 
 export const mockedNarrativeService = mock(NarrativeService);
 
@@ -115,7 +115,7 @@ export const mockedInteractionRule = mock(InteractionRule);
 
 export const mockedCombatRule = mock(CombatRule);
 
-export const mockedRuleDispatcherService = mock(RuleDispatcherService);
+export const mockedRuleDispatcherService = mock(RulesHub);
 
 export const mockedSceneStore = mock(SceneStore);
 
@@ -167,7 +167,7 @@ export const mockedAffectedAxiomService = mock(AffectAxiom);
 
 export const mockedDodgeAxiomService = mock(DodgeAxiom);
 
-export const mockedEventHubHelperService = mock(EventHubHelperService);
+export const mockedEventHubService = mock(EventsHub);
 
 export const mockedReadAxiomService = mock(ReadAxiom);
 
@@ -382,7 +382,7 @@ const resetMocks = () => {
 
   reset(mockedInteractiveEntity);
 
-  reset(mockedRollService);
+  reset(mockedRollHelper);
 
   reset(mockedNarrativeService);
 
@@ -464,7 +464,7 @@ const resetMocks = () => {
 
   reset(mockedDodgeAxiomService);
 
-  reset(mockedEventHubHelperService);
+  reset(mockedEventHubService);
 
   reset(mockedReadAxiomService);
 

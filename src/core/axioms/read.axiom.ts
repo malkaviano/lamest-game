@@ -1,8 +1,8 @@
 import { Observable, Subject } from 'rxjs';
 
-import { ReadableDefinition } from '../../core/definitions/readable.definition';
-import { DocumentOpenedInterface } from '../../core/interfaces/document-opened.interface';
-import { ReadableInterface } from '../../core/interfaces/readable.interface';
+import { ReadableDefinition } from '../definitions/readable.definition';
+import { DocumentOpenedInterface } from '../interfaces/document-opened.interface';
+import { ReadableInterface } from '../interfaces/readable.interface';
 
 export class ReadAxiom implements DocumentOpenedInterface {
   private readonly documentOpened: Subject<ReadableInterface>;
