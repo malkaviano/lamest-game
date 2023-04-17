@@ -1,4 +1,4 @@
-import { LazyHelper } from '../../core/helpers/lazy.helper';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../view-models/array.view';
 import { DiscardState } from './discard.state';
 import { LockPickingContainerState } from './lock-picking-container.state';

@@ -1,8 +1,8 @@
 import { anyString, anything, instance, when } from 'ts-mockito';
 
-import { ActionableDefinition } from '../../core/definitions/actionable.definition';
-import { ArrayView } from '../../core/view-models/array.view';
-import { ActionableState } from '../../core/states/actionable.state';
+import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ArrayView } from '../view-models/array.view';
+import { ActionableState } from '../states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 
 import { actionConsume, actionPickAnalgesic } from '../../../tests/fakes';

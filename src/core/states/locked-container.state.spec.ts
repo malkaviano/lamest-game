@@ -1,6 +1,6 @@
 import { ArrayView } from '../view-models/array.view';
 import { LockedContainerState } from './locked-container.state';
-import { LazyHelper } from '../../core/helpers/lazy.helper';
+import { LazyHelper } from '../helpers/lazy.helper';
 import { DiscardState } from './discard.state';
 
 import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';

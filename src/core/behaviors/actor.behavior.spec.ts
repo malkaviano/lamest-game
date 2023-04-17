@@ -1,7 +1,7 @@
 import { instance } from 'ts-mockito';
 
 import { ActorBehavior } from './actor.behavior';
-import { CharacteristicDefinition } from '../../core/definitions/characteristic.definition';
+import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 
 import {
   actorSettings,
@@ -11,9 +11,9 @@ import {
   fakeMapSkills,
 } from '../../../tests/fakes';
 import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
-import { EffectTypeLiteral } from '../../core/literals/effect-type.literal';
-import { HitPointsEvent } from '../../core/events/hit-points.event';
-import { EnergyPointsEvent } from '../../core/events/energy-points.event';
+import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { HitPointsEvent } from '../events/hit-points.event';
+import { EnergyPointsEvent } from '../events/energy-points.event';
 
 const fakeCharacteristicsAgi = (agi: number) => {
   return {
