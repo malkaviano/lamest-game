@@ -22,25 +22,17 @@ import { InventoryService } from '../../backend/services/inventory.service';
 import { InteractiveStore } from '../../stores/interactive.store';
 import { SceneStore } from '../../stores/scene.store';
 
-const randomIntHelper = new RandomIntHelper();
-const checkedHelper = new CheckedHelper();
-const rollService = new RollService(randomIntHelper);
-const inventoryService = new InventoryService();
-
-const activationAxiom = new ActivationAxiom();
-const affectAxiom = new AffectAxiom();
-const dodgeAxiom = new DodgeAxiom(rollService);
-const readAxiom = new ReadAxiom();
 const resourcesStore = new ResourcesStore();
 const actionableStore = new ActionableStore(resourcesStore);
 const itemStore = new ItemStore(resourcesStore);
 const messageStore = new MessageStore(resourcesStore);
 const professionStore = new ProfessionStore(resourcesStore);
-
-const generatorService = new GeneratorService(randomIntHelper, professionStore);
-
 const settingsStore = new SettingsStore(resourcesStore);
 const skillStore = new SkillStore(resourcesStore);
+
+const randomIntHelper = new RandomIntHelper();
+const generatorService = new GeneratorService(randomIntHelper, professionStore);
+
 const statesStore = new StatesStore(
   messageStore,
   actionableStore,
@@ -54,13 +46,17 @@ const actorStore = new ActorStore(
   skillStore,
   settingsStore
 );
-const interactiveStore = new InteractiveStore(
-  inventoryService,
-  statesStore,
-  itemStore,
-  resourcesStore
-);
+const interactiveStore = new InteractiveStore(statesStore, resourcesStore);
 const sceneStore = new SceneStore(interactiveStore, actorStore, resourcesStore);
+
+const checkedHelper = new CheckedHelper();
+const rollService = new RollService(randomIntHelper);
+const inventoryService = new InventoryService(interactiveStore, itemStore);
+
+const activationAxiom = new ActivationAxiom();
+const affectAxiom = new AffectAxiom();
+const dodgeAxiom = new DodgeAxiom(rollService);
+const readAxiom = new ReadAxiom();
 
 @NgModule({
   declarations: [],

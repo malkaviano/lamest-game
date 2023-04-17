@@ -8,6 +8,8 @@ import { UsableDefinition } from '../../core/definitions/usable.definition';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { ArrayView } from '../../core/view-models/array.view';
 import { InventoryEvent } from '../../core/events/inventory.event';
+import { InteractiveStore } from '../../stores/interactive.store';
+import { ItemStore } from '../../stores/item.store';
 
 export class InventoryService {
   private readonly inventoryChanged: Subject<InventoryEvent>;
@@ -16,26 +18,24 @@ export class InventoryService {
 
   public readonly inventoryChanged$: Observable<InventoryEvent>;
 
-  constructor() {
+  constructor(interactiveStore: InteractiveStore, itemStore: ItemStore) {
     this.storage = new Map<string, { [key: string]: ItemStoredDefinition }>();
 
     this.inventoryChanged = new Subject<InventoryEvent>();
 
     this.inventoryChanged$ = this.inventoryChanged.asObservable();
+
+    Object.keys(interactiveStore.interactives).forEach((id) => {
+      interactiveStore.interactiveItems[id].forEach(({ name, quantity }) => {
+        for (let index = 0; index < quantity; index++) {
+          this.putInInventory(id, itemStore.items[name]);
+        }
+      });
+    });
   }
 
   public store(key: string, item: GameItemDefinition): number {
-    const storage = this.getStorage(key);
-
-    const itemStored = storage[item.identity.name];
-
-    const quantity = (itemStored?.quantity ?? 0) + 1;
-
-    const itemStorage = new ItemStoredDefinition(item, quantity);
-
-    storage[item.identity.name] = itemStorage;
-
-    this.storage.set(key, storage);
+    const quantity = this.putInInventory(key, item);
 
     this.inventoryChanged.next(new InventoryEvent('STORE', key, item));
 
@@ -100,6 +100,21 @@ export class InventoryService {
     [key: string]: ItemStoredDefinition;
   } {
     return this.storage.get(key) ?? {};
+  }
+
+  private putInInventory(key: string, item: GameItemDefinition) {
+    const storage = this.getStorage(key);
+
+    const itemStored = storage[item.identity.name];
+
+    const quantity = (itemStored?.quantity ?? 0) + 1;
+
+    const itemStorage = new ItemStoredDefinition(item, quantity);
+
+    storage[item.identity.name] = itemStorage;
+
+    this.storage.set(key, storage);
+    return quantity;
   }
 
   private isItemTypeRight(item: GameItemDefinition): boolean {

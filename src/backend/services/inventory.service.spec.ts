@@ -1,6 +1,9 @@
-import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
+import { instance } from 'ts-mockito';
 
+import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
 import { InventoryService } from './inventory.service';
+import { ArrayView } from '../../core/view-models/array.view';
+import { InventoryEvent } from '../../core/events/inventory.event';
 
 import {
   consumableAnalgesic,
@@ -9,11 +12,23 @@ import {
   readable,
   simpleSword,
 } from '../../../tests/fakes';
-import { InventoryEvent } from '../../core/events/inventory.event';
-import { ArrayView } from '../../core/view-models/array.view';
+import { mockedItemStore } from '../../../tests/mocks';
+import { InteractiveStore } from '../../stores/interactive.store';
+
+const interactives = {
+  interactives: () => ({}),
+  interactiveItems: () => ({}),
+};
 
 describe('InventoryService', () => {
-  const service = new InventoryService();
+  let service: InventoryService;
+
+  beforeEach(() => {
+    service = new InventoryService(
+      interactives as unknown as InteractiveStore,
+      instance(mockedItemStore)
+    );
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
