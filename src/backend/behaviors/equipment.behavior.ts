@@ -1,7 +1,21 @@
-import {
-  unarmedWeapon,
-  WeaponDefinition,
-} from '../definitions/weapon.definition';
+import { DamageDefinition } from '../../core/definitions/damage.definition';
+import { createDice } from '../../core/definitions/dice.definition';
+import { ItemIdentityDefinition } from '../../core/definitions/item-identity.definition';
+import { WeaponDefinition } from '../../core/definitions/weapon.definition';
+import { GameStringsStore } from '../stores/game-strings.store';
+
+export const unarmedWeapon = new WeaponDefinition(
+  new ItemIdentityDefinition(
+    'unarmed',
+    'Unarmed',
+    GameStringsStore.descriptions['UNARMED']
+  ),
+  'Brawl',
+  new DamageDefinition(createDice({ D4: 1 }), 0, 'KINETIC'),
+  true,
+  'PERMANENT',
+  0
+);
 
 export class EquipmentBehavior {
   private weapon: WeaponDefinition | null;

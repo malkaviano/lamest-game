@@ -4,17 +4,17 @@ import { ActorBehavior } from '../behaviors/actor.behavior';
 import { AiBehavior } from '../behaviors/ai.behavior';
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
-import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
+import { ActorIdentityDefinition } from '../../core/definitions/actor-identity.definition';
+import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { ActorEntity } from '../entities/actor.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ArrayView } from '../view-models/array.view';
+import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { SettingsStore } from './settings.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
+import { ArrayView } from '../../core/view-models/array.view';
 
 @Injectable({
   providedIn: 'root',

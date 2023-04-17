@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { GeneratorService } from './generator.service';
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
 import { SkillService } from './skill.service';
 import { PlayerEntity } from '../entities/player.entity';
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
+import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ProfessionStore } from '../stores/profession.store';

@@ -1,11 +1,11 @@
 import { instance } from 'ts-mockito';
 
 import { VisibilityState } from './visibility.state';
-import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { PlayerEntity } from '../entities/player.entity';
-import { ResultLiteral } from '../literals/result.literal';
+import { ResultLiteral } from '../../core/literals/result.literal';
 import { emptyState } from './empty.state';
 import { GameStringsStore } from '../stores/game-strings.store';
 

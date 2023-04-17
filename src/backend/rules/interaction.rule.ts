@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { ActionableEvent } from '../events/actionable.event';
-import { ActorInterface } from '../interfaces/actor.interface';
-import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
+import { ActorInterface } from '../../core/interfaces/actor.interface';
+import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../stores/game-strings.store';
+import { ActionableEvent } from '../../core/events/actionable.event';
 
 @Injectable({
   providedIn: 'root',

@@ -1,11 +1,11 @@
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '../definitions/actionable.definition';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { MessageMapDefinition } from '../definitions/message-map.definition';
+} from '../../core/definitions/actionable.definition';
+import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
+import { MessageMapDefinition } from '../../core/definitions/message-map.definition';
 import { ActionableState } from './actionable.state';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '../../core/view-models/array.view';
 
 export class ConversationState extends ActionableState {
   protected readonly currentMessages: KeyValueInterface<{

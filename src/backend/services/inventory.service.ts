@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 
-import { ConsumableDefinition } from '../definitions/consumable.definition';
-import { GameItemDefinition } from '../definitions/game-item.definition';
-import { ItemStoredDefinition } from '../definitions/item-storage.definition';
-import { ReadableDefinition } from '../definitions/readable.definition';
-import { UsableDefinition } from '../definitions/usable.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
-import { InventoryEvent } from '../events/inventory.event';
-import { ArrayView } from '../view-models/array.view';
+import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
+import { GameItemDefinition } from '../../core/definitions/game-item.definition';
+import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
+import { ReadableDefinition } from '../../core/definitions/readable.definition';
+import { UsableDefinition } from '../../core/definitions/usable.definition';
+import { WeaponDefinition } from '../../core/definitions/weapon.definition';
+import { ArrayView } from '../../core/view-models/array.view';
+import { InventoryEvent } from '../../core/events/inventory.event';
 
 @Injectable({
   providedIn: 'root',

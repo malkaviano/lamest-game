@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { SceneEntity } from '../entities/scene.entity';
 import { ConverterHelper } from '../helpers/converter.helper';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ArrayView } from '../view-models/array.view';
+import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
 import { ActorStore } from './actor.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';
+import { ArrayView } from '../../core/view-models/array.view';
 
 @Injectable({
   providedIn: 'root',

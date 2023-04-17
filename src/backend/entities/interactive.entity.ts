@@ -1,14 +1,14 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ArrayView } from '../view-models/array.view';
+import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { ActionableState } from '../states/actionable.state';
-import { ResultLiteral } from '../literals/result.literal';
-import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
-import { ClassificationLiteral } from '../literals/classification.literal';
-import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
+import { ResultLiteral } from '../../core/literals/result.literal';
+import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
+import { ClassificationLiteral } from '../../core/literals/classification.literal';
+import { ReactionValuesInterface } from '../../core/interfaces/reaction-values.interface';
+import { ArrayView } from '../../core/view-models/array.view';
 
-export class InteractiveEntity implements ActionReactiveInterface {
+export class InteractiveEntity implements InteractiveInterface {
   private readonly initialState: ActionableState;
 
   private readonly actionsChanged: BehaviorSubject<
@@ -55,6 +55,14 @@ export class InteractiveEntity implements ActionReactiveInterface {
     return log ?? null;
   }
 
+  public reset(): void {
+    if (this.resettable) {
+      this.currentState = this.initialState;
+
+      this.actionsChanged.next(this.currentState.actions);
+    }
+  }
+
   protected publish(
     oldActions: ArrayView<ActionableDefinition>,
     currentActions: ArrayView<ActionableDefinition>
@@ -63,14 +71,6 @@ export class InteractiveEntity implements ActionReactiveInterface {
       JSON.stringify(oldActions.items) !== JSON.stringify(currentActions.items)
     ) {
       this.actionsChanged.next(currentActions);
-    }
-  }
-
-  public reset(): void {
-    if (this.resettable) {
-      this.currentState = this.initialState;
-
-      this.actionsChanged.next(this.currentState.actions);
     }
   }
 }

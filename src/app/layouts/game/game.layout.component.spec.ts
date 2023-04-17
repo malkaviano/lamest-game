@@ -5,12 +5,12 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { GameLayoutComponent } from './game.layout.component';
-import { ArrayView } from '../../../backend/view-models/array.view';
-import { unarmedWeapon } from '../../../backend/definitions/weapon.definition';
-import { ActionableEvent } from '../../../backend/events/actionable.event';
+import { ArrayView } from '../../../core/view-models/array.view';
+import { ActionableEvent } from '../../../core/events/actionable.event';
 import { InteractiveEntity } from '../../../backend/entities/interactive.entity';
-import { SceneDefinition } from '../../../backend/definitions/scene.definition';
+import { SceneDefinition } from '../../../core/definitions/scene.definition';
 import { SimpleState } from '../../../backend/states/simple.state';
+import { unarmedWeapon } from '../../../backend/behaviors/equipment.behavior';
 
 import {
   actionAsk,

@@ -1,6 +1,6 @@
 import { EffectEvent } from '../events/effect.event';
 import { GameItemDefinition } from '../definitions/game-item.definition';
-import { ActionReactiveInterface } from './action-reactive.interface';
+import { InteractiveInterface } from './interactive.interface';
 import { ActorInterface } from './actor.interface';
 
 export interface ReactionValuesInterface {
@@ -8,5 +8,5 @@ export interface ReactionValuesInterface {
   readonly effect?: EffectEvent;
   readonly energy?: number;
   readonly actor?: ActorInterface;
-  readonly target?: ActionReactiveInterface;
+  readonly target?: InteractiveInterface;
 }

@@ -4,24 +4,24 @@ import { filter, map } from 'rxjs';
 
 import { CharacterService } from './character.service';
 import { NarrativeService } from './narrative.service';
-import { ActorInterface } from '../interfaces/actor.interface';
+import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { ActorEntity } from '../entities/actor.entity';
-import { ArrayView } from '../view-models/array.view';
-import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
+import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
 import { PlayerEntity } from '../entities/player.entity';
-import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
-import { SceneDefinition } from '../definitions/scene.definition';
+import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
+import { SceneDefinition } from '../../core/definitions/scene.definition';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 import { EventHubHelperService } from '../helpers/event-hub.helper.service';
 import { InventoryService } from './inventory.service';
-import { GameEventsDefinition } from '../definitions/game-events.definition';
+import { GameEventsDefinition } from '../../core/definitions/game-events.definition';
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '../definitions/actionable.definition';
-import { GameItemDefinition } from '../definitions/game-item.definition';
-import { ActionableItemView } from '../view-models/actionable-item.view';
-import { ActionableEvent } from '../events/actionable.event';
+} from '../../core/definitions/actionable.definition';
+import { GameItemDefinition } from '../../core/definitions/game-item.definition';
+import { ArrayView } from '../../core/view-models/array.view';
+import { ActionableItemView } from '../../core/view-models/actionable-item.view';
+import { ActionableEvent } from '../../core/events/actionable.event';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class GameLoopService {
 
   private currentScene!: SceneDefinition;
 
-  private actionReactives: { [key: string]: ActionReactiveInterface };
+  private actionReactives: { [key: string]: InteractiveInterface };
 
   private actors: ArrayView<ActorInterface>;
 
@@ -128,7 +128,7 @@ export class GameLoopService {
 
   private setActionReactives(): void {
     this.actionReactives = this.currentScene.interactives.items.reduce(
-      (map: { [key: string]: ActionReactiveInterface }, i) => {
+      (map: { [key: string]: InteractiveInterface }, i) => {
         map[i.id] = i;
 
         return map;

@@ -4,14 +4,14 @@ import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
-import { EffectEvent } from '../events/effect.event';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { GameStringsStore } from '../stores/game-strings.store';
-import { RollDefinition } from '../definitions/roll.definition';
+import { RollDefinition } from '../../core/definitions/roll.definition';
+import { EffectEvent } from '../../core/events/effect.event';
 
 import { ruleScenario } from '../../../tests/scenarios';
 import {

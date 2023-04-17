@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 
-import { ConsumableDefinition } from '../definitions/consumable.definition';
-import { ActionableEvent } from '../events/actionable.event';
+import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
 import { InventoryService } from '../services/inventory.service';
 import { RollService } from '../services/roll.service';
-import { ActorInterface } from '../interfaces/actor.interface';
-import { EffectEvent } from '../events/effect.event';
+import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
-import { ResultLiteral } from '../literals/result.literal';
-import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ResultLiteral } from '../../core/literals/result.literal';
+import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { GameStringsStore } from '../stores/game-strings.store';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { ActionableEvent } from '../../core/events/actionable.event';
+import { EffectEvent } from '../../core/events/effect.event';
 
 @Injectable({
   providedIn: 'root',

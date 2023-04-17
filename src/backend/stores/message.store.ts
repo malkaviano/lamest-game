@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { MessageMapDefinition } from '../definitions/message-map.definition';
+import { MessageMapDefinition } from '../../core/definitions/message-map.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 

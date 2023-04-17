@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ReadableInterface } from '../interfaces/readable.interface';
+import { ReadableInterface } from '../../core/interfaces/readable.interface';
 import { ReadAxiomService } from './read.axiom.service';
 
 import { readable } from '../../../tests/fakes';

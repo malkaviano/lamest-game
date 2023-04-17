@@ -12,9 +12,9 @@ import { SkillRule } from '../rules/skill.rule';
 import { UnEquipRule } from '../rules/unequip.rule';
 import { UseRule } from '../rules/use.rule';
 import { InspectRule } from '../rules/inspect.rule';
-import { RuleInterface } from '../interfaces/rule.interface';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { LoggerInterface } from '../interfaces/logger.interface';
+import { RuleInterface } from '../../core/interfaces/rule.interface';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { LoggerInterface } from '../../core/interfaces/logger.interface';
 
 @Injectable({
   providedIn: 'root',

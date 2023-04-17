@@ -6,9 +6,10 @@ import { instance, when } from 'ts-mockito';
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
-import { HitPointsEvent } from '../events/hit-points.event';
-import { WeaponDefinition } from '../definitions/weapon.definition';
-import { EnergyPointsEvent } from '../events/energy-points.event';
+import { WeaponDefinition } from '../../core/definitions/weapon.definition';
+import { VisibilityLiteral } from '../../core/literals/visibility.literal';
+import { EnergyPointsEvent } from '../../core/events/energy-points.event';
+import { HitPointsEvent } from '../../core/events/hit-points.event';
 
 import { simpleSword } from '../../../tests/fakes';
 import {
@@ -16,7 +17,6 @@ import {
   mockedRandomCharacterService,
   setupMocks,
 } from '../../../tests/mocks';
-import { VisibilityLiteral } from '../literals/visibility.literal';
 
 describe('CharacterService', () => {
   let service: CharacterService;

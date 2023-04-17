@@ -1,7 +1,7 @@
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '../../core/view-models/array.view';
 import { ConversationState } from './conversation.state';
-import { createActionableDefinition } from '../definitions/actionable.definition';
-import { MessageMapDefinition } from '../definitions/message-map.definition';
+import { createActionableDefinition } from '../../core/definitions/actionable.definition';
+import { MessageMapDefinition } from '../../core/definitions/message-map.definition';
 
 describe('ConversationState', () => {
   it('should have action Hello', () => {

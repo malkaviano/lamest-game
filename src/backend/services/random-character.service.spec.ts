@@ -9,10 +9,10 @@ import { SkillService } from './skill.service';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ProfessionStore } from '../stores/profession.store';
-import { ArrayView } from '../view-models/array.view';
 import { SkillStore } from '../stores/skill.store';
 import { SettingsStore } from '../stores/settings.store';
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';
+import { ArrayView } from '../../core/view-models/array.view';
 
 import {
   mockedGeneratorService,

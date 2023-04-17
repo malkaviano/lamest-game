@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { RollDefinition } from '../definitions/roll.definition';
-import { ResultLiteral } from '../literals/result.literal';
+import { RollDefinition } from '../../core/definitions/roll.definition';
+import { ResultLiteral } from '../../core/literals/result.literal';
 import { RandomIntService } from '../services/random-int.service';
 import { RollService } from './roll.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 
 import {
   mockedActorEntity,

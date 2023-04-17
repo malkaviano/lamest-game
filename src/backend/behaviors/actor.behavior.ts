@@ -1,15 +1,15 @@
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
-import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
-import { EffectEvent } from '../events/effect.event';
-import { EnergyPointsEvent } from '../events/energy-points.event';
-import { HitPointsEvent } from '../events/hit-points.event';
+import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
+import { DerivedAttributeSetDefinition } from '../../core/definitions/derived-attribute-set.definition';
+import { DerivedAttributeDefinition } from '../../core/definitions/derived-attribute.definition';
 import { MathHelper } from '../helpers/math.helper';
-import { ActorSettingsInterface } from '../interfaces/actor-settings.interface';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ActorSituationLiteral } from '../literals/actor-situation.literal';
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { ActorSettingsInterface } from '../../core/interfaces/actor-settings.interface';
+import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
+import { ActorSituationLiteral } from '../../core/literals/actor-situation.literal';
+import { EffectTypeLiteral } from '../../core/literals/effect-type.literal';
 import { SkillStore } from '../stores/skill.store';
+import { EffectEvent } from '../../core/events/effect.event';
+import { HitPointsEvent } from '../../core/events/hit-points.event';
+import { EnergyPointsEvent } from '../../core/events/energy-points.event';
 
 export class ActorBehavior {
   private readonly maximumHP: number;

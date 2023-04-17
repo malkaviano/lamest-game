@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { SkillDefinition } from '../definitions/skill.definition';
+import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
+import { SkillDefinition } from '../../core/definitions/skill.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ArrayView } from '../view-models/array.view';
+import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
+import { ArrayView } from '../../core/view-models/array.view';
 
 @Injectable({
   providedIn: 'root',

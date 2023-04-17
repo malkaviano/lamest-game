@@ -1,5 +1,5 @@
 import { DirectionLiteral } from '../literals/direction.literal';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '../../core/view-models/array.view';
 import { createActionableDefinition } from './actionable.definition';
 
 export const directionActionableDefinition = (

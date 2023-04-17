@@ -6,11 +6,11 @@ import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { ReadAxiomService } from '../axioms/read.axiom.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
-import { DocumentOpenedInterface } from '../interfaces/document-opened.interface';
-import { LoggerInterface } from '../interfaces/logger.interface';
-import { ReadableInterface } from '../interfaces/readable.interface';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { ActorDodgedInterface } from '../../core/interfaces/actor-dodged.interface';
+import { DocumentOpenedInterface } from '../../core/interfaces/document-opened.interface';
+import { LoggerInterface } from '../../core/interfaces/logger.interface';
+import { ReadableInterface } from '../../core/interfaces/readable.interface';
 import { RollService } from '../services/roll.service';
 import { RuleDispatcherService } from '../services/rule-dispatcher.service';
 

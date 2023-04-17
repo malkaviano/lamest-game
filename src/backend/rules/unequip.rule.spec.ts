@@ -4,8 +4,8 @@ import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UnEquipRule } from './unequip.rule';
-import { ActionableEvent } from '../events/actionable.event';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { ActionableEvent } from '../../core/events/actionable.event';
 
 import {
   mockedPlayerEntity,

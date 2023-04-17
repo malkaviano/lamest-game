@@ -1,4 +1,4 @@
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '../../core/view-models/array.view';
 import { LockedContainerState } from './locked-container.state';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { DiscardState } from './discard.state';

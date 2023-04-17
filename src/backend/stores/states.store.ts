@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ConverterHelper } from '../helpers/converter.helper';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
 import { ActionableState } from '../states/actionable.state';
 import { ConversationState } from '../states/conversation.state';
 import { DestroyableState } from '../states/destroyable.state';
@@ -11,7 +11,6 @@ import { SimpleState } from '../states/simple.state';
 import { SkillState } from '../states/skill.state';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
-import { ArrayView } from '../view-models/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ResourcesStore } from './resources.store';
 import { LockedContainerState } from '../states/locked-container.state';
@@ -20,8 +19,9 @@ import { GeneratorService } from '../services/generator.service';
 import {
   directionActionableDefinition,
   directionNamesDefinition,
-} from '../definitions/directions.definition';
+} from '../../core/definitions/directions.definition';
 import { VisibilityState } from '../states/visibility.state';
+import { ArrayView } from '../../core/view-models/array.view';
 
 @Injectable({
   providedIn: 'root',

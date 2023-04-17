@@ -5,7 +5,7 @@ import { instance, when } from 'ts-mockito';
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
-import { RollDefinition } from '../definitions/roll.definition';
+import { RollDefinition } from '../../core/definitions/roll.definition';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 import {

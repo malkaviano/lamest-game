@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { SceneDefinition } from '../definitions/scene.definition';
+import { SceneDefinition } from '../../core/definitions/scene.definition';
 import { SceneEntity } from '../entities/scene.entity';
-import { ActionableEvent } from '../events/actionable.event';
 import { GameStringsStore } from '../stores/game-strings.store';
 import { SceneStore } from '../stores/scene.store';
+import { ActionableEvent } from '../../core/events/actionable.event';
 
 @Injectable({
   providedIn: 'root',

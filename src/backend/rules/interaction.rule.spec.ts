@@ -4,7 +4,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { CheckedHelper } from '../helpers/checked.helper';
 import { InteractionRule } from './interaction.rule';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 
 import {
   mockedCheckedHelper,

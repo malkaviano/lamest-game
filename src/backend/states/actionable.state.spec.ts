@@ -1,6 +1,6 @@
-import { createActionableDefinition } from '../definitions/actionable.definition';
+import { createActionableDefinition } from '../../core/definitions/actionable.definition';
+import { ArrayView } from '../../core/view-models/array.view';
 import { GameStringsStore } from '../stores/game-strings.store';
-import { ArrayView } from '../view-models/array.view';
 import { ActionableState } from './actionable.state';
 
 describe('ActionableState', () => {

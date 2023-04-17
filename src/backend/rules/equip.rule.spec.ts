@@ -5,8 +5,8 @@ import { instance, verify, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { EquipRule } from './equip.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
-import { WeaponDefinition } from '../definitions/weapon.definition';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { WeaponDefinition } from '../../core/definitions/weapon.definition';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { GameStringsStore } from '../stores/game-strings.store';
 
 import {

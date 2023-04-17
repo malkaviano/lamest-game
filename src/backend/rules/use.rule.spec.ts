@@ -6,7 +6,7 @@ import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 
 import {
   mockedAffectedAxiomService,

@@ -6,13 +6,10 @@ import { EMPTY, of, Subject } from 'rxjs';
 import { CharacterService } from './character.service';
 import { GameLoopService } from './game-loop.service';
 import { NarrativeService } from './narrative.service';
-import { ReadableInterface } from '../interfaces/readable.interface';
-import { ArrayView } from '../view-models/array.view';
+import { ReadableInterface } from '../../core/interfaces/readable.interface';
 import { RuleDispatcherService } from './rule-dispatcher.service';
 import { EventHubHelperService } from '../helpers/event-hub.helper.service';
-import { InventoryEvent } from '../events/inventory.event';
-import { ActionableItemView } from '../view-models/actionable-item.view';
-import { ItemStoredDefinition } from '../definitions/item-storage.definition';
+import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
 import { InventoryService } from './inventory.service';
 
 import {
@@ -43,6 +40,9 @@ import {
   mockedEventHubHelperService,
   mockedInventoryService,
 } from '../../../tests/mocks';
+import { ArrayView } from '../../core/view-models/array.view';
+import { ActionableItemView } from '../../core/view-models/actionable-item.view';
+import { InventoryEvent } from '../../core/events/inventory.event';
 
 const actor = instance(mockedActorEntity);
 

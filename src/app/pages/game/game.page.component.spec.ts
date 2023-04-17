@@ -10,10 +10,10 @@ import { GamePageComponent } from './game.page.component';
 import { GameLoopService } from '../../../backend/services/game-loop.service';
 import { WithSubscriptionHelper } from '../../../backend/helpers/with-subscription.helper';
 import { FormatterHelperService } from '../../../backend/helpers/formatter.helper.service';
-import { ActionableItemView } from '../../../backend/view-models/actionable-item.view';
-import { ArrayView } from '../../../backend/view-models/array.view';
-import { ActionableEvent } from '../../../backend/events/actionable.event';
-import { LogMessageDefinition } from '../../../backend/definitions/log-message.definition';
+import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
+import { ArrayView } from '../../../core/view-models/array.view';
+import { ActionableEvent } from '../../../core/events/actionable.event';
+import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
 
 import {
   mockedFormatterHelperService,

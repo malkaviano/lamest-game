@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
-import { ActorInterface } from '../interfaces/actor.interface';
-import { LoggerInterface } from '../interfaces/logger.interface';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { ActorDodgedInterface } from '../../core/interfaces/actor-dodged.interface';
+import { ActorInterface } from '../../core/interfaces/actor.interface';
+import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { RollService } from '../services/roll.service';
 import { GameStringsStore } from '../stores/game-strings.store';
 

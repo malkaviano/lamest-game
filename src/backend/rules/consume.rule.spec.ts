@@ -7,12 +7,12 @@ import { GameStringsStore } from '../stores/game-strings.store';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
 import { RollService } from '../services/roll.service';
-import { EffectEvent } from '../events/effect.event';
 import { CheckedHelper } from '../helpers/checked.helper';
-import { ConsumableDefinition } from '../definitions/consumable.definition';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { RollDefinition } from '../definitions/roll.definition';
+import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { RollDefinition } from '../../core/definitions/roll.definition';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { EffectEvent } from '../../core/events/effect.event';
 
 import {
   mockedAffectedAxiomService,

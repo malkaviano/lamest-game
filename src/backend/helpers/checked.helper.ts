@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { GameItemDefinition } from '../definitions/game-item.definition';
-import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
-import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
+import { GameItemDefinition } from '../../core/definitions/game-item.definition';
+import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
+import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../stores/game-strings.store';
 
@@ -12,7 +12,7 @@ import { GameStringsStore } from '../stores/game-strings.store';
 export class CheckedHelper {
   public getRuleTargetOrThrow(
     ruleExtrasInterface: RuleExtrasInterface
-  ): ActionReactiveInterface {
+  ): InteractiveInterface {
     const target = ruleExtrasInterface.target;
 
     if (!target) {

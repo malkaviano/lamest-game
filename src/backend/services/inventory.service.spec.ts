@@ -1,8 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ItemStoredDefinition } from '../definitions/item-storage.definition';
-import { InventoryEvent } from '../events/inventory.event';
-import { ArrayView } from '../view-models/array.view';
+import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
+
 import { InventoryService } from './inventory.service';
 
 import {
@@ -12,6 +11,8 @@ import {
   readable,
   simpleSword,
 } from '../../../tests/fakes';
+import { InventoryEvent } from '../../core/events/inventory.event';
+import { ArrayView } from '../../core/view-models/array.view';
 
 describe('InventoryService', () => {
   let service: InventoryService;

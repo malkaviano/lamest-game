@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 
-import { ActionableDefinition } from '../definitions/actionable.definition';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { ActionableDefinition } from '../../core/definitions/actionable.definition';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { ActorEntity } from '../entities/actor.entity';
-import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
-import { LoggerInterface } from '../interfaces/logger.interface';
-import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
-import { ResultLiteral } from '../literals/result.literal';
+import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
+import { LoggerInterface } from '../../core/interfaces/logger.interface';
+import { ReactionValuesInterface } from '../../core/interfaces/reaction-values.interface';
+import { ResultLiteral } from '../../core/literals/result.literal';
 import { GameStringsStore } from '../stores/game-strings.store';
 
 @Injectable({
@@ -26,7 +26,7 @@ export class AffectAxiomService implements LoggerInterface {
   }
 
   public affectWith(
-    actor: ActionReactiveInterface,
+    actor: InteractiveInterface,
     action: ActionableDefinition,
     rollResult: ResultLiteral,
     values: ReactionValuesInterface

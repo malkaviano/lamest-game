@@ -2,9 +2,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { ArrayView } from '../view-models/array.view';
 import { RandomIntService } from './random-int.service';
 import { SkillService } from './skill.service';
+import { ArrayView } from '../../core/view-models/array.view';
 
 import { mockedRandomIntService, setupMocks } from '../../../tests/mocks';
 

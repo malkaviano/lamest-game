@@ -2,23 +2,23 @@ import { TestBed } from '@angular/core/testing';
 
 import { anyNumber, instance, when } from 'ts-mockito';
 
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
-import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { ages } from '../literals/age.literal';
-import { heights } from '../literals/height.literal';
-import { races } from '../literals/race.literal';
-import { weights } from '../literals/weight.literal';
+import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
+import { CharacteristicDefinition } from '../../core/definitions/characteristic.definition';
+import { ages } from '../../core/literals/age.literal';
+import { heights } from '../../core/literals/height.literal';
+import { races } from '../../core/literals/race.literal';
+import { weights } from '../../core/literals/weight.literal';
 import { GeneratorService } from './generator.service';
 import { RandomIntService } from './random-int.service';
-import { DirectionLiteral } from '../literals/direction.literal';
+import { DirectionLiteral } from '../../core/literals/direction.literal';
 import { ProfessionStore } from '../stores/profession.store';
-import { ArrayView } from '../view-models/array.view';
 
 import {
   mockedProfessionStore,
   mockedRandomIntService,
   setupMocks,
 } from '../../../tests/mocks';
+import { ArrayView } from '../../core/view-models/array.view';
 
 describe('GeneratorService', () => {
   let service: GeneratorService;

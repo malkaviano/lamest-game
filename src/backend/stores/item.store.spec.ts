@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { anything, instance, when } from 'ts-mockito';
 
-import { createDice } from '../definitions/dice.definition';
+import { createDice } from '../../core/definitions/dice.definition';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';

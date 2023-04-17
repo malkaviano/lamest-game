@@ -2,19 +2,19 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { WithSubscriptionHelper } from '../../../backend/helpers/with-subscription.helper';
-import { SceneDefinition } from '../../../backend/definitions/scene.definition';
-import { CharacterValuesView } from '../../../backend/view-models/character-values.view';
-import { ActionableItemView } from '../../../backend/view-models/actionable-item.view';
-import { GameItemDefinition } from '../../../backend/definitions/game-item.definition';
-import { CharacterStatusView } from '../../../backend/view-models/character-status.view';
+import { SceneDefinition } from '../../../core/definitions/scene.definition';
+import { CharacterValuesView } from '../../../core/view-models/character-values.view';
+import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
+import { GameItemDefinition } from '../../../core/definitions/game-item.definition';
+import { CharacterStatusView } from '../../../core/view-models/character-status.view';
 import { FormatterHelperService } from '../../../backend/helpers/formatter.helper.service';
 import { GameLoopService } from '../../../backend/services/game-loop.service';
-import { ArrayView } from '../../../backend/view-models/array.view';
-import { KeyValueDescriptionView } from '../../../backend/view-models/key-value-description.view';
+import { ArrayView } from '../../../core/view-models/array.view';
+import { KeyValueDescriptionView } from '../../../core/view-models/key-value-description.view';
 import { GameStringsStore } from '../../../backend/stores/game-strings.store';
-import { ActionableEvent } from '../../../backend/events/actionable.event';
-import { LogMessageDefinition } from '../../../backend/definitions/log-message.definition';
-import { ReadableInterface } from '../../../backend/interfaces/readable.interface';
+import { ActionableEvent } from '../../../core/events/actionable.event';
+import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
+import { ReadableInterface } from '../../../core/interfaces/readable.interface';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 
 @Component({

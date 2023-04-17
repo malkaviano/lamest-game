@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ArrayView } from '../../../backend/view-models/array.view';
+import { ArrayView } from '../../../core/view-models/array.view';
 
 @Component({
   selector: 'app-text-area-widget',

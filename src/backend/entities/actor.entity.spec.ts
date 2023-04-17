@@ -1,15 +1,14 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { HitPointsEvent } from '../events/hit-points.event';
-import { ResultLiteral } from '../literals/result.literal';
+import { ResultLiteral } from '../../core/literals/result.literal';
 import { ActorEntity } from './actor.entity';
-import { ArrayView } from '../view-models/array.view';
-import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
-import {
-  unarmedWeapon,
-  WeaponDefinition,
-} from '../definitions/weapon.definition';
-import { EnergyPointsEvent } from '../events/energy-points.event';
+import { ArrayView } from '../../core/view-models/array.view';
+import { ActorIdentityDefinition } from '../../core/definitions/actor-identity.definition';
+import { WeaponDefinition } from '../../core/definitions/weapon.definition';
+import { VisibilityLiteral } from '../../core/literals/visibility.literal';
+import { HitPointsEvent } from '../../core/events/hit-points.event';
+import { EnergyPointsEvent } from '../../core/events/energy-points.event';
+import { unarmedWeapon } from '../behaviors/equipment.behavior';
 
 import {
   fakeCharacteristics,
@@ -33,7 +32,6 @@ import {
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
-import { VisibilityLiteral } from '../literals/visibility.literal';
 
 const remedy5Log = 'received REMEDY effect, healed 5 hp';
 

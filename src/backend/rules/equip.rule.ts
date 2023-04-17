@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { ActionableEvent } from '../events/actionable.event';
 import { InventoryService } from '../services/inventory.service';
-import { ActorInterface } from '../interfaces/actor.interface';
-import { WeaponDefinition } from '../definitions/weapon.definition';
+import { ActorInterface } from '../../core/interfaces/actor.interface';
+import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../stores/game-strings.store';
+import { ActionableEvent } from '../../core/events/actionable.event';
 
 @Injectable({
   providedIn: 'root',

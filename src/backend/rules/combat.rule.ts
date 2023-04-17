@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { RollService } from '../services/roll.service';
-import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ActionableEvent } from '../events/actionable.event';
-import { ActorInterface } from '../interfaces/actor.interface';
-import { ActionReactiveInterface } from '../interfaces/action-reactive.interface';
-import { DamageDefinition } from '../definitions/damage.definition';
-import { EffectEvent } from '../events/effect.event';
-import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
+import { ActionableDefinition } from '../../core/definitions/actionable.definition';
+import { ActorInterface } from '../../core/interfaces/actor.interface';
+import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
+import { DamageDefinition } from '../../core/definitions/damage.definition';
+import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../stores/game-strings.store';
@@ -15,8 +13,10 @@ import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
-import { ResultLiteral } from '../literals/result.literal';
-import { ItemUsabilityLiteral } from '../literals/item-usability';
+import { ResultLiteral } from '../../core/literals/result.literal';
+import { ItemUsabilityLiteral } from '../../core/literals/item-usability';
+import { ActionableEvent } from '../../core/events/actionable.event';
+import { EffectEvent } from '../../core/events/effect.event';
 
 @Injectable({
   providedIn: 'root',
@@ -135,7 +135,7 @@ export class CombatRule extends MasterRuleService {
   }
 
   private applyDamage(
-    target: ActionReactiveInterface,
+    target: InteractiveInterface,
     action: ActionableDefinition,
     damage: DamageDefinition
   ): void {

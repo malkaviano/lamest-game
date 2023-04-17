@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { TextAreaWidgetComponent } from './text-area.widget.component';
-import { ArrayView } from '../../../backend/view-models/array.view';
+import { ArrayView } from '../../../core/view-models/array.view';
 
 describe('TextAreaWidgetComponent', () => {
   let component: TextAreaWidgetComponent;

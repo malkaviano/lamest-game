@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '../view-models/array.view';
 import { RandomIntService } from './random-int.service';
+import { ArrayView } from '../../core/view-models/array.view';
 
 @Injectable({
   providedIn: 'root',

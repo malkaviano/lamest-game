@@ -1,11 +1,11 @@
 import { Observable, Subject } from 'rxjs';
 
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { ActionableEvent } from '../events/actionable.event';
-import { ActorInterface } from '../interfaces/actor.interface';
-import { LoggerInterface } from '../interfaces/logger.interface';
-import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
-import { RuleInterface } from '../interfaces/rule.interface';
+import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { ActorInterface } from '../../core/interfaces/actor.interface';
+import { LoggerInterface } from '../../core/interfaces/logger.interface';
+import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
+import { RuleInterface } from '../../core/interfaces/rule.interface';
+import { ActionableEvent } from '../../core/events/actionable.event';
 
 export abstract class MasterRuleService
   implements RuleInterface, LoggerInterface

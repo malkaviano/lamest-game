@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
 
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
-import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { AgeLiteral, ages } from '../literals/age.literal';
-import { HeightLiteral, heights } from '../literals/height.literal';
-import { RaceLiteral, races } from '../literals/race.literal';
-import { WeightLiteral, weights } from '../literals/weight.literal';
+import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
+import { CharacteristicDefinition } from '../../core/definitions/characteristic.definition';
+import { AgeLiteral, ages } from '../../core/literals/age.literal';
+import { HeightLiteral, heights } from '../../core/literals/height.literal';
+import { RaceLiteral, races } from '../../core/literals/race.literal';
+import { WeightLiteral, weights } from '../../core/literals/weight.literal';
 import { RandomIntService } from './random-int.service';
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { DirectionLiteral } from '../literals/direction.literal';
+import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
+import { DirectionLiteral } from '../../core/literals/direction.literal';
 import { ProfessionStore } from '../stores/profession.store';
 
 @Injectable({
