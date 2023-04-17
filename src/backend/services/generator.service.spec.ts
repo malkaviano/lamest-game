@@ -7,7 +7,6 @@ import { heights } from '../../core/literals/height.literal';
 import { races } from '../../core/literals/race.literal';
 import { weights } from '../../core/literals/weight.literal';
 import { GeneratorService } from './generator.service';
-import { DirectionLiteral } from '../../core/literals/direction.literal';
 import { ArrayView } from '../../core/view-models/array.view';
 
 import {
@@ -70,22 +69,6 @@ describe('GeneratorService', () => {
       expect(identity.height).toEqual(expectedIdentity.height);
       expect(identity.weight).toEqual(expectedIdentity.weight);
       expect(identity.name).not.toBeNull();
-    });
-  });
-
-  describe('generating lock picking sequence', () => {
-    it('return sequence', () => {
-      when(mockedRandomIntHelper.getRandomInterval(0, 1))
-        .thenReturn(0)
-        .thenReturn(0)
-        .thenReturn(1)
-        .thenReturn(1);
-
-      const expected: DirectionLiteral[] = ['LEFT', 'DOWN', 'RIGHT', 'UP'];
-
-      const result = service.lockPickSequence(4);
-
-      expect(result).toEqual(expected);
     });
   });
 });

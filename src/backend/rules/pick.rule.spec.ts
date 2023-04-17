@@ -4,12 +4,12 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
-import { CheckedHelper } from '../helpers/checked.helper';
+import { CheckedService } from '../services/checked.service';
 import { AffectAxiom } from '../axioms/affect.axiom';
 
 import {
   mockedAffectedAxiomService,
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
@@ -33,8 +33,8 @@ describe('PickRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
+          provide: CheckedService,
+          useValue: instance(mockedCheckedService),
         },
         {
           provide: AffectAxiom,
@@ -46,7 +46,7 @@ describe('PickRule', () => {
     setupMocks();
 
     when(
-      mockedCheckedHelper.takeItemOrThrow(
+      mockedCheckedService.takeItemOrThrow(
         instance(mockedInventoryService),
         eventPickSimpleSword.eventId,
         eventPickSimpleSword.actionableDefinition.name
@@ -54,7 +54,7 @@ describe('PickRule', () => {
     ).thenReturn(simpleSword);
 
     when(
-      mockedCheckedHelper.getRuleTargetOrThrow(
+      mockedCheckedService.getRuleTargetOrThrow(
         deepEqual({ target: instance(mockedInteractiveEntity) })
       )
     ).thenReturn(instance(mockedInteractiveEntity));

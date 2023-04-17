@@ -7,7 +7,6 @@ import { HeightLiteral, heights } from '../../core/literals/height.literal';
 import { RaceLiteral, races } from '../../core/literals/race.literal';
 import { WeightLiteral, weights } from '../../core/literals/weight.literal';
 import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
-import { DirectionLiteral } from '../../core/literals/direction.literal';
 import { ProfessionStore } from '../../stores/profession.store';
 import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
@@ -38,23 +37,6 @@ export class GeneratorService {
       this.weight(),
       'VISIBLE'
     );
-  }
-
-  public lockPickSequence(complexity: number): DirectionLiteral[] {
-    const odd: DirectionLiteral[] = ['LEFT', 'RIGHT'];
-    const even: DirectionLiteral[] = ['DOWN', 'UP'];
-
-    const sequence: DirectionLiteral[] = [];
-
-    for (let index = 1; index <= complexity; index++) {
-      const roll = this.randomIntHelper.getRandomInterval(0, 1);
-
-      const result = index % 2 ? odd[roll] : even[roll];
-
-      sequence.push(result);
-    }
-
-    return sequence;
   }
 
   private height(): HeightLiteral {

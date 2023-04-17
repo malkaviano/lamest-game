@@ -4,7 +4,7 @@ import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
-import { CheckedHelper } from '../helpers/checked.helper';
+import { CheckedService } from '../services/checked.service';
 import { ActivationAxiom } from '../axioms/activation.axiom';
 import { DodgeAxiom } from '../axioms/dodge.axiom';
 import { AffectAxiom } from '../axioms/affect.axiom';
@@ -17,7 +17,7 @@ import {
   mockedActivationAxiomService,
   mockedActorEntity,
   mockedAffectedAxiomService,
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedDodgeAxiomService,
   mockedPlayerEntity,
   mockedRollService,
@@ -45,8 +45,8 @@ describe('CombatRule', () => {
           useValue: instance(mockedRollService),
         },
         {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
+          provide: CheckedService,
+          useValue: instance(mockedCheckedService),
         },
         {
           provide: ActivationAxiom,

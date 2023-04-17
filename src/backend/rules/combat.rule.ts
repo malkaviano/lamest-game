@@ -6,7 +6,6 @@ import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
 import { DamageDefinition } from '../../core/definitions/damage.definition';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActivationAxiom } from '../axioms/activation.axiom';
@@ -17,6 +16,7 @@ import { ItemUsabilityLiteral } from '../../core/literals/item-usability';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
 import { ConverterHelper } from '../../core/helpers/converter.helper';
+import { CheckedService } from '../services/checked.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ import { ConverterHelper } from '../../core/helpers/converter.helper';
 export class CombatRule extends MasterRuleService {
   constructor(
     private readonly rollService: RollService,
-    private readonly checkedHelper: CheckedHelper,
+    private readonly checkedService: CheckedService,
     private readonly activationAxiomService: ActivationAxiom,
     private readonly dodgeAxiomService: DodgeAxiom,
     private readonly affectedAxiomService: AffectAxiom
@@ -37,7 +37,7 @@ export class CombatRule extends MasterRuleService {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): void {
-    const target = this.checkedHelper.getRuleTargetOrThrow(extras);
+    const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const {
       dodgeable,

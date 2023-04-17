@@ -4,7 +4,7 @@ import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
 
-export class CheckedHelper {
+export class CheckedService {
   public getRuleTargetOrThrow(
     ruleExtrasInterface: RuleExtrasInterface
   ): InteractiveInterface {

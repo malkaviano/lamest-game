@@ -36,7 +36,6 @@ import { ActorStore } from '../src/stores/actor.store';
 import { SkillStore } from '../src/stores/skill.store';
 import { InspectRule } from '../src/backend/rules/inspect.rule';
 import { SettingsStore } from '../src/stores/settings.store';
-import { CheckedHelper } from '../src/backend/helpers/checked.helper';
 import { RuleDispatcherService } from '../src/backend/services/rule-dispatcher.service';
 import { ActivationAxiom } from '../src/backend/axioms/activation.axiom';
 import { AffectAxiom } from '../src/backend/axioms/affect.axiom';
@@ -68,6 +67,7 @@ import {
   simpleSword,
 } from './fakes';
 import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
+import { CheckedService } from '../src/backend/services/checked.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -159,7 +159,7 @@ export const mockedInspectRule = mock(InspectRule);
 
 export const mockedSettingsStore = mock(SettingsStore);
 
-export const mockedCheckedHelper = mock(CheckedHelper);
+export const mockedCheckedService = mock(CheckedService);
 
 export const mockedActivationAxiomService = mock(ActivationAxiom);
 
@@ -456,7 +456,7 @@ const resetMocks = () => {
 
   reset(mockedActorEntity2);
 
-  reset(mockedCheckedHelper);
+  reset(mockedCheckedService);
 
   reset(mockedActivationAxiomService);
 
@@ -475,7 +475,7 @@ const resetMocks = () => {
 
 function mockCheckedHelper() {
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedInteractiveEntity),
       })
@@ -483,7 +483,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedInteractiveEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedInteractiveEntity),
         actorVisibility: instance(mockedPlayerEntity),
@@ -492,7 +492,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedInteractiveEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedActorEntity),
       })
@@ -500,7 +500,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedActorEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedPlayerEntity),
       })
@@ -508,7 +508,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedPlayerEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedTargetPlayerEntity),
       })
@@ -516,7 +516,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedTargetPlayerEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedPlayerEntity),
         targetDodgesPerformed: 2,

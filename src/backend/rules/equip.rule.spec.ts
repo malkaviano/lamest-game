@@ -4,13 +4,13 @@ import { instance, verify, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { EquipRule } from './equip.rule';
-import { CheckedHelper } from '../helpers/checked.helper';
+import { CheckedService } from '../services/checked.service';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 
 import {
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedInventoryService,
   mockedPlayerEntity,
   setupMocks,
@@ -37,8 +37,8 @@ describe('EquipRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
+          provide: CheckedService,
+          useValue: instance(mockedCheckedService),
         },
       ],
     });
@@ -78,7 +78,7 @@ describe('EquipRule', () => {
         ).thenReturn(simpleSword);
 
         when(
-          mockedCheckedHelper.takeItemOrThrow<WeaponDefinition>(
+          mockedCheckedService.takeItemOrThrow<WeaponDefinition>(
             instance(mockedInventoryService),
             actor.id,
             simpleSword.identity.name

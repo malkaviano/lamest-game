@@ -7,7 +7,7 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
 import { RollService } from '../services/roll.service';
-import { CheckedHelper } from '../helpers/checked.helper';
+import { CheckedService } from '../services/checked.service';
 import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { RollDefinition } from '../../core/definitions/roll.definition';
@@ -16,7 +16,7 @@ import { EffectEvent } from '../../core/events/effect.event';
 
 import {
   mockedAffectedAxiomService,
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedInventoryService,
   mockedPlayerEntity,
   mockedRollService,
@@ -46,8 +46,8 @@ describe('ConsumeRule', () => {
           useValue: instance(mockedRollService),
         },
         {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
+          provide: CheckedService,
+          useValue: instance(mockedCheckedService),
         },
         {
           provide: AffectAxiom,
@@ -71,7 +71,7 @@ describe('ConsumeRule', () => {
     describe('when item was not a consumable', () => {
       it('throw Wrong item was used', () => {
         when(
-          mockedCheckedHelper.lookItemOrThrow<ConsumableDefinition>(
+          mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             simpleSword.identity.name
@@ -90,7 +90,7 @@ describe('ConsumeRule', () => {
     describe('when item was a consumable', () => {
       it('should log item consume', (done) => {
         when(
-          mockedCheckedHelper.takeItemOrThrow<ConsumableDefinition>(
+          mockedCheckedService.takeItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             consumableFirstAid.identity.name
@@ -98,7 +98,7 @@ describe('ConsumeRule', () => {
         ).thenReturn(consumableFirstAid);
 
         when(
-          mockedCheckedHelper.lookItemOrThrow<ConsumableDefinition>(
+          mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
             instance(mockedInventoryService),
             playerInfo.id,
             consumableFirstAid.identity.name
@@ -122,7 +122,7 @@ describe('ConsumeRule', () => {
       describe('when skill check failed', () => {
         it('should should receive half effect', () => {
           when(
-            mockedCheckedHelper.takeItemOrThrow<ConsumableDefinition>(
+            mockedCheckedService.takeItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
               playerInfo.id,
               consumableFirstAid.identity.name
@@ -130,7 +130,7 @@ describe('ConsumeRule', () => {
           ).thenReturn(consumableFirstAid);
 
           when(
-            mockedCheckedHelper.lookItemOrThrow<ConsumableDefinition>(
+            mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
               playerInfo.id,
               consumableFirstAid.identity.name
@@ -169,7 +169,7 @@ describe('ConsumeRule', () => {
       describe('when skill could not be checked', () => {
         it('should log item consume', (done) => {
           when(
-            mockedCheckedHelper.lookItemOrThrow<ConsumableDefinition>(
+            mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
               instance(mockedInventoryService),
               playerInfo.id,
               consumableFirstAid.identity.name

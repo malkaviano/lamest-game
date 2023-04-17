@@ -4,11 +4,11 @@ import { instance } from 'ts-mockito';
 
 import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { CheckedService } from '../services/checked.service';
 
 import {
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedInteractiveEntity,
   mockedNarrativeService,
   mockedPlayerEntity,
@@ -33,8 +33,8 @@ describe('SceneRule', () => {
           useValue: instance(mockedNarrativeService),
         },
         {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
+          provide: CheckedService,
+          useValue: instance(mockedCheckedService),
         },
       ],
     });

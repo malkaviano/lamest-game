@@ -11,7 +11,6 @@ import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';
 import { LockedContainerState } from '../core/states/locked-container.state';
 import { LockPickingContainerState } from '../core/states/lock-picking-container.state';
-import { GeneratorService } from '../backend/services/generator.service';
 import {
   directionActionableDefinition,
   directionNamesDefinition,
@@ -20,6 +19,7 @@ import { VisibilityState } from '../core/states/visibility.state';
 import { ArrayView } from '../core/view-models/array.view';
 import { LazyHelper } from '../core/helpers/lazy.helper';
 import { ConverterHelper } from '../core/helpers/converter.helper';
+import { SequencerHelper } from '../core/helpers/sequencer.helper';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
@@ -28,7 +28,7 @@ export class StatesStore {
     messageStore: MessageStore,
     actionableStore: ActionableStore,
     resourcesStore: ResourcesStore,
-    generatorService: GeneratorService
+    sequencerHelper: SequencerHelper
   ) {
     this.store = new Map<string, ActionableState>();
 
@@ -109,7 +109,7 @@ export class StatesStore {
             actionables,
             this.lazyState(state.openedState),
             ArrayView.create(
-              generatorService.lockPickSequence(state.lockPicking.complexity)
+              sequencerHelper.lockPickSequence(state.lockPicking.complexity)
             ),
             state.lockPicking.maximumTries
           )

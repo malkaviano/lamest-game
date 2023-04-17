@@ -2,7 +2,7 @@ import { instance, when } from 'ts-mockito';
 
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { CheckedHelper } from './checked.helper';
+import { CheckedService } from './checked.service';
 
 import { playerInfo, simpleSword } from '../../../tests/fakes';
 import {
@@ -11,8 +11,8 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 
-describe('CheckedHelper', () => {
-  const service = new CheckedHelper();
+describe('CheckedService', () => {
+  const service = new CheckedService();
 
   beforeEach(() => {
     setupMocks();

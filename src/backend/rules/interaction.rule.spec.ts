@@ -2,12 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { CheckedHelper } from '../helpers/checked.helper';
+import { CheckedService } from '../services/checked.service';
 import { InteractionRule } from './interaction.rule';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 
 import {
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedInteractiveEntity,
   mockedPlayerEntity,
   setupMocks,
@@ -28,8 +28,8 @@ describe('InteractionRule', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
+          provide: CheckedService,
+          useValue: instance(mockedCheckedService),
         },
       ],
     });

@@ -4,7 +4,6 @@ import { ConsumableDefinition } from '../../core/definitions/consumable.definiti
 import { InventoryService } from '../services/inventory.service';
 import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
@@ -12,6 +11,7 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiom } from '../axioms/affect.axiom';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
+import { CheckedService } from '../services/checked.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class ConsumeRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollRule: RollService,
-    private readonly checkedHelper: CheckedHelper,
+    private readonly checkedService: CheckedService,
     private readonly affectAxiom: AffectAxiom
   ) {
     super();
@@ -29,11 +29,12 @@ export class ConsumeRule extends MasterRuleService {
   public execute(actor: ActorInterface, event: ActionableEvent): void {
     const { actionableDefinition, eventId } = event;
 
-    const consumable = this.checkedHelper.lookItemOrThrow<ConsumableDefinition>(
-      this.inventoryService,
-      actor.id,
-      eventId
-    );
+    const consumable =
+      this.checkedService.lookItemOrThrow<ConsumableDefinition>(
+        this.inventoryService,
+        actor.id,
+        eventId
+      );
 
     let rollResult: ResultLiteral = 'NONE';
 
@@ -48,7 +49,7 @@ export class ConsumeRule extends MasterRuleService {
       this.consume(actor, consumable, actionableDefinition, rollResult);
 
       if (consumable.usability === 'DISPOSABLE') {
-        this.checkedHelper.takeItemOrThrow<ConsumableDefinition>(
+        this.checkedService.takeItemOrThrow<ConsumableDefinition>(
           this.inventoryService,
           actor.id,
           eventId

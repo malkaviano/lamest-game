@@ -4,13 +4,13 @@ import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { AffectAxiom } from '../axioms/affect.axiom';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { CheckedService } from '../services/checked.service';
 
 import {
   mockedAffectedAxiomService,
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
@@ -36,8 +36,8 @@ describe('UseRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
+          provide: CheckedService,
+          useValue: instance(mockedCheckedService),
         },
         {
           provide: AffectAxiom,

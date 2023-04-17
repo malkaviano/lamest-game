@@ -4,16 +4,16 @@ import { instance, when } from 'ts-mockito';
 
 import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { AffectAxiom } from '../axioms/affect.axiom';
+import { CheckedService } from '../services/checked.service';
 
 import {
   mockedPlayerEntity,
   mockedInteractiveEntity,
   mockedRollService,
   setupMocks,
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedAffectedAxiomService,
 } from '../../../tests/mocks';
 import {
@@ -33,8 +33,8 @@ describe('SkillRule', () => {
           useValue: instance(mockedRollService),
         },
         {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
+          provide: CheckedService,
+          useValue: instance(mockedCheckedService),
         },
         {
           provide: AffectAxiom,
