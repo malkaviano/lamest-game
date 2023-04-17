@@ -3,12 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { EMPTY, of } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
-import { ActorBehavior } from '../src/backend/behaviors/actor.behavior';
-import { EquipmentBehavior } from '../src/backend/behaviors/equipment.behavior';
-import { ActorEntity } from '../src/backend/entities/actor.entity';
-import { InteractiveEntity } from '../src/backend/entities/interactive.entity';
-import { PlayerEntity } from '../src/backend/entities/player.entity';
-import { SceneEntity } from '../src/backend/entities/scene.entity';
 import { ConverterHelper } from '../src/backend/helpers/converter.helper';
 import { CombatRule } from '../src/backend/rules/combat.rule';
 import { ConsumeRule } from '../src/backend/rules/consume.rule';
@@ -29,25 +23,38 @@ import { RandomIntService } from '../src/backend/services/random-int.service';
 import { RollService } from '../src/backend/services/roll.service';
 import { SkillService } from '../src/backend/services/skill.service';
 import { ActionableState } from '../src/core/states/actionable.state';
-import { ActionableStore } from '../src/backend/stores/actionable.store';
-import { InteractiveStore } from '../src/backend/stores/interactive.store';
-import { ItemStore } from '../src/backend/stores/item.store';
-import { MessageStore } from '../src/backend/stores/message.store';
-import { ResourcesStore } from '../src/backend/stores/resources.store';
-import { SceneStore } from '../src/backend/stores/scene.store';
-import { StatesStore } from '../src/backend/stores/states.store';
+import { ActionableStore } from '../src/stores/actionable.store';
+import { InteractiveStore } from '../src/stores/interactive.store';
+import { ItemStore } from '../src/stores/item.store';
+import { MessageStore } from '../src/stores/message.store';
+import { ResourcesStore } from '../src/stores/resources.store';
+import { SceneStore } from '../src/stores/scene.store';
+import { StatesStore } from '../src/stores/states.store';
 import { GameEventsDefinition } from '../src/core/definitions/game-events.definition';
 import { SceneDefinition } from '../src/core/definitions/scene.definition';
 import { ArrayView } from '../src/core/view-models/array.view';
-import { ProfessionStore } from '../src/backend/stores/profession.store';
-import { ActorStore } from '../src/backend/stores/actor.store';
-import { SkillStore } from '../src/backend/stores/skill.store';
+import { ProfessionStore } from '../src/stores/profession.store';
+import { ActorStore } from '../src/stores/actor.store';
+import { SkillStore } from '../src/stores/skill.store';
 import { InspectRule } from '../src/backend/rules/inspect.rule';
-import { SettingsStore } from '../src/backend/stores/settings.store';
+import { SettingsStore } from '../src/stores/settings.store';
 import { CheckedHelper } from '../src/backend/helpers/checked.helper';
 import { RuleDispatcherService } from '../src/backend/services/rule-dispatcher.service';
 import { ActivationAxiomService } from '../src/backend/axioms/activation.axiom.service';
 import { AffectAxiomService } from '../src/backend/axioms/affect.axiom.service';
+import { DodgeAxiomService } from '../src/backend/axioms/dodge.axiom.service';
+import { EventHubHelperService } from '../src/backend/helpers/event-hub.helper.service';
+import { ReadAxiomService } from '../src/backend/axioms/read.axiom.service';
+import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
+import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
+import { CooldownBehavior } from '../src/core/behaviors/cooldown.behavior';
+import { AiBehavior } from '../src/core/behaviors/ai.behavior';
+import { PlayerEntity } from '../src/core/entities/player.entity';
+import { InteractiveEntity } from '../src/core/entities/interactive.entity';
+import { ActorEntity } from '../src/core/entities/actor.entity';
+import { ActorBehavior } from '../src/core/behaviors/actor.behavior';
+import { EquipmentBehavior } from '../src/core/behaviors/equipment.behavior';
+import { SceneEntity } from '../src/core/entities/scene.entity';
 
 import {
   actorInfo,
@@ -62,13 +69,6 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { DodgeAxiomService } from '../src/backend/axioms/dodge.axiom.service';
-import { EventHubHelperService } from '../src/backend/helpers/event-hub.helper.service';
-import { ReadAxiomService } from '../src/backend/axioms/read.axiom.service';
-import { CooldownBehavior } from '../src/backend/behaviors/cooldown.behavior';
-import { AiBehavior } from '../src/backend/behaviors/ai.behavior';
-import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
-import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 

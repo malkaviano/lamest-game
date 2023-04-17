@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { CheckedHelper } from './checked.helper';
 

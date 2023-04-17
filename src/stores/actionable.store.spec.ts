@@ -1,19 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 
-import { instance } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
-import { ConverterHelper } from '../helpers/converter.helper';
-import { ProfessionStore } from './profession.store';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ActionableStore } from './actionable.store';
 import { ResourcesStore } from './resources.store';
 
 import {
   mockedConverterHelper,
   mockedResourcesStore,
   setupMocks,
-} from '../../../tests/mocks';
+} from '../../tests/mocks';
 
-describe('ProfessionStore', () => {
-  let service: ProfessionStore;
+describe('ActionableStore', () => {
+  let service: ActionableStore;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,7 +31,11 @@ describe('ProfessionStore', () => {
 
     setupMocks();
 
-    service = TestBed.inject(ProfessionStore);
+    when(mockedResourcesStore.actionableStore).thenReturn({
+      actionables: [],
+    });
+
+    service = TestBed.inject(ActionableStore);
   });
 
   it('should be created', () => {

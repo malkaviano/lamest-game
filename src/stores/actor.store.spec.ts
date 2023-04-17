@@ -2,24 +2,26 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { ConverterHelper } from '../helpers/converter.helper';
-import { InventoryService } from '../services/inventory.service';
-import { InteractiveStore } from './interactive.store';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ActorStore } from './actor.store';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { StatesStore } from './states.store';
+import { SkillStore } from './skill.store';
 
 import {
   mockedConverterHelper,
-  mockedInventoryService,
   mockedItemStore,
   mockedResourcesStore,
+  mockedSettingsStore,
+  mockedSkillStore,
   mockedStatesStore,
   setupMocks,
-} from '../../../tests/mocks';
+} from '../../tests/mocks';
+import { SettingsStore } from './settings.store';
 
-describe('InteractiveStore', () => {
-  let service: InteractiveStore;
+describe('ActorStore', () => {
+  let service: ActorStore;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,10 +35,6 @@ describe('InteractiveStore', () => {
           useValue: instance(mockedResourcesStore),
         },
         {
-          provide: InventoryService,
-          useValue: instance(mockedInventoryService),
-        },
-        {
           provide: StatesStore,
           useValue: instance(mockedStatesStore),
         },
@@ -44,21 +42,24 @@ describe('InteractiveStore', () => {
           provide: ItemStore,
           useValue: instance(mockedItemStore),
         },
+        {
+          provide: SkillStore,
+          useValue: instance(mockedSkillStore),
+        },
+        {
+          provide: SettingsStore,
+          useValue: instance(mockedSettingsStore),
+        },
       ],
     });
 
     setupMocks();
 
-    when(mockedResourcesStore.interactiveStore).thenReturn({
-      interactives: [],
-      inventoryItems: [],
+    when(mockedResourcesStore.actorStore).thenReturn({
+      actors: [],
     });
 
-    when(mockedItemStore.items).thenReturn({});
-
-    when(mockedStatesStore.states).thenReturn({});
-
-    service = TestBed.inject(InteractiveStore);
+    service = TestBed.inject(ActorStore);
   });
 
   it('should be created', () => {

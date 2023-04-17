@@ -1,7 +1,7 @@
 import { instance } from 'ts-mockito';
 
 import { ConverterHelper } from './converter.helper';
-import { ActorEntity } from '../entities/actor.entity';
+import { ActorEntity } from '../../core/entities/actor.entity';
 import { ActorIdentityDefinition } from '../../core/definitions/actor-identity.definition';
 import { emptyState } from '../../core/states/empty.state';
 

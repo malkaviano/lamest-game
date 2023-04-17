@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 
-import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
-import { DamageDefinition } from '../../core/definitions/damage.definition';
-import { createDice } from '../../core/definitions/dice.definition';
-import { GameItemDefinition } from '../../core/definitions/game-item.definition';
-import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
-import { ConverterHelper } from '../helpers/converter.helper';
+import { ConsumableDefinition } from '../core/definitions/consumable.definition';
+import { DamageDefinition } from '../core/definitions/damage.definition';
+import { createDice } from '../core/definitions/dice.definition';
+import { GameItemDefinition } from '../core/definitions/game-item.definition';
+import { KeyValueInterface } from '../core/interfaces/key-value.interface';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
-import { UsableDefinition } from '../../core/definitions/usable.definition';
-import { ItemIdentityDefinition } from '../../core/definitions/item-identity.definition';
-import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { ReadableDefinition } from '../../core/definitions/readable.definition';
-import { ArrayView } from '../../core/view-models/array.view';
+import { UsableDefinition } from '../core/definitions/usable.definition';
+import { ItemIdentityDefinition } from '../core/definitions/item-identity.definition';
+import { WeaponDefinition } from '../core/definitions/weapon.definition';
+import { ReadableDefinition } from '../core/definitions/readable.definition';
+import { ArrayView } from '../core/view-models/array.view';
 
 @Injectable({
   providedIn: 'root',

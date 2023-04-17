@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ActorEntity } from '../entities/actor.entity';
 
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
+import { ActorEntity } from '../../core/entities/actor.entity';
 
 @Injectable({
   providedIn: 'root',

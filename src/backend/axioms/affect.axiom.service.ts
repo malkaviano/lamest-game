@@ -4,12 +4,12 @@ import { Observable, Subject } from 'rxjs';
 
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { ActorEntity } from '../entities/actor.entity';
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
 import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { ReactionValuesInterface } from '../../core/interfaces/reaction-values.interface';
 import { ResultLiteral } from '../../core/literals/result.literal';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
+import { ActorEntity } from '../../core/entities/actor.entity';
 
 @Injectable({
   providedIn: 'root',

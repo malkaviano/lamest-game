@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ConverterHelper } from '../helpers/converter.helper';
-import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
-import { ArrayView } from '../../core/view-models/array.view';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { KeyValueInterface } from '../core/interfaces/key-value.interface';
+import { ArrayView } from '../core/view-models/array.view';
 import { ResourcesStore } from './resources.store';
 
 @Injectable({

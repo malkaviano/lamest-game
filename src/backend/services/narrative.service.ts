@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SceneDefinition } from '../../core/definitions/scene.definition';
-import { SceneEntity } from '../entities/scene.entity';
-import { GameStringsStore } from '../stores/game-strings.store';
-import { SceneStore } from '../stores/scene.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
+import { SceneStore } from '../../stores/scene.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
+import { SceneEntity } from '../../core/entities/scene.entity';
 
 @Injectable({
   providedIn: 'root',

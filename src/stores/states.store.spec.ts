@@ -2,9 +2,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { anything, instance, when } from 'ts-mockito';
 
-import { ConverterHelper } from '../helpers/converter.helper';
-import { SimpleState } from '../../core/states/simple.state';
-import { ArrayView } from '../../core/view-models/array.view';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { SimpleState } from '../core/states/simple.state';
+import { ArrayView } from '../core/view-models/array.view';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';
@@ -16,8 +16,8 @@ import {
   mockedMessageStore,
   mockedResourcesStore,
   setupMocks,
-} from '../../../tests/mocks';
-import { actionConsume } from '../../../tests/fakes';
+} from '../../tests/mocks';
+import { actionConsume } from '../../tests/fakes';
 
 describe('StatesStore', () => {
   let service: StatesStore;

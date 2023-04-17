@@ -7,7 +7,7 @@ import { ItemIdentityDefinition } from '../../core/definitions/item-identity.def
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { LoggerInterface } from '../../core/interfaces/logger.interface';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',

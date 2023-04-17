@@ -11,7 +11,7 @@ import { WeightLiteral, weights } from '../../core/literals/weight.literal';
 import { RandomIntService } from './random-int.service';
 import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
 import { DirectionLiteral } from '../../core/literals/direction.literal';
-import { ProfessionStore } from '../stores/profession.store';
+import { ProfessionStore } from '../../stores/profession.store';
 
 @Injectable({
   providedIn: 'root',

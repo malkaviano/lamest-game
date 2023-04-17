@@ -7,8 +7,8 @@ import { CharacterIdentityLiteral } from '../../core/literals/character-identity
 import { CharacterValuesView } from '../../core/view-models/character-values.view';
 import { KeyValueDescriptionView } from '../../core/view-models/key-value-description.view';
 import { PlayerInterface } from '../../core/interfaces/player.interface';
-import { SkillStore } from '../../backend/stores/skill.store';
-import { GameStringsStore } from '../../backend/stores/game-strings.store';
+import { SkillStore } from '../../stores/skill.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',

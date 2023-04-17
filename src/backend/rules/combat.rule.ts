@@ -8,7 +8,7 @@ import { DamageDefinition } from '../../core/definitions/damage.definition';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';

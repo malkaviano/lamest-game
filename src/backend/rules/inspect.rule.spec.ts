@@ -4,7 +4,7 @@ import { instance, when } from 'ts-mockito';
 
 import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { ReadAxiomService } from '../axioms/read.axiom.service';
 

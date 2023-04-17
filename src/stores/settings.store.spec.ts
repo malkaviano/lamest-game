@@ -5,7 +5,7 @@ import { instance } from 'ts-mockito';
 import { ResourcesStore } from './resources.store';
 import { SettingsStore } from './settings.store';
 
-import { mockedResourcesStore, setupMocks } from '../../../tests/mocks';
+import { mockedResourcesStore, setupMocks } from '../../tests/mocks';
 
 describe('SettingsStore', () => {
   let service: SettingsStore;

@@ -4,7 +4,7 @@ import { ReadAxiomService } from '../axioms/read.axiom.service';
 import { ReadableDefinition } from '../../core/definitions/readable.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { MasterRuleService } from './master.rule';
 import { ActionableEvent } from '../../core/events/actionable.event';
 

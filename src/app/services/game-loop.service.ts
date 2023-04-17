@@ -5,9 +5,7 @@ import { filter, map } from 'rxjs';
 import { CharacterService } from '../../backend/services/character.service';
 import { NarrativeService } from '../../backend/services/narrative.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { ActorEntity } from '../../backend/entities/actor.entity';
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
-import { PlayerEntity } from '../../backend/entities/player.entity';
 import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
 import { SceneDefinition } from '../../core/definitions/scene.definition';
 import { RuleDispatcherService } from '../../backend/services/rule-dispatcher.service';
@@ -22,6 +20,8 @@ import { GameItemDefinition } from '../../core/definitions/game-item.definition'
 import { ArrayView } from '../../core/view-models/array.view';
 import { ActionableItemView } from '../../core/view-models/actionable-item.view';
 import { ActionableEvent } from '../../core/events/actionable.event';
+import { PlayerInterface } from '../../core/interfaces/player.interface';
+import { ActorEntity } from '../../core/entities/actor.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ import { ActionableEvent } from '../../core/events/actionable.event';
 export class GameLoopService {
   private timer: NodeJS.Timer | undefined;
 
-  private readonly player: PlayerEntity;
+  private readonly player: PlayerInterface;
 
   private currentScene!: SceneDefinition;
 

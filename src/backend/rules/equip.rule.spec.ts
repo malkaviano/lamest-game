@@ -7,7 +7,7 @@ import { EquipRule } from './equip.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 import {
   mockedCheckedHelper,

@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '../../core/definitions/actionable.definition';
-import { ConverterHelper } from '../helpers/converter.helper';
-import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
+} from '../core/definitions/actionable.definition';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
 
 @Injectable({

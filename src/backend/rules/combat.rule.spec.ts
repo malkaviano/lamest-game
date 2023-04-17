@@ -9,7 +9,7 @@ import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { EffectEvent } from '../../core/events/effect.event';
 

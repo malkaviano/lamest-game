@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 
-import { ActorBehavior } from '../behaviors/actor.behavior';
-import { AiBehavior } from '../behaviors/ai.behavior';
-import { CooldownBehavior } from '../behaviors/cooldown.behavior';
-import { EquipmentBehavior } from '../behaviors/equipment.behavior';
-import { ActorIdentityDefinition } from '../../core/definitions/actor-identity.definition';
-import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { ActorEntity } from '../entities/actor.entity';
-import { ConverterHelper } from '../helpers/converter.helper';
-import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
+import { ActorIdentityDefinition } from '../core/definitions/actor-identity.definition';
+import { WeaponDefinition } from '../core/definitions/weapon.definition';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { SettingsStore } from './settings.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
-import { ArrayView } from '../../core/view-models/array.view';
+import { ArrayView } from '../core/view-models/array.view';
+import { ActorEntity } from '../core/entities/actor.entity';
+import { ActorBehavior } from '../core/behaviors/actor.behavior';
+import { EquipmentBehavior } from '../core/behaviors/equipment.behavior';
+import { CooldownBehavior } from '../core/behaviors/cooldown.behavior';
+import { AiBehavior } from '../core/behaviors/ai.behavior';
 
 @Injectable({
   providedIn: 'root',

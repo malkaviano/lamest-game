@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { MessageMapDefinition } from '../../core/definitions/message-map.definition';
-import { ConverterHelper } from '../helpers/converter.helper';
+import { MessageMapDefinition } from '../core/definitions/message-map.definition';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 
 type payload = {

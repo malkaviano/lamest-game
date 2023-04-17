@@ -8,7 +8,7 @@ import { RollDefinition } from '../../core/definitions/roll.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { DiceLiteral } from '../../core/literals/dice.literal';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { RandomIntService } from './random-int.service';
 
 @Injectable({

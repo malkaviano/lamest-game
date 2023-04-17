@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { EMPTY } from 'rxjs';
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { InventoryService } from '../services/inventory.service';
 import { ConsumeRule } from './consume.rule';
 import { RollService } from '../services/roll.service';

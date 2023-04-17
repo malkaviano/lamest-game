@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 export class CooldownBehavior {
   private mCanAct: boolean;

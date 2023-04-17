@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { InteractiveEntity } from '../entities/interactive.entity';
-import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
+import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { StatesStore } from './states.store';
-import { ConverterHelper } from '../helpers/converter.helper';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
-import { InventoryService } from '../services/inventory.service';
+import { InventoryService } from '../backend/services/inventory.service';
 import { ItemStore } from './item.store';
+import { InteractiveEntity } from '../core/entities/interactive.entity';
 
 @Injectable({
   providedIn: 'root',

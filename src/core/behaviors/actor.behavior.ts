@@ -6,10 +6,10 @@ import { ActorSettingsInterface } from '../../core/interfaces/actor-settings.int
 import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../../core/literals/actor-situation.literal';
 import { EffectTypeLiteral } from '../../core/literals/effect-type.literal';
-import { SkillStore } from '../stores/skill.store';
 import { EffectEvent } from '../../core/events/effect.event';
 import { HitPointsEvent } from '../../core/events/hit-points.event';
 import { EnergyPointsEvent } from '../../core/events/energy-points.event';
+import { SkillStore } from '../../stores/skill.store';
 
 export class ActorBehavior {
   private readonly maximumHP: number;

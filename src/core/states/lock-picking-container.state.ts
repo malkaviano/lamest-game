@@ -3,7 +3,7 @@ import { directionNamesDefinition } from '../definitions/directions.definition';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { DirectionLiteral } from '../literals/direction.literal';
 import { ResultLiteral } from '../literals/result.literal';
-import { GameStringsStore } from '../../backend/stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { LockedContainerState } from './locked-container.state';
 import { ArrayView } from '../view-models/array.view';

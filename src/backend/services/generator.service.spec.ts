@@ -11,7 +11,7 @@ import { weights } from '../../core/literals/weight.literal';
 import { GeneratorService } from './generator.service';
 import { RandomIntService } from './random-int.service';
 import { DirectionLiteral } from '../../core/literals/direction.literal';
-import { ProfessionStore } from '../stores/profession.store';
+import { ProfessionStore } from '../../stores/profession.store';
 
 import {
   mockedProfessionStore,

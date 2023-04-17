@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
-import { PlayerEntity } from '../entities/player.entity';
 import { CharacterService } from './character.service';
 import { RandomCharacterService } from './random-character.service';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
@@ -17,6 +16,7 @@ import {
   mockedRandomCharacterService,
   setupMocks,
 } from '../../../tests/mocks';
+import { PlayerInterface } from '../../core/interfaces/player.interface';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -51,7 +51,7 @@ describe('CharacterService', () => {
   describe('character changed events', () => {
     describe('on creation', () => {
       it('should emit an event', (done) => {
-        let result: PlayerEntity | undefined;
+        let result: PlayerInterface | undefined;
 
         service.characterChanged$.subscribe((event) => {
           result = event;
@@ -65,7 +65,7 @@ describe('CharacterService', () => {
 
     describe('when character takes damage', () => {
       it('should emit an event', (done) => {
-        let result: PlayerEntity | undefined;
+        let result: PlayerInterface | undefined;
 
         service.characterChanged$.subscribe((event) => {
           result = event;
@@ -81,7 +81,7 @@ describe('CharacterService', () => {
 
     describe('when character equips a Weapon', () => {
       it('should emit an event', (done) => {
-        let result: PlayerEntity | undefined;
+        let result: PlayerInterface | undefined;
 
         service.characterChanged$.subscribe((event) => {
           result = event;
@@ -126,7 +126,7 @@ describe('CharacterService', () => {
 
   describe('when character spent energy', () => {
     it('should emit an event', (done) => {
-      let result: PlayerEntity | undefined;
+      let result: PlayerInterface | undefined;
 
       service.characterChanged$.subscribe((event) => {
         result = event;
@@ -142,7 +142,7 @@ describe('CharacterService', () => {
 
   describe('when character visibility change', () => {
     it('should emit an event', (done) => {
-      let result: PlayerEntity | undefined;
+      let result: PlayerInterface | undefined;
 
       service.characterChanged$.subscribe((event) => {
         result = event;

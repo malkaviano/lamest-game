@@ -1,10 +1,10 @@
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
-import { EffectTypeLiteral } from '../../core/literals/effect-type.literal';
-import { LogCategoryLiteral } from '../../core/literals/log-category.literal';
-import { ResultLiteral } from '../../core/literals/result.literal';
+import { LogMessageDefinition } from '../core/definitions/log-message.definition';
+import { KeyValueInterface } from '../core/interfaces/key-value.interface';
+import { EffectTypeLiteral } from '../core/literals/effect-type.literal';
+import { LogCategoryLiteral } from '../core/literals/log-category.literal';
+import { ResultLiteral } from '../core/literals/result.literal';
 
-import gameMessages from '../../assets/game-strings.json';
+import gameMessages from '../assets/game-strings.json';
 
 export class GameStringsStore {
   private static logMessagesStore: KeyValueInterface<string> =

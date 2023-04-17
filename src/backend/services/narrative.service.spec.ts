@@ -3,9 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { instance, when } from 'ts-mockito';
 
 import { SceneDefinition } from '../../core/definitions/scene.definition';
-import { SceneStore } from '../stores/scene.store';
+import { SceneStore } from '../../stores/scene.store';
 import { NarrativeService } from './narrative.service';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { ArrayView } from '../../core/view-models/array.view';
 
 import {

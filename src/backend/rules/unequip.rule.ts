@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { MasterRuleService } from './master.rule';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 
 @Injectable({

@@ -4,7 +4,7 @@ import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { GameSettingsInterface } from '../../core/interfaces/game-settings.interface';
+import { GameSettingsInterface } from '../core/interfaces/game-settings.interface';
 import { ResourcesStore } from './resources.store';
 
 @Injectable({

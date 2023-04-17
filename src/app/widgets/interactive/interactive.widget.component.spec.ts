@@ -11,8 +11,8 @@ import { InteractiveWidgetComponent } from './interactive.widget.component';
 import { MaterialModule } from '../../../material/material.module';
 import { createActionableDefinition } from '../../../core/definitions/actionable.definition';
 import { ActionableEvent } from '../../../core/events/actionable.event';
-import { InteractiveEntity } from '../../../backend/entities/interactive.entity';
 import { ArrayView } from '../../../core/view-models/array.view';
+import { InteractiveEntity } from '../../../core/entities/interactive.entity';
 
 describe('InteractiveWidgetComponent', () => {
   let fixture: ComponentFixture<InteractiveWidgetComponent>;

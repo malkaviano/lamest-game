@@ -5,7 +5,7 @@ import { instance, when } from 'ts-mockito';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { RollService } from '../services/roll.service';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { DodgeAxiomService } from './dodge.axiom.service';
 
 import {

@@ -1,12 +1,12 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ActorEntity } from '../../backend/entities/actor.entity';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
-import { GameStringsStore } from '../../backend/stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 import { ArrayView } from '../view-models/array.view';
+import { ActorEntity } from '../entities/actor.entity';
 
 export class VisibilityState extends ActionableState {
   constructor(

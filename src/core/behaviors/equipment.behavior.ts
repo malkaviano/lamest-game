@@ -2,7 +2,7 @@ import { DamageDefinition } from '../../core/definitions/damage.definition';
 import { createDice } from '../../core/definitions/dice.definition';
 import { ItemIdentityDefinition } from '../../core/definitions/item-identity.definition';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 export const unarmedWeapon = new WeaponDefinition(
   new ItemIdentityDefinition(

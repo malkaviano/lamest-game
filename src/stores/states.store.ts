@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 
-import { ConverterHelper } from '../helpers/converter.helper';
-import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
-import { ActionableState } from '../../core/states/actionable.state';
-import { ConversationState } from '../../core/states/conversation.state';
-import { DestroyableState } from '../../core/states/destroyable.state';
-import { DiscardState } from '../../core/states/discard.state';
-import { emptyState } from '../../core/states/empty.state';
-import { SimpleState } from '../../core/states/simple.state';
-import { SkillState } from '../../core/states/skill.state';
+import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { KeyValueInterface } from '../core/interfaces/key-value.interface';
+import { ActionableState } from '../core/states/actionable.state';
+import { ConversationState } from '../core/states/conversation.state';
+import { DestroyableState } from '../core/states/destroyable.state';
+import { DiscardState } from '../core/states/discard.state';
+import { emptyState } from '../core/states/empty.state';
+import { SimpleState } from '../core/states/simple.state';
+import { SkillState } from '../core/states/skill.state';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';
-import { LockedContainerState } from '../../core/states/locked-container.state';
-import { LockPickingContainerState } from '../../core/states/lock-picking-container.state';
-import { GeneratorService } from '../services/generator.service';
+import { LockedContainerState } from '../core/states/locked-container.state';
+import { LockPickingContainerState } from '../core/states/lock-picking-container.state';
+import { GeneratorService } from '../backend/services/generator.service';
 import {
   directionActionableDefinition,
   directionNamesDefinition,
-} from '../../core/definitions/directions.definition';
-import { VisibilityState } from '../../core/states/visibility.state';
-import { ArrayView } from '../../core/view-models/array.view';
-import { LazyHelper } from '../../core/helpers/lazy.helper';
+} from '../core/definitions/directions.definition';
+import { VisibilityState } from '../core/states/visibility.state';
+import { ArrayView } from '../core/view-models/array.view';
+import { LazyHelper } from '../core/helpers/lazy.helper';
 
 @Injectable({
   providedIn: 'root',

@@ -19,13 +19,13 @@ import { EffectTypeLiteral } from '../../core/literals/effect-type.literal';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { VisibilityLiteral } from '../../core/literals/visibility.literal';
 import { ActionableState } from '../../core/states/actionable.state';
-import { GameStringsStore } from '../stores/game-strings.store';
 import { ArrayView } from '../../core/view-models/array.view';
 import { InteractiveEntity } from './interactive.entity';
 import { HitPointsEvent } from '../../core/events/hit-points.event';
 import { EnergyPointsEvent } from '../../core/events/energy-points.event';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;

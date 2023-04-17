@@ -8,7 +8,7 @@ import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';

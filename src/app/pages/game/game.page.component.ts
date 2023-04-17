@@ -9,7 +9,7 @@ import { CharacterStatusView } from '../../../core/view-models/character-status.
 import { GameLoopService } from '../../services/game-loop.service';
 import { ArrayView } from '../../../core/view-models/array.view';
 import { KeyValueDescriptionView } from '../../../core/view-models/key-value-description.view';
-import { GameStringsStore } from '../../../backend/stores/game-strings.store';
+import { GameStringsStore } from '../../../stores/game-strings.store';
 import { ActionableEvent } from '../../../core/events/actionable.event';
 import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
 import { ReadableInterface } from '../../../core/interfaces/readable.interface';

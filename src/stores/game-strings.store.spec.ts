@@ -1,4 +1,4 @@
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { LogMessageDefinition } from '../core/definitions/log-message.definition';
 import { GameStringsStore } from './game-strings.store';
 
 describe('GameStringsStoreService', () => {

@@ -6,7 +6,7 @@ import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 
 @Injectable({

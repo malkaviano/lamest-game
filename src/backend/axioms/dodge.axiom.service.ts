@@ -7,7 +7,7 @@ import { ActorDodgedInterface } from '../../core/interfaces/actor-dodged.interfa
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { RollService } from '../services/roll.service';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',

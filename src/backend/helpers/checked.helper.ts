@@ -4,7 +4,7 @@ import { GameItemDefinition } from '../../core/definitions/game-item.definition'
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',
