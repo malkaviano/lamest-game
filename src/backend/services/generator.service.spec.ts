@@ -9,16 +9,16 @@ import { heights } from '../../core/literals/height.literal';
 import { races } from '../../core/literals/race.literal';
 import { weights } from '../../core/literals/weight.literal';
 import { GeneratorService } from './generator.service';
-import { RandomIntService } from './random-int.service';
 import { DirectionLiteral } from '../../core/literals/direction.literal';
 import { ProfessionStore } from '../../stores/profession.store';
+import { ArrayView } from '../../core/view-models/array.view';
+import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
 import {
   mockedProfessionStore,
-  mockedRandomIntService,
+  mockedRandomIntHelper,
   setupMocks,
 } from '../../../tests/mocks';
-import { ArrayView } from '../../core/view-models/array.view';
 
 describe('GeneratorService', () => {
   let service: GeneratorService;
@@ -27,8 +27,8 @@ describe('GeneratorService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: RandomIntService,
-          useValue: instance(mockedRandomIntService),
+          provide: RandomIntHelper,
+          useValue: instance(mockedRandomIntHelper),
         },
         {
           provide: ProfessionStore,
@@ -52,7 +52,7 @@ describe('GeneratorService', () => {
 
   describe('generating random characteristics', () => {
     it('should have STR | VIT | AGI | INT | ESN | APP', () => {
-      when(mockedRandomIntService.getRandomInterval(1, 6))
+      when(mockedRandomIntHelper.getRandomInterval(1, 6))
         .thenReturn(1)
         .thenReturn(3)
         .thenReturn(3)
@@ -75,7 +75,7 @@ describe('GeneratorService', () => {
   describe('generating random identity', () => {
     it('should have new identity', () => {
       when(
-        mockedRandomIntService.getRandomInterval(anyNumber(), anyNumber())
+        mockedRandomIntHelper.getRandomInterval(anyNumber(), anyNumber())
       ).thenReturn(0);
 
       const identity = service.identity();
@@ -91,7 +91,7 @@ describe('GeneratorService', () => {
 
   describe('generating lock picking sequence', () => {
     it('return sequence', () => {
-      when(mockedRandomIntService.getRandomInterval(0, 1))
+      when(mockedRandomIntHelper.getRandomInterval(0, 1))
         .thenReturn(0)
         .thenReturn(0)
         .thenReturn(1)

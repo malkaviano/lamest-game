@@ -1,17 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import { RandomIntHelper } from './random-int.helper';
 
-import { RandomIntService } from './random-int.service';
-
-describe('RandomIntService', () => {
-  let service: RandomIntService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(RandomIntService);
-  });
+describe('RandomIntHelper', () => {
+  const helper = new RandomIntHelper();
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(helper).toBeTruthy();
   });
 
   describe('getRandomInterval', () => {
@@ -19,7 +12,7 @@ describe('RandomIntService', () => {
       const results: { [key: number]: boolean } = {};
 
       for (let index = 0; index < 500; index++) {
-        const element = service.getRandomInterval(0, 100);
+        const element = helper.getRandomInterval(0, 100);
 
         results[element] = true;
       }

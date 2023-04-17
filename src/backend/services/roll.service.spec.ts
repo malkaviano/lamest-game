@@ -4,13 +4,13 @@ import { instance, when } from 'ts-mockito';
 
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { ResultLiteral } from '../../core/literals/result.literal';
-import { RandomIntService } from '../services/random-int.service';
 import { RollService } from './roll.service';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
 import {
   mockedActorEntity,
-  mockedRandomIntService,
+  mockedRandomIntHelper,
   setupMocks,
 } from '../../../tests/mocks';
 
@@ -21,8 +21,8 @@ describe('RollService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: RandomIntService,
-          useValue: instance(mockedRandomIntService),
+          provide: RandomIntHelper,
+          useValue: instance(mockedRandomIntHelper),
         },
       ],
     });
@@ -88,7 +88,7 @@ describe('RollService', () => {
         },
       ].forEach(({ checkResult, roll, message }) => {
         it(`return ${checkResult} and ${roll}`, () => {
-          when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(
+          when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(
             roll
           );
 
@@ -114,7 +114,7 @@ describe('RollService', () => {
 
           const actor = instance(mockedActorEntity);
 
-          when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(
+          when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(
             roll
           );
 
@@ -139,13 +139,13 @@ describe('RollService', () => {
 
   describe('roll', () => {
     it('return summed result', () => {
-      when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(50);
-      when(mockedRandomIntService.getRandomInterval(1, 20)).thenReturn(10);
-      when(mockedRandomIntService.getRandomInterval(1, 12)).thenReturn(6);
-      when(mockedRandomIntService.getRandomInterval(1, 10)).thenReturn(5);
-      when(mockedRandomIntService.getRandomInterval(1, 8)).thenReturn(4);
-      when(mockedRandomIntService.getRandomInterval(1, 6)).thenReturn(3);
-      when(mockedRandomIntService.getRandomInterval(1, 4)).thenReturn(2);
+      when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(50);
+      when(mockedRandomIntHelper.getRandomInterval(1, 20)).thenReturn(10);
+      when(mockedRandomIntHelper.getRandomInterval(1, 12)).thenReturn(6);
+      when(mockedRandomIntHelper.getRandomInterval(1, 10)).thenReturn(5);
+      when(mockedRandomIntHelper.getRandomInterval(1, 8)).thenReturn(4);
+      when(mockedRandomIntHelper.getRandomInterval(1, 6)).thenReturn(3);
+      when(mockedRandomIntHelper.getRandomInterval(1, 4)).thenReturn(2);
 
       const result = service.roll({
         D4: 1,

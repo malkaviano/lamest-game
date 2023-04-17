@@ -18,7 +18,6 @@ import { GeneratorService } from '../src/backend/services/generator.service';
 import { InventoryService } from '../src/backend/services/inventory.service';
 import { NarrativeService } from '../src/backend/services/narrative.service';
 import { RandomCharacterService } from '../src/backend/services/random-character.service';
-import { RandomIntService } from '../src/backend/services/random-int.service';
 import { RollService } from '../src/backend/services/roll.service';
 import { SkillService } from '../src/backend/services/skill.service';
 import { ActionableState } from '../src/core/states/actionable.state';
@@ -68,6 +67,7 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
+import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -131,7 +131,7 @@ export const mockedActionableStore = mock(ActionableStore);
 
 export const mockedRandomCharacterService = mock(RandomCharacterService);
 
-export const mockedRandomIntService = mock(RandomIntService);
+export const mockedRandomIntHelper = mock(RandomIntHelper);
 
 export const mockedGeneratorService = mock(GeneratorService);
 
@@ -422,7 +422,7 @@ const resetMocks = () => {
 
   reset(mockedSceneStore);
 
-  reset(mockedRandomIntService);
+  reset(mockedRandomIntHelper);
 
   reset(mockedActionableState);
 

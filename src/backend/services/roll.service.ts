@@ -9,7 +9,7 @@ import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { DiceLiteral } from '../../core/literals/dice.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { RandomIntService } from './random-int.service';
+import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class RollService implements LoggerInterface {
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
-  constructor(private readonly rngService: RandomIntService) {
+  constructor(private readonly rngService: RandomIntHelper) {
     this.diceMap = {
       D4: { min: 1, max: 4 },
       D6: { min: 1, max: 6 },
