@@ -28,7 +28,7 @@ import { RandomCharacterService } from '../src/backend/services/random-character
 import { RandomIntService } from '../src/backend/services/random-int.service';
 import { RollService } from '../src/backend/services/roll.service';
 import { SkillService } from '../src/backend/services/skill.service';
-import { ActionableState } from '../src/backend/states/actionable.state';
+import { ActionableState } from '../src/core/states/actionable.state';
 import { ActionableStore } from '../src/backend/stores/actionable.store';
 import { InteractiveStore } from '../src/backend/stores/interactive.store';
 import { ItemStore } from '../src/backend/stores/item.store';

@@ -2,7 +2,7 @@ import { CharacterIdentityDefinition } from '../../core/definitions/character-id
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ClassificationLiteral } from '../../core/literals/classification.literal';
-import { emptyState } from '../states/empty.state';
+import { emptyState } from '../../core/states/empty.state';
 import { ActorEntity } from './actor.entity';
 import { ActorIdentityDefinition } from '../../core/definitions/actor-identity.definition';
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';

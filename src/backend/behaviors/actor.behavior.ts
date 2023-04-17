@@ -1,7 +1,7 @@
 import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
 import { DerivedAttributeSetDefinition } from '../../core/definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../../core/definitions/derived-attribute.definition';
-import { MathHelper } from '../helpers/math.helper';
+import { MathHelper } from '../../core/helpers/math.helper';
 import { ActorSettingsInterface } from '../../core/interfaces/actor-settings.interface';
 import { KeyValueInterface } from '../../core/interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../../core/literals/actor-situation.literal';

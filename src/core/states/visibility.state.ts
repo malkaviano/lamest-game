@@ -1,12 +1,12 @@
-import { ActionableDefinition } from '../../core/definitions/actionable.definition';
-import { ActorEntity } from '../entities/actor.entity';
-import { ReactionValuesInterface } from '../../core/interfaces/reaction-values.interface';
-import { ResultLiteral } from '../../core/literals/result.literal';
-import { VisibilityLiteral } from '../../core/literals/visibility.literal';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ActorEntity } from '../../backend/entities/actor.entity';
+import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
+import { ResultLiteral } from '../literals/result.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
+import { GameStringsStore } from '../../backend/stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
-import { ArrayView } from '../../core/view-models/array.view';
+import { ArrayView } from '../view-models/array.view';
 
 export class VisibilityState extends ActionableState {
   constructor(

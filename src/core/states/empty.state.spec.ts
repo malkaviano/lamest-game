@@ -1,5 +1,5 @@
-import { ActionableDefinition } from '../../core/definitions/actionable.definition';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { ActionableDefinition } from '../definitions/actionable.definition';
+import { GameStringsStore } from '../../backend/stores/game-strings.store';
 import { emptyState } from './empty.state';
 
 describe('EmptyState', () => {

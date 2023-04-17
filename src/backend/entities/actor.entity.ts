@@ -18,7 +18,7 @@ import { ClassificationLiteral } from '../../core/literals/classification.litera
 import { EffectTypeLiteral } from '../../core/literals/effect-type.literal';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { VisibilityLiteral } from '../../core/literals/visibility.literal';
-import { ActionableState } from '../states/actionable.state';
+import { ActionableState } from '../../core/states/actionable.state';
 import { GameStringsStore } from '../stores/game-strings.store';
 import { ArrayView } from '../../core/view-models/array.view';
 import { InteractiveEntity } from './interactive.entity';

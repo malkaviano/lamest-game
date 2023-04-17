@@ -1,9 +1,9 @@
-import { ActionableDefinition } from '../../core/definitions/actionable.definition';
-import { LazyHelper } from '../helpers/lazy.helper';
-import { ResultLiteral } from '../../core/literals/result.literal';
+import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
-import { ArrayView } from '../../core/view-models/array.view';
+import { ArrayView } from '../view-models/array.view';
+import { LazyHelper } from '../helpers/lazy.helper';
 
 export class SkillState extends ActionableState {
   constructor(

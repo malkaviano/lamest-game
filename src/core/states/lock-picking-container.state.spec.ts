@@ -1,14 +1,14 @@
-import { LazyHelper } from '../helpers/lazy.helper';
-import { ArrayView } from '../../core/view-models/array.view';
+import { LazyHelper } from '../../core/helpers/lazy.helper';
+import { ArrayView } from '../view-models/array.view';
 import { DiscardState } from './discard.state';
 import { LockPickingContainerState } from './lock-picking-container.state';
-import { createActionableDefinition } from '../../core/definitions/actionable.definition';
+import { createActionableDefinition } from '../definitions/actionable.definition';
 import { LockedContainerState } from './locked-container.state';
 import { ActionableState } from './actionable.state';
 import {
   directionActionableDefinition,
   directionNamesDefinition,
-} from '../../core/definitions/directions.definition';
+} from '../definitions/directions.definition';
 
 import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';
 import { setupMocks } from '../../../tests/mocks';

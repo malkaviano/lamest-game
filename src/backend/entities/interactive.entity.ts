@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
-import { ActionableState } from '../states/actionable.state';
+import { ActionableState } from '../../core/states/actionable.state';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
 import { ClassificationLiteral } from '../../core/literals/classification.literal';

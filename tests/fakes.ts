@@ -16,7 +16,7 @@ import { SceneActorsInfoInterface } from '../src/core/interfaces/scene-actors.in
 import { ArrayView } from '../src/core/view-models/array.view';
 import { CharacterValuesView } from '../src/core/view-models/character-values.view';
 import { KeyValueDescriptionView } from '../src/core/view-models/key-value-description.view';
-import { DiscardState } from '../src/backend/states/discard.state';
+import { DiscardState } from '../src/core/states/discard.state';
 import { UsableDefinition } from '../src/core/definitions/usable.definition';
 import { ItemIdentityDefinition } from '../src/core/definitions/item-identity.definition';
 import { ActionableItemView } from '../src/core/view-models/actionable-item.view';

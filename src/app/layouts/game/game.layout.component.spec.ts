@@ -9,7 +9,7 @@ import { ArrayView } from '../../../core/view-models/array.view';
 import { ActionableEvent } from '../../../core/events/actionable.event';
 import { InteractiveEntity } from '../../../backend/entities/interactive.entity';
 import { SceneDefinition } from '../../../core/definitions/scene.definition';
-import { SimpleState } from '../../../backend/states/simple.state';
+import { SimpleState } from '../../../core/states/simple.state';
 import { unarmedWeapon } from '../../../backend/behaviors/equipment.behavior';
 
 import {

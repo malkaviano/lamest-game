@@ -1,9 +1,9 @@
-import { ActionableDefinition } from '../../core/definitions/actionable.definition';
-import { ArrayView } from '../../core/view-models/array.view';
-import { StateLiteral } from '../../core/literals/state.literal';
-import { ResultLiteral } from '../../core/literals/result.literal';
-import { ReactionValuesInterface } from '../../core/interfaces/reaction-values.interface';
-import { GameStringsStore } from '../stores/game-strings.store';
+import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ArrayView } from '../view-models/array.view';
+import { StateLiteral } from '../literals/state.literal';
+import { ResultLiteral } from '../literals/result.literal';
+import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
+import { GameStringsStore } from '../../backend/stores/game-strings.store';
 
 export abstract class ActionableState {
   constructor(

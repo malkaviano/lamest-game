@@ -3,7 +3,7 @@ import { instance } from 'ts-mockito';
 import { ConverterHelper } from './converter.helper';
 import { ActorEntity } from '../entities/actor.entity';
 import { ActorIdentityDefinition } from '../../core/definitions/actor-identity.definition';
-import { emptyState } from '../states/empty.state';
+import { emptyState } from '../../core/states/empty.state';
 
 import {
   mockedActorBehavior,

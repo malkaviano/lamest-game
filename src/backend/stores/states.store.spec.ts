@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { anything, instance, when } from 'ts-mockito';
 
 import { ConverterHelper } from '../helpers/converter.helper';
-import { SimpleState } from '../states/simple.state';
+import { SimpleState } from '../../core/states/simple.state';
 import { ArrayView } from '../../core/view-models/array.view';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
