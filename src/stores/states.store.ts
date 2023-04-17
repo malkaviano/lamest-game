@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { ConverterHelper } from '../backend/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ActionableState } from '../core/states/actionable.state';
 import { ConversationState } from '../core/states/conversation.state';
@@ -22,6 +21,7 @@ import {
 import { VisibilityState } from '../core/states/visibility.state';
 import { ArrayView } from '../core/view-models/array.view';
 import { LazyHelper } from '../core/helpers/lazy.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,6 @@ export class StatesStore {
   private readonly store: Map<string, ActionableState>;
 
   constructor(
-    private readonly converterHelper: ConverterHelper,
     messageStore: MessageStore,
     actionableStore: ActionableStore,
     resourcesStore: ResourcesStore,
@@ -139,7 +138,7 @@ export class StatesStore {
   }
 
   public get states(): KeyValueInterface<ActionableState> {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 
   public lazyState(stateName: string): LazyHelper<ActionableState> {

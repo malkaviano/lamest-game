@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ActorStore } from './actor.store';
 import { InteractiveStore } from './interactive.store';
@@ -19,8 +19,7 @@ export class SceneStore {
   constructor(
     interactiveStore: InteractiveStore,
     actorStore: ActorStore,
-    resourcesStore: ResourcesStore,
-    private readonly converterHelper: ConverterHelper
+    resourcesStore: ResourcesStore
   ) {
     this.store = new Map<string, SceneEntity>();
 
@@ -52,6 +51,6 @@ export class SceneStore {
   }
 
   public get scenes(): KeyValueInterface<SceneEntity> {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

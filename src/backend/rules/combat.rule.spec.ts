@@ -8,7 +8,6 @@ import { CheckedHelper } from '../helpers/checked.helper';
 import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
-import { ConverterHelper } from '../helpers/converter.helper';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { EffectEvent } from '../../core/events/effect.event';
@@ -19,7 +18,6 @@ import {
   mockedActorEntity,
   mockedAffectedAxiomService,
   mockedCheckedHelper,
-  mockedConverterHelper,
   mockedDodgeAxiomService,
   mockedPlayerEntity,
   mockedRollService,
@@ -61,10 +59,6 @@ describe('CombatRule', () => {
         {
           provide: AffectAxiomService,
           useValue: instance(mockedAffectedAxiomService),
-        },
-        {
-          provide: ConverterHelper,
-          useValue: instance(mockedConverterHelper),
         },
       ],
     });
@@ -116,8 +110,6 @@ describe('CombatRule', () => {
                 })
               )
             ).thenReturn(true);
-
-            when(mockedConverterHelper.asActor(target)).thenReturn(target);
 
             when(
               mockedRollService.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
@@ -189,8 +181,6 @@ describe('CombatRule', () => {
                   })
                 )
               ).thenReturn(true);
-
-              when(mockedConverterHelper.asActor(target)).thenReturn(target);
 
               when(
                 mockedRollService.actorSkillCheck(

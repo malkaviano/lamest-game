@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { StatesStore } from './states.store';
-import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 import { InventoryService } from '../backend/services/inventory.service';
 import { ItemStore } from './item.store';
@@ -15,7 +15,6 @@ export class InteractiveStore {
   private readonly store: Map<string, InteractiveEntity>;
 
   constructor(
-    private readonly converterHelper: ConverterHelper,
     inventoryService: InventoryService,
     stateStore: StatesStore,
     itemStore: ItemStore,
@@ -48,6 +47,6 @@ export class InteractiveStore {
   }
 
   public get interactives(): KeyValueInterface<InteractiveEntity> {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

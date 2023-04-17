@@ -11,12 +11,12 @@ import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
-import { ConverterHelper } from '../helpers/converter.helper';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { ItemUsabilityLiteral } from '../../core/literals/item-usability';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
+import { ConverterHelper } from '../../core/helpers/converter.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +27,7 @@ export class CombatRule extends MasterRuleService {
     private readonly checkedHelper: CheckedHelper,
     private readonly activationAxiomService: ActivationAxiomService,
     private readonly dodgeAxiomService: DodgeAxiomService,
-    private readonly affectedAxiomService: AffectAxiomService,
-    private readonly converterHelper: ConverterHelper
+    private readonly affectedAxiomService: AffectAxiomService
   ) {
     super();
   }
@@ -57,7 +56,7 @@ export class CombatRule extends MasterRuleService {
     ) {
       let targetWasHit = true;
 
-      const targetActor = this.converterHelper.asActor(target);
+      const targetActor = ConverterHelper.asActor(target);
 
       if (targetActor) {
         const actionResult = this.checkSkill(

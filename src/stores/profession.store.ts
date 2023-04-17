@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ArrayView } from '../core/view-models/array.view';
 import { ResourcesStore } from './resources.store';
@@ -10,10 +10,7 @@ import { ResourcesStore } from './resources.store';
 export class ProfessionStore {
   private readonly store: Map<string, ArrayView<string>>;
 
-  constructor(
-    private readonly converterHelper: ConverterHelper,
-    resourcesStore: ResourcesStore
-  ) {
+  constructor(resourcesStore: ResourcesStore) {
     this.store = new Map<string, ArrayView<string>>();
 
     resourcesStore.professionStore.professions.forEach((profession) => {
@@ -22,6 +19,6 @@ export class ProfessionStore {
   }
 
   public get professions(): KeyValueInterface<ArrayView<string>> {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

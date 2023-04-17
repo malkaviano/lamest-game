@@ -5,7 +5,7 @@ import { DamageDefinition } from '../core/definitions/damage.definition';
 import { createDice } from '../core/definitions/dice.definition';
 import { GameItemDefinition } from '../core/definitions/game-item.definition';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
-import { ConverterHelper } from '../backend/helpers/converter.helper';
+import { ConverterHelper } from '../core/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 import { UsableDefinition } from '../core/definitions/usable.definition';
 import { ItemIdentityDefinition } from '../core/definitions/item-identity.definition';
@@ -19,10 +19,7 @@ import { ArrayView } from '../core/view-models/array.view';
 export class ItemStore {
   private readonly store: Map<string, GameItemDefinition>;
 
-  constructor(
-    private readonly converterHelper: ConverterHelper,
-    resourcesStore: ResourcesStore
-  ) {
+  constructor(resourcesStore: ResourcesStore) {
     this.store = new Map<string, GameItemDefinition>();
 
     resourcesStore.weaponStore.weapons.forEach((item) => {
@@ -81,6 +78,6 @@ export class ItemStore {
   }
 
   public get items(): KeyValueInterface<GameItemDefinition> {
-    return this.converterHelper.mapToKeyValueInterface(this.store);
+    return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }
