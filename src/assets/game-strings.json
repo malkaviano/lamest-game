@@ -50,6 +50,13 @@
     "AGI": "The character agility",
     "INT": "The character intelligence",
     "ESN": "The character essence",
-    "APP": "The character looks"
+    "APP": "The character looks",
+    "MAX HP": "The character maximum hit points",
+    "MAX EP": "The character maximum energy points",
+    "CURRENT HP": "The character current hit points",
+    "CURRENT EP": "The character current energy points",
+    "MOV": "The character movement",
+    "HP": "The character max / current hit points",
+    "EP": "The character max / current energy points"
   }
 }

@@ -11,13 +11,11 @@ import { SimpleState } from '../../states/simple.state';
 import { GameLayoutComponent } from './game.layout.component';
 import { ActionableEvent } from '../../events/actionable.event';
 import { unarmedWeapon } from '../../definitions/weapon.definition';
-import { CharacterStatusView } from '../../view-models/character-status.view';
 
 import {
   actionAsk,
   fakeCharacterSheet,
-  fakeCharacterSheetDerivedAttributes,
-  simpleSword,
+  fakeCharacterStatusView,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
 
@@ -46,7 +44,7 @@ describe('GameLayoutComponent', () => {
 
     component.equipped = unarmedWeapon;
 
-    component.ngOnChanges();
+    component.characterStatus = fakeCharacterStatusView;
 
     fixture.detectChanges();
   });
@@ -104,22 +102,8 @@ describe('GameLayoutComponent', () => {
   });
 
   describe('Status Bar', () => {
-    describe('when initialized', () => {
-      it('has character status', () => {
-        expect(component.characterStatus).toEqual(fakeCharacterStatus);
-      });
-    });
-
-    describe('when status change', () => {
-      it('updates the status', () => {
-        component.equipped = simpleSword;
-
-        component.ngOnChanges();
-
-        fixture.detectChanges();
-
-        expect(component.characterStatus).toEqual(fakeCharacterStatusChanged);
-      });
+    it('has character status', () => {
+      expect(component.characterStatus).toEqual(fakeCharacterStatusView);
     });
   });
 });
@@ -136,16 +120,4 @@ const scene = new SceneDefinition(
   'this is a test',
   ArrayView.create([fakeInteractive]),
   'gg.jpg'
-);
-
-const fakeCharacterStatus = CharacterStatusView.create(
-  fakeCharacterSheetDerivedAttributes,
-  unarmedWeapon,
-  'VISIBLE'
-);
-
-const fakeCharacterStatusChanged = CharacterStatusView.create(
-  fakeCharacterSheetDerivedAttributes,
-  simpleSword,
-  'VISIBLE'
 );

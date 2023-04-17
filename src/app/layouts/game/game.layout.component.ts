@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 
 import { ActionableItemView } from '../../view-models/actionable-item.view';
@@ -20,12 +14,12 @@ import { CharacterStatusView } from '../../view-models/character-status.view';
   templateUrl: './game.layout.component.html',
   styleUrls: ['./game.layout.component.css'],
 })
-export class GameLayoutComponent implements OnChanges {
+export class GameLayoutComponent {
   color: ThemePalette = 'accent';
 
   disabled = true;
 
-  characterStatus!: CharacterStatusView;
+  @Input() characterStatus!: CharacterStatusView;
 
   @Input() canAct = true;
 
@@ -43,17 +37,5 @@ export class GameLayoutComponent implements OnChanges {
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
-  }
-
-  ngOnChanges(): void {
-    this.updateStatus();
-  }
-
-  private updateStatus(): void {
-    this.characterStatus = CharacterStatusView.create(
-      this.characterValues.derivedAttributes,
-      this.equipped,
-      this.characterValues.identity.items[6].value
-    );
   }
 }

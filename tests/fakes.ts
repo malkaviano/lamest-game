@@ -28,6 +28,7 @@ import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/app/definitions/readable.definition';
 import { GameSettingsInterface } from '../src/app/interfaces/game-settings.interface';
 import { ActorSettingsInterface } from '../src/app/interfaces/actor-settings.interface';
+import { CharacterStatusView } from '../src/app/view-models/character-status.view';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
@@ -108,8 +109,10 @@ export const fakeCharacteristics: CharacteristicSetDefinition = {
 };
 
 export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
-  HP: new DerivedAttributeDefinition('HP', 8),
-  EP: new DerivedAttributeDefinition('EP', 13),
+  'MAX HP': new DerivedAttributeDefinition('MAX HP', 8),
+  'MAX EP': new DerivedAttributeDefinition('MAX EP', 13),
+  'CURRENT HP': new DerivedAttributeDefinition('CURRENT HP', 8),
+  'CURRENT EP': new DerivedAttributeDefinition('CURRENT EP', 13),
   MOV: new DerivedAttributeDefinition('MOV', 10),
 };
 
@@ -197,8 +200,26 @@ export const fakeCharacterSheetCharacteristics = ArrayView.create([
 ]);
 
 export const fakeCharacterSheetDerivedAttributes = ArrayView.create([
-  KeyValueDescriptionView.create('HP', '8', 'The character hit points'),
-  KeyValueDescriptionView.create('EP', '13', 'The character energy points'),
+  KeyValueDescriptionView.create(
+    'MAX HP',
+    '8',
+    'The character maximum hit points'
+  ),
+  KeyValueDescriptionView.create(
+    'MAX EP',
+    '13',
+    'The character maximum energy points'
+  ),
+  KeyValueDescriptionView.create(
+    'CURRENT HP',
+    '8',
+    'The character current hit points'
+  ),
+  KeyValueDescriptionView.create(
+    'CURRENT EP',
+    '13',
+    'The character current energy points'
+  ),
   KeyValueDescriptionView.create('MOV', '10', 'The character movement'),
 ]);
 
@@ -380,4 +401,14 @@ export const actionDetect = createActionableDefinition(
   'SKILL',
   'Detect',
   'Detect'
+);
+
+export const fakeCharacterStatusView = CharacterStatusView.create(
+  fakeCharacterSheetDerivedAttributes,
+  simpleSword,
+  KeyValueDescriptionView.create(
+    'VISIBILITY',
+    'VISIBLE',
+    'Character current visibility'
+  )
 );
