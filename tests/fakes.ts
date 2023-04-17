@@ -28,6 +28,7 @@ import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/app/definitions/readable.definition';
 import { GameSettingsInterface } from '../src/app/interfaces/game-settings.interface';
 import { ActorSettingsInterface } from '../src/app/interfaces/actor-settings.interface';
+import { CharacterStatusView } from '../src/app/view-models/character-status.view';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
@@ -400,4 +401,14 @@ export const actionDetect = createActionableDefinition(
   'SKILL',
   'Detect',
   'Detect'
+);
+
+export const fakeCharacterStatusView = CharacterStatusView.create(
+  fakeCharacterSheetDerivedAttributes,
+  simpleSword,
+  KeyValueDescriptionView.create(
+    'VISIBILITY',
+    'VISIBLE',
+    'Character current visibility'
+  )
 );

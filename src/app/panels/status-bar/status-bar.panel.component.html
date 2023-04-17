@@ -1,0 +1,19 @@
+<app-window-widget
+  *ngFor="let keyValue of status.derivedAttributes.items"
+  [keyValue]="keyValue"
+  class="status"
+></app-window-widget>
+
+<div
+  matTooltip="{{ status.weapon.identity.description }}"
+  data-testid="tooltip-equipped"
+  class="status"
+>
+  <span data-testid="label-equipped">Equipped</span>
+  <span>:&nbsp;&nbsp;</span>
+  <span data-testid="value-equipped">{{ status.weapon.identity.label }}</span>
+</div>
+<app-window-widget
+  [keyValue]="status.visibility"
+  class="status"
+></app-window-widget>

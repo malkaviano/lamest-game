@@ -16,7 +16,7 @@ import { EquipmentWidgetComponent } from './widgets/equipment/equipment.widget.c
 import { GameLayoutComponent } from './layouts/game/game.layout.component';
 import { InteractivePanelComponent } from './panels/interactive/interactive.panel.component';
 import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component';
-import { StatusBarWidgetComponent } from './widgets/status-bar/status-bar.widget.component';
+import { StatusBarPanelComponent } from './panels/status-bar/status-bar.panel.component';
 import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
 
 @NgModule({
@@ -32,7 +32,7 @@ import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
     GameLayoutComponent,
     InteractivePanelComponent,
     ReaderDialogComponent,
-    StatusBarWidgetComponent,
+    StatusBarPanelComponent,
     SheetPanelComponent,
   ],
   imports: [

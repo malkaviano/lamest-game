@@ -6,13 +6,13 @@ export class CharacterStatusView {
   private constructor(
     public readonly derivedAttributes: ArrayView<KeyValueDescriptionView>,
     public readonly weapon: GameItemDefinition,
-    public readonly visibility: string
+    public readonly visibility: KeyValueDescriptionView
   ) {}
 
   public static create(
     derivedAttributes: ArrayView<KeyValueDescriptionView>,
     weapon: GameItemDefinition,
-    visibility: string
+    visibility: KeyValueDescriptionView
   ): CharacterStatusView {
     return new CharacterStatusView(derivedAttributes, weapon, visibility);
   }
