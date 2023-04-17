@@ -5,7 +5,7 @@ import { instance, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { UseRule } from './use.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../axioms/affect.axiom';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 
 import {
@@ -40,7 +40,7 @@ describe('UseRule', () => {
           useValue: instance(mockedCheckedHelper),
         },
         {
-          provide: AffectAxiomService,
+          provide: AffectAxiom,
           useValue: instance(mockedAffectedAxiomService),
         },
       ],

@@ -5,7 +5,7 @@ import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../axioms/affect.axiom';
 import { ActionableEvent } from '../../core/events/actionable.event';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class SkillRule extends MasterRuleService {
   constructor(
     private readonly rollService: RollService,
     private readonly checkedHelper: CheckedHelper,
-    private readonly affectAxiomService: AffectAxiomService
+    private readonly affectAxiomService: AffectAxiom
   ) {
     super();
   }

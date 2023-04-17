@@ -5,7 +5,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { InventoryService } from '../services/inventory.service';
 import { PickRule } from './pick.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../axioms/affect.axiom';
 
 import {
   mockedAffectedAxiomService,
@@ -37,7 +37,7 @@ describe('PickRule', () => {
           useValue: instance(mockedCheckedHelper),
         },
         {
-          provide: AffectAxiomService,
+          provide: AffectAxiom,
           useValue: instance(mockedAffectedAxiomService),
         },
       ],

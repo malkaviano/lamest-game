@@ -11,7 +11,7 @@ import { CheckedHelper } from '../helpers/checked.helper';
 import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { RollDefinition } from '../../core/definitions/roll.definition';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../axioms/affect.axiom';
 import { EffectEvent } from '../../core/events/effect.event';
 
 import {
@@ -50,7 +50,7 @@ describe('ConsumeRule', () => {
           useValue: instance(mockedCheckedHelper),
         },
         {
-          provide: AffectAxiomService,
+          provide: AffectAxiom,
           useValue: instance(mockedAffectedAxiomService),
         },
       ],

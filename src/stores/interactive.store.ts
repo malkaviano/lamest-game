@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { StatesStore } from './states.store';
 import { ConverterHelper } from '../core/helpers/converter.helper';
@@ -8,9 +6,6 @@ import { InventoryService } from '../backend/services/inventory.service';
 import { ItemStore } from './item.store';
 import { InteractiveEntity } from '../core/entities/interactive.entity';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class InteractiveStore {
   private readonly store: Map<string, InteractiveEntity>;
 

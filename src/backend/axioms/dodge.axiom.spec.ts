@@ -1,12 +1,9 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { RollDefinition } from '../../core/definitions/roll.definition';
-import { RollService } from '../services/roll.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { DodgeAxiomService } from './dodge.axiom.service';
+import { DodgeAxiom } from './dodge.axiom';
 
 import {
   mockedPlayerEntity,
@@ -15,28 +12,17 @@ import {
 } from '../../../tests/mocks';
 import { playerInfo } from '../../../tests/fakes';
 
-describe('DodgeAxiomService', () => {
-  let service: DodgeAxiomService;
+describe('DodgeAxiom', () => {
+  const axiom = new DodgeAxiom(instance(mockedRollService));
 
   const target = instance(mockedPlayerEntity);
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RollService,
-          useValue: instance(mockedRollService),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(DodgeAxiomService);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(axiom).toBeTruthy();
   });
 
   describe('dodge', () => {
@@ -83,7 +69,7 @@ describe('DodgeAxiomService', () => {
           roll
         );
 
-        const result = service.dodge(target, {
+        const result = axiom.dodge(target, {
           dodgeable,
           dodgesPerformed,
         });
@@ -100,11 +86,11 @@ describe('DodgeAxiomService', () => {
 
         const result: LogMessageDefinition[] = [];
 
-        service.logMessageProduced$.subscribe((event) => {
+        axiom.logMessageProduced$.subscribe((event) => {
           result.push(event);
         });
 
-        service.dodge(target, {
+        axiom.dodge(target, {
           dodgeable,
           dodgesPerformed,
         });
@@ -123,11 +109,11 @@ describe('DodgeAxiomService', () => {
 
         const result: string[] = [];
 
-        service.actorDodged$.subscribe((event) => {
+        axiom.actorDodged$.subscribe((event) => {
           result.push(event);
         });
 
-        service.dodge(target, {
+        axiom.dodge(target, {
           dodgeable,
           dodgesPerformed,
         });

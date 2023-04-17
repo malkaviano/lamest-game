@@ -1,24 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { ActivationAxiomService } from './activation.axiom.service';
+import { ActivationAxiom } from './activation.axiom';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { createActionableDefinition } from '../../core/definitions/actionable.definition';
 
 import { shadowDagger, shadowSword, simpleSword } from '../../../tests/fakes';
 import { mockedPlayerEntity } from '../../../tests/mocks';
 
-describe('ActivationAxiomService', () => {
-  let service: ActivationAxiomService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ActivationAxiomService);
-  });
+describe('ActivationAxiom', () => {
+  const axiom = new ActivationAxiom();
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(axiom).toBeTruthy();
   });
 
   describe('activation', () => {
@@ -49,7 +42,7 @@ describe('ActivationAxiomService', () => {
     ].forEach(({ item, expected, log }) => {
       describe(`when energyActivation was ${item.energyActivation}`, () => {
         it(`return ${expected}`, () => {
-          const result = service.activation(instance(mockedPlayerEntity), item);
+          const result = axiom.activation(instance(mockedPlayerEntity), item);
 
           expect(result).toEqual(expected);
         });
@@ -73,11 +66,11 @@ describe('ActivationAxiomService', () => {
 
           let result: LogMessageDefinition | undefined;
 
-          service.logMessageProduced$.subscribe((event) => {
+          axiom.logMessageProduced$.subscribe((event) => {
             result = event;
           });
 
-          service.activation(instance(mockedPlayerEntity), item);
+          axiom.activation(instance(mockedPlayerEntity), item);
 
           done();
 

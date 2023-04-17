@@ -17,6 +17,7 @@ import { InteractivePanelComponent } from './panels/interactive/interactive.pane
 import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component';
 import { StatusBarPanelComponent } from './panels/status-bar/status-bar.panel.component';
 import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
+import { ProvidersModule } from './helpers/providers.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    ProvidersModule,
   ],
   bootstrap: [AppComponent],
 })

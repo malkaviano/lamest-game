@@ -6,7 +6,7 @@ import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { RollDefinition } from '../../core/definitions/roll.definition';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../axioms/affect.axiom';
 
 import {
   mockedPlayerEntity,
@@ -37,7 +37,7 @@ describe('SkillRule', () => {
           useValue: instance(mockedCheckedHelper),
         },
         {
-          provide: AffectAxiomService,
+          provide: AffectAxiom,
           useValue: instance(mockedAffectedAxiomService),
         },
       ],

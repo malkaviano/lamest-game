@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { merge, Observable } from 'rxjs';
 
-import { ActivationAxiomService } from '../axioms/activation.axiom.service';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
-import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
-import { ReadAxiomService } from '../axioms/read.axiom.service';
+import { ActivationAxiom } from '../axioms/activation.axiom';
+import { AffectAxiom } from '../axioms/affect.axiom';
+import { DodgeAxiom } from '../axioms/dodge.axiom';
+import { ReadAxiom } from '../axioms/read.axiom';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { ActorDodgedInterface } from '../../core/interfaces/actor-dodged.interface';
 import { DocumentOpenedInterface } from '../../core/interfaces/document-opened.interface';
@@ -29,10 +29,10 @@ export class EventHubHelperService
   constructor(
     rollService: RollService,
     ruleDispatcherService: RuleDispatcherService,
-    dodgeAxiomService: DodgeAxiomService,
-    activationAxiomService: ActivationAxiomService,
-    affectAxiomService: AffectAxiomService,
-    readAxiomService: ReadAxiomService
+    dodgeAxiomService: DodgeAxiom,
+    activationAxiomService: ActivationAxiom,
+    affectAxiomService: AffectAxiom,
+    readAxiomService: ReadAxiom
   ) {
     this.logMessageProduced$ = merge(
       ruleDispatcherService.logMessageProduced$,

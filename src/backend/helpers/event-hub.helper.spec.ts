@@ -2,13 +2,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance } from 'ts-mockito';
 
-import { EventHubHelperService } from './event-hub.helper.service';
+import { EventHubHelperService } from './event-hub.helper';
 import { RollService } from '../services/roll.service';
 import { RuleDispatcherService } from '../services/rule-dispatcher.service';
-import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
-import { ActivationAxiomService } from '../axioms/activation.axiom.service';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
-import { ReadAxiomService } from '../axioms/read.axiom.service';
+import { DodgeAxiom } from '../axioms/dodge.axiom';
+import { ActivationAxiom } from '../axioms/activation.axiom';
+import { AffectAxiom } from '../axioms/affect.axiom';
+import { ReadAxiom } from '../axioms/read.axiom';
 
 import {
   mockedActivationAxiomService,
@@ -34,19 +34,19 @@ describe('EventHubHelperService', () => {
           useValue: instance(mockedRuleDispatcherService),
         },
         {
-          provide: DodgeAxiomService,
+          provide: DodgeAxiom,
           useValue: instance(mockedDodgeAxiomService),
         },
         {
-          provide: ActivationAxiomService,
+          provide: ActivationAxiom,
           useValue: instance(mockedActivationAxiomService),
         },
         {
-          provide: AffectAxiomService,
+          provide: AffectAxiom,
           useValue: instance(mockedAffectedAxiomService),
         },
         {
-          provide: ReadAxiomService,
+          provide: ReadAxiom,
           useValue: instance(mockedReadAxiomService),
         },
       ],

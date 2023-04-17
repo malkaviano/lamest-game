@@ -38,11 +38,11 @@ import { InspectRule } from '../src/backend/rules/inspect.rule';
 import { SettingsStore } from '../src/stores/settings.store';
 import { CheckedHelper } from '../src/backend/helpers/checked.helper';
 import { RuleDispatcherService } from '../src/backend/services/rule-dispatcher.service';
-import { ActivationAxiomService } from '../src/backend/axioms/activation.axiom.service';
-import { AffectAxiomService } from '../src/backend/axioms/affect.axiom.service';
-import { DodgeAxiomService } from '../src/backend/axioms/dodge.axiom.service';
-import { EventHubHelperService } from '../src/backend/helpers/event-hub.helper.service';
-import { ReadAxiomService } from '../src/backend/axioms/read.axiom.service';
+import { ActivationAxiom } from '../src/backend/axioms/activation.axiom';
+import { AffectAxiom } from '../src/backend/axioms/affect.axiom';
+import { DodgeAxiom } from '../src/backend/axioms/dodge.axiom';
+import { EventHubHelperService } from '../src/backend/helpers/event-hub.helper';
+import { ReadAxiom } from '../src/backend/axioms/read.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { CooldownBehavior } from '../src/core/behaviors/cooldown.behavior';
@@ -161,15 +161,15 @@ export const mockedSettingsStore = mock(SettingsStore);
 
 export const mockedCheckedHelper = mock(CheckedHelper);
 
-export const mockedActivationAxiomService = mock(ActivationAxiomService);
+export const mockedActivationAxiomService = mock(ActivationAxiom);
 
-export const mockedAffectedAxiomService = mock(AffectAxiomService);
+export const mockedAffectedAxiomService = mock(AffectAxiom);
 
-export const mockedDodgeAxiomService = mock(DodgeAxiomService);
+export const mockedDodgeAxiomService = mock(DodgeAxiom);
 
 export const mockedEventHubHelperService = mock(EventHubHelperService);
 
-export const mockedReadAxiomService = mock(ReadAxiomService);
+export const mockedReadAxiomService = mock(ReadAxiom);
 
 export const mockedCooldownBehavior = mock(CooldownBehavior);
 

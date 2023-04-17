@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { Observable, Subject } from 'rxjs';
 
 import { Dice } from '../../core/definitions/dice.definition';
@@ -11,9 +9,6 @@ import { DiceLiteral } from '../../core/literals/dice.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class RollService implements LoggerInterface {
   private readonly diceMap: {
     readonly [key in DiceLiteral]: { min: number; max: number };

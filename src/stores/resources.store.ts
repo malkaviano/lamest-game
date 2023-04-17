@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { SceneStoreInterface } from '../core/interfaces/stores/scene-store.interface';
 import { SkillStateStoreInterface } from '../core/interfaces/stores/skill-state-store.interface';
 import { DiscardStateStoreInterface } from '../core/interfaces/stores/discard-state-store.interface';
@@ -50,9 +48,6 @@ import visibilityStateStore from '../assets/states/visibility-state.json';
 import { AiBehaviorLiteral } from '../core/literals/enemy-behavior.literal';
 import { VisibilityLiteral } from '../core/literals/visibility.literal';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ResourcesStore {
   public readonly sceneStore: SceneStoreInterface;
 

@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { ActorIdentityDefinition } from '../core/definitions/actor-identity.definition';
 import { WeaponDefinition } from '../core/definitions/weapon.definition';
 import { ConverterHelper } from '../core/helpers/converter.helper';
@@ -16,9 +14,6 @@ import { EquipmentBehavior } from '../core/behaviors/equipment.behavior';
 import { CooldownBehavior } from '../core/behaviors/cooldown.behavior';
 import { AiBehavior } from '../core/behaviors/ai.behavior';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ActorStore {
   private readonly store: Map<string, ActorEntity>;
 

@@ -1,5 +1,3 @@
-import { TestBed } from '@angular/core/testing';
-
 import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
 
 import { InventoryService } from './inventory.service';
@@ -15,13 +13,7 @@ import { InventoryEvent } from '../../core/events/inventory.event';
 import { ArrayView } from '../../core/view-models/array.view';
 
 describe('InventoryService', () => {
-  let service: InventoryService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-
-    service = TestBed.inject(InventoryService);
-  });
+  const service = new InventoryService();
 
   it('should be created', () => {
     expect(service).toBeTruthy();

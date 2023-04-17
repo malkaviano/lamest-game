@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReadAxiomService } from '../axioms/read.axiom.service';
+import { ReadAxiom } from '../axioms/read.axiom';
 
 import { ReadableDefinition } from '../../core/definitions/readable.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
@@ -14,7 +14,7 @@ import { ActionableEvent } from '../../core/events/actionable.event';
 export class InspectRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly readAxiomService: ReadAxiomService
+    private readonly readAxiomService: ReadAxiom
   ) {
     super();
   }

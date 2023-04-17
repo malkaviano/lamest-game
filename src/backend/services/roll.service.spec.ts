@@ -1,12 +1,9 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { RollService } from './roll.service';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
 import {
   mockedActorEntity,
@@ -15,21 +12,10 @@ import {
 } from '../../../tests/mocks';
 
 describe('RollService', () => {
-  let service: RollService;
+  const service = new RollService(instance(mockedRandomIntHelper));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RandomIntHelper,
-          useValue: instance(mockedRandomIntHelper),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(RollService);
   });
 
   it('should be created', () => {

@@ -1,5 +1,3 @@
-import { TestBed } from '@angular/core/testing';
-
 import { anyNumber, instance, when } from 'ts-mockito';
 
 import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
@@ -10,9 +8,7 @@ import { races } from '../../core/literals/race.literal';
 import { weights } from '../../core/literals/weight.literal';
 import { GeneratorService } from './generator.service';
 import { DirectionLiteral } from '../../core/literals/direction.literal';
-import { ProfessionStore } from '../../stores/profession.store';
 import { ArrayView } from '../../core/view-models/array.view';
-import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
 import {
   mockedProfessionStore,
@@ -21,29 +17,17 @@ import {
 } from '../../../tests/mocks';
 
 describe('GeneratorService', () => {
-  let service: GeneratorService;
+  const service = new GeneratorService(
+    instance(mockedRandomIntHelper),
+    instance(mockedProfessionStore)
+  );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RandomIntHelper,
-          useValue: instance(mockedRandomIntHelper),
-        },
-        {
-          provide: ProfessionStore,
-          useValue: instance(mockedProfessionStore),
-        },
-      ],
-    });
-
     setupMocks();
 
     when(mockedProfessionStore.professions).thenReturn({
       'Police Detective': ArrayView.create([]),
     });
-
-    service = TestBed.inject(GeneratorService);
   });
 
   it('should be created', () => {

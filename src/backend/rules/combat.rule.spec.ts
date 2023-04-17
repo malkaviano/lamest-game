@@ -5,9 +5,9 @@ import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 import { CombatRule } from './combat.rule';
 import { RollService } from '../services/roll.service';
 import { CheckedHelper } from '../helpers/checked.helper';
-import { ActivationAxiomService } from '../axioms/activation.axiom.service';
-import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { ActivationAxiom } from '../axioms/activation.axiom';
+import { DodgeAxiom } from '../axioms/dodge.axiom';
+import { AffectAxiom } from '../axioms/affect.axiom';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { EffectEvent } from '../../core/events/effect.event';
@@ -49,15 +49,15 @@ describe('CombatRule', () => {
           useValue: instance(mockedCheckedHelper),
         },
         {
-          provide: ActivationAxiomService,
+          provide: ActivationAxiom,
           useValue: instance(mockedActivationAxiomService),
         },
         {
-          provide: DodgeAxiomService,
+          provide: DodgeAxiom,
           useValue: instance(mockedDodgeAxiomService),
         },
         {
-          provide: AffectAxiomService,
+          provide: AffectAxiom,
           useValue: instance(mockedAffectedAxiomService),
         },
       ],

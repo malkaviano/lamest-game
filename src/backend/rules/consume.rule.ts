@@ -9,7 +9,7 @@ import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../axioms/affect.axiom';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
 
@@ -21,7 +21,7 @@ export class ConsumeRule extends MasterRuleService {
     private readonly inventoryService: InventoryService,
     private readonly rollRule: RollService,
     private readonly checkedHelper: CheckedHelper,
-    private readonly affectAxiom: AffectAxiomService
+    private readonly affectAxiom: AffectAxiom
   ) {
     super();
   }

@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { Observable, Subject } from 'rxjs';
 
 import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
@@ -11,9 +9,6 @@ import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { ArrayView } from '../../core/view-models/array.view';
 import { InventoryEvent } from '../../core/events/inventory.event';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class InventoryService {
   private readonly inventoryChanged: Subject<InventoryEvent>;
 

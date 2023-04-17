@@ -1,24 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { AffectAxiomService } from './affect.axiom.service';
+import { AffectAxiom } from './affect.axiom';
 import { EffectEvent } from '../../core/events/effect.event';
 
 import { actionAttack } from '../../../tests/fakes';
 import { mockedPlayerEntity } from '../../../tests/mocks';
 
-describe('AffectedAxiomService', () => {
-  let service: AffectAxiomService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AffectAxiomService);
-  });
+describe('AffectedAxiom', () => {
+  const axiom = new AffectAxiom();
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(axiom).toBeTruthy();
   });
 
   describe('affectWith', () => {
@@ -28,7 +21,7 @@ describe('AffectedAxiomService', () => {
       it('should log effects and actor died', (done) => {
         const result: LogMessageDefinition[] = [];
 
-        service.logMessageProduced$.subscribe((event) => {
+        axiom.logMessageProduced$.subscribe((event) => {
           result.push(event);
         });
 
@@ -44,7 +37,7 @@ describe('AffectedAxiomService', () => {
 
         when(mockedPlayerEntity.situation).thenReturn('DEAD');
 
-        service.affectWith(
+        axiom.affectWith(
           instance(mockedPlayerEntity),
           actionAttack,
           'SUCCESS',

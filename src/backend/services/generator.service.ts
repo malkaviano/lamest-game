@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
 
 import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
@@ -13,9 +11,6 @@ import { DirectionLiteral } from '../../core/literals/direction.literal';
 import { ProfessionStore } from '../../stores/profession.store';
 import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class GeneratorService {
   constructor(
     private readonly randomIntHelper: RandomIntHelper,

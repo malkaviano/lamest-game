@@ -5,7 +5,7 @@ import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../axioms/affect.axiom';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 
@@ -16,7 +16,7 @@ export class PickRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly checkedHelper: CheckedHelper,
-    private readonly affectAxiomService: AffectAxiomService
+    private readonly affectAxiomService: AffectAxiom
   ) {
     super();
   }

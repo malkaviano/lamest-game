@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { Observable, Subject } from 'rxjs';
 
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
@@ -9,12 +7,7 @@ import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { RollService } from '../services/roll.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class DodgeAxiomService
-  implements LoggerInterface, ActorDodgedInterface
-{
+export class DodgeAxiom implements LoggerInterface, ActorDodgedInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;
 
   private readonly actorDodged: Subject<string>;

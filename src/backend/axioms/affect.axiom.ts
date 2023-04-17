@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { Observable, Subject } from 'rxjs';
 
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
@@ -11,10 +9,7 @@ import { ResultLiteral } from '../../core/literals/result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActorEntity } from '../../core/entities/actor.entity';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AffectAxiomService implements LoggerInterface {
+export class AffectAxiom implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;

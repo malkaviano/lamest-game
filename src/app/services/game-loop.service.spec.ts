@@ -41,7 +41,7 @@ import { InventoryEvent } from '../../core/events/inventory.event';
 import { RuleDispatcherService } from '../../backend/services/rule-dispatcher.service';
 import { CharacterService } from '../../backend/services/character.service';
 import { NarrativeService } from '../../backend/services/narrative.service';
-import { EventHubHelperService } from '../../backend/helpers/event-hub.helper.service';
+import { EventHubHelperService } from '../../backend/helpers/event-hub.helper';
 import { InventoryService } from '../../backend/services/inventory.service';
 
 const actor = instance(mockedActorEntity);

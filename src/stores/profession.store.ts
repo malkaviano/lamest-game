@@ -1,12 +1,8 @@
-import { Injectable } from '@angular/core';
 import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ArrayView } from '../core/view-models/array.view';
 import { ResourcesStore } from './resources.store';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ProfessionStore {
   private readonly store: Map<string, ArrayView<string>>;
 

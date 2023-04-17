@@ -6,7 +6,7 @@ import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../axioms/affect.axiom';
 import { MasterRuleService } from './master.rule';
 import { ActionableEvent } from '../../core/events/actionable.event';
 
@@ -17,7 +17,7 @@ export class UseRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly checkedHelper: CheckedHelper,
-    private readonly affectAxiomService: AffectAxiomService
+    private readonly affectAxiomService: AffectAxiom
   ) {
     super();
   }

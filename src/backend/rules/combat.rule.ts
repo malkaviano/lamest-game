@@ -9,9 +9,9 @@ import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface
 import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { ActivationAxiomService } from '../axioms/activation.axiom.service';
-import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { ActivationAxiom } from '../axioms/activation.axiom';
+import { DodgeAxiom } from '../axioms/dodge.axiom';
+import { AffectAxiom } from '../axioms/affect.axiom';
 import { ResultLiteral } from '../../core/literals/result.literal';
 import { ItemUsabilityLiteral } from '../../core/literals/item-usability';
 import { ActionableEvent } from '../../core/events/actionable.event';
@@ -25,9 +25,9 @@ export class CombatRule extends MasterRuleService {
   constructor(
     private readonly rollService: RollService,
     private readonly checkedHelper: CheckedHelper,
-    private readonly activationAxiomService: ActivationAxiomService,
-    private readonly dodgeAxiomService: DodgeAxiomService,
-    private readonly affectedAxiomService: AffectAxiomService
+    private readonly activationAxiomService: ActivationAxiom,
+    private readonly dodgeAxiomService: DodgeAxiom,
+    private readonly affectedAxiomService: AffectAxiom
   ) {
     super();
   }

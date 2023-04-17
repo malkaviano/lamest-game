@@ -1,5 +1,3 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
 import { GameStringsStore } from '../../stores/game-strings.store';
@@ -14,14 +12,10 @@ import {
 } from '../../../tests/mocks';
 
 describe('CheckedHelper', () => {
-  let service: CheckedHelper;
+  const service = new CheckedHelper();
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-
     setupMocks();
-
-    service = TestBed.inject(CheckedHelper);
   });
 
   it('should be created', () => {

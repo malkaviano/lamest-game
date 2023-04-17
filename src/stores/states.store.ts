@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ActionableState } from '../core/states/actionable.state';
 import { ConversationState } from '../core/states/conversation.state';
@@ -23,9 +21,6 @@ import { ArrayView } from '../core/view-models/array.view';
 import { LazyHelper } from '../core/helpers/lazy.helper';
 import { ConverterHelper } from '../core/helpers/converter.helper';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
 

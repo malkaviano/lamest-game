@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { CharacteristicSetDefinition } from '../core/definitions/characteristic-set.definition';
 import { SkillDefinition } from '../core/definitions/skill.definition';
 import { ConverterHelper } from '../core/helpers/converter.helper';
@@ -7,9 +5,6 @@ import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
 import { ArrayView } from '../core/view-models/array.view';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class SkillStore {
   private readonly store: Map<string, SkillDefinition>;
 

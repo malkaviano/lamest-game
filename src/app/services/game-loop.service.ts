@@ -9,7 +9,7 @@ import { InteractiveInterface } from '../../core/interfaces/interactive.interfac
 import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
 import { SceneDefinition } from '../../core/definitions/scene.definition';
 import { RuleDispatcherService } from '../../backend/services/rule-dispatcher.service';
-import { EventHubHelperService } from '../../backend/helpers/event-hub.helper.service';
+import { EventHubHelperService } from '../../backend/helpers/event-hub.helper';
 import { InventoryService } from '../../backend/services/inventory.service';
 import { GameEventsDefinition } from '../../core/definitions/game-events.definition';
 import {

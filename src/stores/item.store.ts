@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { ConsumableDefinition } from '../core/definitions/consumable.definition';
 import { DamageDefinition } from '../core/definitions/damage.definition';
 import { createDice } from '../core/definitions/dice.definition';
@@ -13,9 +11,6 @@ import { WeaponDefinition } from '../core/definitions/weapon.definition';
 import { ReadableDefinition } from '../core/definitions/readable.definition';
 import { ArrayView } from '../core/view-models/array.view';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ItemStore {
   private readonly store: Map<string, GameItemDefinition>;
 
