@@ -25,8 +25,6 @@ describe('AiBehavior', () => {
   [
     {
       playerActorInfo: {
-        id: playerInfo.id,
-        classification: 'PLAYER' as ClassificationLiteral,
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
@@ -36,8 +34,6 @@ describe('AiBehavior', () => {
     },
     {
       playerActorInfo: {
-        id: playerInfo.id,
-        classification: 'PLAYER' as ClassificationLiteral,
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
@@ -47,8 +43,6 @@ describe('AiBehavior', () => {
     },
     {
       playerActorInfo: {
-        id: playerInfo.id,
-        classification: 'PLAYER' as ClassificationLiteral,
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
@@ -58,8 +52,6 @@ describe('AiBehavior', () => {
     },
     {
       playerActorInfo: {
-        id: playerInfo.id,
-        classification: 'PLAYER' as ClassificationLiteral,
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
@@ -69,8 +61,6 @@ describe('AiBehavior', () => {
     },
     {
       playerActorInfo: {
-        id: playerInfo.id,
-        classification: 'PLAYER' as ClassificationLiteral,
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
@@ -80,8 +70,6 @@ describe('AiBehavior', () => {
     },
     {
       playerActorInfo: {
-        id: playerInfo.id,
-        classification: 'PLAYER' as ClassificationLiteral,
         situation: 'DEAD' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
@@ -91,8 +79,6 @@ describe('AiBehavior', () => {
     },
     {
       playerActorInfo: {
-        id: playerInfo.id,
-        classification: 'PLAYER' as ClassificationLiteral,
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'HIDDEN' as VisibilityLiteral,
       },
@@ -102,7 +88,19 @@ describe('AiBehavior', () => {
     },
   ].forEach(({ playerActorInfo, behavior, afflictedBy, expected }) => {
     describe(`when ${behavior} and was attacked ${afflictedBy}`, () => {
-      scenario(playerActorInfo, behavior, afflictedBy, expected);
+      const id = playerInfo.id;
+      const classification: ClassificationLiteral = 'PLAYER';
+
+      scenario(
+        {
+          id,
+          classification,
+          ...playerActorInfo,
+        },
+        behavior,
+        afflictedBy,
+        expected
+      );
     });
   });
 });
