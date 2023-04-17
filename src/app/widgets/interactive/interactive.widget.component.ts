@@ -6,12 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ActionableDefinition } from '../../definitions/actionable.definition';
-import { ArrayView } from '../../view-models/array.view';
 
-import { InteractiveEntity } from '../../entities/interactive.entity';
-import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ActionableEvent } from '../../events/actionable.event';
+import { WithSubscriptionHelper } from '../../../backend/helpers/with-subscription.helper';
+import { InteractiveEntity } from '../../../backend/entities/interactive.entity';
+import { ActionableEvent } from '../../../backend/events/actionable.event';
+import { ActionableDefinition } from '../../../backend/definitions/actionable.definition';
+import { ArrayView } from '../../../backend/view-models/array.view';
 
 @Component({
   selector: 'app-interactive-widget',

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ActionableItemView } from '../../view-models/actionable-item.view';
-import { ActionableDefinition } from '../../definitions/actionable.definition';
-import { ActionableEvent } from '../../events/actionable.event';
+import { ActionableEvent } from '../../../backend/events/actionable.event';
+import { ActionableItemView } from '../../../backend/view-models/actionable-item.view';
+import { ActionableDefinition } from '../../../backend/definitions/actionable.definition';
 
 @Component({
   selector: 'app-equipment-widget',

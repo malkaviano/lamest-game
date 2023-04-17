@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { merge, Observable } from 'rxjs';
+
 import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';

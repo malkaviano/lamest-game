@@ -10,10 +10,10 @@ import { ActivationAxiomService } from '../axioms/activation.axiom.service';
 import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { ConverterHelper } from '../helpers/converter.helper';
-import { ruleScenario } from '../../../tests/scenarios';
 import { GameStringsStore } from '../stores/game-strings.store';
 import { RollDefinition } from '../definitions/roll.definition';
 
+import { ruleScenario } from '../../../tests/scenarios';
 import {
   mockedActivationAxiomService,
   mockedActorEntity,

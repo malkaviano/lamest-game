@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ArrayView } from '../../view-models/array.view';
-import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
-import { CharacterService } from '../../services/character.service';
-import { FormatterHelperService } from '../../helpers/formatter.helper.service';
+import { KeyValueDescriptionView } from '../../../backend/view-models/key-value-description.view';
+import { ArrayView } from '../../../backend/view-models/array.view';
+import { CharacterService } from '../../../backend/services/character.service';
+import { FormatterHelperService } from '../../../backend/helpers/formatter.helper.service';
 
 @Component({
   selector: 'app-character-page',

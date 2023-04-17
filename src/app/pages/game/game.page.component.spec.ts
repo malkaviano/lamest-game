@@ -7,12 +7,13 @@ import { instance, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
-import { ArrayView } from '../../view-models/array.view';
-import { ActionableEvent } from '../../events/actionable.event';
-import { ActionableItemView } from '../../view-models/actionable-item.view';
-import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { FormatterHelperService } from '../../helpers/formatter.helper.service';
-import { LogMessageDefinition } from '../../definitions/log-message.definition';
+import { GameLoopService } from '../../../backend/services/game-loop.service';
+import { WithSubscriptionHelper } from '../../../backend/helpers/with-subscription.helper';
+import { FormatterHelperService } from '../../../backend/helpers/formatter.helper.service';
+import { ActionableItemView } from '../../../backend/view-models/actionable-item.view';
+import { ArrayView } from '../../../backend/view-models/array.view';
+import { ActionableEvent } from '../../../backend/events/actionable.event';
+import { LogMessageDefinition } from '../../../backend/definitions/log-message.definition';
 
 import {
   mockedFormatterHelperService,
@@ -34,7 +35,6 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
-import { GameLoopService } from '../../services/game-loop.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;

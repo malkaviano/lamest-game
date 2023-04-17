@@ -9,10 +9,10 @@ import { first, of } from 'rxjs';
 
 import { InteractiveWidgetComponent } from './interactive.widget.component';
 import { MaterialModule } from '../../../material/material.module';
-import { InteractiveEntity } from '../../entities/interactive.entity';
-import { createActionableDefinition } from '../../definitions/actionable.definition';
-import { ArrayView } from '../../view-models/array.view';
-import { ActionableEvent } from '../../events/actionable.event';
+import { createActionableDefinition } from '../../../backend/definitions/actionable.definition';
+import { ActionableEvent } from '../../../backend/events/actionable.event';
+import { InteractiveEntity } from '../../../backend/entities/interactive.entity';
+import { ArrayView } from '../../../backend/view-models/array.view';
 
 describe('InteractiveWidgetComponent', () => {
   let fixture: ComponentFixture<InteractiveWidgetComponent>;

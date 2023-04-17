@@ -5,7 +5,6 @@ import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { CheckedHelper } from '../helpers/checked.helper';
-
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../stores/game-strings.store';
 

@@ -7,7 +7,6 @@ import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { EffectEvent } from '../events/effect.event';
 import { CheckedHelper } from '../helpers/checked.helper';
-
 import { MasterRuleService } from './master.rule';
 import { ResultLiteral } from '../literals/result.literal';
 import { ActionableDefinition } from '../definitions/actionable.definition';

@@ -1,4 +1,5 @@
 import { Observable, Subject } from 'rxjs';
+
 import { GameStringsStore } from '../stores/game-strings.store';
 
 export class CooldownBehavior {

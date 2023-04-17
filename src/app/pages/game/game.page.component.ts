@@ -1,21 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ActionableItemView } from '../../view-models/actionable-item.view';
-import { CharacterValuesView } from '../../view-models/character-values.view';
-import { GameItemDefinition } from '../../definitions/game-item.definition';
-import { SceneDefinition } from '../../definitions/scene.definition';
-import { ActionableEvent } from '../../events/actionable.event';
-import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ArrayView } from '../../view-models/array.view';
-import { FormatterHelperService } from '../../helpers/formatter.helper.service';
+import { WithSubscriptionHelper } from '../../../backend/helpers/with-subscription.helper';
+import { SceneDefinition } from '../../../backend/definitions/scene.definition';
+import { CharacterValuesView } from '../../../backend/view-models/character-values.view';
+import { ActionableItemView } from '../../../backend/view-models/actionable-item.view';
+import { GameItemDefinition } from '../../../backend/definitions/game-item.definition';
+import { CharacterStatusView } from '../../../backend/view-models/character-status.view';
+import { FormatterHelperService } from '../../../backend/helpers/formatter.helper.service';
+import { GameLoopService } from '../../../backend/services/game-loop.service';
+import { ArrayView } from '../../../backend/view-models/array.view';
+import { KeyValueDescriptionView } from '../../../backend/view-models/key-value-description.view';
+import { GameStringsStore } from '../../../backend/stores/game-strings.store';
+import { ActionableEvent } from '../../../backend/events/actionable.event';
+import { LogMessageDefinition } from '../../../backend/definitions/log-message.definition';
+import { ReadableInterface } from '../../../backend/interfaces/readable.interface';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
-import { ReadableInterface } from '../../interfaces/readable.interface';
-import { LogMessageDefinition } from '../../definitions/log-message.definition';
-import { GameLoopService } from '../../services/game-loop.service';
-import { CharacterStatusView } from '../../view-models/character-status.view';
-import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
-import { GameStringsStore } from '../../stores/game-strings.store';
 
 @Component({
   selector: 'app-game-page',

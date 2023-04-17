@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CharacterValuesView } from '../../view-models/character-values.view';
-import { ActionableItemView } from '../../view-models/actionable-item.view';
-import { ActionableEvent } from '../../events/actionable.event';
+import { ActionableEvent } from '../../../backend/events/actionable.event';
+import { CharacterValuesView } from '../../../backend/view-models/character-values.view';
+import { ActionableItemView } from '../../../backend/view-models/actionable-item.view';
 
 @Component({
   selector: 'app-sheet-panel',

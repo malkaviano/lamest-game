@@ -5,7 +5,6 @@ import { instance } from 'ts-mockito';
 import { NarrativeService } from '../services/narrative.service';
 import { SceneRule } from './scene.rule';
 import { CheckedHelper } from '../helpers/checked.helper';
-
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {

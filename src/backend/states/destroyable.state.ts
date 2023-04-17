@@ -3,7 +3,6 @@ import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ResultLiteral } from '../literals/result.literal';
 import { GameStringsStore } from '../stores/game-strings.store';
-
 import { ArrayView } from '../view-models/array.view';
 import { ActionableState } from './actionable.state';
 

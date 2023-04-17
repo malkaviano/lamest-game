@@ -4,10 +4,8 @@ import { ReadAxiomService } from '../axioms/read.axiom.service';
 import { ReadableDefinition } from '../definitions/readable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from '../interfaces/actor.interface';
-
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../stores/game-strings.store';
-
 import { MasterRuleService } from './master.rule';
 
 @Injectable({

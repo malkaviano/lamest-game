@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
+
 import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { CharacteristicDefinition } from '../definitions/characteristic.definition';
 import { AgeLiteral, ages } from '../literals/age.literal';

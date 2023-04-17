@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-
 import { RollService } from '../services/roll.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
-
 import { MasterRuleService } from './master.rule';
 import { AffectAxiomService } from '../axioms/affect.axiom.service';
 

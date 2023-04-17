@@ -7,7 +7,6 @@ import { CharacteristicDefinition } from '../definitions/characteristic.definiti
 import { KeyValueDescriptionView } from '../view-models/key-value-description.view';
 import { PlayerEntity } from '../entities/player.entity';
 import { CharacterIdentityLiteral } from '../literals/character-identity.literal';
-
 import { SkillStore } from '../stores/skill.store';
 import { GameStringsStore } from '../stores/game-strings.store';
 

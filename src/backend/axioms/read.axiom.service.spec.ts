@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { readable } from '../../../tests/fakes';
-import { ReadableInterface } from '../interfaces/readable.interface';
 
+import { ReadableInterface } from '../interfaces/readable.interface';
 import { ReadAxiomService } from './read.axiom.service';
+
+import { readable } from '../../../tests/fakes';
 
 describe('ReadAxiomService', () => {
   let service: ReadAxiomService;

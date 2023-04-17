@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { ActionableEvent } from '../events/actionable.event';
-
 import { NarrativeService } from '../services/narrative.service';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { RuleExtrasInterface } from '../interfaces/rule-extras.interface';
 import { CheckedHelper } from '../helpers/checked.helper';
-
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../stores/game-strings.store';
 

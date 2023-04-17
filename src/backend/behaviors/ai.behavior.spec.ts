@@ -1,6 +1,5 @@
 import { when } from 'ts-mockito';
 
-import { mockedCooldownBehavior, setupMocks } from '../../../tests/mocks';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
@@ -8,9 +7,10 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { AiBehavior } from './ai.behavior';
+import { ArrayView } from '../view-models/array.view';
 
 import { playerInfo } from '../../../tests/fakes';
-import { ArrayView } from '../view-models/array.view';
+import { mockedCooldownBehavior, setupMocks } from '../../../tests/mocks';
 
 describe('AiBehavior', () => {
   beforeEach(() => {

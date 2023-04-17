@@ -5,15 +5,16 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { instance } from 'ts-mockito';
 
 import { MaterialModule } from '../../../material/material.module';
-import { FormatterHelperService } from '../../helpers/formatter.helper.service';
+
 import { CharacterPageComponent } from './character.page.component';
-import { CharacterService } from '../../services/character.service';
 
 import {
   mockedCharacterService,
   mockedFormatterHelperService,
   setupMocks,
 } from '../../../../tests/mocks';
+import { CharacterService } from '../../../backend/services/character.service';
+import { FormatterHelperService } from '../../../backend/helpers/formatter.helper.service';
 
 describe('CharacterPageComponent', () => {
   let component: CharacterPageComponent;

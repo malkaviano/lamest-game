@@ -1,34 +1,34 @@
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '../src/app/definitions/actionable.definition';
-import { CharacteristicSetDefinition } from '../src/app/definitions/characteristic-set.definition';
-import { CharacteristicDefinition } from '../src/app/definitions/characteristic.definition';
-import { ConsumableDefinition } from '../src/app/definitions/consumable.definition';
-import { DamageDefinition } from '../src/app/definitions/damage.definition';
-import { DerivedAttributeSetDefinition } from '../src/app/definitions/derived-attribute-set.definition';
-import { DerivedAttributeDefinition } from '../src/app/definitions/derived-attribute.definition';
-import { createDice } from '../src/app/definitions/dice.definition';
-import { CharacterIdentityDefinition } from '../src/app/definitions/character-identity.definition';
-import { ActionableEvent } from '../src/app/events/actionable.event';
-import { KeyValueInterface } from '../src/app/interfaces/key-value.interface';
-import { SceneActorsInfoInterface } from '../src/app/interfaces/scene-actors.interface';
-import { ArrayView } from '../src/app/view-models/array.view';
-import { CharacterValuesView } from '../src/app/view-models/character-values.view';
-import { KeyValueDescriptionView } from '../src/app/view-models/key-value-description.view';
-import { DiscardState } from '../src/app/states/discard.state';
-import { UsableDefinition } from '../src/app/definitions/usable.definition';
-import { ItemIdentityDefinition } from '../src/app/definitions/item-identity.definition';
-import { ActionableItemView } from '../src/app/view-models/actionable-item.view';
-import { GameItemDefinition } from '../src/app/definitions/game-item.definition';
-import { WeaponDefinition } from '../src/app/definitions/weapon.definition';
-import { SkillDefinition } from '../src/app/definitions/skill.definition';
-import { EffectEvent } from '../src/app/events/effect.event';
-import { EffectTypeLiteral } from '../src/app/literals/effect-type.literal';
-import { ReadableDefinition } from '../src/app/definitions/readable.definition';
-import { GameSettingsInterface } from '../src/app/interfaces/game-settings.interface';
-import { ActorSettingsInterface } from '../src/app/interfaces/actor-settings.interface';
-import { CharacterStatusView } from '../src/app/view-models/character-status.view';
+} from '../src/backend/definitions/actionable.definition';
+import { CharacteristicSetDefinition } from '../src/backend/definitions/characteristic-set.definition';
+import { CharacteristicDefinition } from '../src/backend/definitions/characteristic.definition';
+import { ConsumableDefinition } from '../src/backend/definitions/consumable.definition';
+import { DamageDefinition } from '../src/backend/definitions/damage.definition';
+import { DerivedAttributeSetDefinition } from '../src/backend/definitions/derived-attribute-set.definition';
+import { DerivedAttributeDefinition } from '../src/backend/definitions/derived-attribute.definition';
+import { createDice } from '../src/backend/definitions/dice.definition';
+import { CharacterIdentityDefinition } from '../src/backend/definitions/character-identity.definition';
+import { ActionableEvent } from '../src/backend/events/actionable.event';
+import { KeyValueInterface } from '../src/backend/interfaces/key-value.interface';
+import { SceneActorsInfoInterface } from '../src/backend/interfaces/scene-actors.interface';
+import { ArrayView } from '../src/backend/view-models/array.view';
+import { CharacterValuesView } from '../src/backend/view-models/character-values.view';
+import { KeyValueDescriptionView } from '../src/backend/view-models/key-value-description.view';
+import { DiscardState } from '../src/backend/states/discard.state';
+import { UsableDefinition } from '../src/backend/definitions/usable.definition';
+import { ItemIdentityDefinition } from '../src/backend/definitions/item-identity.definition';
+import { ActionableItemView } from '../src/backend/view-models/actionable-item.view';
+import { GameItemDefinition } from '../src/backend/definitions/game-item.definition';
+import { WeaponDefinition } from '../src/backend/definitions/weapon.definition';
+import { SkillDefinition } from '../src/backend/definitions/skill.definition';
+import { EffectEvent } from '../src/backend/events/effect.event';
+import { EffectTypeLiteral } from '../src/backend/literals/effect-type.literal';
+import { ReadableDefinition } from '../src/backend/definitions/readable.definition';
+import { GameSettingsInterface } from '../src/backend/interfaces/game-settings.interface';
+import { ActorSettingsInterface } from '../src/backend/interfaces/actor-settings.interface';
+import { CharacterStatusView } from '../src/backend/view-models/character-status.view';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
