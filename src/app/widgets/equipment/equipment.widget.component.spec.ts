@@ -6,8 +6,8 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { first } from 'rxjs';
 
 import { MaterialModule } from '../../../material/material.module';
-import { ActionableEvent } from '../../events/actionable.event';
 import { EquipmentWidgetComponent } from './equipment.widget.component';
+import { ActionableEvent } from '../../../core/events/actionable.event';
 
 import {
   actionableItemView,

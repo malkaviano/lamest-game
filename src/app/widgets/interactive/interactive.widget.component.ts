@@ -6,12 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ActionableDefinition } from '../../definitions/actionable.definition';
-import { ArrayView } from '../../view-models/array.view';
 
-import { InteractiveEntity } from '../../entities/interactive.entity';
+import { ActionableDefinition } from '../../../core/definitions/actionable.definition';
+import { ActionableEvent } from '../../../core/events/actionable.event';
+import { ArrayView } from '../../../core/view-models/array.view';
+import { InteractiveInterface } from '../../../core/interfaces/interactive.interface';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ActionableEvent } from '../../events/actionable.event';
 
 @Component({
   selector: 'app-interactive-widget',
@@ -20,7 +20,7 @@ import { ActionableEvent } from '../../events/actionable.event';
   providers: [WithSubscriptionHelper],
 })
 export class InteractiveWidgetComponent implements OnInit, OnDestroy {
-  @Input() interactive!: InteractiveEntity;
+  @Input() interactive!: InteractiveInterface;
   @Output() actionSelected: EventEmitter<ActionableEvent>;
   actions: ArrayView<ActionableDefinition>;
 

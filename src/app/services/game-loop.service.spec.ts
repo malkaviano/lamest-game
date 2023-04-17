@@ -3,17 +3,9 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { anyString, anything, instance, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
 
-import { CharacterService } from './character.service';
 import { GameLoopService } from './game-loop.service';
-import { NarrativeService } from './narrative.service';
-import { ReadableInterface } from '../interfaces/readable.interface';
-import { ArrayView } from '../view-models/array.view';
-import { RuleDispatcherService } from './rule-dispatcher.service';
-import { EventHubHelperService } from '../helpers/event-hub.helper.service';
-import { InventoryEvent } from '../events/inventory.event';
-import { ActionableItemView } from '../view-models/actionable-item.view';
-import { ItemStoredDefinition } from '../definitions/item-storage.definition';
-import { InventoryService } from './inventory.service';
+import { ReadableInterface } from '../../core/interfaces/readable.interface';
+import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
 
 import {
   actionableEvent,
@@ -43,6 +35,14 @@ import {
   mockedEventHubHelperService,
   mockedInventoryService,
 } from '../../../tests/mocks';
+import { ArrayView } from '../../core/view-models/array.view';
+import { ActionableItemView } from '../../core/view-models/actionable-item.view';
+import { InventoryEvent } from '../../core/events/inventory.event';
+import { RuleDispatcherService } from '../../backend/services/rule-dispatcher.service';
+import { CharacterService } from '../../backend/services/character.service';
+import { NarrativeService } from '../../backend/services/narrative.service';
+import { EventHubHelperService } from '../../backend/helpers/event-hub.helper.service';
+import { InventoryService } from '../../backend/services/inventory.service';
 
 const actor = instance(mockedActorEntity);
 

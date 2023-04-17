@@ -3,6 +3,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { SheetPanelComponent } from './sheet.panel.component';
+import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
+import { ActionableEvent } from '../../../core/events/actionable.event';
 
 import {
   actionAsk,
@@ -14,8 +16,6 @@ import {
   molotov,
   simpleSword,
 } from '../../../../tests/fakes';
-import { ActionableItemView } from '../../view-models/actionable-item.view';
-import { ActionableEvent } from '../../events/actionable.event';
 
 describe('SheetPanelComponent', () => {
   let component: SheetPanelComponent;

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { instance, when } from 'ts-mockito';
 
 import { FormatterHelperService } from './formatter.helper.service';
-import { SkillStore } from '../stores/skill.store';
+import { SkillStore } from '../../stores/skill.store';
 
 import {
   fakeCharacteristics,

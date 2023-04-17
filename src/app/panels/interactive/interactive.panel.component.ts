@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { InteractiveEntity } from '../../entities/interactive.entity';
-import { ActionableEvent } from '../../events/actionable.event';
-import { ArrayView } from '../../view-models/array.view';
+import { ActionableEvent } from '../../../core/events/actionable.event';
+import { ArrayView } from '../../../core/view-models/array.view';
+import { InteractiveInterface } from '../../../core/interfaces/interactive.interface';
 
 @Component({
   selector: 'app-interactive-panel',
@@ -14,7 +14,7 @@ export class InteractivePanelComponent {
 
   @Input() public panelName: string;
 
-  @Input() public interactives: ArrayView<InteractiveEntity>;
+  @Input() public interactives: ArrayView<InteractiveInterface>;
 
   constructor() {
     this.panelName = '';

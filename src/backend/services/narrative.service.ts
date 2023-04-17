@@ -1,0 +1,42 @@
+import { Injectable } from '@angular/core';
+
+import { BehaviorSubject, Observable } from 'rxjs';
+
+import { SceneDefinition } from '../../core/definitions/scene.definition';
+import { GameStringsStore } from '../../stores/game-strings.store';
+import { SceneStore } from '../../stores/scene.store';
+import { ActionableEvent } from '../../core/events/actionable.event';
+import { SceneEntity } from '../../core/entities/scene.entity';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class NarrativeService {
+  private currentScene: SceneEntity;
+
+  private readonly sceneChanged: BehaviorSubject<SceneDefinition>;
+
+  public readonly sceneChanged$: Observable<SceneDefinition>;
+
+  constructor(private readonly sceneStore: SceneStore) {
+    this.currentScene = this.sceneStore.scenes[this.sceneStore.initial];
+
+    this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
+
+    this.sceneChanged$ = this.sceneChanged.asObservable();
+  }
+
+  public changeScene(action: ActionableEvent): void {
+    if (action.actionableDefinition.actionable !== 'SCENE') {
+      throw new Error(GameStringsStore.errorMessages['INVALID-OPERATION']);
+    }
+
+    const nextSceneName = this.currentScene.transitions[action.eventId];
+
+    this.currentScene = this.sceneStore.scenes[nextSceneName];
+
+    this.currentScene.reset();
+
+    this.sceneChanged.next(this.currentScene);
+  }
+}

@@ -1,8 +1,8 @@
-import { LogMessageDefinition } from '../src/app/definitions/log-message.definition';
-import { ActionableEvent } from '../src/app/events/actionable.event';
-import { ActorInterface } from '../src/app/interfaces/actor.interface';
-import { RuleExtrasInterface } from '../src/app/interfaces/rule-extras.interface';
-import { MasterRuleService } from '../src/app/rules/master.rule';
+import { LogMessageDefinition } from '../src/core/definitions/log-message.definition';
+import { ActionableEvent } from '../src/core/events/actionable.event';
+import { ActorInterface } from '../src/core/interfaces/actor.interface';
+import { RuleExtrasInterface } from '../src/core/interfaces/rule-extras.interface';
+import { MasterRuleService } from '../src/backend/rules/master.rule';
 
 export const ruleScenario = (
   service: MasterRuleService,

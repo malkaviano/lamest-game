@@ -9,7 +9,6 @@ import { MaterialModule } from '../material/material.module';
 import { InteractiveWidgetComponent } from './widgets/interactive/interactive.widget.component';
 import { GamePageComponent } from './pages/game/game.page.component';
 import { KeyValueDescriptionPanelComponent } from './panels/key-value-description/key-value-description.panel.component';
-import { CharacterPageComponent } from './pages/character/character.page.component';
 import { TextAreaWidgetComponent } from './widgets/text-area/text-area.widget.component';
 import { WindowWidgetComponent } from './widgets/window/window.widget.component';
 import { EquipmentWidgetComponent } from './widgets/equipment/equipment.widget.component';
@@ -26,7 +25,6 @@ import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
     TextAreaWidgetComponent,
     GamePageComponent,
     KeyValueDescriptionPanelComponent,
-    CharacterPageComponent,
     WindowWidgetComponent,
     EquipmentWidgetComponent,
     GameLayoutComponent,

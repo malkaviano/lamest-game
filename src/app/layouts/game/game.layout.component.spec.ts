@@ -4,13 +4,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { ArrayView } from '../../view-models/array.view';
-import { SceneDefinition } from '../../definitions/scene.definition';
-import { InteractiveEntity } from '../../entities/interactive.entity';
-import { SimpleState } from '../../states/simple.state';
 import { GameLayoutComponent } from './game.layout.component';
-import { ActionableEvent } from '../../events/actionable.event';
-import { unarmedWeapon } from '../../definitions/weapon.definition';
+import { ArrayView } from '../../../core/view-models/array.view';
+import { ActionableEvent } from '../../../core/events/actionable.event';
+import { SceneDefinition } from '../../../core/definitions/scene.definition';
+import { SimpleState } from '../../../core/states/simple.state';
+import { unarmedWeapon } from '../../../core/behaviors/equipment.behavior';
+import { InteractiveEntity } from '../../../core/entities/interactive.entity';
 
 import {
   actionAsk,

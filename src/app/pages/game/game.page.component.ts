@@ -1,21 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ActionableItemView } from '../../view-models/actionable-item.view';
-import { CharacterValuesView } from '../../view-models/character-values.view';
-import { GameItemDefinition } from '../../definitions/game-item.definition';
-import { SceneDefinition } from '../../definitions/scene.definition';
-import { ActionableEvent } from '../../events/actionable.event';
-import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ArrayView } from '../../view-models/array.view';
-import { FormatterHelperService } from '../../helpers/formatter.helper.service';
-import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
-import { ReadableInterface } from '../../interfaces/readable.interface';
-import { LogMessageDefinition } from '../../definitions/log-message.definition';
+import { SceneDefinition } from '../../../core/definitions/scene.definition';
+import { CharacterValuesView } from '../../../core/view-models/character-values.view';
+import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
+import { GameItemDefinition } from '../../../core/definitions/game-item.definition';
+import { CharacterStatusView } from '../../../core/view-models/character-status.view';
 import { GameLoopService } from '../../services/game-loop.service';
-import { CharacterStatusView } from '../../view-models/character-status.view';
-import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { ArrayView } from '../../../core/view-models/array.view';
+import { KeyValueDescriptionView } from '../../../core/view-models/key-value-description.view';
+import { GameStringsStore } from '../../../stores/game-strings.store';
+import { ActionableEvent } from '../../../core/events/actionable.event';
+import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
+import { ReadableInterface } from '../../../core/interfaces/readable.interface';
+import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
+import { FormatterHelperService } from '../../helpers/formatter.helper.service';
+import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
 @Component({
   selector: 'app-game-page',
@@ -68,7 +68,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.withSubscriptionHelper.addSubscription(
-      this.gameLoopService.events.characterChanged$.subscribe((character) => {
+      this.gameLoopService.events.playerChanged$.subscribe((character) => {
         this.characterValues =
           this.formatterHelperService.characterToKeyValueDescription(character);
 
