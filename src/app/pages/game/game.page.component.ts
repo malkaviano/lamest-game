@@ -6,7 +6,7 @@ import { CharacterValuesView } from '../../../core/view-models/character-values.
 import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
 import { GameItemDefinition } from '../../../core/definitions/game-item.definition';
 import { CharacterStatusView } from '../../../core/view-models/character-status.view';
-import { GameLoopService } from '../../../backend/services/game-loop.service';
+import { GameLoopService } from '../../services/game-loop.service';
 import { ArrayView } from '../../../core/view-models/array.view';
 import { KeyValueDescriptionView } from '../../../core/view-models/key-value-description.view';
 import { GameStringsStore } from '../../../backend/stores/game-strings.store';

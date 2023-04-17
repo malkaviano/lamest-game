@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 
 import { filter, map } from 'rxjs';
 
-import { CharacterService } from './character.service';
-import { NarrativeService } from './narrative.service';
+import { CharacterService } from '../../backend/services/character.service';
+import { NarrativeService } from '../../backend/services/narrative.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { ActorEntity } from '../entities/actor.entity';
+import { ActorEntity } from '../../backend/entities/actor.entity';
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
-import { PlayerEntity } from '../entities/player.entity';
+import { PlayerEntity } from '../../backend/entities/player.entity';
 import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
 import { SceneDefinition } from '../../core/definitions/scene.definition';
-import { RuleDispatcherService } from './rule-dispatcher.service';
-import { EventHubHelperService } from '../helpers/event-hub.helper.service';
-import { InventoryService } from './inventory.service';
+import { RuleDispatcherService } from '../../backend/services/rule-dispatcher.service';
+import { EventHubHelperService } from '../../backend/helpers/event-hub.helper.service';
+import { InventoryService } from '../../backend/services/inventory.service';
 import { GameEventsDefinition } from '../../core/definitions/game-events.definition';
 import {
   ActionableDefinition,

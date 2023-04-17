@@ -20,7 +20,7 @@ import { SkillRule } from '../src/backend/rules/skill.rule';
 import { UnEquipRule } from '../src/backend/rules/unequip.rule';
 import { UseRule } from '../src/backend/rules/use.rule';
 import { CharacterService } from '../src/backend/services/character.service';
-import { GameLoopService } from '../src/backend/services/game-loop.service';
+import { GameLoopService } from '../src/app/services/game-loop.service';
 import { GeneratorService } from '../src/backend/services/generator.service';
 import { InventoryService } from '../src/backend/services/inventory.service';
 import { NarrativeService } from '../src/backend/services/narrative.service';
