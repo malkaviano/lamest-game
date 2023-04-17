@@ -39,7 +39,6 @@ import { StatesStore } from '../src/backend/stores/states.store';
 import { GameEventsDefinition } from '../src/core/definitions/game-events.definition';
 import { SceneDefinition } from '../src/core/definitions/scene.definition';
 import { ArrayView } from '../src/core/view-models/array.view';
-import { WithSubscriptionHelper } from '../src/backend/helpers/with-subscription.helper';
 import { ProfessionStore } from '../src/backend/stores/profession.store';
 import { ActorStore } from '../src/backend/stores/actor.store';
 import { SkillStore } from '../src/backend/stores/skill.store';
@@ -69,6 +68,7 @@ import { ReadAxiomService } from '../src/backend/axioms/read.axiom.service';
 import { CooldownBehavior } from '../src/backend/behaviors/cooldown.behavior';
 import { AiBehavior } from '../src/backend/behaviors/ai.behavior';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
+import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 

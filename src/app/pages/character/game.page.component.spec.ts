@@ -6,14 +6,14 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { instance, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
-import { GamePageComponent } from './game.page.component';
 import { GameLoopService } from '../../services/game-loop.service';
-import { WithSubscriptionHelper } from '../../../backend/helpers/with-subscription.helper';
-import { FormatterHelperService } from '../../../backend/helpers/formatter.helper.service';
 import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
 import { ArrayView } from '../../../core/view-models/array.view';
 import { ActionableEvent } from '../../../core/events/actionable.event';
 import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
+import { GamePageComponent } from '../game/game.page.component';
+import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 
 import {
   mockedFormatterHelperService,
