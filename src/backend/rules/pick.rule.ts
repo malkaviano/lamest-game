@@ -1,22 +1,17 @@
-import { Injectable } from '@angular/core';
-
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
+import { AffectAxiom } from '../../core/axioms/affect.axiom';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
+import { CheckedService } from '../services/checked.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class PickRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly checkedHelper: CheckedHelper,
-    private readonly affectAxiomService: AffectAxiomService
+    private readonly checkedService: CheckedService,
+    private readonly affectAxiomService: AffectAxiom
   ) {
     super();
   }
@@ -26,9 +21,9 @@ export class PickRule extends MasterRuleService {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): void {
-    const target = this.checkedHelper.getRuleTargetOrThrow(extras);
+    const target = this.checkedService.getRuleTargetOrThrow(extras);
 
-    const item = this.checkedHelper.takeItemOrThrow(
+    const item = this.checkedService.takeItemOrThrow(
       this.inventoryService,
       action.eventId,
       action.actionableDefinition.name

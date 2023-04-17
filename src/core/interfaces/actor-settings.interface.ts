@@ -1,5 +1,5 @@
 import { EffectTypeLiteral } from '../literals/effect-type.literal';
-import { ArrayView } from '../../core/view-models/array.view';
+import { ArrayView } from '../view-models/array.view';
 
 export interface ActorSettingsInterface {
   readonly vulnerabilityCoefficient: number;

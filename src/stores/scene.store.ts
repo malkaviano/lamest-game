@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ActorStore } from './actor.store';
@@ -8,9 +6,6 @@ import { ResourcesStore } from './resources.store';
 import { ArrayView } from '../core/view-models/array.view';
 import { SceneEntity } from '../core/entities/scene.entity';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class SceneStore {
   private readonly store: Map<string, SceneEntity>;
 

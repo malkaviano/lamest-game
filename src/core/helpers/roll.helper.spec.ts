@@ -1,45 +1,31 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
-import { RollDefinition } from '../../core/definitions/roll.definition';
-import { ResultLiteral } from '../../core/literals/result.literal';
-import { RandomIntService } from '../services/random-int.service';
-import { RollService } from './roll.service';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { RollDefinition } from '../definitions/roll.definition';
+import { ResultLiteral } from '../literals/result.literal';
+import { RollHelper } from './roll.helper';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedActorEntity,
-  mockedRandomIntService,
+  mockedRandomIntHelper,
   setupMocks,
 } from '../../../tests/mocks';
 
-describe('RollService', () => {
-  let service: RollService;
+describe('RollHelper', () => {
+  const helper = new RollHelper(instance(mockedRandomIntHelper));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RandomIntService,
-          useValue: instance(mockedRandomIntService),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(RollService);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(helper).toBeTruthy();
   });
 
   describe('actorSkillCheck', () => {
     describe('when skill value is not set or zero', () => {
       it('return IMPOSSIBLE and 0', () => {
-        const result = service.actorSkillCheck(
+        const result = helper.actorSkillCheck(
           instance(mockedActorEntity),
           'Appraise'
         );
@@ -52,13 +38,13 @@ describe('RollService', () => {
       it('should emit skillCheckLog log', (done) => {
         let result: LogMessageDefinition | undefined;
 
-        service.logMessageProduced$.subscribe((event) => {
+        helper.logMessageProduced$.subscribe((event) => {
           result = event;
         });
 
         const actor = instance(mockedActorEntity);
 
-        service.actorSkillCheck(actor, 'Appraise');
+        helper.actorSkillCheck(actor, 'Appraise');
 
         const expected = new LogMessageDefinition(
           'CHECK',
@@ -88,11 +74,11 @@ describe('RollService', () => {
         },
       ].forEach(({ checkResult, roll, message }) => {
         it(`return ${checkResult} and ${roll}`, () => {
-          when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(
+          when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(
             roll
           );
 
-          const result = service.actorSkillCheck(
+          const result = helper.actorSkillCheck(
             instance(mockedActorEntity),
             'Melee Weapon (Simple)'
           );
@@ -108,17 +94,17 @@ describe('RollService', () => {
         it('should emit skillCheckLog log', (done) => {
           let result: LogMessageDefinition | undefined;
 
-          service.logMessageProduced$.subscribe((event) => {
+          helper.logMessageProduced$.subscribe((event) => {
             result = event;
           });
 
           const actor = instance(mockedActorEntity);
 
-          when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(
+          when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(
             roll
           );
 
-          service.actorSkillCheck(
+          helper.actorSkillCheck(
             instance(mockedActorEntity),
             'Melee Weapon (Simple)'
           );
@@ -139,15 +125,15 @@ describe('RollService', () => {
 
   describe('roll', () => {
     it('return summed result', () => {
-      when(mockedRandomIntService.getRandomInterval(1, 100)).thenReturn(50);
-      when(mockedRandomIntService.getRandomInterval(1, 20)).thenReturn(10);
-      when(mockedRandomIntService.getRandomInterval(1, 12)).thenReturn(6);
-      when(mockedRandomIntService.getRandomInterval(1, 10)).thenReturn(5);
-      when(mockedRandomIntService.getRandomInterval(1, 8)).thenReturn(4);
-      when(mockedRandomIntService.getRandomInterval(1, 6)).thenReturn(3);
-      when(mockedRandomIntService.getRandomInterval(1, 4)).thenReturn(2);
+      when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(50);
+      when(mockedRandomIntHelper.getRandomInterval(1, 20)).thenReturn(10);
+      when(mockedRandomIntHelper.getRandomInterval(1, 12)).thenReturn(6);
+      when(mockedRandomIntHelper.getRandomInterval(1, 10)).thenReturn(5);
+      when(mockedRandomIntHelper.getRandomInterval(1, 8)).thenReturn(4);
+      when(mockedRandomIntHelper.getRandomInterval(1, 6)).thenReturn(3);
+      when(mockedRandomIntHelper.getRandomInterval(1, 4)).thenReturn(2);
 
-      const result = service.roll({
+      const result = helper.roll({
         D4: 1,
         D6: 1,
         D8: 1,

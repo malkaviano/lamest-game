@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { RandomIntService } from './random-int.service';
 import { ArrayView } from '../../core/view-models/array.view';
+import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillService {
-  constructor(private readonly randomIntService: RandomIntService) {}
+  constructor(private readonly rngHelper: RandomIntHelper) {}
 
   public newSkillSetFor(skillNames: ArrayView<string>): Map<string, number> {
     const skills = new Map<string, number>();
@@ -28,7 +28,7 @@ export class SkillService {
     while (spent < points) {
       characterSkills.forEach((v, k) => {
         if (spent < points) {
-          const roll = this.randomIntService.getRandomInterval(0, 1);
+          const roll = this.rngHelper.getRandomInterval(0, 1);
 
           if (roll) {
             characterSkills.set(k, v + 5);

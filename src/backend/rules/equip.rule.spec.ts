@@ -1,16 +1,12 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, verify, when } from 'ts-mockito';
 
-import { InventoryService } from '../services/inventory.service';
 import { EquipRule } from './equip.rule';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 
 import {
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedInventoryService,
   mockedPlayerEntity,
   setupMocks,
@@ -27,29 +23,17 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('EquipRule', () => {
-  let service: EquipRule;
+  const rule = new EquipRule(
+    instance(mockedInventoryService),
+    instance(mockedCheckedService)
+  );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: InventoryService,
-          useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(EquipRule);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(rule).toBeTruthy();
   });
 
   describe('execute', () => {
@@ -63,7 +47,7 @@ describe('EquipRule', () => {
         ).thenReturn(null);
 
         expect(() =>
-          service.execute(instance(mockedPlayerEntity), eventWrong)
+          rule.execute(instance(mockedPlayerEntity), eventWrong)
         ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
       });
     });
@@ -78,7 +62,7 @@ describe('EquipRule', () => {
         ).thenReturn(simpleSword);
 
         when(
-          mockedCheckedHelper.takeItemOrThrow<WeaponDefinition>(
+          mockedCheckedService.takeItemOrThrow<WeaponDefinition>(
             instance(mockedInventoryService),
             actor.id,
             simpleSword.identity.name
@@ -88,7 +72,7 @@ describe('EquipRule', () => {
         when(mockedPlayerEntity.equip(simpleSword)).thenReturn(unDodgeableAxe);
 
         ruleScenario(
-          service,
+          rule,
           actor,
           eventOk,
           extras,
@@ -113,7 +97,7 @@ describe('EquipRule', () => {
             )
           ).thenReturn(greatSword);
 
-          ruleScenario(service, actor, eventNoSkill, extras, [errorLog], done);
+          ruleScenario(rule, actor, eventNoSkill, extras, [errorLog], done);
 
           // cheap side effect verification
           verify(mockedPlayerEntity.equip(greatSword)).never();

@@ -1,9 +1,9 @@
-import { createActionableDefinition } from '../../core/definitions/actionable.definition';
-import { ActionableEvent } from '../../core/events/actionable.event';
-import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
-import { AiBehaviorLiteral } from '../../core/literals/enemy-behavior.literal';
-import { VisibilityLiteral } from '../../core/literals/visibility.literal';
-import { ArrayView } from '../../core/view-models/array.view';
+import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ActionableEvent } from '../events/actionable.event';
+import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
+import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
+import { ArrayView } from '../view-models/array.view';
 
 export class AiBehavior {
   constructor(

@@ -1,13 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-
 import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { CombatRule } from './combat.rule';
-import { RollService } from '../services/roll.service';
-import { CheckedHelper } from '../helpers/checked.helper';
-import { ActivationAxiomService } from '../axioms/activation.axiom.service';
-import { DodgeAxiomService } from '../axioms/dodge.axiom.service';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { EffectEvent } from '../../core/events/effect.event';
@@ -17,10 +10,10 @@ import {
   mockedActivationAxiomService,
   mockedActorEntity,
   mockedAffectedAxiomService,
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedDodgeAxiomService,
   mockedPlayerEntity,
-  mockedRollService,
+  mockedRollHelper,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -35,39 +28,20 @@ import {
 } from '../../../tests/fakes';
 
 describe('CombatRule', () => {
-  let service: CombatRule;
+  const rule = new CombatRule(
+    instance(mockedRollHelper),
+    instance(mockedCheckedService),
+    instance(mockedActivationAxiomService),
+    instance(mockedDodgeAxiomService),
+    instance(mockedAffectedAxiomService)
+  );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RollService,
-          useValue: instance(mockedRollService),
-        },
-        {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
-        },
-        {
-          provide: ActivationAxiomService,
-          useValue: instance(mockedActivationAxiomService),
-        },
-        {
-          provide: DodgeAxiomService,
-          useValue: instance(mockedDodgeAxiomService),
-        },
-        {
-          provide: AffectAxiomService,
-          useValue: instance(mockedAffectedAxiomService),
-        },
-      ],
-    });
-
     setupMocks();
 
-    when(mockedRollService.roll(simpleSword.damage.diceRoll)).thenReturn(0);
+    when(mockedRollHelper.roll(simpleSword.damage.diceRoll)).thenReturn(0);
 
-    when(mockedRollService.roll(unDodgeableAxe.damage.diceRoll)).thenReturn(0);
+    when(mockedRollHelper.roll(unDodgeableAxe.damage.diceRoll)).thenReturn(0);
 
     when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
 
@@ -86,12 +60,10 @@ describe('CombatRule', () => {
         })
       )
     ).thenReturn(damageMessage2);
-
-    service = TestBed.inject(CombatRule);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(rule).toBeTruthy();
   });
 
   describe('execute', () => {
@@ -112,7 +84,7 @@ describe('CombatRule', () => {
             ).thenReturn(true);
 
             when(
-              mockedRollService.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
+              mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
             ).thenReturn(new RollDefinition('SUCCESS', 5));
 
             when(
@@ -126,7 +98,7 @@ describe('CombatRule', () => {
             ).thenReturn(false);
 
             ruleScenario(
-              service,
+              rule,
               actor,
               eventAttackInteractive,
               {
@@ -158,7 +130,7 @@ describe('CombatRule', () => {
             ).once();
 
             verify(
-              mockedRollService.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
+              mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
             ).once();
           });
         });
@@ -183,10 +155,7 @@ describe('CombatRule', () => {
               ).thenReturn(true);
 
               when(
-                mockedRollService.actorSkillCheck(
-                  actor,
-                  'Melee Weapon (Simple)'
-                )
+                mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
               ).thenReturn(new RollDefinition('SUCCESS', 5));
 
               when(
@@ -200,7 +169,7 @@ describe('CombatRule', () => {
               ).thenReturn(true);
 
               ruleScenario(
-                service,
+                rule,
                 actor,
                 eventAttackInteractive,
                 {
@@ -230,10 +199,7 @@ describe('CombatRule', () => {
               ).once();
 
               verify(
-                mockedRollService.actorSkillCheck(
-                  actor,
-                  'Melee Weapon (Simple)'
-                )
+                mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
               ).once();
             });
           });

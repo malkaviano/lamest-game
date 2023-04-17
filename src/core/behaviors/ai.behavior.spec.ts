@@ -1,13 +1,13 @@
 import { when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../../core/definitions/actionable.definition';
-import { ActorSituationLiteral } from '../../core/literals/actor-situation.literal';
-import { ClassificationLiteral } from '../../core/literals/classification.literal';
-import { AiBehaviorLiteral } from '../../core/literals/enemy-behavior.literal';
-import { VisibilityLiteral } from '../../core/literals/visibility.literal';
+import { createActionableDefinition } from '../definitions/actionable.definition';
+import { ActorSituationLiteral } from '../literals/actor-situation.literal';
+import { ClassificationLiteral } from '../literals/classification.literal';
+import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 import { AiBehavior } from './ai.behavior';
-import { ArrayView } from '../../core/view-models/array.view';
-import { ActionableEvent } from '../../core/events/actionable.event';
+import { ArrayView } from '../view-models/array.view';
+import { ActionableEvent } from '../events/actionable.event';
 
 import { playerInfo } from '../../../tests/fakes';
 import { mockedCooldownBehavior, setupMocks } from '../../../tests/mocks';

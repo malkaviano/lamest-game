@@ -1,19 +1,14 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
-import { RollService } from '../services/roll.service';
 import { SkillRule } from './skill.rule';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { RollDefinition } from '../../core/definitions/roll.definition';
-import { AffectAxiomService } from '../axioms/affect.axiom.service';
 
 import {
   mockedPlayerEntity,
   mockedInteractiveEntity,
-  mockedRollService,
+  mockedRollHelper,
   setupMocks,
-  mockedCheckedHelper,
+  mockedCheckedService,
   mockedAffectedAxiomService,
 } from '../../../tests/mocks';
 import {
@@ -23,39 +18,24 @@ import {
 } from '../../../tests/fakes';
 
 describe('SkillRule', () => {
-  let service: SkillRule;
+  const rule = new SkillRule(
+    instance(mockedRollHelper),
+    instance(mockedCheckedService),
+    instance(mockedAffectedAxiomService)
+  );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RollService,
-          useValue: instance(mockedRollService),
-        },
-        {
-          provide: CheckedHelper,
-          useValue: instance(mockedCheckedHelper),
-        },
-        {
-          provide: AffectAxiomService,
-          useValue: instance(mockedAffectedAxiomService),
-        },
-      ],
-    });
-
     setupMocks();
-
-    service = TestBed.inject(SkillRule);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(rule).toBeTruthy();
   });
 
   describe('execute', () => {
     it('should log target log', () => {
       when(
-        mockedRollService.actorSkillCheck(
+        mockedRollHelper.actorSkillCheck(
           actor,
           eventSkillSurvival.actionableDefinition.name
         )
@@ -63,7 +43,7 @@ describe('SkillRule', () => {
 
       const spy = spyOn(instance(mockedAffectedAxiomService), 'affectWith');
 
-      service.execute(actor, eventSkillSurvival, extras);
+      rule.execute(actor, eventSkillSurvival, extras);
 
       expect(spy).toHaveBeenCalled();
     });

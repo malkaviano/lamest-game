@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { MessageMapDefinition } from '../core/definitions/message-map.definition';
 import { ConverterHelper } from '../core/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
@@ -8,9 +6,6 @@ type payload = {
   [key: string]: { label: string; answer: string; change?: string };
 };
 
-@Injectable({
-  providedIn: 'root',
-})
 export class MessageStore {
   private readonly store: Map<string, payload>;
 

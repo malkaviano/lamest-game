@@ -1,20 +1,15 @@
-import { Injectable } from '@angular/core';
-
 import { Observable, Subject } from 'rxjs';
 
-import { ActionableDefinition } from '../../core/definitions/actionable.definition';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
-import { LoggerInterface } from '../../core/interfaces/logger.interface';
-import { ReactionValuesInterface } from '../../core/interfaces/reaction-values.interface';
-import { ResultLiteral } from '../../core/literals/result.literal';
+import { ActionableDefinition } from '../definitions/actionable.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { InteractiveInterface } from '../interfaces/interactive.interface';
+import { LoggerInterface } from '../interfaces/logger.interface';
+import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
+import { ResultLiteral } from '../literals/result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { ActorEntity } from '../../core/entities/actor.entity';
+import { ActorEntity } from '../entities/actor.entity';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AffectAxiomService implements LoggerInterface {
+export class AffectAxiom implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;

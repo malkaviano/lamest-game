@@ -18,8 +18,6 @@ import { GeneratorService } from '../src/backend/services/generator.service';
 import { InventoryService } from '../src/backend/services/inventory.service';
 import { NarrativeService } from '../src/backend/services/narrative.service';
 import { RandomCharacterService } from '../src/backend/services/random-character.service';
-import { RandomIntService } from '../src/backend/services/random-int.service';
-import { RollService } from '../src/backend/services/roll.service';
 import { SkillService } from '../src/backend/services/skill.service';
 import { ActionableState } from '../src/core/states/actionable.state';
 import { ActionableStore } from '../src/stores/actionable.store';
@@ -37,13 +35,11 @@ import { ActorStore } from '../src/stores/actor.store';
 import { SkillStore } from '../src/stores/skill.store';
 import { InspectRule } from '../src/backend/rules/inspect.rule';
 import { SettingsStore } from '../src/stores/settings.store';
-import { CheckedHelper } from '../src/backend/helpers/checked.helper';
-import { RuleDispatcherService } from '../src/backend/services/rule-dispatcher.service';
-import { ActivationAxiomService } from '../src/backend/axioms/activation.axiom.service';
-import { AffectAxiomService } from '../src/backend/axioms/affect.axiom.service';
-import { DodgeAxiomService } from '../src/backend/axioms/dodge.axiom.service';
-import { EventHubHelperService } from '../src/backend/helpers/event-hub.helper.service';
-import { ReadAxiomService } from '../src/backend/axioms/read.axiom.service';
+import { RulesHub } from '../src/backend/services/rules.hub';
+import { ActivationAxiom } from '../src/core/axioms/activation.axiom';
+import { AffectAxiom } from '../src/core/axioms/affect.axiom';
+import { DodgeAxiom } from '../src/core/axioms/dodge.axiom';
+import { ReadAxiom } from '../src/core/axioms/read.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { CooldownBehavior } from '../src/core/behaviors/cooldown.behavior';
@@ -68,6 +64,10 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
+import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
+import { CheckedService } from '../src/backend/services/checked.service';
+import { EventsHub } from '../src/backend/services/events.hub';
+import { RollHelper } from '../src/core/helpers/roll.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -77,7 +77,7 @@ export const mockedTargetPlayerEntity = mock(PlayerEntity);
 
 export const mockedInteractiveEntity = mock(InteractiveEntity);
 
-export const mockedRollService = mock(RollService);
+export const mockedRollHelper = mock(RollHelper);
 
 export const mockedNarrativeService = mock(NarrativeService);
 
@@ -115,7 +115,7 @@ export const mockedInteractionRule = mock(InteractionRule);
 
 export const mockedCombatRule = mock(CombatRule);
 
-export const mockedRuleDispatcherService = mock(RuleDispatcherService);
+export const mockedRuleDispatcherService = mock(RulesHub);
 
 export const mockedSceneStore = mock(SceneStore);
 
@@ -131,7 +131,7 @@ export const mockedActionableStore = mock(ActionableStore);
 
 export const mockedRandomCharacterService = mock(RandomCharacterService);
 
-export const mockedRandomIntService = mock(RandomIntService);
+export const mockedRandomIntHelper = mock(RandomIntHelper);
 
 export const mockedGeneratorService = mock(GeneratorService);
 
@@ -159,17 +159,17 @@ export const mockedInspectRule = mock(InspectRule);
 
 export const mockedSettingsStore = mock(SettingsStore);
 
-export const mockedCheckedHelper = mock(CheckedHelper);
+export const mockedCheckedService = mock(CheckedService);
 
-export const mockedActivationAxiomService = mock(ActivationAxiomService);
+export const mockedActivationAxiomService = mock(ActivationAxiom);
 
-export const mockedAffectedAxiomService = mock(AffectAxiomService);
+export const mockedAffectedAxiomService = mock(AffectAxiom);
 
-export const mockedDodgeAxiomService = mock(DodgeAxiomService);
+export const mockedDodgeAxiomService = mock(DodgeAxiom);
 
-export const mockedEventHubHelperService = mock(EventHubHelperService);
+export const mockedEventHubService = mock(EventsHub);
 
-export const mockedReadAxiomService = mock(ReadAxiomService);
+export const mockedReadAxiomService = mock(ReadAxiom);
 
 export const mockedCooldownBehavior = mock(CooldownBehavior);
 
@@ -382,7 +382,7 @@ const resetMocks = () => {
 
   reset(mockedInteractiveEntity);
 
-  reset(mockedRollService);
+  reset(mockedRollHelper);
 
   reset(mockedNarrativeService);
 
@@ -422,7 +422,7 @@ const resetMocks = () => {
 
   reset(mockedSceneStore);
 
-  reset(mockedRandomIntService);
+  reset(mockedRandomIntHelper);
 
   reset(mockedActionableState);
 
@@ -456,7 +456,7 @@ const resetMocks = () => {
 
   reset(mockedActorEntity2);
 
-  reset(mockedCheckedHelper);
+  reset(mockedCheckedService);
 
   reset(mockedActivationAxiomService);
 
@@ -464,7 +464,7 @@ const resetMocks = () => {
 
   reset(mockedDodgeAxiomService);
 
-  reset(mockedEventHubHelperService);
+  reset(mockedEventHubService);
 
   reset(mockedReadAxiomService);
 
@@ -475,7 +475,7 @@ const resetMocks = () => {
 
 function mockCheckedHelper() {
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedInteractiveEntity),
       })
@@ -483,7 +483,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedInteractiveEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedInteractiveEntity),
         actorVisibility: instance(mockedPlayerEntity),
@@ -492,7 +492,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedInteractiveEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedActorEntity),
       })
@@ -500,7 +500,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedActorEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedPlayerEntity),
       })
@@ -508,7 +508,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedPlayerEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedTargetPlayerEntity),
       })
@@ -516,7 +516,7 @@ function mockCheckedHelper() {
   ).thenReturn(instance(mockedTargetPlayerEntity));
 
   when(
-    mockedCheckedHelper.getRuleTargetOrThrow(
+    mockedCheckedService.getRuleTargetOrThrow(
       deepEqual({
         target: instance(mockedPlayerEntity),
         targetDodgesPerformed: 2,

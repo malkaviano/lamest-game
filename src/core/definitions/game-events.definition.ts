@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { SceneDefinition } from './scene.definition';
-import { ArrayView } from '../../core/view-models/array.view';
+import { ArrayView } from '../view-models/array.view';
 import { ActionableItemView } from '../view-models/actionable-item.view';
 import { LogMessageDefinition } from './log-message.definition';
 import { ReadableInterface } from '../interfaces/readable.interface';

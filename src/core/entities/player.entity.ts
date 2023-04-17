@@ -1,19 +1,19 @@
-import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
+import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
-import { ClassificationLiteral } from '../../core/literals/classification.literal';
-import { emptyState } from '../../core/states/empty.state';
+import { ClassificationLiteral } from '../literals/classification.literal';
+import { emptyState } from '../states/empty.state';
 import { ActorEntity } from './actor.entity';
-import { ActorIdentityDefinition } from '../../core/definitions/actor-identity.definition';
+import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 import { AiBehavior } from '../behaviors/ai.behavior';
-import { ArrayView } from '../../core/view-models/array.view';
-import { AgeLiteral } from '../../core/literals/age.literal';
-import { RaceLiteral } from '../../core/literals/race.literal';
-import { HeightLiteral } from '../../core/literals/height.literal';
-import { WeightLiteral } from '../../core/literals/weight.literal';
-import { ActionableEvent } from '../../core/events/actionable.event';
-import { PlayerInterface } from '../../core/interfaces/player.interface';
+import { ArrayView } from '../view-models/array.view';
+import { AgeLiteral } from '../literals/age.literal';
+import { RaceLiteral } from '../literals/race.literal';
+import { HeightLiteral } from '../literals/height.literal';
+import { WeightLiteral } from '../literals/weight.literal';
+import { ActionableEvent } from '../events/actionable.event';
+import { PlayerInterface } from '../interfaces/player.interface';
 
 export class PlayerEntity extends ActorEntity implements PlayerInterface {
   private playerAction: ActionableEvent | null;

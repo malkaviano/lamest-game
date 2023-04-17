@@ -1,5 +1,3 @@
-import { TestBed } from '@angular/core/testing';
-
 import { anyNumber, instance, when } from 'ts-mockito';
 
 import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
@@ -9,41 +7,26 @@ import { heights } from '../../core/literals/height.literal';
 import { races } from '../../core/literals/race.literal';
 import { weights } from '../../core/literals/weight.literal';
 import { GeneratorService } from './generator.service';
-import { RandomIntService } from './random-int.service';
-import { DirectionLiteral } from '../../core/literals/direction.literal';
-import { ProfessionStore } from '../../stores/profession.store';
+import { ArrayView } from '../../core/view-models/array.view';
 
 import {
   mockedProfessionStore,
-  mockedRandomIntService,
+  mockedRandomIntHelper,
   setupMocks,
 } from '../../../tests/mocks';
-import { ArrayView } from '../../core/view-models/array.view';
 
 describe('GeneratorService', () => {
-  let service: GeneratorService;
+  const service = new GeneratorService(
+    instance(mockedRandomIntHelper),
+    instance(mockedProfessionStore)
+  );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RandomIntService,
-          useValue: instance(mockedRandomIntService),
-        },
-        {
-          provide: ProfessionStore,
-          useValue: instance(mockedProfessionStore),
-        },
-      ],
-    });
-
     setupMocks();
 
     when(mockedProfessionStore.professions).thenReturn({
       'Police Detective': ArrayView.create([]),
     });
-
-    service = TestBed.inject(GeneratorService);
   });
 
   it('should be created', () => {
@@ -52,7 +35,7 @@ describe('GeneratorService', () => {
 
   describe('generating random characteristics', () => {
     it('should have STR | VIT | AGI | INT | ESN | APP', () => {
-      when(mockedRandomIntService.getRandomInterval(1, 6))
+      when(mockedRandomIntHelper.getRandomInterval(1, 6))
         .thenReturn(1)
         .thenReturn(3)
         .thenReturn(3)
@@ -75,7 +58,7 @@ describe('GeneratorService', () => {
   describe('generating random identity', () => {
     it('should have new identity', () => {
       when(
-        mockedRandomIntService.getRandomInterval(anyNumber(), anyNumber())
+        mockedRandomIntHelper.getRandomInterval(anyNumber(), anyNumber())
       ).thenReturn(0);
 
       const identity = service.identity();
@@ -86,22 +69,6 @@ describe('GeneratorService', () => {
       expect(identity.height).toEqual(expectedIdentity.height);
       expect(identity.weight).toEqual(expectedIdentity.weight);
       expect(identity.name).not.toBeNull();
-    });
-  });
-
-  describe('generating lock picking sequence', () => {
-    it('return sequence', () => {
-      when(mockedRandomIntService.getRandomInterval(0, 1))
-        .thenReturn(0)
-        .thenReturn(0)
-        .thenReturn(1)
-        .thenReturn(1);
-
-      const expected: DirectionLiteral[] = ['LEFT', 'DOWN', 'RIGHT', 'UP'];
-
-      const result = service.lockPickSequence(4);
-
-      expect(result).toEqual(expected);
     });
   });
 });

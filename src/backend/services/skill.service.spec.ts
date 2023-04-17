@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, when } from 'ts-mockito';
 
-import { RandomIntService } from './random-int.service';
 import { SkillService } from './skill.service';
 import { ArrayView } from '../../core/view-models/array.view';
+import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
-import { mockedRandomIntService, setupMocks } from '../../../tests/mocks';
+import { mockedRandomIntHelper, setupMocks } from '../../../tests/mocks';
 
 describe('SkillService', () => {
   let service: SkillService;
@@ -15,8 +15,8 @@ describe('SkillService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: RandomIntService,
-          useValue: instance(mockedRandomIntService),
+          provide: RandomIntHelper,
+          useValue: instance(mockedRandomIntHelper),
         },
       ],
     });
@@ -59,7 +59,7 @@ describe('SkillService', () => {
       ['Athleticism', 0],
     ]);
 
-    when(mockedRandomIntService.getRandomInterval(0, 1))
+    when(mockedRandomIntHelper.getRandomInterval(0, 1))
       .thenReturn(1)
       .thenReturn(0)
       .thenReturn(0)

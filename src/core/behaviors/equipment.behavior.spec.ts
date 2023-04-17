@@ -1,5 +1,5 @@
 import { EquipmentBehavior, unarmedWeapon } from './equipment.behavior';
-import { WeaponDefinition } from '../../core/definitions/weapon.definition';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 import { molotov, simpleSword } from '../../../tests/fakes';
 

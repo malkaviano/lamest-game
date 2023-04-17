@@ -1,20 +1,15 @@
-import { Injectable } from '@angular/core';
-
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
+import { CheckedService } from '../services/checked.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class EquipRule extends MasterRuleService {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly checkedHelper: CheckedHelper
+    private readonly checkedService: CheckedService
   ) {
     super();
   }
@@ -32,7 +27,7 @@ export class EquipRule extends MasterRuleService {
     const skillName = item.skillName;
 
     if (actor.skills[skillName] > 0) {
-      const weapon = this.checkedHelper.takeItemOrThrow<WeaponDefinition>(
+      const weapon = this.checkedService.takeItemOrThrow<WeaponDefinition>(
         this.inventoryService,
         actor.id,
         action.eventId

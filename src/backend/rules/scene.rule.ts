@@ -1,20 +1,15 @@
-import { Injectable } from '@angular/core';
-
 import { NarrativeService } from '../services/narrative.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { CheckedHelper } from '../helpers/checked.helper';
 import { MasterRuleService } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
+import { CheckedService } from '../services/checked.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class SceneRule extends MasterRuleService {
   constructor(
     private readonly narrativeService: NarrativeService,
-    private readonly checkedHelper: CheckedHelper
+    private readonly checkedService: CheckedService
   ) {
     super();
   }
@@ -24,7 +19,7 @@ export class SceneRule extends MasterRuleService {
     action: ActionableEvent,
     extras: RuleExtrasInterface
   ): void {
-    const target = this.checkedHelper.getRuleTargetOrThrow(extras);
+    const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     this.narrativeService.changeScene(action);
 

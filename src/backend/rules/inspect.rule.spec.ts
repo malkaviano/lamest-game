@@ -6,7 +6,7 @@ import { InventoryService } from '../services/inventory.service';
 import { InspectRule } from './inspect.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { ReadAxiomService } from '../axioms/read.axiom.service';
+import { ReadAxiom } from '../../core/axioms/read.axiom';
 
 import {
   mockedInventoryService,
@@ -34,7 +34,7 @@ describe('InspectRule', () => {
           useValue: instance(mockedInventoryService),
         },
         {
-          provide: ReadAxiomService,
+          provide: ReadAxiom,
           useValue: instance(mockedReadAxiomService),
         },
       ],

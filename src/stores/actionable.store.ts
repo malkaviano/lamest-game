@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import {
   ActionableDefinition,
   createActionableDefinition,
@@ -8,9 +6,6 @@ import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ActionableStore {
   private readonly store: Map<string, ActionableDefinition>;
 
