@@ -1,13 +1,8 @@
 {
   "states": [
     {
-      "id": "lockedChest",
-      "actionables": ["useMasterKey"],
-      "openedState": "lockedChestLoot"
-    },
-    {
       "id": "ambulatoryLocked1",
-      "actionables": ["useLockPick"],
+      "actionables": ["useMasterKey"],
       "openedState": "ambulatoryLocked1Loot",
       "lockPicking": {
         "complexity": 3,
@@ -16,7 +11,7 @@
     },
     {
       "id": "storageLocked1",
-      "actionables": ["useLockPick"],
+      "actionables": ["useMasterKey"],
       "openedState": "storageLocked1Loot",
       "lockPicking": {
         "complexity": 4,

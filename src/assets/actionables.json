@@ -146,21 +146,7 @@
       "key": "pickFirstAid",
       "name": "firstAidKit",
       "actionable": "PICK",
-      "label": "PICK Kit"
-    },
-
-    {
-      "key": "pickLockPick",
-      "name": "lockPick",
-      "actionable": "PICK",
-      "label": "PICK LockPick"
-    },
-
-    {
-      "key": "useLockPick",
-      "name": "lockPick",
-      "actionable": "USE",
-      "label": "USE LockPick"
+      "label": "PICK FA Kit"
     },
 
     {

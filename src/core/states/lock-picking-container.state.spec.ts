@@ -35,16 +35,16 @@ const fakeState = () =>
     3
   );
 
-const logLeft = 'lockPick moved LEFT';
+const logLeft = 'Lock Pick moved LEFT';
 
-const logRight = 'lockPick got stuck moving RIGHT';
+const logRight = 'Lock Pick got stuck moving RIGHT';
 
-const logOpen = 'lockPick moved DOWN and opened the container';
+const logOpen = 'Lock Pick moved DOWN and opened the container';
 
-const logUp = 'lockPick got stuck moving UP';
+const logUp = 'Lock Pick got stuck moving UP';
 
 const logJammed =
-  'lockPick got stuck moving UP and cannot be lockPicked anymore';
+  'Lock Pick got stuck moving UP and cannot be lock picked anymore';
 
 const log = 'was opened using Master Key';
 

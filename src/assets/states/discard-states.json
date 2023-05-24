@@ -21,7 +21,7 @@
 
     {
       "id": "villagerLoot",
-      "actionables": ["pickLockPick", "pickRawMeat", "pickRawMeat"]
+      "actionables": ["pickMasterKey", "pickRawMeat", "pickRawMeat"]
     },
     {
       "id": "ambulatoryLocked1Loot",
@@ -41,8 +41,8 @@
       "id": "storageGuardLoot",
       "actionables": [
         "pickBaton",
-        "pickLockPick",
-        "pickLockPick",
+        "pickMasterKey",
+        "pickMasterKey",
         "pickAnalgesic",
         "pickAnalgesic"
       ]
