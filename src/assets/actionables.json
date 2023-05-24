@@ -153,14 +153,14 @@
       "key": "pickLockPick",
       "name": "lockPick",
       "actionable": "PICK",
-      "label": "PICK Lockpick"
+      "label": "PICK LockPick"
     },
 
     {
       "key": "useLockPick",
       "name": "lockPick",
       "actionable": "USE",
-      "label": "USE Lockpick"
+      "label": "USE LockPick"
     },
 
     {

@@ -63,29 +63,29 @@ export class GameStringsStore {
     );
   }
 
-  public static createLockpickMovedMessage(direction: string): string {
-    return GameStringsStore.logMessagesStore['lockpickMovedMessage'].replace(
+  public static createLockPickMovedMessage(direction: string): string {
+    return GameStringsStore.logMessagesStore['lockPickMovedMessage'].replace(
       '${direction}',
       direction
     );
   }
 
-  public static createLockpickStuckMessage(direction: string): string {
-    return GameStringsStore.logMessagesStore['lockpickStuckMessage'].replace(
+  public static createLockPickStuckMessage(direction: string): string {
+    return GameStringsStore.logMessagesStore['lockPickStuckMessage'].replace(
       '${direction}',
       direction
     );
   }
 
-  public static createLockpickOpenedMessage(direction: string): string {
-    return `${GameStringsStore.createLockpickMovedMessage(direction)} and ${
-      GameStringsStore.logMessagesStore['lockpickOpenedMessage']
+  public static createLockPickOpenedMessage(direction: string): string {
+    return `${GameStringsStore.createLockPickMovedMessage(direction)} and ${
+      GameStringsStore.logMessagesStore['lockPickOpenedMessage']
     }`;
   }
 
-  public static createLockpickJammedMessage(direction: string): string {
-    return `${GameStringsStore.createLockpickStuckMessage(direction)} and ${
-      GameStringsStore.logMessagesStore['lockpickJammedMessage']
+  public static createLockPickJammedMessage(direction: string): string {
+    return `${GameStringsStore.createLockPickStuckMessage(direction)} and ${
+      GameStringsStore.logMessagesStore['lockPickJammedMessage']
     }`;
   }
 

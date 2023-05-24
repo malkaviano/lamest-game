@@ -54,13 +54,13 @@ export class LockPickingContainerState extends LockedContainerState {
         if (this.sequence === this.lockSequence.items.length) {
           return {
             state: this.openedState.value,
-            log: GameStringsStore.createLockpickOpenedMessage(direction),
+            log: GameStringsStore.createLockPickOpenedMessage(direction),
           };
         }
 
         return {
           state: this,
-          log: GameStringsStore.createLockpickMovedMessage(direction),
+          log: GameStringsStore.createLockPickMovedMessage(direction),
         };
       }
 
@@ -76,13 +76,13 @@ export class LockPickingContainerState extends LockedContainerState {
             this.jammedStateActions,
             this.openedState
           ),
-          log: GameStringsStore.createLockpickJammedMessage(direction),
+          log: GameStringsStore.createLockPickJammedMessage(direction),
         };
       }
 
       return {
         state: this,
-        log: GameStringsStore.createLockpickStuckMessage(direction),
+        log: GameStringsStore.createLockPickStuckMessage(direction),
       };
     }
 
