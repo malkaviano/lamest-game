@@ -1,6 +1,6 @@
 # lamest-game
 
-A very lame game in Angular
+A demo of a web text game using Angular 2+
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=malkaviano_lamest-game&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=malkaviano_lamest-game)
 
@@ -10,6 +10,15 @@ A very lame game in Angular
 
 https://lamest-game.web.app/
 
-Scenario descriptions were generated using ChatGPT
+## About
+~~Scenario descriptions were generated using ChatGPT~~
 
-Work in progress
+Texts were removed and AI images are now used
+
+This project was started as an exercise about agile mentality, MVP and XP principles, the game engine was an accident the initial thought was to produce a simple web text game.
+
+Angular framework was pushed and used in some cases without the best practices to keep all the code into the app. Maybe in the future a server will be created.
+
+Most of the code is testes, but after a while the discipline started to fail, some refactoring is also in need.
+
+This is a work in progress, but not a priority right now, PRs are welcome.
