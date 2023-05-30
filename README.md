@@ -13,7 +13,7 @@ https://lamest-game.web.app/
 ## About
 ~~Scenario descriptions were generated using ChatGPT~~
 
-Texts were removed and AI images are now used
+Texts were replaced by AI generated images.
 
 This project was started as an exercise about agile mentality, MVP and XP principles, the game engine was an accident the initial thought was to produce a simple web text game.
 
