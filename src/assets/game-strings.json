@@ -28,7 +28,8 @@
     "energyDrainedMessage": "lost ${energy} energy",
     "energyDidNotChangeMessage": "EP did not change",
     "notEnoughEnergyMessage": "not enough energy to activate ${item}",
-    "energySpentMessage": "spent ${energySpent} EP to activate ${item}"
+    "energySpentMessage": "spent ${energySpent} EP to activate ${item}",
+    "startLockPicking": "started lock picking the container"
   },
   "errors": {
     "INVALID-OPERATION": "Invalid operation ocurred",
