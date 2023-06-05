@@ -2,7 +2,7 @@
   "states": [
     {
       "id": "ambulatoryLocked1",
-      "actionables": ["useMasterKey"],
+      "actionables": ["interactionPickLock", "useMasterKey"],
       "openedState": "ambulatoryLocked1Loot",
       "lockPicking": {
         "complexity": 3,
@@ -11,7 +11,7 @@
     },
     {
       "id": "storageLocked1",
-      "actionables": ["useMasterKey"],
+      "actionables": ["interactionPickLock", "useMasterKey"],
       "openedState": "storageLocked1Loot",
       "lockPicking": {
         "complexity": 4,

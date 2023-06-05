@@ -63,6 +63,10 @@ export class GameStringsStore {
     );
   }
 
+  public static createStartedLockPickingMessage(): string {
+    return GameStringsStore.logMessagesStore['startLockPicking'];
+  }
+
   public static createLockPickMovedMessage(direction: string): string {
     return GameStringsStore.logMessagesStore['lockPickMovedMessage'].replace(
       '${direction}',

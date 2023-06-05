@@ -20,6 +20,7 @@ import { ArrayView } from '../core/view-models/array.view';
 import { LazyHelper } from '../core/helpers/lazy.helper';
 import { ConverterHelper } from '../core/helpers/converter.helper';
 import { SequencerHelper } from '../core/helpers/sequencer.helper';
+import { LockPickableContainerState } from 'src/core/states/lock-pickable-container.state';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
@@ -104,14 +105,18 @@ export class StatesStore {
       );
 
       const locked = state.lockPicking
-        ? new LockPickingContainerState(
-            ArrayView.create(allDirectionsDefinition),
+        ? new LockPickableContainerState(
             actionables,
-            this.lazyState(state.openedState),
-            ArrayView.create(
-              sequencerHelper.lockPickSequence(state.lockPicking.complexity)
+            new LockPickingContainerState(
+              ArrayView.create(allDirectionsDefinition),
+              ArrayView.create([actionables.items[1]]),
+              this.lazyState(state.openedState),
+              ArrayView.create(
+                sequencerHelper.lockPickSequence(state.lockPicking.complexity)
+              ),
+              state.lockPicking.maximumTries
             ),
-            state.lockPicking.maximumTries
+            this.lazyState(state.openedState)
           )
         : new LockedContainerState(
             actionables,
