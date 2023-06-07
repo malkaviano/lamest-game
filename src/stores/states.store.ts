@@ -104,12 +104,15 @@ export class StatesStore {
         }
       );
 
+      const pickLockActionable =
+        actionableStore.actionables['interactionPickLock'];
+
       const locked = state.lockPicking
         ? new LockPickableContainerState(
-            actionables,
+            ArrayView.create([pickLockActionable, ...actionables.items]),
             new LockPickingContainerState(
               ArrayView.create(allDirectionsDefinition),
-              ArrayView.create([actionables.items[1]]),
+              actionables,
               this.lazyState(state.openedState),
               ArrayView.create(
                 sequencerHelper.lockPickSequence(state.lockPicking.complexity)
