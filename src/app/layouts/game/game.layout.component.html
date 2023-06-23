@@ -24,22 +24,6 @@
       ></app-sheet-panel>
     </div>
   </div>
-  <div class="section">
-    <!-- <div>
-      <div class="title-text">
-        <span class="mat-h3">Scene</span>
-      </div>
-      <div class="image">
-        <img
-          data-testid="image"
-          src="assets/images/{{ scene.image }}"
-          alt="{{ scene.description }}"
-          width="400"
-          height="400"
-        />
-      </div>
-    </div> -->
-  </div>
   <div class="section large-box">
     <div class="title-text">
       <span class="mat-h3">Scene Interactives</span>
@@ -57,8 +41,7 @@
 
     <mat-spinner
       *ngIf="!canAct"
-      style="margin: 0 auto"
-      diameter="200"
+      style="margin: auto;"      
     ></mat-spinner>
   </div>
   <div class="section content-box">

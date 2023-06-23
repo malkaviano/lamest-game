@@ -4,7 +4,7 @@
   text-align: center;
   display: flex;
   flex-wrap: wrap;
-  align-content: space-around;
+  align-content: space-evenly;
 }
 
 .action {
@@ -12,7 +12,7 @@
 }
 
 .action-button {
-  margin: 0px 5px;
+  margin: 5px;
   min-width: 100px;
   max-width: 200px;
   min-height: 40px;
