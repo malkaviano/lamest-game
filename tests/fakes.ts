@@ -412,3 +412,11 @@ export const fakeCharacterStatusView = CharacterStatusView.create(
     'Character current visibility'
   )
 );
+
+export const imageOpened = {
+  title: 'Testing',
+  src: 'some image path',
+  alt: 'some image alt',
+  width: '400',
+  height: '400',
+};

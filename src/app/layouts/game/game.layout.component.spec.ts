@@ -18,6 +18,7 @@ import {
   fakeCharacterStatusView,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
+import { ViewableInterface } from '../../../core/interfaces/viewable.interface';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;
@@ -85,12 +86,6 @@ describe('GameLayoutComponent', () => {
     });
   });
 
-  it(`should have image`, () => {
-    const result = fixture.debugElement.query(By.css('[data-testid="image"]'));
-
-    expect(result).not.toBeNull();
-  });
-
   it(`should have action log`, () => {
     const result = fixture.debugElement.query(By.css('[data-testid="log"]'));
 
@@ -104,6 +99,34 @@ describe('GameLayoutComponent', () => {
   describe('Status Bar', () => {
     it('has character status', () => {
       expect(component.characterStatus).toEqual(fakeCharacterStatusView);
+    });
+  });
+
+  describe('Scene image', () => {
+    it('show scene image', (done) => {
+      const event = {
+        title: 'title',
+        src: 'image.jpg',
+        alt: 'alt',
+        width: '400',
+        height: '400',
+      };
+
+      const widget = fixture.debugElement.query(
+        By.css(`app-image-viewer-widget`)
+      );
+
+      let result: ViewableInterface | undefined;
+
+      component.sceneOpened.asObservable().subscribe((event) => {
+        result = event;
+      });
+
+      widget.triggerEventHandler('imageOpened', event);
+
+      done();
+
+      expect(result).toEqual(event);
     });
   });
 });

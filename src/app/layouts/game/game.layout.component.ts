@@ -8,6 +8,7 @@ import { SceneDefinition } from '../../../core/definitions/scene.definition';
 import { CharacterValuesView } from '../../../core/view-models/character-values.view';
 import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
 import { GameItemDefinition } from '../../../core/definitions/game-item.definition';
+import { ViewableInterface } from '../../../core/interfaces/viewable.interface';
 
 @Component({
   selector: 'app-game-layout',
@@ -35,7 +36,11 @@ export class GameLayoutComponent {
 
   @Input() equipped!: GameItemDefinition;
 
+  @Output() sceneOpened: EventEmitter<ViewableInterface>;
+
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
+
+    this.sceneOpened = new EventEmitter<ViewableInterface>();
   }
 }

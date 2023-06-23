@@ -16,6 +16,8 @@ import { ReadableInterface } from '../../../core/interfaces/readable.interface';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { ViewableInterface } from '../../../core/interfaces/viewable.interface';
+import { ViewerComponent } from '../../dialogs/viewer/viewer.dialog.component';
 
 @Component({
   selector: 'app-game-page',
@@ -137,6 +139,11 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.gameLoopService.actionableReceived(action);
   }
 
+  public informSceneOpened(image: ViewableInterface): void {
+    console.log(image);
+    this.openViewerDialog(image);
+  }
+
   public get logs(): ArrayView<string> {
     return ArrayView.create(this.gameLogs);
   }
@@ -147,6 +154,13 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   private openReaderDialog(data: ReadableInterface): void {
     this.dialog.open(ReaderDialogComponent, {
+      data,
+      autoFocus: false,
+    });
+  }
+
+  private openViewerDialog(data: ViewableInterface): void {
+    this.dialog.open(ViewerComponent, {
       data,
       autoFocus: false,
     });

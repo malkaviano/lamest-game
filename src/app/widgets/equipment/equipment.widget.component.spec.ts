@@ -54,15 +54,15 @@ describe('EquipmentWidgetComponent', () => {
         .pipe(first())
         .subscribe((action: ActionableEvent) => {
           result = action;
-
-          expect(result).toEqual(
-            new ActionableEvent(actionEquip, simpleSword.identity.name)
-          );
         });
 
       await button.click();
 
       fixture.detectChanges();
+
+      expect(result).toEqual(
+        new ActionableEvent(actionEquip, simpleSword.identity.name)
+      );
     });
   });
 });

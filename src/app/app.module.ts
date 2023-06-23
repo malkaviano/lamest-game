@@ -18,6 +18,8 @@ import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component'
 import { StatusBarPanelComponent } from './panels/status-bar/status-bar.panel.component';
 import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
 import { ProvidersModule } from './providers/provider.module';
+import { ViewerComponent } from './dialogs/viewer/viewer.dialog.component';
+import { ImageViewerComponent } from './widgets/image-viewer/image-viewer.widget.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { ProvidersModule } from './providers/provider.module';
     ReaderDialogComponent,
     StatusBarPanelComponent,
     SheetPanelComponent,
+    ViewerComponent,
+    ImageViewerComponent,
   ],
   imports: [
     BrowserModule,

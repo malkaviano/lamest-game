@@ -7,9 +7,12 @@
 .main-bar {
   display: flex;
   flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+.content-bar {
   justify-content: center;
-  margin: 10px 20px;
-  padding: 5px;
+  padding: 10px 20px;
 }
 
 .section {
