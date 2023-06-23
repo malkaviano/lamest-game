@@ -1,11 +1,10 @@
 .flex-panel {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   min-width: 30px;
 }
 
 .panel-item {
   padding: 5px;
-  margin: 2px;
 }

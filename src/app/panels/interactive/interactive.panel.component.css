@@ -1,7 +1,7 @@
 .flex-panel {
   display: flex;
   flex-wrap: wrap;
-  justify-content: baseline;
+  justify-content: space-evenly;
   min-height: 300px;
   max-height: 500px;
 }

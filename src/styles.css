@@ -7,20 +7,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; font-size: 
   border: 1px solid;
 }
 
-.base-margin-left {
-  margin-left: 20px;
-}
-
-.base-margin-right {
-  margin-right: 20px;
-}
-
 .title-text {
   color: rgb(255, 235, 59);
   border: 5px solid #607D8B;
   border-radius: 25px;
   text-align: center;
-  margin: 10px 0;
 }
 
 .vertical-scrollable {

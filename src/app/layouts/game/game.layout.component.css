@@ -1,13 +1,14 @@
 .flex-panel {
   display: flex;
   flex-wrap: wrap;
-  align-content: space-around;
+  justify-content: space-evenly;
 }
 
 .main-bar {
+  padding: 10px;
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .content-bar {

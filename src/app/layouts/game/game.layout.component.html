@@ -1,13 +1,13 @@
 <div class="main-bar">
+  <div class="content-bar title-text">
+    <app-status-bar-panel [status]="characterStatus"></app-status-bar-panel>
+  </div>
   <div class="content-bar">
     <app-image-viewer-widget 
       [image]="{ title: scene.description, src: 'assets/images/' + scene.image, alt: scene.description, width: '400', height: '400'}"
       (imageOpened)="sceneOpened.emit($event)"
     >
     </app-image-viewer-widget>
-  </div>
-  <div class="content-bar title-text">
-    <app-status-bar-panel [status]="characterStatus"></app-status-bar-panel>
   </div>
 </div>
 
@@ -23,22 +23,6 @@
         (actionSelected)="actionSelected.emit($event)"
       ></app-sheet-panel>
     </div>
-  </div>
-  <div class="section">
-    <!-- <div>
-      <div class="title-text">
-        <span class="mat-h3">Scene</span>
-      </div>
-      <div class="image">
-        <img
-          data-testid="image"
-          src="assets/images/{{ scene.image }}"
-          alt="{{ scene.description }}"
-          width="400"
-          height="400"
-        />
-      </div>
-    </div> -->
   </div>
   <div class="section large-box">
     <div class="title-text">
@@ -57,8 +41,7 @@
 
     <mat-spinner
       *ngIf="!canAct"
-      style="margin: 0 auto"
-      diameter="200"
+      style="margin: auto;"      
     ></mat-spinner>
   </div>
   <div class="section content-box">
