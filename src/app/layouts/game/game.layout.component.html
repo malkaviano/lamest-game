@@ -1,13 +1,13 @@
 <div class="main-bar">
+  <div class="content-bar title-text">
+    <app-status-bar-panel [status]="characterStatus"></app-status-bar-panel>
+  </div>
   <div class="content-bar">
     <app-image-viewer-widget 
       [image]="{ title: scene.description, src: 'assets/images/' + scene.image, alt: scene.description, width: '400', height: '400'}"
       (imageOpened)="sceneOpened.emit($event)"
     >
     </app-image-viewer-widget>
-  </div>
-  <div class="content-bar title-text">
-    <app-status-bar-panel [status]="characterStatus"></app-status-bar-panel>
   </div>
 </div>
 
