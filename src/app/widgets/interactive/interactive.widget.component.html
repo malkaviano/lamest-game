@@ -5,11 +5,12 @@
     </mat-card-title>
     <mat-card-content>
       <span [ngSwitch]="interactive.behavior">
-        <img *ngSwitchCase="'RETALIATE'" src="assets/icons/shield.png">
-        <img *ngSwitchCase="'AGGRESSIVE'" src="assets/icons/swords.png">
-        <img *ngSwitchCase="'PLAYER'" src="assets/icons/person.png">
+        <img matTooltip="{{ retaliateTooltip }}" *ngSwitchCase="'RETALIATE'" src="assets/icons/shield.png">
+        <img matTooltip="{{ aggressiveTooltip }}" *ngSwitchCase="'AGGRESSIVE'" src="assets/icons/swords.png">
+        <img matTooltip="{{ playerTooltip }}" *ngSwitchCase="'PLAYER'" src="assets/icons/person.png">
       </span>
-      <img src="assets/icons/visibility.png">
+      <img matTooltip="{{ searchTooltip }}" src="assets/icons/search.png">
+      <img matTooltip="{{ visibilityTooltip }}" src="assets/icons/visibility.png">
       <div>
         {{ interactive.description }}
       </div>
