@@ -232,7 +232,7 @@ export class ResourcesStore {
           oneDodgesEveryAgiAmount,
         },
         aiBehavior: a.aiBehavior as BehaviorLiteral,
-        ignores: a.ignores.map((i) => i as VisibilityLiteral),
+        detects: a.detects.map((i) => i as VisibilityLiteral),
         visibility: a.visibility as VisibilityLiteral,
       };
     });
