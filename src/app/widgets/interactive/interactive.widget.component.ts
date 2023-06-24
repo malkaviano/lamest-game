@@ -25,11 +25,11 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
   @Output() actionSelected: EventEmitter<ActionableEvent>;
   actions: ArrayView<ActionableDefinition>;
 
-  public readonly aggressiveTooltip: String;
-  public readonly retaliateTooltip: String;
-  public readonly playerTooltip: String;
-  public readonly searchTooltip: String;
-  public readonly visibilityTooltip: String;
+  public readonly aggressiveTooltip: string;
+  public readonly retaliateTooltip: string;
+  public readonly playerTooltip: string;
+  public readonly searchTooltip: string;
+  public readonly visibilityTooltip: string;
 
   public detectHidden: boolean;
   public detectDisguised: boolean;
