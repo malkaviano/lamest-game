@@ -27,7 +27,7 @@
       "vulnerabilities": [],
       "resistances": [],
       "aiBehavior": "AGGRESSIVE",
-      "detects": ["HIDDEN"],
+      "ignores": ["HIDDEN"],
       "visibility": "VISIBLE"
     },
     {
@@ -57,7 +57,7 @@
       "vulnerabilities": [],
       "resistances": [],
       "aiBehavior": "RETALIATE",
-      "detects": ["HIDDEN", "DISGUISED"],
+      "ignores": ["HIDDEN", "DISGUISED"],
       "visibility": "VISIBLE"
     },
     {
@@ -91,7 +91,7 @@
       "vulnerabilities": [],
       "resistances": [],
       "aiBehavior": "AGGRESSIVE",
-      "detects": ["HIDDEN", "DISGUISED"],
+      "ignores": ["HIDDEN", "DISGUISED"],
       "visibility": "VISIBLE"
     }
   ]

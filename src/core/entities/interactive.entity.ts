@@ -8,6 +8,7 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ArrayView } from '../view-models/array.view';
 import { BehaviorLiteral } from '../literals/behavior.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 
 export class InteractiveEntity implements InteractiveInterface {
   private readonly initialState: ActionableState;
@@ -32,6 +33,10 @@ export class InteractiveEntity implements InteractiveInterface {
     );
 
     this.actionsChanged$ = this.actionsChanged.asObservable();
+  }
+
+  public get ignores(): ArrayView<VisibilityLiteral> {
+    return ArrayView.empty<VisibilityLiteral>();
   }
 
   public get behavior(): BehaviorLiteral {

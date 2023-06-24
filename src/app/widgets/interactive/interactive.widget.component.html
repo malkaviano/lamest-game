@@ -9,8 +9,8 @@
         <img matTooltip="{{ aggressiveTooltip }}" *ngSwitchCase="'AGGRESSIVE'" src="assets/icons/swords.png">
         <img matTooltip="{{ playerTooltip }}" *ngSwitchCase="'PLAYER'" src="assets/icons/person.png">
       </span>
-      <img matTooltip="{{ searchTooltip }}" src="assets/icons/search.png">
-      <img matTooltip="{{ visibilityTooltip }}" src="assets/icons/visibility.png">
+      <img *ngIf="detectDisguised" matTooltip="{{ searchTooltip }}" src="assets/icons/search.png">
+      <img *ngIf="detectHidden" matTooltip="{{ visibilityTooltip }}" src="assets/icons/visibility.png">
       <div>
         {{ interactive.description }}
       </div>

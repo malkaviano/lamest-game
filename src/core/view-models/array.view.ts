@@ -8,4 +8,8 @@ export class ArrayView<T> {
   public static create<T>(collection: T[]): ArrayView<T> {
     return new ArrayView(collection);
   }
+
+  public static empty<T>(): ArrayView<T> {
+    return new ArrayView([]);
+  }
 }

@@ -15,6 +15,7 @@ import { WeightLiteral } from '../literals/weight.literal';
 import { ActionableEvent } from '../events/actionable.event';
 import { PlayerInterface } from '../interfaces/player.interface';
 import { BehaviorLiteral } from '../literals/behavior.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 
 export class PlayerEntity extends ActorEntity implements PlayerInterface {
   private playerAction: ActionableEvent | null;
@@ -84,6 +85,10 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
 
   public override get behavior(): BehaviorLiteral {
     return 'PLAYER';
+  }
+
+  public override get ignores(): ArrayView<VisibilityLiteral> {
+    return ArrayView.empty();
   }
 
   public override action(): ActionableEvent | null {

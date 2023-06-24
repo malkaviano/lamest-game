@@ -31,6 +31,9 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
   public readonly searchTooltip: String;
   public readonly visibilityTooltip: String;
 
+  public detectHidden: boolean;
+  public detectDisguised: boolean;
+
   constructor(private readonly withSubscriptionHelper: WithSubscriptionHelper) {
     this.actionSelected = new EventEmitter<ActionableEvent>();
     this.actions = ArrayView.create([]);
@@ -40,6 +43,9 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
     this.playerTooltip = GameStringsStore.tooltips['retaliate'];
     this.searchTooltip = GameStringsStore.tooltips['search'];
     this.visibilityTooltip = GameStringsStore.tooltips['visibility'];
+
+    this.detectHidden = false;
+    this.detectDisguised = false;
   }
 
   ngOnInit(): void {
@@ -48,6 +54,16 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
         this.actions = actions;
       })
     );
+
+    if (
+      this.interactive.classification !== 'REACTIVE' &&
+      this.interactive.ignores?.items.length
+    ) {
+      this.detectHidden =
+        !this.interactive.ignores.items.includes('HIDDEN') ?? false;
+      this.detectDisguised =
+        !this.interactive.ignores.items.includes('DISGUISED') ?? false;
+    }
   }
 
   ngOnDestroy(): void {

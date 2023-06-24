@@ -8,7 +8,7 @@ import { ArrayView } from '../view-models/array.view';
 export class AiBehavior {
   constructor(
     public readonly aiBehavior: BehaviorLiteral,
-    public readonly detects: ArrayView<VisibilityLiteral>
+    public readonly ignores: ArrayView<VisibilityLiteral>
   ) {}
 
   public action(
@@ -19,7 +19,7 @@ export class AiBehavior {
       (a) =>
         a.classification === 'PLAYER' &&
         a.situation === 'ALIVE' &&
-        !this.detects.items.includes(a.visibility)
+        !this.ignores.items.includes(a.visibility)
     );
 
     if (player) {
@@ -41,8 +41,8 @@ export class AiBehavior {
 
   public static create(
     aiBehavior: BehaviorLiteral,
-    detects: ArrayView<VisibilityLiteral>
+    ignores: ArrayView<VisibilityLiteral>
   ): AiBehavior {
-    return new AiBehavior(aiBehavior, detects);
+    return new AiBehavior(aiBehavior, ignores);
   }
 }

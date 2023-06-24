@@ -122,6 +122,12 @@ describe('InteractiveEntity', () => {
       expect(fakeEntity().behavior).toEqual('PASSIVE');
     });
   });
+
+  describe('ignores', () => {
+    it('return empty array view', () => {
+      expect(fakeEntity().ignores).toEqual(ArrayView.empty());
+    });
+  });
 });
 
 const state1 = instance(mockedActionableState);

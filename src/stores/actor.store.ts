@@ -39,7 +39,7 @@ export class ActorStore {
         behaviorState,
         actorSettings,
         aiBehavior,
-        detects,
+        ignores,
         visibility,
       }) => {
         const actor = new ActorEntity(
@@ -60,7 +60,7 @@ export class ActorStore {
             ),
             aiBehavior: AiBehavior.create(
               aiBehavior,
-              ArrayView.create(detects)
+              ArrayView.create(ignores)
             ),
           }
         );

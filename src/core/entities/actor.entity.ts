@@ -118,6 +118,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return this.aiBehavior.aiBehavior;
   }
 
+  public override get ignores(): ArrayView<VisibilityLiteral> {
+    return this.aiBehavior.ignores;
+  }
+
   public get weaponEquipped(): WeaponDefinition {
     return this.equipmentBehavior.weaponEquipped;
   }

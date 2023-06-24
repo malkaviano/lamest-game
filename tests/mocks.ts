@@ -246,6 +246,8 @@ export const setupMocks = () => {
 
   when(mockedAiBehavior.aiBehavior).thenReturn('AGGRESSIVE');
 
+  when(mockedAiBehavior.ignores).thenReturn(ArrayView.create(['DISGUISED']));
+
   const instanceActorEntity = instance(mockedActorEntity);
 
   const instanceActorEntity2 = instance(mockedActorEntity2);
