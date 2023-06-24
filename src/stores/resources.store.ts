@@ -45,7 +45,7 @@ import skillStore from '../assets/skills.json';
 import settingsStore from '../assets/settings.json';
 import readableStore from '../assets/items/readables.json';
 import visibilityStateStore from '../assets/states/visibility-state.json';
-import { AiBehaviorLiteral } from '../core/literals/enemy-behavior.literal';
+import { BehaviorLiteral } from '../core/literals/behavior.literal';
 import { VisibilityLiteral } from '../core/literals/visibility.literal';
 
 export class ResourcesStore {
@@ -231,7 +231,7 @@ export class ResourcesStore {
           },
           oneDodgesEveryAgiAmount,
         },
-        aiBehavior: a.aiBehavior as AiBehaviorLiteral,
+        aiBehavior: a.aiBehavior as BehaviorLiteral,
         ignores: a.ignores.map((i) => i as VisibilityLiteral),
         visibility: a.visibility as VisibilityLiteral,
       };

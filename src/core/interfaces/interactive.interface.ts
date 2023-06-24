@@ -5,6 +5,8 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { ResultLiteral } from '../literals/result.literal';
 import { ReactionValuesInterface } from './reaction-values.interface';
 import { ArrayView } from '../view-models/array.view';
+import { BehaviorLiteral } from '../literals/behavior.literal';
+import { VisibilityLiteral } from '../literals/visibility.literal';
 
 export interface InteractiveInterface {
   get id(): string;
@@ -14,6 +16,10 @@ export interface InteractiveInterface {
   get description(): string;
 
   get classification(): ClassificationLiteral;
+
+  get behavior(): BehaviorLiteral;
+
+  get ignores(): ArrayView<VisibilityLiteral>;
 
   readonly actionsChanged$: Observable<ArrayView<ActionableDefinition>>;
 

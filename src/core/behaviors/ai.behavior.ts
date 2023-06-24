@@ -1,13 +1,13 @@
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
-import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
+import { BehaviorLiteral } from '../literals/behavior.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ArrayView } from '../view-models/array.view';
 
 export class AiBehavior {
   constructor(
-    public readonly aiBehavior: AiBehaviorLiteral,
+    public readonly aiBehavior: BehaviorLiteral,
     public readonly ignores: ArrayView<VisibilityLiteral>
   ) {}
 
@@ -40,7 +40,7 @@ export class AiBehavior {
   }
 
   public static create(
-    aiBehavior: AiBehaviorLiteral,
+    aiBehavior: BehaviorLiteral,
     ignores: ArrayView<VisibilityLiteral>
   ): AiBehavior {
     return new AiBehavior(aiBehavior, ignores);

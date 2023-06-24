@@ -3,7 +3,7 @@ import { when } from 'ts-mockito';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ClassificationLiteral } from '../literals/classification.literal';
-import { AiBehaviorLiteral } from '../literals/enemy-behavior.literal';
+import { BehaviorLiteral } from '../literals/behavior.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { AiBehavior } from './ai.behavior';
 import { ArrayView } from '../view-models/array.view';
@@ -28,7 +28,7 @@ describe('AiBehavior', () => {
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
-      behavior: 'PASSIVE' as AiBehaviorLiteral,
+      behavior: 'PASSIVE' as BehaviorLiteral,
       afflictedBy: [playerInfo.id],
       expected: null,
     },
@@ -37,7 +37,7 @@ describe('AiBehavior', () => {
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
-      behavior: 'RETALIATE' as AiBehaviorLiteral,
+      behavior: 'RETALIATE' as BehaviorLiteral,
       afflictedBy: [],
       expected: null,
     },
@@ -46,7 +46,7 @@ describe('AiBehavior', () => {
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
-      behavior: 'RETALIATE' as AiBehaviorLiteral,
+      behavior: 'RETALIATE' as BehaviorLiteral,
       afflictedBy: [playerInfo.id],
       expected: event,
     },
@@ -55,7 +55,7 @@ describe('AiBehavior', () => {
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
-      behavior: 'AGGRESSIVE' as AiBehaviorLiteral,
+      behavior: 'AGGRESSIVE' as BehaviorLiteral,
       afflictedBy: [playerInfo.id],
       expected: event,
     },
@@ -64,7 +64,7 @@ describe('AiBehavior', () => {
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
-      behavior: 'AGGRESSIVE' as AiBehaviorLiteral,
+      behavior: 'AGGRESSIVE' as BehaviorLiteral,
       afflictedBy: [playerInfo.id],
       expected: event,
     },
@@ -73,7 +73,7 @@ describe('AiBehavior', () => {
         situation: 'DEAD' as ActorSituationLiteral,
         visibility: 'VISIBLE' as VisibilityLiteral,
       },
-      behavior: 'AGGRESSIVE' as AiBehaviorLiteral,
+      behavior: 'AGGRESSIVE' as BehaviorLiteral,
       afflictedBy: [playerInfo.id],
       expected: null,
     },
@@ -82,7 +82,7 @@ describe('AiBehavior', () => {
         situation: 'ALIVE' as ActorSituationLiteral,
         visibility: 'HIDDEN' as VisibilityLiteral,
       },
-      behavior: 'AGGRESSIVE' as AiBehaviorLiteral,
+      behavior: 'AGGRESSIVE' as BehaviorLiteral,
       afflictedBy: [playerInfo.id],
       expected: null,
     },
@@ -105,7 +105,7 @@ describe('AiBehavior', () => {
   });
 });
 
-const behavior = (aiBehavior: AiBehaviorLiteral) =>
+const behavior = (aiBehavior: BehaviorLiteral) =>
   AiBehavior.create(aiBehavior, ArrayView.create(['HIDDEN']));
 
 function scenario(
@@ -115,7 +115,7 @@ function scenario(
     situation: ActorSituationLiteral;
     visibility: VisibilityLiteral;
   },
-  aiBehavior: AiBehaviorLiteral,
+  aiBehavior: BehaviorLiteral,
   afflictedBy: string[],
   expected: ActionableEvent | null
 ) {

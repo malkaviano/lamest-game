@@ -2,6 +2,7 @@ import { instance } from 'ts-mockito';
 
 import { PlayerEntity } from './player.entity';
 import { ActionableEvent } from '../events/actionable.event';
+import { ArrayView } from '../view-models/array.view';
 
 import { fakeIdentity, actionConsume } from '../../../tests/fakes';
 import {
@@ -39,6 +40,18 @@ describe('PlayerEntity', () => {
 
         expect(char.action()).toEqual(expected);
       });
+    });
+  });
+
+  describe('behavior', () => {
+    it('return PLAYER', () => {
+      expect(fakeCharacter().behavior).toEqual('PLAYER');
+    });
+  });
+
+  describe('ignores', () => {
+    it('return HIDDEN and DISGUISED', () => {
+      expect(fakeCharacter().ignores).toEqual(ArrayView.empty());
     });
   });
 });

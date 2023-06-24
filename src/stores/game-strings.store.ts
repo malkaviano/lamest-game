@@ -16,12 +16,19 @@ export class GameStringsStore {
   private static descriptionsStore: KeyValueInterface<string> =
     gameMessages.descriptions;
 
+  private static tooltipsStore: KeyValueInterface<string> =
+    gameMessages.tooltips;
+
   public static get errorMessages(): KeyValueInterface<string> {
     return GameStringsStore.errorMessagesStore;
   }
 
   public static get descriptions(): KeyValueInterface<string> {
     return GameStringsStore.descriptionsStore;
+  }
+
+  public static get tooltips(): KeyValueInterface<string> {
+    return GameStringsStore.tooltipsStore;
   }
 
   public static createEffectRestoredHPMessage(
