@@ -26,6 +26,7 @@ import { EnergyPointsEvent } from '../events/energy-points.event';
 import { ActionableEvent } from '../events/actionable.event';
 import { EffectEvent } from '../events/effect.event';
 import { GameStringsStore } from '../../stores/game-strings.store';
+import { BehaviorLiteral } from '../literals/behavior.literal';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -111,6 +112,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public override get classification(): ClassificationLiteral {
     return 'ACTOR';
+  }
+
+  public override get behavior(): BehaviorLiteral {
+    return this.aiBehavior.aiBehavior;
   }
 
   public get weaponEquipped(): WeaponDefinition {

@@ -493,6 +493,12 @@ describe('ActorEntity', () => {
       expect(fakeActor().wannaDodge('FIRE')).toEqual(true);
     });
   });
+
+  describe('behavior', () => {
+    it('return ACTOR', () => {
+      expect(fakeActor().behavior).toEqual('AGGRESSIVE');
+    });
+  });
 });
 
 const killedState = instance(mockedActionableState2);

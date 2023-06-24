@@ -1,7 +1,19 @@
 <div class="card-box">
   <mat-card attr.data-testid="interactive-{{ interactive.id }}">
-    <mat-card-title class="card-title">{{ interactive.name }}</mat-card-title>
-    <mat-card-content>{{ interactive.description }}</mat-card-content>
+    <mat-card-title class="card-title">
+      {{ interactive.name }}
+    </mat-card-title>
+    <mat-card-content>
+      <span [ngSwitch]="interactive.behavior">
+        <img *ngSwitchCase="'RETALIATE'" src="assets/icons/shield.png">
+        <img *ngSwitchCase="'AGGRESSIVE'" src="assets/icons/swords.png">
+        <img *ngSwitchCase="'PLAYER'" src="assets/icons/person.png">
+      </span>
+      <img src="assets/icons/visibility.png">
+      <div>
+        {{ interactive.description }}
+      </div>
+    </mat-card-content>
     <mat-card-actions>
       <ng-template ngFor let-action [ngForOf]="actions.items">
         <div class="action">

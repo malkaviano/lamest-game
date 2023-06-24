@@ -14,6 +14,7 @@ import { HeightLiteral } from '../literals/height.literal';
 import { WeightLiteral } from '../literals/weight.literal';
 import { ActionableEvent } from '../events/actionable.event';
 import { PlayerInterface } from '../interfaces/player.interface';
+import { BehaviorLiteral } from '../literals/behavior.literal';
 
 export class PlayerEntity extends ActorEntity implements PlayerInterface {
   private playerAction: ActionableEvent | null;
@@ -78,6 +79,10 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
   }
 
   public override get classification(): ClassificationLiteral {
+    return 'PLAYER';
+  }
+
+  public override get behavior(): BehaviorLiteral {
     return 'PLAYER';
   }
 

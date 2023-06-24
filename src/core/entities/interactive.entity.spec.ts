@@ -116,6 +116,12 @@ describe('InteractiveEntity', () => {
       expect(fakeEntity().classification).toEqual('REACTIVE');
     });
   });
+
+  describe('behavior', () => {
+    it('return PASSIVE', () => {
+      expect(fakeEntity().behavior).toEqual('PASSIVE');
+    });
+  });
 });
 
 const state1 = instance(mockedActionableState);

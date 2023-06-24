@@ -41,6 +41,12 @@ describe('PlayerEntity', () => {
       });
     });
   });
+
+  describe('behavior', () => {
+    it('return PLAYER', () => {
+      expect(fakeCharacter().behavior).toEqual('PLAYER');
+    });
+  });
 });
 
 const fakeCharacter = () =>
