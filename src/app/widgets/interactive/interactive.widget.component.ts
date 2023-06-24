@@ -59,10 +59,9 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
       this.interactive.classification !== 'REACTIVE' &&
       this.interactive.ignores?.items.length
     ) {
-      this.detectHidden =
-        !this.interactive.ignores.items.includes('HIDDEN') ?? false;
+      this.detectHidden = !this.interactive.ignores.items.includes('HIDDEN');
       this.detectDisguised =
-        !this.interactive.ignores.items.includes('DISGUISED') ?? false;
+        !this.interactive.ignores.items.includes('DISGUISED');
     }
   }
 
