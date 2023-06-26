@@ -1,6 +1,15 @@
 export type ResultLiteral =
+  | 'NONE'
   | 'SUCCESS'
   | 'FAILURE'
-  | 'NONE'
   | 'IMPOSSIBLE'
-  | 'USED';
+  | 'DENIED'
+  | 'USED'
+  | 'EQUIPPED'
+  | 'UNEQUIPPED'
+  | 'TRANSITIONED'
+  | 'PICKED'
+  | 'INTERACTED'
+  | 'READ'
+  | 'CONSUMED'
+  | 'AFFECTED';

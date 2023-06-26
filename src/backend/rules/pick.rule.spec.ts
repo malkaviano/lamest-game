@@ -1,9 +1,10 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { PickRule } from './pick.rule';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 import {
-  mockedAffectedAxiomService,
+  mockedAffectedAxiom,
   mockedCheckedService,
   mockedInteractiveEntity,
   mockedInventoryService,
@@ -21,7 +22,7 @@ describe('PickRule', () => {
   const rule = new PickRule(
     instance(mockedInventoryService),
     instance(mockedCheckedService),
-    instance(mockedAffectedAxiomService)
+    instance(mockedAffectedAxiom)
   );
 
   beforeEach(() => {
@@ -51,25 +52,43 @@ describe('PickRule', () => {
       const spy = spyOn(instance(mockedInventoryService), 'store');
 
       rule.execute(actor, eventPickSimpleSword, {
-        target: instance(mockedInteractiveEntity),
+        target,
       });
 
       expect(spy).toHaveBeenCalledWith(actor.id, simpleSword);
     });
 
     it('should react to the action', () => {
-      const spy = spyOn(instance(mockedAffectedAxiomService), 'affectWith');
+      const spy = spyOn(instance(mockedAffectedAxiom), 'affectWith');
 
       rule.execute(actor, eventPickSimpleSword, {
-        target: instance(mockedInteractiveEntity),
+        target,
       });
 
       expect(spy).toHaveBeenCalled();
+    });
+
+    it('return item picked', () => {
+      const result = rule.execute(actor, eventPickSimpleSword, {
+        target,
+      });
+
+      const expected: RuleResultInterface = {
+        actor,
+        event: eventPickSimpleSword,
+        target,
+        result: 'PICKED',
+        picked: simpleSword,
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 });
 
 const actor = instance(mockedPlayerEntity);
+
+const target = instance(mockedInteractiveEntity);
 
 const eventPickSimpleSword = actionableEvent(
   actionPickSimpleSword,

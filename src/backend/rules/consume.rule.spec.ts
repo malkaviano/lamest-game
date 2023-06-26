@@ -1,15 +1,15 @@
 import { EMPTY } from 'rxjs';
-import { deepEqual, instance, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ConsumeRule } from './consume.rule';
 import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { RollDefinition } from '../../core/definitions/roll.definition';
-import { EffectEvent } from '../../core/events/effect.event';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 import {
-  mockedAffectedAxiomService,
+  mockedAffectedAxiom,
   mockedCheckedService,
   mockedInventoryService,
   mockedPlayerEntity,
@@ -30,13 +30,37 @@ describe('ConsumeRule', () => {
     instance(mockedInventoryService),
     instance(mockedRollHelper),
     instance(mockedCheckedService),
-    instance(mockedAffectedAxiomService)
+    instance(mockedAffectedAxiom)
   );
 
   beforeEach(() => {
     setupMocks();
 
-    when(mockedAffectedAxiomService.logMessageProduced$).thenReturn(EMPTY);
+    when(mockedAffectedAxiom.logMessageProduced$).thenReturn(EMPTY);
+
+    when(
+      mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
+        instance(mockedInventoryService),
+        playerInfo.id,
+        simpleSword.identity.name
+      )
+    ).thenThrow(new Error(GameStringsStore.errorMessages['WRONG-ITEM']));
+
+    when(
+      mockedCheckedService.takeItemOrThrow<ConsumableDefinition>(
+        instance(mockedInventoryService),
+        playerInfo.id,
+        consumableFirstAid.identity.name
+      )
+    ).thenReturn(consumableFirstAid);
+
+    when(
+      mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
+        instance(mockedInventoryService),
+        playerInfo.id,
+        consumableFirstAid.identity.name
+      )
+    ).thenReturn(consumableFirstAid);
   });
 
   it('should be created', () => {
@@ -46,14 +70,6 @@ describe('ConsumeRule', () => {
   describe('execute', () => {
     describe('when item was not a consumable', () => {
       it('throw Wrong item was used', () => {
-        when(
-          mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
-            instance(mockedInventoryService),
-            playerInfo.id,
-            simpleSword.identity.name
-          )
-        ).thenThrow(new Error(GameStringsStore.errorMessages['WRONG-ITEM']));
-
         expect(() =>
           rule.execute(
             instance(mockedPlayerEntity),
@@ -65,22 +81,6 @@ describe('ConsumeRule', () => {
 
     describe('when item was a consumable', () => {
       it('should log item consume', (done) => {
-        when(
-          mockedCheckedService.takeItemOrThrow<ConsumableDefinition>(
-            instance(mockedInventoryService),
-            playerInfo.id,
-            consumableFirstAid.identity.name
-          )
-        ).thenReturn(consumableFirstAid);
-
-        when(
-          mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
-            instance(mockedInventoryService),
-            playerInfo.id,
-            consumableFirstAid.identity.name
-          )
-        ).thenReturn(consumableFirstAid);
-
         when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
           successFirstAidRoll
         );
@@ -95,68 +95,78 @@ describe('ConsumeRule', () => {
         );
       });
 
+      describe('when skill check passes', () => {
+        it('return consumed result', () => {
+          when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
+            successFirstAidRoll
+          );
+
+          const result = rule.execute(actor, eventConsumeFirstAid);
+
+          const expected: RuleResultInterface = {
+            event: eventConsumeFirstAid,
+            actor,
+            result: 'CONSUMED',
+            skill: { name: 'First Aid', roll: successFirstAidRoll.roll },
+            consumable: {
+              consumed: consumableFirstAid,
+              hp: 5,
+              energy: 2,
+            },
+          };
+
+          expect(result).toEqual(expected);
+        });
+      });
+
       describe('when skill check failed', () => {
-        it('should should receive half effect', () => {
-          when(
-            mockedCheckedService.takeItemOrThrow<ConsumableDefinition>(
-              instance(mockedInventoryService),
-              playerInfo.id,
-              consumableFirstAid.identity.name
-            )
-          ).thenReturn(consumableFirstAid);
-
-          when(
-            mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
-              instance(mockedInventoryService),
-              playerInfo.id,
-              consumableFirstAid.identity.name
-            )
-          ).thenReturn(consumableFirstAid);
-
+        it('return consumed result with half effect', () => {
           when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
             failureFirstAidRoll
           );
 
-          let result = false;
+          const result = rule.execute(actor, eventConsumeFirstAid);
 
-          when(
-            mockedAffectedAxiomService.affectWith(
-              actor,
-              eventConsumeFirstAid.actionableDefinition,
-              failureFirstAidRoll.result,
-              deepEqual({
-                effect: new EffectEvent(
-                  consumableFirstAid.effect,
-                  Math.trunc(consumableFirstAid.hp / 2)
-                ),
-                energy: Math.trunc(consumableFirstAid.energy / 2),
-              })
-            )
-          ).thenCall(() => {
-            result = true;
-          });
+          const expected: RuleResultInterface = {
+            event: eventConsumeFirstAid,
+            actor,
+            result: 'CONSUMED',
+            skill: { name: 'First Aid', roll: failureFirstAidRoll.roll },
+            consumable: {
+              consumed: consumableFirstAid,
+              hp: 2,
+              energy: 1,
+            },
+          };
 
-          rule.execute(actor, eventConsumeFirstAid);
-
-          expect(result).toEqual(true);
+          expect(result).toEqual(expected);
         });
       });
 
       describe('when skill could not be checked', () => {
         it('should log item consume', (done) => {
-          when(
-            mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
-              instance(mockedInventoryService),
-              playerInfo.id,
-              consumableFirstAid.identity.name
-            )
-          ).thenReturn(consumableFirstAid);
-
           when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
             impossibleFirstAidRoll
           );
 
           ruleScenario(rule, actor, eventConsumeFirstAid, {}, [], done);
+        });
+
+        it('return denied result', () => {
+          when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
+            impossibleFirstAidRoll
+          );
+
+          const result = rule.execute(actor, eventConsumeFirstAid);
+
+          const expected: RuleResultInterface = {
+            event: eventConsumeFirstAid,
+            actor,
+            result: 'DENIED',
+            skill: { name: 'First Aid', roll: 0 },
+          };
+
+          expect(result).toEqual(expected);
         });
       });
     });

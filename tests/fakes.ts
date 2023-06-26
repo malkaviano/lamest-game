@@ -5,7 +5,7 @@ import {
 import { CharacteristicSetDefinition } from '../src/core/definitions/characteristic-set.definition';
 import { CharacteristicDefinition } from '../src/core/definitions/characteristic.definition';
 import { ConsumableDefinition } from '../src/core/definitions/consumable.definition';
-import { DamageDefinition } from '../src/core/definitions/damage.definition';
+import { EffectDefinition } from '../src/core/definitions/effect.definition';
 import { DerivedAttributeSetDefinition } from '../src/core/definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../src/core/definitions/derived-attribute.definition';
 import { createDice } from '../src/core/definitions/dice.definition';
@@ -39,7 +39,7 @@ export const actorInfo = { id: 'actorId', name: 'actor' };
 export const simpleSword = new WeaponDefinition(
   new ItemIdentityDefinition('sword', 'Sword', 'some sword'),
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice(), 2, 'KINETIC'),
+  new EffectDefinition(createDice(), 2, 'KINETIC'),
   true,
   'PERMANENT',
   0
@@ -48,7 +48,7 @@ export const simpleSword = new WeaponDefinition(
 export const greatSword = new WeaponDefinition(
   new ItemIdentityDefinition('greatSword', 'Great Sword', 'Some Great Sword'),
   'Melee Weapon (Great)',
-  new DamageDefinition(createDice(), 6, 'KINETIC'),
+  new EffectDefinition(createDice(), 6, 'KINETIC'),
   true,
   'PERMANENT',
   0
@@ -57,16 +57,16 @@ export const greatSword = new WeaponDefinition(
 export const unDodgeableAxe = new WeaponDefinition(
   new ItemIdentityDefinition('axe', 'Axe', 'UnDodgeable Axe'),
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice(), 2, 'KINETIC'),
+  new EffectDefinition(createDice(), 2, 'KINETIC'),
   false,
   'PERMANENT',
-  0
+  1000
 );
 
 export const molotov = new WeaponDefinition(
   new ItemIdentityDefinition('molotov', 'Molotov', 'Homemade Bomb'),
   'Ranged Weapon (Throw)',
-  new DamageDefinition(createDice(), 2, 'FIRE'),
+  new EffectDefinition(createDice(), 2, 'FIRE'),
   false,
   'DISPOSABLE',
   0
@@ -257,7 +257,6 @@ export const consumableFirstAid = new ConsumableDefinition(
   5,
   2,
   'REMEDY',
-  'DISPOSABLE',
   'First Aid'
 );
 
@@ -327,11 +326,7 @@ export const documentOpened = {
   text: ArrayView.create(['GG man']),
 };
 
-export const actionInspect = createActionableDefinition(
-  'INSPECT',
-  'inspect',
-  'Inspect'
-);
+export const actionRead = createActionableDefinition('READ', 'read', 'Read');
 
 export const readable = new ReadableDefinition(
   new ItemIdentityDefinition('book', 'Book', 'Some book'),
@@ -370,7 +365,7 @@ export const actorSettings: ActorSettingsInterface = {
 export const shadowSword = new WeaponDefinition(
   new ItemIdentityDefinition('shadowSword', 'Shadow Sword', 'Unholy Sword'),
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice(), 2, 'PROFANE'),
+  new EffectDefinition(createDice(), 2, 'PROFANE'),
   true,
   'PERMANENT',
   20
@@ -379,7 +374,7 @@ export const shadowSword = new WeaponDefinition(
 export const shadowDagger = new WeaponDefinition(
   new ItemIdentityDefinition('shadowDagger', 'Shadow Dagger', 'Unholy Dagger'),
   'Melee Weapon (Simple)',
-  new DamageDefinition(createDice(), 2, 'PROFANE'),
+  new EffectDefinition(createDice(), 2, 'PROFANE'),
   true,
   'PERMANENT',
   5

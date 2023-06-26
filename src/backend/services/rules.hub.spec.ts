@@ -3,7 +3,7 @@ import { instance } from 'ts-mockito';
 import { RulesHub } from './rules.hub';
 
 import {
-  mockedCombatRule,
+  mockedAffectRule,
   mockedConsumeRule,
   mockedInteractionRule,
   mockedEquipRule,
@@ -12,7 +12,7 @@ import {
   mockedSkillRule,
   mockedUnEquipRule,
   mockedUseRule,
-  mockedInspectRule,
+  mockedReadRule,
 } from '../../../tests/mocks';
 
 describe('RulesHub', () => {
@@ -22,11 +22,11 @@ describe('RulesHub', () => {
     instance(mockedEquipRule),
     instance(mockedUnEquipRule),
     instance(mockedSceneRule),
-    instance(mockedCombatRule),
+    instance(mockedAffectRule),
     instance(mockedConsumeRule),
     instance(mockedInteractionRule),
     instance(mockedUseRule),
-    instance(mockedInspectRule)
+    instance(mockedReadRule)
   );
 
   it('should be created', () => {

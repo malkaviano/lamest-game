@@ -1,4 +1,4 @@
-import { DamageDefinition } from '../definitions/damage.definition';
+import { EffectDefinition } from '../definitions/effect.definition';
 import { createDice } from '../definitions/dice.definition';
 import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
@@ -11,7 +11,7 @@ export const unarmedWeapon = new WeaponDefinition(
     GameStringsStore.descriptions['UNARMED']
   ),
   'Brawl',
-  new DamageDefinition(createDice({ D4: 1 }), 0, 'KINETIC'),
+  new EffectDefinition(createDice({ D4: 1 }), 0, 'KINETIC'),
   true,
   'PERMANENT',
   0

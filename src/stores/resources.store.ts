@@ -172,7 +172,6 @@ export class ResourcesStore {
         hp: c.hp,
         energy: c.energy,
         effect: c.effect as EffectTypeLiteral,
-        usability: c.usability as ItemUsabilityLiteral,
         skillName: c.skillName,
       };
     });

@@ -3,10 +3,10 @@ import { instance } from 'ts-mockito';
 import { EventsHub } from './events.hub';
 
 import {
-  mockedActivationAxiomService,
-  mockedAffectedAxiomService,
-  mockedDodgeAxiomService,
-  mockedReadAxiomService,
+  mockedActivationAxiom,
+  mockedAffectedAxiom,
+  mockedDodgeAxiom,
+  mockedReadAxiom,
   mockedRollHelper,
   mockedRuleDispatcherService,
 } from '../../../tests/mocks';
@@ -15,10 +15,10 @@ describe('EventsHub', () => {
   const service = new EventsHub(
     instance(mockedRollHelper),
     instance(mockedRuleDispatcherService),
-    instance(mockedDodgeAxiomService),
-    instance(mockedActivationAxiomService),
-    instance(mockedAffectedAxiomService),
-    instance(mockedReadAxiomService)
+    instance(mockedDodgeAxiom),
+    instance(mockedActivationAxiom),
+    instance(mockedAffectedAxiom),
+    instance(mockedReadAxiom)
   );
 
   it('should be created', () => {

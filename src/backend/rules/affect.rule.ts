@@ -2,21 +2,21 @@ import { RollHelper } from '../../core/helpers/roll.helper';
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
-import { DamageDefinition } from '../../core/definitions/damage.definition';
+import { EffectDefinition } from '../../core/definitions/effect.definition';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { MasterRuleService } from './master.rule';
+import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActivationAxiom } from '../../core/axioms/activation.axiom';
 import { DodgeAxiom } from '../../core/axioms/dodge.axiom';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
 import { ResultLiteral } from '../../core/literals/result.literal';
-import { ItemUsabilityLiteral } from '../../core/literals/item-usability';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
 import { ConverterHelper } from '../../core/helpers/converter.helper';
 import { CheckedService } from '../services/checked.service';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
-export class CombatRule extends MasterRuleService {
+export class AffectRule extends MasterRule {
   constructor(
     private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,
@@ -29,56 +29,83 @@ export class CombatRule extends MasterRuleService {
 
   public execute(
     actor: ActorInterface,
-    action: ActionableEvent,
+    event: ActionableEvent,
     extras: RuleExtrasInterface
-  ): void {
+  ): RuleResultInterface {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const {
       dodgeable,
-      damage,
+      damage: effect,
       skillName,
       identity,
       usability,
       energyActivation,
     } = actor.weaponEquipped;
 
-    if (
-      this.activationAxiomService.activation(actor, {
-        identity,
-        energyActivation,
-      })
-    ) {
+    const result: RuleResultInterface = {
+      event,
+      actor,
+      target,
+      result: 'DENIED',
+      affected: actor.weaponEquipped,
+      skill: { name: skillName },
+    };
+
+    const activated = this.activationAxiomService.activation(actor, {
+      identity,
+      energyActivation,
+    });
+
+    if (activated) {
       let targetWasHit = true;
 
       const targetActor = ConverterHelper.asActor(target);
 
       if (targetActor) {
-        const actionResult = this.checkSkill(
+        const { checkResult, roll } = this.checkSkill(
           actor,
           skillName,
           targetActor,
           identity.label
         );
 
-        targetWasHit = actionResult === 'SUCCESS';
+        targetWasHit = checkResult === 'SUCCESS';
 
-        if (actionResult !== 'IMPOSSIBLE') {
-          this.disposeItem(actor, usability, identity.label);
+        Object.assign(result, { skill: { name: skillName, roll } });
+
+        if (checkResult !== 'IMPOSSIBLE' && usability === 'DISPOSABLE') {
+          this.disposeItem(actor, identity.label);
         }
       }
 
       if (targetWasHit) {
         const dodged =
-          targetActor &&
-          targetActor.wannaDodge(damage.effectType) &&
+          targetActor?.wannaDodge(effect.effectType) &&
           this.dodgeAxiomService.dodge(targetActor, {
             dodgeable,
             dodgesPerformed: extras.targetDodgesPerformed ?? 0,
           });
 
+        Object.assign(result, { dodged });
+
         if (!dodged) {
-          this.applyDamage(target, action.actionableDefinition, damage);
+          const effectAmount =
+            this.rollHelper.roll(effect.diceRoll) + effect.fixed;
+
+          this.affectedAxiomService.affectWith(
+            target,
+            event.actionableDefinition,
+            'SUCCESS',
+            {
+              effect: new EffectEvent(effect.effectType, effectAmount),
+            }
+          );
+
+          Object.assign(result, {
+            result: 'AFFECTED',
+            effect: { type: effect.effectType, amount: effectAmount },
+          });
         }
       }
 
@@ -88,23 +115,19 @@ export class CombatRule extends MasterRuleService {
 
       targetActor?.changeVisibility('VISIBLE');
     }
+
+    return result;
   }
 
-  private disposeItem(
-    actor: ActorInterface,
-    usability: ItemUsabilityLiteral,
-    label: string
-  ): void {
-    if (usability === 'DISPOSABLE') {
-      actor.unEquip();
+  private disposeItem(actor: ActorInterface, label: string): void {
+    actor.unEquip();
 
-      const logMessage = GameStringsStore.createLostItemLogMessage(
-        actor.name,
-        label
-      );
+    const logMessage = GameStringsStore.createLostItemLogMessage(
+      actor.name,
+      label
+    );
 
-      this.ruleLog.next(logMessage);
-    }
+    this.ruleLog.next(logMessage);
   }
 
   private checkSkill(
@@ -112,8 +135,8 @@ export class CombatRule extends MasterRuleService {
     skillName: string,
     target: ActorInterface,
     weaponLabel: string
-  ): ResultLiteral {
-    const { result } = this.rollHelper.actorSkillCheck(actor, skillName);
+  ): { checkResult: ResultLiteral; roll: number } {
+    const { result, roll } = this.rollHelper.actorSkillCheck(actor, skillName);
 
     if (result === 'SUCCESS') {
       const logMessage = GameStringsStore.createUsedItemLogMessage(
@@ -125,18 +148,6 @@ export class CombatRule extends MasterRuleService {
       this.ruleLog.next(logMessage);
     }
 
-    return result;
-  }
-
-  private applyDamage(
-    target: InteractiveInterface,
-    action: ActionableDefinition,
-    damage: DamageDefinition
-  ): void {
-    const damageAmount = this.rollHelper.roll(damage.diceRoll) + damage.fixed;
-
-    this.affectedAxiomService.affectWith(target, action, 'SUCCESS', {
-      effect: new EffectEvent(damage.effectType, damageAmount),
-    });
+    return { checkResult: result, roll };
   }
 }

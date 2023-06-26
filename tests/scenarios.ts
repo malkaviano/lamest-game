@@ -2,10 +2,10 @@ import { LogMessageDefinition } from '../src/core/definitions/log-message.defini
 import { ActionableEvent } from '../src/core/events/actionable.event';
 import { ActorInterface } from '../src/core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../src/core/interfaces/rule-extras.interface';
-import { MasterRuleService } from '../src/backend/rules/master.rule';
+import { MasterRule } from '../src/backend/rules/master.rule';
 
 export const ruleScenario = (
-  service: MasterRuleService,
+  service: MasterRule,
   actor: ActorInterface,
   actionableEvent: ActionableEvent,
   extras: RuleExtrasInterface,

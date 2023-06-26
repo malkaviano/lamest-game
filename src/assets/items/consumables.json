@@ -7,8 +7,7 @@
       "hp": 8,
       "energy": 0,
       "effect": "REMEDY",
-      "skillName": "First Aid",
-      "usability": "DISPOSABLE"
+      "skillName": "First Aid"
     },
     {
       "name": "analgesicBottle",
@@ -16,8 +15,7 @@
       "description": "Use to recover HP (2) and Energy (2)",
       "hp": 2,
       "energy": 2,
-      "effect": "REMEDY",
-      "usability": "DISPOSABLE"
+      "effect": "REMEDY"
     },
     {
       "name": "adrenaline",
@@ -25,8 +23,7 @@
       "description": "Use to recover HP (4)",
       "hp": 4,
       "energy": 0,
-      "effect": "REMEDY",
-      "usability": "DISPOSABLE"
+      "effect": "REMEDY"
     }
   ]
 }

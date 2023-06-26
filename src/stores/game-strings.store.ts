@@ -281,14 +281,14 @@ export class GameStringsStore {
     );
   }
 
-  public static createItemInspectedLogMessage(
+  public static createItemReadLogMessage(
     actor: string,
     item: string
   ): LogMessageDefinition {
     return new LogMessageDefinition(
-      'INSPECTED',
+      'READ',
       actor,
-      GameStringsStore.logMessagesStore['itemInspectedMessage'].replace(
+      GameStringsStore.logMessagesStore['itemReadMessage'].replace(
         '${item}',
         item
       )

@@ -2,24 +2,23 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InteractionRule } from './interaction.rule';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 import {
+  mockedAffectedAxiom,
   mockedCheckedService,
   mockedInteractiveEntity,
   mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
-import {
-  interactiveInfo,
-  playerInfo,
-  actionableEvent,
-  actionInspect,
-  readable,
-} from '../../../tests/fakes';
+import { playerInfo, actionableEvent, actionAsk } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('InteractionRule', () => {
-  const rule = new InteractionRule(instance(mockedCheckedService));
+  const rule = new InteractionRule(
+    instance(mockedCheckedService),
+    instance(mockedAffectedAxiom)
+  );
 
   beforeEach(() => {
     setupMocks();
@@ -33,20 +32,33 @@ describe('InteractionRule', () => {
     it('should log item inspected', (done) => {
       when(
         mockedInteractiveEntity.reactTo(
-          eventInspect.actionableDefinition,
+          eventInteraction.actionableDefinition,
           'NONE',
           deepEqual({})
         )
-      ).thenReturn(inspectedMessage);
+      ).thenReturn(null);
 
       ruleScenario(
         rule,
         actor,
-        eventInspect,
+        eventInteraction,
         extras,
-        [inspectActionLog, inspectedLog],
+        [interactionActionLog],
         done
       );
+    });
+
+    it('return interaction result', () => {
+      const result = rule.execute(actor, eventInteraction, extras);
+
+      const expected: RuleResultInterface = {
+        event: eventInteraction,
+        actor,
+        result: 'INTERACTED',
+        target: extras.target,
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 });
@@ -59,18 +71,10 @@ const extras = {
   target,
 };
 
-const eventInspect = actionableEvent(actionInspect, readable.identity.name);
+const eventInteraction = actionableEvent(actionAsk, 'someId');
 
-const inspectedMessage = 'inspected';
-
-const inspectActionLog = new LogMessageDefinition(
+const interactionActionLog = new LogMessageDefinition(
   'INTERACTED',
   playerInfo.name,
-  'Inspect'
-);
-
-const inspectedLog = new LogMessageDefinition(
-  'INTERACTED',
-  interactiveInfo.name,
-  'inspected'
+  'Got action?'
 );

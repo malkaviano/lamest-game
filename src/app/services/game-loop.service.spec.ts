@@ -27,20 +27,20 @@ import {
   masterKey,
   actionNoop,
   readable,
-  actionInspect,
+  actionRead,
 } from '../../../tests/fakes';
 import {
   mockedActorEntity,
   mockedActorEntity2,
   mockedCharacterService,
-  mockedCombatRule,
+  mockedAffectRule,
   mockedNarrativeService,
   mockedPlayerEntity,
   mockedRuleDispatcherService,
   mockedSceneEntity,
   setupMocks,
   mockedInteractiveEntity,
-  mockedEventHubService,
+  mockedEventHub,
   mockedInventoryService,
 } from '../../../tests/mocks';
 
@@ -68,7 +68,7 @@ describe('GameLoopService', () => {
         },
         {
           provide: EventsHub,
-          useValue: instance(mockedEventHubService),
+          useValue: instance(mockedEventHub),
         },
         {
           provide: InventoryService,
@@ -79,11 +79,11 @@ describe('GameLoopService', () => {
 
     setupMocks();
 
-    when(mockedEventHubService.logMessageProduced$).thenReturn(EMPTY);
+    when(mockedEventHub.logMessageProduced$).thenReturn(EMPTY);
 
-    when(mockedEventHubService.actorDodged$).thenReturn(of(playerInfo.id));
+    when(mockedEventHub.actorDodged$).thenReturn(of(playerInfo.id));
 
-    when(mockedEventHubService.documentOpened$).thenReturn(documentSubject);
+    when(mockedEventHub.documentOpened$).thenReturn(documentSubject);
 
     when(mockedSceneEntity.interactives).thenReturn(
       ArrayView.create([instance(mockedInteractiveEntity), actor, actor2])
@@ -117,7 +117,7 @@ describe('GameLoopService', () => {
       when(mockedRuleDispatcherService.dispatcher).thenCall(() => {
         result = true;
 
-        return { AFFECT: instance(mockedCombatRule) };
+        return { AFFECT: instance(mockedAffectRule) };
       });
 
       service.start();
@@ -153,7 +153,7 @@ describe('GameLoopService', () => {
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, readable),
-        expected: ActionableItemView.create(readable, actionInspect),
+        expected: ActionableItemView.create(readable, actionRead),
         item: readable,
       },
     ].forEach(({ invEvent, expected, item }) => {

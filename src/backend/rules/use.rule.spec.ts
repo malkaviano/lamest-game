@@ -2,9 +2,10 @@ import { instance, when } from 'ts-mockito';
 
 import { UseRule } from './use.rule';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 import {
-  mockedAffectedAxiomService,
+  mockedAffectedAxiom,
   mockedCheckedService,
   mockedInteractiveEntity,
   mockedInventoryService,
@@ -24,7 +25,7 @@ describe('UseRule', () => {
   const rule = new UseRule(
     instance(mockedInventoryService),
     instance(mockedCheckedService),
-    instance(mockedAffectedAxiomService)
+    instance(mockedAffectedAxiom)
   );
 
   beforeEach(() => {
@@ -47,9 +48,22 @@ describe('UseRule', () => {
           done
         );
       });
+
+      it('return denied result', () => {
+        const result = rule.execute(actor, eventUseMasterKey, extras);
+
+        const expected: RuleResultInterface = {
+          event: eventUseMasterKey,
+          result: 'DENIED',
+          actor,
+          target: extras.target,
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
 
-    describe('when item could be found', () => {
+    describe('when item was found', () => {
       it('should log item lost', (done) => {
         when(
           mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
@@ -63,6 +77,24 @@ describe('UseRule', () => {
           [itemLostLog],
           done
         );
+      });
+
+      it('return used result', () => {
+        when(
+          mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
+        ).thenReturn(masterKey);
+
+        const result = rule.execute(actor, eventUseMasterKey, extras);
+
+        const expected: RuleResultInterface = {
+          event: eventUseMasterKey,
+          result: 'USED',
+          actor,
+          target: extras.target,
+          used: masterKey,
+        };
+
+        expect(result).toEqual(expected);
       });
     });
   });

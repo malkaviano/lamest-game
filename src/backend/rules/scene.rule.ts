@@ -1,12 +1,13 @@
 import { NarrativeService } from '../services/narrative.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { MasterRuleService } from './master.rule';
+import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
-export class SceneRule extends MasterRuleService {
+export class SceneRule extends MasterRule {
   constructor(
     private readonly narrativeService: NarrativeService,
     private readonly checkedService: CheckedService
@@ -16,19 +17,21 @@ export class SceneRule extends MasterRuleService {
 
   public execute(
     actor: ActorInterface,
-    action: ActionableEvent,
+    event: ActionableEvent,
     extras: RuleExtrasInterface
-  ): void {
+  ): RuleResultInterface {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
-    this.narrativeService.changeScene(action);
+    this.narrativeService.changeScene(event);
 
     const logMessage = GameStringsStore.createSceneLogMessage(
       actor.name,
       target.name,
-      action.actionableDefinition.label
+      event.actionableDefinition.label
     );
 
     this.ruleLog.next(logMessage);
+
+    return { event, actor, target, result: 'TRANSITIONED' };
   }
 }

@@ -1,23 +1,28 @@
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { MasterRuleService } from './master.rule';
+import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { AffectAxiom } from '../../core/axioms/affect.axiom';
 
-export class InteractionRule extends MasterRuleService {
-  constructor(private readonly checkedService: CheckedService) {
+export class InteractionRule extends MasterRule {
+  constructor(
+    private readonly checkedService: CheckedService,
+    private readonly affectAxiomService: AffectAxiom
+  ) {
     super();
   }
 
   public execute(
     actor: ActorInterface,
-    action: ActionableEvent,
+    event: ActionableEvent,
     extras: RuleExtrasInterface
-  ): void {
+  ): RuleResultInterface {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
-    const { actionableDefinition } = action;
+    const { actionableDefinition } = event;
 
     const logMessage = GameStringsStore.createFreeLogMessage(
       'INTERACTED',
@@ -27,16 +32,18 @@ export class InteractionRule extends MasterRuleService {
 
     this.ruleLog.next(logMessage);
 
-    const log = target.reactTo(actionableDefinition, 'NONE', {});
+    this.affectAxiomService.affectWith(
+      target,
+      event.actionableDefinition,
+      'NONE',
+      {}
+    );
 
-    if (log) {
-      const logMessage = GameStringsStore.createFreeLogMessage(
-        'INTERACTED',
-        target.name,
-        log
-      );
-
-      this.ruleLog.next(logMessage);
-    }
+    return {
+      event,
+      actor,
+      target,
+      result: 'INTERACTED',
+    };
   }
 }

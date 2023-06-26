@@ -17,7 +17,7 @@ import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
 import {
   mockedFormatterHelperService,
-  mockedGameEventsService,
+  mockedGameEventsDefinition,
   mockedGameLoopService,
   mockedInteractiveEntity,
   mockedMatDialog,
@@ -68,7 +68,7 @@ describe('GamePageComponent', () => {
 
     setupMocks();
 
-    when(mockedGameEventsService.playerInventory$).thenReturn(
+    when(mockedGameEventsDefinition.playerInventory$).thenReturn(
       of(
         ArrayView.create([
           ActionableItemView.create(simpleSword, actionEquip),
@@ -77,16 +77,16 @@ describe('GamePageComponent', () => {
       )
     );
 
-    when(mockedGameEventsService.actionLogged$).thenReturn(of(log));
+    when(mockedGameEventsDefinition.actionLogged$).thenReturn(of(log));
 
-    when(mockedGameEventsService.documentOpened$).thenReturn(
+    when(mockedGameEventsDefinition.documentOpened$).thenReturn(
       of({
         title: 'GG',
         text: ArrayView.create([]),
       })
     );
 
-    when(mockedGameEventsService.canActChanged$).thenReturn(of(true));
+    when(mockedGameEventsDefinition.canActChanged$).thenReturn(of(true));
 
     fixture = TestBed.createComponent(GamePageComponent);
 
