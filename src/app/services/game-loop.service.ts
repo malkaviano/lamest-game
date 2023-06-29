@@ -203,7 +203,7 @@ export class GameLoopService {
     }
 
     if (item.category === 'READABLE') {
-      return createActionableDefinition('INSPECT', 'inspect', 'Inspect');
+      return createActionableDefinition('READ', 'read', 'Read');
     }
 
     return createActionableDefinition('NOOP', 'noop', 'NOOP');

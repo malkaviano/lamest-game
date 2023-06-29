@@ -11,7 +11,7 @@ export type LogCategoryLiteral =
   | 'LOST'
   | 'NOT-FOUND'
   | 'OPENED'
-  | 'INSPECTED'
+  | 'READ'
   | 'USED'
   | 'ACTIVATION'
   | 'INTERACTED'

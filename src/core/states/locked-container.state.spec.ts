@@ -21,7 +21,7 @@ describe('LockedContainerState', () => {
 
   describe(`when item was in player's inventory`, () => {
     it('return discarded state and log', () => {
-      const result = state.onResult(actionUseMasterKey, 'USED', {
+      const result = state.onResult(actionUseMasterKey, 'NONE', {
         item: masterKey,
       });
 

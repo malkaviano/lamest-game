@@ -16,7 +16,6 @@ import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ClassificationLiteral } from '../literals/classification.literal';
 import { EffectTypeLiteral } from '../literals/effect-type.literal';
-import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
 import { ArrayView } from '../view-models/array.view';
@@ -27,6 +26,7 @@ import { ActionableEvent } from '../events/actionable.event';
 import { EffectEvent } from '../events/effect.event';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { BehaviorLiteral } from '../literals/behavior.literal';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -192,7 +192,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public override reactTo(
     action: ActionableDefinition,
-    result: ResultLiteral,
+    result: CheckResultLiteral,
     values: ReactionValuesInterface
   ): string | null {
     const { actionable } = action;

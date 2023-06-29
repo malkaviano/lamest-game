@@ -1,8 +1,7 @@
 import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { MasterRuleService } from './master.rule';
-import { ResultLiteral } from '../../core/literals/result.literal';
+import { MasterRule } from './master.rule';
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
@@ -10,8 +9,10 @@ import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
 import { CheckedService } from '../services/checked.service';
 import { RollHelper } from '../../core/helpers/roll.helper';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { CheckResultLiteral } from '../../core/literals/check-result.literal';
 
-export class ConsumeRule extends MasterRuleService {
+export class ConsumeRule extends MasterRule {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollHelper: RollHelper,
@@ -21,51 +22,79 @@ export class ConsumeRule extends MasterRuleService {
     super();
   }
 
-  public execute(actor: ActorInterface, event: ActionableEvent): void {
+  public execute(
+    actor: ActorInterface,
+    event: ActionableEvent
+  ): RuleResultInterface {
     const { actionableDefinition, eventId } = event;
 
-    const consumable =
-      this.checkedService.lookItemOrThrow<ConsumableDefinition>(
+    const consumed = this.checkedService.lookItemOrThrow<ConsumableDefinition>(
+      this.inventoryService,
+      actor.id,
+      eventId
+    );
+
+    let rollResult: CheckResultLiteral = 'NONE';
+
+    const result: RuleResultInterface = {
+      event,
+      actor,
+      result: 'DENIED',
+    };
+
+    if (consumed.skillName) {
+      const rollChecked = this.rollHelper.actorSkillCheck(
+        actor,
+        consumed.skillName
+      );
+
+      rollResult = rollChecked.result;
+
+      Object.assign(result, {
+        skill: { name: consumed.skillName, roll: rollChecked.roll },
+      });
+    }
+
+    if (rollResult !== 'IMPOSSIBLE') {
+      const { hp, energy } = this.consume(
+        actor,
+        consumed,
+        actionableDefinition,
+        rollResult
+      );
+
+      Object.assign(result, {
+        result: 'CONSUMED',
+        consumable: {
+          consumed,
+          hp,
+          energy,
+        },
+      });
+
+      this.checkedService.takeItemOrThrow<ConsumableDefinition>(
         this.inventoryService,
         actor.id,
         eventId
       );
 
-    let rollResult: ResultLiteral = 'NONE';
+      const logMessage = GameStringsStore.createLostItemLogMessage(
+        actor.name,
+        consumed.identity.label
+      );
 
-    if (consumable.skillName) {
-      rollResult = this.rollHelper.actorSkillCheck(
-        actor,
-        consumable.skillName
-      ).result;
+      this.ruleLog.next(logMessage);
     }
 
-    if (rollResult !== 'IMPOSSIBLE') {
-      this.consume(actor, consumable, actionableDefinition, rollResult);
-
-      if (consumable.usability === 'DISPOSABLE') {
-        this.checkedService.takeItemOrThrow<ConsumableDefinition>(
-          this.inventoryService,
-          actor.id,
-          eventId
-        );
-
-        const logMessage = GameStringsStore.createLostItemLogMessage(
-          actor.name,
-          consumable.identity.label
-        );
-
-        this.ruleLog.next(logMessage);
-      }
-    }
+    return result;
   }
 
   private consume(
     actor: ActorInterface,
     consumable: ConsumableDefinition,
     actionableDefinition: ActionableDefinition,
-    rollResult: ResultLiteral
-  ) {
+    rollResult: CheckResultLiteral
+  ): { hp: number; energy: number } {
     const logMessage = GameStringsStore.createConsumedLogMessage(
       actor.name,
       consumable.identity.label
@@ -85,5 +114,7 @@ export class ConsumeRule extends MasterRuleService {
       effect: new EffectEvent(consumable.effect, hp),
       energy,
     });
+
+    return { hp, energy };
   }
 }

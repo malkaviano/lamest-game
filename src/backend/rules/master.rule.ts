@@ -7,9 +7,7 @@ import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface
 import { RuleInterface } from '../../core/interfaces/rule.interface';
 import { ActionableEvent } from '../../core/events/actionable.event';
 
-export abstract class MasterRuleService
-  implements RuleInterface, LoggerInterface
-{
+export abstract class MasterRule implements RuleInterface, LoggerInterface {
   protected readonly ruleLog: Subject<LogMessageDefinition>;
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;

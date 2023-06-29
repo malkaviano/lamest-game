@@ -2,11 +2,11 @@ import { GameStringsStore } from 'src/stores/game-strings.store';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
-import { ResultLiteral } from '../literals/result.literal';
 import { ArrayView } from '../view-models/array.view';
 import { ActionableState } from './actionable.state';
 import { LockPickingContainerState } from './lock-picking-container.state';
 import { LockedContainerState } from './locked-container.state';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 export class LockPickableContainerState extends LockedContainerState {
   constructor(
@@ -19,9 +19,9 @@ export class LockPickableContainerState extends LockedContainerState {
 
   protected override stateResult(
     action: ActionableDefinition,
-    result: ResultLiteral,
+    result: CheckResultLiteral,
     values: ReactionValuesInterface
-  ): { state: ActionableState; log?: string | undefined } {
+  ): { state: ActionableState; log?: string } {
     if (
       action.actionable === 'INTERACTION' &&
       this.actionables.items.some((a) => a.name === action.name)

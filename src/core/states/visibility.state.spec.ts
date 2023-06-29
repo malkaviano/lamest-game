@@ -2,7 +2,6 @@ import { instance } from 'ts-mockito';
 
 import { VisibilityState } from './visibility.state';
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ResultLiteral } from '../literals/result.literal';
 import { emptyState } from './empty.state';
 import { GameStringsStore } from '../../stores/game-strings.store';
 
@@ -24,6 +23,7 @@ import {
 import { PlayerEntity } from '../entities/player.entity';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 const fakeState = (action: ActionableDefinition, tries: number) =>
   new VisibilityState(action, tries);
@@ -122,7 +122,7 @@ describe('VisibilityState', () => {
 
         const result = fakeState(action, tries).onResult(
           action,
-          rollResult as ResultLiteral,
+          rollResult as CheckResultLiteral,
           {
             actor: char,
           }
@@ -134,10 +134,14 @@ describe('VisibilityState', () => {
       it('should set actor visibility', () => {
         const char = fakeCharacter();
 
-        fakeState(action, tries).onResult(action, rollResult as ResultLiteral, {
-          actor: char,
-          target: char,
-        });
+        fakeState(action, tries).onResult(
+          action,
+          rollResult as CheckResultLiteral,
+          {
+            actor: char,
+            target: char,
+          }
+        );
 
         expect(char.visibility).toEqual(visibility);
       });
@@ -166,7 +170,7 @@ describe('VisibilityState', () => {
 
         const result = fakeState(action, tries).onResult(
           action,
-          rollResult as ResultLiteral,
+          rollResult as CheckResultLiteral,
           {
             actor: char,
             target: char,
@@ -181,10 +185,14 @@ describe('VisibilityState', () => {
 
         char.changeVisibility('HIDDEN');
 
-        fakeState(action, tries).onResult(action, rollResult as ResultLiteral, {
-          actor: char,
-          target: char,
-        });
+        fakeState(action, tries).onResult(
+          action,
+          rollResult as CheckResultLiteral,
+          {
+            actor: char,
+            target: char,
+          }
+        );
 
         expect(char.visibility).toEqual(visibility);
       });

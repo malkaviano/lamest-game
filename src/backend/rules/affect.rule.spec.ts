@@ -1,17 +1,17 @@
 import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
-import { CombatRule } from './combat.rule';
+import { AffectRule } from './affect.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { RollDefinition } from '../../core/definitions/roll.definition';
 import { EffectEvent } from '../../core/events/effect.event';
 
 import { ruleScenario } from '../../../tests/scenarios';
 import {
-  mockedActivationAxiomService,
+  mockedActivationAxiom,
   mockedActorEntity,
-  mockedAffectedAxiomService,
+  mockedAffectedAxiom,
   mockedCheckedService,
-  mockedDodgeAxiomService,
+  mockedDodgeAxiom,
   mockedPlayerEntity,
   mockedRollHelper,
   setupMocks,
@@ -26,14 +26,15 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../tests/fakes';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
-describe('CombatRule', () => {
-  const rule = new CombatRule(
+describe('AffectRule', () => {
+  const rule = new AffectRule(
     instance(mockedRollHelper),
     instance(mockedCheckedService),
-    instance(mockedActivationAxiomService),
-    instance(mockedDodgeAxiomService),
-    instance(mockedAffectedAxiomService)
+    instance(mockedActivationAxiom),
+    instance(mockedDodgeAxiom),
+    instance(mockedAffectedAxiom)
   );
 
   beforeEach(() => {
@@ -60,6 +61,34 @@ describe('CombatRule', () => {
         })
       )
     ).thenReturn(damageMessage2);
+
+    when(
+      mockedActivationAxiom.activation(
+        actor,
+        deepEqual({
+          identity: molotov.identity,
+          energyActivation: molotov.energyActivation,
+        })
+      )
+    ).thenReturn(true);
+
+    when(
+      mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
+    ).thenReturn(new RollDefinition('SUCCESS', 5));
+
+    when(
+      mockedActivationAxiom.activation(
+        actor,
+        deepEqual({
+          identity: simpleSword.identity,
+          energyActivation: simpleSword.energyActivation,
+        })
+      )
+    ).thenReturn(true);
+
+    when(
+      mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
+    ).thenReturn(new RollDefinition('SUCCESS', 5));
   });
 
   it('should be created', () => {
@@ -71,24 +100,8 @@ describe('CombatRule', () => {
       describe('when target is actor', () => {
         describe('when check skill succeed', () => {
           it('should log used molotov and lost molotov', (done) => {
-            when(mockedPlayerEntity.weaponEquipped).thenReturn(molotov);
-
             when(
-              mockedActivationAxiomService.activation(
-                actor,
-                deepEqual({
-                  identity: molotov.identity,
-                  energyActivation: molotov.energyActivation,
-                })
-              )
-            ).thenReturn(true);
-
-            when(
-              mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
-            ).thenReturn(new RollDefinition('SUCCESS', 5));
-
-            when(
-              mockedDodgeAxiomService.dodge(
+              mockedDodgeAxiom.dodge(
                 target,
                 deepEqual({
                   dodgeable: false,
@@ -96,6 +109,8 @@ describe('CombatRule', () => {
                 })
               )
             ).thenReturn(false);
+
+            when(mockedPlayerEntity.weaponEquipped).thenReturn(molotov);
 
             ruleScenario(
               rule,
@@ -109,7 +124,7 @@ describe('CombatRule', () => {
             );
 
             verify(
-              mockedAffectedAxiomService.affectWith(
+              mockedAffectedAxiom.affectWith(
                 target,
                 actionAttack,
                 'SUCCESS',
@@ -120,7 +135,7 @@ describe('CombatRule', () => {
             ).once();
 
             verify(
-              mockedDodgeAxiomService.dodge(
+              mockedDodgeAxiom.dodge(
                 target,
                 deepEqual({
                   dodgeable: false,
@@ -145,21 +160,7 @@ describe('CombatRule', () => {
               when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
               when(
-                mockedActivationAxiomService.activation(
-                  actor,
-                  deepEqual({
-                    identity: simpleSword.identity,
-                    energyActivation: simpleSword.energyActivation,
-                  })
-                )
-              ).thenReturn(true);
-
-              when(
-                mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
-              ).thenReturn(new RollDefinition('SUCCESS', 5));
-
-              when(
-                mockedDodgeAxiomService.dodge(
+                mockedDodgeAxiom.dodge(
                   target,
                   deepEqual({
                     dodgeable: true,
@@ -180,7 +181,7 @@ describe('CombatRule', () => {
               );
 
               verify(
-                mockedAffectedAxiomService.affectWith(
+                mockedAffectedAxiom.affectWith(
                   anything(),
                   anything(),
                   anything(),
@@ -189,7 +190,7 @@ describe('CombatRule', () => {
               ).never();
 
               verify(
-                mockedDodgeAxiomService.dodge(
+                mockedDodgeAxiom.dodge(
                   target,
                   deepEqual({
                     dodgeable: true,
@@ -204,6 +205,92 @@ describe('CombatRule', () => {
             });
           });
         });
+      });
+    });
+
+    describe('when no energy to activate', () => {
+      it('return denied result', () => {
+        when(mockedPlayerEntity.weaponEquipped).thenReturn(unDodgeableAxe);
+
+        const result = rule.execute(actor, eventAttackInteractive, {
+          target,
+        });
+
+        const expected: RuleResultInterface = {
+          event: eventAttackInteractive,
+          actor,
+          result: 'DENIED',
+          target,
+          affected: unDodgeableAxe,
+          skill: { name: 'Melee Weapon (Simple)' },
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when target dodged', () => {
+      it('return denied result', () => {
+        when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
+
+        when(
+          mockedDodgeAxiom.dodge(
+            target,
+            deepEqual({
+              dodgeable: true,
+              dodgesPerformed: 0,
+            })
+          )
+        ).thenReturn(true);
+
+        const result = rule.execute(actor, eventAttackInteractive, {
+          target,
+        });
+
+        const expected: RuleResultInterface = {
+          event: eventAttackInteractive,
+          actor,
+          result: 'DENIED',
+          target,
+          affected: simpleSword,
+          skill: { name: 'Melee Weapon (Simple)', roll: 5 },
+          dodged: true,
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when target is affected', () => {
+      it('return affect result', () => {
+        when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
+
+        when(
+          mockedDodgeAxiom.dodge(
+            target,
+            deepEqual({
+              dodgeable: true,
+              dodgesPerformed: 0,
+            })
+          )
+        ).thenReturn(false);
+
+        const result = rule.execute(actor, eventAttackInteractive, {
+          target,
+        });
+
+        const expected: RuleResultInterface = {
+          event: eventAttackInteractive,
+          actor,
+          result: 'AFFECTED',
+          target,
+          affected: simpleSword,
+          skill: { name: 'Melee Weapon (Simple)', roll: 5 },
+          dodged: false,
+          effect: { type: 'KINETIC', amount: 2 },
+        };
+
+        expect(result).toEqual(expected);
       });
     });
   });

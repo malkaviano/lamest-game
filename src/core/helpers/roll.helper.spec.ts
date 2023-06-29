@@ -1,7 +1,6 @@
 import { instance, when } from 'ts-mockito';
 
 import { RollDefinition } from '../definitions/roll.definition';
-import { ResultLiteral } from '../literals/result.literal';
 import { RollHelper } from './roll.helper';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 
@@ -10,6 +9,7 @@ import {
   mockedRandomIntHelper,
   setupMocks,
 } from '../../../tests/mocks';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 describe('RollHelper', () => {
   const helper = new RollHelper(instance(mockedRandomIntHelper));
@@ -84,7 +84,7 @@ describe('RollHelper', () => {
           );
 
           const expected = new RollDefinition(
-            checkResult as ResultLiteral,
+            checkResult as CheckResultLiteral,
             roll
           );
 

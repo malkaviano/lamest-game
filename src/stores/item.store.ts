@@ -1,5 +1,5 @@
 import { ConsumableDefinition } from '../core/definitions/consumable.definition';
-import { DamageDefinition } from '../core/definitions/damage.definition';
+import { EffectDefinition } from '../core/definitions/effect.definition';
 import { createDice } from '../core/definitions/dice.definition';
 import { GameItemDefinition } from '../core/definitions/game-item.definition';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
@@ -23,7 +23,7 @@ export class ItemStore {
         new WeaponDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
           item.skillName,
-          new DamageDefinition(
+          new EffectDefinition(
             createDice(item.damage?.dice),
             item.damage.fixed,
             item.damage.effect
@@ -43,7 +43,6 @@ export class ItemStore {
           item.hp,
           item.energy,
           item.effect,
-          item.usability,
           item.skillName
         )
       );

@@ -22,10 +22,10 @@ import { SceneStore } from '../../stores/scene.store';
 import { SequencerHelper } from '../../core/helpers/sequencer.helper';
 import { CheckedService } from '../../backend/services/checked.service';
 import { RollHelper } from '../../core/helpers/roll.helper';
-import { CombatRule } from '../../backend/rules/combat.rule';
+import { AffectRule } from '../../backend/rules/affect.rule';
 import { ConsumeRule } from '../../backend/rules/consume.rule';
 import { EquipRule } from '../../backend/rules/equip.rule';
-import { InspectRule } from '../../backend/rules/inspect.rule';
+import { ReadRule } from '../../backend/rules/read.rule';
 import { InteractionRule } from '../../backend/rules/interaction.rule';
 import { PickRule } from '../../backend/rules/pick.rule';
 import { SceneRule } from '../../backend/rules/scene.rule';
@@ -73,7 +73,7 @@ const affectAxiom = new AffectAxiom();
 const dodgeAxiom = new DodgeAxiom(rollHelper);
 const readAxiom = new ReadAxiom();
 
-const combatRule = new CombatRule(
+const combatRule = new AffectRule(
   rollHelper,
   checkedService,
   activationAxiom,
@@ -87,8 +87,8 @@ const consumeRule = new ConsumeRule(
   affectAxiom
 );
 const equipRule = new EquipRule(inventoryService, checkedService);
-const inspectRule = new InspectRule(inventoryService, readAxiom);
-const interactionRule = new InteractionRule(checkedService);
+const inspectRule = new ReadRule(inventoryService, readAxiom);
+const interactionRule = new InteractionRule(checkedService, affectAxiom);
 const pickRule = new PickRule(inventoryService, checkedService, affectAxiom);
 const sceneRule = new SceneRule(narrativeService, checkedService);
 const skillRule = new SkillRule(rollHelper, checkedService, affectAxiom);
@@ -145,10 +145,10 @@ const eventsHub = new EventsHub(
     { provide: InventoryService, useValue: inventoryService },
     { provide: NarrativeService, useValue: narrativeService },
 
-    { provide: CombatRule, useValue: combatRule },
+    { provide: AffectRule, useValue: combatRule },
     { provide: ConsumeRule, useValue: consumeRule },
     { provide: EquipRule, useValue: equipRule },
-    { provide: InspectRule, useValue: inspectRule },
+    { provide: ReadRule, useValue: inspectRule },
     { provide: InteractionRule, useValue: interactionRule },
     { provide: PickRule, useValue: pickRule },
     { provide: SceneRule, useValue: sceneRule },

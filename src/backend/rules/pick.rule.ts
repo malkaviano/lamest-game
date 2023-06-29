@@ -1,13 +1,14 @@
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { MasterRuleService } from './master.rule';
+import { MasterRule } from './master.rule';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
-export class PickRule extends MasterRuleService {
+export class PickRule extends MasterRule {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly checkedService: CheckedService,
@@ -18,15 +19,15 @@ export class PickRule extends MasterRuleService {
 
   public execute(
     actor: ActorInterface,
-    action: ActionableEvent,
+    event: ActionableEvent,
     extras: RuleExtrasInterface
-  ): void {
+  ): RuleResultInterface {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const item = this.checkedService.takeItemOrThrow(
       this.inventoryService,
-      action.eventId,
-      action.actionableDefinition.name
+      event.eventId,
+      event.actionableDefinition.name
     );
 
     this.inventoryService.store(actor.id, item);
@@ -41,9 +42,17 @@ export class PickRule extends MasterRuleService {
 
     this.affectAxiomService.affectWith(
       target,
-      action.actionableDefinition,
+      event.actionableDefinition,
       'NONE',
       {}
     );
+
+    return {
+      event,
+      actor,
+      target,
+      picked: item,
+      result: 'PICKED',
+    };
   }
 }

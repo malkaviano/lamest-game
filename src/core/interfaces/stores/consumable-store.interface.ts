@@ -1,5 +1,4 @@
 import { EffectTypeLiteral } from '../../literals/effect-type.literal';
-import { ItemUsabilityLiteral } from '../../literals/item-usability';
 
 export interface ConsumableStoreInterface {
   readonly consumables: {
@@ -10,6 +9,5 @@ export interface ConsumableStoreInterface {
     readonly energy: number;
     readonly effect: EffectTypeLiteral;
     readonly skillName?: string;
-    readonly usability: ItemUsabilityLiteral;
   }[];
 }

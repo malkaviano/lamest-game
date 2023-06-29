@@ -1,10 +1,10 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
-import { ResultLiteral } from '../literals/result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { ArrayView } from '../view-models/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 export class LockedContainerState extends ActionableState {
   constructor(
@@ -16,16 +16,12 @@ export class LockedContainerState extends ActionableState {
 
   protected stateResult(
     action: ActionableDefinition,
-    result: ResultLiteral,
+    result: CheckResultLiteral,
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
     const item = values.item;
 
-    if (
-      super.actions.items.some((a) => a.name === action.name) &&
-      item &&
-      result === 'USED'
-    ) {
+    if (super.actions.items.some((a) => a.name === action.name) && item) {
       return {
         state: this.openedState.value,
         log: GameStringsStore.createOpenedUsingMessage(item.identity.label),

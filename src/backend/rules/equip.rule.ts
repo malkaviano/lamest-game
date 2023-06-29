@@ -1,12 +1,13 @@
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { MasterRuleService } from './master.rule';
+import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
-export class EquipRule extends MasterRuleService {
+export class EquipRule extends MasterRule {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly checkedService: CheckedService
@@ -14,33 +15,46 @@ export class EquipRule extends MasterRuleService {
     super();
   }
 
-  public execute(actor: ActorInterface, action: ActionableEvent): void {
-    const item = this.inventoryService.look<WeaponDefinition>(
+  public execute(
+    actor: ActorInterface,
+    event: ActionableEvent
+  ): RuleResultInterface {
+    const equipped = this.checkedService.lookItemOrThrow<WeaponDefinition>(
+      this.inventoryService,
       actor.id,
-      action.eventId
+      event.eventId
     );
 
-    if (!item) {
-      throw new Error(GameStringsStore.errorMessages['WRONG-ITEM']);
-    }
+    const skillName = equipped.skillName;
 
-    const skillName = item.skillName;
+    const result: RuleResultInterface = {
+      event,
+      actor,
+      result: 'DENIED',
+      skill: {
+        name: skillName,
+      },
+    };
 
     if (actor.skills[skillName] > 0) {
+      Object.assign(result, { result: 'EQUIPPED', equipped });
+
       const weapon = this.checkedService.takeItemOrThrow<WeaponDefinition>(
         this.inventoryService,
         actor.id,
-        action.eventId
+        event.eventId
       );
 
-      const previous = actor.equip(weapon);
+      const unequipped = actor.equip(weapon);
 
-      if (previous) {
-        this.inventoryService.store(actor.id, previous);
+      if (unequipped) {
+        Object.assign(result, { unequipped });
+
+        this.inventoryService.store(actor.id, unequipped);
 
         const logMessage = GameStringsStore.createUnEquippedLogMessage(
           actor.name,
-          previous.identity.label
+          unequipped.identity.label
         );
 
         this.ruleLog.next(logMessage);
@@ -56,10 +70,12 @@ export class EquipRule extends MasterRuleService {
       const logMessage = GameStringsStore.createEquipErrorLogMessage(
         actor.name,
         skillName,
-        item.identity.label
+        equipped.identity.label
       );
 
       this.ruleLog.next(logMessage);
     }
+
+    return result;
   }
 }

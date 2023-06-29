@@ -4,6 +4,7 @@ import { EquipRule } from './equip.rule';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 import {
   mockedCheckedService,
@@ -30,6 +31,40 @@ describe('EquipRule', () => {
 
   beforeEach(() => {
     setupMocks();
+
+    when(
+      mockedCheckedService.lookItemOrThrow<WeaponDefinition>(
+        instance(mockedInventoryService),
+        playerInfo.id,
+        consumableAnalgesic.identity.name
+      )
+    ).thenThrow(new Error(GameStringsStore.errorMessages['WRONG-ITEM']));
+
+    when(
+      mockedCheckedService.lookItemOrThrow<WeaponDefinition>(
+        instance(mockedInventoryService),
+        playerInfo.id,
+        simpleSword.identity.name
+      )
+    ).thenReturn(simpleSword);
+
+    when(
+      mockedCheckedService.takeItemOrThrow<WeaponDefinition>(
+        instance(mockedInventoryService),
+        actor.id,
+        simpleSword.identity.name
+      )
+    ).thenReturn(simpleSword);
+
+    when(mockedPlayerEntity.equip(simpleSword)).thenReturn(unDodgeableAxe);
+
+    when(
+      mockedCheckedService.lookItemOrThrow<WeaponDefinition>(
+        instance(mockedInventoryService),
+        playerInfo.id,
+        greatSword.identity.name
+      )
+    ).thenReturn(greatSword);
   });
 
   it('should be created', () => {
@@ -39,13 +74,6 @@ describe('EquipRule', () => {
   describe('execute', () => {
     describe('when item was not a weapon', () => {
       it('throw Wrong item was used', () => {
-        when(
-          mockedInventoryService.look<WeaponDefinition>(
-            playerInfo.id,
-            consumableAnalgesic.identity.name
-          )
-        ).thenReturn(null);
-
         expect(() =>
           rule.execute(instance(mockedPlayerEntity), eventWrong)
         ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
@@ -53,50 +81,45 @@ describe('EquipRule', () => {
     });
 
     describe('when item was a weapon', () => {
-      it('should log item was equipped and produce side effects', (done) => {
-        when(
-          mockedInventoryService.look<WeaponDefinition>(
-            playerInfo.id,
-            simpleSword.identity.name
-          )
-        ).thenReturn(simpleSword);
+      describe('when skill value was above zero', () => {
+        it('should log item was equipped and produce side effects', (done) => {
+          ruleScenario(
+            rule,
+            actor,
+            eventOk,
+            extras,
+            [unEquipLog, equipLog],
+            done
+          );
 
-        when(
-          mockedCheckedService.takeItemOrThrow<WeaponDefinition>(
-            instance(mockedInventoryService),
-            actor.id,
-            simpleSword.identity.name
-          )
-        ).thenReturn(simpleSword);
+          // cheap side effect verification
+          verify(mockedPlayerEntity.equip(simpleSword)).once();
 
-        when(mockedPlayerEntity.equip(simpleSword)).thenReturn(unDodgeableAxe);
+          verify(
+            mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
+          ).once();
+        });
 
-        ruleScenario(
-          rule,
-          actor,
-          eventOk,
-          extras,
-          [unEquipLog, equipLog],
-          done
-        );
+        it('return equipped result', () => {
+          const result = rule.execute(actor, eventOk);
 
-        // cheap side effect verification
-        verify(mockedPlayerEntity.equip(simpleSword)).once();
+          const expected: RuleResultInterface = {
+            event: eventOk,
+            actor,
+            result: 'EQUIPPED',
+            equipped: simpleSword,
+            unequipped: unDodgeableAxe,
+            skill: {
+              name: simpleSword.skillName,
+            },
+          };
 
-        verify(
-          mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
-        ).once();
+          expect(result).toEqual(expected);
+        });
       });
 
       describe('when skill value was zero or not set', () => {
         it('should log error equipping and no side effects', (done) => {
-          when(
-            mockedInventoryService.look<WeaponDefinition>(
-              playerInfo.id,
-              greatSword.identity.name
-            )
-          ).thenReturn(greatSword);
-
           ruleScenario(rule, actor, eventNoSkill, extras, [errorLog], done);
 
           // cheap side effect verification
@@ -105,6 +128,21 @@ describe('EquipRule', () => {
           verify(
             mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
           ).never();
+        });
+
+        it('return denied result', () => {
+          const result = rule.execute(actor, eventNoSkill);
+
+          const expected: RuleResultInterface = {
+            event: eventNoSkill,
+            actor,
+            result: 'DENIED',
+            skill: {
+              name: greatSword.skillName,
+            },
+          };
+
+          expect(result).toEqual(expected);
         });
       });
     });

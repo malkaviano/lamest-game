@@ -22,7 +22,7 @@
     "lockPickStuckMessage": "Lock Pick got stuck moving ${direction}",
     "lockPickOpenedMessage": "opened the container",
     "lockPickJammedMessage": "cannot be lock picked anymore",
-    "itemInspectedMessage": "inspected ${item}",
+    "itemReadMessage": "read ${item}",
     "outOfDodgesMessage": "was out of dodges",
     "energizedMessage": "restored ${energy} energy",
     "energyDrainedMessage": "lost ${energy} energy",

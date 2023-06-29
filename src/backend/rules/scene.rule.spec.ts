@@ -1,7 +1,8 @@
 import { instance } from 'ts-mockito';
 
-import { SceneRule } from './scene.rule';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { SceneRule } from './scene.rule';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 import {
   mockedCheckedService,
@@ -42,6 +43,19 @@ describe('SceneRule', () => {
         [sceneChangedLog],
         done
       );
+    });
+
+    it('return transitioned result', () => {
+      const result = rule.execute(actor, eventSceneExit, extras);
+
+      const expected: RuleResultInterface = {
+        event: eventSceneExit,
+        actor,
+        target: extras.target,
+        result: 'TRANSITIONED',
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 });

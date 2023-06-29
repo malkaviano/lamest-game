@@ -9,19 +9,20 @@ import {
   mockedRollHelper,
   setupMocks,
   mockedCheckedService,
-  mockedAffectedAxiomService,
+  mockedAffectedAxiom,
 } from '../../../tests/mocks';
 import {
   actionableEvent,
   actionSkillSurvival,
   interactiveInfo,
 } from '../../../tests/fakes';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 describe('SkillRule', () => {
   const rule = new SkillRule(
     instance(mockedRollHelper),
     instance(mockedCheckedService),
-    instance(mockedAffectedAxiomService)
+    instance(mockedAffectedAxiom)
   );
 
   beforeEach(() => {
@@ -41,11 +42,36 @@ describe('SkillRule', () => {
         )
       ).thenReturn(new RollDefinition('SUCCESS', 10));
 
-      const spy = spyOn(instance(mockedAffectedAxiomService), 'affectWith');
+      const spy = spyOn(instance(mockedAffectedAxiom), 'affectWith');
 
       rule.execute(actor, eventSkillSurvival, extras);
 
       expect(spy).toHaveBeenCalled();
+    });
+
+    it('return rule result', () => {
+      const rollResult = new RollDefinition('SUCCESS', 10);
+      when(
+        mockedRollHelper.actorSkillCheck(
+          actor,
+          eventSkillSurvival.actionableDefinition.name
+        )
+      ).thenReturn(new RollDefinition('SUCCESS', 10));
+
+      const expected: RuleResultInterface = {
+        event: eventSkillSurvival,
+        actor,
+        target,
+        result: 'ACTED',
+        skill: {
+          roll: rollResult.roll,
+          name: eventSkillSurvival.actionableDefinition.name,
+        },
+      };
+
+      const result = rule.execute(actor, eventSkillSurvival, extras);
+
+      expect(result).toEqual(expected);
     });
   });
 });

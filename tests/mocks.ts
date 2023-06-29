@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EMPTY, of } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
-import { CombatRule } from '../src/backend/rules/combat.rule';
+import { AffectRule } from '../src/backend/rules/affect.rule';
 import { ConsumeRule } from '../src/backend/rules/consume.rule';
 import { InteractionRule } from '../src/backend/rules/interaction.rule';
 import { EquipRule } from '../src/backend/rules/equip.rule';
@@ -33,7 +33,7 @@ import { ArrayView } from '../src/core/view-models/array.view';
 import { ProfessionStore } from '../src/stores/profession.store';
 import { ActorStore } from '../src/stores/actor.store';
 import { SkillStore } from '../src/stores/skill.store';
-import { InspectRule } from '../src/backend/rules/inspect.rule';
+import { ReadRule } from '../src/backend/rules/read.rule';
 import { SettingsStore } from '../src/stores/settings.store';
 import { RulesHub } from '../src/backend/services/rules.hub';
 import { ActivationAxiom } from '../src/core/axioms/activation.axiom';
@@ -113,7 +113,7 @@ export const mockedConsumeRule = mock(ConsumeRule);
 
 export const mockedInteractionRule = mock(InteractionRule);
 
-export const mockedCombatRule = mock(CombatRule);
+export const mockedAffectRule = mock(AffectRule);
 
 export const mockedRuleDispatcherService = mock(RulesHub);
 
@@ -141,7 +141,7 @@ export const mockedSceneEntity = mock(SceneEntity);
 
 export const mockedUseRule = mock(UseRule);
 
-export const mockedGameEventsService = mock(GameEventsDefinition);
+export const mockedGameEventsDefinition = mock(GameEventsDefinition);
 
 export const mockedWithSubscriptionHelper = mock(WithSubscriptionHelper);
 
@@ -155,21 +155,21 @@ export const mockedSkillStore = mock(SkillStore);
 
 export const mockedMatDialog = mock(MatDialog);
 
-export const mockedInspectRule = mock(InspectRule);
+export const mockedReadRule = mock(ReadRule);
 
 export const mockedSettingsStore = mock(SettingsStore);
 
 export const mockedCheckedService = mock(CheckedService);
 
-export const mockedActivationAxiomService = mock(ActivationAxiom);
+export const mockedActivationAxiom = mock(ActivationAxiom);
 
-export const mockedAffectedAxiomService = mock(AffectAxiom);
+export const mockedAffectedAxiom = mock(AffectAxiom);
 
-export const mockedDodgeAxiomService = mock(DodgeAxiom);
+export const mockedDodgeAxiom = mock(DodgeAxiom);
 
-export const mockedEventHubService = mock(EventsHub);
+export const mockedEventHub = mock(EventsHub);
 
-export const mockedReadAxiomService = mock(ReadAxiom);
+export const mockedReadAxiom = mock(ReadAxiom);
 
 export const mockedCooldownBehavior = mock(CooldownBehavior);
 
@@ -343,14 +343,14 @@ export const setupMocks = () => {
   );
 
   when(mockedGameLoopService.events).thenReturn(
-    instance(mockedGameEventsService)
+    instance(mockedGameEventsDefinition)
   );
 
-  when(mockedGameEventsService.playerChanged$).thenReturn(
+  when(mockedGameEventsDefinition.playerChanged$).thenReturn(
     of(instance(mockedPlayerEntity))
   );
 
-  when(mockedGameEventsService.sceneChanged$).thenReturn(
+  when(mockedGameEventsDefinition.sceneChanged$).thenReturn(
     of(
       new SceneDefinition(
         'this is a test',
@@ -360,7 +360,7 @@ export const setupMocks = () => {
     )
   );
 
-  when(mockedGameEventsService.documentOpened$).thenReturn(of());
+  when(mockedGameEventsDefinition.documentOpened$).thenReturn(of());
 
   when(
     mockedFormatterHelperService.characterToKeyValueDescription(
@@ -372,7 +372,7 @@ export const setupMocks = () => {
 
   when(mockedSettingsStore.settings).thenReturn(gameSettings);
 
-  when(mockedAffectedAxiomService.logMessageProduced$).thenReturn(EMPTY);
+  when(mockedAffectedAxiom.logMessageProduced$).thenReturn(EMPTY);
 
   when(mockedCooldownBehavior.canAct).thenReturn(true);
 
@@ -420,7 +420,7 @@ const resetMocks = () => {
 
   reset(mockedInteractionRule);
 
-  reset(mockedCombatRule);
+  reset(mockedAffectRule);
 
   reset(mockedRuleDispatcherService);
 
@@ -440,7 +440,7 @@ const resetMocks = () => {
 
   reset(mockedUseRule);
 
-  reset(mockedGameEventsService);
+  reset(mockedGameEventsDefinition);
 
   reset(mockedWithSubscriptionHelper);
 
@@ -454,7 +454,7 @@ const resetMocks = () => {
 
   reset(mockedMatDialog);
 
-  reset(mockedInspectRule);
+  reset(mockedReadRule);
 
   reset(mockedSettingsStore);
 
@@ -462,15 +462,15 @@ const resetMocks = () => {
 
   reset(mockedCheckedService);
 
-  reset(mockedActivationAxiomService);
+  reset(mockedActivationAxiom);
 
-  reset(mockedAffectedAxiomService);
+  reset(mockedAffectedAxiom);
 
-  reset(mockedDodgeAxiomService);
+  reset(mockedDodgeAxiom);
 
-  reset(mockedEventHubService);
+  reset(mockedEventHub);
 
-  reset(mockedReadAxiomService);
+  reset(mockedReadAxiom);
 
   reset(mockedCooldownBehavior);
 

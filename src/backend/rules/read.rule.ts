@@ -1,17 +1,13 @@
-import { Injectable } from '@angular/core';
 import { ReadAxiom } from '../../core/axioms/read.axiom';
-
 import { ReadableDefinition } from '../../core/definitions/readable.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { MasterRuleService } from './master.rule';
+import { MasterRule } from './master.rule';
 import { ActionableEvent } from '../../core/events/actionable.event';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class InspectRule extends MasterRuleService {
+export class ReadRule extends MasterRule {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly readAxiomService: ReadAxiom
@@ -19,25 +15,35 @@ export class InspectRule extends MasterRuleService {
     super();
   }
 
-  public execute(actor: ActorInterface, event: ActionableEvent): void {
+  public execute(
+    actor: ActorInterface,
+    event: ActionableEvent
+  ): RuleResultInterface {
     const itemName = event.eventId;
 
-    const item = this.inventoryService.look<ReadableDefinition>(
+    const read = this.inventoryService.look<ReadableDefinition>(
       actor.id,
       itemName
     );
 
-    if (!item) {
+    if (!read) {
       throw new Error(GameStringsStore.errorMessages['WRONG-ITEM']);
     }
 
-    const logMessage = GameStringsStore.createItemInspectedLogMessage(
+    const logMessage = GameStringsStore.createItemReadLogMessage(
       actor.name,
-      item.identity.label
+      read.identity.label
     );
 
     this.ruleLog.next(logMessage);
 
-    this.readAxiomService.openDocument(item);
+    this.readAxiomService.openDocument(read);
+
+    return {
+      event,
+      actor,
+      read,
+      result: 'READ',
+    };
   }
 }
