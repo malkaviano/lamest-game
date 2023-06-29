@@ -1,8 +1,4 @@
-export type ResultLiteral =
-  | 'NONE'
-  | 'SUCCESS'
-  | 'FAILURE'
-  | 'IMPOSSIBLE'
+export type RuleResultLiteral =
   | 'DENIED'
   | 'USED'
   | 'EQUIPPED'
@@ -12,4 +8,5 @@ export type ResultLiteral =
   | 'INTERACTED'
   | 'READ'
   | 'CONSUMED'
-  | 'AFFECTED';
+  | 'AFFECTED'
+  | 'ACTED';

@@ -1,20 +1,17 @@
 import { RollHelper } from '../../core/helpers/roll.helper';
-import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
-import { EffectDefinition } from '../../core/definitions/effect.definition';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActivationAxiom } from '../../core/axioms/activation.axiom';
 import { DodgeAxiom } from '../../core/axioms/dodge.axiom';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
-import { ResultLiteral } from '../../core/literals/result.literal';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
 import { ConverterHelper } from '../../core/helpers/converter.helper';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { CheckResultLiteral } from '../../core/literals/check-result.literal';
 
 export class AffectRule extends MasterRule {
   constructor(
@@ -135,7 +132,7 @@ export class AffectRule extends MasterRule {
     skillName: string,
     target: ActorInterface,
     weaponLabel: string
-  ): { checkResult: ResultLiteral; roll: number } {
+  ): { checkResult: CheckResultLiteral; roll: number } {
     const { result, roll } = this.rollHelper.actorSkillCheck(actor, skillName);
 
     if (result === 'SUCCESS') {

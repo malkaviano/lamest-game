@@ -2,13 +2,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ActionableState } from '../states/actionable.state';
-import { ResultLiteral } from '../literals/result.literal';
 import { InteractiveInterface } from '../interfaces/interactive.interface';
 import { ClassificationLiteral } from '../literals/classification.literal';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { ArrayView } from '../view-models/array.view';
 import { BehaviorLiteral } from '../literals/behavior.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 export class InteractiveEntity implements InteractiveInterface {
   private readonly initialState: ActionableState;
@@ -49,7 +49,7 @@ export class InteractiveEntity implements InteractiveInterface {
 
   public reactTo(
     action: ActionableDefinition,
-    result: ResultLiteral,
+    result: CheckResultLiteral,
     values: ReactionValuesInterface
   ): string | null {
     const oldActions = this.currentState.actions;

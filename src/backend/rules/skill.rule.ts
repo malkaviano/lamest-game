@@ -39,6 +39,12 @@ export class SkillRule extends MasterRule {
       );
     }
 
-    return { event, result, actor, target, skill: { roll, name: skillName } };
+    return {
+      event,
+      result: 'ACTED',
+      actor,
+      target,
+      skill: { roll, name: skillName },
+    };
   }
 }

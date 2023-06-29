@@ -55,7 +55,7 @@ describe('UnEquipRule', () => {
   });
 
   describe('when no weapon was equipped', () => {
-    it('return none result', () => {
+    it('return denied result', () => {
       when(mockedPlayerEntity.unEquip()).thenReturn(null);
 
       const result = rule.execute(actor, unEquipEvent);
@@ -64,7 +64,7 @@ describe('UnEquipRule', () => {
 
       const expected: RuleResultInterface = {
         event: unEquipEvent,
-        result: 'NONE',
+        result: 'DENIED',
         actor,
       };
 

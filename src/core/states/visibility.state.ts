@@ -1,12 +1,12 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
-import { ResultLiteral } from '../literals/result.literal';
 import { VisibilityLiteral } from '../literals/visibility.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 import { ArrayView } from '../view-models/array.view';
 import { ActorEntity } from '../entities/actor.entity';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 export class VisibilityState extends ActionableState {
   constructor(
@@ -18,7 +18,7 @@ export class VisibilityState extends ActionableState {
 
   protected override stateResult(
     action: ActionableDefinition,
-    result: ResultLiteral,
+    result: CheckResultLiteral,
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
     const actor = values.actor;

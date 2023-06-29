@@ -1,6 +1,5 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { ResultLiteral } from '../literals/result.literal';
 import { ActorEntity } from './actor.entity';
 import { ArrayView } from '../view-models/array.view';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
@@ -32,6 +31,7 @@ import {
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 const remedy5Log = 'received REMEDY effect, healed 5 hp';
 
@@ -148,7 +148,7 @@ describe('ActorEntity', () => {
             it('return nothing', () => {
               const log = fakeActor().reactTo(
                 actionAttack,
-                result as ResultLiteral,
+                result as CheckResultLiteral,
                 deepEqual({ effect: fakeEffect('ACID', 1) })
               );
 
@@ -253,7 +253,7 @@ describe('ActorEntity', () => {
 
               const log = fakeActor().reactTo(
                 actionConsume,
-                result as ResultLiteral,
+                result as CheckResultLiteral,
                 { effect, energy }
               );
 
@@ -278,7 +278,7 @@ describe('ActorEntity', () => {
               hpResult = event;
             });
 
-            char.reactTo(actionConsume, result as ResultLiteral, {
+            char.reactTo(actionConsume, result as CheckResultLiteral, {
               effect,
               energy,
             });
@@ -305,7 +305,7 @@ describe('ActorEntity', () => {
               epResult = event;
             });
 
-            char.reactTo(actionConsume, result as ResultLiteral, {
+            char.reactTo(actionConsume, result as CheckResultLiteral, {
               effect,
               energy,
             });
@@ -322,7 +322,7 @@ describe('ActorEntity', () => {
           it('return nothing', () => {
             const log = fakeActor().reactTo(
               actionConsume,
-              result as ResultLiteral,
+              result as CheckResultLiteral,
               deepEqual({ effect: fakeEffect('REMEDY', 1) })
             );
 

@@ -1,9 +1,9 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ArrayView } from '../view-models/array.view';
 import { StateLiteral } from '../literals/state.literal';
-import { ResultLiteral } from '../literals/result.literal';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 export abstract class ActionableState {
   constructor(
@@ -17,7 +17,7 @@ export abstract class ActionableState {
 
   public onResult(
     action: ActionableDefinition,
-    result: ResultLiteral,
+    result: CheckResultLiteral,
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
     if (!this.stateActions.items.some((a) => a.equals(action))) {
@@ -29,7 +29,7 @@ export abstract class ActionableState {
 
   protected abstract stateResult(
     action: ActionableDefinition,
-    result: ResultLiteral,
+    result: CheckResultLiteral,
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string };
 }

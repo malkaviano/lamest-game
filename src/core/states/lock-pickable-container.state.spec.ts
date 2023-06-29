@@ -52,7 +52,7 @@ describe('LockPickableContainerState', () => {
 
   describe('when using a master key', () => {
     it('return discarded state and log', () => {
-      const result = fakeState().onResult(actionUseMasterKey, 'USED', {
+      const result = fakeState().onResult(actionUseMasterKey, 'NONE', {
         item: masterKey,
       });
 
@@ -67,7 +67,7 @@ describe('LockPickableContainerState', () => {
     it('return LockPickingContainerState', () => {
       const result = fakeState().onResult(
         actionInteractionLockPick,
-        'USED',
+        'NONE',
         {}
       );
 

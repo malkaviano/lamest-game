@@ -2,9 +2,9 @@ import { LogMessageDefinition } from '../core/definitions/log-message.definition
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { EffectTypeLiteral } from '../core/literals/effect-type.literal';
 import { LogCategoryLiteral } from '../core/literals/log-category.literal';
-import { ResultLiteral } from '../core/literals/result.literal';
 
 import gameMessages from '../assets/game-strings.json';
+import { CheckResultLiteral } from '../core/literals/check-result.literal';
 
 export class GameStringsStore {
   private static logMessagesStore: KeyValueInterface<string> =
@@ -122,7 +122,7 @@ export class GameStringsStore {
     actor: string,
     skill: string,
     roll: string,
-    result: ResultLiteral
+    result: CheckResultLiteral
   ): LogMessageDefinition {
     return new LogMessageDefinition(
       'CHECK',

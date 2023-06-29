@@ -1,7 +1,7 @@
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from './actor.interface';
 import { InteractiveInterface } from './interactive.interface';
-import { ResultLiteral } from '../literals/result.literal';
+import { RuleResultLiteral } from '../literals/rule-result.literal';
 import { GameItemDefinition } from '../definitions/game-item.definition';
 import { WeaponDefinition } from '../definitions/weapon.definition';
 import { UsableDefinition } from '../definitions/usable.definition';
@@ -11,7 +11,7 @@ import { EffectTypeLiteral } from '../literals/effect-type.literal';
 
 export interface RuleResultInterface {
   readonly event: ActionableEvent;
-  readonly result: ResultLiteral;
+  readonly result: RuleResultLiteral;
   readonly actor: ActorInterface;
   readonly target?: InteractiveInterface;
   readonly picked?: GameItemDefinition;

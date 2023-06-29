@@ -18,7 +18,7 @@ export class UnEquipRule extends MasterRule {
 
     const result: RuleResultInterface = {
       event,
-      result: 'NONE',
+      result: 'DENIED',
       actor,
     };
 

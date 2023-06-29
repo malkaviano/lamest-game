@@ -1,9 +1,9 @@
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ResultLiteral } from '../literals/result.literal';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 import { ArrayView } from '../view-models/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 export class SkillState extends ActionableState {
   constructor(
@@ -16,7 +16,7 @@ export class SkillState extends ActionableState {
 
   protected override stateResult(
     _1: ActionableDefinition,
-    result: ResultLiteral
+    result: CheckResultLiteral
   ): { state: ActionableState; log?: string } {
     switch (result) {
       case 'SUCCESS':

@@ -57,7 +57,7 @@ export class UseRule extends MasterRule {
 
       this.ruleLog.next(logMessage);
 
-      this.affectAxiomService.affectWith(target, actionableDefinition, 'USED', {
+      this.affectAxiomService.affectWith(target, actionableDefinition, 'NONE', {
         item: used,
       });
     }

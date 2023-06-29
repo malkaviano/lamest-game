@@ -2,12 +2,12 @@ import { ActionableDefinition } from '../definitions/actionable.definition';
 import { directionNamesDefinition } from '../definitions/directions.definition';
 import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
 import { DirectionLiteral } from '../literals/direction.literal';
-import { ResultLiteral } from '../literals/result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { LockedContainerState } from './locked-container.state';
 import { ArrayView } from '../view-models/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 export class LockPickingContainerState extends LockedContainerState {
   private lockPosition: number;
@@ -37,7 +37,7 @@ export class LockPickingContainerState extends LockedContainerState {
 
   protected override stateResult(
     action: ActionableDefinition,
-    result: ResultLiteral,
+    result: CheckResultLiteral,
     values: ReactionValuesInterface
   ): { state: ActionableState; log?: string } {
     const direction = action.name as DirectionLiteral;

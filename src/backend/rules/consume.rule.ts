@@ -2,7 +2,7 @@ import { ConsumableDefinition } from '../../core/definitions/consumable.definiti
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { MasterRule } from './master.rule';
-import { ResultLiteral } from '../../core/literals/result.literal';
+import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
@@ -11,6 +11,7 @@ import { EffectEvent } from '../../core/events/effect.event';
 import { CheckedService } from '../services/checked.service';
 import { RollHelper } from '../../core/helpers/roll.helper';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { CheckResultLiteral } from '../../core/literals/check-result.literal';
 
 export class ConsumeRule extends MasterRule {
   constructor(
@@ -34,7 +35,7 @@ export class ConsumeRule extends MasterRule {
       eventId
     );
 
-    let rollResult: ResultLiteral = 'NONE';
+    let rollResult: CheckResultLiteral = 'NONE';
 
     const result: RuleResultInterface = {
       event,
@@ -93,7 +94,7 @@ export class ConsumeRule extends MasterRule {
     actor: ActorInterface,
     consumable: ConsumableDefinition,
     actionableDefinition: ActionableDefinition,
-    rollResult: ResultLiteral
+    rollResult: CheckResultLiteral
   ): { hp: number; energy: number } {
     const logMessage = GameStringsStore.createConsumedLogMessage(
       actor.name,
