@@ -1,5 +1,4 @@
 import { EffectTypeLiteral } from '../../literals/effect-type.literal';
-import { ItemUsabilityLiteral } from '../../literals/item-usability';
 
 export interface ConsumableStoreInterface {
   readonly consumables: {

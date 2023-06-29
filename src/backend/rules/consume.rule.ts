@@ -2,7 +2,6 @@ import { ConsumableDefinition } from '../../core/definitions/consumable.definiti
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { MasterRule } from './master.rule';
-import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
 import { ActionableDefinition } from '../../core/definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';

@@ -2,7 +2,6 @@ import { instance } from 'ts-mockito';
 
 import { VisibilityState } from './visibility.state';
 import { ActionableDefinition } from '../definitions/actionable.definition';
-import { RuleResultLiteral } from '../literals/rule-result.literal';
 import { emptyState } from './empty.state';
 import { GameStringsStore } from '../../stores/game-strings.store';
 
