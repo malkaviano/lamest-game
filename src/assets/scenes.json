@@ -2,7 +2,7 @@
   "scenes": [
     {
       "name": "clearing",
-      "description": "clearing",
+      "description": "Forest Clearing",
       "image": "clearing.jpg",
       "interactives": ["campFire", "forestTrail", "bushes", "disguiseVillager"],
       "transitions": [
@@ -14,7 +14,7 @@
     },
     {
       "name": "villageEntrance",
-      "description": "entrance",
+      "description": "Village Entrance",
       "image": "gate.jpg",
       "interactives": ["forestTrail", "villager", "villageGate"],
       "transitions": [
@@ -30,7 +30,7 @@
     },
     {
       "name": "mainStreet",
-      "description": "village",
+      "description": "Village Main Street",
       "image": "village.jpg",
       "interactives": [
         "villageGate",
@@ -69,7 +69,7 @@
     },
     {
       "name": "mainHouse",
-      "description": "mainHouse",
+      "description": "Main House",
       "image": "main.jpg",
       "interactives": [
         "mainHouseDoor",
@@ -98,7 +98,7 @@
     },
     {
       "name": "mainHouseLibrary",
-      "description": "mainHouseLibrary",
+      "description": "Main House Library",
       "image": "library.jpg",
       "interactives": ["mainHouseLibraryDoor"],
       "transitions": [
@@ -110,7 +110,7 @@
     },
     {
       "name": "mainHouseDining",
-      "description": "mainHouseDining",
+      "description": "Main House Dining",
       "image": "dining.jpg",
       "interactives": ["mainHouseDiningDoor"],
       "transitions": [
@@ -122,7 +122,7 @@
     },
     {
       "name": "mainHouseBasement",
-      "description": "mainHouseBasement",
+      "description": "Main House Basement",
       "image": "basement.jpg",
       "interactives": ["mainHouseBasementDoor"],
       "transitions": [
@@ -134,7 +134,7 @@
     },
     {
       "name": "hunterCabin",
-      "description": "hunterCabin",
+      "description": "Hunter Cabin",
       "image": "cabin.jpg",
       "interactives": [
         "hunterCabinDoor",
@@ -150,7 +150,7 @@
     },
     {
       "name": "mysteriousHouse",
-      "description": "mysteriousHouse",
+      "description": "Mysterious House",
       "image": "mysterious.jpg",
       "interactives": ["mysteriousHouseDoor", "zombie"],
       "transitions": [
@@ -162,7 +162,7 @@
     },
     {
       "name": "ambulatoryTent",
-      "description": "ambulatoryTent",
+      "description": "Ambulatory Tent",
       "image": "ambulatory.jpg",
       "interactives": [
         "ambulatoryTentEntrance",
@@ -179,7 +179,7 @@
     },
     {
       "name": "storageHangar",
-      "description": "storageHangar",
+      "description": "Storage Hangar",
       "image": "warehouse.jpg",
       "interactives": [
         "storageHangarDoor",
