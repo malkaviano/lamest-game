@@ -15,7 +15,11 @@ export class ReadRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'READ';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {

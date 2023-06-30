@@ -24,7 +24,11 @@ export class AffectRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'AFFECT';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface

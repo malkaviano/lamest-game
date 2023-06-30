@@ -16,7 +16,11 @@ export class SkillRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'SKILL';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface

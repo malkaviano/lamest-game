@@ -22,7 +22,11 @@ export class ConsumeRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'CONSUME';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {

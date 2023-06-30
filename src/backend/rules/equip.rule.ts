@@ -15,7 +15,11 @@ export class EquipRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'EQUIP';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {

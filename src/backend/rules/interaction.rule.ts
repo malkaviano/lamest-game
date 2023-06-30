@@ -15,7 +15,11 @@ export class InteractionRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'INTERACTION';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface

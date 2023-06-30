@@ -17,7 +17,11 @@ export class PickRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'PICK';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface

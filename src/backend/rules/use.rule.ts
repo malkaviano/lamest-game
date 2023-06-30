@@ -18,6 +18,10 @@ export class UseRule extends MasterRule {
     super();
   }
 
+  public override get name(): string {
+    return 'USE';
+  }
+
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent,

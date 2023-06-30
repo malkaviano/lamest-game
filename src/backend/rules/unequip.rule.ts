@@ -10,7 +10,11 @@ export class UnEquipRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'UNEQUIP';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {

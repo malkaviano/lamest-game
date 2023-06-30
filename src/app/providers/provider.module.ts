@@ -110,18 +110,19 @@ const rulesHub = new RulesHub(
   inspectRule
 );
 
+const visibilityPolicy = new VisibilityPolicy();
+
+const policyHub = new PolicyHub(visibilityPolicy);
+
 const eventsHub = new EventsHub(
   rollHelper,
   rulesHub,
   dodgeAxiom,
   activationAxiom,
   affectAxiom,
-  readAxiom
+  readAxiom,
+  policyHub
 );
-
-const visibilityPolicy = new VisibilityPolicy();
-
-const policyHub = new PolicyHub(visibilityPolicy);
 
 @NgModule({
   declarations: [],

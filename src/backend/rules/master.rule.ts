@@ -13,6 +13,8 @@ export abstract class MasterRule implements RuleInterface, LoggerInterface {
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
+  public abstract get name(): string;
+
   constructor() {
     this.ruleLog = new Subject();
 

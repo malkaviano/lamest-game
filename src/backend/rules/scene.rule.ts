@@ -15,7 +15,11 @@ export class SceneRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): string {
+    return 'SCENE';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface
