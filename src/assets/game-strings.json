@@ -57,8 +57,8 @@
     "CURRENT HP": "The character current hit points",
     "CURRENT EP": "The character current energy points",
     "MOV": "The character movement",
-    "HP": "The character max / current hit points",
-    "EP": "The character max / current energy points",
+    "HP": "The character current | max hit points",
+    "EP": "The character current | max energy points",
     "UNARMED": "Actor Natural Weapon"
   },
   "tooltips": {

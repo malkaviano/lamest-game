@@ -2,8 +2,11 @@
   <div class="content-bar title-text">
     <app-status-bar-panel [status]="characterStatus"></app-status-bar-panel>
   </div>
+  <div class="content-bar title-text">
+    <span>Current Scene: {{ scene.description }}</span>
+  </div>
   <div class="content-bar">
-    <app-image-viewer-widget 
+    <app-image-viewer-widget
       [image]="{ title: scene.description, src: 'assets/images/' + scene.image, alt: scene.description, width: '400', height: '400'}"
       (imageOpened)="sceneOpened.emit($event)"
     >
@@ -11,48 +14,50 @@
   </div>
 </div>
 
-<div class="flex-panel">
-  <div class="section content-box">
-    <div class="title-text">
-      <span class="mat-h3">Character</span>
-    </div>
-    <div data-testid="character">
-      <app-sheet-panel
-        [characterValues]="characterValues"
-        [inventory]="inventory"
-        (actionSelected)="actionSelected.emit($event)"
-      ></app-sheet-panel>
-    </div>
-  </div>
-  <div class="section large-box">
-    <div class="title-text">
-      <span class="mat-h3">Scene Interactives</span>
-    </div>
-    <div class="vertical-scrollable">
-      <div data-testid="interactives">
-        <app-interactive-panel
-          *ngIf="canAct"
-          [panelName]="'interactives'"
-          [interactives]="scene.interactives"
+<section name="content">
+  <div class="flex-panel">
+    <div class="section content-box">
+      <div class="title-text">
+        <span class="mat-h3">Character</span>
+      </div>
+      <div data-testid="character">
+        <app-sheet-panel
+          [characterValues]="characterValues"
+          [inventory]="inventory"
           (actionSelected)="actionSelected.emit($event)"
-        ></app-interactive-panel>
+        ></app-sheet-panel>
       </div>
     </div>
+    <div class="section large-box">
+      <div class="title-text">
+        <span class="mat-h3">Scene Interactives</span>
+      </div>
+      <div class="vertical-scrollable">
+        <div data-testid="interactives">
+          <app-interactive-panel
+            *ngIf="canAct"
+            [panelName]="'interactives'"
+            [interactives]="scene.interactives"
+            (actionSelected)="actionSelected.emit($event)"
+          ></app-interactive-panel>
+        </div>
+      </div>
 
-    <mat-spinner
-      *ngIf="!canAct"
-      style="margin: auto;"      
-    ></mat-spinner>
-  </div>
-  <div class="section content-box">
-    <div class="title-text">
-      <span class="mat-h3">Action Logs</span>
+      <mat-spinner
+        *ngIf="!canAct"
+        style="margin: auto;"
+      ></mat-spinner>
     </div>
-    <div>
-      <app-text-area-widget
-        [paragraphs]="logs"
-        data-testid="log"
-      ></app-text-area-widget>
+    <div class="section content-box">
+      <div class="title-text">
+        <span class="mat-h3">Action Logs</span>
+      </div>
+      <div>
+        <app-text-area-widget
+          [paragraphs]="logs"
+          data-testid="log"
+        ></app-text-area-widget>
+      </div>
     </div>
   </div>
-</div>
+</section>
