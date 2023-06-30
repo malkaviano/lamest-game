@@ -12,6 +12,9 @@ import { ConverterHelper } from '../../core/helpers/converter.helper';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 import { CheckResultLiteral } from '../../core/literals/check-result.literal';
+import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
+import { EffectTypeLiteral } from '../../core/literals/effect-type.literal';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
 
 export class AffectRule extends MasterRule {
   constructor(
@@ -24,7 +27,7 @@ export class AffectRule extends MasterRule {
     super();
   }
 
-  public override get name(): string {
+  public override get name(): RuleNameLiteral {
     return 'AFFECT';
   }
 
@@ -44,20 +47,18 @@ export class AffectRule extends MasterRule {
       energyActivation,
     } = actor.weaponEquipped;
 
-    const result: RuleResultInterface = {
-      name: 'AFFECT',
-      event,
-      actor,
-      target,
-      result: 'DENIED',
-      affected: actor.weaponEquipped,
-      skill: { name: skillName },
-    };
-
     const activated = this.activationAxiomService.activation(actor, {
       identity,
       energyActivation,
     });
+
+    let ruleResult: RuleResultLiteral = 'DENIED';
+
+    this.ruleResult.skillName = skillName;
+
+    this.ruleResult.target = target;
+
+    this.ruleResult.affected = actor.weaponEquipped;
 
     if (activated) {
       let targetWasHit = true;
@@ -74,7 +75,7 @@ export class AffectRule extends MasterRule {
 
         targetWasHit = checkResult === 'SUCCESS';
 
-        Object.assign(result, { skill: { name: skillName, roll } });
+        this.ruleResult.checkRoll = roll;
 
         if (checkResult !== 'IMPOSSIBLE' && usability === 'DISPOSABLE') {
           this.disposeItem(actor, identity.label);
@@ -89,7 +90,7 @@ export class AffectRule extends MasterRule {
             dodgesPerformed: extras.targetDodgesPerformed ?? 0,
           });
 
-        Object.assign(result, { dodged });
+        this.ruleResult.dodged = dodged;
 
         if (!dodged) {
           const effectAmount =
@@ -104,17 +105,17 @@ export class AffectRule extends MasterRule {
             }
           );
 
-          Object.assign(result, {
-            result: 'EXECUTED',
-            effect: { type: effect.effectType, amount: effectAmount },
-          });
+          ruleResult = 'EXECUTED';
+
+          this.ruleResult.effectType = effect.effectType;
+          this.ruleResult.effectAmount = effectAmount;
         }
       }
 
       targetActor?.afflictedBy(actor.id);
     }
 
-    return result;
+    return this.getResult(event, actor, ruleResult);
   }
 
   private disposeItem(actor: ActorInterface, label: string): void {

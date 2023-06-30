@@ -24,13 +24,15 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('EquipRule', () => {
-  const rule = new EquipRule(
-    instance(mockedInventoryService),
-    instance(mockedCheckedService)
-  );
+  let rule: EquipRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new EquipRule(
+      instance(mockedInventoryService),
+      instance(mockedCheckedService)
+    );
 
     when(
       mockedCheckedService.lookItemOrThrow<WeaponDefinition>(

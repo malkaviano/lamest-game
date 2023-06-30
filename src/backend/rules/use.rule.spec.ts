@@ -23,14 +23,16 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UseRule', () => {
-  const rule = new UseRule(
-    instance(mockedInventoryService),
-    instance(mockedCheckedService),
-    instance(mockedAffectedAxiom)
-  );
+  let rule: UseRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new UseRule(
+      instance(mockedInventoryService),
+      instance(mockedCheckedService),
+      instance(mockedAffectedAxiom)
+    );
 
     when(
       mockedCheckedService.takeItemOrThrow<UsableDefinition>(

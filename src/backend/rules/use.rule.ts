@@ -8,6 +8,8 @@ import { MasterRule } from './master.rule';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
+import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
 
 export class UseRule extends MasterRule {
   constructor(
@@ -18,7 +20,7 @@ export class UseRule extends MasterRule {
     super();
   }
 
-  public override get name(): string {
+  public override get name(): RuleNameLiteral {
     return 'USE';
   }
 
@@ -36,13 +38,9 @@ export class UseRule extends MasterRule {
       actionableDefinition.name
     );
 
-    const result: RuleResultInterface = {
-      name: 'USE',
-      event,
-      result: 'DENIED',
-      actor,
-      target,
-    };
+    let ruleResult: RuleResultLiteral = 'DENIED';
+
+    this.ruleResult.target = target;
 
     if (!used) {
       const logMessage = GameStringsStore.createNotFoundLogMessage(
@@ -52,7 +50,9 @@ export class UseRule extends MasterRule {
 
       this.ruleLog.next(logMessage);
     } else {
-      Object.assign(result, { result: 'EXECUTED', used });
+      this.ruleResult.used = used;
+
+      ruleResult = 'EXECUTED';
 
       if (used.usability === 'DISPOSABLE') {
         this.checkedService.takeItemOrThrow<UsableDefinition>(
@@ -74,6 +74,6 @@ export class UseRule extends MasterRule {
       });
     }
 
-    return result;
+    return this.getResult(event, actor, ruleResult);
   }
 }

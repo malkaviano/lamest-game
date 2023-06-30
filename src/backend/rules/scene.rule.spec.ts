@@ -20,13 +20,15 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('SceneRule', () => {
-  const rule = new SceneRule(
-    instance(mockedNarrativeService),
-    instance(mockedCheckedService)
-  );
+  let rule: SceneRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new SceneRule(
+      instance(mockedNarrativeService),
+      instance(mockedCheckedService)
+    );
   });
 
   it('should be created', () => {

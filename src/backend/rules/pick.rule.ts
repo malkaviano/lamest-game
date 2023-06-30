@@ -7,6 +7,7 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
 
 export class PickRule extends MasterRule {
   constructor(
@@ -17,7 +18,7 @@ export class PickRule extends MasterRule {
     super();
   }
 
-  public override get name(): string {
+  public override get name(): RuleNameLiteral {
     return 'PICK';
   }
 
@@ -51,13 +52,10 @@ export class PickRule extends MasterRule {
       {}
     );
 
-    return {
-      name: 'PICK',
-      event,
-      actor,
-      target,
-      picked: item,
-      result: 'EXECUTED',
-    };
+    this.ruleResult.picked = item;
+
+    this.ruleResult.target = target;
+
+    return this.getResult(event, actor, 'EXECUTED');
   }
 }

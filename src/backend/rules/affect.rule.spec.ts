@@ -29,15 +29,17 @@ import {
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 describe('AffectRule', () => {
-  const rule = new AffectRule(
-    instance(mockedRollHelper),
-    instance(mockedCheckedService),
-    instance(mockedActivationAxiom),
-    instance(mockedDodgeAxiom),
-    instance(mockedAffectedAxiom)
-  );
+  let rule: AffectRule;
 
   beforeEach(() => {
+    rule = new AffectRule(
+      instance(mockedRollHelper),
+      instance(mockedCheckedService),
+      instance(mockedActivationAxiom),
+      instance(mockedDodgeAxiom),
+      instance(mockedAffectedAxiom)
+    );
+
     setupMocks();
 
     when(mockedRollHelper.roll(simpleSword.damage.diceRoll)).thenReturn(0);

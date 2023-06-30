@@ -21,13 +21,15 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('ReadRule', () => {
-  const rule = new ReadRule(
-    instance(mockedInventoryService),
-    instance(mockedReadAxiom)
-  );
+  let rule: ReadRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new ReadRule(
+      instance(mockedInventoryService),
+      instance(mockedReadAxiom)
+    );
 
     when(
       mockedInventoryService.look(playerInfo.id, eventRead.eventId)

@@ -6,6 +6,8 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
+import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
 
 export class EquipRule extends MasterRule {
   constructor(
@@ -15,7 +17,7 @@ export class EquipRule extends MasterRule {
     super();
   }
 
-  public override get name(): string {
+  public override get name(): RuleNameLiteral {
     return 'EQUIP';
   }
 
@@ -29,20 +31,14 @@ export class EquipRule extends MasterRule {
       event.eventId
     );
 
-    const skillName = equipped.skillName;
+    this.ruleResult.skillName = equipped.skillName;
 
-    const result: RuleResultInterface = {
-      name: 'EQUIP',
-      event,
-      actor,
-      result: 'DENIED',
-      skill: {
-        name: skillName,
-      },
-    };
+    let ruleResult: RuleResultLiteral = 'DENIED';
 
-    if (actor.skills[skillName] > 0) {
-      Object.assign(result, { result: 'EXECUTED', equipped });
+    if (actor.skills[equipped.skillName] > 0) {
+      ruleResult = 'EXECUTED';
+
+      this.ruleResult.equipped = equipped;
 
       const weapon = this.checkedService.takeItemOrThrow<WeaponDefinition>(
         this.inventoryService,
@@ -53,7 +49,7 @@ export class EquipRule extends MasterRule {
       const unequipped = actor.equip(weapon);
 
       if (unequipped) {
-        Object.assign(result, { unequipped });
+        this.ruleResult.unequipped = unequipped;
 
         this.inventoryService.store(actor.id, unequipped);
 
@@ -74,13 +70,13 @@ export class EquipRule extends MasterRule {
     } else {
       const logMessage = GameStringsStore.createEquipErrorLogMessage(
         actor.name,
-        skillName,
+        equipped.skillName,
         equipped.identity.label
       );
 
       this.ruleLog.next(logMessage);
     }
 
-    return result;
+    return this.getResult(event, actor, ruleResult);
   }
 }

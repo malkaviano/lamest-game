@@ -6,6 +6,7 @@ import { AffectAxiom } from '../../core/axioms/affect.axiom';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
 
 export class SkillRule extends MasterRule {
   constructor(
@@ -16,7 +17,7 @@ export class SkillRule extends MasterRule {
     super();
   }
 
-  public override get name(): string {
+  public override get name(): RuleNameLiteral {
     return 'SKILL';
   }
 
@@ -31,6 +32,12 @@ export class SkillRule extends MasterRule {
 
     const { result, roll } = this.rollHelper.actorSkillCheck(actor, skillName);
 
+    this.ruleResult.skillName = skillName;
+
+    this.ruleResult.checkRoll = roll;
+
+    this.ruleResult.target = target;
+
     if (result !== 'IMPOSSIBLE') {
       this.affectAxiomService.affectWith(
         target,
@@ -43,13 +50,6 @@ export class SkillRule extends MasterRule {
       );
     }
 
-    return {
-      name: 'SKILL',
-      event,
-      result: 'EXECUTED',
-      actor,
-      target,
-      skill: { roll, name: skillName },
-    };
+    return this.getResult(event, actor, 'EXECUTED');
   }
 }

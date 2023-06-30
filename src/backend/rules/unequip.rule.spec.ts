@@ -19,12 +19,14 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UnEquipRule', () => {
-  const rule = new UnEquipRule(instance(mockedInventoryService));
+  let rule: UnEquipRule;
 
   const actor = instance(mockedPlayerEntity);
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new UnEquipRule(instance(mockedInventoryService));
 
     when(mockedPlayerEntity.unEquip()).thenReturn(unDodgeableAxe);
   });

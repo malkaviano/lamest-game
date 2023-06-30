@@ -27,9 +27,9 @@ export interface RuleResultInterface {
     readonly roll?: number;
   };
   readonly consumable?: {
-    readonly consumed?: ConsumableDefinition;
-    readonly hp?: number;
-    readonly energy?: number;
+    readonly consumed: ConsumableDefinition;
+    readonly hp: number;
+    readonly energy: number;
   };
   readonly dodged?: boolean;
   readonly effect?: { type: EffectTypeLiteral; amount: number };

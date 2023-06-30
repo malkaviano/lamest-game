@@ -19,14 +19,16 @@ import {
 } from '../../../tests/fakes';
 
 describe('PickRule', () => {
-  const rule = new PickRule(
-    instance(mockedInventoryService),
-    instance(mockedCheckedService),
-    instance(mockedAffectedAxiom)
-  );
+  let rule: PickRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new PickRule(
+      instance(mockedInventoryService),
+      instance(mockedCheckedService),
+      instance(mockedAffectedAxiom)
+    );
 
     when(
       mockedCheckedService.takeItemOrThrow(

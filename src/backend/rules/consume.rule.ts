@@ -11,6 +11,8 @@ import { CheckedService } from '../services/checked.service';
 import { RollHelper } from '../../core/helpers/roll.helper';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 import { CheckResultLiteral } from '../../core/literals/check-result.literal';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
+import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
 
 export class ConsumeRule extends MasterRule {
   constructor(
@@ -22,7 +24,7 @@ export class ConsumeRule extends MasterRule {
     super();
   }
 
-  public override get name(): string {
+  public override get name(): RuleNameLiteral {
     return 'CONSUME';
   }
 
@@ -38,44 +40,29 @@ export class ConsumeRule extends MasterRule {
       eventId
     );
 
+    let ruleResult: RuleResultLiteral = 'DENIED';
+
     let rollResult: CheckResultLiteral = 'NONE';
 
-    const result: RuleResultInterface = {
-      name: 'CONSUME',
-      event,
-      actor,
-      result: 'DENIED',
-    };
+    this.ruleResult.consumable = consumed;
 
     if (consumed.skillName) {
-      const rollChecked = this.rollHelper.actorSkillCheck(
+      const checkRoll = this.rollHelper.actorSkillCheck(
         actor,
         consumed.skillName
       );
 
-      rollResult = rollChecked.result;
+      rollResult = checkRoll.result;
 
-      Object.assign(result, {
-        skill: { name: consumed.skillName, roll: rollChecked.roll },
-      });
+      this.ruleResult.skillName = consumed.skillName;
+
+      this.ruleResult.checkRoll = checkRoll.roll;
     }
 
     if (rollResult !== 'IMPOSSIBLE') {
-      const { hp, energy } = this.consume(
-        actor,
-        consumed,
-        actionableDefinition,
-        rollResult
-      );
+      this.consume(actor, consumed, actionableDefinition, rollResult);
 
-      Object.assign(result, {
-        result: 'EXECUTED',
-        consumable: {
-          consumed,
-          hp,
-          energy,
-        },
-      });
+      ruleResult = 'EXECUTED';
 
       this.checkedService.takeItemOrThrow<ConsumableDefinition>(
         this.inventoryService,
@@ -91,7 +78,7 @@ export class ConsumeRule extends MasterRule {
       this.ruleLog.next(logMessage);
     }
 
-    return result;
+    return this.getResult(event, actor, ruleResult);
   }
 
   private consume(
@@ -99,7 +86,7 @@ export class ConsumeRule extends MasterRule {
     consumable: ConsumableDefinition,
     actionableDefinition: ActionableDefinition,
     rollResult: CheckResultLiteral
-  ): { hp: number; energy: number } {
+  ): void {
     const logMessage = GameStringsStore.createConsumedLogMessage(
       actor.name,
       consumable.identity.label
@@ -120,6 +107,8 @@ export class ConsumeRule extends MasterRule {
       energy,
     });
 
-    return { hp, energy };
+    this.ruleResult.consumableHp = hp;
+
+    this.ruleResult.consumableEnergy = energy;
   }
 }
