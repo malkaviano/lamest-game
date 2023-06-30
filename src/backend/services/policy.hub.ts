@@ -1,4 +1,4 @@
-import { Observable, Subject, merge } from 'rxjs';
+import { Observable, merge } from 'rxjs';
 
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { LoggerInterface } from '../../core/interfaces/logger.interface';

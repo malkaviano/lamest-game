@@ -6,7 +6,6 @@ import {
   mockedActivationAxiom,
   mockedAffectedAxiom,
   mockedDodgeAxiom,
-  mockedEventHub,
   mockedPolicyHub,
   mockedReadAxiom,
   mockedRollHelper,

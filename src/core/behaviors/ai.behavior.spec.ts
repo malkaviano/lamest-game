@@ -1,6 +1,5 @@
 import { when } from 'ts-mockito';
 
-import { createActionableDefinition } from '../definitions/actionable.definition';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ClassificationLiteral } from '../literals/classification.literal';
 import { BehaviorLiteral } from '../literals/behavior.literal';
