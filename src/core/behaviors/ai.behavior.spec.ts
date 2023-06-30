@@ -9,7 +9,7 @@ import { AiBehavior } from './ai.behavior';
 import { ArrayView } from '../view-models/array.view';
 import { ActionableEvent } from '../events/actionable.event';
 
-import { playerInfo } from '../../../tests/fakes';
+import { actionAffect, playerInfo } from '../../../tests/fakes';
 import { mockedCooldownBehavior, setupMocks } from '../../../tests/mocks';
 
 describe('AiBehavior', () => {
@@ -17,10 +17,7 @@ describe('AiBehavior', () => {
     setupMocks();
   });
 
-  const event = new ActionableEvent(
-    createActionableDefinition('AFFECT', 'affect', 'Use Equipped'),
-    playerInfo.id
-  );
+  const event = new ActionableEvent(actionAffect, playerInfo.id);
 
   [
     {

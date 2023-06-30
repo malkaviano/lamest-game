@@ -17,7 +17,7 @@ import { EventsHub } from '../../backend/services/events.hub';
 
 import {
   actionableEvent,
-  actionAttack,
+  actionAffect,
   interactiveInfo,
   playerInfo,
   unDodgeableAxe,
@@ -42,7 +42,9 @@ import {
   mockedInteractiveEntity,
   mockedEventHub,
   mockedInventoryService,
+  mockedPolicyHub,
 } from '../../../tests/mocks';
+import { PolicyHub } from '../../backend/services/policy.hub';
 
 const actor = instance(mockedActorEntity);
 
@@ -74,6 +76,10 @@ describe('GameLoopService', () => {
           provide: InventoryService,
           useValue: instance(mockedInventoryService),
         },
+        {
+          provide: PolicyHub,
+          useValue: instance(mockedPolicyHub),
+        },
       ],
     });
 
@@ -96,6 +102,14 @@ describe('GameLoopService', () => {
     when(mockedInventoryService.inventoryChanged$).thenReturn(
       inventoryEventSubject
     );
+
+    when(
+      mockedAffectRule.execute(anything(), anything(), anything())
+    ).thenReturn({
+      actor,
+      event: eventAttackInteractive,
+      result: 'AFFECTED',
+    });
 
     service = TestBed.inject(GameLoopService);
   });
@@ -192,10 +206,10 @@ describe('GameLoopService', () => {
   });
 });
 
-const eventAttackPlayer = actionableEvent(actionAttack, playerInfo.id);
+const eventAttackPlayer = actionableEvent(actionAffect, playerInfo.id);
 
 const eventAttackInteractive = actionableEvent(
-  actionAttack,
+  actionAffect,
   interactiveInfo.id
 );
 

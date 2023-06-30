@@ -6,6 +6,7 @@ import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { RuleInterface } from '../../core/interfaces/rule.interface';
 import { ActionableEvent } from '../../core/events/actionable.event';
+import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 export abstract class MasterRule implements RuleInterface, LoggerInterface {
   protected readonly ruleLog: Subject<LogMessageDefinition>;
@@ -22,5 +23,5 @@ export abstract class MasterRule implements RuleInterface, LoggerInterface {
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface
-  ): void;
+  ): RuleResultInterface;
 }

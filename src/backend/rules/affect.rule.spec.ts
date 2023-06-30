@@ -18,7 +18,7 @@ import {
 } from '../../../tests/mocks';
 import {
   actionableEvent,
-  actionAttack,
+  actionAffect,
   actorInfo,
   interactiveInfo,
   molotov,
@@ -126,7 +126,7 @@ describe('AffectRule', () => {
             verify(
               mockedAffectedAxiom.affectWith(
                 target,
-                actionAttack,
+                actionAffect,
                 'SUCCESS',
                 deepEqual({
                   effect: new EffectEvent('FIRE', 2),
@@ -320,6 +320,6 @@ const usedSwordLog = GameStringsStore.createUsedItemLogMessage(
 );
 
 const eventAttackInteractive = actionableEvent(
-  actionAttack,
+  actionAffect,
   interactiveInfo.id
 );

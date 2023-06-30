@@ -15,7 +15,7 @@ import {
   fakeSkills,
   fakeSceneActorsInfo,
   simpleSword,
-  actionAttack,
+  actionAffect,
   fakeEffect,
   actionConsume,
   playerInfo,
@@ -110,7 +110,7 @@ describe('ActorEntity', () => {
                 )
               ).thenReturn(event);
 
-              const result = fakeActor().reactTo(actionAttack, 'SUCCESS', {
+              const result = fakeActor().reactTo(actionAffect, 'SUCCESS', {
                 effect: fakeEffect('ACID', 10),
               });
 
@@ -133,7 +133,7 @@ describe('ActorEntity', () => {
               result.push(event);
             });
 
-            char.reactTo(actionAttack, 'SUCCESS', {
+            char.reactTo(actionAffect, 'SUCCESS', {
               effect: fakeEffect('ACID', 6),
             });
 
@@ -147,7 +147,7 @@ describe('ActorEntity', () => {
           describe(`attack was ${result}`, () => {
             it('return nothing', () => {
               const log = fakeActor().reactTo(
-                actionAttack,
+                actionAffect,
                 result as CheckResultLiteral,
                 deepEqual({ effect: fakeEffect('ACID', 1) })
               );
@@ -346,7 +346,7 @@ describe('ActorEntity', () => {
 
         const char = fakeActor();
 
-        char.reactTo(actionAttack, 'SUCCESS', {
+        char.reactTo(actionAffect, 'SUCCESS', {
           effect: fakeEffect('ACID', 10),
         });
 
@@ -538,4 +538,4 @@ const unEquipActorScenario = (
   return character.unEquip();
 };
 
-const eventAttackPlayer = actionableEvent(actionAttack, playerInfo.id);
+const eventAttackPlayer = actionableEvent(actionAffect, playerInfo.id);
