@@ -1,8 +1,9 @@
-import { instance, when } from 'ts-mockito';
+import { instance, verify, when } from 'ts-mockito';
 
 import { UseRule } from './use.rule';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { UsableDefinition } from '../../core/definitions/usable.definition';
 
 import {
   mockedAffectedAxiom,
@@ -30,6 +31,14 @@ describe('UseRule', () => {
 
   beforeEach(() => {
     setupMocks();
+
+    when(
+      mockedCheckedService.takeItemOrThrow<UsableDefinition>(
+        instance(mockedInventoryService),
+        actor.id,
+        masterKey.identity.name
+      )
+    ).thenReturn(masterKey);
   });
 
   it('should be created', () => {
@@ -66,7 +75,7 @@ describe('UseRule', () => {
     describe('when item was found', () => {
       it('should log item lost', (done) => {
         when(
-          mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
+          mockedInventoryService.look(playerInfo.id, masterKey.identity.name)
         ).thenReturn(masterKey);
 
         ruleScenario(
@@ -81,10 +90,18 @@ describe('UseRule', () => {
 
       it('return used result', () => {
         when(
-          mockedInventoryService.take(playerInfo.id, masterKey.identity.name)
+          mockedInventoryService.look(playerInfo.id, masterKey.identity.name)
         ).thenReturn(masterKey);
 
         const result = rule.execute(actor, eventUseMasterKey, extras);
+
+        verify(
+          mockedCheckedService.takeItemOrThrow<UsableDefinition>(
+            instance(mockedInventoryService),
+            actor.id,
+            masterKey.identity.name
+          )
+        ).once();
 
         const expected: RuleResultInterface = {
           event: eventUseMasterKey,

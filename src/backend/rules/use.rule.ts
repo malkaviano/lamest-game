@@ -27,8 +27,7 @@ export class UseRule extends MasterRule {
 
     const { actionableDefinition } = event;
 
-    // FIXME: Use checked service and check if DISPOSABLE
-    const used = this.inventoryService.take<UsableDefinition>(
+    const used = this.inventoryService.look<UsableDefinition>(
       actor.id,
       actionableDefinition.name
     );
@@ -50,12 +49,20 @@ export class UseRule extends MasterRule {
     } else {
       Object.assign(result, { result: 'USED', used });
 
-      const logMessage = GameStringsStore.createLostItemLogMessage(
-        actor.name,
-        used.identity.label
-      );
+      if (used.usability === 'DISPOSABLE') {
+        this.checkedService.takeItemOrThrow<UsableDefinition>(
+          this.inventoryService,
+          actor.id,
+          used.identity.name
+        );
 
-      this.ruleLog.next(logMessage);
+        const logMessage = GameStringsStore.createLostItemLogMessage(
+          actor.name,
+          used.identity.label
+        );
+
+        this.ruleLog.next(logMessage);
+      }
 
       this.affectAxiomService.affectWith(target, actionableDefinition, 'NONE', {
         item: used,
