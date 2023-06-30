@@ -62,6 +62,7 @@ describe('UseRule', () => {
         const result = rule.execute(actor, eventUseMasterKey, extras);
 
         const expected: RuleResultInterface = {
+          name: 'USE',
           event: eventUseMasterKey,
           result: 'DENIED',
           actor,
@@ -104,8 +105,9 @@ describe('UseRule', () => {
         ).once();
 
         const expected: RuleResultInterface = {
+          name: 'USE',
           event: eventUseMasterKey,
-          result: 'USED',
+          result: 'EXECUTED',
           actor,
           target: extras.target,
           used: masterKey,

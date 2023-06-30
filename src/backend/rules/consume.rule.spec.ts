@@ -104,9 +104,10 @@ describe('ConsumeRule', () => {
           const result = rule.execute(actor, eventConsumeFirstAid);
 
           const expected: RuleResultInterface = {
+            name: 'CONSUME',
             event: eventConsumeFirstAid,
             actor,
-            result: 'CONSUMED',
+            result: 'EXECUTED',
             skill: { name: 'First Aid', roll: successFirstAidRoll.roll },
             consumable: {
               consumed: consumableFirstAid,
@@ -128,9 +129,10 @@ describe('ConsumeRule', () => {
           const result = rule.execute(actor, eventConsumeFirstAid);
 
           const expected: RuleResultInterface = {
+            name: 'CONSUME',
             event: eventConsumeFirstAid,
             actor,
-            result: 'CONSUMED',
+            result: 'EXECUTED',
             skill: { name: 'First Aid', roll: failureFirstAidRoll.roll },
             consumable: {
               consumed: consumableFirstAid,
@@ -160,6 +162,7 @@ describe('ConsumeRule', () => {
           const result = rule.execute(actor, eventConsumeFirstAid);
 
           const expected: RuleResultInterface = {
+            name: 'CONSUME',
             event: eventConsumeFirstAid,
             actor,
             result: 'DENIED',

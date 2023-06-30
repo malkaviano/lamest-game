@@ -45,6 +45,7 @@ export class AffectRule extends MasterRule {
     } = actor.weaponEquipped;
 
     const result: RuleResultInterface = {
+      name: 'AFFECT',
       event,
       actor,
       target,
@@ -104,17 +105,13 @@ export class AffectRule extends MasterRule {
           );
 
           Object.assign(result, {
-            result: 'AFFECTED',
+            result: 'EXECUTED',
             effect: { type: effect.effectType, amount: effectAmount },
           });
         }
       }
 
-      actor.changeVisibility('VISIBLE');
-
       targetActor?.afflictedBy(actor.id);
-
-      targetActor?.changeVisibility('VISIBLE');
     }
 
     return result;

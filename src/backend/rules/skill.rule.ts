@@ -44,8 +44,9 @@ export class SkillRule extends MasterRule {
     }
 
     return {
+      name: 'SKILL',
       event,
-      result: 'ACTED',
+      result: 'EXECUTED',
       actor,
       target,
       skill: { roll, name: skillName },

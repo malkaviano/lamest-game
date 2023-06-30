@@ -142,7 +142,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   public informSceneOpened(image: ViewableInterface): void {
-    console.log(image);
     this.openViewerDialog(image);
   }
 

@@ -104,9 +104,10 @@ describe('EquipRule', () => {
           const result = rule.execute(actor, eventOk);
 
           const expected: RuleResultInterface = {
+            name: 'EQUIP',
             event: eventOk,
             actor,
-            result: 'EQUIPPED',
+            result: 'EXECUTED',
             equipped: simpleSword,
             unequipped: unDodgeableAxe,
             skill: {
@@ -134,6 +135,7 @@ describe('EquipRule', () => {
           const result = rule.execute(actor, eventNoSkill);
 
           const expected: RuleResultInterface = {
+            name: 'EQUIP',
             event: eventNoSkill,
             actor,
             result: 'DENIED',

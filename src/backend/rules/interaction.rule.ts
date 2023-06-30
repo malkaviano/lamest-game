@@ -44,10 +44,11 @@ export class InteractionRule extends MasterRule {
     );
 
     return {
+      name: 'INTERACTION',
       event,
       actor,
       target,
-      result: 'INTERACTED',
+      result: 'EXECUTED',
     };
   }
 }

@@ -32,6 +32,7 @@ export class EquipRule extends MasterRule {
     const skillName = equipped.skillName;
 
     const result: RuleResultInterface = {
+      name: 'EQUIP',
       event,
       actor,
       result: 'DENIED',
@@ -41,7 +42,7 @@ export class EquipRule extends MasterRule {
     };
 
     if (actor.skills[skillName] > 0) {
-      Object.assign(result, { result: 'EQUIPPED', equipped });
+      Object.assign(result, { result: 'EXECUTED', equipped });
 
       const weapon = this.checkedService.takeItemOrThrow<WeaponDefinition>(
         this.inventoryService,

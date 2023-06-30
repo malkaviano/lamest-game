@@ -37,6 +37,7 @@ export class UseRule extends MasterRule {
     );
 
     const result: RuleResultInterface = {
+      name: 'USE',
       event,
       result: 'DENIED',
       actor,
@@ -51,7 +52,7 @@ export class UseRule extends MasterRule {
 
       this.ruleLog.next(logMessage);
     } else {
-      Object.assign(result, { result: 'USED', used });
+      Object.assign(result, { result: 'EXECUTED', used });
 
       if (used.usability === 'DISPOSABLE') {
         this.checkedService.takeItemOrThrow<UsableDefinition>(

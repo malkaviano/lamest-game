@@ -59,10 +59,11 @@ describe('SkillRule', () => {
       ).thenReturn(new RollDefinition('SUCCESS', 10));
 
       const expected: RuleResultInterface = {
+        name: 'SKILL',
         event: eventSkillSurvival,
         actor,
         target,
-        result: 'ACTED',
+        result: 'EXECUTED',
         skill: {
           roll: rollResult.roll,
           name: eventSkillSurvival.actionableDefinition.name,

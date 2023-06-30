@@ -52,11 +52,12 @@ export class PickRule extends MasterRule {
     );
 
     return {
+      name: 'PICK',
       event,
       actor,
       target,
       picked: item,
-      result: 'PICKED',
+      result: 'EXECUTED',
     };
   }
 }

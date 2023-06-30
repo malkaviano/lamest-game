@@ -106,9 +106,10 @@ describe('GameLoopService', () => {
     when(
       mockedAffectRule.execute(anything(), anything(), anything())
     ).thenReturn({
+      name: 'AFFECT',
       actor,
       event: eventAttackInteractive,
-      result: 'AFFECTED',
+      result: 'EXECUTED',
     });
 
     service = TestBed.inject(GameLoopService);

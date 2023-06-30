@@ -60,10 +60,11 @@ describe('ReadRule', () => {
         const result = rule.execute(actor, eventRead);
 
         const expected: RuleResultInterface = {
+          name: 'READ',
           event: eventRead,
           actor,
           read: readable,
-          result: 'READ',
+          result: 'EXECUTED',
         };
 
         expect(result).toEqual(expected);

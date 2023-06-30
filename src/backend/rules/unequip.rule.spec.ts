@@ -44,8 +44,9 @@ describe('UnEquipRule', () => {
       verify(mockedInventoryService.store(actor.id, unDodgeableAxe)).once();
 
       const expected: RuleResultInterface = {
+        name: 'UNEQUIP',
         event: unEquipEvent,
-        result: 'UNEQUIPPED',
+        result: 'EXECUTED',
         actor,
         unequipped: unDodgeableAxe,
       };
@@ -63,6 +64,7 @@ describe('UnEquipRule', () => {
       verify(mockedInventoryService.store(actor.id, simpleSword)).never();
 
       const expected: RuleResultInterface = {
+        name: 'UNEQUIP',
         event: unEquipEvent,
         result: 'DENIED',
         actor,

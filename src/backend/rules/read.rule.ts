@@ -44,10 +44,11 @@ export class ReadRule extends MasterRule {
     this.readAxiomService.openDocument(read);
 
     return {
+      name: 'READ',
       event,
       actor,
       read,
-      result: 'READ',
+      result: 'EXECUTED',
     };
   }
 }

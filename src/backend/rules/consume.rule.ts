@@ -41,6 +41,7 @@ export class ConsumeRule extends MasterRule {
     let rollResult: CheckResultLiteral = 'NONE';
 
     const result: RuleResultInterface = {
+      name: 'CONSUME',
       event,
       actor,
       result: 'DENIED',
@@ -68,7 +69,7 @@ export class ConsumeRule extends MasterRule {
       );
 
       Object.assign(result, {
-        result: 'CONSUMED',
+        result: 'EXECUTED',
         consumable: {
           consumed,
           hp,

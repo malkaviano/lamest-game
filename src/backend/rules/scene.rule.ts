@@ -36,6 +36,6 @@ export class SceneRule extends MasterRule {
 
     this.ruleLog.next(logMessage);
 
-    return { event, actor, target, result: 'TRANSITIONED' };
+    return { name: 'SCENE', event, actor, target, result: 'EXECUTED' };
   }
 }

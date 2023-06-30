@@ -74,10 +74,11 @@ describe('PickRule', () => {
       });
 
       const expected: RuleResultInterface = {
+        name: 'PICK',
         actor,
         event: eventPickSimpleSword,
         target,
-        result: 'PICKED',
+        result: 'EXECUTED',
         picked: simpleSword,
       };
 

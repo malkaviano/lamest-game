@@ -217,6 +217,7 @@ describe('AffectRule', () => {
         });
 
         const expected: RuleResultInterface = {
+          name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
           result: 'DENIED',
@@ -248,6 +249,7 @@ describe('AffectRule', () => {
         });
 
         const expected: RuleResultInterface = {
+          name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
           result: 'DENIED',
@@ -280,9 +282,10 @@ describe('AffectRule', () => {
         });
 
         const expected: RuleResultInterface = {
+          name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
-          result: 'AFFECTED',
+          result: 'EXECUTED',
           target,
           affected: simpleSword,
           skill: { name: 'Melee Weapon (Simple)', roll: 5 },

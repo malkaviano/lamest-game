@@ -15,7 +15,7 @@ export class PolicyHub implements LoggerInterface {
     this.policies = ArrayView.create(_policies);
 
     this.logMessageProduced$ = merge(
-      ...this.policies.items.flatMap((p) => p.logMessageProduced$)
+      ...this.policies.items.map((p) => p.logMessageProduced$)
     );
   }
 

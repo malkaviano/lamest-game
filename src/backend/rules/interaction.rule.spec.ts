@@ -52,9 +52,10 @@ describe('InteractionRule', () => {
       const result = rule.execute(actor, eventInteraction, extras);
 
       const expected: RuleResultInterface = {
+        name: 'INTERACTION',
         event: eventInteraction,
         actor,
-        result: 'INTERACTED',
+        result: 'EXECUTED',
         target: extras.target,
       };
 

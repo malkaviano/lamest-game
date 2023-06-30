@@ -49,10 +49,11 @@ describe('SceneRule', () => {
       const result = rule.execute(actor, eventSceneExit, extras);
 
       const expected: RuleResultInterface = {
+        name: 'SCENE',
         event: eventSceneExit,
         actor,
         target: extras.target,
-        result: 'TRANSITIONED',
+        result: 'EXECUTED',
       };
 
       expect(result).toEqual(expected);

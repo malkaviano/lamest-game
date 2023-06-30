@@ -8,8 +8,10 @@ import { UsableDefinition } from '../definitions/usable.definition';
 import { ReadableDefinition } from '../definitions/readable.definition';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { RuleNameLiteral } from '../literals/rule-name.literal';
 
 export interface RuleResultInterface {
+  readonly name: RuleNameLiteral;
   readonly event: ActionableEvent;
   readonly result: RuleResultLiteral;
   readonly actor: ActorInterface;

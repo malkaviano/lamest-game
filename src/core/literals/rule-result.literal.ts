@@ -1,12 +1,1 @@
-export type RuleResultLiteral =
-  | 'DENIED'
-  | 'USED'
-  | 'EQUIPPED'
-  | 'UNEQUIPPED'
-  | 'TRANSITIONED'
-  | 'PICKED'
-  | 'INTERACTED'
-  | 'READ'
-  | 'CONSUMED'
-  | 'AFFECTED'
-  | 'ACTED';
+export type RuleResultLiteral = 'DENIED' | 'EXECUTED';

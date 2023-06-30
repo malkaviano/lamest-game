@@ -21,6 +21,7 @@ export class UnEquipRule extends MasterRule {
     const weapon = actor.unEquip();
 
     const result: RuleResultInterface = {
+      name: 'UNEQUIP',
       event,
       result: 'DENIED',
       actor,
@@ -36,7 +37,7 @@ export class UnEquipRule extends MasterRule {
 
       this.ruleLog.next(logMessage);
 
-      Object.assign(result, { result: 'UNEQUIPPED', unequipped: weapon });
+      Object.assign(result, { result: 'EXECUTED', unequipped: weapon });
     }
 
     return result;

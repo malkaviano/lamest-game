@@ -28,7 +28,7 @@ export class VisibilityPolicy implements PolicyInterface {
     const visibility = 'VISIBLE';
 
     if (
-      ruleResult.result === 'AFFECTED' &&
+      ruleResult.name === 'AFFECT' &&
       ruleResult.actor.visibility !== visibility
     ) {
       ruleResult.actor.changeVisibility(visibility);
@@ -46,7 +46,11 @@ export class VisibilityPolicy implements PolicyInterface {
     if (ruleResult.target) {
       const targetActor = ConverterHelper.asActor(ruleResult.target);
 
-      if (targetActor && ruleResult.effect) {
+      if (
+        targetActor &&
+        ruleResult.effect &&
+        targetActor.visibility !== visibility
+      ) {
         targetActor?.changeVisibility(visibility);
 
         result.target = visibility;
