@@ -27,7 +27,10 @@ export class VisibilityPolicy implements PolicyInterface {
 
     const visibility = 'VISIBLE';
 
-    if (ruleResult.result === 'AFFECTED') {
+    if (
+      ruleResult.result === 'AFFECTED' &&
+      ruleResult.actor.visibility !== visibility
+    ) {
       ruleResult.actor.changeVisibility(visibility);
 
       result.actor = visibility;

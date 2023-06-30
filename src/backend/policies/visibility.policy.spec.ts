@@ -1,4 +1,4 @@
-import { instance, verify } from 'ts-mockito';
+import { instance, verify, when } from 'ts-mockito';
 
 import { VisibilityPolicy } from './visibility.policy';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
@@ -38,9 +38,13 @@ describe('VisibilityPolicy', () => {
           result: 'AFFECTED',
         };
 
+        when(mockedPlayerEntity.visibility).thenReturn('DISGUISED');
+
         const result = policy.enforce(ruleResult);
 
         verify(mockedPlayerEntity.changeVisibility('VISIBLE')).once();
+
+        verify(mockedActorEntity.changeVisibility('VISIBLE')).never();
 
         expect(result).toEqual({
           visibility: { actor: 'VISIBLE' },
@@ -63,12 +67,18 @@ describe('VisibilityPolicy', () => {
           },
         };
 
+        when(mockedPlayerEntity.visibility).thenReturn('VISIBLE');
+
+        when(mockedActorEntity.visibility).thenReturn('HIDDEN');
+
         const result = policy.enforce(ruleResult);
+
+        verify(mockedPlayerEntity.changeVisibility('VISIBLE')).never();
 
         verify(mockedActorEntity.changeVisibility('VISIBLE')).once();
 
         expect(result).toEqual({
-          visibility: { actor: 'VISIBLE', target: 'VISIBLE' },
+          visibility: { target: 'VISIBLE' },
         });
       });
     });
@@ -87,6 +97,10 @@ describe('VisibilityPolicy', () => {
         type: 'ACID',
       },
     };
+
+    when(mockedPlayerEntity.visibility).thenReturn('DISGUISED');
+
+    when(mockedActorEntity.visibility).thenReturn('HIDDEN');
 
     policy.logMessageProduced$.subscribe((event) => {
       result.push(event);
