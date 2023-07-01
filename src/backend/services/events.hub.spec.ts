@@ -6,6 +6,7 @@ import {
   mockedActivationAxiom,
   mockedAffectedAxiom,
   mockedDodgeAxiom,
+  mockedPolicyHub,
   mockedReadAxiom,
   mockedRollHelper,
   mockedRuleDispatcherService,
@@ -18,7 +19,8 @@ describe('EventsHub', () => {
     instance(mockedDodgeAxiom),
     instance(mockedActivationAxiom),
     instance(mockedAffectedAxiom),
-    instance(mockedReadAxiom)
+    instance(mockedReadAxiom),
+    instance(mockedPolicyHub)
   );
 
   it('should be created', () => {

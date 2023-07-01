@@ -22,6 +22,7 @@ import { ActionableEvent } from '../../core/events/actionable.event';
 import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorEntity } from '../../core/entities/actor.entity';
 import { EventsHub } from '../../backend/services/events.hub';
+import { PolicyHub } from '../../backend/services/policy.hub';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,7 @@ export class GameLoopService {
     private readonly ruleDispatcherService: RulesHub,
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
+    private readonly policyHub: PolicyHub,
     private readonly eventHub: EventsHub,
     inventoryService: InventoryService
   ) {
@@ -105,12 +107,14 @@ export class GameLoopService {
         if (actor.situation === 'ALIVE' && action) {
           const target = this.actionReactives[action.eventId];
 
-          this.ruleDispatcherService.dispatcher[
+          const result = this.ruleDispatcherService.dispatcher[
             action.actionableDefinition.actionable
           ].execute(actor, action, {
             target,
             targetDodgesPerformed: this.dodgedThisRound.get(target?.id),
           });
+
+          this.policyHub.enforcePolicies(result);
         }
       });
     }

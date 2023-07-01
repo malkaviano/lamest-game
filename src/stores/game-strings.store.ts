@@ -71,7 +71,7 @@ export class GameStringsStore {
   }
 
   public static createStartedLockPickingMessage(): string {
-    return GameStringsStore.logMessagesStore['startLockPicking'];
+    return GameStringsStore.logMessagesStore['startLockPickingMessage'];
   }
 
   public static createLockPickMovedMessage(direction: string): string {
@@ -348,6 +348,20 @@ export class GameStringsStore {
       'DIED',
       actor,
       GameStringsStore.logMessagesStore['isDeadMessage']
+    );
+  }
+
+  public static createVisibilityChangedLogMessage(
+    actor: string,
+    visibility: string
+  ) {
+    return new LogMessageDefinition(
+      'VISIBILITY',
+      actor,
+      GameStringsStore.logMessagesStore['visibilityMessage'].replace(
+        '${visibility}',
+        visibility
+      )
     );
   }
 }

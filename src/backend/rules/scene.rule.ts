@@ -6,6 +6,7 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
 
 export class SceneRule extends MasterRule {
   constructor(
@@ -15,7 +16,11 @@ export class SceneRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): RuleNameLiteral {
+    return 'SCENE';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface
@@ -32,6 +37,8 @@ export class SceneRule extends MasterRule {
 
     this.ruleLog.next(logMessage);
 
-    return { event, actor, target, result: 'TRANSITIONED' };
+    this.ruleResult.target = target;
+
+    return this.getResult(event, actor, 'EXECUTED');
   }
 }

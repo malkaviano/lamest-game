@@ -4,23 +4,25 @@ import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
+import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
 
 export class UnEquipRule extends MasterRule {
   constructor(private readonly inventoryService: InventoryService) {
     super();
   }
 
-  public execute(
+  public override get name(): RuleNameLiteral {
+    return 'UNEQUIP';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {
     const weapon = actor.unEquip();
 
-    const result: RuleResultInterface = {
-      event,
-      result: 'DENIED',
-      actor,
-    };
+    let ruleResult: RuleResultLiteral = 'DENIED';
 
     if (weapon) {
       this.inventoryService.store(actor.id, weapon);
@@ -32,9 +34,11 @@ export class UnEquipRule extends MasterRule {
 
       this.ruleLog.next(logMessage);
 
-      Object.assign(result, { result: 'UNEQUIPPED', unequipped: weapon });
+      this.ruleResult.unequipped = weapon;
+
+      ruleResult = 'EXECUTED';
     }
 
-    return result;
+    return this.getResult(event, actor, ruleResult);
   }
 }

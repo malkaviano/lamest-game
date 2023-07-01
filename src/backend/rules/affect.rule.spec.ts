@@ -18,7 +18,7 @@ import {
 } from '../../../tests/mocks';
 import {
   actionableEvent,
-  actionAttack,
+  actionAffect,
   actorInfo,
   interactiveInfo,
   molotov,
@@ -29,15 +29,17 @@ import {
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 describe('AffectRule', () => {
-  const rule = new AffectRule(
-    instance(mockedRollHelper),
-    instance(mockedCheckedService),
-    instance(mockedActivationAxiom),
-    instance(mockedDodgeAxiom),
-    instance(mockedAffectedAxiom)
-  );
+  let rule: AffectRule;
 
   beforeEach(() => {
+    rule = new AffectRule(
+      instance(mockedRollHelper),
+      instance(mockedCheckedService),
+      instance(mockedActivationAxiom),
+      instance(mockedDodgeAxiom),
+      instance(mockedAffectedAxiom)
+    );
+
     setupMocks();
 
     when(mockedRollHelper.roll(simpleSword.damage.diceRoll)).thenReturn(0);
@@ -126,7 +128,7 @@ describe('AffectRule', () => {
             verify(
               mockedAffectedAxiom.affectWith(
                 target,
-                actionAttack,
+                actionAffect,
                 'SUCCESS',
                 deepEqual({
                   effect: new EffectEvent('FIRE', 2),
@@ -217,6 +219,7 @@ describe('AffectRule', () => {
         });
 
         const expected: RuleResultInterface = {
+          name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
           result: 'DENIED',
@@ -248,6 +251,7 @@ describe('AffectRule', () => {
         });
 
         const expected: RuleResultInterface = {
+          name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
           result: 'DENIED',
@@ -280,9 +284,10 @@ describe('AffectRule', () => {
         });
 
         const expected: RuleResultInterface = {
+          name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
-          result: 'AFFECTED',
+          result: 'EXECUTED',
           target,
           affected: simpleSword,
           skill: { name: 'Melee Weapon (Simple)', roll: 5 },
@@ -320,6 +325,6 @@ const usedSwordLog = GameStringsStore.createUsedItemLogMessage(
 );
 
 const eventAttackInteractive = actionableEvent(
-  actionAttack,
+  actionAffect,
   interactiveInfo.id
 );

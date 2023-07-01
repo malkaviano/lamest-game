@@ -16,4 +16,5 @@ export type LogCategoryLiteral =
   | 'ACTIVATION'
   | 'INTERACTED'
   | 'AFFECTED'
-  | 'DENIED';
+  | 'DENIED'
+  | 'VISIBILITY';

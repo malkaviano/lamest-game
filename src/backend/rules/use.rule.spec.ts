@@ -23,14 +23,16 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UseRule', () => {
-  const rule = new UseRule(
-    instance(mockedInventoryService),
-    instance(mockedCheckedService),
-    instance(mockedAffectedAxiom)
-  );
+  let rule: UseRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new UseRule(
+      instance(mockedInventoryService),
+      instance(mockedCheckedService),
+      instance(mockedAffectedAxiom)
+    );
 
     when(
       mockedCheckedService.takeItemOrThrow<UsableDefinition>(
@@ -62,6 +64,7 @@ describe('UseRule', () => {
         const result = rule.execute(actor, eventUseMasterKey, extras);
 
         const expected: RuleResultInterface = {
+          name: 'USE',
           event: eventUseMasterKey,
           result: 'DENIED',
           actor,
@@ -104,8 +107,9 @@ describe('UseRule', () => {
         ).once();
 
         const expected: RuleResultInterface = {
+          name: 'USE',
           event: eventUseMasterKey,
-          result: 'USED',
+          result: 'EXECUTED',
           actor,
           target: extras.target,
           used: masterKey,

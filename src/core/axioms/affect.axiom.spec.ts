@@ -4,7 +4,7 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { AffectAxiom } from './affect.axiom';
 import { EffectEvent } from '../events/effect.event';
 
-import { actionAttack } from '../../../tests/fakes';
+import { actionAffect } from '../../../tests/fakes';
 import { mockedPlayerEntity } from '../../../tests/mocks';
 
 describe('AffectedAxiom', () => {
@@ -27,7 +27,7 @@ describe('AffectedAxiom', () => {
 
         when(
           mockedPlayerEntity.reactTo(
-            actionAttack,
+            actionAffect,
             'SUCCESS',
             deepEqual({
               effect,
@@ -39,7 +39,7 @@ describe('AffectedAxiom', () => {
 
         axiom.affectWith(
           instance(mockedPlayerEntity),
-          actionAttack,
+          actionAffect,
           'SUCCESS',
           {
             effect,

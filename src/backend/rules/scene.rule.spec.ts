@@ -20,13 +20,15 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('SceneRule', () => {
-  const rule = new SceneRule(
-    instance(mockedNarrativeService),
-    instance(mockedCheckedService)
-  );
+  let rule: SceneRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new SceneRule(
+      instance(mockedNarrativeService),
+      instance(mockedCheckedService)
+    );
   });
 
   it('should be created', () => {
@@ -49,10 +51,11 @@ describe('SceneRule', () => {
       const result = rule.execute(actor, eventSceneExit, extras);
 
       const expected: RuleResultInterface = {
+        name: 'SCENE',
         event: eventSceneExit,
         actor,
         target: extras.target,
-        result: 'TRANSITIONED',
+        result: 'EXECUTED',
       };
 
       expect(result).toEqual(expected);

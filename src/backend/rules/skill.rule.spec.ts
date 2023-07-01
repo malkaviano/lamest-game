@@ -19,14 +19,16 @@ import {
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 
 describe('SkillRule', () => {
-  const rule = new SkillRule(
-    instance(mockedRollHelper),
-    instance(mockedCheckedService),
-    instance(mockedAffectedAxiom)
-  );
+  let rule: SkillRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new SkillRule(
+      instance(mockedRollHelper),
+      instance(mockedCheckedService),
+      instance(mockedAffectedAxiom)
+    );
   });
 
   it('should be created', () => {
@@ -59,10 +61,11 @@ describe('SkillRule', () => {
       ).thenReturn(new RollDefinition('SUCCESS', 10));
 
       const expected: RuleResultInterface = {
+        name: 'SKILL',
         event: eventSkillSurvival,
         actor,
         target,
-        result: 'ACTED',
+        result: 'EXECUTED',
         skill: {
           roll: rollResult.roll,
           name: eventSkillSurvival.actionableDefinition.name,

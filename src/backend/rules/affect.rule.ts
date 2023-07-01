@@ -1,17 +1,19 @@
-import { RollHelper } from '../../core/helpers/roll.helper';
-import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { MasterRule } from './master.rule';
-import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActivationAxiom } from '../../core/axioms/activation.axiom';
-import { DodgeAxiom } from '../../core/axioms/dodge.axiom';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
+import { DodgeAxiom } from '../../core/axioms/dodge.axiom';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { EffectEvent } from '../../core/events/effect.event';
 import { ConverterHelper } from '../../core/helpers/converter.helper';
-import { CheckedService } from '../services/checked.service';
+import { RollHelper } from '../../core/helpers/roll.helper';
+import { ActorInterface } from '../../core/interfaces/actor.interface';
+import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 import { CheckResultLiteral } from '../../core/literals/check-result.literal';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
+import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
+import { GameStringsStore } from '../../stores/game-strings.store';
+import { CheckedService } from '../services/checked.service';
+import { MasterRule } from './master.rule';
 
 export class AffectRule extends MasterRule {
   constructor(
@@ -24,7 +26,11 @@ export class AffectRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): RuleNameLiteral {
+    return 'AFFECT';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface
@@ -40,19 +46,18 @@ export class AffectRule extends MasterRule {
       energyActivation,
     } = actor.weaponEquipped;
 
-    const result: RuleResultInterface = {
-      event,
-      actor,
-      target,
-      result: 'DENIED',
-      affected: actor.weaponEquipped,
-      skill: { name: skillName },
-    };
-
     const activated = this.activationAxiomService.activation(actor, {
       identity,
       energyActivation,
     });
+
+    let ruleResult: RuleResultLiteral = 'DENIED';
+
+    this.ruleResult.skillName = skillName;
+
+    this.ruleResult.target = target;
+
+    this.ruleResult.affected = actor.weaponEquipped;
 
     if (activated) {
       let targetWasHit = true;
@@ -69,7 +74,7 @@ export class AffectRule extends MasterRule {
 
         targetWasHit = checkResult === 'SUCCESS';
 
-        Object.assign(result, { skill: { name: skillName, roll } });
+        this.ruleResult.checkRoll = roll;
 
         if (checkResult !== 'IMPOSSIBLE' && usability === 'DISPOSABLE') {
           this.disposeItem(actor, identity.label);
@@ -84,7 +89,7 @@ export class AffectRule extends MasterRule {
             dodgesPerformed: extras.targetDodgesPerformed ?? 0,
           });
 
-        Object.assign(result, { dodged });
+        this.ruleResult.dodged = dodged;
 
         if (!dodged) {
           const effectAmount =
@@ -99,21 +104,17 @@ export class AffectRule extends MasterRule {
             }
           );
 
-          Object.assign(result, {
-            result: 'AFFECTED',
-            effect: { type: effect.effectType, amount: effectAmount },
-          });
+          ruleResult = 'EXECUTED';
+
+          this.ruleResult.effectType = effect.effectType;
+          this.ruleResult.effectAmount = effectAmount;
         }
       }
 
-      actor.changeVisibility('VISIBLE');
-
       targetActor?.afflictedBy(actor.id);
-
-      targetActor?.changeVisibility('VISIBLE');
     }
 
-    return result;
+    return this.getResult(event, actor, ruleResult);
   }
 
   private disposeItem(actor: ActorInterface, label: string): void {

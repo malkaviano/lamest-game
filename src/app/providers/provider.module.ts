@@ -35,6 +35,8 @@ import { UseRule } from '../../backend/rules/use.rule';
 import { NarrativeService } from '../../backend/services/narrative.service';
 import { EventsHub } from '../../backend/services/events.hub';
 import { RulesHub } from '../../backend/services/rules.hub';
+import { VisibilityPolicy } from '../../backend/policies/visibility.policy';
+import { PolicyHub } from '../../backend/services/policy.hub';
 
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
@@ -107,13 +109,19 @@ const rulesHub = new RulesHub(
   useRule,
   inspectRule
 );
+
+const visibilityPolicy = new VisibilityPolicy();
+
+const policyHub = new PolicyHub(visibilityPolicy);
+
 const eventsHub = new EventsHub(
   rollHelper,
   rulesHub,
   dodgeAxiom,
   activationAxiom,
   affectAxiom,
-  readAxiom
+  readAxiom,
+  policyHub
 );
 
 @NgModule({
@@ -158,6 +166,7 @@ const eventsHub = new EventsHub(
 
     { provide: RulesHub, useValue: rulesHub },
     { provide: EventsHub, useValue: eventsHub },
+    { provide: PolicyHub, useValue: policyHub },
   ],
   imports: [CommonModule],
 })

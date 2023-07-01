@@ -8,8 +8,10 @@ import { UsableDefinition } from '../definitions/usable.definition';
 import { ReadableDefinition } from '../definitions/readable.definition';
 import { ConsumableDefinition } from '../definitions/consumable.definition';
 import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { RuleNameLiteral } from '../literals/rule-name.literal';
 
 export interface RuleResultInterface {
+  readonly name: RuleNameLiteral;
   readonly event: ActionableEvent;
   readonly result: RuleResultLiteral;
   readonly actor: ActorInterface;
@@ -25,9 +27,9 @@ export interface RuleResultInterface {
     readonly roll?: number;
   };
   readonly consumable?: {
-    readonly consumed?: ConsumableDefinition;
-    readonly hp?: number;
-    readonly energy?: number;
+    readonly consumed: ConsumableDefinition;
+    readonly hp: number;
+    readonly energy: number;
   };
   readonly dodged?: boolean;
   readonly effect?: { type: EffectTypeLiteral; amount: number };

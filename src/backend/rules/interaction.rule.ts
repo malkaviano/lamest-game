@@ -6,6 +6,7 @@ import { ActionableEvent } from '../../core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
 
 export class InteractionRule extends MasterRule {
   constructor(
@@ -15,7 +16,11 @@ export class InteractionRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): RuleNameLiteral {
+    return 'INTERACTION';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface
@@ -39,11 +44,8 @@ export class InteractionRule extends MasterRule {
       {}
     );
 
-    return {
-      event,
-      actor,
-      target,
-      result: 'INTERACTED',
-    };
+    this.ruleResult.target = target;
+
+    return this.getResult(event, actor, 'EXECUTED');
   }
 }

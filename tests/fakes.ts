@@ -81,7 +81,7 @@ export const actionEquip = createActionableDefinition(
 export const actionUnEquip = (label: string) =>
   createActionableDefinition('UNEQUIP', 'unequip', label);
 
-export const actionAttack = createActionableDefinition(
+export const actionAffect = createActionableDefinition(
   'AFFECT',
   'affect',
   'Use Equipped'

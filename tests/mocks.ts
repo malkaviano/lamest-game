@@ -68,6 +68,7 @@ import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
 import { CheckedService } from '../src/backend/services/checked.service';
 import { EventsHub } from '../src/backend/services/events.hub';
 import { RollHelper } from '../src/core/helpers/roll.helper';
+import { PolicyHub } from '../src/backend/services/policy.hub';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -174,6 +175,8 @@ export const mockedReadAxiom = mock(ReadAxiom);
 export const mockedCooldownBehavior = mock(CooldownBehavior);
 
 export const mockedAiBehavior = mock(AiBehavior);
+
+export const mockedPolicyHub = mock(PolicyHub);
 
 export const setupMocks = () => {
   resetMocks();
@@ -475,6 +478,8 @@ const resetMocks = () => {
   reset(mockedCooldownBehavior);
 
   reset(mockedAiBehavior);
+
+  reset(mockedPolicyHub);
 };
 
 function mockCheckedHelper() {

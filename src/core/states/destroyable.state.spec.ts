@@ -4,7 +4,7 @@ import { DestroyableState } from './destroyable.state';
 import { DiscardState } from './discard.state';
 
 import {
-  actionAttack,
+  actionAffect,
   actionPickSimpleSword,
   fakeEffect,
 } from '../../../tests/fakes';
@@ -21,7 +21,7 @@ describe('DestroyableState', () => {
 
   describe('when HP <= 0', () => {
     it('return DiscardState', () => {
-      const result = state.onResult(actionAttack, 'SUCCESS', {
+      const result = state.onResult(actionAffect, 'SUCCESS', {
         effect: fakeEffect('KINETIC', 12),
       });
 
@@ -34,7 +34,7 @@ describe('DestroyableState', () => {
 
   describe('when HP > 0', () => {
     it('return DestroyableState with remaining HP', () => {
-      const result = state.onResult(actionAttack, 'SUCCESS', {
+      const result = state.onResult(actionAffect, 'SUCCESS', {
         effect: fakeEffect('KINETIC', 6),
       });
 
@@ -44,7 +44,7 @@ describe('DestroyableState', () => {
 
   describe('when no damage is taken', () => {
     it('return DestroyableState with same HP', () => {
-      const result = state.onResult(actionAttack, 'FAILURE', {});
+      const result = state.onResult(actionAffect, 'FAILURE', {});
 
       expect(result).toEqual({ state });
     });
@@ -59,6 +59,6 @@ const f = () => discardedState;
 
 const lazy = new LazyHelper(f);
 
-const state = new DestroyableState(ArrayView.create([actionAttack]), lazy, 10);
+const state = new DestroyableState(ArrayView.create([actionAffect]), lazy, 10);
 
-const state2 = new DestroyableState(ArrayView.create([actionAttack]), lazy, 4);
+const state2 = new DestroyableState(ArrayView.create([actionAffect]), lazy, 4);

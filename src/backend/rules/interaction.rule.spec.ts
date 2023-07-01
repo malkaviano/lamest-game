@@ -15,13 +15,15 @@ import { playerInfo, actionableEvent, actionAsk } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('InteractionRule', () => {
-  const rule = new InteractionRule(
-    instance(mockedCheckedService),
-    instance(mockedAffectedAxiom)
-  );
+  let rule: InteractionRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new InteractionRule(
+      instance(mockedCheckedService),
+      instance(mockedAffectedAxiom)
+    );
   });
 
   it('should be created', () => {
@@ -52,9 +54,10 @@ describe('InteractionRule', () => {
       const result = rule.execute(actor, eventInteraction, extras);
 
       const expected: RuleResultInterface = {
+        name: 'INTERACTION',
         event: eventInteraction,
         actor,
-        result: 'INTERACTED',
+        result: 'EXECUTED',
         target: extras.target,
       };
 

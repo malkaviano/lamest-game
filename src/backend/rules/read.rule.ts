@@ -6,6 +6,7 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { MasterRule } from './master.rule';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
 
 export class ReadRule extends MasterRule {
   constructor(
@@ -15,7 +16,11 @@ export class ReadRule extends MasterRule {
     super();
   }
 
-  public execute(
+  public override get name(): RuleNameLiteral {
+    return 'READ';
+  }
+
+  public override execute(
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {
@@ -39,11 +44,8 @@ export class ReadRule extends MasterRule {
 
     this.readAxiomService.openDocument(read);
 
-    return {
-      event,
-      actor,
-      read,
-      result: 'READ',
-    };
+    this.ruleResult.read = read;
+
+    return this.getResult(event, actor, 'EXECUTED');
   }
 }

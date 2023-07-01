@@ -19,12 +19,14 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UnEquipRule', () => {
-  const rule = new UnEquipRule(instance(mockedInventoryService));
+  let rule: UnEquipRule;
 
   const actor = instance(mockedPlayerEntity);
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new UnEquipRule(instance(mockedInventoryService));
 
     when(mockedPlayerEntity.unEquip()).thenReturn(unDodgeableAxe);
   });
@@ -44,8 +46,9 @@ describe('UnEquipRule', () => {
       verify(mockedInventoryService.store(actor.id, unDodgeableAxe)).once();
 
       const expected: RuleResultInterface = {
+        name: 'UNEQUIP',
         event: unEquipEvent,
-        result: 'UNEQUIPPED',
+        result: 'EXECUTED',
         actor,
         unequipped: unDodgeableAxe,
       };
@@ -63,6 +66,7 @@ describe('UnEquipRule', () => {
       verify(mockedInventoryService.store(actor.id, simpleSword)).never();
 
       const expected: RuleResultInterface = {
+        name: 'UNEQUIP',
         event: unEquipEvent,
         result: 'DENIED',
         actor,

@@ -24,13 +24,15 @@ import {
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('EquipRule', () => {
-  const rule = new EquipRule(
-    instance(mockedInventoryService),
-    instance(mockedCheckedService)
-  );
+  let rule: EquipRule;
 
   beforeEach(() => {
     setupMocks();
+
+    rule = new EquipRule(
+      instance(mockedInventoryService),
+      instance(mockedCheckedService)
+    );
 
     when(
       mockedCheckedService.lookItemOrThrow<WeaponDefinition>(
@@ -104,9 +106,10 @@ describe('EquipRule', () => {
           const result = rule.execute(actor, eventOk);
 
           const expected: RuleResultInterface = {
+            name: 'EQUIP',
             event: eventOk,
             actor,
-            result: 'EQUIPPED',
+            result: 'EXECUTED',
             equipped: simpleSword,
             unequipped: unDodgeableAxe,
             skill: {
@@ -134,6 +137,7 @@ describe('EquipRule', () => {
           const result = rule.execute(actor, eventNoSkill);
 
           const expected: RuleResultInterface = {
+            name: 'EQUIP',
             event: eventNoSkill,
             actor,
             result: 'DENIED',

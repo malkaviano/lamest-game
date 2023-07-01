@@ -11,6 +11,7 @@ import { LoggerInterface } from '../../core/interfaces/logger.interface';
 import { ReadableInterface } from '../../core/interfaces/readable.interface';
 import { RulesHub } from './rules.hub';
 import { RollHelper } from '../../core/helpers/roll.helper';
+import { PolicyHub } from './policy.hub';
 
 export class EventsHub
   implements LoggerInterface, ActorDodgedInterface, DocumentOpenedInterface
@@ -27,14 +28,16 @@ export class EventsHub
     dodgeAxiomService: DodgeAxiom,
     activationAxiomService: ActivationAxiom,
     affectAxiomService: AffectAxiom,
-    readAxiomService: ReadAxiom
+    readAxiomService: ReadAxiom,
+    policyHub: PolicyHub
   ) {
     this.logMessageProduced$ = merge(
       ruleDispatcherService.logMessageProduced$,
       dodgeAxiomService.logMessageProduced$,
       activationAxiomService.logMessageProduced$,
       affectAxiomService.logMessageProduced$,
-      rollService.logMessageProduced$
+      rollService.logMessageProduced$,
+      policyHub.logMessageProduced$
     );
 
     this.actorDodged$ = dodgeAxiomService.actorDodged$;
