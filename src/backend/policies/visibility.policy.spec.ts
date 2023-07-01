@@ -3,6 +3,7 @@ import { instance, verify, when } from 'ts-mockito';
 import { VisibilityPolicy } from './visibility.policy';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { VisibilityLiteral } from '../../core/literals/visibility.literal';
 
 import {
   mockedActorEntity,
@@ -86,74 +87,57 @@ describe('VisibilityPolicy', () => {
     });
   });
 
-  it('should log', (done) => {
-    const result: LogMessageDefinition[] = [];
+  [
+    {
+      actorVisibility: 'DISGUISED' as VisibilityLiteral,
+      targetVisibility: 'HIDDEN' as VisibilityLiteral,
+      expected: [
+        new LogMessageDefinition(
+          'VISIBILITY',
+          'Some Name',
+          'visibility changed to VISIBLE'
+        ),
+        new LogMessageDefinition(
+          'VISIBILITY',
+          'actor',
+          'visibility changed to VISIBLE'
+        ),
+      ],
+    },
+    {
+      actorVisibility: 'VISIBLE' as VisibilityLiteral,
+      targetVisibility: 'VISIBLE' as VisibilityLiteral,
+      expected: [],
+    },
+  ].forEach(({ actorVisibility, targetVisibility, expected }) => {
+    it('should log', (done) => {
+      const result: LogMessageDefinition[] = [];
 
-    const ruleResult: RuleResultInterface = {
-      name: 'AFFECT',
-      actor,
-      event: eventAffect,
-      target,
-      result: 'EXECUTED',
-      effect: {
-        amount: 10,
-        type: 'ACID',
-      },
-    };
+      const ruleResult: RuleResultInterface = {
+        name: 'AFFECT',
+        actor,
+        event: eventAffect,
+        target,
+        result: 'EXECUTED',
+        effect: {
+          amount: 10,
+          type: 'ACID',
+        },
+      };
 
-    when(mockedPlayerEntity.visibility).thenReturn('DISGUISED');
+      when(mockedPlayerEntity.visibility).thenReturn(actorVisibility);
 
-    when(mockedActorEntity.visibility).thenReturn('HIDDEN');
+      when(mockedActorEntity.visibility).thenReturn(targetVisibility);
 
-    policy.logMessageProduced$.subscribe((event) => {
-      result.push(event);
+      policy.logMessageProduced$.subscribe((event) => {
+        result.push(event);
+      });
+
+      policy.enforce(ruleResult);
+
+      done();
+
+      expect(result).toEqual(expected);
     });
-
-    policy.enforce(ruleResult);
-
-    done();
-
-    expect(result).toEqual([
-      new LogMessageDefinition(
-        'VISIBILITY',
-        actor.name,
-        'visibility changed to VISIBLE'
-      ),
-      new LogMessageDefinition(
-        'VISIBILITY',
-        target.name,
-        'visibility changed to VISIBLE'
-      ),
-    ]);
-  });
-
-  it('should not log', (done) => {
-    const result: LogMessageDefinition[] = [];
-
-    const ruleResult: RuleResultInterface = {
-      name: 'AFFECT',
-      actor,
-      event: eventAffect,
-      target,
-      result: 'EXECUTED',
-      effect: {
-        amount: 10,
-        type: 'ACID',
-      },
-    };
-
-    when(mockedPlayerEntity.visibility).thenReturn('VISIBLE');
-
-    when(mockedActorEntity.visibility).thenReturn('VISIBLE');
-
-    policy.logMessageProduced$.subscribe((event) => {
-      result.push(event);
-    });
-
-    policy.enforce(ruleResult);
-
-    done();
-
-    expect(result).toEqual([]);
   });
 });
