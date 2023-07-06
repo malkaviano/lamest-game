@@ -6,7 +6,7 @@ import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
 import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
 import { SceneDefinition } from '../../core/definitions/scene.definition';
-import { RulesHub } from '../../backend/services/rules.hub';
+import { RulesHub } from '../hubs/rules.hub';
 import { InventoryService } from '../../backend/services/inventory.service';
 import { GameEventsDefinition } from '../../core/definitions/game-events.definition';
 import {
@@ -19,8 +19,8 @@ import { ActionableItemView } from '../../core/view-models/actionable-item.view'
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorEntity } from '../../core/entities/actor.entity';
-import { EventsHub } from '../../backend/services/events.hub';
-import { PolicyHub } from '../../backend/services/policy.hub';
+import { EventsHub } from '../hubs/events.hub';
+import { PolicyHub } from '../hubs/policy.hub';
 
 export class GameLoopService {
   private timer: NodeJS.Timer | undefined;
