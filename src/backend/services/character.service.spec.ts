@@ -1,10 +1,7 @@
-import { TestBed } from '@angular/core/testing';
-
 import { Subject } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { CharacterService } from './character.service';
-import { RandomCharacterService } from './random-character.service';
 import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { VisibilityLiteral } from '../../core/literals/visibility.literal';
 import { EnergyPointsEvent } from '../../core/events/energy-points.event';
@@ -22,15 +19,6 @@ describe('CharacterService', () => {
   let service: CharacterService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RandomCharacterService,
-          useValue: instance(mockedRandomCharacterService),
-        },
-      ],
-    });
-
     setupMocks();
 
     when(mockedRandomCharacterService.character()).thenReturn(
@@ -45,7 +33,7 @@ describe('CharacterService', () => {
 
     when(mockedPlayerEntity.visibilityChanged$).thenReturn(subjectVisibility);
 
-    service = TestBed.inject(CharacterService);
+    service = new CharacterService(instance(mockedRandomCharacterService));
   });
 
   describe('character changed events', () => {

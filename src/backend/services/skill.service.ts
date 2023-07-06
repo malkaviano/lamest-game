@@ -1,11 +1,6 @@
-import { Injectable } from '@angular/core';
-
 import { ArrayView } from '../../core/view-models/array.view';
 import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class SkillService {
   constructor(private readonly rngHelper: RandomIntHelper) {}
 

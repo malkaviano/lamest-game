@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { filter, map } from 'rxjs';
 
 import { CharacterService } from '../../backend/services/character.service';
@@ -24,9 +22,6 @@ import { ActorEntity } from '../../core/entities/actor.entity';
 import { EventsHub } from '../../backend/services/events.hub';
 import { PolicyHub } from '../../backend/services/policy.hub';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class GameLoopService {
   private timer: NodeJS.Timer | undefined;
 
@@ -43,7 +38,7 @@ export class GameLoopService {
   public readonly events: GameEventsDefinition;
 
   constructor(
-    private readonly ruleDispatcherService: RulesHub,
+    private readonly ruleHub: RulesHub,
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
     private readonly policyHub: PolicyHub,
@@ -107,7 +102,7 @@ export class GameLoopService {
         if (actor.situation === 'ALIVE' && action) {
           const target = this.actionReactives[action.eventId];
 
-          const result = this.ruleDispatcherService.dispatcher[
+          const result = this.ruleHub.dispatcher[
             action.actionableDefinition.actionable
           ].execute(actor, action, {
             target,

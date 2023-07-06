@@ -37,6 +37,10 @@ import { EventsHub } from '../../backend/services/events.hub';
 import { RulesHub } from '../../backend/services/rules.hub';
 import { VisibilityPolicy } from '../../backend/policies/visibility.policy';
 import { PolicyHub } from '../../backend/services/policy.hub';
+import { GameLoopService } from '../../backend/services/game-loop.service';
+import { CharacterService } from '../../backend/services/character.service';
+import { RandomCharacterService } from '../../backend/services/random-character.service';
+import { SkillService } from '../../backend/services/skill.service';
 
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
@@ -124,6 +128,27 @@ const eventsHub = new EventsHub(
   policyHub
 );
 
+const skillService = new SkillService(randomIntHelper);
+
+const rngCharacterService = new RandomCharacterService(
+  generatorService,
+  skillService,
+  professionStore,
+  skillStore,
+  settingsStore
+);
+
+const characterService = new CharacterService(rngCharacterService);
+
+const gameLoopService = new GameLoopService(
+  rulesHub,
+  characterService,
+  narrativeService,
+  policyHub,
+  eventsHub,
+  inventoryService
+);
+
 @NgModule({
   declarations: [],
   providers: [
@@ -167,6 +192,11 @@ const eventsHub = new EventsHub(
     { provide: RulesHub, useValue: rulesHub },
     { provide: EventsHub, useValue: eventsHub },
     { provide: PolicyHub, useValue: policyHub },
+
+    { provide: SkillService, useValue: skillService },
+    { provide: RandomCharacterService, useValue: rngCharacterService },
+    { provide: CharacterService, useValue: characterService },
+    { provide: GameLoopService, useValue: gameLoopService },
   ],
   imports: [CommonModule],
 })

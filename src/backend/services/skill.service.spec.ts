@@ -1,10 +1,7 @@
-import { TestBed } from '@angular/core/testing';
-
 import { instance, when } from 'ts-mockito';
 
 import { SkillService } from './skill.service';
 import { ArrayView } from '../../core/view-models/array.view';
-import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 
 import { mockedRandomIntHelper, setupMocks } from '../../../tests/mocks';
 
@@ -12,18 +9,9 @@ describe('SkillService', () => {
   let service: SkillService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RandomIntHelper,
-          useValue: instance(mockedRandomIntHelper),
-        },
-      ],
-    });
-
     setupMocks();
 
-    service = TestBed.inject(SkillService);
+    service = new SkillService(instance(mockedRandomIntHelper));
   });
 
   it('should be created', () => {

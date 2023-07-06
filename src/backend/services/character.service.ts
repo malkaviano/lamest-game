@@ -1,13 +1,8 @@
-import { Injectable } from '@angular/core';
-
 import { BehaviorSubject, map, merge, Observable } from 'rxjs';
 
 import { RandomCharacterService } from './random-character.service';
 import { PlayerInterface } from '../../core/interfaces/player.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class CharacterService {
   private readonly character: PlayerInterface;
 

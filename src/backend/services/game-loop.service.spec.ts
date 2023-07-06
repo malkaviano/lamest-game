@@ -1,4 +1,4 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, tick } from '@angular/core/testing';
 
 import { anyString, anything, instance, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
@@ -9,11 +9,6 @@ import { ItemStoredDefinition } from '../../core/definitions/item-storage.defini
 import { ArrayView } from '../../core/view-models/array.view';
 import { ActionableItemView } from '../../core/view-models/actionable-item.view';
 import { InventoryEvent } from '../../core/events/inventory.event';
-import { RulesHub } from '../../backend/services/rules.hub';
-import { CharacterService } from '../../backend/services/character.service';
-import { NarrativeService } from '../../backend/services/narrative.service';
-import { InventoryService } from '../../backend/services/inventory.service';
-import { EventsHub } from '../../backend/services/events.hub';
 
 import {
   actionableEvent,
@@ -36,7 +31,7 @@ import {
   mockedAffectRule,
   mockedNarrativeService,
   mockedPlayerEntity,
-  mockedRuleDispatcherService,
+  mockedRulesHub,
   mockedSceneEntity,
   setupMocks,
   mockedInteractiveEntity,
@@ -44,7 +39,6 @@ import {
   mockedInventoryService,
   mockedPolicyHub,
 } from '../../../tests/mocks';
-import { PolicyHub } from '../../backend/services/policy.hub';
 
 const actor = instance(mockedActorEntity);
 
@@ -54,35 +48,6 @@ describe('GameLoopService', () => {
   let service: GameLoopService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: RulesHub,
-          useValue: instance(mockedRuleDispatcherService),
-        },
-        {
-          provide: CharacterService,
-          useValue: instance(mockedCharacterService),
-        },
-        {
-          provide: NarrativeService,
-          useValue: instance(mockedNarrativeService),
-        },
-        {
-          provide: EventsHub,
-          useValue: instance(mockedEventHub),
-        },
-        {
-          provide: InventoryService,
-          useValue: instance(mockedInventoryService),
-        },
-        {
-          provide: PolicyHub,
-          useValue: instance(mockedPolicyHub),
-        },
-      ],
-    });
-
     setupMocks();
 
     when(mockedEventHub.logMessageProduced$).thenReturn(EMPTY);
@@ -112,7 +77,14 @@ describe('GameLoopService', () => {
       result: 'EXECUTED',
     });
 
-    service = TestBed.inject(GameLoopService);
+    service = new GameLoopService(
+      instance(mockedRulesHub),
+      instance(mockedCharacterService),
+      instance(mockedNarrativeService),
+      instance(mockedPolicyHub),
+      instance(mockedEventHub),
+      instance(mockedInventoryService)
+    );
   });
 
   it('should be created', () => {
@@ -129,7 +101,7 @@ describe('GameLoopService', () => {
 
       let result = false;
 
-      when(mockedRuleDispatcherService.dispatcher).thenCall(() => {
+      when(mockedRulesHub.dispatcher).thenCall(() => {
         result = true;
 
         return { AFFECT: instance(mockedAffectRule) };
