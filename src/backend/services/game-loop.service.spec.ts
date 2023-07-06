@@ -39,7 +39,6 @@ import {
   mockedInventoryService,
   mockedPolicyHub,
 } from '../../../tests/mocks';
-import { PolicyHub } from './policy.hub';
 
 const actor = instance(mockedActorEntity);
 
