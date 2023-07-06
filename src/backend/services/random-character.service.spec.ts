@@ -1,11 +1,6 @@
 import { anyNumber, anything, instance, when } from 'ts-mockito';
 
 import { RandomCharacterService } from './random-character.service';
-import { GeneratorService } from './generator.service';
-import { SkillService } from './skill.service';
-import { ProfessionStore } from '../../stores/profession.store';
-import { SkillStore } from '../../stores/skill.store';
-import { SettingsStore } from '../../stores/settings.store';
 import { ArrayView } from '../../core/view-models/array.view';
 import { PlayerEntity } from '../../core/entities/player.entity';
 import { ActorBehavior } from '../../core/behaviors/actor.behavior';
