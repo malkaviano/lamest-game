@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { GeneratorService } from './generator.service';
 import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
 import { SkillService } from './skill.service';
@@ -13,9 +11,6 @@ import { ActorBehavior } from '../../core/behaviors/actor.behavior';
 import { EquipmentBehavior } from '../../core/behaviors/equipment.behavior';
 import { CooldownBehavior } from '../../core/behaviors/cooldown.behavior';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class RandomCharacterService {
   constructor(
     private readonly generator: GeneratorService,

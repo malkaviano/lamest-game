@@ -13,7 +13,6 @@ import { SkillRule } from '../src/backend/rules/skill.rule';
 import { UnEquipRule } from '../src/backend/rules/unequip.rule';
 import { UseRule } from '../src/backend/rules/use.rule';
 import { CharacterService } from '../src/backend/services/character.service';
-import { GameLoopService } from '../src/app/services/game-loop.service';
 import { GeneratorService } from '../src/backend/services/generator.service';
 import { InventoryService } from '../src/backend/services/inventory.service';
 import { NarrativeService } from '../src/backend/services/narrative.service';
@@ -69,6 +68,7 @@ import { CheckedService } from '../src/backend/services/checked.service';
 import { EventsHub } from '../src/backend/services/events.hub';
 import { RollHelper } from '../src/core/helpers/roll.helper';
 import { PolicyHub } from '../src/backend/services/policy.hub';
+import { GameLoopService } from '../src/backend/services/game-loop.service';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -116,7 +116,7 @@ export const mockedInteractionRule = mock(InteractionRule);
 
 export const mockedAffectRule = mock(AffectRule);
 
-export const mockedRuleDispatcherService = mock(RulesHub);
+export const mockedRulesHub = mock(RulesHub);
 
 export const mockedSceneStore = mock(SceneStore);
 
@@ -425,7 +425,7 @@ const resetMocks = () => {
 
   reset(mockedAffectRule);
 
-  reset(mockedRuleDispatcherService);
+  reset(mockedRulesHub);
 
   reset(mockedSceneStore);
 

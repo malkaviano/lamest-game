@@ -9,13 +9,13 @@ import {
   mockedPolicyHub,
   mockedReadAxiom,
   mockedRollHelper,
-  mockedRuleDispatcherService,
+  mockedRulesHub,
 } from '../../../tests/mocks';
 
 describe('EventsHub', () => {
   const service = new EventsHub(
     instance(mockedRollHelper),
-    instance(mockedRuleDispatcherService),
+    instance(mockedRulesHub),
     instance(mockedDodgeAxiom),
     instance(mockedActivationAxiom),
     instance(mockedAffectedAxiom),

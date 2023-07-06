@@ -7,7 +7,6 @@ import { instance, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
-import { GameLoopService } from '../../services/game-loop.service';
 import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
 import { ArrayView } from '../../../core/view-models/array.view';
 import { ActionableEvent } from '../../../core/events/actionable.event';
@@ -35,6 +34,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
+import { GameLoopService } from '../../../backend/services/game-loop.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;

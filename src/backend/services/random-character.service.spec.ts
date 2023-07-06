@@ -1,5 +1,3 @@
-import { TestBed } from '@angular/core/testing';
-
 import { anyNumber, anything, instance, when } from 'ts-mockito';
 
 import { RandomCharacterService } from './random-character.service';
@@ -32,31 +30,6 @@ describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: GeneratorService,
-          useValue: instance(mockedGeneratorService),
-        },
-        {
-          provide: SkillService,
-          useValue: instance(mockedSkillService),
-        },
-        {
-          provide: ProfessionStore,
-          useValue: instance(mockedProfessionStore),
-        },
-        {
-          provide: SkillStore,
-          useValue: instance(mockedSkillStore),
-        },
-        {
-          provide: SettingsStore,
-          useValue: instance(mockedSettingsStore),
-        },
-      ],
-    });
-
     setupMocks();
 
     when(mockedProfessionStore.professions).thenReturn({
@@ -67,7 +40,13 @@ describe('RandomCharacterService', () => {
       ArrayView.create(['Artillery', 'First Aid', 'Manipulation'])
     );
 
-    service = TestBed.inject(RandomCharacterService);
+    service = new RandomCharacterService(
+      instance(mockedGeneratorService),
+      instance(mockedSkillService),
+      instance(mockedProfessionStore),
+      instance(mockedSkillStore),
+      instance(mockedSettingsStore)
+    );
   });
 
   it('should be created', () => {
