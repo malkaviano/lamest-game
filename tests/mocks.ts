@@ -34,7 +34,7 @@ import { ActorStore } from '../src/stores/actor.store';
 import { SkillStore } from '../src/stores/skill.store';
 import { ReadRule } from '../src/backend/rules/read.rule';
 import { SettingsStore } from '../src/stores/settings.store';
-import { RulesHub } from '../src/backend/services/rules.hub';
+import { RulesHub } from '../src/backend/hubs/rules.hub';
 import { ActivationAxiom } from '../src/core/axioms/activation.axiom';
 import { AffectAxiom } from '../src/core/axioms/affect.axiom';
 import { DodgeAxiom } from '../src/core/axioms/dodge.axiom';
@@ -65,9 +65,9 @@ import {
 } from './fakes';
 import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
 import { CheckedService } from '../src/backend/services/checked.service';
-import { EventsHub } from '../src/backend/services/events.hub';
+import { EventsHub } from '../src/backend/hubs/events.hub';
 import { RollHelper } from '../src/core/helpers/roll.helper';
-import { PolicyHub } from '../src/backend/services/policy.hub';
+import { PolicyHub } from '../src/backend/hubs/policy.hub';
 import { GameLoopService } from '../src/backend/services/game-loop.service';
 
 export const mockedInventoryService = mock(InventoryService);
