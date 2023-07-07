@@ -98,19 +98,19 @@ export class ResourcesStore {
       actionCooldown,
     } = settingsStore.settings;
 
-    const cures = ArrayView.create(
+    const cures = ArrayView.fromArray(
       playerEffectDefenses.cures.map((e) => e as EffectTypeLiteral)
     );
 
-    const immunities = ArrayView.create(
+    const immunities = ArrayView.fromArray(
       playerEffectDefenses.immunities.map((e) => e as EffectTypeLiteral)
     );
 
-    const resistances = ArrayView.create(
+    const resistances = ArrayView.fromArray(
       playerEffectDefenses.resistances.map((e) => e as EffectTypeLiteral)
     );
 
-    const vulnerabilities = ArrayView.create(
+    const vulnerabilities = ArrayView.fromArray(
       playerEffectDefenses.vulnerabilities.map((e) => e as EffectTypeLiteral)
     );
 
@@ -223,10 +223,10 @@ export class ResourcesStore {
           vulnerabilityCoefficient,
           resistanceCoefficient,
           effectDefenses: {
-            cures: ArrayView.create(a.cures),
-            immunities: ArrayView.create(a.immunities),
-            vulnerabilities: ArrayView.create(a.vulnerabilities),
-            resistances: ArrayView.create(a.resistances),
+            cures: ArrayView.fromArray(a.cures),
+            immunities: ArrayView.fromArray(a.immunities),
+            vulnerabilities: ArrayView.fromArray(a.vulnerabilities),
+            resistances: ArrayView.fromArray(a.resistances),
           },
           oneDodgesEveryAgiAmount,
         },

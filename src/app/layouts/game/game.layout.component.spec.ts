@@ -41,7 +41,7 @@ describe('GameLayoutComponent', () => {
 
     component.scene = scene;
 
-    component.logs = ArrayView.create(['OMG', 'This is not happening', 'GG']);
+    component.logs = ArrayView.create('OMG', 'This is not happening', 'GG');
 
     component.equipped = unarmedWeapon;
 
@@ -63,7 +63,7 @@ describe('GameLayoutComponent', () => {
       expect(result.properties['panelName']).toEqual('interactives');
 
       expect(result.properties['interactives']).toEqual(
-        ArrayView.create([fakeInteractive])
+        ArrayView.create(fakeInteractive)
       );
     });
 
@@ -92,7 +92,7 @@ describe('GameLayoutComponent', () => {
     expect(result).not.toBeNull();
 
     expect(component.logs).toEqual(
-      ArrayView.create(['OMG', 'This is not happening', 'GG'])
+      ArrayView.create('OMG', 'This is not happening', 'GG')
     );
   });
 
@@ -135,12 +135,12 @@ const fakeInteractive = new InteractiveEntity(
   'id1',
   'props1',
   'This is props1',
-  new SimpleState(ArrayView.create([actionAsk])),
+  new SimpleState(ArrayView.create(actionAsk)),
   true
 );
 
 const scene = new SceneDefinition(
   'this is a test',
-  ArrayView.create([fakeInteractive]),
+  ArrayView.create(fakeInteractive),
   'gg.jpg'
 );

@@ -8,4 +8,4 @@ export const directionActionableDefinition = (
 ) => createActionableDefinition('INTERACTION', direction, label);
 
 export const directionNamesDefinition: ArrayView<DirectionLiteral> =
-  ArrayView.create(['LEFT', 'RIGHT', 'UP', 'DOWN']);
+  ArrayView.create('LEFT', 'RIGHT', 'UP', 'DOWN');

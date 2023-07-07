@@ -17,7 +17,7 @@ export class DiscardState extends ActionableState {
 
     return {
       state: new DiscardState(
-        ArrayView.create(actions.filter((_, i) => i !== index))
+        ArrayView.fromArray(actions.filter((_, i) => i !== index))
       ),
     };
   }

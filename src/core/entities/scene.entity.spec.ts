@@ -29,7 +29,7 @@ const interactive = instance(mockedInteractiveEntity);
 
 const entity = new SceneEntity(
   'GG',
-  ArrayView.create([interactive]),
+  ArrayView.create(interactive),
   {},
   'gg.jpg'
 );

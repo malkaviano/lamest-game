@@ -19,7 +19,7 @@ export class FormatterHelperService {
   public characterToKeyValueDescription(
     character: PlayerInterface
   ): CharacterValuesView {
-    const identity = ArrayView.create(
+    const identity = ArrayView.fromArray(
       Object.entries(character.identity).map(([key, value]) => {
         return KeyValueDescriptionView.create(
           key.toUpperCase(),
@@ -29,7 +29,7 @@ export class FormatterHelperService {
       })
     );
 
-    const characteristics = ArrayView.create(
+    const characteristics = ArrayView.fromArray(
       Object.values(character.characteristics).map(
         (c: CharacteristicDefinition) => {
           return KeyValueDescriptionView.create(
@@ -41,7 +41,7 @@ export class FormatterHelperService {
       )
     );
 
-    const derivedAttributes = ArrayView.create(
+    const derivedAttributes = ArrayView.fromArray(
       Object.values(character.derivedAttributes).map(
         (da: DerivedAttributeDefinition) => {
           return KeyValueDescriptionView.create(
@@ -53,7 +53,7 @@ export class FormatterHelperService {
       )
     );
 
-    const skills = ArrayView.create(
+    const skills = ArrayView.fromArray(
       Object.entries(character.skills)
         .map(([key, value]) => {
           return KeyValueDescriptionView.create(

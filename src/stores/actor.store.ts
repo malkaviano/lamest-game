@@ -60,7 +60,7 @@ export class ActorStore {
             ),
             aiBehavior: AiBehavior.create(
               aiBehavior,
-              ArrayView.create(ignores)
+              ArrayView.fromArray(ignores)
             ),
           }
         );

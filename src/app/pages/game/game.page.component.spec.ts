@@ -70,10 +70,10 @@ describe('GamePageComponent', () => {
 
     when(mockedGameEventsDefinition.playerInventory$).thenReturn(
       of(
-        ArrayView.create([
+        ArrayView.create(
           ActionableItemView.create(simpleSword, actionEquip),
-          ActionableItemView.create(unDodgeableAxe, actionEquip),
-        ])
+          ActionableItemView.create(unDodgeableAxe, actionEquip)
+        )
       )
     );
 
@@ -82,7 +82,7 @@ describe('GamePageComponent', () => {
     when(mockedGameEventsDefinition.documentOpened$).thenReturn(
       of({
         title: 'GG',
-        text: ArrayView.create([]),
+        text: ArrayView.create<string>(),
       })
     );
 
@@ -127,12 +127,12 @@ describe('GamePageComponent', () => {
 
   it(`should have interactives`, () => {
     expect(component.scene.interactives).toEqual(
-      ArrayView.create([instance(mockedInteractiveEntity)])
+      ArrayView.create(instance(mockedInteractiveEntity))
     );
   });
 
   it(`should have action log`, () => {
-    expect(component.logs).toEqual(ArrayView.create(['player: Sword']));
+    expect(component.logs).toEqual(ArrayView.create('player: Sword'));
   });
 
   it(`should have inventory`, () => {

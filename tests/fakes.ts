@@ -163,16 +163,14 @@ export const fakeIdentity = new CharacterIdentityDefinition(
 );
 
 export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
-  ArrayView.create([
-    {
-      id: playerInfo.id,
-      classification: 'PLAYER',
-      situation: 'ALIVE',
-      visibility: 'VISIBLE',
-    },
-  ]);
+  ArrayView.create({
+    id: playerInfo.id,
+    classification: 'PLAYER',
+    situation: 'ALIVE',
+    visibility: 'VISIBLE',
+  });
 
-export const fakeCharacterSheetIdentity = ArrayView.create([
+export const fakeCharacterSheetIdentity = ArrayView.create(
   KeyValueDescriptionView.create('NAME', 'Some Name', 'Character name'),
   KeyValueDescriptionView.create(
     'PROFESSION',
@@ -187,19 +185,19 @@ export const fakeCharacterSheetIdentity = ArrayView.create([
     'VISIBILITY',
     'VISIBLE',
     'Character current visibility'
-  ),
-]);
+  )
+);
 
-export const fakeCharacterSheetCharacteristics = ArrayView.create([
+export const fakeCharacterSheetCharacteristics = ArrayView.create(
   KeyValueDescriptionView.create('STR', '8', 'The character physical force'),
   KeyValueDescriptionView.create('VIT', '9', 'The character vitality'),
   KeyValueDescriptionView.create('AGI', '11', 'The character agility'),
   KeyValueDescriptionView.create('INT', '12', 'The character intelligence'),
   KeyValueDescriptionView.create('ESN', '13', 'The character essence'),
-  KeyValueDescriptionView.create('APP', '14', 'The character looks'),
-]);
+  KeyValueDescriptionView.create('APP', '14', 'The character looks')
+);
 
-export const fakeCharacterSheetDerivedAttributes = ArrayView.create([
+export const fakeCharacterSheetDerivedAttributes = ArrayView.create(
   KeyValueDescriptionView.create(
     'MAX HP',
     '8',
@@ -220,10 +218,10 @@ export const fakeCharacterSheetDerivedAttributes = ArrayView.create([
     '13',
     'The character current energy points'
   ),
-  KeyValueDescriptionView.create('MOV', '10', 'The character movement'),
-]);
+  KeyValueDescriptionView.create('MOV', '10', 'The character movement')
+);
 
-export const fakeCharacterSheetSkills = ArrayView.create([
+export const fakeCharacterSheetSkills = ArrayView.create(
   KeyValueDescriptionView.create('Brawl', '45', 'Fighting unarmed'),
   KeyValueDescriptionView.create(
     'First Aid',
@@ -234,8 +232,8 @@ export const fakeCharacterSheetSkills = ArrayView.create([
     'Melee Weapon (Simple)',
     '45',
     'Light close combat weapons, one handed'
-  ),
-]);
+  )
+);
 
 export const fakeCharacterSheet = CharacterValuesView.create(
   fakeCharacterSheetIdentity,
@@ -245,7 +243,7 @@ export const fakeCharacterSheet = CharacterValuesView.create(
 );
 
 export const lootState = new DiscardState(
-  ArrayView.create([actionPickAnalgesic])
+  ArrayView.create(actionPickAnalgesic)
 );
 
 export const consumableFirstAid = new ConsumableDefinition(
@@ -331,16 +329,16 @@ export const actionRead = createActionableDefinition('READ', 'read', 'Read');
 export const readable = new ReadableDefinition(
   new ItemIdentityDefinition('book', 'Book', 'Some book'),
   'BOOK',
-  ArrayView.create(['GG']),
+  ArrayView.create('GG'),
   'PERMANENT'
 );
 
 export const gameSettings: GameSettingsInterface = {
   playerEffectDefenses: {
-    immunities: ArrayView.create<EffectTypeLiteral>(['ACID']),
-    cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
-    vulnerabilities: ArrayView.create<EffectTypeLiteral>(['PROFANE']),
-    resistances: ArrayView.create<EffectTypeLiteral>(['KINETIC', 'SACRED']),
+    immunities: ArrayView.create<EffectTypeLiteral>('ACID'),
+    cures: ArrayView.create<EffectTypeLiteral>('REMEDY', 'SACRED'),
+    vulnerabilities: ArrayView.create<EffectTypeLiteral>('PROFANE'),
+    resistances: ArrayView.create<EffectTypeLiteral>('KINETIC', 'SACRED'),
   },
   resistanceCoefficient: 0.5,
   vulnerabilityCoefficient: 1.5,
@@ -352,10 +350,10 @@ export const gameSettings: GameSettingsInterface = {
 
 export const actorSettings: ActorSettingsInterface = {
   effectDefenses: {
-    immunities: ArrayView.create<EffectTypeLiteral>(['ACID']),
-    cures: ArrayView.create<EffectTypeLiteral>(['REMEDY', 'SACRED']),
-    vulnerabilities: ArrayView.create<EffectTypeLiteral>(['PROFANE']),
-    resistances: ArrayView.create<EffectTypeLiteral>(['KINETIC', 'SACRED']),
+    immunities: ArrayView.create<EffectTypeLiteral>('ACID'),
+    cures: ArrayView.create<EffectTypeLiteral>('REMEDY', 'SACRED'),
+    vulnerabilities: ArrayView.create<EffectTypeLiteral>('PROFANE'),
+    resistances: ArrayView.create<EffectTypeLiteral>('KINETIC', 'SACRED'),
   },
   resistanceCoefficient: 0.5,
   vulnerabilityCoefficient: 1.5,

@@ -10,7 +10,7 @@ export class ProfessionStore {
     this.store = new Map<string, ArrayView<string>>();
 
     resourcesStore.professionStore.professions.forEach((profession) => {
-      this.store.set(profession.name, ArrayView.create(profession.skills));
+      this.store.set(profession.name, ArrayView.fromArray(profession.skills));
     });
   }
 

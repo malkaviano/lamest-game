@@ -57,13 +57,13 @@ const pickAction = createActionableDefinition(
 );
 
 const successState = new SimpleState(
-  ArrayView.create([
+  ArrayView.create(
     createActionableDefinition(
       'INTERACTION',
       'askMeSecret',
       'Whats the secret?'
-    ),
-  ])
+    )
+  )
 );
 
 const f = () => successState;

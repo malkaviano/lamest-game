@@ -102,7 +102,7 @@ describe('AiBehavior', () => {
 });
 
 const behavior = (aiBehavior: BehaviorLiteral) =>
-  AiBehavior.create(aiBehavior, ArrayView.create(['HIDDEN']));
+  AiBehavior.create(aiBehavior, ArrayView.create('HIDDEN'));
 
 function scenario(
   playerActorInfo: {
@@ -120,7 +120,7 @@ function scenario(
 
     when(mockedCooldownBehavior.canAct).thenReturn(true);
 
-    expect(b.action(ArrayView.create([playerActorInfo]), afflictedBy)).toEqual(
+    expect(b.action(ArrayView.create(playerActorInfo), afflictedBy)).toEqual(
       expected
     );
   });

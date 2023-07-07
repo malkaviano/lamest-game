@@ -25,7 +25,7 @@ describe('GeneratorService', () => {
     setupMocks();
 
     when(mockedProfessionStore.professions).thenReturn({
-      'Police Detective': ArrayView.create([]),
+      'Police Detective': ArrayView.empty(),
     });
   });
 

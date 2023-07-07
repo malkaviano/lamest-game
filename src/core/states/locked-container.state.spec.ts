@@ -34,7 +34,7 @@ describe('LockedContainerState', () => {
 });
 
 const state = new LockedContainerState(
-  ArrayView.create([actionUseMasterKey]),
+  ArrayView.create(actionUseMasterKey),
   new LazyHelper<DiscardState>(() => lootState)
 );
 

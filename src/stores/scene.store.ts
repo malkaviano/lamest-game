@@ -40,7 +40,7 @@ export class SceneStore {
         scene.name,
         new SceneEntity(
           scene.description,
-          ArrayView.create(interactives),
+          ArrayView.fromArray(interactives),
           transitions,
           scene.image
         )

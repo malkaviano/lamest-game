@@ -57,7 +57,7 @@ describe('GameLoopService', () => {
     when(mockedEventHub.documentOpened$).thenReturn(documentSubject);
 
     when(mockedSceneEntity.interactives).thenReturn(
-      ArrayView.create([instance(mockedInteractiveEntity), actor, actor2])
+      ArrayView.create(instance(mockedInteractiveEntity), actor, actor2)
     );
 
     when(mockedNarrativeService.sceneChanged$).thenReturn(
@@ -148,7 +148,7 @@ describe('GameLoopService', () => {
         let result: ArrayView<ActionableItemView> | undefined;
 
         when(mockedInventoryService.list(anyString())).thenReturn(
-          ArrayView.create([new ItemStoredDefinition(item, 1)])
+          ArrayView.create(new ItemStoredDefinition(item, 1))
         );
 
         service.events.playerInventory$.subscribe((event) => {
@@ -159,7 +159,7 @@ describe('GameLoopService', () => {
 
         done();
 
-        expect(result).toEqual(ArrayView.create([expected]));
+        expect(result).toEqual(ArrayView.create(expected));
       });
     });
   });

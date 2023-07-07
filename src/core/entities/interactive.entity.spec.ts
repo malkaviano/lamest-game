@@ -17,17 +17,17 @@ describe('InteractiveEntity', () => {
     setupMocks();
 
     when(mockedActionableState.actions).thenReturn(
-      ArrayView.create([actionConsume])
+      ArrayView.create(actionConsume)
     );
 
     when(mockedActionableState2.actions).thenReturn(
-      ArrayView.create([actionPickAnalgesic])
+      ArrayView.create(actionPickAnalgesic)
     );
   });
 
   describe('initial state', () => {
     it('push an actionsChanged notification', (done) => {
-      const expected = ArrayView.create([actionConsume]);
+      const expected = ArrayView.create(actionConsume);
 
       const entity = fakeEntity();
 
@@ -57,7 +57,7 @@ describe('InteractiveEntity', () => {
 
       done();
 
-      expect(result).toEqual(ArrayView.create([actionPickAnalgesic]));
+      expect(result).toEqual(ArrayView.create(actionPickAnalgesic));
     });
   });
 
@@ -82,7 +82,7 @@ describe('InteractiveEntity', () => {
 
         done();
 
-        expect(result).toEqual(ArrayView.create([actionConsume]));
+        expect(result).toEqual(ArrayView.create(actionConsume));
       });
     });
 
@@ -106,7 +106,7 @@ describe('InteractiveEntity', () => {
 
         done();
 
-        expect(result).toEqual(ArrayView.create([actionPickAnalgesic]));
+        expect(result).toEqual(ArrayView.create(actionPickAnalgesic));
       });
     });
   });

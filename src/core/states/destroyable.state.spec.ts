@@ -52,13 +52,13 @@ describe('DestroyableState', () => {
 });
 
 const discardedState = new DiscardState(
-  ArrayView.create([actionPickSimpleSword])
+  ArrayView.create(actionPickSimpleSword)
 );
 
 const f = () => discardedState;
 
 const lazy = new LazyHelper(f);
 
-const state = new DestroyableState(ArrayView.create([actionAffect]), lazy, 10);
+const state = new DestroyableState(ArrayView.create(actionAffect), lazy, 10);
 
-const state2 = new DestroyableState(ArrayView.create([actionAffect]), lazy, 4);
+const state2 = new DestroyableState(ArrayView.create(actionAffect), lazy, 4);

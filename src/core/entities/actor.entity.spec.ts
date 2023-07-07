@@ -60,9 +60,9 @@ describe('ActorEntity', () => {
       )
     ).thenReturn(eventAttackPlayer);
 
-    when(mockedActionableState.actions).thenReturn(ArrayView.create([]));
+    when(mockedActionableState.actions).thenReturn(ArrayView.empty());
 
-    when(mockedActionableState2.actions).thenReturn(ArrayView.create([]));
+    when(mockedActionableState2.actions).thenReturn(ArrayView.empty());
   });
 
   describe('derivedAttributes', () => {
@@ -166,7 +166,7 @@ describe('ActorEntity', () => {
         const char = fakeActor();
 
         when(mockedActionableState.actions).thenReturn(
-          ArrayView.create([actionPickAnalgesic])
+          ArrayView.create(actionPickAnalgesic)
         );
 
         when(
@@ -431,7 +431,7 @@ describe('ActorEntity', () => {
     });
 
     it('return action null', () => {
-      expect(fakeActor().action(ArrayView.create([]))).toBeNull();
+      expect(fakeActor().action(ArrayView.empty())).toBeNull();
     });
 
     describe('when canAct is false', () => {
@@ -502,7 +502,7 @@ describe('ActorEntity', () => {
 
   describe('ignores', () => {
     it('return DISGUISED', () => {
-      expect(fakeActor().ignores).toEqual(ArrayView.create(['DISGUISED']));
+      expect(fakeActor().ignores).toEqual(ArrayView.create('DISGUISED'));
     });
   });
 });

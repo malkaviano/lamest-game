@@ -20,7 +20,7 @@ const actionInteractionLockPick = createActionableDefinition(
   'START Lock Picking'
 );
 
-const allDirectionsDefinition = ArrayView.create(
+const allDirectionsDefinition = ArrayView.fromArray(
   directionNamesDefinition.items.map((direction) => {
     return directionActionableDefinition(direction, `Turn ${direction}`);
   })
@@ -28,15 +28,15 @@ const allDirectionsDefinition = ArrayView.create(
 
 const lockpickingState = new LockPickingContainerState(
   allDirectionsDefinition,
-  ArrayView.create([actionUseMasterKey]),
+  ArrayView.create(actionUseMasterKey),
   new LazyHelper<DiscardState>(f),
-  ArrayView.create(['LEFT', 'DOWN']),
+  ArrayView.create('LEFT', 'DOWN'),
   3
 );
 
 const fakeState = () =>
   new LockPickableContainerState(
-    ArrayView.create([actionInteractionLockPick, actionUseMasterKey]),
+    ArrayView.create(actionInteractionLockPick, actionUseMasterKey),
     lockpickingState,
     new LazyHelper<DiscardState>(f)
   );

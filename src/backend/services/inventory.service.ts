@@ -80,7 +80,7 @@ export class InventoryService {
       return acc;
     }, result);
 
-    return ArrayView.create(a);
+    return ArrayView.fromArray(a);
   }
 
   public look<T extends GameItemDefinition>(

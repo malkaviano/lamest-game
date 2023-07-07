@@ -50,7 +50,7 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
       emptyState,
       {
         cooldownBehavior,
-        aiBehavior: AiBehavior.create('PASSIVE', ArrayView.create([])),
+        aiBehavior: AiBehavior.create('PASSIVE', ArrayView.empty()),
       }
     );
 
