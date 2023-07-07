@@ -41,6 +41,7 @@ import { GameLoopService } from '../../backend/services/game-loop.service';
 import { CharacterService } from '../../backend/services/character.service';
 import { RandomCharacterService } from '../../backend/services/random-character.service';
 import { SkillService } from '../../backend/services/skill.service';
+import { LoggingHub } from '../../backend/hubs/logging.hub';
 
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
@@ -118,15 +119,16 @@ const visibilityPolicy = new VisibilityPolicy();
 
 const policyHub = new PolicyHub(visibilityPolicy);
 
-const eventsHub = new EventsHub(
+const loggingHub = new LoggingHub(
   rollHelper,
   rulesHub,
-  dodgeAxiom,
   activationAxiom,
   affectAxiom,
-  readAxiom,
-  policyHub
+  policyHub,
+  dodgeAxiom
 );
+
+const eventsHub = new EventsHub(dodgeAxiom, readAxiom);
 
 const skillService = new SkillService(randomIntHelper);
 
@@ -146,7 +148,8 @@ const gameLoopService = new GameLoopService(
   narrativeService,
   policyHub,
   eventsHub,
-  inventoryService
+  inventoryService,
+  loggingHub
 );
 
 @NgModule({
@@ -197,6 +200,8 @@ const gameLoopService = new GameLoopService(
     { provide: RandomCharacterService, useValue: rngCharacterService },
     { provide: CharacterService, useValue: characterService },
     { provide: GameLoopService, useValue: gameLoopService },
+
+    { provide: LoggingHub, useValue: loggingHub },
   ],
   imports: [CommonModule],
 })
