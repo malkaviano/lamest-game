@@ -11,7 +11,7 @@ import {
 } from '../../../tests/mocks';
 
 describe('LoggingHub', () => {
-  let hub = new LoggingHub(
+  const hub = new LoggingHub(
     instance(mockedRollHelper),
     instance(mockedRulesHub),
     instance(mockedDodgeAxiom),

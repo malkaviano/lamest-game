@@ -148,7 +148,8 @@ const gameLoopService = new GameLoopService(
   narrativeService,
   policyHub,
   eventsHub,
-  inventoryService
+  inventoryService,
+  loggingHub
 );
 
 @NgModule({
