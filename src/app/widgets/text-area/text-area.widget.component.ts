@@ -12,6 +12,6 @@ export class TextAreaWidgetComponent {
   public paragraphs: ArrayView<string>;
 
   constructor() {
-    this.paragraphs = ArrayView.create();
+    this.paragraphs = ArrayView.empty();
   }
 }

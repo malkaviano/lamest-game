@@ -60,9 +60,9 @@ describe('ActorEntity', () => {
       )
     ).thenReturn(eventAttackPlayer);
 
-    when(mockedActionableState.actions).thenReturn(ArrayView.create());
+    when(mockedActionableState.actions).thenReturn(ArrayView.empty());
 
-    when(mockedActionableState2.actions).thenReturn(ArrayView.create());
+    when(mockedActionableState2.actions).thenReturn(ArrayView.empty());
   });
 
   describe('derivedAttributes', () => {
@@ -431,7 +431,7 @@ describe('ActorEntity', () => {
     });
 
     it('return action null', () => {
-      expect(fakeActor().action(ArrayView.create())).toBeNull();
+      expect(fakeActor().action(ArrayView.empty())).toBeNull();
     });
 
     describe('when canAct is false', () => {

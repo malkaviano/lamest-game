@@ -19,7 +19,7 @@ export class InteractivePanelComponent {
   constructor() {
     this.panelName = '';
 
-    this.interactives = ArrayView.create();
+    this.interactives = ArrayView.empty();
 
     this.actionSelected = new EventEmitter<ActionableEvent>();
   }

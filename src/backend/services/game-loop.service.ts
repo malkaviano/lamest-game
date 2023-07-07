@@ -49,7 +49,7 @@ export class GameLoopService {
 
     this.actionReactives = {};
 
-    this.actors = ArrayView.create();
+    this.actors = ArrayView.empty();
 
     this.narrativeService.sceneChanged$.subscribe((scene) => {
       this.currentScene = scene;
