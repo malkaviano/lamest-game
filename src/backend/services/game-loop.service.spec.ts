@@ -38,6 +38,7 @@ import {
   mockedEventHub,
   mockedInventoryService,
   mockedPolicyHub,
+  mockedLoggingHub,
 } from '../../../tests/mocks';
 
 const actor = instance(mockedActorEntity);
@@ -50,7 +51,7 @@ describe('GameLoopService', () => {
   beforeEach(() => {
     setupMocks();
 
-    when(mockedEventHub.logMessageProduced$).thenReturn(EMPTY);
+    when(mockedLoggingHub.logMessageProduced$).thenReturn(EMPTY);
 
     when(mockedEventHub.actorDodged$).thenReturn(of(playerInfo.id));
 
@@ -83,7 +84,8 @@ describe('GameLoopService', () => {
       instance(mockedNarrativeService),
       instance(mockedPolicyHub),
       instance(mockedEventHub),
-      instance(mockedInventoryService)
+      instance(mockedInventoryService),
+      instance(mockedLoggingHub)
     );
   });
 

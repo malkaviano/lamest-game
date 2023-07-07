@@ -21,6 +21,7 @@ import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorEntity } from '../../core/entities/actor.entity';
 import { EventsHub } from '../hubs/events.hub';
 import { PolicyHub } from '../hubs/policy.hub';
+import { LoggingHub } from '../hubs/logging.hub';
 
 export class GameLoopService {
   private timer: NodeJS.Timer | undefined;
@@ -43,7 +44,8 @@ export class GameLoopService {
     private readonly narrativeService: NarrativeService,
     private readonly policyHub: PolicyHub,
     private readonly eventHub: EventsHub,
-    inventoryService: InventoryService
+    inventoryService: InventoryService,
+    loggingHub: LoggingHub
   ) {
     this.player = this.characterService.currentCharacter;
 
@@ -76,7 +78,7 @@ export class GameLoopService {
 
     this.events = new GameEventsDefinition(
       narrativeService.sceneChanged$,
-      eventHub.logMessageProduced$,
+      loggingHub.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
       this.eventHub.documentOpened$,

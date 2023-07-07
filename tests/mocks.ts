@@ -69,6 +69,7 @@ import { EventsHub } from '../src/backend/hubs/events.hub';
 import { RollHelper } from '../src/core/helpers/roll.helper';
 import { PolicyHub } from '../src/backend/hubs/policy.hub';
 import { GameLoopService } from '../src/backend/services/game-loop.service';
+import { LoggingHub } from '../src/backend/hubs/logging.hub';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -177,6 +178,8 @@ export const mockedCooldownBehavior = mock(CooldownBehavior);
 export const mockedAiBehavior = mock(AiBehavior);
 
 export const mockedPolicyHub = mock(PolicyHub);
+
+export const mockedLoggingHub = mock(LoggingHub);
 
 export const setupMocks = () => {
   resetMocks();
@@ -480,6 +483,8 @@ const resetMocks = () => {
   reset(mockedAiBehavior);
 
   reset(mockedPolicyHub);
+
+  reset(mockedLoggingHub);
 };
 
 function mockCheckedHelper() {
