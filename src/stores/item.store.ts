@@ -64,7 +64,7 @@ export class ItemStore {
         new ReadableDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
           item.title,
-          ArrayView.create(item.text),
+          ArrayView.fromArray(item.text),
           item.usability
         )
       );

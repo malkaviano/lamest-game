@@ -51,13 +51,13 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.inventory = [];
 
     this.characterValues = CharacterValuesView.create(
-      ArrayView.create([]),
-      ArrayView.create([]),
-      ArrayView.create([]),
-      ArrayView.create([])
+      ArrayView.create(),
+      ArrayView.create(),
+      ArrayView.create(),
+      ArrayView.create()
     );
 
-    this.scene = new SceneDefinition('', ArrayView.create([]), '');
+    this.scene = new SceneDefinition('', ArrayView.create(), '');
 
     this.canAct = true;
   }
@@ -93,11 +93,11 @@ export class GamePageComponent implements OnInit, OnDestroy {
         );
 
         this.characterStatus = CharacterStatusView.create(
-          ArrayView.create([
+          ArrayView.create(
             hp,
             ep,
-            this.characterValues.derivedAttributes.items[4],
-          ]),
+            this.characterValues.derivedAttributes.items[4]
+          ),
           this.equipped,
           this.characterValues.identity.items[6]
         );
@@ -146,7 +146,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   public get logs(): ArrayView<string> {
-    return ArrayView.create(this.gameLogs);
+    return ArrayView.fromArray(this.gameLogs);
   }
 
   private printLog(logMessage: LogMessageDefinition): string {

@@ -23,10 +23,7 @@ export class LockPickingContainerState extends LockedContainerState {
     private readonly lockSequence: ArrayView<DirectionLiteral>,
     private readonly maximumTries: number
   ) {
-    super(
-      ArrayView.create([...lockPickActions.items, ...jammedStateActions.items]),
-      openedState
-    );
+    super(lockPickActions.concat(jammedStateActions), openedState);
 
     this.lockPosition = 0;
 

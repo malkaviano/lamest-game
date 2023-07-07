@@ -13,7 +13,7 @@ export class VisibilityState extends ActionableState {
     stateAction: ActionableDefinition,
     private readonly maximumTries: number
   ) {
-    super('VisibilityState', ArrayView.create([stateAction]));
+    super('VisibilityState', ArrayView.create(stateAction));
   }
 
   protected override stateResult(

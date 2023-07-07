@@ -12,7 +12,7 @@ export class PolicyHub implements LoggerInterface {
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
   constructor(..._policies: PolicyInterface[]) {
-    this.policies = ArrayView.create(_policies);
+    this.policies = ArrayView.fromArray(_policies);
 
     this.logMessageProduced$ = merge(
       ...this.policies.items.map((p) => p.logMessageProduced$)

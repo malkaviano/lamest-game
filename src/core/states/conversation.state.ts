@@ -27,7 +27,7 @@ export class ConversationState extends ActionableState {
         currentMessages[topic].label
       )
     );
-    super('ConversationState', ArrayView.create(actions));
+    super('ConversationState', ArrayView.fromArray(actions));
 
     this.currentMessages = currentMessages;
   }

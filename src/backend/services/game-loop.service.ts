@@ -49,7 +49,7 @@ export class GameLoopService {
 
     this.actionReactives = {};
 
-    this.actors = ArrayView.create([]);
+    this.actors = ArrayView.create();
 
     this.narrativeService.sceneChanged$.subscribe((scene) => {
       this.currentScene = scene;
@@ -149,11 +149,11 @@ export class GameLoopService {
 
     actors.unshift(this.player);
 
-    this.actors = ArrayView.create(actors);
+    this.actors = ArrayView.fromArray(actors);
   }
 
   private get sceneActorsInfo(): ArrayView<SceneActorsInfoInterface> {
-    return ArrayView.create(
+    return ArrayView.fromArray(
       this.actors.items.map((a) => {
         return {
           id: a.id,
@@ -189,7 +189,7 @@ export class GameLoopService {
       return acc;
     }, inventoryView);
 
-    return ArrayView.create([...items]);
+    return ArrayView.fromArray(items);
   }
 
   private inventoryAction(item: GameItemDefinition): ActionableDefinition {

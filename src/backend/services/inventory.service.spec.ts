@@ -110,7 +110,7 @@ describe('InventoryService', () => {
 
           service.take('take', simpleSword.identity.name);
 
-          const expected = ArrayView.create([]);
+          const expected = ArrayView.create();
 
           const result = service.list('take');
 
@@ -163,7 +163,7 @@ describe('InventoryService', () => {
   describe('listing items stored', () => {
     describe('when storage is empty', () => {
       it('return empty', () => {
-        const expected = ArrayView.create([]);
+        const expected = ArrayView.create();
 
         const result = service.list('check');
 
