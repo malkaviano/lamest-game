@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 import { ActivationAxiom } from '../../core/axioms/activation.axiom';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
 import { DodgeAxiom } from '../../core/axioms/dodge.axiom';
@@ -14,16 +16,21 @@ import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { CheckedService } from '../services/checked.service';
 import { MasterRule } from './master.rule';
+import { ActorDodgedInterface } from '../../core/interfaces/actor-dodged.interface';
 
-export class AffectRule extends MasterRule {
+export class AffectRule extends MasterRule implements ActorDodgedInterface {
+  public readonly actorDodged$: Observable<string>;
+
   constructor(
     private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,
-    private readonly activationAxiomService: ActivationAxiom,
-    private readonly dodgeAxiomService: DodgeAxiom,
-    private readonly affectedAxiomService: AffectAxiom
+    private readonly activationAxiom: ActivationAxiom,
+    private readonly dodgeAxiom: DodgeAxiom,
+    private readonly affectedAxiom: AffectAxiom
   ) {
     super();
+
+    this.actorDodged$ = this.dodgeAxiom.actorDodged$;
   }
 
   public override get name(): RuleNameLiteral {
@@ -46,7 +53,7 @@ export class AffectRule extends MasterRule {
       energyActivation,
     } = actor.weaponEquipped;
 
-    const activated = this.activationAxiomService.activation(actor, {
+    const activated = this.activationAxiom.activation(actor, {
       identity,
       energyActivation,
     });
@@ -84,7 +91,7 @@ export class AffectRule extends MasterRule {
       if (targetWasHit) {
         const dodged =
           targetActor?.wannaDodge(effect.effectType) &&
-          this.dodgeAxiomService.dodge(targetActor, {
+          this.dodgeAxiom.dodge(targetActor, {
             dodgeable,
             dodgesPerformed: extras.targetDodgesPerformed ?? 0,
           });
@@ -95,7 +102,7 @@ export class AffectRule extends MasterRule {
           const effectAmount =
             this.rollHelper.roll(effect.diceRoll) + effect.fixed;
 
-          this.affectedAxiomService.affectWith(
+          this.affectedAxiom.affectWith(
             target,
             event.actionableDefinition,
             'SUCCESS',

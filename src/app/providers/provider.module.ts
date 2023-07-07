@@ -33,7 +33,6 @@ import { SkillRule } from '../../backend/rules/skill.rule';
 import { UnEquipRule } from '../../backend/rules/unequip.rule';
 import { UseRule } from '../../backend/rules/use.rule';
 import { NarrativeService } from '../../backend/services/narrative.service';
-import { EventsHub } from '../../backend/hubs/events.hub';
 import { RulesHub } from '../../backend/hubs/rules.hub';
 import { VisibilityPolicy } from '../../backend/policies/visibility.policy';
 import { PolicyHub } from '../../backend/hubs/policy.hub';
@@ -128,8 +127,6 @@ const loggingHub = new LoggingHub(
   dodgeAxiom
 );
 
-const eventsHub = new EventsHub(dodgeAxiom, readAxiom);
-
 const skillService = new SkillService(randomIntHelper);
 
 const rngCharacterService = new RandomCharacterService(
@@ -147,7 +144,6 @@ const gameLoopService = new GameLoopService(
   characterService,
   narrativeService,
   policyHub,
-  eventsHub,
   inventoryService,
   loggingHub
 );
@@ -193,7 +189,6 @@ const gameLoopService = new GameLoopService(
     { provide: UseRule, useValue: useRule },
 
     { provide: RulesHub, useValue: rulesHub },
-    { provide: EventsHub, useValue: eventsHub },
     { provide: PolicyHub, useValue: policyHub },
 
     { provide: SkillService, useValue: skillService },

@@ -65,7 +65,6 @@ import {
 } from './fakes';
 import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
 import { CheckedService } from '../src/backend/services/checked.service';
-import { EventsHub } from '../src/backend/hubs/events.hub';
 import { RollHelper } from '../src/core/helpers/roll.helper';
 import { PolicyHub } from '../src/backend/hubs/policy.hub';
 import { GameLoopService } from '../src/backend/services/game-loop.service';
@@ -168,8 +167,6 @@ export const mockedActivationAxiom = mock(ActivationAxiom);
 export const mockedAffectedAxiom = mock(AffectAxiom);
 
 export const mockedDodgeAxiom = mock(DodgeAxiom);
-
-export const mockedEventHub = mock(EventsHub);
 
 export const mockedReadAxiom = mock(ReadAxiom);
 
@@ -473,8 +470,6 @@ const resetMocks = () => {
   reset(mockedAffectedAxiom);
 
   reset(mockedDodgeAxiom);
-
-  reset(mockedEventHub);
 
   reset(mockedReadAxiom);
 

@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 import { ReadAxiom } from '../../core/axioms/read.axiom';
 import { ReadableDefinition } from '../../core/definitions/readable.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
@@ -7,13 +9,19 @@ import { MasterRule } from './master.rule';
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
+import { DocumentOpenedInterface } from '../../core/interfaces/document-opened.interface';
+import { ReadableInterface } from '../../core/interfaces/readable.interface';
 
-export class ReadRule extends MasterRule {
+export class ReadRule extends MasterRule implements DocumentOpenedInterface {
+  public readonly documentOpened$: Observable<ReadableInterface>;
+
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly readAxiomService: ReadAxiom
   ) {
     super();
+
+    this.documentOpened$ = this.readAxiomService.documentOpened$;
   }
 
   public override get name(): RuleNameLiteral {

@@ -19,7 +19,6 @@ import { ActionableItemView } from '../../core/view-models/actionable-item.view'
 import { ActionableEvent } from '../../core/events/actionable.event';
 import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorEntity } from '../../core/entities/actor.entity';
-import { EventsHub } from '../hubs/events.hub';
 import { PolicyHub } from '../hubs/policy.hub';
 import { LoggingHub } from '../hubs/logging.hub';
 
@@ -43,7 +42,6 @@ export class GameLoopService {
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
     private readonly policyHub: PolicyHub,
-    private readonly eventHub: EventsHub,
     inventoryService: InventoryService,
     loggingHub: LoggingHub
   ) {
@@ -63,7 +61,7 @@ export class GameLoopService {
 
     this.dodgedThisRound = new Map<string, number>();
 
-    this.eventHub.actorDodged$.subscribe((actorId) => {
+    this.ruleHub.actorDodged$.subscribe((actorId) => {
       this.actorDodged(actorId);
     });
 
@@ -81,7 +79,7 @@ export class GameLoopService {
       loggingHub.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
-      this.eventHub.documentOpened$,
+      this.ruleHub.documentOpened$,
       this.player.canActChanged$
     );
   }

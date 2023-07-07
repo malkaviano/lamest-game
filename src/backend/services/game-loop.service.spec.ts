@@ -35,7 +35,6 @@ import {
   mockedSceneEntity,
   setupMocks,
   mockedInteractiveEntity,
-  mockedEventHub,
   mockedInventoryService,
   mockedPolicyHub,
   mockedLoggingHub,
@@ -53,9 +52,9 @@ describe('GameLoopService', () => {
 
     when(mockedLoggingHub.logMessageProduced$).thenReturn(EMPTY);
 
-    when(mockedEventHub.actorDodged$).thenReturn(of(playerInfo.id));
+    when(mockedRulesHub.actorDodged$).thenReturn(of(playerInfo.id));
 
-    when(mockedEventHub.documentOpened$).thenReturn(documentSubject);
+    when(mockedRulesHub.documentOpened$).thenReturn(documentSubject);
 
     when(mockedSceneEntity.interactives).thenReturn(
       ArrayView.create(instance(mockedInteractiveEntity), actor, actor2)
@@ -83,7 +82,6 @@ describe('GameLoopService', () => {
       instance(mockedCharacterService),
       instance(mockedNarrativeService),
       instance(mockedPolicyHub),
-      instance(mockedEventHub),
       instance(mockedInventoryService),
       instance(mockedLoggingHub)
     );
