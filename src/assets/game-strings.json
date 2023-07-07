@@ -55,11 +55,14 @@
     "APP": "The character looks",
     "MAX HP": "The character maximum hit points",
     "MAX EP": "The character maximum energy points",
+    "MAX AP": "The character maximum action points",
     "CURRENT HP": "The character current hit points",
     "CURRENT EP": "The character current energy points",
+    "CURRENT AP": "The character current action points",
     "MOV": "The character movement",
     "HP": "The character current | max hit points",
     "EP": "The character current | max energy points",
+    "AP": "The character current | max action points",
     "UNARMED": "Actor Natural Weapon"
   },
   "tooltips": {

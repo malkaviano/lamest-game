@@ -92,12 +92,16 @@ export class GamePageComponent implements OnInit, OnDestroy {
           GameStringsStore.descriptions['EP']
         );
 
+        const ap = KeyValueDescriptionView.create(
+          'AP',
+          `${this.characterValues.derivedAttributes.items[5].value}` +
+            ' | ' +
+            `${this.characterValues.derivedAttributes.items[4].value}`,
+          GameStringsStore.descriptions['AP']
+        );
+
         this.characterStatus = CharacterStatusView.create(
-          ArrayView.create(
-            hp,
-            ep,
-            this.characterValues.derivedAttributes.items[4]
-          ),
+          ArrayView.create(hp, ep, ap),
           this.equipped,
           this.characterValues.identity.items[6]
         );

@@ -3,4 +3,5 @@ export type DerivedAttributeNameLiteral =
   | 'CURRENT EP'
   | 'MAX HP'
   | 'MAX EP'
-  | 'MOV';
+  | 'MAX AP'
+  | 'CURRENT AP';

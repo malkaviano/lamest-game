@@ -16,9 +16,13 @@ export class ActorBehavior {
 
   private readonly maximumEP: number;
 
+  private readonly maximumAP: number;
+
   private currentHP: number;
 
   private currentEP: number;
+
+  private currentAP: number;
 
   private constructor(
     private readonly mCharacteristics: CharacteristicSetDefinition,
@@ -32,9 +36,13 @@ export class ActorBehavior {
 
     this.maximumEP = this.characteristics.ESN.value;
 
+    this.maximumAP = 10;
+
     this.currentHP = this.maximumHP;
 
     this.currentEP = this.maximumEP;
+
+    this.currentAP = this.maximumAP;
   }
 
   public get characteristics(): CharacteristicSetDefinition {
@@ -53,7 +61,11 @@ export class ActorBehavior {
         'CURRENT EP',
         this.currentEP
       ),
-      MOV: new DerivedAttributeDefinition('MOV', 10),
+      'MAX AP': new DerivedAttributeDefinition('MAX AP', this.maximumAP),
+      'CURRENT AP': new DerivedAttributeDefinition(
+        'CURRENT AP',
+        this.currentAP
+      ),
     };
   }
 
