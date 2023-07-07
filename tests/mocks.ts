@@ -38,7 +38,6 @@ import { RulesHub } from '../src/backend/hubs/rules.hub';
 import { ActivationAxiom } from '../src/core/axioms/activation.axiom';
 import { AffectAxiom } from '../src/core/axioms/affect.axiom';
 import { DodgeAxiom } from '../src/core/axioms/dodge.axiom';
-import { ReadAxiom } from '../src/core/axioms/read.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { CooldownBehavior } from '../src/core/behaviors/cooldown.behavior';
@@ -167,8 +166,6 @@ export const mockedActivationAxiom = mock(ActivationAxiom);
 export const mockedAffectedAxiom = mock(AffectAxiom);
 
 export const mockedDodgeAxiom = mock(DodgeAxiom);
-
-export const mockedReadAxiom = mock(ReadAxiom);
 
 export const mockedCooldownBehavior = mock(CooldownBehavior);
 
@@ -470,8 +467,6 @@ const resetMocks = () => {
   reset(mockedAffectedAxiom);
 
   reset(mockedDodgeAxiom);
-
-  reset(mockedReadAxiom);
 
   reset(mockedCooldownBehavior);
 

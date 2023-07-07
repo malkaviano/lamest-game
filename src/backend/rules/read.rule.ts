@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
-import { ReadAxiom } from '../../core/axioms/read.axiom';
 import { ReadableDefinition } from '../../core/definitions/readable.definition';
 import { ActorInterface } from '../../core/interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
@@ -13,15 +12,16 @@ import { DocumentOpenedInterface } from '../../core/interfaces/document-opened.i
 import { ReadableInterface } from '../../core/interfaces/readable.interface';
 
 export class ReadRule extends MasterRule implements DocumentOpenedInterface {
+  private readonly documentOpened: Subject<ReadableInterface>;
+
   public readonly documentOpened$: Observable<ReadableInterface>;
 
-  constructor(
-    private readonly inventoryService: InventoryService,
-    private readonly readAxiomService: ReadAxiom
-  ) {
+  constructor(private readonly inventoryService: InventoryService) {
     super();
 
-    this.documentOpened$ = this.readAxiomService.documentOpened$;
+    this.documentOpened = new Subject();
+
+    this.documentOpened$ = this.documentOpened.asObservable();
   }
 
   public override get name(): RuleNameLiteral {
@@ -50,10 +50,17 @@ export class ReadRule extends MasterRule implements DocumentOpenedInterface {
 
     this.ruleLog.next(logMessage);
 
-    this.readAxiomService.openDocument(read);
+    this.openDocument(read);
 
     this.ruleResult.read = read;
 
     return this.getResult(event, actor, 'EXECUTED');
+  }
+
+  private openDocument(item: ReadableDefinition): void {
+    this.documentOpened.next({
+      title: item.title,
+      text: item.text,
+    });
   }
 }

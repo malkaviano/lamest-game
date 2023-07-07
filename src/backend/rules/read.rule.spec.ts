@@ -8,7 +8,6 @@ import { RuleResultInterface } from '../../core/interfaces/rule-result.interface
 import {
   mockedInventoryService,
   mockedPlayerEntity,
-  mockedReadAxiom,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -19,6 +18,7 @@ import {
   simpleSword,
 } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
+import { ReadableInterface } from '../../core/interfaces/readable.interface';
 
 describe('ReadRule', () => {
   let rule: ReadRule;
@@ -26,10 +26,7 @@ describe('ReadRule', () => {
   beforeEach(() => {
     setupMocks();
 
-    rule = new ReadRule(
-      instance(mockedInventoryService),
-      instance(mockedReadAxiom)
-    );
+    rule = new ReadRule(instance(mockedInventoryService));
 
     when(
       mockedInventoryService.look(playerInfo.id, eventRead.eventId)
@@ -72,6 +69,22 @@ describe('ReadRule', () => {
         expect(result).toEqual(expected);
       });
     });
+
+    describe('openDocument', () => {
+      it('should emit documentOpened event', (done) => {
+        const result: ReadableInterface[] = [];
+
+        rule.documentOpened$.subscribe((event) => {
+          result.push(event);
+        });
+
+        rule.execute(actor, eventRead);
+
+        done();
+
+        expect(result).toEqual([docEvent]);
+      });
+    });
   });
 });
 
@@ -86,3 +99,8 @@ const itemReadLog = new LogMessageDefinition(
   playerInfo.name,
   'read Book'
 );
+
+const docEvent = {
+  title: readable.title,
+  text: readable.text,
+};
