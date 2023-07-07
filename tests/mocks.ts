@@ -38,7 +38,6 @@ import { RulesHub } from '../src/backend/hubs/rules.hub';
 import { ActivationAxiom } from '../src/core/axioms/activation.axiom';
 import { AffectAxiom } from '../src/core/axioms/affect.axiom';
 import { DodgeAxiom } from '../src/core/axioms/dodge.axiom';
-import { ReadAxiom } from '../src/core/axioms/read.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { CooldownBehavior } from '../src/core/behaviors/cooldown.behavior';
@@ -65,7 +64,6 @@ import {
 } from './fakes';
 import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
 import { CheckedService } from '../src/backend/services/checked.service';
-import { EventsHub } from '../src/backend/hubs/events.hub';
 import { RollHelper } from '../src/core/helpers/roll.helper';
 import { PolicyHub } from '../src/backend/hubs/policy.hub';
 import { GameLoopService } from '../src/backend/services/game-loop.service';
@@ -168,10 +166,6 @@ export const mockedActivationAxiom = mock(ActivationAxiom);
 export const mockedAffectedAxiom = mock(AffectAxiom);
 
 export const mockedDodgeAxiom = mock(DodgeAxiom);
-
-export const mockedEventHub = mock(EventsHub);
-
-export const mockedReadAxiom = mock(ReadAxiom);
 
 export const mockedCooldownBehavior = mock(CooldownBehavior);
 
@@ -473,10 +467,6 @@ const resetMocks = () => {
   reset(mockedAffectedAxiom);
 
   reset(mockedDodgeAxiom);
-
-  reset(mockedEventHub);
-
-  reset(mockedReadAxiom);
 
   reset(mockedCooldownBehavior);
 

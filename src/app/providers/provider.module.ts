@@ -5,7 +5,6 @@ import { RandomIntHelper } from '../../core/helpers/random-int.helper';
 import { ActivationAxiom } from '../../core/axioms/activation.axiom';
 import { AffectAxiom } from '../../core/axioms/affect.axiom';
 import { DodgeAxiom } from '../../core/axioms/dodge.axiom';
-import { ReadAxiom } from '../../core/axioms/read.axiom';
 import { ResourcesStore } from '../../stores/resources.store';
 import { ActionableStore } from '../../stores/actionable.store';
 import { ItemStore } from '../../stores/item.store';
@@ -33,7 +32,6 @@ import { SkillRule } from '../../backend/rules/skill.rule';
 import { UnEquipRule } from '../../backend/rules/unequip.rule';
 import { UseRule } from '../../backend/rules/use.rule';
 import { NarrativeService } from '../../backend/services/narrative.service';
-import { EventsHub } from '../../backend/hubs/events.hub';
 import { RulesHub } from '../../backend/hubs/rules.hub';
 import { VisibilityPolicy } from '../../backend/policies/visibility.policy';
 import { PolicyHub } from '../../backend/hubs/policy.hub';
@@ -78,7 +76,6 @@ const checkedService = new CheckedService();
 const activationAxiom = new ActivationAxiom();
 const affectAxiom = new AffectAxiom();
 const dodgeAxiom = new DodgeAxiom(rollHelper);
-const readAxiom = new ReadAxiom();
 
 const combatRule = new AffectRule(
   rollHelper,
@@ -94,7 +91,7 @@ const consumeRule = new ConsumeRule(
   affectAxiom
 );
 const equipRule = new EquipRule(inventoryService, checkedService);
-const inspectRule = new ReadRule(inventoryService, readAxiom);
+const inspectRule = new ReadRule(inventoryService);
 const interactionRule = new InteractionRule(checkedService, affectAxiom);
 const pickRule = new PickRule(inventoryService, checkedService, affectAxiom);
 const sceneRule = new SceneRule(narrativeService, checkedService);
@@ -128,8 +125,6 @@ const loggingHub = new LoggingHub(
   dodgeAxiom
 );
 
-const eventsHub = new EventsHub(dodgeAxiom, readAxiom);
-
 const skillService = new SkillService(randomIntHelper);
 
 const rngCharacterService = new RandomCharacterService(
@@ -147,7 +142,6 @@ const gameLoopService = new GameLoopService(
   characterService,
   narrativeService,
   policyHub,
-  eventsHub,
   inventoryService,
   loggingHub
 );
@@ -173,7 +167,6 @@ const gameLoopService = new GameLoopService(
 
     { provide: ActivationAxiom, useValue: activationAxiom },
     { provide: AffectAxiom, useValue: affectAxiom },
-    { provide: ReadAxiom, useValue: readAxiom },
     { provide: DodgeAxiom, useValue: dodgeAxiom },
 
     { provide: CheckedService, useValue: checkedService },
@@ -193,7 +186,6 @@ const gameLoopService = new GameLoopService(
     { provide: UseRule, useValue: useRule },
 
     { provide: RulesHub, useValue: rulesHub },
-    { provide: EventsHub, useValue: eventsHub },
     { provide: PolicyHub, useValue: policyHub },
 
     { provide: SkillService, useValue: skillService },
