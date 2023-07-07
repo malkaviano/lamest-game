@@ -24,10 +24,10 @@ describe('SkillService', () => {
       ['Research', 0],
     ]);
 
-    const skillNames: ArrayView<string> = ArrayView.create([
+    const skillNames: ArrayView<string> = ArrayView.create(
       'First Aid',
-      'Research',
-    ]);
+      'Research'
+    );
 
     const result = service.newSkillSetFor(skillNames);
 

@@ -34,7 +34,7 @@ describe('InteractiveWidgetComponent', () => {
     when(mockedInteractive.name).thenReturn('Ornate Chest');
     when(mockedInteractive.description).thenReturn('A brilliant chest');
     when(mockedInteractive.actionsChanged$).thenReturn(
-      of(ArrayView.create([consumeAction, pickAction]))
+      of(ArrayView.create(consumeAction, pickAction))
     );
   });
 

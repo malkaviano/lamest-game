@@ -249,7 +249,7 @@ export const setupMocks = () => {
 
   when(mockedAiBehavior.aiBehavior).thenReturn('AGGRESSIVE');
 
-  when(mockedAiBehavior.ignores).thenReturn(ArrayView.create(['DISGUISED']));
+  when(mockedAiBehavior.ignores).thenReturn(ArrayView.create('DISGUISED'));
 
   const instanceActorEntity = instance(mockedActorEntity);
 
@@ -330,10 +330,10 @@ export const setupMocks = () => {
       resistanceCoefficient: 0.5,
       oneDodgesEveryAgiAmount: 8,
       playerEffectDefenses: {
-        cures: ArrayView.create([]),
-        immunities: ArrayView.create([]),
-        resistances: ArrayView.create([]),
-        vulnerabilities: ArrayView.create([]),
+        cures: ArrayView.create(),
+        immunities: ArrayView.create(),
+        resistances: ArrayView.create(),
+        vulnerabilities: ArrayView.create(),
       },
       actionCooldown: 0,
     },
@@ -357,7 +357,7 @@ export const setupMocks = () => {
     of(
       new SceneDefinition(
         'this is a test',
-        ArrayView.create([instance(mockedInteractiveEntity)]),
+        ArrayView.create(instance(mockedInteractiveEntity)),
         'gg.jpg'
       )
     )

@@ -28,11 +28,11 @@ describe('RandomCharacterService', () => {
     setupMocks();
 
     when(mockedProfessionStore.professions).thenReturn({
-      'Police Detective': ArrayView.create([]),
+      'Police Detective': ArrayView.create(),
     });
 
     when(mockedSkillStore.naturalSkills).thenReturn(
-      ArrayView.create(['Artillery', 'First Aid', 'Manipulation'])
+      ArrayView.create('Artillery', 'First Aid', 'Manipulation')
     );
 
     service = new RandomCharacterService(

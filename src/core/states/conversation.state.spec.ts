@@ -5,7 +5,7 @@ import { MessageMapDefinition } from '../definitions/message-map.definition';
 
 describe('ConversationState', () => {
   it('should have action Hello', () => {
-    expect(state.actions).toEqual(ArrayView.create([helloAction, dieAction]));
+    expect(state.actions).toEqual(ArrayView.create(helloAction, dieAction));
   });
 
   describe('message context', () => {
@@ -14,7 +14,7 @@ describe('ConversationState', () => {
         const result = state.onResult(helloAction, 'NONE', {});
 
         expect(result.state.actions).toEqual(
-          ArrayView.create([helloAction, dieAction])
+          ArrayView.create(helloAction, dieAction)
         );
       });
     });
@@ -23,7 +23,7 @@ describe('ConversationState', () => {
       it('change context', () => {
         const result = state.onResult(dieAction, 'NONE', {});
 
-        expect(result.state.actions).toEqual(ArrayView.create([sorryAction]));
+        expect(result.state.actions).toEqual(ArrayView.create(sorryAction));
       });
     });
   });

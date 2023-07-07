@@ -8,7 +8,7 @@ import { ArrayView } from '../../../core/view-models/array.view';
 describe('TextAreaWidgetComponent', () => {
   let component: TextAreaWidgetComponent;
   let fixture: ComponentFixture<TextAreaWidgetComponent>;
-  const paragraphs = ArrayView.create(['p1', 'p2', 'p3', 'p4']);
+  const paragraphs = ArrayView.create('p1', 'p2', 'p3', 'p4');
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

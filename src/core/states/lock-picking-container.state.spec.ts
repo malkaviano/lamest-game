@@ -16,11 +16,11 @@ import { setupMocks } from '../../../tests/mocks';
 const f = () => lootState;
 
 const jammedState = new LockedContainerState(
-  ArrayView.create([actionUseMasterKey]),
+  ArrayView.create(actionUseMasterKey),
   new LazyHelper<DiscardState>(f)
 );
 
-const allDirectionsDefinition = ArrayView.create(
+const allDirectionsDefinition = ArrayView.fromArray(
   directionNamesDefinition.items.map((direction) => {
     return directionActionableDefinition(direction, `Turn ${direction}`);
   })
@@ -29,9 +29,9 @@ const allDirectionsDefinition = ArrayView.create(
 const fakeState = () =>
   new LockPickingContainerState(
     allDirectionsDefinition,
-    ArrayView.create([actionUseMasterKey]),
+    ArrayView.create(actionUseMasterKey),
     new LazyHelper<DiscardState>(f),
-    ArrayView.create(['LEFT', 'DOWN']),
+    ArrayView.create('LEFT', 'DOWN'),
     3
   );
 
