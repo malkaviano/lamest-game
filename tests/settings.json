@@ -11,6 +11,18 @@
     "oneDodgeEveryAgiAmount": 8,
     "intelligencePoints": 10,
     "professionPoints": 300,
-    "actionCooldown": 0
+    "actionCooldown": 0,
+    "ruleCost": {
+      "AFFECT": 3,
+      "CONSUME": 1,
+      "EQUIP": 1,
+      "INTERACTION": 1,
+      "PICK": 1,
+      "READ": 0,
+      "SCENE": 1,
+      "SKILL": 2,
+      "UNEQUIP": 1,
+      "USE": 1
+    }
   }
 }

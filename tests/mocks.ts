@@ -220,6 +220,8 @@ export const setupMocks = () => {
 
   when(mockedActorEntity2.skills).thenReturn(fakeSkills);
 
+  when(mockedActorEntity2.derivedAttributes).thenReturn(fakeDerivedAttributes);
+
   when(mockedActorEntity2.classification).thenReturn('ACTOR');
 
   when(mockedActorEntity2.situation).thenReturn('ALIVE');

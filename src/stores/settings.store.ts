@@ -17,6 +17,7 @@ export class SettingsStore {
       playerEffectDefenses,
       oneDodgeEveryAgiAmount,
       actionCooldown,
+      ruleCost,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(
@@ -48,6 +49,7 @@ export class SettingsStore {
         vulnerabilities,
       },
       actionCooldown,
+      ruleCost,
     };
   }
 

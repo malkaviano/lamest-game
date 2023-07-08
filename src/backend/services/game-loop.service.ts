@@ -21,6 +21,7 @@ import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorEntity } from '../../core/entities/actor.entity';
 import { PolicyHub } from '../hubs/policy.hub';
 import { LoggingHub } from '../hubs/logging.hub';
+import { SettingsStore } from '../../stores/settings.store';
 
 export class GameLoopService {
   private timer: NodeJS.Timer | undefined;
@@ -92,6 +93,10 @@ export class GameLoopService {
     clearInterval(this.timer);
   }
 
+  public actionableReceived(action: ActionableEvent): void {
+    this.player.playerDecision(action);
+  }
+
   private run(): void {
     if (this.isPlayerAlive()) {
       this.dodgedThisRound.clear();
@@ -100,16 +105,21 @@ export class GameLoopService {
         const action = actor.action(this.sceneActorsInfo);
 
         if (actor.situation === 'ALIVE' && action) {
-          const target = this.actionReactives[action.eventId];
+          const rule =
+            this.ruleHub.dispatcher[action.actionableDefinition.actionable];
 
-          const result = this.ruleHub.dispatcher[
-            action.actionableDefinition.actionable
-          ].execute(actor, action, {
-            target,
-            targetDodgesPerformed: this.dodgedThisRound.get(target?.id),
-          });
+          const ruleCost = SettingsStore.settings.ruleCost[rule.name];
 
-          this.policyHub.enforcePolicies(result);
+          if (actor.derivedAttributes['CURRENT AP'].value >= ruleCost) {
+            const target = this.actionReactives[action.eventId];
+
+            const result = rule.execute(actor, action, {
+              target,
+              targetDodgesPerformed: this.dodgedThisRound.get(target?.id),
+            });
+
+            this.policyHub.enforcePolicies(result);
+          }
         }
       });
     }
@@ -163,10 +173,6 @@ export class GameLoopService {
         };
       })
     );
-  }
-
-  public actionableReceived(action: ActionableEvent): void {
-    this.player.playerDecision(action);
   }
 
   private playerInventory(
