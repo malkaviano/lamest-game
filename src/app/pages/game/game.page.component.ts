@@ -36,8 +36,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public equipped!: GameItemDefinition;
 
-  public canAct: boolean;
-
   public characterStatus!: CharacterStatusView;
 
   constructor(
@@ -58,8 +56,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
     );
 
     this.scene = new SceneDefinition('', ArrayView.empty(), '');
-
-    this.canAct = true;
   }
 
   ngOnDestroy(): void {
@@ -129,12 +125,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.documentOpened$.subscribe((documentText) => {
         this.openReaderDialog(documentText);
-      })
-    );
-
-    this.withSubscriptionHelper.addSubscription(
-      this.gameLoopService.events.canActChanged$.subscribe((canAct) => {
-        this.canAct = canAct;
       })
     );
 

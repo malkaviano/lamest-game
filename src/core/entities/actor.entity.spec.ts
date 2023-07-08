@@ -29,7 +29,7 @@ import {
   mockedActionableState2,
   mockedActorBehavior,
   mockedAiBehavior,
-  mockedCooldownBehavior,
+  mockedRegeneratorBehavior,
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
@@ -434,18 +434,6 @@ describe('ActorEntity', () => {
     it('return action null', () => {
       expect(fakeActor().action(ArrayView.empty())).toBeNull();
     });
-
-    describe('when canAct is false', () => {
-      it('return action null', () => {
-        const actor = fakeActor();
-
-        actor.afflictedBy(playerInfo.id);
-
-        when(mockedCooldownBehavior.canAct).thenReturn(false);
-
-        expect(actor.action(fakeSceneActorsInfo)).toBeNull();
-      });
-    });
   });
 
   describe('dodgesPerRound', () => {
@@ -539,7 +527,7 @@ const fakeActor = () =>
     instance(mockedEquipmentBehavior),
     killedState,
     {
-      cooldownBehavior: instance(mockedCooldownBehavior),
+      regeneratorBehavior: instance(mockedRegeneratorBehavior),
       aiBehavior: instance(mockedAiBehavior),
     }
   );

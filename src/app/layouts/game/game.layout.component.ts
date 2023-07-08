@@ -22,8 +22,6 @@ export class GameLayoutComponent {
 
   @Input() characterStatus!: CharacterStatusView;
 
-  @Input() canAct = true;
-
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
   @Input() logs!: ArrayView<string>;

@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material/dialog';
 
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, Subject } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
 import { AffectRule } from '../src/backend/rules/affect.rule';
@@ -39,7 +39,7 @@ import { AffectAxiom } from '../src/core/axioms/affect.axiom';
 import { DodgeAxiom } from '../src/core/axioms/dodge.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
-import { CooldownBehavior } from '../src/core/behaviors/cooldown.behavior';
+import { RegeneratorBehavior } from '../src/core/behaviors/regenerator.behavior';
 import { AiBehavior } from '../src/core/behaviors/ai.behavior';
 import { PlayerEntity } from '../src/core/entities/player.entity';
 import { InteractiveEntity } from '../src/core/entities/interactive.entity';
@@ -167,7 +167,7 @@ export const mockedAffectedAxiom = mock(AffectAxiom);
 
 export const mockedDodgeAxiom = mock(DodgeAxiom);
 
-export const mockedCooldownBehavior = mock(CooldownBehavior);
+export const mockedRegeneratorBehavior = mock(RegeneratorBehavior);
 
 export const mockedAiBehavior = mock(AiBehavior);
 
@@ -175,8 +175,14 @@ export const mockedPolicyHub = mock(PolicyHub);
 
 export const mockedLoggingHub = mock(LoggingHub);
 
+export const apRegeneratedSubject = new Subject<number>();
+
 export const setupMocks = () => {
   resetMocks();
+
+  when(mockedRegeneratorBehavior.apRegenerated$).thenReturn(
+    apRegeneratedSubject.asObservable()
+  );
 
   when(mockedCharacterService.currentCharacter).thenReturn(
     instance(mockedPlayerEntity)
@@ -357,8 +363,6 @@ export const setupMocks = () => {
 
   when(mockedAffectedAxiom.logMessageProduced$).thenReturn(EMPTY);
 
-  when(mockedCooldownBehavior.canAct).thenReturn(true);
-
   when(mockedAffectRule.name).thenReturn('AFFECT');
 
   mockCheckedHelper();
@@ -451,7 +455,7 @@ const resetMocks = () => {
 
   reset(mockedDodgeAxiom);
 
-  reset(mockedCooldownBehavior);
+  reset(mockedRegeneratorBehavior);
 
   reset(mockedAiBehavior);
 

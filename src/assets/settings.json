@@ -14,7 +14,10 @@
       "vulnerabilities": [],
       "resistances": []
     },
-    "actionCooldown": 1200,
+    "apRegeneration": {
+      "intervalMilliseconds": 3000,
+      "amount": 2
+    },
     "ruleCost": {
       "AFFECT": 3,
       "CONSUME": 1,

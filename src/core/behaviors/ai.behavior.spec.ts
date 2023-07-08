@@ -9,7 +9,7 @@ import { ArrayView } from '../view-models/array.view';
 import { ActionableEvent } from '../events/actionable.event';
 
 import { actionAffect, playerInfo } from '../../../tests/fakes';
-import { mockedCooldownBehavior, setupMocks } from '../../../tests/mocks';
+import { mockedRegeneratorBehavior, setupMocks } from '../../../tests/mocks';
 
 describe('AiBehavior', () => {
   beforeEach(() => {
@@ -117,8 +117,6 @@ function scenario(
 ) {
   it(`return ${expected?.actionableDefinition.actionable}`, () => {
     const b = behavior(aiBehavior);
-
-    when(mockedCooldownBehavior.canAct).thenReturn(true);
 
     expect(b.action(ArrayView.create(playerActorInfo), afflictedBy)).toEqual(
       expected

@@ -4,17 +4,17 @@ import { ConverterHelper } from './converter.helper';
 import { ActorEntity } from '../entities/actor.entity';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
 import { emptyState } from '../states/empty.state';
+import { RegeneratorBehavior } from '../behaviors/regenerator.behavior';
 
 import {
   mockedActorBehavior,
-  mockedAiBehavior,
-  mockedCooldownBehavior,
   mockedEquipmentBehavior,
   mockedInteractiveEntity,
   setupMocks,
+  mockedAiBehavior,
 } from '../../../tests/mocks';
 
-const actor = new ActorEntity(
+let actor = new ActorEntity(
   new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
   emptyState,
   false,
@@ -22,7 +22,7 @@ const actor = new ActorEntity(
   instance(mockedEquipmentBehavior),
   emptyState,
   {
-    cooldownBehavior: instance(mockedCooldownBehavior),
+    regeneratorBehavior: new RegeneratorBehavior(),
     aiBehavior: instance(mockedAiBehavior),
   }
 );

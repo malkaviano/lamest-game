@@ -11,7 +11,7 @@ import { ArrayView } from '../core/view-models/array.view';
 import { ActorEntity } from '../core/entities/actor.entity';
 import { ActorBehavior } from '../core/behaviors/actor.behavior';
 import { EquipmentBehavior } from '../core/behaviors/equipment.behavior';
-import { CooldownBehavior } from '../core/behaviors/cooldown.behavior';
+import { RegeneratorBehavior } from '../core/behaviors/regenerator.behavior';
 import { AiBehavior } from '../core/behaviors/ai.behavior';
 
 export class ActorStore {
@@ -48,9 +48,7 @@ export class ActorStore {
           EquipmentBehavior.create(),
           stateStore.states[killedState],
           {
-            cooldownBehavior: CooldownBehavior.create(
-              SettingsStore.settings.actionCooldown
-            ),
+            regeneratorBehavior: new RegeneratorBehavior(),
             aiBehavior: AiBehavior.create(
               aiBehavior,
               ArrayView.fromArray(ignores)

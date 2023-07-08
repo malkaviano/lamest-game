@@ -14,7 +14,7 @@ import {
   fakeIdentity,
 } from '../../../tests/fakes';
 import {
-  mockedCooldownBehavior,
+  mockedRegeneratorBehavior,
   mockedPlayerEntity,
   mockedSkillStore,
   setupMocks,
@@ -230,5 +230,5 @@ const fakeCharacter = () =>
       instance(mockedSkillStore)
     ),
     EquipmentBehavior.create(),
-    instance(mockedCooldownBehavior)
+    instance(mockedRegeneratorBehavior)
   );

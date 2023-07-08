@@ -35,18 +35,12 @@
       <div class="vertical-scrollable">
         <div data-testid="interactives">
           <app-interactive-panel
-            *ngIf="canAct"
             [panelName]="'interactives'"
             [interactives]="scene.interactives"
             (actionSelected)="actionSelected.emit($event)"
           ></app-interactive-panel>
         </div>
       </div>
-
-      <mat-spinner
-        *ngIf="!canAct"
-        style="margin: auto;"
-      ></mat-spinner>
     </div>
     <div class="section content-box">
       <div class="title-text">

@@ -5,7 +5,7 @@ import { ClassificationLiteral } from '../literals/classification.literal';
 import { emptyState } from '../states/empty.state';
 import { ActorEntity } from './actor.entity';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
-import { CooldownBehavior } from '../behaviors/cooldown.behavior';
+import { RegeneratorBehavior } from '../behaviors/regenerator.behavior';
 import { AiBehavior } from '../behaviors/ai.behavior';
 import { ArrayView } from '../view-models/array.view';
 import { AgeLiteral } from '../literals/age.literal';
@@ -34,7 +34,7 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
     identity: CharacterIdentityDefinition,
     actorBehavior: ActorBehavior,
     equipmentBehavior: EquipmentBehavior,
-    cooldownBehavior: CooldownBehavior
+    cooldownBehavior: RegeneratorBehavior
   ) {
     super(
       new ActorIdentityDefinition(
@@ -49,7 +49,7 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
       equipmentBehavior,
       emptyState,
       {
-        cooldownBehavior,
+        regeneratorBehavior: cooldownBehavior,
         aiBehavior: AiBehavior.create('PASSIVE', ArrayView.empty()),
       }
     );
@@ -92,12 +92,12 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
   }
 
   public override action(): ActionableEvent | null {
-    if (this.playerAction && this.cooldownBehavior.canAct) {
+    if (this.playerAction) {
       const tmp = this.playerAction;
 
       this.playerAction = null;
 
-      this.cooldownBehavior.acted();
+      this.regeneratorBehavior.startApRegeneration();
 
       return tmp;
     }
@@ -106,8 +106,6 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
   }
 
   public playerDecision(event: ActionableEvent | null): void {
-    if (this.cooldownBehavior.canAct) {
-      this.playerAction = event;
-    }
+    this.playerAction = event;
   }
 }

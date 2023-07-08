@@ -9,7 +9,7 @@ import { PlayerEntity } from '../../core/entities/player.entity';
 import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorBehavior } from '../../core/behaviors/actor.behavior';
 import { EquipmentBehavior } from '../../core/behaviors/equipment.behavior';
-import { CooldownBehavior } from '../../core/behaviors/cooldown.behavior';
+import { RegeneratorBehavior } from '../../core/behaviors/regenerator.behavior';
 
 export class RandomCharacterService {
   constructor(
@@ -23,8 +23,6 @@ export class RandomCharacterService {
     const identity = this.identity();
     const characteristics = this.characteristics();
 
-    const { actionCooldown } = SettingsStore.settings;
-
     return new PlayerEntity(
       identity,
       ActorBehavior.create(
@@ -33,7 +31,7 @@ export class RandomCharacterService {
         this.skillStore
       ),
       EquipmentBehavior.create(),
-      CooldownBehavior.create(actionCooldown)
+      new RegeneratorBehavior()
     );
   }
 

@@ -80,8 +80,7 @@ export class GameLoopService {
       loggingHub.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
-      this.ruleHub.documentOpened$,
-      this.player.canActChanged$
+      this.ruleHub.documentOpened$
     );
   }
 

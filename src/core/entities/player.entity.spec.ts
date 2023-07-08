@@ -7,7 +7,7 @@ import { ArrayView } from '../view-models/array.view';
 import { fakeIdentity, actionConsume } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
-  mockedCooldownBehavior,
+  mockedRegeneratorBehavior,
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
@@ -61,5 +61,5 @@ const fakeCharacter = () =>
     fakeIdentity,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
-    instance(mockedCooldownBehavior)
+    instance(mockedRegeneratorBehavior)
   );
