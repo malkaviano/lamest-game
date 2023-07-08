@@ -21,8 +21,7 @@ export class ActorStore {
     stateStore: StatesStore,
     resourcesStore: ResourcesStore,
     itemStore: ItemStore,
-    skillStore: SkillStore,
-    settingsStore: SettingsStore
+    skillStore: SkillStore
   ) {
     this.store = new Map<string, ActorEntity>();
 
@@ -37,7 +36,6 @@ export class ActorStore {
         equippedWeapon,
         killedState,
         behaviorState,
-        actorSettings,
         aiBehavior,
         ignores,
         visibility,
@@ -46,17 +44,12 @@ export class ActorStore {
           new ActorIdentityDefinition(id, name, description, visibility),
           stateStore.states[behaviorState],
           resettable,
-          ActorBehavior.create(
-            characteristics,
-            skills,
-            skillStore,
-            actorSettings
-          ),
+          ActorBehavior.create(characteristics, skills, skillStore),
           EquipmentBehavior.create(),
           stateStore.states[killedState],
           {
             cooldownBehavior: CooldownBehavior.create(
-              settingsStore.settings.actionCooldown
+              SettingsStore.settings.actionCooldown
             ),
             aiBehavior: AiBehavior.create(
               aiBehavior,

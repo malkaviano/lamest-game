@@ -21,10 +21,12 @@ import { ProfessionStoreInterface } from '../core/interfaces/stores/profession-s
 import { SkillStoreInterface } from '../core/interfaces/stores/skill-store.interface';
 import { SkillAffinityLiteral } from '../core/literals/skill-category.literal';
 import { EffectTypeLiteral } from '../core/literals/effect-type.literal';
-import { SettingsStoreInterface } from '../core/interfaces/stores/settings-store.interface';
 import { ReadableStoreInterface } from '../core/interfaces/stores/readable-store.interface';
 import { VisibilityStateStoreInterface } from '../core/interfaces/stores/visibility-state-store.interface';
 import { ArrayView } from '../core/view-models/array.view';
+import { BehaviorLiteral } from '../core/literals/behavior.literal';
+import { VisibilityLiteral } from '../core/literals/visibility.literal';
+import { SettingsStore } from './settings.store';
 
 import sceneStore from '../assets/scenes.json';
 import skillStateStore from '../assets/states/skill-states.json';
@@ -42,11 +44,8 @@ import usablesStore from '../assets/items/usables.json';
 import lockedContainerStateStore from '../assets/states/locked-container-state.json';
 import professionStore from '../assets/professions.json';
 import skillStore from '../assets/skills.json';
-import settingsStore from '../assets/settings.json';
 import readableStore from '../assets/items/readables.json';
 import visibilityStateStore from '../assets/states/visibility-state.json';
-import { BehaviorLiteral } from '../core/literals/behavior.literal';
-import { VisibilityLiteral } from '../core/literals/visibility.literal';
 
 export class ResourcesStore {
   public readonly sceneStore: SceneStoreInterface;
@@ -81,56 +80,11 @@ export class ResourcesStore {
 
   public readonly skillStore: SkillStoreInterface;
 
-  public readonly settingsStore: SettingsStoreInterface;
-
   public readonly readableStore: ReadableStoreInterface;
 
   public readonly visibilityStateStore: VisibilityStateStoreInterface;
 
   constructor() {
-    const {
-      professionPoints,
-      intelligencePoints,
-      vulnerabilityCoefficient,
-      resistanceCoefficient,
-      playerEffectDefenses,
-      oneDodgesEveryAgiAmount,
-      actionCooldown,
-    } = settingsStore.settings;
-
-    const cures = ArrayView.fromArray(
-      playerEffectDefenses.cures.map((e) => e as EffectTypeLiteral)
-    );
-
-    const immunities = ArrayView.fromArray(
-      playerEffectDefenses.immunities.map((e) => e as EffectTypeLiteral)
-    );
-
-    const resistances = ArrayView.fromArray(
-      playerEffectDefenses.resistances.map((e) => e as EffectTypeLiteral)
-    );
-
-    const vulnerabilities = ArrayView.fromArray(
-      playerEffectDefenses.vulnerabilities.map((e) => e as EffectTypeLiteral)
-    );
-
-    this.settingsStore = {
-      settings: {
-        professionPoints,
-        intelligencePoints,
-        vulnerabilityCoefficient,
-        resistanceCoefficient,
-        oneDodgesEveryAgiAmount,
-        playerEffectDefenses: {
-          cures,
-          immunities,
-          resistances,
-          vulnerabilities,
-        },
-        actionCooldown,
-      },
-    };
-
     this.sceneStore = sceneStore;
 
     this.skillStateStore = skillStateStore;
@@ -220,15 +174,17 @@ export class ResourcesStore {
         killedState: a.killedState,
         behaviorState: a.behaviorState,
         actorSettings: {
-          vulnerabilityCoefficient,
-          resistanceCoefficient,
+          vulnerabilityCoefficient:
+            SettingsStore.settings.vulnerabilityCoefficient,
+          resistanceCoefficient: SettingsStore.settings.resistanceCoefficient,
           effectDefenses: {
             cures: ArrayView.fromArray(a.cures),
             immunities: ArrayView.fromArray(a.immunities),
             vulnerabilities: ArrayView.fromArray(a.vulnerabilities),
             resistances: ArrayView.fromArray(a.resistances),
           },
-          oneDodgesEveryAgiAmount,
+          oneDodgesEveryAgiAmount:
+            SettingsStore.settings.oneDodgeEveryAgiAmount,
         },
         aiBehavior: a.aiBehavior as BehaviorLiteral,
         ignores: a.ignores.map((i) => i as VisibilityLiteral),

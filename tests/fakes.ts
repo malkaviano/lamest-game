@@ -26,8 +26,6 @@ import { SkillDefinition } from '../src/core/definitions/skill.definition';
 import { EffectEvent } from '../src/core/events/effect.event';
 import { EffectTypeLiteral } from '../src/core/literals/effect-type.literal';
 import { ReadableDefinition } from '../src/core/definitions/readable.definition';
-import { GameSettingsInterface } from '../src/core/interfaces/game-settings.interface';
-import { ActorSettingsInterface } from '../src/core/interfaces/actor-settings.interface';
 import { CharacterStatusView } from '../src/core/view-models/character-status.view';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
@@ -342,33 +340,6 @@ export const readable = new ReadableDefinition(
   ArrayView.create('GG'),
   'PERMANENT'
 );
-
-export const gameSettings: GameSettingsInterface = {
-  playerEffectDefenses: {
-    immunities: ArrayView.create<EffectTypeLiteral>('ACID'),
-    cures: ArrayView.create<EffectTypeLiteral>('REMEDY', 'SACRED'),
-    vulnerabilities: ArrayView.create<EffectTypeLiteral>('PROFANE'),
-    resistances: ArrayView.create<EffectTypeLiteral>('KINETIC', 'SACRED'),
-  },
-  resistanceCoefficient: 0.5,
-  vulnerabilityCoefficient: 1.5,
-  oneDodgesEveryAgiAmount: 8,
-  intelligencePoints: 10,
-  professionPoints: 300,
-  actionCooldown: 0,
-};
-
-export const actorSettings: ActorSettingsInterface = {
-  effectDefenses: {
-    immunities: ArrayView.create<EffectTypeLiteral>('ACID'),
-    cures: ArrayView.create<EffectTypeLiteral>('REMEDY', 'SACRED'),
-    vulnerabilities: ArrayView.create<EffectTypeLiteral>('PROFANE'),
-    resistances: ArrayView.create<EffectTypeLiteral>('KINETIC', 'SACRED'),
-  },
-  resistanceCoefficient: 0.5,
-  vulnerabilityCoefficient: 1.5,
-  oneDodgesEveryAgiAmount: 8,
-};
 
 export const shadowSword = new WeaponDefinition(
   new ItemIdentityDefinition('shadowSword', 'Shadow Sword', 'Unholy Sword'),

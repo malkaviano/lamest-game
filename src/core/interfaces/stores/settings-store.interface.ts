@@ -1,5 +1,4 @@
 import { EffectTypeLiteral } from '../../literals/effect-type.literal';
-import { ArrayView } from '../../view-models/array.view';
 
 export interface SettingsStoreInterface {
   readonly settings: {
@@ -8,12 +7,12 @@ export interface SettingsStoreInterface {
     readonly vulnerabilityCoefficient: number;
     readonly resistanceCoefficient: number;
     readonly playerEffectDefenses: {
-      readonly immunities: ArrayView<EffectTypeLiteral>;
-      readonly cures: ArrayView<EffectTypeLiteral>;
-      readonly vulnerabilities: ArrayView<EffectTypeLiteral>;
-      readonly resistances: ArrayView<EffectTypeLiteral>;
+      readonly immunities: EffectTypeLiteral[];
+      readonly cures: EffectTypeLiteral[];
+      readonly vulnerabilities: EffectTypeLiteral[];
+      readonly resistances: EffectTypeLiteral[];
     };
-    readonly oneDodgesEveryAgiAmount: number;
+    readonly oneDodgeEveryAgiAmount: number;
     readonly actionCooldown: number;
   };
 }

@@ -12,6 +12,6 @@ export interface GameSettingsInterface {
     readonly vulnerabilities: ArrayView<EffectTypeLiteral>;
     readonly resistances: ArrayView<EffectTypeLiteral>;
   };
-  readonly oneDodgesEveryAgiAmount: number;
+  readonly oneDodgeEveryAgiAmount: number;
   readonly actionCooldown: number;
 }

@@ -10,16 +10,11 @@ import { CooldownBehavior } from '../../core/behaviors/cooldown.behavior';
 import {
   mockedGeneratorService,
   mockedProfessionStore,
-  mockedSettingsStore,
   mockedSkillService,
   mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
-import {
-  actorSettings,
-  fakeCharacteristics,
-  fakeIdentity,
-} from '../../../tests/fakes';
+import { fakeCharacteristics, fakeIdentity } from '../../../tests/fakes';
 
 describe('RandomCharacterService', () => {
   let service: RandomCharacterService;
@@ -39,8 +34,7 @@ describe('RandomCharacterService', () => {
       instance(mockedGeneratorService),
       instance(mockedSkillService),
       instance(mockedProfessionStore),
-      instance(mockedSkillStore),
-      instance(mockedSettingsStore)
+      instance(mockedSkillStore)
     );
   });
 
@@ -101,8 +95,7 @@ const expectedCharacter = new PlayerEntity(
   ActorBehavior.create(
     fakeCharacteristics,
     distributedSkills,
-    instance(mockedSkillStore),
-    actorSettings
+    instance(mockedSkillStore)
   ),
   EquipmentBehavior.create(),
   CooldownBehavior.create(0)

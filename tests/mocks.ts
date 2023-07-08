@@ -33,7 +33,6 @@ import { ProfessionStore } from '../src/stores/profession.store';
 import { ActorStore } from '../src/stores/actor.store';
 import { SkillStore } from '../src/stores/skill.store';
 import { ReadRule } from '../src/backend/rules/read.rule';
-import { SettingsStore } from '../src/stores/settings.store';
 import { RulesHub } from '../src/backend/hubs/rules.hub';
 import { ActivationAxiom } from '../src/core/axioms/activation.axiom';
 import { AffectAxiom } from '../src/core/axioms/affect.axiom';
@@ -48,6 +47,16 @@ import { ActorEntity } from '../src/core/entities/actor.entity';
 import { ActorBehavior } from '../src/core/behaviors/actor.behavior';
 import { EquipmentBehavior } from '../src/core/behaviors/equipment.behavior';
 import { SceneEntity } from '../src/core/entities/scene.entity';
+import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
+import { CheckedService } from '../src/backend/services/checked.service';
+import { RollHelper } from '../src/core/helpers/roll.helper';
+import { PolicyHub } from '../src/backend/hubs/policy.hub';
+import { GameLoopService } from '../src/backend/services/game-loop.service';
+import { LoggingHub } from '../src/backend/hubs/logging.hub';
+import { SettingsStoreInterface } from '../src/core/interfaces/stores/settings-store.interface';
+import { SettingsStore } from '../src/stores/settings.store';
+
+import settingsStore from './settings.json';
 
 import {
   actorInfo,
@@ -57,17 +66,10 @@ import {
   fakeIdentity,
   fakeSkills,
   fakeSkillStore,
-  gameSettings,
   interactiveInfo,
   playerInfo,
   simpleSword,
 } from './fakes';
-import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
-import { CheckedService } from '../src/backend/services/checked.service';
-import { RollHelper } from '../src/core/helpers/roll.helper';
-import { PolicyHub } from '../src/backend/hubs/policy.hub';
-import { GameLoopService } from '../src/backend/services/game-loop.service';
-import { LoggingHub } from '../src/backend/hubs/logging.hub';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -156,8 +158,6 @@ export const mockedSkillStore = mock(SkillStore);
 export const mockedMatDialog = mock(MatDialog);
 
 export const mockedReadRule = mock(ReadRule);
-
-export const mockedSettingsStore = mock(SettingsStore);
 
 export const mockedCheckedService = mock(CheckedService);
 
@@ -319,23 +319,6 @@ export const setupMocks = () => {
     readables: [],
   });
 
-  when(mockedResourcesStore.settingsStore).thenReturn({
-    settings: {
-      intelligencePoints: 10,
-      professionPoints: 300,
-      vulnerabilityCoefficient: 1.5,
-      resistanceCoefficient: 0.5,
-      oneDodgesEveryAgiAmount: 8,
-      playerEffectDefenses: {
-        cures: ArrayView.empty(),
-        immunities: ArrayView.empty(),
-        resistances: ArrayView.empty(),
-        vulnerabilities: ArrayView.empty(),
-      },
-      actionCooldown: 0,
-    },
-  });
-
   when(mockedGeneratorService.identity()).thenReturn(fakeIdentity);
 
   when(mockedGeneratorService.characteristics()).thenReturn(
@@ -369,8 +352,6 @@ export const setupMocks = () => {
   ).thenReturn(fakeCharacterSheet);
 
   when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
-
-  when(mockedSettingsStore.settings).thenReturn(gameSettings);
 
   when(mockedAffectedAxiom.logMessageProduced$).thenReturn(EMPTY);
 
@@ -456,8 +437,6 @@ const resetMocks = () => {
 
   reset(mockedReadRule);
 
-  reset(mockedSettingsStore);
-
   reset(mockedActorEntity2);
 
   reset(mockedCheckedService);
@@ -528,3 +507,5 @@ function mockCheckedHelper() {
     )
   ).thenReturn(instance(mockedPlayerEntity));
 }
+
+SettingsStore.initialize(settingsStore as SettingsStoreInterface);

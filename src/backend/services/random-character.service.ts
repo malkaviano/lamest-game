@@ -16,34 +16,21 @@ export class RandomCharacterService {
     private readonly generator: GeneratorService,
     private readonly skillService: SkillService,
     private readonly professionStore: ProfessionStore,
-    private readonly skillStore: SkillStore,
-    private readonly settingsStore: SettingsStore
+    private readonly skillStore: SkillStore
   ) {}
 
   public character(): PlayerInterface {
     const identity = this.identity();
     const characteristics = this.characteristics();
 
-    const {
-      oneDodgesEveryAgiAmount,
-      playerEffectDefenses,
-      resistanceCoefficient,
-      vulnerabilityCoefficient,
-      actionCooldown,
-    } = this.settingsStore.settings;
+    const { actionCooldown } = SettingsStore.settings;
 
     return new PlayerEntity(
       identity,
       ActorBehavior.create(
         characteristics,
         this.skills(identity.profession, characteristics.INT.value),
-        this.skillStore,
-        {
-          effectDefenses: playerEffectDefenses,
-          oneDodgesEveryAgiAmount,
-          resistanceCoefficient,
-          vulnerabilityCoefficient,
-        }
+        this.skillStore
       ),
       EquipmentBehavior.create(),
       CooldownBehavior.create(actionCooldown)
@@ -66,7 +53,7 @@ export class RandomCharacterService {
 
     const distributedSkills = this.skillService.distribute(
       this.skillService.newSkillSetFor(professionSkills),
-      this.settingsStore.settings.professionPoints
+      SettingsStore.settings.professionPoints
     );
 
     this.skillStore.naturalSkills.items.forEach((skillName) => {
@@ -77,7 +64,7 @@ export class RandomCharacterService {
 
     const distributedCharacterSkills = this.skillService.distribute(
       distributedSkills,
-      intelligence * this.settingsStore.settings.intelligencePoints
+      intelligence * SettingsStore.settings.intelligencePoints
     );
 
     return distributedCharacterSkills;
