@@ -10,6 +10,7 @@ import { HitPointsEvent } from '../events/hit-points.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';
 import { SkillStore } from '../../stores/skill.store';
 import { SettingsStore } from '../../stores/settings.store';
+import { ActionPointsEvent } from '../events/action-points.event';
 
 export class ActorBehavior {
   private readonly maximumHP: number;
@@ -153,6 +154,16 @@ export class ActorBehavior {
     this.currentEP = MathHelper.clamp(this.currentEP, 0, this.maximumEP);
 
     return new EnergyPointsEvent(previousEP, this.currentEP);
+  }
+
+  public actionPointsChange(ap: number): ActionPointsEvent {
+    const previousAP = this.currentAP;
+
+    this.currentAP += ap;
+
+    this.currentAP = MathHelper.clamp(this.currentAP, 0, this.maximumAP);
+
+    return new ActionPointsEvent(previousAP, this.currentAP);
   }
 
   public static create(

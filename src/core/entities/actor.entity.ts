@@ -27,6 +27,7 @@ import { EffectEvent } from '../events/effect.event';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { BehaviorLiteral } from '../literals/behavior.literal';
 import { CheckResultLiteral } from '../literals/check-result.literal';
+import { ActionPointsEvent } from '../events/action-points.event';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -41,6 +42,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   private readonly visibilityChanged: Subject<VisibilityLiteral>;
 
+  private readonly apChanged: Subject<ActionPointsEvent>;
+
   protected readonly cooldownBehavior: CooldownBehavior;
 
   protected readonly aiBehavior: AiBehavior;
@@ -54,6 +57,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public readonly visibilityChanged$: Observable<VisibilityLiteral>;
 
   public readonly canActChanged$: Observable<boolean>;
+
+  public readonly apChanged$: Observable<ActionPointsEvent>;
 
   constructor(
     identity: ActorIdentityDefinition,
@@ -100,6 +105,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.visibilityChanged$ = this.visibilityChanged.asObservable();
 
     this.canActChanged$ = this.cooldownBehavior.canActChanged$;
+
+    this.apChanged = new Subject();
+
+    this.apChanged$ = this.apChanged.asObservable();
   }
 
   public get dodgesPerRound(): number {
@@ -225,11 +234,11 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public apSpent(apSpent: number): void {
-    throw new Error('Method not implemented.');
+    this.apChange(-apSpent);
   }
 
   public apRecovered(apRecovered: number): void {
-    throw new Error('Method not implemented.');
+    this.apChange(apRecovered);
   }
 
   private effect(effect: EffectEvent): string | null {
@@ -286,5 +295,13 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     return resultLog;
+  }
+
+  private apChange(ap: number) {
+    const result = this.actorBehavior.actionPointsChange(ap);
+
+    if (result.effective) {
+      this.apChanged.next(result);
+    }
   }
 }

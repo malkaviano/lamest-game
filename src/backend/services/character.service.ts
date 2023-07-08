@@ -24,7 +24,8 @@ export class CharacterService {
       ),
       this.currentCharacter.weaponEquippedChanged$.pipe(
         map(() => this.currentCharacter)
-      )
+      ),
+      this.currentCharacter.apChanged$.pipe(map(() => this.currentCharacter))
     );
   }
 

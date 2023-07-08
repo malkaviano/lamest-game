@@ -13,6 +13,7 @@ import {
   fakeMapSkills,
 } from '../../../tests/fakes';
 import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
+import { ActionPointsEvent } from '../events/action-points.event';
 
 const fakeCharacteristicsAgi = (agi: number) => {
   return {
@@ -191,25 +192,22 @@ describe('ActorBehavior', () => {
   });
 
   describe('energyChange', () => {
-    describe('when energy is negative', () => {
-      it('return EnergyPointsEvent previous 13 current 0', () => {
+    [
+      {
+        changes: [-14],
+        expected: [new EnergyPointsEvent(13, 0)],
+      },
+      {
+        changes: [-14, 20],
+        expected: [new EnergyPointsEvent(13, 0), new EnergyPointsEvent(0, 13)],
+      },
+    ].forEach(({ changes, expected }) => {
+      it('return EnergyPointsEvent', () => {
         const b = fakeBehavior();
 
-        const result = b.energyChange(-14);
+        let result = changes.map((change) => b.energyChange(change));
 
-        expect(result).toEqual(new EnergyPointsEvent(13, 0));
-      });
-    });
-
-    describe('when energy is positive', () => {
-      it('return EnergyPointsEvent previous 0 current 13', () => {
-        const b = fakeBehavior();
-
-        b.energyChange(-14);
-
-        const result = b.energyChange(20);
-
-        expect(result).toEqual(new EnergyPointsEvent(0, 13));
+        expect(result).toEqual(expected);
       });
     });
   });
@@ -249,6 +247,27 @@ describe('ActorBehavior', () => {
         expect(fakeBehavior().wannaDodge(effect as EffectTypeLiteral)).toEqual(
           expected
         );
+      });
+    });
+  });
+
+  describe('actionPointsChange', () => {
+    [
+      {
+        changes: [-14],
+        expected: [new ActionPointsEvent(10, 0)],
+      },
+      {
+        changes: [-14, 20],
+        expected: [new ActionPointsEvent(10, 0), new ActionPointsEvent(0, 10)],
+      },
+    ].forEach(({ changes, expected }) => {
+      it('return ActionPointsEvent', () => {
+        const b = fakeBehavior();
+
+        let result = changes.map((change) => b.actionPointsChange(change));
+
+        expect(result).toEqual(expected);
       });
     });
   });
