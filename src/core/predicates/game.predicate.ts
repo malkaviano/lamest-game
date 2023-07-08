@@ -5,6 +5,7 @@ import { SettingsStore } from '../../stores/settings.store';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
+import { PlayerEntity } from '../entities/player.entity';
 
 export class GamePredicate {
   private static readonly logMessageProduced: Subject<LogMessageDefinition> =
@@ -21,7 +22,13 @@ export class GamePredicate {
 
     const result = actor.derivedAttributes['CURRENT AP'].value >= ruleCost;
 
-    if (!result) {
+    console.log(
+      actor.name,
+      actor.derivedAttributes['CURRENT AP'].value,
+      result
+    );
+
+    if (!result && actor instanceof PlayerEntity) {
       GamePredicate.logMessageProduced.next(
         GameStringsStore.createInsufficientAPLogMessage(actor.name, ruleCost)
       );
