@@ -224,6 +224,14 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return null;
   }
 
+  public apSpent(apSpent: number): void {
+    throw new Error('Method not implemented.');
+  }
+
+  public apRecovered(apRecovered: number): void {
+    throw new Error('Method not implemented.');
+  }
+
   private effect(effect: EffectEvent): string | null {
     const result = this.actorBehavior.effectReceived(effect);
 

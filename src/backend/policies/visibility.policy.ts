@@ -1,25 +1,14 @@
-import { Observable, Subject } from 'rxjs';
-
 import { ConverterHelper } from '../../core/helpers/converter.helper';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { PolicyInterface } from '../../core/interfaces/policy.interface';
 import { PolicyResultInterface } from '../../core/interfaces/policy-result.interface';
 import { VisibilityLiteral } from '../../core/literals/visibility.literal';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
+import { MasterPolicy } from './master.policy';
 
-export class VisibilityPolicy implements PolicyInterface {
-  private readonly logMessageProduced: Subject<LogMessageDefinition>;
-
-  public readonly logMessageProduced$: Observable<LogMessageDefinition>;
-
-  constructor() {
-    this.logMessageProduced = new Subject();
-
-    this.logMessageProduced$ = this.logMessageProduced.asObservable();
-  }
-
-  public enforce(ruleResult: RuleResultInterface): PolicyResultInterface {
+export class VisibilityPolicy extends MasterPolicy {
+  public override enforce(
+    ruleResult: RuleResultInterface
+  ): PolicyResultInterface {
     const result: {
       actor?: VisibilityLiteral;
       target?: VisibilityLiteral;

@@ -364,4 +364,18 @@ export class GameStringsStore {
       )
     );
   }
+
+  public static createAPSpentLogMessage(
+    actor: string,
+    ap: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'AP',
+      actor,
+      GameStringsStore.logMessagesStore['actionPointsSpentMessage'].replace(
+        '${actionPointsSpent}',
+        ap.toString()
+      )
+    );
+  }
 }

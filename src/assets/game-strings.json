@@ -30,7 +30,8 @@
     "notEnoughEnergyMessage": "not enough energy to activate ${item}",
     "energySpentMessage": "spent ${energySpent} EP to activate ${item}",
     "startLockPickingMessage": "started lock picking the container",
-    "visibilityMessage": "visibility changed to ${visibility}"
+    "visibilityMessage": "visibility changed to ${visibility}",
+    "actionPointsSpentMessage": "spent ${actionPointsSpent} action points"
   },
   "errors": {
     "INVALID-OPERATION": "Invalid operation ocurred",
