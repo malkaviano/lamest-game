@@ -22,12 +22,6 @@ export class GamePredicate {
 
     const result = actor.derivedAttributes['CURRENT AP'].value >= ruleCost;
 
-    console.log(
-      actor.name,
-      actor.derivedAttributes['CURRENT AP'].value,
-      result
-    );
-
     if (!result && actor instanceof PlayerEntity) {
       GamePredicate.logMessageProduced.next(
         GameStringsStore.createInsufficientAPLogMessage(actor.name, ruleCost)
