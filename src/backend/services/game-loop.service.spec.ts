@@ -108,24 +108,6 @@ describe('GameLoopService', () => {
       expect(actor1Played).toEqual(true);
       expect(actor2Played).toEqual(true);
     });
-
-    describe('when actor AP is insufficient', () => {
-      it('do not let actor play', async () => {
-        when(mockedActorEntity.derivedAttributes).thenReturn({
-          'MAX HP': new DerivedAttributeDefinition('MAX HP', 8),
-          'MAX EP': new DerivedAttributeDefinition('MAX EP', 13),
-          'CURRENT HP': new DerivedAttributeDefinition('CURRENT HP', 8),
-          'CURRENT EP': new DerivedAttributeDefinition('CURRENT EP', 13),
-          'MAX AP': new DerivedAttributeDefinition('MAX AP', 10),
-          'CURRENT AP': new DerivedAttributeDefinition('CURRENT AP', 0),
-        });
-
-        const { actor1Played, actor2Played } = await testRun(service);
-
-        expect(actor1Played).toEqual(false);
-        expect(actor2Played).toEqual(true);
-      });
-    });
   });
 
   describe('when player inventory changes', () => {

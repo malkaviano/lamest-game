@@ -31,7 +31,8 @@
     "energySpentMessage": "spent ${energySpent} EP to activate ${item}",
     "startLockPickingMessage": "started lock picking the container",
     "visibilityMessage": "visibility changed to ${visibility}",
-    "actionPointsSpentMessage": "spent ${actionPointsSpent} action points"
+    "actionPointsSpentMessage": "spent ${actionPointsSpent} action points",
+    "actionPointsInsufficientMessage": "insufficient AP. Action requires ${actionPointsRequired} AP"
   },
   "errors": {
     "INVALID-OPERATION": "Invalid operation ocurred",

@@ -359,6 +359,8 @@ export const setupMocks = () => {
 
   when(mockedCooldownBehavior.canAct).thenReturn(true);
 
+  when(mockedAffectRule.name).thenReturn('AFFECT');
+
   mockCheckedHelper();
 };
 

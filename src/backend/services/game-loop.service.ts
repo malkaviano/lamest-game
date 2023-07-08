@@ -21,7 +21,7 @@ import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorEntity } from '../../core/entities/actor.entity';
 import { PolicyHub } from '../hubs/policy.hub';
 import { LoggingHub } from '../hubs/logging.hub';
-import { SettingsStore } from '../../stores/settings.store';
+import { GamePredicate } from '../../core/predicates/game.predicate';
 
 export class GameLoopService {
   private timer: NodeJS.Timer | undefined;
@@ -108,9 +108,7 @@ export class GameLoopService {
           const rule =
             this.ruleHub.dispatcher[action.actionableDefinition.actionable];
 
-          const ruleCost = SettingsStore.settings.ruleCost[rule.name];
-
-          if (actor.derivedAttributes['CURRENT AP'].value >= ruleCost) {
+          if (GamePredicate.hasEnoughActionPoints(actor, rule)) {
             const target = this.actionReactives[action.eventId];
 
             const result = rule.execute(actor, action, {

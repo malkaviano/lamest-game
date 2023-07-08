@@ -378,4 +378,17 @@ export class GameStringsStore {
       )
     );
   }
+
+  public static createInsufficientAPLogMessage(
+    actor: string,
+    required: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'AP',
+      actor,
+      GameStringsStore.logMessagesStore[
+        'actionPointsInsufficientMessage'
+      ].replace('${actionPointsRequired}', required.toString())
+    );
+  }
 }
