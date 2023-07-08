@@ -6,7 +6,6 @@ import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { VisibilityLiteral } from '../../core/literals/visibility.literal';
 import { EnergyPointsEvent } from '../../core/events/energy-points.event';
 import { HitPointsEvent } from '../../core/events/hit-points.event';
-import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActionPointsEvent } from '../../core/events/action-points.event';
 
 import { simpleSword } from '../../../tests/fakes';
@@ -42,7 +41,7 @@ describe('CharacterService', () => {
   describe('character changed events', () => {
     describe('on creation', () => {
       it('should emit an event', (done) => {
-        testEvent(service, done, () => {});
+        testEvent(service, done);
       });
     });
 
@@ -129,7 +128,7 @@ const subjectAP = new Subject<ActionPointsEvent>();
 function testEvent(
   service: CharacterService,
   done: DoneFn,
-  action: () => void
+  action?: () => void
 ) {
   let result = false;
 
@@ -137,7 +136,9 @@ function testEvent(
     result = true;
   });
 
-  action();
+  if (action) {
+    action();
+  }
 
   done();
 

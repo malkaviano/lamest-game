@@ -205,7 +205,7 @@ describe('ActorBehavior', () => {
       it('return EnergyPointsEvent', () => {
         const b = fakeBehavior();
 
-        let result = changes.map((change) => b.energyChange(change));
+        const result = changes.map((change) => b.energyChange(change));
 
         expect(result).toEqual(expected);
       });
@@ -265,7 +265,7 @@ describe('ActorBehavior', () => {
       it('return ActionPointsEvent', () => {
         const b = fakeBehavior();
 
-        let result = changes.map((change) => b.actionPointsChange(change));
+        const result = changes.map((change) => b.actionPointsChange(change));
 
         expect(result).toEqual(expected);
       });
