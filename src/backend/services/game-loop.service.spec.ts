@@ -37,7 +37,6 @@ import {
   mockedPolicyHub,
   mockedLoggingHub,
 } from '../../../tests/mocks';
-import { DerivedAttributeDefinition } from '../../core/definitions/derived-attribute.definition';
 
 const actor = instance(mockedActorEntity);
 
