@@ -7,6 +7,7 @@ import {
   mockedActorEntity,
   mockedActorEntity2,
   mockedAffectRule,
+  mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -19,7 +20,7 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 describe('GamePredicate', () => {
   const actor = instance(mockedActorEntity);
 
-  const actor2 = instance(mockedActorEntity2);
+  const actor2 = instance(mockedPlayerEntity);
 
   const rule = instance(mockedAffectRule);
 
@@ -30,7 +31,7 @@ describe('GamePredicate', () => {
 
   const log = new LogMessageDefinition(
     'AP',
-    'actor2',
+    'Some Name',
     'insufficient AP. Action requires 3 AP'
   );
 
@@ -46,7 +47,7 @@ describe('GamePredicate', () => {
       result: 'EXECUTED',
     });
 
-    when(mockedActorEntity2.derivedAttributes).thenReturn({
+    when(mockedPlayerEntity.derivedAttributes).thenReturn({
       'MAX HP': new DerivedAttributeDefinition('MAX HP', 8),
       'MAX EP': new DerivedAttributeDefinition('MAX EP', 13),
       'CURRENT HP': new DerivedAttributeDefinition('CURRENT HP', 8),

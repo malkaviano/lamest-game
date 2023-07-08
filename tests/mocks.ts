@@ -266,7 +266,7 @@ export const setupMocks = () => {
 
   Object.setPrototypeOf(instanceActorEntity2, ActorEntity.prototype);
 
-  Object.setPrototypeOf(instancePlayerEntity, ActorEntity.prototype);
+  Object.setPrototypeOf(instancePlayerEntity, PlayerEntity.prototype);
 
   Object.setPrototypeOf(
     instance(mockedTargetPlayerEntity),
