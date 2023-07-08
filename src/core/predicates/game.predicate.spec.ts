@@ -5,7 +5,6 @@ import { DerivedAttributeDefinition } from '../definitions/derived-attribute.def
 
 import {
   mockedActorEntity,
-  mockedActorEntity2,
   mockedAffectRule,
   mockedPlayerEntity,
   setupMocks,
