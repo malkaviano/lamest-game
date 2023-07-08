@@ -14,7 +14,7 @@ import {
   mockedAiBehavior,
 } from '../../../tests/mocks';
 
-let actor = new ActorEntity(
+const actor = new ActorEntity(
   new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
   emptyState,
   false,

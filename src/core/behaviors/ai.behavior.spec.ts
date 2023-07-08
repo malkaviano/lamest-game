@@ -1,5 +1,3 @@
-import { when } from 'ts-mockito';
-
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { ClassificationLiteral } from '../literals/classification.literal';
 import { BehaviorLiteral } from '../literals/behavior.literal';
@@ -9,7 +7,7 @@ import { ArrayView } from '../view-models/array.view';
 import { ActionableEvent } from '../events/actionable.event';
 
 import { actionAffect, playerInfo } from '../../../tests/fakes';
-import { mockedRegeneratorBehavior, setupMocks } from '../../../tests/mocks';
+import { setupMocks } from '../../../tests/mocks';
 
 describe('AiBehavior', () => {
   beforeEach(() => {

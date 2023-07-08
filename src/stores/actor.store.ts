@@ -4,7 +4,6 @@ import { ConverterHelper } from '../core/helpers/converter.helper';
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
-import { SettingsStore } from './settings.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
 import { ArrayView } from '../core/view-models/array.view';
