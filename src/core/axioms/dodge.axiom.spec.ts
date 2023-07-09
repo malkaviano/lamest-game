@@ -1,6 +1,5 @@
 import { instance, when } from 'ts-mockito';
 
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { RollDefinition } from '../definitions/roll.definition';
 import { DodgeAxiom } from './dodge.axiom';
 

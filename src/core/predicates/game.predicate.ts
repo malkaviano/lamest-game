@@ -39,7 +39,7 @@ export class GamePredicate implements LoggerInterface {
   ): boolean {
     const canActivate = actor.derivedAttributes['CURRENT EP'].value >= energy;
 
-    if (!canActivate) {
+    if (!canActivate && actor instanceof PlayerEntity) {
       const logMessage = GameStringsStore.createNotEnoughEnergyLogMessage(
         actor.name,
         label

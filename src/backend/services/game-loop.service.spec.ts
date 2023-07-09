@@ -38,7 +38,6 @@ import {
   mockedLoggingHub,
   mockedGamePredicate,
 } from '../../../tests/mocks';
-import { GamePredicate } from '../../core/predicates/game.predicate';
 
 const actor = instance(mockedActorEntity);
 
