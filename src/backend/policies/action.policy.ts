@@ -9,16 +9,18 @@ export class ActionPolicy extends MasterPolicy {
     if (result.result === 'EXECUTED') {
       const actionPointsSpent = SettingsStore.settings.ruleCost[result.name];
 
-      result.actor.apSpent(actionPointsSpent);
+      if (actionPointsSpent > 0) {
+        result.actor.apSpent(actionPointsSpent);
 
-      this.logMessageProduced.next(
-        GameStringsStore.createAPSpentLogMessage(
-          result.actor.name,
-          actionPointsSpent
-        )
-      );
+        this.logMessageProduced.next(
+          GameStringsStore.createAPSpentLogMessage(
+            result.actor.name,
+            actionPointsSpent
+          )
+        );
 
-      return { actionPointsSpent };
+        return { actionPointsSpent };
+      }
     }
 
     return {};
