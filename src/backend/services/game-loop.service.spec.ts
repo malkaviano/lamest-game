@@ -1,6 +1,4 @@
-import { fakeAsync, tick } from '@angular/core/testing';
-
-import { anyString, anything, instance, when } from 'ts-mockito';
+import { anyString, anything, instance, verify, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
 
 import { GameLoopService } from './game-loop.service';
@@ -92,29 +90,23 @@ describe('GameLoopService', () => {
   });
 
   describe('start', () => {
-    it('should invoke run', fakeAsync(() => {
-      when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
+    it('invoke run', async () => {
+      const { result } = await testRun(service);
 
-      when(mockedActorEntity2.action(anything())).thenReturn(eventAttackPlayer);
-
-      when(mockedPlayerEntity.action()).thenReturn(eventAttackInteractive);
-
-      let result = false;
-
-      when(mockedRulesHub.dispatcher).thenCall(() => {
-        result = true;
-
-        return { AFFECT: instance(mockedAffectRule) };
-      });
-
-      service.start();
-
-      tick(100);
-
-      service.stop();
+      verify(
+        mockedAffectRule.execute(anything(), anything(), anything())
+      ).twice();
+      verify(mockedPolicyHub.enforcePolicies(anything())).twice();
 
       expect(result).toEqual(true);
-    }));
+    });
+
+    it('invoke actors execute action', async () => {
+      const { actor1Played, actor2Played } = await testRun(service);
+
+      expect(actor1Played).toEqual(true);
+      expect(actor2Played).toEqual(true);
+    });
   });
 
   describe('when player inventory changes', () => {
@@ -194,3 +186,42 @@ const eventEquipUnDodgeableAxe = actionableEvent(
   actionEquip,
   unDodgeableAxe.identity.name
 );
+
+async function testRun(
+  service: GameLoopService
+): Promise<{ result: boolean; actor1Played: boolean; actor2Played: boolean }> {
+  let result = false;
+
+  let actor1Played = false;
+
+  let actor2Played = false;
+
+  when(mockedRulesHub.dispatcher).thenCall(() => {
+    result = true;
+
+    return { AFFECT: instance(mockedAffectRule) };
+  });
+
+  when(mockedAffectRule.name).thenReturn('AFFECT');
+
+  when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
+
+  when(mockedActorEntity2.action(anything())).thenReturn(eventAttackPlayer);
+
+  when(mockedAffectRule.execute(actor, anything(), anything())).thenCall(
+    () => (actor1Played = true)
+  );
+
+  when(mockedAffectRule.execute(actor2, anything(), anything())).thenCall(
+    () => (actor2Played = true)
+  );
+
+  service.start();
+
+  // Portable event tick
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
+  service.stop();
+
+  return { result, actor1Played, actor2Played };
+}

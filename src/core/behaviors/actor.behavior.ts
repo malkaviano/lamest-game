@@ -2,7 +2,6 @@ import { CharacteristicSetDefinition } from '../definitions/characteristic-set.d
 import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
 import { MathHelper } from '../helpers/math.helper';
-import { ActorSettingsInterface } from '../interfaces/actor-settings.interface';
 import { KeyValueInterface } from '../interfaces/key-value.interface';
 import { ActorSituationLiteral } from '../literals/actor-situation.literal';
 import { EffectTypeLiteral } from '../literals/effect-type.literal';
@@ -10,21 +9,26 @@ import { EffectEvent } from '../events/effect.event';
 import { HitPointsEvent } from '../events/hit-points.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';
 import { SkillStore } from '../../stores/skill.store';
+import { SettingsStore } from '../../stores/settings.store';
+import { ActionPointsEvent } from '../events/action-points.event';
 
 export class ActorBehavior {
   private readonly maximumHP: number;
 
   private readonly maximumEP: number;
 
+  private readonly maximumAP: number;
+
   private currentHP: number;
 
   private currentEP: number;
 
+  private currentAP: number;
+
   private constructor(
     private readonly mCharacteristics: CharacteristicSetDefinition,
     private readonly mSkills: Map<string, number>,
-    private readonly skillStore: SkillStore,
-    private readonly actorSettings: ActorSettingsInterface
+    private readonly skillStore: SkillStore
   ) {
     this.maximumHP = Math.trunc(
       (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
@@ -32,9 +36,13 @@ export class ActorBehavior {
 
     this.maximumEP = this.characteristics.ESN.value;
 
+    this.maximumAP = 10;
+
     this.currentHP = this.maximumHP;
 
     this.currentEP = this.maximumEP;
+
+    this.currentAP = this.maximumAP;
   }
 
   public get characteristics(): CharacteristicSetDefinition {
@@ -53,7 +61,11 @@ export class ActorBehavior {
         'CURRENT EP',
         this.currentEP
       ),
-      MOV: new DerivedAttributeDefinition('MOV', 10),
+      'MAX AP': new DerivedAttributeDefinition('MAX AP', this.maximumAP),
+      'CURRENT AP': new DerivedAttributeDefinition(
+        'CURRENT AP',
+        this.currentAP
+      ),
     };
   }
 
@@ -77,7 +89,7 @@ export class ActorBehavior {
   public get dodgesPerRound(): number {
     const dodges = Math.trunc(
       this.characteristics.AGI.value /
-        this.actorSettings.oneDodgesEveryAgiAmount
+        SettingsStore.settings.oneDodgeEveryAgiAmount
     );
 
     return MathHelper.clamp(dodges, 1, Number.MAX_VALUE);
@@ -85,10 +97,12 @@ export class ActorBehavior {
 
   public wannaDodge(effect: EffectTypeLiteral): boolean {
     return !(
-      this.actorSettings.effectDefenses.immunities.items.some(
+      SettingsStore.settings.playerEffectDefenses.immunities.items.some(
         (i) => i === effect
       ) ||
-      this.actorSettings.effectDefenses.cures.items.some((i) => i === effect)
+      SettingsStore.settings.playerEffectDefenses.cures.items.some(
+        (i) => i === effect
+      )
     );
   }
 
@@ -98,13 +112,17 @@ export class ActorBehavior {
     let value = 0;
 
     if (
-      !this.actorSettings.effectDefenses.immunities.items.includes(effectType)
+      !SettingsStore.settings.playerEffectDefenses.immunities.items.includes(
+        effectType
+      )
     ) {
       const isCure =
-        this.actorSettings.effectDefenses.cures.items.includes(effectType);
+        SettingsStore.settings.playerEffectDefenses.cures.items.includes(
+          effectType
+        );
 
       const isVulnerable =
-        this.actorSettings.effectDefenses.vulnerabilities.items.includes(
+        SettingsStore.settings.playerEffectDefenses.vulnerabilities.items.includes(
           effectType
         );
 
@@ -112,14 +130,16 @@ export class ActorBehavior {
         value += amount;
       } else {
         value -= isVulnerable
-          ? amount * this.actorSettings.vulnerabilityCoefficient
+          ? amount * SettingsStore.settings.vulnerabilityCoefficient
           : amount;
       }
 
       if (
-        this.actorSettings.effectDefenses.resistances.items.includes(effectType)
+        SettingsStore.settings.playerEffectDefenses.resistances.items.includes(
+          effectType
+        )
       ) {
-        value += value * this.actorSettings.resistanceCoefficient * -1;
+        value += value * SettingsStore.settings.resistanceCoefficient * -1;
       }
     }
 
@@ -136,18 +156,22 @@ export class ActorBehavior {
     return new EnergyPointsEvent(previousEP, this.currentEP);
   }
 
+  public actionPointsChange(ap: number): ActionPointsEvent {
+    const previousAP = this.currentAP;
+
+    this.currentAP += ap;
+
+    this.currentAP = MathHelper.clamp(this.currentAP, 0, this.maximumAP);
+
+    return new ActionPointsEvent(previousAP, this.currentAP);
+  }
+
   public static create(
     characteristics: CharacteristicSetDefinition,
     skills: Map<string, number>,
-    skillStore: SkillStore,
-    actorSettings: ActorSettingsInterface
+    skillStore: SkillStore
   ): ActorBehavior {
-    return new ActorBehavior(
-      characteristics,
-      skills,
-      skillStore,
-      actorSettings
-    );
+    return new ActorBehavior(characteristics, skills, skillStore);
   }
 
   private modifyHealth(modified: number): HitPointsEvent {

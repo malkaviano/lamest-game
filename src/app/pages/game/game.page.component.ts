@@ -36,8 +36,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public equipped!: GameItemDefinition;
 
-  public canAct: boolean;
-
   public characterStatus!: CharacterStatusView;
 
   constructor(
@@ -58,8 +56,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
     );
 
     this.scene = new SceneDefinition('', ArrayView.empty(), '');
-
-    this.canAct = true;
   }
 
   ngOnDestroy(): void {
@@ -92,12 +88,16 @@ export class GamePageComponent implements OnInit, OnDestroy {
           GameStringsStore.descriptions['EP']
         );
 
+        const ap = KeyValueDescriptionView.create(
+          'AP',
+          `${this.characterValues.derivedAttributes.items[5].value}` +
+            ' | ' +
+            `${this.characterValues.derivedAttributes.items[4].value}`,
+          GameStringsStore.descriptions['AP']
+        );
+
         this.characterStatus = CharacterStatusView.create(
-          ArrayView.create(
-            hp,
-            ep,
-            this.characterValues.derivedAttributes.items[4]
-          ),
+          ArrayView.create(hp, ep, ap),
           this.equipped,
           this.characterValues.identity.items[6]
         );
@@ -125,12 +125,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.documentOpened$.subscribe((documentText) => {
         this.openReaderDialog(documentText);
-      })
-    );
-
-    this.withSubscriptionHelper.addSubscription(
-      this.gameLoopService.events.canActChanged$.subscribe((canAct) => {
-        this.canAct = canAct;
       })
     );
 

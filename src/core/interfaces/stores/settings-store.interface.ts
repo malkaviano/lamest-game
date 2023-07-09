@@ -1,5 +1,5 @@
 import { EffectTypeLiteral } from '../../literals/effect-type.literal';
-import { ArrayView } from '../../view-models/array.view';
+import { RuleNameLiteral } from '../../literals/rule-name.literal';
 
 export interface SettingsStoreInterface {
   readonly settings: {
@@ -8,12 +8,16 @@ export interface SettingsStoreInterface {
     readonly vulnerabilityCoefficient: number;
     readonly resistanceCoefficient: number;
     readonly playerEffectDefenses: {
-      readonly immunities: ArrayView<EffectTypeLiteral>;
-      readonly cures: ArrayView<EffectTypeLiteral>;
-      readonly vulnerabilities: ArrayView<EffectTypeLiteral>;
-      readonly resistances: ArrayView<EffectTypeLiteral>;
+      readonly immunities: EffectTypeLiteral[];
+      readonly cures: EffectTypeLiteral[];
+      readonly vulnerabilities: EffectTypeLiteral[];
+      readonly resistances: EffectTypeLiteral[];
     };
-    readonly oneDodgesEveryAgiAmount: number;
-    readonly actionCooldown: number;
+    readonly oneDodgeEveryAgiAmount: number;
+    readonly apRegeneration: {
+      readonly intervalMilliseconds: number;
+      readonly amount: number;
+    };
+    readonly ruleCost: { [key in RuleNameLiteral]: number };
   };
 }

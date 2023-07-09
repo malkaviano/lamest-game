@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material/dialog';
 
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, Subject } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
 import { AffectRule } from '../src/backend/rules/affect.rule';
@@ -33,14 +33,13 @@ import { ProfessionStore } from '../src/stores/profession.store';
 import { ActorStore } from '../src/stores/actor.store';
 import { SkillStore } from '../src/stores/skill.store';
 import { ReadRule } from '../src/backend/rules/read.rule';
-import { SettingsStore } from '../src/stores/settings.store';
 import { RulesHub } from '../src/backend/hubs/rules.hub';
 import { ActivationAxiom } from '../src/core/axioms/activation.axiom';
 import { AffectAxiom } from '../src/core/axioms/affect.axiom';
 import { DodgeAxiom } from '../src/core/axioms/dodge.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
-import { CooldownBehavior } from '../src/core/behaviors/cooldown.behavior';
+import { RegeneratorBehavior } from '../src/core/behaviors/regenerator.behavior';
 import { AiBehavior } from '../src/core/behaviors/ai.behavior';
 import { PlayerEntity } from '../src/core/entities/player.entity';
 import { InteractiveEntity } from '../src/core/entities/interactive.entity';
@@ -48,6 +47,16 @@ import { ActorEntity } from '../src/core/entities/actor.entity';
 import { ActorBehavior } from '../src/core/behaviors/actor.behavior';
 import { EquipmentBehavior } from '../src/core/behaviors/equipment.behavior';
 import { SceneEntity } from '../src/core/entities/scene.entity';
+import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
+import { CheckedService } from '../src/backend/services/checked.service';
+import { RollHelper } from '../src/core/helpers/roll.helper';
+import { PolicyHub } from '../src/backend/hubs/policy.hub';
+import { GameLoopService } from '../src/backend/services/game-loop.service';
+import { LoggingHub } from '../src/backend/hubs/logging.hub';
+import { SettingsStoreInterface } from '../src/core/interfaces/stores/settings-store.interface';
+import { SettingsStore } from '../src/stores/settings.store';
+
+import settingsStore from './settings.json';
 
 import {
   actorInfo,
@@ -57,17 +66,10 @@ import {
   fakeIdentity,
   fakeSkills,
   fakeSkillStore,
-  gameSettings,
   interactiveInfo,
   playerInfo,
   simpleSword,
 } from './fakes';
-import { RandomIntHelper } from '../src/core/helpers/random-int.helper';
-import { CheckedService } from '../src/backend/services/checked.service';
-import { RollHelper } from '../src/core/helpers/roll.helper';
-import { PolicyHub } from '../src/backend/hubs/policy.hub';
-import { GameLoopService } from '../src/backend/services/game-loop.service';
-import { LoggingHub } from '../src/backend/hubs/logging.hub';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -157,8 +159,6 @@ export const mockedMatDialog = mock(MatDialog);
 
 export const mockedReadRule = mock(ReadRule);
 
-export const mockedSettingsStore = mock(SettingsStore);
-
 export const mockedCheckedService = mock(CheckedService);
 
 export const mockedActivationAxiom = mock(ActivationAxiom);
@@ -167,7 +167,7 @@ export const mockedAffectedAxiom = mock(AffectAxiom);
 
 export const mockedDodgeAxiom = mock(DodgeAxiom);
 
-export const mockedCooldownBehavior = mock(CooldownBehavior);
+export const mockedRegeneratorBehavior = mock(RegeneratorBehavior);
 
 export const mockedAiBehavior = mock(AiBehavior);
 
@@ -175,8 +175,14 @@ export const mockedPolicyHub = mock(PolicyHub);
 
 export const mockedLoggingHub = mock(LoggingHub);
 
+export const apRegeneratedSubject = new Subject<number>();
+
 export const setupMocks = () => {
   resetMocks();
+
+  when(mockedRegeneratorBehavior.apRegenerated$).thenReturn(
+    apRegeneratedSubject.asObservable()
+  );
 
   when(mockedCharacterService.currentCharacter).thenReturn(
     instance(mockedPlayerEntity)
@@ -220,6 +226,8 @@ export const setupMocks = () => {
 
   when(mockedActorEntity2.skills).thenReturn(fakeSkills);
 
+  when(mockedActorEntity2.derivedAttributes).thenReturn(fakeDerivedAttributes);
+
   when(mockedActorEntity2.classification).thenReturn('ACTOR');
 
   when(mockedActorEntity2.situation).thenReturn('ALIVE');
@@ -258,7 +266,7 @@ export const setupMocks = () => {
 
   Object.setPrototypeOf(instanceActorEntity2, ActorEntity.prototype);
 
-  Object.setPrototypeOf(instancePlayerEntity, ActorEntity.prototype);
+  Object.setPrototypeOf(instancePlayerEntity, PlayerEntity.prototype);
 
   Object.setPrototypeOf(
     instance(mockedTargetPlayerEntity),
@@ -319,23 +327,6 @@ export const setupMocks = () => {
     readables: [],
   });
 
-  when(mockedResourcesStore.settingsStore).thenReturn({
-    settings: {
-      intelligencePoints: 10,
-      professionPoints: 300,
-      vulnerabilityCoefficient: 1.5,
-      resistanceCoefficient: 0.5,
-      oneDodgesEveryAgiAmount: 8,
-      playerEffectDefenses: {
-        cures: ArrayView.empty(),
-        immunities: ArrayView.empty(),
-        resistances: ArrayView.empty(),
-        vulnerabilities: ArrayView.empty(),
-      },
-      actionCooldown: 0,
-    },
-  });
-
   when(mockedGeneratorService.identity()).thenReturn(fakeIdentity);
 
   when(mockedGeneratorService.characteristics()).thenReturn(
@@ -370,11 +361,9 @@ export const setupMocks = () => {
 
   when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
 
-  when(mockedSettingsStore.settings).thenReturn(gameSettings);
-
   when(mockedAffectedAxiom.logMessageProduced$).thenReturn(EMPTY);
 
-  when(mockedCooldownBehavior.canAct).thenReturn(true);
+  when(mockedAffectRule.name).thenReturn('AFFECT');
 
   mockCheckedHelper();
 };
@@ -456,8 +445,6 @@ const resetMocks = () => {
 
   reset(mockedReadRule);
 
-  reset(mockedSettingsStore);
-
   reset(mockedActorEntity2);
 
   reset(mockedCheckedService);
@@ -468,7 +455,7 @@ const resetMocks = () => {
 
   reset(mockedDodgeAxiom);
 
-  reset(mockedCooldownBehavior);
+  reset(mockedRegeneratorBehavior);
 
   reset(mockedAiBehavior);
 
@@ -528,3 +515,5 @@ function mockCheckedHelper() {
     )
   ).thenReturn(instance(mockedPlayerEntity));
 }
+
+SettingsStore.initialize(settingsStore as SettingsStoreInterface);

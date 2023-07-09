@@ -2,7 +2,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { AiBehavior } from '../behaviors/ai.behavior';
-import { CooldownBehavior } from '../behaviors/cooldown.behavior';
+import { RegeneratorBehavior } from '../behaviors/regenerator.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
 import { ActionableDefinition } from '../definitions/actionable.definition';
 import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
@@ -27,6 +27,7 @@ import { EffectEvent } from '../events/effect.event';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { BehaviorLiteral } from '../literals/behavior.literal';
 import { CheckResultLiteral } from '../literals/check-result.literal';
+import { ActionPointsEvent } from '../events/action-points.event';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -41,7 +42,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   private readonly visibilityChanged: Subject<VisibilityLiteral>;
 
-  protected readonly cooldownBehavior: CooldownBehavior;
+  private readonly apChanged: Subject<ActionPointsEvent>;
+
+  protected readonly regeneratorBehavior: RegeneratorBehavior;
 
   protected readonly aiBehavior: AiBehavior;
 
@@ -53,7 +56,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public readonly visibilityChanged$: Observable<VisibilityLiteral>;
 
-  public readonly canActChanged$: Observable<boolean>;
+  public readonly apChanged$: Observable<ActionPointsEvent>;
 
   constructor(
     identity: ActorIdentityDefinition,
@@ -63,7 +66,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     protected readonly equipmentBehavior: EquipmentBehavior,
     protected readonly killedState: ActionableState,
     behaviors: {
-      readonly cooldownBehavior: CooldownBehavior;
+      readonly regeneratorBehavior: RegeneratorBehavior;
       readonly aiBehavior: AiBehavior;
     }
   ) {
@@ -75,7 +78,11 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       resettable
     );
 
-    this.cooldownBehavior = behaviors.cooldownBehavior;
+    this.regeneratorBehavior = behaviors.regeneratorBehavior;
+
+    this.regeneratorBehavior.apRegenerated$.subscribe((ap) =>
+      this.apRecovered(ap)
+    );
 
     this.aiBehavior = behaviors.aiBehavior;
 
@@ -99,7 +106,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     this.visibilityChanged$ = this.visibilityChanged.asObservable();
 
-    this.canActChanged$ = this.cooldownBehavior.canActChanged$;
+    this.apChanged = new Subject();
+
+    this.apChanged$ = this.apChanged.asObservable();
   }
 
   public get dodgesPerRound(): number {
@@ -157,15 +166,11 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public action(
     sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
   ): ActionableEvent | null {
-    if (this.cooldownBehavior.canAct) {
-      this.cooldownBehavior.acted();
+    this.regeneratorBehavior.startApRegeneration();
 
-      return this.aiBehavior.action(sceneActorsInfo, [
-        ...this.mAfflictedBy.values(),
-      ]);
-    }
-
-    return null;
+    return this.aiBehavior.action(sceneActorsInfo, [
+      ...this.mAfflictedBy.values(),
+    ]);
   }
 
   public afflictedBy(actorId: string): void {
@@ -224,6 +229,21 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return null;
   }
 
+  public apSpent(apSpent: number): void {
+    this.apChange(-apSpent);
+  }
+
+  public apRecovered(apRecovered: number): void {
+    this.apChange(apRecovered);
+
+    if (
+      this.derivedAttributes['CURRENT AP'].value ===
+      this.derivedAttributes['MAX AP'].value
+    ) {
+      this.regeneratorBehavior.stopApRegeneration();
+    }
+  }
+
   private effect(effect: EffectEvent): string | null {
     const result = this.actorBehavior.effectReceived(effect);
 
@@ -278,5 +298,13 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     }
 
     return resultLog;
+  }
+
+  private apChange(ap: number) {
+    const result = this.actorBehavior.actionPointsChange(ap);
+
+    if (result.effective) {
+      this.apChanged.next(result);
+    }
   }
 }

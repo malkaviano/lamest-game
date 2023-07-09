@@ -5,4 +5,5 @@ export interface PolicyResultInterface {
     readonly actor?: VisibilityLiteral;
     readonly target?: VisibilityLiteral;
   };
+  readonly actionPointsSpent?: number;
 }

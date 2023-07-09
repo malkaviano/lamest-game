@@ -8,6 +8,8 @@ import { VisibilityLiteral } from '../literals/visibility.literal';
 import { HitPointsEvent } from '../events/hit-points.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';
 import { unarmedWeapon } from '../behaviors/equipment.behavior';
+import { CheckResultLiteral } from '../literals/check-result.literal';
+import { ActionPointsEvent } from '../events/action-points.event';
 
 import {
   fakeCharacteristics,
@@ -27,11 +29,10 @@ import {
   mockedActionableState2,
   mockedActorBehavior,
   mockedAiBehavior,
-  mockedCooldownBehavior,
+  mockedRegeneratorBehavior,
   mockedEquipmentBehavior,
   setupMocks,
 } from '../../../tests/mocks';
-import { CheckResultLiteral } from '../literals/check-result.literal';
 
 const remedy5Log = 'received REMEDY effect, healed 5 hp';
 
@@ -433,18 +434,6 @@ describe('ActorEntity', () => {
     it('return action null', () => {
       expect(fakeActor().action(ArrayView.empty())).toBeNull();
     });
-
-    describe('when canAct is false', () => {
-      it('return action null', () => {
-        const actor = fakeActor();
-
-        actor.afflictedBy(playerInfo.id);
-
-        when(mockedCooldownBehavior.canAct).thenReturn(false);
-
-        expect(actor.action(fakeSceneActorsInfo)).toBeNull();
-      });
-    });
   });
 
   describe('dodgesPerRound', () => {
@@ -505,6 +494,26 @@ describe('ActorEntity', () => {
       expect(fakeActor().ignores).toEqual(ArrayView.create('DISGUISED'));
     });
   });
+
+  describe('apSpent', () => {
+    it('emits ActionPointsEvent', (done) => {
+      const actor = fakeActor();
+
+      const expected = new ActionPointsEvent(10, 5);
+
+      apEventTest(actor, done, -5, () => actor.apSpent(5), expected);
+    });
+  });
+
+  describe('apRecovered', () => {
+    it('emits ActionPointsEvent', (done) => {
+      const actor = fakeActor();
+
+      const expected = new ActionPointsEvent(5, 12);
+
+      apEventTest(actor, done, 7, () => actor.apRecovered(7), expected);
+    });
+  });
 });
 
 const killedState = instance(mockedActionableState2);
@@ -518,7 +527,7 @@ const fakeActor = () =>
     instance(mockedEquipmentBehavior),
     killedState,
     {
-      cooldownBehavior: instance(mockedCooldownBehavior),
+      regeneratorBehavior: instance(mockedRegeneratorBehavior),
       aiBehavior: instance(mockedAiBehavior),
     }
   );
@@ -539,3 +548,25 @@ const unEquipActorScenario = (
 };
 
 const eventAttackPlayer = actionableEvent(actionAffect, playerInfo.id);
+
+function apEventTest(
+  actor: ActorEntity,
+  done: DoneFn,
+  ap: number,
+  action: () => void,
+  expected: ActionPointsEvent
+) {
+  let result: ActionPointsEvent | undefined;
+
+  when(mockedActorBehavior.actionPointsChange(ap)).thenReturn(expected);
+
+  actor.apChanged$.subscribe((event) => {
+    result = event;
+  });
+
+  action();
+
+  done();
+
+  expect(result).toEqual(expected);
+}

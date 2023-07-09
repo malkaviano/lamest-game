@@ -2,9 +2,9 @@ import { LogMessageDefinition } from '../core/definitions/log-message.definition
 import { KeyValueInterface } from '../core/interfaces/key-value.interface';
 import { EffectTypeLiteral } from '../core/literals/effect-type.literal';
 import { LogCategoryLiteral } from '../core/literals/log-category.literal';
+import { CheckResultLiteral } from '../core/literals/check-result.literal';
 
 import gameMessages from '../assets/game-strings.json';
-import { CheckResultLiteral } from '../core/literals/check-result.literal';
 
 export class GameStringsStore {
   private static logMessagesStore: KeyValueInterface<string> =
@@ -362,6 +362,33 @@ export class GameStringsStore {
         '${visibility}',
         visibility
       )
+    );
+  }
+
+  public static createAPSpentLogMessage(
+    actor: string,
+    ap: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'AP',
+      actor,
+      GameStringsStore.logMessagesStore['actionPointsSpentMessage'].replace(
+        '${actionPointsSpent}',
+        ap.toString()
+      )
+    );
+  }
+
+  public static createInsufficientAPLogMessage(
+    actor: string,
+    required: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'AP',
+      actor,
+      GameStringsStore.logMessagesStore[
+        'actionPointsInsufficientMessage'
+      ].replace('${actionPointsRequired}', required.toString())
     );
   }
 }

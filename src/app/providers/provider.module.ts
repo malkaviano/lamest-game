@@ -10,7 +10,6 @@ import { ActionableStore } from '../../stores/actionable.store';
 import { ItemStore } from '../../stores/item.store';
 import { MessageStore } from '../../stores/message.store';
 import { ProfessionStore } from '../../stores/profession.store';
-import { SettingsStore } from '../../stores/settings.store';
 import { SkillStore } from '../../stores/skill.store';
 import { StatesStore } from '../../stores/states.store';
 import { GeneratorService } from '../../backend/services/generator.service';
@@ -40,6 +39,7 @@ import { CharacterService } from '../../backend/services/character.service';
 import { RandomCharacterService } from '../../backend/services/random-character.service';
 import { SkillService } from '../../backend/services/skill.service';
 import { LoggingHub } from '../../backend/hubs/logging.hub';
+import { ActionPolicy } from '../../backend/policies/action.policy';
 
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
@@ -50,7 +50,6 @@ const actionableStore = new ActionableStore(resourcesStore);
 const itemStore = new ItemStore(resourcesStore);
 const messageStore = new MessageStore(resourcesStore);
 const professionStore = new ProfessionStore(resourcesStore);
-const settingsStore = new SettingsStore(resourcesStore);
 const skillStore = new SkillStore(resourcesStore);
 const statesStore = new StatesStore(
   messageStore,
@@ -62,8 +61,7 @@ const actorStore = new ActorStore(
   statesStore,
   resourcesStore,
   itemStore,
-  skillStore,
-  settingsStore
+  skillStore
 );
 const interactiveStore = new InteractiveStore(statesStore, resourcesStore);
 const sceneStore = new SceneStore(interactiveStore, actorStore, resourcesStore);
@@ -114,7 +112,9 @@ const rulesHub = new RulesHub(
 
 const visibilityPolicy = new VisibilityPolicy();
 
-const policyHub = new PolicyHub(visibilityPolicy);
+const actionPolicy = new ActionPolicy();
+
+const policyHub = new PolicyHub(visibilityPolicy, actionPolicy);
 
 const loggingHub = new LoggingHub(
   rollHelper,
@@ -131,8 +131,7 @@ const rngCharacterService = new RandomCharacterService(
   generatorService,
   skillService,
   professionStore,
-  skillStore,
-  settingsStore
+  skillStore
 );
 
 const characterService = new CharacterService(rngCharacterService);
@@ -158,7 +157,6 @@ const gameLoopService = new GameLoopService(
     { provide: ItemStore, useValue: itemStore },
     { provide: MessageStore, useValue: messageStore },
     { provide: ProfessionStore, useValue: professionStore },
-    { provide: SettingsStore, useValue: settingsStore },
     { provide: SkillStore, useValue: skillStore },
     { provide: StatesStore, useValue: statesStore },
     { provide: ActorStore, useValue: actorStore },

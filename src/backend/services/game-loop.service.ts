@@ -21,6 +21,7 @@ import { PlayerInterface } from '../../core/interfaces/player.interface';
 import { ActorEntity } from '../../core/entities/actor.entity';
 import { PolicyHub } from '../hubs/policy.hub';
 import { LoggingHub } from '../hubs/logging.hub';
+import { GamePredicate } from '../../core/predicates/game.predicate';
 
 export class GameLoopService {
   private timer: NodeJS.Timer | undefined;
@@ -79,8 +80,7 @@ export class GameLoopService {
       loggingHub.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
-      this.ruleHub.documentOpened$,
-      this.player.canActChanged$
+      this.ruleHub.documentOpened$
     );
   }
 
@@ -92,6 +92,10 @@ export class GameLoopService {
     clearInterval(this.timer);
   }
 
+  public actionableReceived(action: ActionableEvent): void {
+    this.player.playerDecision(action);
+  }
+
   private run(): void {
     if (this.isPlayerAlive()) {
       this.dodgedThisRound.clear();
@@ -100,16 +104,19 @@ export class GameLoopService {
         const action = actor.action(this.sceneActorsInfo);
 
         if (actor.situation === 'ALIVE' && action) {
-          const target = this.actionReactives[action.eventId];
+          const rule =
+            this.ruleHub.dispatcher[action.actionableDefinition.actionable];
 
-          const result = this.ruleHub.dispatcher[
-            action.actionableDefinition.actionable
-          ].execute(actor, action, {
-            target,
-            targetDodgesPerformed: this.dodgedThisRound.get(target?.id),
-          });
+          if (GamePredicate.hasEnoughActionPoints(actor, rule)) {
+            const target = this.actionReactives[action.eventId];
 
-          this.policyHub.enforcePolicies(result);
+            const result = rule.execute(actor, action, {
+              target,
+              targetDodgesPerformed: this.dodgedThisRound.get(target?.id),
+            });
+
+            this.policyHub.enforcePolicies(result);
+          }
         }
       });
     }
@@ -163,10 +170,6 @@ export class GameLoopService {
         };
       })
     );
-  }
-
-  public actionableReceived(action: ActionableEvent): void {
-    this.player.playerDecision(action);
   }
 
   private playerInventory(

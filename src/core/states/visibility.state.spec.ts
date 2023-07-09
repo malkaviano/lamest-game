@@ -10,12 +10,11 @@ import {
   actionDetect,
   actionDisguise,
   actionHide,
-  actorSettings,
   fakeCharacteristics,
   fakeIdentity,
 } from '../../../tests/fakes';
 import {
-  mockedCooldownBehavior,
+  mockedRegeneratorBehavior,
   mockedPlayerEntity,
   mockedSkillStore,
   setupMocks,
@@ -228,9 +227,8 @@ const fakeCharacter = () =>
     ActorBehavior.create(
       fakeCharacteristics,
       distributedSkills,
-      instance(mockedSkillStore),
-      actorSettings
+      instance(mockedSkillStore)
     ),
     EquipmentBehavior.create(),
-    instance(mockedCooldownBehavior)
+    instance(mockedRegeneratorBehavior)
   );

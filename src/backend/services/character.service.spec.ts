@@ -6,6 +6,7 @@ import { WeaponDefinition } from '../../core/definitions/weapon.definition';
 import { VisibilityLiteral } from '../../core/literals/visibility.literal';
 import { EnergyPointsEvent } from '../../core/events/energy-points.event';
 import { HitPointsEvent } from '../../core/events/hit-points.event';
+import { ActionPointsEvent } from '../../core/events/action-points.event';
 
 import { simpleSword } from '../../../tests/fakes';
 import {
@@ -13,7 +14,6 @@ import {
   mockedRandomCharacterService,
   setupMocks,
 } from '../../../tests/mocks';
-import { PlayerInterface } from '../../core/interfaces/player.interface';
 
 describe('CharacterService', () => {
   let service: CharacterService;
@@ -33,53 +33,31 @@ describe('CharacterService', () => {
 
     when(mockedPlayerEntity.visibilityChanged$).thenReturn(subjectVisibility);
 
+    when(mockedPlayerEntity.apChanged$).thenReturn(subjectAP);
+
     service = new CharacterService(instance(mockedRandomCharacterService));
   });
 
   describe('character changed events', () => {
     describe('on creation', () => {
       it('should emit an event', (done) => {
-        let result: PlayerInterface | undefined;
-
-        service.characterChanged$.subscribe((event) => {
-          result = event;
-        });
-
-        done();
-
-        expect(result).toEqual(instance(mockedPlayerEntity));
+        testEvent(service, done);
       });
     });
 
     describe('when character takes damage', () => {
       it('should emit an event', (done) => {
-        let result: PlayerInterface | undefined;
-
-        service.characterChanged$.subscribe((event) => {
-          result = event;
+        testEvent(service, done, () => {
+          subjectHP.next(new HitPointsEvent(12, 8));
         });
-
-        subjectHP.next(new HitPointsEvent(12, 8));
-
-        done();
-
-        expect(result).toEqual(instance(mockedPlayerEntity));
       });
     });
 
     describe('when character equips a Weapon', () => {
       it('should emit an event', (done) => {
-        let result: PlayerInterface | undefined;
-
-        service.characterChanged$.subscribe((event) => {
-          result = event;
+        testEvent(service, done, () => {
+          subjectWeapon.next(simpleSword);
         });
-
-        subjectWeapon.next(simpleSword);
-
-        done();
-
-        expect(result).toEqual(instance(mockedPlayerEntity));
       });
     });
   });
@@ -114,33 +92,25 @@ describe('CharacterService', () => {
 
   describe('when character spent energy', () => {
     it('should emit an event', (done) => {
-      let result: PlayerInterface | undefined;
-
-      service.characterChanged$.subscribe((event) => {
-        result = event;
+      testEvent(service, done, () => {
+        subjectEP.next(new EnergyPointsEvent(12, 8));
       });
-
-      subjectEP.next(new EnergyPointsEvent(12, 8));
-
-      done();
-
-      expect(result).toEqual(instance(mockedPlayerEntity));
     });
   });
 
   describe('when character visibility change', () => {
     it('should emit an event', (done) => {
-      let result: PlayerInterface | undefined;
-
-      service.characterChanged$.subscribe((event) => {
-        result = event;
+      testEvent(service, done, () => {
+        subjectVisibility.next('DISGUISED');
       });
+    });
+  });
 
-      subjectVisibility.next('DISGUISED');
-
-      done();
-
-      expect(result).toEqual(instance(mockedPlayerEntity));
+  describe('when character spent action points', () => {
+    it('should emit an event', (done) => {
+      testEvent(service, done, () => {
+        subjectAP.next(new ActionPointsEvent(12, 8));
+      });
     });
   });
 });
@@ -152,3 +122,25 @@ const subjectEP = new Subject<EnergyPointsEvent>();
 const subjectVisibility = new Subject<VisibilityLiteral>();
 
 const subjectWeapon = new Subject<WeaponDefinition>();
+
+const subjectAP = new Subject<ActionPointsEvent>();
+
+function testEvent(
+  service: CharacterService,
+  done: DoneFn,
+  action?: () => void
+) {
+  let result = false;
+
+  service.characterChanged$.subscribe(() => {
+    result = true;
+  });
+
+  if (action) {
+    action();
+  }
+
+  done();
+
+  expect(result).toEqual(true);
+}
