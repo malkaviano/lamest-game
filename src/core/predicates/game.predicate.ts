@@ -6,6 +6,7 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { PlayerEntity } from '../entities/player.entity';
+import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
 
 export class GamePredicate {
   private static readonly logMessageProduced: Subject<LogMessageDefinition> =
@@ -29,5 +30,24 @@ export class GamePredicate {
     }
 
     return result;
+  }
+
+  public static canActivate(
+    actor: ActorInterface,
+    energy: number,
+    label: string
+  ): boolean {
+    const canActivate = actor.derivedAttributes['CURRENT EP'].value >= energy;
+
+    if (!canActivate) {
+      const logMessage = GameStringsStore.createNotEnoughEnergyLogMessage(
+        actor.name,
+        label
+      );
+
+      GamePredicate.logMessageProduced.next(logMessage);
+    }
+
+    return canActivate;
   }
 }

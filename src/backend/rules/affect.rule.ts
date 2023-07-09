@@ -17,6 +17,7 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { CheckedService } from '../services/checked.service';
 import { MasterRule } from './master.rule';
 import { ActorDodgedInterface } from '../../core/interfaces/actor-dodged.interface';
+import { GamePredicate } from '../../core/predicates/game.predicate';
 
 export class AffectRule extends MasterRule implements ActorDodgedInterface {
   public readonly actorDodged$: Observable<string>;
@@ -53,11 +54,6 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
       energyActivation,
     } = actor.weaponEquipped;
 
-    const activated = this.activationAxiom.activation(actor, {
-      identity,
-      energyActivation,
-    });
-
     let ruleResult: RuleResultLiteral = 'DENIED';
 
     this.ruleResult.skillName = skillName;
@@ -65,6 +61,12 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
     this.ruleResult.target = target;
 
     this.ruleResult.affected = actor.weaponEquipped;
+
+    const activated = this.activationAxiom.activation(
+      actor,
+      energyActivation,
+      identity.label
+    );
 
     if (activated) {
       let targetWasHit = true;

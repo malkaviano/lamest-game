@@ -5,10 +5,14 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 
 import { shadowDagger, shadowSword, simpleSword } from '../../../tests/fakes';
-import { mockedPlayerEntity } from '../../../tests/mocks';
+import { mockedPlayerEntity, setupMocks } from '../../../tests/mocks';
 
 describe('ActivationAxiom', () => {
   const axiom = new ActivationAxiom();
+
+  beforeEach(() => {
+    setupMocks();
+  });
 
   it('should be created', () => {
     expect(axiom).toBeTruthy();
@@ -18,17 +22,13 @@ describe('ActivationAxiom', () => {
     [
       {
         item: simpleSword,
-        expected: true,
+        expected: false,
         log: undefined,
       },
       {
         item: shadowSword,
         expected: false,
-        log: new LogMessageDefinition(
-          'ACTIVATION',
-          'Some Name',
-          'not enough energy to activate Shadow Sword'
-        ),
+        log: undefined,
       },
       {
         item: shadowDagger,
@@ -41,13 +41,35 @@ describe('ActivationAxiom', () => {
       },
     ].forEach(({ item, expected, log }) => {
       describe(`when energyActivation was ${item.energyActivation}`, () => {
-        it(`return ${expected}`, () => {
-          const result = axiom.activation(instance(mockedPlayerEntity), item);
+        it(`${expected ? 'do' : 'do not'} activate`, () => {
+          const actor = instance(mockedPlayerEntity);
+
+          let result = false;
+
+          when(
+            mockedPlayerEntity.reactTo(
+              deepEqual(
+                createActionableDefinition(
+                  'CONSUME',
+                  'activation',
+                  'Activation'
+                )
+              ),
+              'NONE',
+              deepEqual({
+                energy: -item.energyActivation,
+              })
+            )
+          ).thenCall(() => (result = true));
+
+          axiom.activation(actor, item.energyActivation, item.identity.label);
 
           expect(result).toEqual(expected);
         });
 
         it(`should produce logs ${expected}`, (done) => {
+          const actor = instance(mockedPlayerEntity);
+
           when(
             mockedPlayerEntity.reactTo(
               deepEqual(
@@ -70,7 +92,7 @@ describe('ActivationAxiom', () => {
             result = event;
           });
 
-          axiom.activation(instance(mockedPlayerEntity), item);
+          axiom.activation(actor, item.energyActivation, item.identity.label);
 
           done();
 

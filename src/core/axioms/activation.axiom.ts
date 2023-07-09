@@ -6,6 +6,7 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
+import { GamePredicate } from '../predicates/game.predicate';
 
 export class ActivationAxiom implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;
@@ -20,45 +21,34 @@ export class ActivationAxiom implements LoggerInterface {
 
   public activation(
     actor: ActorInterface,
-    activatable: {
-      readonly identity: ItemIdentityDefinition;
-      readonly energyActivation: number;
-    }
+    energyActivation: number,
+    label: string
   ): boolean {
-    const energyActivation = Math.abs(activatable.energyActivation);
+    const canActivate = GamePredicate.canActivate(
+      actor,
+      energyActivation,
+      label
+    );
 
-    const canActivate =
-      actor.derivedAttributes['CURRENT EP'].value >= energyActivation;
-
-    if (canActivate) {
-      if (energyActivation > 0) {
-        const energyCost = -activatable.energyActivation;
-
-        const log = actor.reactTo(
-          createActionableDefinition('CONSUME', 'activation', 'Activation'),
-          'NONE',
-          {
-            energy: energyCost,
-          }
-        );
-
-        if (log) {
-          const logMessage = GameStringsStore.createEnergySpentLogMessage(
-            actor.name,
-            log,
-            activatable.identity.label
-          );
-
-          this.logMessageProduced.next(logMessage);
+    if (energyActivation !== 0 && canActivate) {
+      const log = actor.reactTo(
+        // TODO: Create proper verb
+        createActionableDefinition('CONSUME', 'activation', 'Activation'),
+        'NONE',
+        {
+          energy: -energyActivation,
         }
-      }
-    } else {
-      const logMessage = GameStringsStore.createNotEnoughEnergyLogMessage(
-        actor.name,
-        activatable.identity.label
       );
 
-      this.logMessageProduced.next(logMessage);
+      if (log) {
+        const logMessage = GameStringsStore.createEnergySpentLogMessage(
+          actor.name,
+          log,
+          label
+        );
+
+        this.logMessageProduced.next(logMessage);
+      }
     }
 
     return canActivate;

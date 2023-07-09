@@ -65,32 +65,28 @@ describe('AffectRule', () => {
     ).thenReturn(damageMessage2);
 
     when(
-      mockedActivationAxiom.activation(
-        actor,
-        deepEqual({
-          identity: molotov.identity,
-          energyActivation: molotov.energyActivation,
-        })
-      )
-    ).thenReturn(true);
-
-    when(
       mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
+      mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
+    ).thenReturn(new RollDefinition('SUCCESS', 5));
+
+    when(
       mockedActivationAxiom.activation(
         actor,
-        deepEqual({
-          identity: simpleSword.identity,
-          energyActivation: simpleSword.energyActivation,
-        })
+        molotov.energyActivation,
+        molotov.identity.label
       )
     ).thenReturn(true);
 
     when(
-      mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
-    ).thenReturn(new RollDefinition('SUCCESS', 5));
+      mockedActivationAxiom.activation(
+        actor,
+        simpleSword.energyActivation,
+        simpleSword.identity.label
+      )
+    ).thenReturn(true);
   });
 
   it('should be created', () => {
