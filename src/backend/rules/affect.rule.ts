@@ -68,6 +68,8 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
     );
 
     if (activated) {
+      ruleResult = 'AVOIDED';
+
       let targetWasHit = true;
 
       const targetActor = ConverterHelper.asActor(target);
@@ -84,7 +86,7 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
 
         this.ruleResult.checkRoll = roll;
 
-        if (checkResult !== 'IMPOSSIBLE' && usability === 'DISPOSABLE') {
+        if (usability === 'DISPOSABLE') {
           this.disposeItem(actor, identity.label);
         }
       }
@@ -101,6 +103,8 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
         this.ruleResult.dodged = dodged;
 
         if (!dodged) {
+          ruleResult = 'EXECUTED';
+
           const effectAmount =
             this.rollHelper.roll(effect.diceRoll) + effect.fixed;
 
@@ -112,8 +116,6 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
               effect: new EffectEvent(effect.effectType, effectAmount),
             }
           );
-
-          ruleResult = 'EXECUTED';
 
           this.ruleResult.effectType = effect.effectType;
           this.ruleResult.effectAmount = effectAmount;

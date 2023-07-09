@@ -1,1 +1,1 @@
-export type RuleResultLiteral = 'DENIED' | 'EXECUTED';
+export type RuleResultLiteral = 'DENIED' | 'EXECUTED' | 'AVOIDED';
