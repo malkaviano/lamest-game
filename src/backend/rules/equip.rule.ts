@@ -8,11 +8,13 @@ import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
 import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
 import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
+import { GamePredicate } from '../../core/predicates/game.predicate';
 
 export class EquipRule extends MasterRule {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly checkedService: CheckedService
+    private readonly checkedService: CheckedService,
+    private readonly gamePredicate: GamePredicate
   ) {
     super();
   }
@@ -25,20 +27,20 @@ export class EquipRule extends MasterRule {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {
-    const equipped = this.checkedService.lookItemOrThrow<WeaponDefinition>(
+    const toEquip = this.checkedService.lookItemOrThrow<WeaponDefinition>(
       this.inventoryService,
       actor.id,
       event.eventId
     );
 
-    this.ruleResult.skillName = equipped.skillName;
+    this.ruleResult.skillName = toEquip.skillName;
 
     let ruleResult: RuleResultLiteral = 'DENIED';
 
-    if (actor.skills[equipped.skillName] > 0) {
+    if (this.gamePredicate.canEquip(actor, toEquip)) {
       ruleResult = 'EXECUTED';
 
-      this.ruleResult.equipped = equipped;
+      this.ruleResult.equipped = toEquip;
 
       const weapon = this.checkedService.takeItemOrThrow<WeaponDefinition>(
         this.inventoryService,
@@ -64,14 +66,6 @@ export class EquipRule extends MasterRule {
       const logMessage = GameStringsStore.createEquippedLogMessage(
         actor.name,
         weapon.identity.label
-      );
-
-      this.ruleLog.next(logMessage);
-    } else {
-      const logMessage = GameStringsStore.createEquipErrorLogMessage(
-        actor.name,
-        equipped.skillName,
-        equipped.identity.label
       );
 
       this.ruleLog.next(logMessage);

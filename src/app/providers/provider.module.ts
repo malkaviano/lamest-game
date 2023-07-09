@@ -91,7 +91,11 @@ const consumeRule = new ConsumeRule(
   checkedService,
   affectAxiom
 );
-const equipRule = new EquipRule(inventoryService, checkedService);
+const equipRule = new EquipRule(
+  inventoryService,
+  checkedService,
+  gamePredicate
+);
 const inspectRule = new ReadRule(inventoryService);
 const interactionRule = new InteractionRule(checkedService, affectAxiom);
 const pickRule = new PickRule(inventoryService, checkedService, affectAxiom);

@@ -7,6 +7,7 @@ import { ActorInterface } from '../interfaces/actor.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { PlayerEntity } from '../entities/player.entity';
 import { LoggerInterface } from '../interfaces/logger.interface';
+import { WeaponDefinition } from '../definitions/weapon.definition';
 
 export class GamePredicate implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition> =
@@ -75,5 +76,21 @@ export class GamePredicate implements LoggerInterface {
     }
 
     return actionDodgeable && canDodge;
+  }
+
+  public canEquip(actor: ActorInterface, equip: WeaponDefinition): boolean {
+    const canEquip = actor.skills[equip.skillName] > 0;
+
+    if (!canEquip) {
+      const logMessage = GameStringsStore.createEquipErrorLogMessage(
+        actor.name,
+        equip.skillName,
+        equip.identity.label
+      );
+
+      this.logMessageProduced.next(logMessage);
+    }
+
+    return canEquip;
   }
 }

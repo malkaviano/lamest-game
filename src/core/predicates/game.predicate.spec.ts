@@ -13,7 +13,9 @@ import {
 import {
   actionAffect,
   actionableEvent,
+  greatSword,
   interactiveInfo,
+  simpleSword,
 } from '../../../tests/fakes';
 
 describe('GamePredicate', () => {
@@ -68,7 +70,7 @@ describe('GamePredicate', () => {
         expect(result).toEqual(expected);
       });
 
-      it('emit log', () => {
+      it('emit log', (done) => {
         setAP();
 
         let result: LogMessageDefinition | undefined;
@@ -78,6 +80,8 @@ describe('GamePredicate', () => {
         });
 
         predicate.hasEnoughActionPoints(actor, rule);
+
+        done();
 
         expect(result).toEqual(log);
       });
@@ -127,7 +131,7 @@ describe('GamePredicate', () => {
           expect(result).toEqual(expected);
         });
 
-        it('emit log', () => {
+        it('emit log', (done) => {
           let result: LogMessageDefinition | undefined;
 
           predicate.logMessageProduced$.subscribe((event) => {
@@ -135,6 +139,8 @@ describe('GamePredicate', () => {
           });
 
           predicate.canDodge(actor, actionDodgeable, targetDodgesPerformed);
+
+          done();
 
           expect(result).toEqual(log);
         });
@@ -169,7 +175,7 @@ describe('GamePredicate', () => {
         expect(result).toEqual(expected);
       });
 
-      it('emit log', () => {
+      it('emit log', (done) => {
         let result: LogMessageDefinition | undefined;
 
         predicate.logMessageProduced$.subscribe((event) => {
@@ -177,6 +183,49 @@ describe('GamePredicate', () => {
         });
 
         predicate.canActivate(actor, energy, label);
+
+        done();
+
+        expect(result).toEqual(log);
+      });
+    });
+  });
+
+  describe('canEquip', () => {
+    [
+      {
+        actor: instance(mockedPlayerEntity),
+        equip: simpleSword,
+        expected: true,
+        log: undefined,
+      },
+      {
+        actor: instance(mockedPlayerEntity),
+        equip: greatSword,
+        expected: false,
+        log: new LogMessageDefinition(
+          'EQUIP-ERROR',
+          'Some Name',
+          'Melee Weapon (Great) is required to equip Great Sword'
+        ),
+      },
+    ].forEach(({ actor, equip, expected, log }) => {
+      it(`return ${expected}`, () => {
+        const result = predicate.canEquip(actor, equip);
+
+        expect(result).toEqual(expected);
+      });
+
+      it('emit log', (done) => {
+        let result: LogMessageDefinition | undefined;
+
+        predicate.logMessageProduced$.subscribe((event) => {
+          result = event;
+        });
+
+        predicate.canEquip(actor, equip);
+
+        done();
 
         expect(result).toEqual(log);
       });
