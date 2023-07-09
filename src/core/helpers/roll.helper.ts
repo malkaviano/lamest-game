@@ -8,6 +8,7 @@ import { LoggerInterface } from '../interfaces/logger.interface';
 import { DiceLiteral } from '../literals/dice.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { RandomIntHelper } from './random-int.helper';
+import { GamePredicate } from '../predicates/game.predicate';
 
 export class RollHelper implements LoggerInterface {
   private readonly diceMap: {
@@ -18,7 +19,10 @@ export class RollHelper implements LoggerInterface {
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
-  constructor(private readonly randomIntHelper: RandomIntHelper) {
+  constructor(
+    private readonly randomIntHelper: RandomIntHelper,
+    private readonly gamePredicate: GamePredicate
+  ) {
     this.diceMap = {
       D4: { min: 1, max: 4 },
       D6: { min: 1, max: 6 },
@@ -38,29 +42,22 @@ export class RollHelper implements LoggerInterface {
     actor: ActorInterface,
     skillName: string
   ): RollDefinition {
-    const skillValue = actor.skills[skillName] ?? 0;
+    let result = new RollDefinition('IMPOSSIBLE', 0);
 
-    if (skillValue <= 0) {
-      const logMessage = GameStringsStore.createCannotCheckSkillLogMessage(
+    if (this.gamePredicate.canUseSkill(actor, skillName)) {
+      const skillValue = actor.skills[skillName];
+
+      result = this.skillCheck(skillValue);
+
+      const logMessage = GameStringsStore.createSkillCheckLogMessage(
         actor.name,
-        skillName
+        skillName,
+        result.roll.toString(),
+        result.result
       );
 
       this.skillCheckLog.next(logMessage);
-
-      return new RollDefinition('IMPOSSIBLE', 0);
     }
-
-    const result = this.skillCheck(skillValue);
-
-    const logMessage = GameStringsStore.createSkillCheckLogMessage(
-      actor.name,
-      skillName,
-      result.roll.toString(),
-      result.result
-    );
-
-    this.skillCheckLog.next(logMessage);
 
     return result;
   }

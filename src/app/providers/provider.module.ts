@@ -42,9 +42,11 @@ import { LoggingHub } from '../../backend/hubs/logging.hub';
 import { ActionPolicy } from '../../backend/policies/action.policy';
 import { GamePredicate } from '../../core/predicates/game.predicate';
 
+const gamePredicate = new GamePredicate();
+
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
-const rollHelper = new RollHelper(randomIntHelper);
+const rollHelper = new RollHelper(randomIntHelper, gamePredicate);
 
 const resourcesStore = new ResourcesStore();
 const actionableStore = new ActionableStore(resourcesStore);
@@ -71,8 +73,6 @@ const inventoryService = new InventoryService(interactiveStore, itemStore);
 const generatorService = new GeneratorService(randomIntHelper, professionStore);
 const narrativeService = new NarrativeService(sceneStore);
 const checkedService = new CheckedService();
-
-const gamePredicate = new GamePredicate();
 
 const activationAxiom = new ActivationAxiom(gamePredicate);
 const affectAxiom = new AffectAxiom();

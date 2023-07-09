@@ -231,6 +231,47 @@ describe('GamePredicate', () => {
       });
     });
   });
+
+  describe('canUseSkill', () => {
+    [
+      {
+        actor: instance(mockedPlayerEntity),
+        skillName: 'Brawl',
+        expected: true,
+        log: undefined,
+      },
+      {
+        actor: instance(mockedPlayerEntity),
+        skillName: 'GG',
+        expected: false,
+        log: new LogMessageDefinition(
+          'CHECK',
+          'Some Name',
+          "GG skill couldn't be checked because it's value is zero"
+        ),
+      },
+    ].forEach(({ actor, skillName, expected, log }) => {
+      it(`return ${expected}`, () => {
+        const result = predicate.canUseSkill(actor, skillName);
+
+        expect(result).toEqual(expected);
+      });
+
+      it('emit log', (done) => {
+        let result: LogMessageDefinition | undefined;
+
+        predicate.logMessageProduced$.subscribe((event) => {
+          result = event;
+        });
+
+        predicate.canUseSkill(actor, skillName);
+
+        done();
+
+        expect(result).toEqual(log);
+      });
+    });
+  });
 });
 
 const setAP = () => {

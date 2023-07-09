@@ -93,4 +93,19 @@ export class GamePredicate implements LoggerInterface {
 
     return canEquip;
   }
+
+  public canUseSkill(actor: ActorInterface, skillName: string): boolean {
+    const canUseSkill = (actor.skills[skillName] ?? 0) > 0;
+
+    if (!canUseSkill) {
+      const logMessage = GameStringsStore.createCannotCheckSkillLogMessage(
+        actor.name,
+        skillName
+      );
+
+      this.logMessageProduced.next(logMessage);
+    }
+
+    return canUseSkill;
+  }
 }
