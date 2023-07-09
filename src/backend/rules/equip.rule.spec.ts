@@ -8,6 +8,7 @@ import { RuleResultInterface } from '../../core/interfaces/rule-result.interface
 
 import {
   mockedCheckedService,
+  mockedGamePredicate,
   mockedInventoryService,
   mockedPlayerEntity,
   setupMocks,
@@ -31,7 +32,8 @@ describe('EquipRule', () => {
 
     rule = new EquipRule(
       instance(mockedInventoryService),
-      instance(mockedCheckedService)
+      instance(mockedCheckedService),
+      instance(mockedGamePredicate)
     );
 
     when(
@@ -85,6 +87,10 @@ describe('EquipRule', () => {
     describe('when item was a weapon', () => {
       describe('when skill value was above zero', () => {
         it('should log item was equipped and produce side effects', (done) => {
+          when(mockedGamePredicate.canEquip(actor, simpleSword)).thenReturn(
+            true
+          );
+
           ruleScenario(
             rule,
             actor,
@@ -103,6 +109,10 @@ describe('EquipRule', () => {
         });
 
         it('return equipped result', () => {
+          when(mockedGamePredicate.canEquip(actor, simpleSword)).thenReturn(
+            true
+          );
+
           const result = rule.execute(actor, eventOk);
 
           const expected: RuleResultInterface = {
@@ -122,19 +132,12 @@ describe('EquipRule', () => {
       });
 
       describe('when skill value was zero or not set', () => {
-        it('should log error equipping and no side effects', (done) => {
-          ruleScenario(rule, actor, eventNoSkill, extras, [errorLog], done);
-
-          // cheap side effect verification
-          verify(mockedPlayerEntity.equip(greatSword)).never();
-
-          verify(
-            mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
-          ).never();
-        });
-
         it('return denied result', () => {
           const result = rule.execute(actor, eventNoSkill);
+
+          when(mockedGamePredicate.canEquip(actor, greatSword)).thenReturn(
+            false
+          );
 
           const expected: RuleResultInterface = {
             name: 'EQUIP',
@@ -176,10 +179,4 @@ const unEquipLog = new LogMessageDefinition(
   'UNEQUIPPED',
   playerInfo.name,
   'un-equipped Axe'
-);
-
-const errorLog = new LogMessageDefinition(
-  'EQUIP-ERROR',
-  playerInfo.name,
-  'Melee Weapon (Great) is required to equip Great Sword'
 );

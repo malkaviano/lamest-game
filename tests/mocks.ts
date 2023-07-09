@@ -70,6 +70,7 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
+import { GamePredicate } from '../src/core/predicates/game.predicate';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -176,6 +177,8 @@ export const mockedPolicyHub = mock(PolicyHub);
 export const mockedLoggingHub = mock(LoggingHub);
 
 export const apRegeneratedSubject = new Subject<number>();
+
+export const mockedGamePredicate = mock(GamePredicate);
 
 export const setupMocks = () => {
   resetMocks();
@@ -462,6 +465,8 @@ const resetMocks = () => {
   reset(mockedPolicyHub);
 
   reset(mockedLoggingHub);
+
+  reset(mockedGamePredicate);
 };
 
 function mockCheckedHelper() {

@@ -53,11 +53,6 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
       energyActivation,
     } = actor.weaponEquipped;
 
-    const activated = this.activationAxiom.activation(actor, {
-      identity,
-      energyActivation,
-    });
-
     let ruleResult: RuleResultLiteral = 'DENIED';
 
     this.ruleResult.skillName = skillName;
@@ -65,6 +60,12 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
     this.ruleResult.target = target;
 
     this.ruleResult.affected = actor.weaponEquipped;
+
+    const activated = this.activationAxiom.activation(
+      actor,
+      energyActivation,
+      identity.label
+    );
 
     if (activated) {
       let targetWasHit = true;
@@ -91,10 +92,11 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
       if (targetWasHit) {
         const dodged =
           targetActor?.wannaDodge(effect.effectType) &&
-          this.dodgeAxiom.dodge(targetActor, {
+          this.dodgeAxiom.dodged(
+            targetActor,
             dodgeable,
-            dodgesPerformed: extras.targetDodgesPerformed ?? 0,
-          });
+            extras.targetDodgesPerformed ?? 0
+          );
 
         this.ruleResult.dodged = dodged;
 

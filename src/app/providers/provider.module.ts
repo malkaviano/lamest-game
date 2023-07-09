@@ -40,10 +40,13 @@ import { RandomCharacterService } from '../../backend/services/random-character.
 import { SkillService } from '../../backend/services/skill.service';
 import { LoggingHub } from '../../backend/hubs/logging.hub';
 import { ActionPolicy } from '../../backend/policies/action.policy';
+import { GamePredicate } from '../../core/predicates/game.predicate';
+
+const gamePredicate = new GamePredicate();
 
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
-const rollHelper = new RollHelper(randomIntHelper);
+const rollHelper = new RollHelper(randomIntHelper, gamePredicate);
 
 const resourcesStore = new ResourcesStore();
 const actionableStore = new ActionableStore(resourcesStore);
@@ -71,9 +74,9 @@ const generatorService = new GeneratorService(randomIntHelper, professionStore);
 const narrativeService = new NarrativeService(sceneStore);
 const checkedService = new CheckedService();
 
-const activationAxiom = new ActivationAxiom();
+const activationAxiom = new ActivationAxiom(gamePredicate);
 const affectAxiom = new AffectAxiom();
-const dodgeAxiom = new DodgeAxiom(rollHelper);
+const dodgeAxiom = new DodgeAxiom(rollHelper, gamePredicate);
 
 const combatRule = new AffectRule(
   rollHelper,
@@ -88,7 +91,11 @@ const consumeRule = new ConsumeRule(
   checkedService,
   affectAxiom
 );
-const equipRule = new EquipRule(inventoryService, checkedService);
+const equipRule = new EquipRule(
+  inventoryService,
+  checkedService,
+  gamePredicate
+);
 const inspectRule = new ReadRule(inventoryService);
 const interactionRule = new InteractionRule(checkedService, affectAxiom);
 const pickRule = new PickRule(inventoryService, checkedService, affectAxiom);
@@ -122,7 +129,8 @@ const loggingHub = new LoggingHub(
   activationAxiom,
   affectAxiom,
   policyHub,
-  dodgeAxiom
+  dodgeAxiom,
+  gamePredicate
 );
 
 const skillService = new SkillService(randomIntHelper);
@@ -141,6 +149,7 @@ const gameLoopService = new GameLoopService(
   characterService,
   narrativeService,
   policyHub,
+  gamePredicate,
   inventoryService,
   loggingHub
 );
@@ -192,6 +201,8 @@ const gameLoopService = new GameLoopService(
     { provide: GameLoopService, useValue: gameLoopService },
 
     { provide: LoggingHub, useValue: loggingHub },
+
+    { provide: GamePredicate, useValue: GamePredicate },
   ],
   imports: [CommonModule],
 })

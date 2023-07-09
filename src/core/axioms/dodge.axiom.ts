@@ -4,8 +4,8 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
-import { GameStringsStore } from '../../stores/game-strings.store';
 import { RollHelper } from '../helpers/roll.helper';
+import { GamePredicate } from '../predicates/game.predicate';
 
 export class DodgeAxiom implements LoggerInterface, ActorDodgedInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;
@@ -16,7 +16,10 @@ export class DodgeAxiom implements LoggerInterface, ActorDodgedInterface {
 
   public readonly actorDodged$: Observable<string>;
 
-  constructor(private readonly rollService: RollHelper) {
+  constructor(
+    private readonly rollService: RollHelper,
+    private readonly gamePredicate: GamePredicate
+  ) {
     this.logMessageProduced = new Subject();
 
     this.logMessageProduced$ = this.logMessageProduced.asObservable();
@@ -26,29 +29,16 @@ export class DodgeAxiom implements LoggerInterface, ActorDodgedInterface {
     this.actorDodged$ = this.actorDodged.asObservable();
   }
 
-  public dodge(
+  public dodged(
     target: ActorInterface,
-    action: { dodgeable: boolean; dodgesPerformed: number }
+    actionDodgeable: boolean,
+    dodgesPerformed: number
   ): boolean {
-    const { dodgeable, dodgesPerformed } = action;
+    const dodged =
+      this.gamePredicate.canDodge(target, actionDodgeable, dodgesPerformed) &&
+      this.checkDodge(target);
 
-    const canDodge = target.dodgesPerRound > dodgesPerformed;
-
-    if (!dodgeable) {
-      const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
-        target.name
-      );
-
-      this.logMessageProduced.next(logMessage);
-    } else if (!canDodge) {
-      const logMessage = GameStringsStore.createOutOfDodgesLogMessage(
-        target.name
-      );
-
-      this.logMessageProduced.next(logMessage);
-    }
-
-    return dodgeable && canDodge && this.checkDodge(target);
+    return dodged;
   }
 
   private checkDodge(targetActor: ActorInterface) {

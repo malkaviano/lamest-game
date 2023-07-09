@@ -3,16 +3,20 @@ import { instance, when } from 'ts-mockito';
 import { RollDefinition } from '../definitions/roll.definition';
 import { RollHelper } from './roll.helper';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { CheckResultLiteral } from '../literals/check-result.literal';
 
 import {
   mockedActorEntity,
+  mockedGamePredicate,
   mockedRandomIntHelper,
   setupMocks,
 } from '../../../tests/mocks';
-import { CheckResultLiteral } from '../literals/check-result.literal';
 
 describe('RollHelper', () => {
-  const helper = new RollHelper(instance(mockedRandomIntHelper));
+  const helper = new RollHelper(
+    instance(mockedRandomIntHelper),
+    instance(mockedGamePredicate)
+  );
 
   beforeEach(() => {
     setupMocks();
@@ -25,34 +29,15 @@ describe('RollHelper', () => {
   describe('actorSkillCheck', () => {
     describe('when skill value is not set or zero', () => {
       it('return IMPOSSIBLE and 0', () => {
-        const result = helper.actorSkillCheck(
-          instance(mockedActorEntity),
-          'Appraise'
-        );
-
-        const expected = new RollDefinition('IMPOSSIBLE', 0);
-
-        expect(result).toEqual(expected);
-      });
-
-      it('should emit skillCheckLog log', (done) => {
-        let result: LogMessageDefinition | undefined;
-
-        helper.logMessageProduced$.subscribe((event) => {
-          result = event;
-        });
-
         const actor = instance(mockedActorEntity);
 
-        helper.actorSkillCheck(actor, 'Appraise');
-
-        const expected = new LogMessageDefinition(
-          'CHECK',
-          actor.name,
-          "Appraise skill couldn't be checked because it's value is zero"
+        when(mockedGamePredicate.canUseSkill(actor, 'Appraise')).thenReturn(
+          false
         );
 
-        done();
+        const result = helper.actorSkillCheck(actor, 'Appraise');
+
+        const expected = new RollDefinition('IMPOSSIBLE', 0);
 
         expect(result).toEqual(expected);
       });
@@ -74,14 +59,17 @@ describe('RollHelper', () => {
         },
       ].forEach(({ checkResult, roll, message }) => {
         it(`return ${checkResult} and ${roll}`, () => {
+          const actor = instance(mockedActorEntity);
+
           when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(
             roll
           );
 
-          const result = helper.actorSkillCheck(
-            instance(mockedActorEntity),
-            'Melee Weapon (Simple)'
-          );
+          when(
+            mockedGamePredicate.canUseSkill(actor, 'Melee Weapon (Simple)')
+          ).thenReturn(true);
+
+          const result = helper.actorSkillCheck(actor, 'Melee Weapon (Simple)');
 
           const expected = new RollDefinition(
             checkResult as CheckResultLiteral,
@@ -94,11 +82,15 @@ describe('RollHelper', () => {
         it('should emit skillCheckLog log', (done) => {
           let result: LogMessageDefinition | undefined;
 
+          const actor = instance(mockedActorEntity);
+
+          when(
+            mockedGamePredicate.canUseSkill(actor, 'Melee Weapon (Simple)')
+          ).thenReturn(true);
+
           helper.logMessageProduced$.subscribe((event) => {
             result = event;
           });
-
-          const actor = instance(mockedActorEntity);
 
           when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(
             roll

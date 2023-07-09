@@ -65,32 +65,28 @@ describe('AffectRule', () => {
     ).thenReturn(damageMessage2);
 
     when(
-      mockedActivationAxiom.activation(
-        actor,
-        deepEqual({
-          identity: molotov.identity,
-          energyActivation: molotov.energyActivation,
-        })
-      )
-    ).thenReturn(true);
-
-    when(
       mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
+      mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
+    ).thenReturn(new RollDefinition('SUCCESS', 5));
+
+    when(
       mockedActivationAxiom.activation(
         actor,
-        deepEqual({
-          identity: simpleSword.identity,
-          energyActivation: simpleSword.energyActivation,
-        })
+        molotov.energyActivation,
+        molotov.identity.label
       )
     ).thenReturn(true);
 
     when(
-      mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
-    ).thenReturn(new RollDefinition('SUCCESS', 5));
+      mockedActivationAxiom.activation(
+        actor,
+        simpleSword.energyActivation,
+        simpleSword.identity.label
+      )
+    ).thenReturn(true);
   });
 
   it('should be created', () => {
@@ -102,15 +98,7 @@ describe('AffectRule', () => {
       describe('when target is actor', () => {
         describe('when check skill succeed', () => {
           it('should log used molotov and lost molotov', (done) => {
-            when(
-              mockedDodgeAxiom.dodge(
-                target,
-                deepEqual({
-                  dodgeable: false,
-                  dodgesPerformed: 0,
-                })
-              )
-            ).thenReturn(false);
+            when(mockedDodgeAxiom.dodged(target, false, 0)).thenReturn(false);
 
             when(mockedPlayerEntity.weaponEquipped).thenReturn(molotov);
 
@@ -136,15 +124,7 @@ describe('AffectRule', () => {
               )
             ).once();
 
-            verify(
-              mockedDodgeAxiom.dodge(
-                target,
-                deepEqual({
-                  dodgeable: false,
-                  dodgesPerformed: 0,
-                })
-              )
-            ).once();
+            verify(mockedDodgeAxiom.dodged(target, false, 0)).once();
 
             verify(
               mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
@@ -161,15 +141,7 @@ describe('AffectRule', () => {
             it('should log used sword', (done) => {
               when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-              when(
-                mockedDodgeAxiom.dodge(
-                  target,
-                  deepEqual({
-                    dodgeable: true,
-                    dodgesPerformed: 0,
-                  })
-                )
-              ).thenReturn(true);
+              when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(true);
 
               ruleScenario(
                 rule,
@@ -191,15 +163,7 @@ describe('AffectRule', () => {
                 )
               ).never();
 
-              verify(
-                mockedDodgeAxiom.dodge(
-                  target,
-                  deepEqual({
-                    dodgeable: true,
-                    dodgesPerformed: 0,
-                  })
-                )
-              ).once();
+              verify(mockedDodgeAxiom.dodged(target, true, 0)).once();
 
               verify(
                 mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
@@ -236,15 +200,7 @@ describe('AffectRule', () => {
       it('return denied result', () => {
         when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-        when(
-          mockedDodgeAxiom.dodge(
-            target,
-            deepEqual({
-              dodgeable: true,
-              dodgesPerformed: 0,
-            })
-          )
-        ).thenReturn(true);
+        when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(true);
 
         const result = rule.execute(actor, eventAttackInteractive, {
           target,
@@ -269,15 +225,7 @@ describe('AffectRule', () => {
       it('return affect result', () => {
         when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-        when(
-          mockedDodgeAxiom.dodge(
-            target,
-            deepEqual({
-              dodgeable: true,
-              dodgesPerformed: 0,
-            })
-          )
-        ).thenReturn(false);
+        when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(false);
 
         const result = rule.execute(actor, eventAttackInteractive, {
           target,
