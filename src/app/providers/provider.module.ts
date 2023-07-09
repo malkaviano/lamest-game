@@ -76,7 +76,7 @@ const gamePredicate = new GamePredicate();
 
 const activationAxiom = new ActivationAxiom(gamePredicate);
 const affectAxiom = new AffectAxiom();
-const dodgeAxiom = new DodgeAxiom(rollHelper);
+const dodgeAxiom = new DodgeAxiom(rollHelper, gamePredicate);
 
 const combatRule = new AffectRule(
   rollHelper,

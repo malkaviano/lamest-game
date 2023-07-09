@@ -92,10 +92,11 @@ export class AffectRule extends MasterRule implements ActorDodgedInterface {
       if (targetWasHit) {
         const dodged =
           targetActor?.wannaDodge(effect.effectType) &&
-          this.dodgeAxiom.dodge(targetActor, {
+          this.dodgeAxiom.dodged(
+            targetActor,
             dodgeable,
-            dodgesPerformed: extras.targetDodgesPerformed ?? 0,
-          });
+            extras.targetDodgesPerformed ?? 0
+          );
 
         this.ruleResult.dodged = dodged;
 

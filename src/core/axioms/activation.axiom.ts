@@ -31,7 +31,6 @@ export class ActivationAxiom implements LoggerInterface {
 
     if (energyActivation !== 0 && canActivate) {
       const log = actor.reactTo(
-        // TODO: Create proper verb
         createActionableDefinition('CONSUME', 'activation', 'Activation'),
         'NONE',
         {

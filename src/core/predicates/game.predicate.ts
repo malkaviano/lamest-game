@@ -50,4 +50,30 @@ export class GamePredicate implements LoggerInterface {
 
     return canActivate;
   }
+
+  public canDodge(
+    actor: ActorInterface,
+    actionDodgeable: boolean,
+    targetDodgesPerformed: number
+  ): boolean {
+    if (!actionDodgeable && actor instanceof PlayerEntity) {
+      const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
+        actor.name
+      );
+
+      this.logMessageProduced.next(logMessage);
+    }
+
+    const canDodge = actor.dodgesPerRound > targetDodgesPerformed;
+
+    if (!canDodge && actor instanceof PlayerEntity) {
+      const logMessage = GameStringsStore.createOutOfDodgesLogMessage(
+        actor.name
+      );
+
+      this.logMessageProduced.next(logMessage);
+    }
+
+    return actionDodgeable && canDodge;
+  }
 }
