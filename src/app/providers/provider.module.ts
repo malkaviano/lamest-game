@@ -40,6 +40,7 @@ import { RandomCharacterService } from '../../backend/services/random-character.
 import { SkillService } from '../../backend/services/skill.service';
 import { LoggingHub } from '../../backend/hubs/logging.hub';
 import { ActionPolicy } from '../../backend/policies/action.policy';
+import { GamePredicate } from '../../core/predicates/game.predicate';
 
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
@@ -71,7 +72,9 @@ const generatorService = new GeneratorService(randomIntHelper, professionStore);
 const narrativeService = new NarrativeService(sceneStore);
 const checkedService = new CheckedService();
 
-const activationAxiom = new ActivationAxiom();
+const gamePredicate = new GamePredicate();
+
+const activationAxiom = new ActivationAxiom(gamePredicate);
 const affectAxiom = new AffectAxiom();
 const dodgeAxiom = new DodgeAxiom(rollHelper);
 
@@ -122,7 +125,8 @@ const loggingHub = new LoggingHub(
   activationAxiom,
   affectAxiom,
   policyHub,
-  dodgeAxiom
+  dodgeAxiom,
+  gamePredicate
 );
 
 const skillService = new SkillService(randomIntHelper);
@@ -141,6 +145,7 @@ const gameLoopService = new GameLoopService(
   characterService,
   narrativeService,
   policyHub,
+  gamePredicate,
   inventoryService,
   loggingHub
 );
@@ -192,6 +197,8 @@ const gameLoopService = new GameLoopService(
     { provide: GameLoopService, useValue: gameLoopService },
 
     { provide: LoggingHub, useValue: loggingHub },
+
+    { provide: GamePredicate, useValue: GamePredicate },
   ],
   imports: [CommonModule],
 })

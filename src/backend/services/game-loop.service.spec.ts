@@ -36,7 +36,9 @@ import {
   mockedInventoryService,
   mockedPolicyHub,
   mockedLoggingHub,
+  mockedGamePredicate,
 } from '../../../tests/mocks';
+import { GamePredicate } from '../../core/predicates/game.predicate';
 
 const actor = instance(mockedActorEntity);
 
@@ -75,11 +77,16 @@ describe('GameLoopService', () => {
       result: 'EXECUTED',
     });
 
+    when(
+      mockedGamePredicate.hasEnoughActionPoints(anything(), anything())
+    ).thenReturn(true);
+
     service = new GameLoopService(
       instance(mockedRulesHub),
       instance(mockedCharacterService),
       instance(mockedNarrativeService),
       instance(mockedPolicyHub),
+      instance(mockedGamePredicate),
       instance(mockedInventoryService),
       instance(mockedLoggingHub)
     );
@@ -96,6 +103,7 @@ describe('GameLoopService', () => {
       verify(
         mockedAffectRule.execute(anything(), anything(), anything())
       ).twice();
+
       verify(mockedPolicyHub.enforcePolicies(anything())).twice();
 
       expect(result).toEqual(true);
@@ -104,8 +112,10 @@ describe('GameLoopService', () => {
     it('invoke actors execute action', async () => {
       const { actor1Played, actor2Played } = await testRun(service);
 
-      expect(actor1Played).toEqual(true);
-      expect(actor2Played).toEqual(true);
+      expect({ actor1Played, actor2Played }).toEqual({
+        actor1Played: true,
+        actor2Played: true,
+      });
     });
   });
 

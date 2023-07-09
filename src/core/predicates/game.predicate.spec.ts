@@ -2,6 +2,7 @@ import { anything, instance, when } from 'ts-mockito';
 
 import { GamePredicate } from './game.predicate';
 import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
+import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 import {
   mockedActorEntity,
@@ -14,7 +15,6 @@ import {
   actionableEvent,
   interactiveInfo,
 } from '../../../tests/fakes';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
 
 describe('GamePredicate', () => {
   const actor = instance(mockedActorEntity);
@@ -33,6 +33,8 @@ describe('GamePredicate', () => {
     'Some Name',
     'insufficient AP. Action requires 3 AP'
   );
+
+  const predicate = new GamePredicate();
 
   beforeEach(() => {
     setupMocks();
@@ -70,7 +72,7 @@ describe('GamePredicate', () => {
       },
     ].forEach(({ expected, actor, log }) => {
       it(`return ${expected}`, () => {
-        const result = GamePredicate.hasEnoughActionPoints(actor, rule);
+        const result = predicate.hasEnoughActionPoints(actor, rule);
 
         expect(result).toEqual(expected);
       });
@@ -78,11 +80,11 @@ describe('GamePredicate', () => {
       it('emit log', () => {
         let result: LogMessageDefinition | undefined;
 
-        GamePredicate.logMessageProduced$.subscribe((event) => {
+        predicate.logMessageProduced$.subscribe((event) => {
           result = event;
         });
 
-        GamePredicate.hasEnoughActionPoints(actor, rule);
+        predicate.hasEnoughActionPoints(actor, rule);
 
         expect(result).toEqual(log);
       });

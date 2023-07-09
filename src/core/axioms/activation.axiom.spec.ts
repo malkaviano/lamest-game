@@ -5,10 +5,14 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { createActionableDefinition } from '../definitions/actionable.definition';
 
 import { shadowDagger, shadowSword, simpleSword } from '../../../tests/fakes';
-import { mockedPlayerEntity, setupMocks } from '../../../tests/mocks';
+import {
+  mockedGamePredicate,
+  mockedPlayerEntity,
+  setupMocks,
+} from '../../../tests/mocks';
 
 describe('ActivationAxiom', () => {
-  const axiom = new ActivationAxiom();
+  const axiom = new ActivationAxiom(instance(mockedGamePredicate));
 
   beforeEach(() => {
     setupMocks();
@@ -47,6 +51,16 @@ describe('ActivationAxiom', () => {
           let result = false;
 
           when(
+            mockedGamePredicate.canActivate(
+              actor,
+              item.energyActivation,
+              item.identity.label
+            )
+          ).thenReturn(
+            item.energyActivation <= actor.derivedAttributes['CURRENT EP'].value
+          );
+
+          when(
             mockedPlayerEntity.reactTo(
               deepEqual(
                 createActionableDefinition(
@@ -69,6 +83,16 @@ describe('ActivationAxiom', () => {
 
         it(`should produce logs ${expected}`, (done) => {
           const actor = instance(mockedPlayerEntity);
+
+          when(
+            mockedGamePredicate.canActivate(
+              actor,
+              item.energyActivation,
+              item.identity.label
+            )
+          ).thenReturn(
+            item.energyActivation <= actor.derivedAttributes['CURRENT EP'].value
+          );
 
           when(
             mockedPlayerEntity.reactTo(

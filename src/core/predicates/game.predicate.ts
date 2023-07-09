@@ -6,16 +6,16 @@ import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { PlayerEntity } from '../entities/player.entity';
-import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
+import { LoggerInterface } from '../interfaces/logger.interface';
 
-export class GamePredicate {
-  private static readonly logMessageProduced: Subject<LogMessageDefinition> =
+export class GamePredicate implements LoggerInterface {
+  private readonly logMessageProduced: Subject<LogMessageDefinition> =
     new Subject();
 
-  public static readonly logMessageProduced$: Observable<LogMessageDefinition> =
+  public readonly logMessageProduced$: Observable<LogMessageDefinition> =
     this.logMessageProduced.asObservable();
 
-  public static hasEnoughActionPoints(
+  public hasEnoughActionPoints(
     actor: ActorInterface,
     rule: MasterRule
   ): boolean {
@@ -24,7 +24,7 @@ export class GamePredicate {
     const result = actor.derivedAttributes['CURRENT AP'].value >= ruleCost;
 
     if (!result && actor instanceof PlayerEntity) {
-      GamePredicate.logMessageProduced.next(
+      this.logMessageProduced.next(
         GameStringsStore.createInsufficientAPLogMessage(actor.name, ruleCost)
       );
     }
@@ -32,7 +32,7 @@ export class GamePredicate {
     return result;
   }
 
-  public static canActivate(
+  public canActivate(
     actor: ActorInterface,
     energy: number,
     label: string
@@ -45,7 +45,7 @@ export class GamePredicate {
         label
       );
 
-      GamePredicate.logMessageProduced.next(logMessage);
+      this.logMessageProduced.next(logMessage);
     }
 
     return canActivate;

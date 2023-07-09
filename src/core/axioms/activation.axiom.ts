@@ -1,7 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 
 import { createActionableDefinition } from '../definitions/actionable.definition';
-import { ItemIdentityDefinition } from '../definitions/item-identity.definition';
 import { LogMessageDefinition } from '../definitions/log-message.definition';
 import { ActorInterface } from '../interfaces/actor.interface';
 import { LoggerInterface } from '../interfaces/logger.interface';
@@ -13,7 +12,7 @@ export class ActivationAxiom implements LoggerInterface {
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
-  constructor() {
+  constructor(private readonly gamePredicate: GamePredicate) {
     this.logMessageProduced = new Subject();
 
     this.logMessageProduced$ = this.logMessageProduced.asObservable();
@@ -24,7 +23,7 @@ export class ActivationAxiom implements LoggerInterface {
     energyActivation: number,
     label: string
   ): boolean {
-    const canActivate = GamePredicate.canActivate(
+    const canActivate = this.gamePredicate.canActivate(
       actor,
       energyActivation,
       label

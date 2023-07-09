@@ -17,7 +17,6 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { CheckedService } from '../services/checked.service';
 import { MasterRule } from './master.rule';
 import { ActorDodgedInterface } from '../../core/interfaces/actor-dodged.interface';
-import { GamePredicate } from '../../core/predicates/game.predicate';
 
 export class AffectRule extends MasterRule implements ActorDodgedInterface {
   public readonly actorDodged$: Observable<string>;

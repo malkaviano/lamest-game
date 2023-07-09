@@ -43,6 +43,7 @@ export class GameLoopService {
     private readonly characterService: CharacterService,
     private readonly narrativeService: NarrativeService,
     private readonly policyHub: PolicyHub,
+    private readonly gamePredicate: GamePredicate,
     inventoryService: InventoryService,
     loggingHub: LoggingHub
   ) {
@@ -107,7 +108,7 @@ export class GameLoopService {
           const rule =
             this.ruleHub.dispatcher[action.actionableDefinition.actionable];
 
-          if (GamePredicate.hasEnoughActionPoints(actor, rule)) {
+          if (this.gamePredicate.hasEnoughActionPoints(actor, rule)) {
             const target = this.actionReactives[action.eventId];
 
             const result = rule.execute(actor, action, {

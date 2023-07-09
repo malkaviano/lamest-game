@@ -9,8 +9,7 @@ export class LoggingHub implements LoggerInterface {
 
   constructor(...logProducers: LoggerInterface[]) {
     this.logMessageProduced$ = merge(
-      ...logProducers.map((lp) => lp.logMessageProduced$),
-      GamePredicate.logMessageProduced$
+      ...logProducers.map((lp) => lp.logMessageProduced$)
     );
   }
 }
