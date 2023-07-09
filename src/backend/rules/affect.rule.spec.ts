@@ -197,7 +197,7 @@ describe('AffectRule', () => {
     });
 
     describe('when target dodged', () => {
-      it('return denied result', () => {
+      it('return avoided result', () => {
         when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
         when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(true);
@@ -210,7 +210,7 @@ describe('AffectRule', () => {
           name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
-          result: 'DENIED',
+          result: 'AVOIDED',
           target,
           affected: simpleSword,
           skill: { name: 'Melee Weapon (Simple)', roll: 5 },

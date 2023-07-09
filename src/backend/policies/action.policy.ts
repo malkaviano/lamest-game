@@ -6,20 +6,17 @@ import { MasterPolicy } from './master.policy';
 
 export class ActionPolicy extends MasterPolicy {
   public override enforce(result: RuleResultInterface): PolicyResultInterface {
-    if (result.result === 'EXECUTED') {
-      const actionPointsSpent = SettingsStore.settings.ruleCost[result.name];
+    if (result.result !== 'DENIED') {
+      const ruleCost = SettingsStore.settings.ruleCost[result.name];
 
-      if (actionPointsSpent > 0) {
-        result.actor.apSpent(actionPointsSpent);
+      if (ruleCost > 0) {
+        result.actor.apSpent(ruleCost);
 
         this.logMessageProduced.next(
-          GameStringsStore.createAPSpentLogMessage(
-            result.actor.name,
-            actionPointsSpent
-          )
+          GameStringsStore.createAPSpentLogMessage(result.actor.name, ruleCost)
         );
 
-        return { actionPointsSpent };
+        return { actionPointsSpent: ruleCost };
       }
     }
 
