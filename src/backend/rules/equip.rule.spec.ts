@@ -180,9 +180,3 @@ const unEquipLog = new LogMessageDefinition(
   playerInfo.name,
   'un-equipped Axe'
 );
-
-const errorLog = new LogMessageDefinition(
-  'EQUIP-ERROR',
-  playerInfo.name,
-  'Melee Weapon (Great) is required to equip Great Sword'
-);
