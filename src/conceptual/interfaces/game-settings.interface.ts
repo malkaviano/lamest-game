@@ -1,6 +1,6 @@
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 
 export interface GameSettingsInterface {
   readonly professionPoints: number;

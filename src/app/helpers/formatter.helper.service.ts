@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
-import { CharacterIdentityLiteral } from '@conceptual/literals/character-identity.literal';
+import { CharacterIdentityLiteral } from '@literals/character-identity.literal';
 import { CharacterValuesView } from '../view-models/character-values.view';
 import { KeyValueDescriptionView } from '../view-models/key-value-description.view';
 import { PlayerInterface } from '@conceptual/interfaces/player.interface';

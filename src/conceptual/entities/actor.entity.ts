@@ -18,7 +18,7 @@ import { ClassificationLiteral } from '@literals/classification.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { InteractiveEntity } from './interactive.entity';
 import { HitPointsEvent } from '../events/hit-points.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';

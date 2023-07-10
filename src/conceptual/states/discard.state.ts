@@ -1,5 +1,5 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from './actionable.state';
 
 export class DiscardState extends ActionableState {

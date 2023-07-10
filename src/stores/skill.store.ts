@@ -3,7 +3,7 @@ import { SkillDefinition } from '@definitions/skill.definition';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 
 export class SkillStore {
   private readonly store: Map<string, SkillDefinition>;

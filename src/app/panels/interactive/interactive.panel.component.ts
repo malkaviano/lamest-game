@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ActionableEvent } from '@conceptual/events/actionable.event';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
 
 @Component({

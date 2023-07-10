@@ -3,7 +3,7 @@ import { ThemePalette } from '@angular/material/core';
 
 import { CharacterStatusView } from 'src/app/view-models/character-status.view';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { CharacterValuesView } from '../../view-models/character-values.view';
 import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';

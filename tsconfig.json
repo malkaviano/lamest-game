@@ -30,6 +30,7 @@
         "@definitions/*": [ "./src/conceptual/definitions/*" ],
         "@interfaces/*": [ "./src/conceptual/interfaces/*" ],
         "@literals/*": [ "./src/conceptual/literals/*" ],
+        "@wrappers/*": [ "./src/wrappers/*" ],
     }
   },
   "angularCompilerOptions": {

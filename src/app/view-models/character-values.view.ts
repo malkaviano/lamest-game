@@ -1,4 +1,4 @@
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { KeyValueDescriptionView } from './key-value-description.view';
 
 export class CharacterValuesView {

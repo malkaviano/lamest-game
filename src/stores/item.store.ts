@@ -9,7 +9,7 @@ import { UsableDefinition } from '@definitions/usable.definition';
 import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ReadableDefinition } from '@definitions/readable.definition';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 
 export class ItemStore {
   private readonly store: Map<string, GameItemDefinition>;

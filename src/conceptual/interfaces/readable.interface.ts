@@ -1,4 +1,4 @@
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 
 export interface ReadableInterface {
   readonly title: string;

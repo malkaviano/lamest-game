@@ -3,7 +3,7 @@ import { ClassificationLiteral } from '@literals/classification.literal';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { AiBehavior } from './ai.behavior';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActionableEvent } from '../events/actionable.event';
 
 import { actionAffect, playerInfo } from '../../../tests/fakes';

@@ -3,7 +3,7 @@ import { instance, verify, when } from 'ts-mockito';
 import { VisibilityPolicy } from './visibility.policy';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { VisibilityLiteral } from '@conceptual/literals/visibility.literal';
+import { VisibilityLiteral } from '@literals/visibility.literal';
 
 import {
   mockedActorEntity,

@@ -4,7 +4,7 @@ import { EMPTY, of, Subject } from 'rxjs';
 import { GameLoopService } from './game-loop.service';
 import { ReadableInterface } from '@conceptual/interfaces/readable.interface';
 import { ItemStoredDefinition } from '@definitions/item-storage.definition';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
 import { InventoryEvent } from '@conceptual/events/inventory.event';
 

@@ -10,9 +10,9 @@ import { EffectEvent } from '@conceptual/events/effect.event';
 import { CheckedService } from '../services/checked.service';
 import { RollHelper } from '@conceptual/helpers/roll.helper';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
-import { CheckResultLiteral } from '@conceptual/literals/check-result.literal';
-import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
-import { RuleResultLiteral } from '@conceptual/literals/rule-result.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
+import { RuleResultLiteral } from '@literals/rule-result.literal';
 
 export class ConsumeRule extends MasterRule {
   constructor(

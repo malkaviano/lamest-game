@@ -1,7 +1,7 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { ActorEntity } from './actor.entity';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';

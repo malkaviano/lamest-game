@@ -3,7 +3,7 @@ import {
   directionNamesDefinition,
 } from '@definitions/directions.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { DiscardState } from './discard.state';
 import { LockPickableContainerState } from './lock-pickable-container.state';
 import { createActionableDefinition } from '@definitions/actionable.definition';

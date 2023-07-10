@@ -7,7 +7,7 @@ import { ActorEntity } from './actor.entity';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { RegeneratorBehavior } from '../behaviors/regenerator.behavior';
 import { AiBehavior } from '../behaviors/ai.behavior';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { AgeLiteral } from '@literals/age.literal';
 import { RaceLiteral } from '@literals/race.literal';
 import { HeightLiteral } from '@literals/height.literal';

@@ -14,7 +14,7 @@ import {
   createActionableDefinition,
 } from '@definitions/actionable.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { PlayerInterface } from '@conceptual/interfaces/player.interface';

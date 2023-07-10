@@ -1,31 +1,31 @@
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '../src/conceptual/definitions/actionable.definition';
-import { CharacteristicSetDefinition } from '../src/conceptual/definitions/characteristic-set.definition';
-import { CharacteristicDefinition } from '../src/conceptual/definitions/characteristic.definition';
-import { ConsumableDefinition } from '../src/conceptual/definitions/consumable.definition';
-import { EffectDefinition } from '../src/conceptual/definitions/effect.definition';
-import { DerivedAttributeSetDefinition } from '../src/conceptual/definitions/derived-attribute-set.definition';
-import { DerivedAttributeDefinition } from '../src/conceptual/definitions/derived-attribute.definition';
-import { createDice } from '../src/conceptual/definitions/dice.definition';
-import { CharacterIdentityDefinition } from '../src/conceptual/definitions/character-identity.definition';
+} from '@definitions/actionable.definition';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { EffectDefinition } from '@definitions/effect.definition';
+import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
+import { createDice } from '@definitions/dice.definition';
+import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
 import { ActionableEvent } from '../src/conceptual/events/actionable.event';
 import { KeyValueInterface } from '../src/conceptual/interfaces/key-value.interface';
 import { SceneActorsInfoInterface } from '../src/conceptual/interfaces/scene-actors.interface';
-import { ArrayView } from '../src/conceptual/view-models/array.view';
+import { ArrayView } from '../src/wrappers/array.view';
 import { CharacterValuesView } from '../src/app/view-models/character-values.view';
 import { KeyValueDescriptionView } from '../src/app/view-models/key-value-description.view';
 import { DiscardState } from '../src/conceptual/states/discard.state';
-import { UsableDefinition } from '../src/conceptual/definitions/usable.definition';
-import { ItemIdentityDefinition } from '../src/conceptual/definitions/item-identity.definition';
+import { UsableDefinition } from '@definitions/usable.definition';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
 import { ActionableItemView } from '../src/conceptual/view-models/actionable-item.view';
-import { GameItemDefinition } from '../src/conceptual/definitions/game-item.definition';
-import { WeaponDefinition } from '../src/conceptual/definitions/weapon.definition';
-import { SkillDefinition } from '../src/conceptual/definitions/skill.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { SkillDefinition } from '@definitions/skill.definition';
 import { EffectEvent } from '../src/conceptual/events/effect.event';
-import { EffectTypeLiteral } from '../src/conceptual/literals/effect-type.literal';
-import { ReadableDefinition } from '../src/conceptual/definitions/readable.definition';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { CharacterStatusView } from '../src/app/view-models/character-status.view';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };

@@ -6,7 +6,7 @@ import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActorEntity } from '@conceptual/entities/actor.entity';
 import { ActorBehavior } from '@conceptual/behaviors/actor.behavior';
 import { EquipmentBehavior } from '@conceptual/behaviors/equipment.behavior';

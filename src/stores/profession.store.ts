@@ -1,6 +1,6 @@
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ResourcesStore } from './resources.store';
 
 export class ProfessionStore {

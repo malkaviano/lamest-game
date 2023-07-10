@@ -16,7 +16,7 @@ import {
   directionNamesDefinition,
 } from '@definitions/directions.definition';
 import { VisibilityState } from '@conceptual/states/visibility.state';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '@conceptual/helpers/lazy.helper';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { SequencerHelper } from '@conceptual/helpers/sequencer.helper';

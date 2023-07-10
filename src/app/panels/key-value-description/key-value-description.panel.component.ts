@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 
 @Component({

@@ -1,4 +1,4 @@
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ConversationState } from './conversation.state';
 import { createActionableDefinition } from '@definitions/actionable.definition';
 import { MessageMapDefinition } from '@definitions/message-map.definition';

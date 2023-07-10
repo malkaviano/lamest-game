@@ -7,7 +7,7 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { MasterRule } from './master.rule';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
-import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { DocumentOpenedInterface } from '@conceptual/interfaces/document-opened.interface';
 import { ReadableInterface } from '@conceptual/interfaces/readable.interface';
 

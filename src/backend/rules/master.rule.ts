@@ -7,15 +7,15 @@ import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interfac
 import { RuleInterface } from '@conceptual/interfaces/rule.interface';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
-import { RuleResultLiteral } from '@conceptual/literals/rule-result.literal';
-import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
+import { RuleResultLiteral } from '@literals/rule-result.literal';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { UsableDefinition } from '@definitions/usable.definition';
 import { ReadableDefinition } from '@definitions/readable.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
-import { EffectTypeLiteral } from '@conceptual/literals/effect-type.literal';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 
 type Result = {
   name: RuleNameLiteral;

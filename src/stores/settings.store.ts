@@ -1,6 +1,6 @@
 import { GameSettingsInterface } from '@conceptual/interfaces/game-settings.interface';
-import { ArrayView } from '@conceptual/view-models/array.view';
-import { EffectTypeLiteral } from '@conceptual/literals/effect-type.literal';
+import { ArrayView } from '@wrappers/array.view';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { SettingsStoreInterface } from '@conceptual/interfaces/stores/settings-store.interface';
 
 import settingsStore from '../assets/settings.json';

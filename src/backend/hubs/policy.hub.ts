@@ -4,7 +4,7 @@ import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { LoggerInterface } from '@conceptual/interfaces/logger.interface';
 import { PolicyInterface } from '@conceptual/interfaces/policy.interface';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 
 export class PolicyHub implements LoggerInterface {
   private readonly policies: ArrayView<PolicyInterface>;

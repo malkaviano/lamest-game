@@ -3,7 +3,7 @@ import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
 import { ActorStore } from './actor.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { SceneEntity } from '@conceptual/entities/scene.entity';
 import { InteractiveEntity } from '@conceptual/entities/interactive.entity';
 

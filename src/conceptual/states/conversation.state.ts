@@ -5,7 +5,7 @@ import {
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { MessageMapDefinition } from '@definitions/message-map.definition';
 import { ActionableState } from './actionable.state';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 
 export class ConversationState extends ActionableState {
   protected readonly currentMessages: KeyValueInterface<{

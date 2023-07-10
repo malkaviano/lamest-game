@@ -5,7 +5,7 @@ import { DirectionLiteral } from '@literals/direction.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { LockedContainerState } from './locked-container.state';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 

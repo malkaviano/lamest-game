@@ -6,7 +6,7 @@ import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
-import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
 
 export class InteractionRule extends MasterRule {
   constructor(

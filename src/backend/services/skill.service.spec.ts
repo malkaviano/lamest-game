@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { SkillService } from './skill.service';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 
 import { mockedRandomIntHelper, setupMocks } from '../../../tests/mocks';
 

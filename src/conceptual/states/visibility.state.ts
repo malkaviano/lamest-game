@@ -4,7 +4,7 @@ import { VisibilityLiteral } from '@literals/visibility.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActorEntity } from '../entities/actor.entity';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 

@@ -2,12 +2,12 @@ import { anyNumber, instance, when } from 'ts-mockito';
 
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
-import { ages } from '@conceptual/literals/age.literal';
-import { heights } from '@conceptual/literals/height.literal';
-import { races } from '@conceptual/literals/race.literal';
-import { weights } from '@conceptual/literals/weight.literal';
 import { GeneratorService } from './generator.service';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
+import { races } from '@definitions/races.definition';
+import { weights } from '@definitions/weight.definitions';
+import { ages } from '@definitions/ages.definition';
+import { heights } from '@definitions/height.definition';
 
 import {
   mockedProfessionStore,
@@ -85,9 +85,9 @@ const expectedCharacteristics = {
 const expectedIdentity = new CharacterIdentityDefinition(
   'Alice Shields',
   'Police Detective',
-  ages[0],
-  races[0],
-  heights[0],
-  weights[0],
+  ages.items[0],
+  races.items[0],
+  heights.items[0],
+  weights.items[0],
   'VISIBLE'
 );

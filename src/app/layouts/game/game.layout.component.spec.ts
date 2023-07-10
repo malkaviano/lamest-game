@@ -5,7 +5,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { GameLayoutComponent } from './game.layout.component';
-import { ArrayView } from '@conceptual/view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { SimpleState } from '@conceptual/states/simple.state';

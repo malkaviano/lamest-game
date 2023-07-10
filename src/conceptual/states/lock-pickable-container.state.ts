@@ -2,7 +2,7 @@ import { GameStringsStore } from 'src/stores/game-strings.store';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
-import { ArrayView } from '../view-models/array.view';
+import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from './actionable.state';
 import { LockPickingContainerState } from './lock-picking-container.state';
 import { LockedContainerState } from './locked-container.state';
