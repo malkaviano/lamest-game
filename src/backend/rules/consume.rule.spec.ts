@@ -1,7 +1,7 @@
 import { EMPTY } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { ConsumeRule } from './consume.rule';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';

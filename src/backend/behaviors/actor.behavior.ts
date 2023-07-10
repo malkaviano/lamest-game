@@ -8,8 +8,8 @@ import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { EffectEvent } from '@events/effect.event';
 import { HitPointsEvent } from '@events/hit-points.event';
 import { EnergyPointsEvent } from '@events/energy-points.event';
-import { SkillStore } from '../../stores/skill.store';
-import { SettingsStore } from '../../stores/settings.store';
+import { SkillStore } from '@stores/skill.store';
+import { SettingsStore } from '@stores/settings.store';
 import { ActionPointsEvent } from '@events/action-points.event';
 
 export class ActorBehavior {

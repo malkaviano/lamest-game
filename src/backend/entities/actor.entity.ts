@@ -24,7 +24,7 @@ import { HitPointsEvent } from '@events/hit-points.event';
 import { EnergyPointsEvent } from '@events/energy-points.event';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ActionPointsEvent } from '@events/action-points.event';

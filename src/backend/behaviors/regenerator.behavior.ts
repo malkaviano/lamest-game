@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 
-import { SettingsStore } from '../../stores/settings.store';
+import { SettingsStore } from '@stores/settings.store';
 
 export class RegeneratorBehavior {
   private apRegenerationTimer: NodeJS.Timer | null;

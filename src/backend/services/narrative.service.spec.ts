@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { NarrativeService } from '@services/narrative.service';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { ArrayView } from '@wrappers/array.view';
 
 import {

@@ -3,7 +3,7 @@ import { ArrayView } from '@wrappers/array.view';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { SettingsStoreInterface } from '@interfaces/stores/settings-store.interface';
 
-import settingsStore from '../assets/settings.json';
+import settingsStore from '@assets/settings.json';
 
 export class SettingsStore {
   private static mSettings: GameSettingsInterface;

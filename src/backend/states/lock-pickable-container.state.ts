@@ -6,7 +6,7 @@ import { ActionableState } from '@states/actionable.state';
 import { LockPickingContainerState } from '@states/lock-picking-container.state';
 import { LockedContainerState } from '@states/locked-container.state';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 
 export class LockPickableContainerState extends LockedContainerState {
   constructor(

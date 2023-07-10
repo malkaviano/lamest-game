@@ -13,7 +13,7 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { CheckedService } from '../services/checked.service';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';

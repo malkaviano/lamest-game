@@ -12,7 +12,7 @@ import { ActionableEvent } from '@events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { GameStringsStore } from '../../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 
 @Component({
   selector: 'app-interactive-widget',

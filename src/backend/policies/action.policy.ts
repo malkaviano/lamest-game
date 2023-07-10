@@ -1,7 +1,7 @@
 import { PolicyResultInterface } from '@interfaces/policy-result.interface';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
-import { GameStringsStore } from '../../stores/game-strings.store';
-import { SettingsStore } from '../../stores/settings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { SettingsStore } from '@stores/settings.store';
 import { PolicyAbstraction } from '@abstractions/policy.abstraction';
 
 export class ActionPolicy extends PolicyAbstraction {

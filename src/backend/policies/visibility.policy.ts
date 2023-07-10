@@ -2,7 +2,7 @@ import { ConverterHelper } from '@helpers/converter.helper';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { PolicyResultInterface } from '@interfaces/policy-result.interface';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { PolicyAbstraction } from '@abstractions/policy.abstraction';
 
 export class VisibilityPolicy extends PolicyAbstraction {

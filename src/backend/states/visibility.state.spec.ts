@@ -3,7 +3,7 @@ import { instance } from 'ts-mockito';
 import { VisibilityState } from './visibility.state';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { emptyState } from './empty.state';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { PlayerEntity } from '@entities/player.entity';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';

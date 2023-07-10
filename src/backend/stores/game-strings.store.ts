@@ -4,7 +4,7 @@ import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { LogCategoryLiteral } from '@literals/log-category.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 
-import gameMessages from '../assets/game-strings.json';
+import gameMessages from '@assets/game-strings.json';
 
 export class GameStringsStore {
   private static logMessagesStore: KeyValueInterface<string> =

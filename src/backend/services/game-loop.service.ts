@@ -22,7 +22,7 @@ import { ActorEntity } from '@entities/actor.entity';
 import { PolicyHub } from '@hubs/policy.hub';
 import { LoggingHub } from '@hubs/logging.hub';
 import { GamePredicate } from '@predicates/game.predicate';
-import { SettingsStore } from '../../stores/settings.store';
+import { SettingsStore } from '@stores/settings.store';
 
 export class GameLoopService {
   private aiTimer: NodeJS.Timer | undefined;

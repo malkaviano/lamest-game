@@ -2,7 +2,7 @@ import { ActionableDefinition } from '@definitions/actionable.definition';
 import { directionNamesDefinition } from '@definitions/directions.definition';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { DirectionLiteral } from '@literals/direction.literal';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableState } from '@states/actionable.state';
 import { LockedContainerState } from '@states/locked-container.state';
 import { ArrayView } from '@wrappers/array.view';

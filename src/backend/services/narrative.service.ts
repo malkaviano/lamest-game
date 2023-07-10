@@ -1,8 +1,8 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SceneDefinition } from '@definitions/scene.definition';
-import { GameStringsStore } from '../../stores/game-strings.store';
-import { SceneStore } from '../../stores/scene.store';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { SceneStore } from '@stores/scene.store';
 import { ActionableEvent } from '@events/actionable.event';
 import { SceneEntity } from '@entities/scene.entity';
 

@@ -1,7 +1,7 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 import { ArrayView } from '@wrappers/array.view';

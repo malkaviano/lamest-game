@@ -13,7 +13,7 @@ import {
   simpleSword,
 } from '../../../tests/fakes';
 import { mockedItemStore } from '../../../tests/mocks';
-import { InteractiveStore } from '../../stores/interactive.store';
+import { InteractiveStore } from '@stores/interactive.store';
 
 const interactives = {
   interactives: () => ({}),

@@ -2,7 +2,7 @@ import { UsableDefinition } from '@definitions/usable.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { AffectAxiom } from '@axioms/affect.axiom';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableEvent } from '@events/actionable.event';

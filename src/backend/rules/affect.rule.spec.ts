@@ -1,7 +1,7 @@
 import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { AffectRule } from './affect.rule';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { RollDefinition } from '@definitions/roll.definition';
 import { EffectEvent } from '@events/effect.event';
 

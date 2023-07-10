@@ -6,7 +6,7 @@ import { RollDefinition } from '@definitions/roll.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { DiceLiteral } from '@literals/dice.literal';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { GamePredicate } from '@predicates/game.predicate';
 

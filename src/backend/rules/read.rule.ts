@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { ReadableDefinition } from '@definitions/readable.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableEvent } from '@events/actionable.event';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';

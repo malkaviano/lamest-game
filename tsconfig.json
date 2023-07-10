@@ -26,6 +26,8 @@
     "esModuleInterop": true,
     "useDefineForClassFields": false,
     "paths": {
+      "@assets/*": [ "./src/assets/*" ],
+      "@stores/*": [ "./src/backend/stores/*" ],
       "@entities/*": [ "./src/backend/entities/*" ],
       "@states/*": [ "./src/backend/states/*" ],
       "@axioms/*": [ "./src/backend/axioms/*" ],

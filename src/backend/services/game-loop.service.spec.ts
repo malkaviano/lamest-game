@@ -38,7 +38,7 @@ import {
   mockedLoggingHub,
   mockedGamePredicate,
 } from '../../../tests/mocks';
-import { SettingsStore } from '../../stores/settings.store';
+import { SettingsStore } from '@stores/settings.store';
 
 const actor = instance(mockedActorEntity);
 

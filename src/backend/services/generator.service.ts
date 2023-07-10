@@ -7,7 +7,7 @@ import { HeightLiteral } from '@literals/height.literal';
 import { RaceLiteral } from '@literals/race.literal';
 import { WeightLiteral } from '@literals/weight.literal';
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
-import { ProfessionStore } from '../../stores/profession.store';
+import { ProfessionStore } from '@stores/profession.store';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { weights } from '@definitions/weight.definitions';
 import { races } from '@definitions/races.definition';

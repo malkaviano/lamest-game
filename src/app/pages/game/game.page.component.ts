@@ -8,7 +8,7 @@ import { GameItemDefinition } from '@definitions/game-item.definition';
 import { CharacterStatusView } from 'src/app/view-models/character-status.view';
 import { ArrayView } from '@wrappers/array.view';
 import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
-import { GameStringsStore } from '../../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ReadableInterface } from '@interfaces/readable.interface';

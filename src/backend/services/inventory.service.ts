@@ -8,8 +8,8 @@ import { UsableDefinition } from '@definitions/usable.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { InventoryEvent } from '@events/inventory.event';
-import { InteractiveStore } from '../../stores/interactive.store';
-import { ItemStore } from '../../stores/item.store';
+import { InteractiveStore } from '@stores/interactive.store';
+import { ItemStore } from '@stores/item.store';
 
 export class InventoryService {
   private readonly inventoryChanged: Subject<InventoryEvent>;
