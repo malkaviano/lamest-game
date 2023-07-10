@@ -3,7 +3,7 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { PolicyResultInterface } from '@interfaces/policy-result.interface';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { MasterPolicy } from './master.policy';
+import { MasterPolicy } from '@policies/master.policy';
 
 export class VisibilityPolicy extends MasterPolicy {
   public override enforce(

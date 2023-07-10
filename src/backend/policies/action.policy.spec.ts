@@ -1,6 +1,6 @@
 import { instance } from 'ts-mockito';
 
-import { ActionPolicy } from './action.policy';
+import { ActionPolicy } from '@policies/action.policy';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 

@@ -32,14 +32,14 @@ import { UnEquipRule } from '../../backend/rules/unequip.rule';
 import { UseRule } from '../../backend/rules/use.rule';
 import { NarrativeService } from '../../backend/services/narrative.service';
 import { RulesHub } from '../../backend/hubs/rules.hub';
-import { VisibilityPolicy } from '../../backend/policies/visibility.policy';
+import { VisibilityPolicy } from '@policies/visibility.policy';
 import { PolicyHub } from '@hubs/policy.hub';
 import { GameLoopService } from '../../backend/services/game-loop.service';
 import { CharacterService } from '../../backend/services/character.service';
 import { RandomCharacterService } from '../../backend/services/random-character.service';
 import { SkillService } from '../../backend/services/skill.service';
 import { LoggingHub } from '@hubs/logging.hub';
-import { ActionPolicy } from '../../backend/policies/action.policy';
+import { ActionPolicy } from '@policies/action.policy';
 import { GamePredicate } from '@conceptual/predicates/game.predicate';
 
 const gamePredicate = new GamePredicate();

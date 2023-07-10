@@ -27,6 +27,7 @@
     "useDefineForClassFields": false,
     "paths": {
         "@hubs/*": [ "./src/backend/hubs/*" ],
+        "@policies/*": [ "./src/backend/policies/*" ],
         "@conceptual/*": [ "./src/conceptual/*" ],
         "@definitions/*": [ "./src/conceptual/definitions/*" ],
         "@interfaces/*": [ "./src/conceptual/interfaces/*" ],
