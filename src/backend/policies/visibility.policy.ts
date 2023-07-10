@@ -1,7 +1,7 @@
-import { ConverterHelper } from '@core/helpers/converter.helper';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
-import { PolicyResultInterface } from '@core/interfaces/policy-result.interface';
-import { VisibilityLiteral } from '@core/literals/visibility.literal';
+import { ConverterHelper } from '@conceptual/helpers/converter.helper';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { PolicyResultInterface } from '@conceptual/interfaces/policy-result.interface';
+import { VisibilityLiteral } from '@conceptual/literals/visibility.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { MasterPolicy } from './master.policy';
 

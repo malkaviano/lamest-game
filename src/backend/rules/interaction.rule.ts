@@ -1,12 +1,12 @@
-import { ActorInterface } from '@core/interfaces/actor.interface';
-import { RuleExtrasInterface } from '@core/interfaces/rule-extras.interface';
+import { ActorInterface } from '@conceptual/interfaces/actor.interface';
+import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
 import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { ActionableEvent } from '@core/events/actionable.event';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
-import { AffectAxiom } from '@core/axioms/affect.axiom';
-import { RuleNameLiteral } from '@core/literals/rule-name.literal';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
+import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
 
 export class InteractionRule extends MasterRule {
   constructor(

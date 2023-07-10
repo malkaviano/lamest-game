@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { RandomIntHelper } from '@core/helpers/random-int.helper';
-import { ActivationAxiom } from '@core/axioms/activation.axiom';
-import { AffectAxiom } from '@core/axioms/affect.axiom';
-import { DodgeAxiom } from '@core/axioms/dodge.axiom';
+import { RandomIntHelper } from '@conceptual/helpers/random-int.helper';
+import { ActivationAxiom } from '@conceptual/axioms/activation.axiom';
+import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
+import { DodgeAxiom } from '@conceptual/axioms/dodge.axiom';
 import { ResourcesStore } from '../../stores/resources.store';
 import { ActionableStore } from '../../stores/actionable.store';
 import { ItemStore } from '../../stores/item.store';
@@ -17,9 +17,9 @@ import { ActorStore } from '../../stores/actor.store';
 import { InventoryService } from '../../backend/services/inventory.service';
 import { InteractiveStore } from '../../stores/interactive.store';
 import { SceneStore } from '../../stores/scene.store';
-import { SequencerHelper } from '@core/helpers/sequencer.helper';
+import { SequencerHelper } from '@conceptual/helpers/sequencer.helper';
 import { CheckedService } from '../../backend/services/checked.service';
-import { RollHelper } from '@core/helpers/roll.helper';
+import { RollHelper } from '@conceptual/helpers/roll.helper';
 import { AffectRule } from '../../backend/rules/affect.rule';
 import { ConsumeRule } from '../../backend/rules/consume.rule';
 import { EquipRule } from '../../backend/rules/equip.rule';
@@ -40,7 +40,7 @@ import { RandomCharacterService } from '../../backend/services/random-character.
 import { SkillService } from '../../backend/services/skill.service';
 import { LoggingHub } from '../../backend/hubs/logging.hub';
 import { ActionPolicy } from '../../backend/policies/action.policy';
-import { GamePredicate } from '@core/predicates/game.predicate';
+import { GamePredicate } from '@conceptual/predicates/game.predicate';
 
 const gamePredicate = new GamePredicate();
 

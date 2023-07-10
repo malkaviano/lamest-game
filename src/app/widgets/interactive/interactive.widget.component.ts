@@ -7,10 +7,10 @@ import {
   Output,
 } from '@angular/core';
 
-import { ActionableDefinition } from '@core/definitions/actionable.definition';
-import { ActionableEvent } from '@core/events/actionable.event';
-import { ArrayView } from '@core/view-models/array.view';
-import { InteractiveInterface } from '@core/interfaces/interactive.interface';
+import { ActionableDefinition } from '@conceptual/definitions/actionable.definition';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ArrayView } from '@conceptual/view-models/array.view';
+import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameStringsStore } from '../../../stores/game-strings.store';
 

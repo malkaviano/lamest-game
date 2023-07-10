@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { SkillRule } from './skill.rule';
-import { RollDefinition } from '@core/definitions/roll.definition';
+import { RollDefinition } from '@conceptual/definitions/roll.definition';
 
 import {
   mockedPlayerEntity,
@@ -16,7 +16,7 @@ import {
   actionSkillSurvival,
   interactiveInfo,
 } from '../../../tests/fakes';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 
 describe('SkillRule', () => {
   let rule: SkillRule;

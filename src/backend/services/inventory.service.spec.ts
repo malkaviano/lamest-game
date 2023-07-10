@@ -1,9 +1,9 @@
 import { instance } from 'ts-mockito';
 
-import { ItemStoredDefinition } from '@core/definitions/item-storage.definition';
+import { ItemStoredDefinition } from '@conceptual/definitions/item-storage.definition';
 import { InventoryService } from './inventory.service';
-import { ArrayView } from '@core/view-models/array.view';
-import { InventoryEvent } from '@core/events/inventory.event';
+import { ArrayView } from '@conceptual/view-models/array.view';
+import { InventoryEvent } from '@conceptual/events/inventory.event';
 
 import {
   consumableAnalgesic,

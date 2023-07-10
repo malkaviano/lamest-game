@@ -1,5 +1,5 @@
-import { MessageMapDefinition } from '@core/definitions/message-map.definition';
-import { ConverterHelper } from '@core/helpers/converter.helper';
+import { MessageMapDefinition } from '@conceptual/definitions/message-map.definition';
+import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 
 type payload = {

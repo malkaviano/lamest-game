@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ViewableInterface } from '@core/interfaces/viewable.interface';
+import { ViewableInterface } from '@conceptual/interfaces/viewable.interface';
 
 @Component({
   selector: 'app-image-viewer-widget',

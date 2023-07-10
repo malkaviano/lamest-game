@@ -1,26 +1,26 @@
-import { KeyValueInterface } from '@core/interfaces/key-value.interface';
-import { ActionableState } from '@core/states/actionable.state';
-import { ConversationState } from '@core/states/conversation.state';
-import { DestroyableState } from '@core/states/destroyable.state';
-import { DiscardState } from '@core/states/discard.state';
-import { emptyState } from '@core/states/empty.state';
-import { SimpleState } from '@core/states/simple.state';
-import { SkillState } from '@core/states/skill.state';
+import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
+import { ActionableState } from '@conceptual/states/actionable.state';
+import { ConversationState } from '@conceptual/states/conversation.state';
+import { DestroyableState } from '@conceptual/states/destroyable.state';
+import { DiscardState } from '@conceptual/states/discard.state';
+import { emptyState } from '@conceptual/states/empty.state';
+import { SimpleState } from '@conceptual/states/simple.state';
+import { SkillState } from '@conceptual/states/skill.state';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';
-import { LockedContainerState } from '@core/states/locked-container.state';
-import { LockPickingContainerState } from '@core/states/lock-picking-container.state';
+import { LockedContainerState } from '@conceptual/states/locked-container.state';
+import { LockPickingContainerState } from '@conceptual/states/lock-picking-container.state';
 import {
   directionActionableDefinition,
   directionNamesDefinition,
-} from '@core/definitions/directions.definition';
-import { VisibilityState } from '@core/states/visibility.state';
-import { ArrayView } from '@core/view-models/array.view';
-import { LazyHelper } from '@core/helpers/lazy.helper';
-import { ConverterHelper } from '@core/helpers/converter.helper';
-import { SequencerHelper } from '@core/helpers/sequencer.helper';
-import { LockPickableContainerState } from 'src/core/states/lock-pickable-container.state';
+} from '@conceptual/definitions/directions.definition';
+import { VisibilityState } from '@conceptual/states/visibility.state';
+import { ArrayView } from '@conceptual/view-models/array.view';
+import { LazyHelper } from '@conceptual/helpers/lazy.helper';
+import { ConverterHelper } from '@conceptual/helpers/converter.helper';
+import { SequencerHelper } from '@conceptual/helpers/sequencer.helper';
+import { LockPickableContainerState } from '@conceptual/states/lock-pickable-container.state';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;

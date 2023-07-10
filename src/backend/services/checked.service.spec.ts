@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { WeaponDefinition } from '@core/definitions/weapon.definition';
+import { WeaponDefinition } from '@conceptual/definitions/weapon.definition';
 import { CheckedService } from './checked.service';
 
 import { playerInfo, simpleSword } from '../../../tests/fakes';

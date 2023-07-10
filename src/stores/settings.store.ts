@@ -1,7 +1,7 @@
-import { GameSettingsInterface } from '@core/interfaces/game-settings.interface';
-import { ArrayView } from '@core/view-models/array.view';
-import { EffectTypeLiteral } from '@core/literals/effect-type.literal';
-import { SettingsStoreInterface } from '@core/interfaces/stores/settings-store.interface';
+import { GameSettingsInterface } from '@conceptual/interfaces/game-settings.interface';
+import { ArrayView } from '@conceptual/view-models/array.view';
+import { EffectTypeLiteral } from '@conceptual/literals/effect-type.literal';
+import { SettingsStoreInterface } from '@conceptual/interfaces/stores/settings-store.interface';
 
 import settingsStore from '../assets/settings.json';
 

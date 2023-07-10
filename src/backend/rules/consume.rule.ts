@@ -1,18 +1,18 @@
-import { ConsumableDefinition } from '@core/definitions/consumable.definition';
+import { ConsumableDefinition } from '@conceptual/definitions/consumable.definition';
 import { InventoryService } from '../services/inventory.service';
-import { ActorInterface } from '@core/interfaces/actor.interface';
+import { ActorInterface } from '@conceptual/interfaces/actor.interface';
 import { MasterRule } from './master.rule';
-import { ActionableDefinition } from '@core/definitions/actionable.definition';
+import { ActionableDefinition } from '@conceptual/definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { AffectAxiom } from '@core/axioms/affect.axiom';
-import { ActionableEvent } from '@core/events/actionable.event';
-import { EffectEvent } from '@core/events/effect.event';
+import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { EffectEvent } from '@conceptual/events/effect.event';
 import { CheckedService } from '../services/checked.service';
-import { RollHelper } from '@core/helpers/roll.helper';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
-import { CheckResultLiteral } from '@core/literals/check-result.literal';
-import { RuleNameLiteral } from '@core/literals/rule-name.literal';
-import { RuleResultLiteral } from '@core/literals/rule-result.literal';
+import { RollHelper } from '@conceptual/helpers/roll.helper';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { CheckResultLiteral } from '@conceptual/literals/check-result.literal';
+import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
+import { RuleResultLiteral } from '@conceptual/literals/rule-result.literal';
 
 export class ConsumeRule extends MasterRule {
   constructor(

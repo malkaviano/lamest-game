@@ -1,13 +1,13 @@
 import { anyNumber, instance, when } from 'ts-mockito';
 
-import { CharacterIdentityDefinition } from '@core/definitions/character-identity.definition';
-import { CharacteristicDefinition } from '@core/definitions/characteristic.definition';
-import { ages } from '@core/literals/age.literal';
-import { heights } from '@core/literals/height.literal';
-import { races } from '@core/literals/race.literal';
-import { weights } from '@core/literals/weight.literal';
+import { CharacterIdentityDefinition } from '@conceptual/definitions/character-identity.definition';
+import { CharacteristicDefinition } from '@conceptual/definitions/characteristic.definition';
+import { ages } from '@conceptual/literals/age.literal';
+import { heights } from '@conceptual/literals/height.literal';
+import { races } from '@conceptual/literals/race.literal';
+import { weights } from '@conceptual/literals/weight.literal';
 import { GeneratorService } from './generator.service';
-import { ArrayView } from '@core/view-models/array.view';
+import { ArrayView } from '@conceptual/view-models/array.view';
 
 import {
   mockedProfessionStore,

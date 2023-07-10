@@ -2,7 +2,7 @@ import { instance, when } from 'ts-mockito';
 
 import { NarrativeService } from './narrative.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { ArrayView } from '@core/view-models/array.view';
+import { ArrayView } from '@conceptual/view-models/array.view';
 
 import {
   mockedInteractiveEntity,

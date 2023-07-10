@@ -1,8 +1,8 @@
-import { LogMessageDefinition } from '@core/definitions/log-message.definition';
-import { KeyValueInterface } from '@core/interfaces/key-value.interface';
-import { EffectTypeLiteral } from '@core/literals/effect-type.literal';
-import { LogCategoryLiteral } from '@core/literals/log-category.literal';
-import { CheckResultLiteral } from '@core/literals/check-result.literal';
+import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
+import { EffectTypeLiteral } from '@conceptual/literals/effect-type.literal';
+import { LogCategoryLiteral } from '@conceptual/literals/log-category.literal';
+import { CheckResultLiteral } from '@conceptual/literals/check-result.literal';
 
 import gameMessages from '../assets/game-strings.json';
 

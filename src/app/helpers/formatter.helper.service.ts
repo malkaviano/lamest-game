@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '@core/view-models/array.view';
-import { DerivedAttributeDefinition } from '@core/definitions/derived-attribute.definition';
-import { CharacteristicDefinition } from '@core/definitions/characteristic.definition';
-import { CharacterIdentityLiteral } from '@core/literals/character-identity.literal';
-import { CharacterValuesView } from '@core/view-models/character-values.view';
-import { KeyValueDescriptionView } from '@core/view-models/key-value-description.view';
-import { PlayerInterface } from '@core/interfaces/player.interface';
+import { ArrayView } from '@conceptual/view-models/array.view';
+import { DerivedAttributeDefinition } from '@conceptual/definitions/derived-attribute.definition';
+import { CharacteristicDefinition } from '@conceptual/definitions/characteristic.definition';
+import { CharacterIdentityLiteral } from '@conceptual/literals/character-identity.literal';
+import { CharacterValuesView } from '@conceptual/view-models/character-values.view';
+import { KeyValueDescriptionView } from '@conceptual/view-models/key-value-description.view';
+import { PlayerInterface } from '@conceptual/interfaces/player.interface';
 import { SkillStore } from '../../stores/skill.store';
 import { GameStringsStore } from '../../stores/game-strings.store';
 

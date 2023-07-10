@@ -3,10 +3,10 @@ import { instance, when } from 'ts-mockito';
 
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ConsumeRule } from './consume.rule';
-import { ConsumableDefinition } from '@core/definitions/consumable.definition';
-import { LogMessageDefinition } from '@core/definitions/log-message.definition';
-import { RollDefinition } from '@core/definitions/roll.definition';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
+import { ConsumableDefinition } from '@conceptual/definitions/consumable.definition';
+import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { RollDefinition } from '@conceptual/definitions/roll.definition';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 
 import {
   mockedAffectedAxiom,

@@ -1,9 +1,9 @@
 import { instance, verify, when } from 'ts-mockito';
 
 import { UseRule } from './use.rule';
-import { LogMessageDefinition } from '@core/definitions/log-message.definition';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
-import { UsableDefinition } from '@core/definitions/usable.definition';
+import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { UsableDefinition } from '@conceptual/definitions/usable.definition';
 
 import {
   mockedAffectedAxiom,

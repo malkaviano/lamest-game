@@ -1,7 +1,7 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { PickRule } from './pick.rule';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 
 import {
   mockedAffectedAxiom,

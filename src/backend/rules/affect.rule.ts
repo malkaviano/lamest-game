@@ -1,22 +1,22 @@
 import { Observable } from 'rxjs';
 
-import { ActivationAxiom } from '@core/axioms/activation.axiom';
-import { AffectAxiom } from '@core/axioms/affect.axiom';
-import { DodgeAxiom } from '@core/axioms/dodge.axiom';
-import { ActionableEvent } from '@core/events/actionable.event';
-import { EffectEvent } from '@core/events/effect.event';
-import { ConverterHelper } from '@core/helpers/converter.helper';
-import { RollHelper } from '@core/helpers/roll.helper';
-import { ActorInterface } from '@core/interfaces/actor.interface';
-import { RuleExtrasInterface } from '@core/interfaces/rule-extras.interface';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
-import { CheckResultLiteral } from '@core/literals/check-result.literal';
-import { RuleNameLiteral } from '@core/literals/rule-name.literal';
-import { RuleResultLiteral } from '@core/literals/rule-result.literal';
+import { ActivationAxiom } from '@conceptual/axioms/activation.axiom';
+import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
+import { DodgeAxiom } from '@conceptual/axioms/dodge.axiom';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { EffectEvent } from '@conceptual/events/effect.event';
+import { ConverterHelper } from '@conceptual/helpers/converter.helper';
+import { RollHelper } from '@conceptual/helpers/roll.helper';
+import { ActorInterface } from '@conceptual/interfaces/actor.interface';
+import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { CheckResultLiteral } from '@conceptual/literals/check-result.literal';
+import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
+import { RuleResultLiteral } from '@conceptual/literals/rule-result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { CheckedService } from '../services/checked.service';
 import { MasterRule } from './master.rule';
-import { ActorDodgedInterface } from '@core/interfaces/actor-dodged.interface';
+import { ActorDodgedInterface } from '@conceptual/interfaces/actor-dodged.interface';
 
 export class AffectRule extends MasterRule implements ActorDodgedInterface {
   public readonly actorDodged$: Observable<string>;

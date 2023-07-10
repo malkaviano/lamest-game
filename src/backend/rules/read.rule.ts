@@ -1,15 +1,15 @@
 import { Observable, Subject } from 'rxjs';
 
-import { ReadableDefinition } from '@core/definitions/readable.definition';
-import { ActorInterface } from '@core/interfaces/actor.interface';
+import { ReadableDefinition } from '@conceptual/definitions/readable.definition';
+import { ActorInterface } from '@conceptual/interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { MasterRule } from './master.rule';
-import { ActionableEvent } from '@core/events/actionable.event';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
-import { RuleNameLiteral } from '@core/literals/rule-name.literal';
-import { DocumentOpenedInterface } from '@core/interfaces/document-opened.interface';
-import { ReadableInterface } from '@core/interfaces/readable.interface';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
+import { DocumentOpenedInterface } from '@conceptual/interfaces/document-opened.interface';
+import { ReadableInterface } from '@conceptual/interfaces/readable.interface';
 
 export class ReadRule extends MasterRule implements DocumentOpenedInterface {
   private readonly documentOpened: Subject<ReadableInterface>;

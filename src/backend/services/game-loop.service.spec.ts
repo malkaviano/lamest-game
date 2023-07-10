@@ -2,11 +2,11 @@ import { anyString, anything, instance, verify, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
 
 import { GameLoopService } from './game-loop.service';
-import { ReadableInterface } from '@core/interfaces/readable.interface';
-import { ItemStoredDefinition } from '@core/definitions/item-storage.definition';
-import { ArrayView } from '@core/view-models/array.view';
-import { ActionableItemView } from '@core/view-models/actionable-item.view';
-import { InventoryEvent } from '@core/events/inventory.event';
+import { ReadableInterface } from '@conceptual/interfaces/readable.interface';
+import { ItemStoredDefinition } from '@conceptual/definitions/item-storage.definition';
+import { ArrayView } from '@conceptual/view-models/array.view';
+import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
+import { InventoryEvent } from '@conceptual/events/inventory.event';
 
 import {
   actionableEvent,

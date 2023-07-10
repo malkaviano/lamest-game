@@ -1,14 +1,14 @@
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
 
-import { CharacterIdentityDefinition } from '@core/definitions/character-identity.definition';
-import { CharacteristicDefinition } from '@core/definitions/characteristic.definition';
-import { AgeLiteral, ages } from '@core/literals/age.literal';
-import { HeightLiteral, heights } from '@core/literals/height.literal';
-import { RaceLiteral, races } from '@core/literals/race.literal';
-import { WeightLiteral, weights } from '@core/literals/weight.literal';
-import { CharacteristicSetDefinition } from '@core/definitions/characteristic-set.definition';
+import { CharacterIdentityDefinition } from '@conceptual/definitions/character-identity.definition';
+import { CharacteristicDefinition } from '@conceptual/definitions/characteristic.definition';
+import { AgeLiteral, ages } from '@conceptual/literals/age.literal';
+import { HeightLiteral, heights } from '@conceptual/literals/height.literal';
+import { RaceLiteral, races } from '@conceptual/literals/race.literal';
+import { WeightLiteral, weights } from '@conceptual/literals/weight.literal';
+import { CharacteristicSetDefinition } from '@conceptual/definitions/characteristic-set.definition';
 import { ProfessionStore } from '../../stores/profession.store';
-import { RandomIntHelper } from '@core/helpers/random-int.helper';
+import { RandomIntHelper } from '@conceptual/helpers/random-int.helper';
 
 export class GeneratorService {
   constructor(

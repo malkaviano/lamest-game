@@ -1,5 +1,5 @@
-import { ArrayView } from '@core/view-models/array.view';
-import { RandomIntHelper } from '@core/helpers/random-int.helper';
+import { ArrayView } from '@conceptual/view-models/array.view';
+import { RandomIntHelper } from '@conceptual/helpers/random-int.helper';
 
 export class SkillService {
   constructor(private readonly rngHelper: RandomIntHelper) {}

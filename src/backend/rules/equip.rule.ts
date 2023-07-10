@@ -1,14 +1,14 @@
 import { InventoryService } from '../services/inventory.service';
-import { ActorInterface } from '@core/interfaces/actor.interface';
-import { WeaponDefinition } from '@core/definitions/weapon.definition';
+import { ActorInterface } from '@conceptual/interfaces/actor.interface';
+import { WeaponDefinition } from '@conceptual/definitions/weapon.definition';
 import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { ActionableEvent } from '@core/events/actionable.event';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
-import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
-import { RuleNameLiteral } from '@core/literals/rule-name.literal';
-import { RuleResultLiteral } from '@core/literals/rule-result.literal';
-import { GamePredicate } from '@core/predicates/game.predicate';
+import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
+import { RuleResultLiteral } from '@conceptual/literals/rule-result.literal';
+import { GamePredicate } from '@conceptual/predicates/game.predicate';
 
 export class EquipRule extends MasterRule {
   constructor(

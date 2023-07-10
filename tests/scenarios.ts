@@ -1,7 +1,7 @@
-import { LogMessageDefinition } from '../src/core/definitions/log-message.definition';
-import { ActionableEvent } from '../src/core/events/actionable.event';
-import { ActorInterface } from '../src/core/interfaces/actor.interface';
-import { RuleExtrasInterface } from '../src/core/interfaces/rule-extras.interface';
+import { LogMessageDefinition } from '../src/conceptual/definitions/log-message.definition';
+import { ActionableEvent } from '../src/conceptual/events/actionable.event';
+import { ActorInterface } from '../src/conceptual/interfaces/actor.interface';
+import { RuleExtrasInterface } from '../src/conceptual/interfaces/rule-extras.interface';
 import { MasterRule } from '../src/backend/rules/master.rule';
 
 export const ruleScenario = (
