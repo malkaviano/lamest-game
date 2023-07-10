@@ -15,10 +15,13 @@ import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { CheckedService } from '../services/checked.service';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 
-export class AffectRule extends MasterRule implements ActorDodgedInterface {
+export class AffectRule
+  extends RuleAbstraction
+  implements ActorDodgedInterface
+{
   public readonly actorDodged$: Observable<string>;
 
   constructor(

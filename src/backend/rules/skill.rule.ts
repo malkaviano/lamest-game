@@ -1,14 +1,14 @@
 import { RollHelper } from '@conceptual/helpers/roll.helper';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 
-export class SkillRule extends MasterRule {
+export class SkillRule extends RuleAbstraction {
   constructor(
     private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,

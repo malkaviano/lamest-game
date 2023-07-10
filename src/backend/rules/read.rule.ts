@@ -4,14 +4,17 @@ import { ReadableDefinition } from '@definitions/readable.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
 import { ReadableInterface } from '@interfaces/readable.interface';
 
-export class ReadRule extends MasterRule implements DocumentOpenedInterface {
+export class ReadRule
+  extends RuleAbstraction
+  implements DocumentOpenedInterface
+{
   private readonly documentOpened: Subject<ReadableInterface>;
 
   public readonly documentOpened$: Observable<ReadableInterface>;

@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { SettingsStore } from '../../stores/settings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
@@ -18,7 +18,7 @@ export class GamePredicate implements LoggerInterface {
 
   public hasEnoughActionPoints(
     actor: ActorInterface,
-    rule: MasterRule
+    rule: RuleAbstraction
   ): boolean {
     const ruleCost = SettingsStore.settings.ruleCost[rule.name];
 

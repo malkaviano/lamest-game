@@ -1,7 +1,7 @@
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { WeaponDefinition } from '@definitions/weapon.definition';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
@@ -10,7 +10,7 @@ import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { GamePredicate } from '@conceptual/predicates/game.predicate';
 
-export class EquipRule extends MasterRule {
+export class EquipRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly checkedService: CheckedService,

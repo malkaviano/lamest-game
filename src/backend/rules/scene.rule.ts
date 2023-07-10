@@ -1,14 +1,14 @@
 import { NarrativeService } from '../services/narrative.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 
-export class SceneRule extends MasterRule {
+export class SceneRule extends RuleAbstraction {
   constructor(
     private readonly narrativeService: NarrativeService,
     private readonly checkedService: CheckedService

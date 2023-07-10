@@ -1,7 +1,7 @@
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
@@ -14,7 +14,7 @@ import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 
-export class ConsumeRule extends MasterRule {
+export class ConsumeRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollHelper: RollHelper,

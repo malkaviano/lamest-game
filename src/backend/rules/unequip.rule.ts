@@ -1,13 +1,13 @@
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 
-export class UnEquipRule extends MasterRule {
+export class UnEquipRule extends RuleAbstraction {
   constructor(private readonly inventoryService: InventoryService) {
     super();
   }

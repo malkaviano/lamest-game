@@ -1,6 +1,6 @@
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
@@ -8,7 +8,7 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 
-export class InteractionRule extends MasterRule {
+export class InteractionRule extends RuleAbstraction {
   constructor(
     private readonly checkedService: CheckedService,
     private readonly affectAxiomService: AffectAxiom

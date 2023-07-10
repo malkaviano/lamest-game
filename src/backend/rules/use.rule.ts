@@ -4,14 +4,14 @@ import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
-import { MasterRule } from '@rules/master.rule';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 
-export class UseRule extends MasterRule {
+export class UseRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly checkedService: CheckedService,

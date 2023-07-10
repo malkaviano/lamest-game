@@ -42,7 +42,9 @@ type Result = {
   effect?: { type: EffectTypeLiteral; amount: number };
 };
 
-export abstract class MasterRule implements RuleInterface, LoggerInterface {
+export abstract class RuleAbstraction
+  implements RuleInterface, LoggerInterface
+{
   protected ruleResult: {
     target?: InteractiveInterface;
     picked?: GameItemDefinition;

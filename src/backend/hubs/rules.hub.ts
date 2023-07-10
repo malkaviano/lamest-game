@@ -2,7 +2,7 @@ import { merge, Observable } from 'rxjs';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { LoggerInterface } from '@interfaces/logger.interface';
-import { MasterRule } from '../rules/master.rule';
+import { RuleAbstraction } from '../../conceptual/abstractions/rule.abstraction';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { AffectRule } from '../rules/affect.rule';
@@ -13,7 +13,7 @@ import { ReadRule } from '../rules/read.rule';
 export class RulesHub
   implements LoggerInterface, ActorDodgedInterface, DocumentOpenedInterface
 {
-  public readonly dispatcher: KeyValueInterface<MasterRule>;
+  public readonly dispatcher: KeyValueInterface<RuleAbstraction>;
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
@@ -21,12 +21,15 @@ export class RulesHub
 
   public readonly documentOpened$: Observable<ReadableInterface>;
 
-  constructor(...rules: MasterRule[]) {
-    this.dispatcher = rules.reduce((acc: { [key: string]: MasterRule }, r) => {
-      acc[r.name] = r;
+  constructor(...rules: RuleAbstraction[]) {
+    this.dispatcher = rules.reduce(
+      (acc: { [key: string]: RuleAbstraction }, r) => {
+        acc[r.name] = r;
 
-      return acc;
-    }, {});
+        return acc;
+      },
+      {}
+    );
 
     this.logMessageProduced$ = merge(
       ...rules.map((r) => r.logMessageProduced$)
