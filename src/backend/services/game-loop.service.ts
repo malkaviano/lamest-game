@@ -22,9 +22,12 @@ import { ActorEntity } from '../../core/entities/actor.entity';
 import { PolicyHub } from '../hubs/policy.hub';
 import { LoggingHub } from '../hubs/logging.hub';
 import { GamePredicate } from '../../core/predicates/game.predicate';
+import { SettingsStore } from '../../stores/settings.store';
 
 export class GameLoopService {
-  private timer: NodeJS.Timer | undefined;
+  private aiTimer: NodeJS.Timer | undefined;
+
+  private playerTimer: NodeJS.Timer | undefined;
 
   private readonly player: PlayerInterface;
 
@@ -86,22 +89,32 @@ export class GameLoopService {
   }
 
   public start(): void {
-    this.timer = setInterval(() => this.run(), 100);
+    this.aiTimer = setInterval(
+      () => this.run(this.actors),
+      SettingsStore.settings.aiLoopMilliseconds
+    );
+
+    this.playerTimer = setInterval(
+      () => this.run(ArrayView.create(this.player)),
+      250
+    );
   }
 
   public stop(): void {
-    clearInterval(this.timer);
+    clearInterval(this.aiTimer);
+
+    clearInterval(this.playerTimer);
   }
 
   public actionableReceived(action: ActionableEvent): void {
     this.player.playerDecision(action);
   }
 
-  private run(): void {
+  private run(actors: ArrayView<ActorInterface>): void {
     if (this.isPlayerAlive()) {
       this.dodgedThisRound.clear();
 
-      this.actors.items.forEach((actor) => {
+      actors.items.forEach((actor) => {
         const action = actor.action(this.sceneActorsInfo);
 
         if (actor.situation === 'ALIVE' && action) {
@@ -155,14 +168,12 @@ export class GameLoopService {
       }
     });
 
-    actors.unshift(this.player);
-
     this.actors = ArrayView.fromArray(actors);
   }
 
   private get sceneActorsInfo(): ArrayView<SceneActorsInfoInterface> {
     return ArrayView.fromArray(
-      this.actors.items.map((a) => {
+      this.actors.insert(this.player).items.map((a) => {
         return {
           id: a.id,
           situation: a.situation,

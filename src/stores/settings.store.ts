@@ -18,6 +18,7 @@ export class SettingsStore {
       oneDodgeEveryAgiAmount,
       apRegeneration,
       ruleCost,
+      aiLoopMilliseconds,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(
@@ -50,6 +51,7 @@ export class SettingsStore {
       },
       apRegeneration,
       ruleCost,
+      aiLoopMilliseconds,
     };
   }
 

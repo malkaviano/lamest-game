@@ -26,6 +26,7 @@
       "SKILL": 2,
       "UNEQUIP": 1,
       "USE": 1
-    }
+    },
+    "aiLoopMilliseconds": 10
   }
 }

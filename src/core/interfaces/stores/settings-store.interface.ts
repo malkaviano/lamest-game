@@ -19,5 +19,6 @@ export interface SettingsStoreInterface {
       readonly amount: number;
     };
     readonly ruleCost: { [key in RuleNameLiteral]: number };
+    readonly aiLoopMilliseconds: number;
   };
 }

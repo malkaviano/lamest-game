@@ -38,6 +38,7 @@ import {
   mockedLoggingHub,
   mockedGamePredicate,
 } from '../../../tests/mocks';
+import { SettingsStore } from '../../stores/settings.store';
 
 const actor = instance(mockedActorEntity);
 
@@ -228,7 +229,9 @@ async function testRun(
   service.start();
 
   // Portable event tick
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  await new Promise((resolve) =>
+    setTimeout(resolve, SettingsStore.settings.aiLoopMilliseconds)
+  );
 
   service.stop();
 
