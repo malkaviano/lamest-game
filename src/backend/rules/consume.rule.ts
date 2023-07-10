@@ -4,7 +4,7 @@ import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
+import { AffectAxiom } from '@axioms/affect.axiom';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
 import { CheckedService } from '../services/checked.service';

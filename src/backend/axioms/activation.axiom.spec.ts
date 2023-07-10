@@ -1,6 +1,6 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { ActivationAxiom } from './activation.axiom';
+import { ActivationAxiom } from '@axioms/activation.axiom';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { createActionableDefinition } from '@definitions/actionable.definition';
 

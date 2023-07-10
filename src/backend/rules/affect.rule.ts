@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 
-import { ActivationAxiom } from '@conceptual/axioms/activation.axiom';
-import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
-import { DodgeAxiom } from '@conceptual/axioms/dodge.axiom';
+import { ActivationAxiom } from '@axioms/activation.axiom';
+import { AffectAxiom } from '@axioms/affect.axiom';
+import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
 import { ConverterHelper } from '@helpers/converter.helper';

@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RandomIntHelper } from '@helpers/random-int.helper';
-import { ActivationAxiom } from '@conceptual/axioms/activation.axiom';
-import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
-import { DodgeAxiom } from '@conceptual/axioms/dodge.axiom';
+import { ActivationAxiom } from '@axioms/activation.axiom';
+import { AffectAxiom } from '@axioms/affect.axiom';
+import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ResourcesStore } from '../../stores/resources.store';
 import { ActionableStore } from '../../stores/actionable.store';
 import { ItemStore } from '../../stores/item.store';
