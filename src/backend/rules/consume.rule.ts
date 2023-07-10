@@ -8,7 +8,7 @@ import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { EffectEvent } from '@conceptual/events/effect.event';
 import { CheckedService } from '../services/checked.service';
-import { RollHelper } from '@conceptual/helpers/roll.helper';
+import { RollHelper } from '@helpers/roll.helper';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';

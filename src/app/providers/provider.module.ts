@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { RandomIntHelper } from '@conceptual/helpers/random-int.helper';
+import { RandomIntHelper } from '@helpers/random-int.helper';
 import { ActivationAxiom } from '@conceptual/axioms/activation.axiom';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
 import { DodgeAxiom } from '@conceptual/axioms/dodge.axiom';
@@ -17,9 +17,9 @@ import { ActorStore } from '../../stores/actor.store';
 import { InventoryService } from '@services/inventory.service';
 import { InteractiveStore } from '../../stores/interactive.store';
 import { SceneStore } from '../../stores/scene.store';
-import { SequencerHelper } from '@conceptual/helpers/sequencer.helper';
+import { SequencerHelper } from '@helpers/sequencer.helper';
 import { CheckedService } from '@services/checked.service';
-import { RollHelper } from '@conceptual/helpers/roll.helper';
+import { RollHelper } from '@helpers/roll.helper';
 import { AffectRule } from '@rules/affect.rule';
 import { ConsumeRule } from '@rules/consume.rule';
 import { EquipRule } from '@rules/equip.rule';

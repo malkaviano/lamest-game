@@ -2,7 +2,7 @@ import {
   directionActionableDefinition,
   directionNamesDefinition,
 } from '@definitions/directions.definition';
-import { LazyHelper } from '../helpers/lazy.helper';
+import { LazyHelper } from '../../backend/helpers/lazy.helper';
 import { ArrayView } from '@wrappers/array.view';
 import { DiscardState } from './discard.state';
 import { LockPickableContainerState } from './lock-pickable-container.state';

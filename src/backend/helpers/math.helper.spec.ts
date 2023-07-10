@@ -1,4 +1,4 @@
-import { MathHelper } from './math.helper';
+import { MathHelper } from '@helpers/math.helper';
 
 describe('MathHelper', () => {
   describe('when the number is bellow the min value', () => {

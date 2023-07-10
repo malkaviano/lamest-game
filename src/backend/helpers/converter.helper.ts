@@ -1,7 +1,7 @@
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
-import { ActorEntity } from '../entities/actor.entity';
+import { ActorEntity } from '@conceptual/entities/actor.entity';
 
 export class ConverterHelper {
   public static mapToKeyValueInterface<Value>(

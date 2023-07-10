@@ -1,4 +1,4 @@
-import { RollHelper } from '@conceptual/helpers/roll.helper';
+import { RollHelper } from '@helpers/roll.helper';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';

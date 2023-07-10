@@ -1,4 +1,4 @@
-import { LazyHelper } from './lazy.helper';
+import { LazyHelper } from '@helpers/lazy.helper';
 
 describe('LazyHelper', () => {
   describe('lazy behavior', () => {

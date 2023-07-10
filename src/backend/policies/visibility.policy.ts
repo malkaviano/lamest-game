@@ -1,4 +1,4 @@
-import { ConverterHelper } from '@conceptual/helpers/converter.helper';
+import { ConverterHelper } from '@helpers/converter.helper';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { PolicyResultInterface } from '@interfaces/policy-result.interface';
 import { VisibilityLiteral } from '@literals/visibility.literal';

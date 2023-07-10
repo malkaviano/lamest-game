@@ -1,4 +1,4 @@
-import { ConverterHelper } from '@conceptual/helpers/converter.helper';
+import { ConverterHelper } from '@helpers/converter.helper';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ArrayView } from '@wrappers/array.view';
 import { ResourcesStore } from './resources.store';

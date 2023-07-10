@@ -1,6 +1,6 @@
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
-import { ConverterHelper } from '@conceptual/helpers/converter.helper';
+import { ConverterHelper } from '@helpers/converter.helper';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';

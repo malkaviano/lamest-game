@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { RollDefinition } from '@definitions/roll.definition';
-import { RollHelper } from './roll.helper';
+import { RollHelper } from '@helpers/roll.helper';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 

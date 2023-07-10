@@ -17,9 +17,9 @@ import {
 } from '@definitions/directions.definition';
 import { VisibilityState } from '@conceptual/states/visibility.state';
 import { ArrayView } from '@wrappers/array.view';
-import { LazyHelper } from '@conceptual/helpers/lazy.helper';
-import { ConverterHelper } from '@conceptual/helpers/converter.helper';
-import { SequencerHelper } from '@conceptual/helpers/sequencer.helper';
+import { LazyHelper } from '@helpers/lazy.helper';
+import { ConverterHelper } from '@helpers/converter.helper';
+import { SequencerHelper } from '@helpers/sequencer.helper';
 import { LockPickableContainerState } from '@conceptual/states/lock-pickable-container.state';
 
 export class StatesStore {

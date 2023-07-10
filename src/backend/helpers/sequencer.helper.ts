@@ -1,5 +1,5 @@
 import { DirectionLiteral } from '@literals/direction.literal';
-import { RandomIntHelper } from './random-int.helper';
+import { RandomIntHelper } from '@helpers/random-int.helper';
 
 export class SequencerHelper {
   constructor(private readonly randomIntHelper: RandomIntHelper) {}

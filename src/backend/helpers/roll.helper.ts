@@ -7,8 +7,8 @@ import { ActorInterface } from '@interfaces/actor.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { DiceLiteral } from '@literals/dice.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { RandomIntHelper } from './random-int.helper';
-import { GamePredicate } from '../predicates/game.predicate';
+import { RandomIntHelper } from '@helpers/random-int.helper';
+import { GamePredicate } from '@conceptual/predicates/game.predicate';
 
 export class RollHelper implements LoggerInterface {
   private readonly diceMap: {

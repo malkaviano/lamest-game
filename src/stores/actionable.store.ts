@@ -2,7 +2,7 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '@definitions/actionable.definition';
-import { ConverterHelper } from '@conceptual/helpers/converter.helper';
+import { ConverterHelper } from '@helpers/converter.helper';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
 

@@ -1,4 +1,4 @@
-import { RandomIntHelper } from './random-int.helper';
+import { RandomIntHelper } from '@helpers/random-int.helper';
 
 describe('RandomIntHelper', () => {
   const helper = new RandomIntHelper();
