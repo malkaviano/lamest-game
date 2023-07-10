@@ -37,10 +37,10 @@
       "@rules/*": [ "./src/backend/rules/*" ],
       "@hubs/*": [ "./src/backend/hubs/*" ],
       "@policies/*": [ "./src/backend/policies/*" ],
-      "@definitions/*": [ "./src/conceptual/definitions/*" ],
-      "@abstractions/*": [ "./src/conceptual/abstractions/*" ],
-      "@interfaces/*": [ "./src/conceptual/interfaces/*" ],
-      "@literals/*": [ "./src/conceptual/literals/*" ],
+      "@definitions/*": [ "./src/backend/conceptual/definitions/*" ],
+      "@abstractions/*": [ "./src/backend/conceptual/abstractions/*" ],
+      "@interfaces/*": [ "./src/backend/conceptual/interfaces/*" ],
+      "@literals/*": [ "./src/backend/conceptual/literals/*" ],
       "@wrappers/*": [ "./src/wrappers/*" ]
     }
   },
