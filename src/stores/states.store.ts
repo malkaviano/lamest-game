@@ -1,26 +1,26 @@
 import { KeyValueInterface } from '@interfaces/key-value.interface';
-import { ActionableState } from '@conceptual/states/actionable.state';
-import { ConversationState } from '@conceptual/states/conversation.state';
-import { DestroyableState } from '@conceptual/states/destroyable.state';
-import { DiscardState } from '@conceptual/states/discard.state';
-import { emptyState } from '@conceptual/states/empty.state';
-import { SimpleState } from '@conceptual/states/simple.state';
-import { SkillState } from '@conceptual/states/skill.state';
+import { ActionableState } from '@states/actionable.state';
+import { ConversationState } from '@states/conversation.state';
+import { DestroyableState } from '@states/destroyable.state';
+import { DiscardState } from '@states/discard.state';
+import { emptyState } from '@states/empty.state';
+import { SimpleState } from '@states/simple.state';
+import { SkillState } from '@states/skill.state';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';
-import { LockedContainerState } from '@conceptual/states/locked-container.state';
-import { LockPickingContainerState } from '@conceptual/states/lock-picking-container.state';
+import { LockedContainerState } from '@states/locked-container.state';
+import { LockPickingContainerState } from '@states/lock-picking-container.state';
 import {
   directionActionableDefinition,
   directionNamesDefinition,
 } from '@definitions/directions.definition';
-import { VisibilityState } from '@conceptual/states/visibility.state';
+import { VisibilityState } from '@states/visibility.state';
 import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { SequencerHelper } from '@helpers/sequencer.helper';
-import { LockPickableContainerState } from '@conceptual/states/lock-pickable-container.state';
+import { LockPickableContainerState } from '@states/lock-pickable-container.state';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;

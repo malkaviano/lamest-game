@@ -8,7 +8,7 @@ import { GameLayoutComponent } from './game.layout.component';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableEvent } from '@events/actionable.event';
 import { SceneDefinition } from '@definitions/scene.definition';
-import { SimpleState } from '@conceptual/states/simple.state';
+import { SimpleState } from '@states/simple.state';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { InteractiveEntity } from '@conceptual/entities/interactive.entity';
 

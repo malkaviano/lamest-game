@@ -26,6 +26,7 @@
     "esModuleInterop": true,
     "useDefineForClassFields": false,
     "paths": {
+      "@states/*": [ "./src/backend/states/*" ],
       "@axioms/*": [ "./src/backend/axioms/*" ],
       "@predicates/*": [ "./src/backend/predicates/*" ],
       "@events/*": [ "./src/backend/events/*" ],

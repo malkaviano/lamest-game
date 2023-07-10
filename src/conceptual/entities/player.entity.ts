@@ -2,7 +2,7 @@ import { CharacterIdentityDefinition } from '@definitions/character-identity.def
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { ClassificationLiteral } from '@literals/classification.literal';
-import { emptyState } from '../states/empty.state';
+import { emptyState } from '@states/empty.state';
 import { ActorEntity } from './actor.entity';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';

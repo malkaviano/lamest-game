@@ -19,7 +19,7 @@ import {
   mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
-import { PlayerEntity } from '../entities/player.entity';
+import { PlayerEntity } from '../../conceptual/entities/player.entity';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { CheckResultLiteral } from '@literals/check-result.literal';

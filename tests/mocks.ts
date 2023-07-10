@@ -18,7 +18,7 @@ import { InventoryService } from '@services/inventory.service';
 import { NarrativeService } from '@services/narrative.service';
 import { RandomCharacterService } from '@services/random-character.service';
 import { SkillService } from '@services/skill.service';
-import { ActionableState } from '@conceptual/states/actionable.state';
+import { ActionableState } from '@states/actionable.state';
 import { ActionableStore } from '../src/stores/actionable.store';
 import { InteractiveStore } from '../src/stores/interactive.store';
 import { ItemStore } from '../src/stores/item.store';

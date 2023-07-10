@@ -2,7 +2,7 @@ import { anyString, anything, instance, when } from 'ts-mockito';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableState } from '../states/actionable.state';
+import { ActionableState } from '@states/actionable.state';
 import { InteractiveEntity } from './interactive.entity';
 
 import { actionConsume, actionPickAnalgesic } from '../../../tests/fakes';

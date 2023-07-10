@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { ActionableState } from '../states/actionable.state';
+import { ActionableState } from '@states/actionable.state';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ClassificationLiteral } from '@literals/classification.literal';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
