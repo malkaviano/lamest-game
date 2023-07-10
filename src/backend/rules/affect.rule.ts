@@ -7,16 +7,16 @@ import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { EffectEvent } from '@conceptual/events/effect.event';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { RollHelper } from '@conceptual/helpers/roll.helper';
-import { ActorInterface } from '@conceptual/interfaces/actor.interface';
-import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { CheckedService } from '../services/checked.service';
 import { MasterRule } from './master.rule';
-import { ActorDodgedInterface } from '@conceptual/interfaces/actor-dodged.interface';
+import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 
 export class AffectRule extends MasterRule implements ActorDodgedInterface {
   public readonly actorDodged$: Observable<string>;

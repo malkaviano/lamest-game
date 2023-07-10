@@ -4,7 +4,7 @@ import { EquipRule } from './equip.rule';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
   mockedCheckedService,

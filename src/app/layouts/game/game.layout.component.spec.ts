@@ -18,7 +18,7 @@ import {
   fakeCharacterStatusView,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
-import { ViewableInterface } from '@conceptual/interfaces/viewable.interface';
+import { ViewableInterface } from '@interfaces/viewable.interface';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;

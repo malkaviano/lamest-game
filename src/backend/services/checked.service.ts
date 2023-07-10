@@ -1,6 +1,6 @@
 import { GameItemDefinition } from '@definitions/game-item.definition';
-import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
-import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
+import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
 

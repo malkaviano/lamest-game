@@ -8,7 +8,7 @@ import { SceneDefinition } from '@definitions/scene.definition';
 import { CharacterValuesView } from '../../view-models/character-values.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { GameItemDefinition } from '@definitions/game-item.definition';
-import { ViewableInterface } from '@conceptual/interfaces/viewable.interface';
+import { ViewableInterface } from '@interfaces/viewable.interface';
 
 @Component({
   selector: 'app-game-layout',

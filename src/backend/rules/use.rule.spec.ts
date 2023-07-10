@@ -2,7 +2,7 @@ import { instance, verify, when } from 'ts-mockito';
 
 import { UseRule } from './use.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { UsableDefinition } from '@definitions/usable.definition';
 
 import {

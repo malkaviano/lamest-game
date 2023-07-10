@@ -1,7 +1,7 @@
 import { instance, verify, when } from 'ts-mockito';
 
 import { VisibilityPolicy } from './visibility.policy';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 

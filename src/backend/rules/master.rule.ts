@@ -1,15 +1,15 @@
 import { Observable, Subject } from 'rxjs';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { ActorInterface } from '@conceptual/interfaces/actor.interface';
-import { LoggerInterface } from '@conceptual/interfaces/logger.interface';
-import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
-import { RuleInterface } from '@conceptual/interfaces/rule.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { LoggerInterface } from '@interfaces/logger.interface';
+import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
+import { RuleInterface } from '@interfaces/rule.interface';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
-import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { UsableDefinition } from '@definitions/usable.definition';
 import { ReadableDefinition } from '@definitions/readable.definition';

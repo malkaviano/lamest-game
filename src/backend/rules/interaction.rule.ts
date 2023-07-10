@@ -1,10 +1,10 @@
-import { ActorInterface } from '@conceptual/interfaces/actor.interface';
-import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 

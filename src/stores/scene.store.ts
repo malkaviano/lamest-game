@@ -1,5 +1,5 @@
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
-import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActorStore } from './actor.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';

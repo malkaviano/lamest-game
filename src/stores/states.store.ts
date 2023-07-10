@@ -1,4 +1,4 @@
-import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActionableState } from '@conceptual/states/actionable.state';
 import { ConversationState } from '@conceptual/states/conversation.state';
 import { DestroyableState } from '@conceptual/states/destroyable.state';

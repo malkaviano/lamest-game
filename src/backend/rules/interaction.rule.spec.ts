@@ -2,7 +2,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InteractionRule } from './interaction.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
   mockedAffectedAxiom,

@@ -6,7 +6,7 @@ import { ConsumeRule } from './consume.rule';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RollDefinition } from '@definitions/roll.definition';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
   mockedAffectedAxiom,

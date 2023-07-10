@@ -1,4 +1,4 @@
-import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { StatesStore } from './states.store';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';

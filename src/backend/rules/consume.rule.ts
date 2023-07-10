@@ -1,6 +1,6 @@
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { InventoryService } from '../services/inventory.service';
-import { ActorInterface } from '@conceptual/interfaces/actor.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
 import { MasterRule } from './master.rule';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
@@ -9,7 +9,7 @@ import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { EffectEvent } from '@conceptual/events/effect.event';
 import { CheckedService } from '../services/checked.service';
 import { RollHelper } from '@conceptual/helpers/roll.helper';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';

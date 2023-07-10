@@ -1,5 +1,5 @@
-import { PolicyResultInterface } from '@conceptual/interfaces/policy-result.interface';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { PolicyResultInterface } from '@interfaces/policy-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { SettingsStore } from '../../stores/settings.store';
 import { MasterPolicy } from './master.policy';

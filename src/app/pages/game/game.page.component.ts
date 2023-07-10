@@ -11,11 +11,11 @@ import { KeyValueDescriptionView } from '../../view-models/key-value-description
 import { GameStringsStore } from '../../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { ReadableInterface } from '@conceptual/interfaces/readable.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ViewableInterface } from '@conceptual/interfaces/viewable.interface';
+import { ViewableInterface } from '@interfaces/viewable.interface';
 import { ViewerComponent } from '../../dialogs/viewer/viewer.dialog.component';
 import { GameLoopService } from '../../../backend/services/game-loop.service';
 

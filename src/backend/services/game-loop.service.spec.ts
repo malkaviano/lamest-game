@@ -2,7 +2,7 @@ import { anyString, anything, instance, verify, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
 
 import { GameLoopService } from './game-loop.service';
-import { ReadableInterface } from '@conceptual/interfaces/readable.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
 import { ItemStoredDefinition } from '@definitions/item-storage.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';

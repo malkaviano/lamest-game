@@ -2,9 +2,9 @@ import { filter, map } from 'rxjs';
 
 import { CharacterService } from '../../backend/services/character.service';
 import { NarrativeService } from '../../backend/services/narrative.service';
-import { ActorInterface } from '@conceptual/interfaces/actor.interface';
-import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
-import { SceneActorsInfoInterface } from '@conceptual/interfaces/scene-actors.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
+import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { RulesHub } from '../hubs/rules.hub';
 import { InventoryService } from '../../backend/services/inventory.service';
@@ -17,10 +17,10 @@ import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
-import { PlayerInterface } from '@conceptual/interfaces/player.interface';
+import { PlayerInterface } from '@interfaces/player.interface';
 import { ActorEntity } from '@conceptual/entities/actor.entity';
-import { PolicyHub } from '../hubs/policy.hub';
-import { LoggingHub } from '../hubs/logging.hub';
+import { PolicyHub } from '@hubs/policy.hub';
+import { LoggingHub } from '@hubs/logging.hub';
 import { GamePredicate } from '@conceptual/predicates/game.predicate';
 import { SettingsStore } from '../../stores/settings.store';
 

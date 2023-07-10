@@ -1,5 +1,5 @@
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { LogCategoryLiteral } from '@literals/log-category.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';

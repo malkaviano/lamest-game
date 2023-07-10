@@ -1,13 +1,13 @@
 import { merge, Observable } from 'rxjs';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { LoggerInterface } from '@conceptual/interfaces/logger.interface';
+import { LoggerInterface } from '@interfaces/logger.interface';
 import { MasterRule } from '../rules/master.rule';
-import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
-import { ActorDodgedInterface } from '@conceptual/interfaces/actor-dodged.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { AffectRule } from '../rules/affect.rule';
-import { DocumentOpenedInterface } from '@conceptual/interfaces/document-opened.interface';
-import { ReadableInterface } from '@conceptual/interfaces/readable.interface';
+import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
 import { ReadRule } from '../rules/read.rule';
 
 export class RulesHub

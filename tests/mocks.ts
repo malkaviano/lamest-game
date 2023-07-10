@@ -50,9 +50,9 @@ import { SceneEntity } from '../src/conceptual/entities/scene.entity';
 import { RandomIntHelper } from '../src/conceptual/helpers/random-int.helper';
 import { CheckedService } from '../src/backend/services/checked.service';
 import { RollHelper } from '../src/conceptual/helpers/roll.helper';
-import { PolicyHub } from '../src/backend/hubs/policy.hub';
+import { PolicyHub } from '@hubs/policy.hub';
 import { GameLoopService } from '../src/backend/services/game-loop.service';
-import { LoggingHub } from '../src/backend/hubs/logging.hub';
+import { LoggingHub } from '@hubs/logging.hub';
 import { SettingsStoreInterface } from '../src/conceptual/interfaces/stores/settings-store.interface';
 import { SettingsStore } from '../src/stores/settings.store';
 

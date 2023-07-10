@@ -6,7 +6,7 @@ import { ProfessionStore } from '../../stores/profession.store';
 import { SkillStore } from '../../stores/skill.store';
 import { SettingsStore } from '../../stores/settings.store';
 import { PlayerEntity } from '@conceptual/entities/player.entity';
-import { PlayerInterface } from '@conceptual/interfaces/player.interface';
+import { PlayerInterface } from '@interfaces/player.interface';
 import { ActorBehavior } from '@conceptual/behaviors/actor.behavior';
 import { EquipmentBehavior } from '@conceptual/behaviors/equipment.behavior';
 import { RegeneratorBehavior } from '@conceptual/behaviors/regenerator.behavior';

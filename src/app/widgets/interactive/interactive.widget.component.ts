@@ -10,7 +10,7 @@ import {
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
-import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameStringsStore } from '../../../stores/game-strings.store';
 

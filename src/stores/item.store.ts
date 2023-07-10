@@ -2,7 +2,7 @@ import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectDefinition } from '@definitions/effect.definition';
 import { createDice } from '@definitions/dice.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
-import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 import { UsableDefinition } from '@definitions/usable.definition';

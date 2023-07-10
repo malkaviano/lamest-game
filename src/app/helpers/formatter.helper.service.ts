@@ -6,7 +6,7 @@ import { CharacteristicDefinition } from '@definitions/characteristic.definition
 import { CharacterIdentityLiteral } from '@literals/character-identity.literal';
 import { CharacterValuesView } from '../view-models/character-values.view';
 import { KeyValueDescriptionView } from '../view-models/key-value-description.view';
-import { PlayerInterface } from '@conceptual/interfaces/player.interface';
+import { PlayerInterface } from '@interfaces/player.interface';
 import { SkillStore } from '../../stores/skill.store';
 import { GameStringsStore } from '../../stores/game-strings.store';
 

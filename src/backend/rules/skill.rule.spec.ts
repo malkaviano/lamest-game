@@ -16,7 +16,7 @@ import {
   actionSkillSurvival,
   interactiveInfo,
 } from '../../../tests/fakes';
-import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 describe('SkillRule', () => {
   let rule: SkillRule;

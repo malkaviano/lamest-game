@@ -1,7 +1,7 @@
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
 import { SkillDefinition } from '@definitions/skill.definition';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
-import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
 import { ArrayView } from '@wrappers/array.view';
 

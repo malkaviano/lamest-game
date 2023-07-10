@@ -26,6 +26,7 @@
     "esModuleInterop": true,
     "useDefineForClassFields": false,
     "paths": {
+        "@hubs/*": [ "./src/backend/hubs/*" ],
         "@conceptual/*": [ "./src/conceptual/*" ],
         "@definitions/*": [ "./src/conceptual/definitions/*" ],
         "@interfaces/*": [ "./src/conceptual/interfaces/*" ],
