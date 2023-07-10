@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 
-import { CharacterStatusView } from '../../../core/view-models/character-status.view';
-import { ActionableEvent } from '../../../core/events/actionable.event';
-import { ArrayView } from '../../../core/view-models/array.view';
-import { SceneDefinition } from '../../../core/definitions/scene.definition';
-import { CharacterValuesView } from '../../../core/view-models/character-values.view';
-import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
-import { GameItemDefinition } from '../../../core/definitions/game-item.definition';
-import { ViewableInterface } from '../../../core/interfaces/viewable.interface';
+import { CharacterStatusView } from '@core/view-models/character-status.view';
+import { ActionableEvent } from '@core/events/actionable.event';
+import { ArrayView } from '@core/view-models/array.view';
+import { SceneDefinition } from '@core/definitions/scene.definition';
+import { CharacterValuesView } from '@core/view-models/character-values.view';
+import { ActionableItemView } from '@core/view-models/actionable-item.view';
+import { GameItemDefinition } from '@core/definitions/game-item.definition';
+import { ViewableInterface } from '@core/interfaces/viewable.interface';
 
 @Component({
   selector: 'app-game-layout',

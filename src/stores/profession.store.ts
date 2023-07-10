@@ -1,6 +1,6 @@
-import { ConverterHelper } from '../core/helpers/converter.helper';
-import { KeyValueInterface } from '../core/interfaces/key-value.interface';
-import { ArrayView } from '../core/view-models/array.view';
+import { ConverterHelper } from '@core/helpers/converter.helper';
+import { KeyValueInterface } from '@core/interfaces/key-value.interface';
+import { ArrayView } from '@core/view-models/array.view';
 import { ResourcesStore } from './resources.store';
 
 export class ProfessionStore {

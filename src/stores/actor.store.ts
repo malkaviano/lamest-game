@@ -1,17 +1,17 @@
-import { ActorIdentityDefinition } from '../core/definitions/actor-identity.definition';
-import { WeaponDefinition } from '../core/definitions/weapon.definition';
-import { ConverterHelper } from '../core/helpers/converter.helper';
-import { KeyValueInterface } from '../core/interfaces/key-value.interface';
+import { ActorIdentityDefinition } from '@core/definitions/actor-identity.definition';
+import { WeaponDefinition } from '@core/definitions/weapon.definition';
+import { ConverterHelper } from '@core/helpers/converter.helper';
+import { KeyValueInterface } from '@core/interfaces/key-value.interface';
 import { ItemStore } from './item.store';
 import { ResourcesStore } from './resources.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
-import { ArrayView } from '../core/view-models/array.view';
-import { ActorEntity } from '../core/entities/actor.entity';
-import { ActorBehavior } from '../core/behaviors/actor.behavior';
-import { EquipmentBehavior } from '../core/behaviors/equipment.behavior';
-import { RegeneratorBehavior } from '../core/behaviors/regenerator.behavior';
-import { AiBehavior } from '../core/behaviors/ai.behavior';
+import { ArrayView } from '@core/view-models/array.view';
+import { ActorEntity } from '@core/entities/actor.entity';
+import { ActorBehavior } from '@core/behaviors/actor.behavior';
+import { EquipmentBehavior } from '@core/behaviors/equipment.behavior';
+import { RegeneratorBehavior } from '@core/behaviors/regenerator.behavior';
+import { AiBehavior } from '@core/behaviors/ai.behavior';
 
 export class ActorStore {
   private readonly store: Map<string, ActorEntity>;

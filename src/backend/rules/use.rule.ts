@@ -1,15 +1,15 @@
-import { UsableDefinition } from '../../core/definitions/usable.definition';
-import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
+import { UsableDefinition } from '@core/definitions/usable.definition';
+import { ActorInterface } from '@core/interfaces/actor.interface';
+import { RuleExtrasInterface } from '@core/interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { AffectAxiom } from '../../core/axioms/affect.axiom';
+import { AffectAxiom } from '@core/axioms/affect.axiom';
 import { MasterRule } from './master.rule';
-import { ActionableEvent } from '../../core/events/actionable.event';
+import { ActionableEvent } from '@core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
-import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
+import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '@core/literals/rule-name.literal';
+import { RuleResultLiteral } from '@core/literals/rule-result.literal';
 
 export class UseRule extends MasterRule {
   constructor(

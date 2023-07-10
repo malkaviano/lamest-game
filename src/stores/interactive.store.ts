@@ -1,8 +1,8 @@
-import { KeyValueInterface } from '../core/interfaces/key-value.interface';
+import { KeyValueInterface } from '@core/interfaces/key-value.interface';
 import { StatesStore } from './states.store';
-import { ConverterHelper } from '../core/helpers/converter.helper';
+import { ConverterHelper } from '@core/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
-import { InteractiveEntity } from '../core/entities/interactive.entity';
+import { InteractiveEntity } from '@core/entities/interactive.entity';
 
 export class InteractiveStore {
   private readonly store: Map<string, InteractiveEntity>;

@@ -1,15 +1,15 @@
-import { ConsumableDefinition } from '../core/definitions/consumable.definition';
-import { EffectDefinition } from '../core/definitions/effect.definition';
-import { createDice } from '../core/definitions/dice.definition';
-import { GameItemDefinition } from '../core/definitions/game-item.definition';
-import { KeyValueInterface } from '../core/interfaces/key-value.interface';
-import { ConverterHelper } from '../core/helpers/converter.helper';
+import { ConsumableDefinition } from '@core/definitions/consumable.definition';
+import { EffectDefinition } from '@core/definitions/effect.definition';
+import { createDice } from '@core/definitions/dice.definition';
+import { GameItemDefinition } from '@core/definitions/game-item.definition';
+import { KeyValueInterface } from '@core/interfaces/key-value.interface';
+import { ConverterHelper } from '@core/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
-import { UsableDefinition } from '../core/definitions/usable.definition';
-import { ItemIdentityDefinition } from '../core/definitions/item-identity.definition';
-import { WeaponDefinition } from '../core/definitions/weapon.definition';
-import { ReadableDefinition } from '../core/definitions/readable.definition';
-import { ArrayView } from '../core/view-models/array.view';
+import { UsableDefinition } from '@core/definitions/usable.definition';
+import { ItemIdentityDefinition } from '@core/definitions/item-identity.definition';
+import { WeaponDefinition } from '@core/definitions/weapon.definition';
+import { ReadableDefinition } from '@core/definitions/readable.definition';
+import { ArrayView } from '@core/view-models/array.view';
 
 export class ItemStore {
   private readonly store: Map<string, GameItemDefinition>;

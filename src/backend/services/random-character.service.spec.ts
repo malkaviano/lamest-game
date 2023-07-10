@@ -1,7 +1,7 @@
 import { anyNumber, anything, instance, when } from 'ts-mockito';
 
 import { RandomCharacterService } from './random-character.service';
-import { ArrayView } from '../../core/view-models/array.view';
+import { ArrayView } from '@core/view-models/array.view';
 
 import {
   mockedGeneratorService,

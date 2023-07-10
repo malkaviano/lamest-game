@@ -1,13 +1,13 @@
 import { Observable, Subject } from 'rxjs';
 
-import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
-import { GameItemDefinition } from '../../core/definitions/game-item.definition';
-import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
-import { ReadableDefinition } from '../../core/definitions/readable.definition';
-import { UsableDefinition } from '../../core/definitions/usable.definition';
-import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { ArrayView } from '../../core/view-models/array.view';
-import { InventoryEvent } from '../../core/events/inventory.event';
+import { ConsumableDefinition } from '@core/definitions/consumable.definition';
+import { GameItemDefinition } from '@core/definitions/game-item.definition';
+import { ItemStoredDefinition } from '@core/definitions/item-storage.definition';
+import { ReadableDefinition } from '@core/definitions/readable.definition';
+import { UsableDefinition } from '@core/definitions/usable.definition';
+import { WeaponDefinition } from '@core/definitions/weapon.definition';
+import { ArrayView } from '@core/view-models/array.view';
+import { InventoryEvent } from '@core/events/inventory.event';
 import { InteractiveStore } from '../../stores/interactive.store';
 import { ItemStore } from '../../stores/item.store';
 

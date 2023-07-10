@@ -1,10 +1,10 @@
 import { instance, verify, when } from 'ts-mockito';
 
 import { EquipRule } from './equip.rule';
-import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { WeaponDefinition } from '@core/definitions/weapon.definition';
+import { LogMessageDefinition } from '@core/definitions/log-message.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
 
 import {
   mockedCheckedService,

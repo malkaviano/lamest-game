@@ -7,10 +7,10 @@ import { instance, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
-import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
-import { ArrayView } from '../../../core/view-models/array.view';
-import { ActionableEvent } from '../../../core/events/actionable.event';
-import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
+import { ActionableItemView } from '@core/view-models/actionable-item.view';
+import { ArrayView } from '@core/view-models/array.view';
+import { ActionableEvent } from '@core/events/actionable.event';
+import { LogMessageDefinition } from '@core/definitions/log-message.definition';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 

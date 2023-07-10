@@ -3,8 +3,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { SheetPanelComponent } from './sheet.panel.component';
-import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
-import { ActionableEvent } from '../../../core/events/actionable.event';
+import { ActionableItemView } from '@core/view-models/actionable-item.view';
+import { ActionableEvent } from '@core/events/actionable.event';
 
 import {
   actionAsk,

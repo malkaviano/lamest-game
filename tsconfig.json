@@ -24,7 +24,10 @@
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {
+        "@core/*": [ "./src/core/*" ],
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

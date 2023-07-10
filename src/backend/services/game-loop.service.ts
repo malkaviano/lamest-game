@@ -2,26 +2,26 @@ import { filter, map } from 'rxjs';
 
 import { CharacterService } from '../../backend/services/character.service';
 import { NarrativeService } from '../../backend/services/narrative.service';
-import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
-import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
-import { SceneDefinition } from '../../core/definitions/scene.definition';
+import { ActorInterface } from '@core/interfaces/actor.interface';
+import { InteractiveInterface } from '@core/interfaces/interactive.interface';
+import { SceneActorsInfoInterface } from '@core/interfaces/scene-actors.interface';
+import { SceneDefinition } from '@core/definitions/scene.definition';
 import { RulesHub } from '../hubs/rules.hub';
 import { InventoryService } from '../../backend/services/inventory.service';
-import { GameEventsDefinition } from '../../core/definitions/game-events.definition';
+import { GameEventsDefinition } from '@core/definitions/game-events.definition';
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '../../core/definitions/actionable.definition';
-import { GameItemDefinition } from '../../core/definitions/game-item.definition';
-import { ArrayView } from '../../core/view-models/array.view';
-import { ActionableItemView } from '../../core/view-models/actionable-item.view';
-import { ActionableEvent } from '../../core/events/actionable.event';
-import { PlayerInterface } from '../../core/interfaces/player.interface';
-import { ActorEntity } from '../../core/entities/actor.entity';
+} from '@core/definitions/actionable.definition';
+import { GameItemDefinition } from '@core/definitions/game-item.definition';
+import { ArrayView } from '@core/view-models/array.view';
+import { ActionableItemView } from '@core/view-models/actionable-item.view';
+import { ActionableEvent } from '@core/events/actionable.event';
+import { PlayerInterface } from '@core/interfaces/player.interface';
+import { ActorEntity } from '@core/entities/actor.entity';
 import { PolicyHub } from '../hubs/policy.hub';
 import { LoggingHub } from '../hubs/logging.hub';
-import { GamePredicate } from '../../core/predicates/game.predicate';
+import { GamePredicate } from '@core/predicates/game.predicate';
 import { SettingsStore } from '../../stores/settings.store';
 
 export class GameLoopService {

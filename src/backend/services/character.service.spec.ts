@@ -2,11 +2,11 @@ import { Subject } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { CharacterService } from './character.service';
-import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { VisibilityLiteral } from '../../core/literals/visibility.literal';
-import { EnergyPointsEvent } from '../../core/events/energy-points.event';
-import { HitPointsEvent } from '../../core/events/hit-points.event';
-import { ActionPointsEvent } from '../../core/events/action-points.event';
+import { WeaponDefinition } from '@core/definitions/weapon.definition';
+import { VisibilityLiteral } from '@core/literals/visibility.literal';
+import { EnergyPointsEvent } from '@core/events/energy-points.event';
+import { HitPointsEvent } from '@core/events/hit-points.event';
+import { ActionPointsEvent } from '@core/events/action-points.event';
 
 import { simpleSword } from '../../../tests/fakes';
 import {

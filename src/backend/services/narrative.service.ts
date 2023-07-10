@@ -1,10 +1,10 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { SceneDefinition } from '../../core/definitions/scene.definition';
+import { SceneDefinition } from '@core/definitions/scene.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { SceneStore } from '../../stores/scene.store';
-import { ActionableEvent } from '../../core/events/actionable.event';
-import { SceneEntity } from '../../core/entities/scene.entity';
+import { ActionableEvent } from '@core/events/actionable.event';
+import { SceneEntity } from '@core/entities/scene.entity';
 
 export class NarrativeService {
   private currentScene: SceneEntity;

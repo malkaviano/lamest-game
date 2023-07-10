@@ -1,9 +1,9 @@
 import { instance, verify, when } from 'ts-mockito';
 
 import { VisibilityPolicy } from './visibility.policy';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { VisibilityLiteral } from '../../core/literals/visibility.literal';
+import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
+import { LogMessageDefinition } from '@core/definitions/log-message.definition';
+import { VisibilityLiteral } from '@core/literals/visibility.literal';
 
 import {
   mockedActorEntity,

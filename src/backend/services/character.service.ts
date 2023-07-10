@@ -1,7 +1,7 @@
 import { BehaviorSubject, map, merge, Observable } from 'rxjs';
 
 import { RandomCharacterService } from './random-character.service';
-import { PlayerInterface } from '../../core/interfaces/player.interface';
+import { PlayerInterface } from '@core/interfaces/player.interface';
 
 export class CharacterService {
   private readonly character: PlayerInterface;

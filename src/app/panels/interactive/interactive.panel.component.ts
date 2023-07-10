@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ActionableEvent } from '../../../core/events/actionable.event';
-import { ArrayView } from '../../../core/view-models/array.view';
-import { InteractiveInterface } from '../../../core/interfaces/interactive.interface';
+import { ActionableEvent } from '@core/events/actionable.event';
+import { ArrayView } from '@core/view-models/array.view';
+import { InteractiveInterface } from '@core/interfaces/interactive.interface';
 
 @Component({
   selector: 'app-interactive-panel',

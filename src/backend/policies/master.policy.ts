@@ -1,8 +1,8 @@
 import { Observable, Subject } from 'rxjs';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { PolicyResultInterface } from '../../core/interfaces/policy-result.interface';
-import { PolicyInterface } from '../../core/interfaces/policy.interface';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { LogMessageDefinition } from '@core/definitions/log-message.definition';
+import { PolicyResultInterface } from '@core/interfaces/policy-result.interface';
+import { PolicyInterface } from '@core/interfaces/policy.interface';
+import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
 
 export abstract class MasterPolicy implements PolicyInterface {
   protected readonly logMessageProduced: Subject<LogMessageDefinition>;

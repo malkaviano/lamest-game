@@ -1,21 +1,21 @@
 import { Observable, Subject } from 'rxjs';
 
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { LoggerInterface } from '../../core/interfaces/logger.interface';
-import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { RuleInterface } from '../../core/interfaces/rule.interface';
-import { ActionableEvent } from '../../core/events/actionable.event';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { RuleResultLiteral } from '../../core/literals/rule-result.literal';
-import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
-import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
-import { GameItemDefinition } from '../../core/definitions/game-item.definition';
-import { UsableDefinition } from '../../core/definitions/usable.definition';
-import { ReadableDefinition } from '../../core/definitions/readable.definition';
-import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
-import { EffectTypeLiteral } from '../../core/literals/effect-type.literal';
+import { LogMessageDefinition } from '@core/definitions/log-message.definition';
+import { ActorInterface } from '@core/interfaces/actor.interface';
+import { LoggerInterface } from '@core/interfaces/logger.interface';
+import { RuleExtrasInterface } from '@core/interfaces/rule-extras.interface';
+import { RuleInterface } from '@core/interfaces/rule.interface';
+import { ActionableEvent } from '@core/events/actionable.event';
+import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
+import { RuleResultLiteral } from '@core/literals/rule-result.literal';
+import { RuleNameLiteral } from '@core/literals/rule-name.literal';
+import { InteractiveInterface } from '@core/interfaces/interactive.interface';
+import { GameItemDefinition } from '@core/definitions/game-item.definition';
+import { UsableDefinition } from '@core/definitions/usable.definition';
+import { ReadableDefinition } from '@core/definitions/readable.definition';
+import { WeaponDefinition } from '@core/definitions/weapon.definition';
+import { ConsumableDefinition } from '@core/definitions/consumable.definition';
+import { EffectTypeLiteral } from '@core/literals/effect-type.literal';
 
 type Result = {
   name: RuleNameLiteral;

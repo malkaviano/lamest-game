@@ -1,8 +1,8 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InteractionRule } from './interaction.rule';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { LogMessageDefinition } from '@core/definitions/log-message.definition';
+import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
 
 import {
   mockedAffectedAxiom,

@@ -1,11 +1,11 @@
-import { ConverterHelper } from '../core/helpers/converter.helper';
-import { KeyValueInterface } from '../core/interfaces/key-value.interface';
+import { ConverterHelper } from '@core/helpers/converter.helper';
+import { KeyValueInterface } from '@core/interfaces/key-value.interface';
 import { ActorStore } from './actor.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';
-import { ArrayView } from '../core/view-models/array.view';
-import { SceneEntity } from '../core/entities/scene.entity';
-import { InteractiveEntity } from '../core/entities/interactive.entity';
+import { ArrayView } from '@core/view-models/array.view';
+import { SceneEntity } from '@core/entities/scene.entity';
+import { InteractiveEntity } from '@core/entities/interactive.entity';
 
 export class SceneStore {
   private readonly store: Map<string, SceneEntity>;

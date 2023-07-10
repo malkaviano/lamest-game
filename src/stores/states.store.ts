@@ -1,25 +1,25 @@
-import { KeyValueInterface } from '../core/interfaces/key-value.interface';
-import { ActionableState } from '../core/states/actionable.state';
-import { ConversationState } from '../core/states/conversation.state';
-import { DestroyableState } from '../core/states/destroyable.state';
-import { DiscardState } from '../core/states/discard.state';
-import { emptyState } from '../core/states/empty.state';
-import { SimpleState } from '../core/states/simple.state';
-import { SkillState } from '../core/states/skill.state';
+import { KeyValueInterface } from '@core/interfaces/key-value.interface';
+import { ActionableState } from '@core/states/actionable.state';
+import { ConversationState } from '@core/states/conversation.state';
+import { DestroyableState } from '@core/states/destroyable.state';
+import { DiscardState } from '@core/states/discard.state';
+import { emptyState } from '@core/states/empty.state';
+import { SimpleState } from '@core/states/simple.state';
+import { SkillState } from '@core/states/skill.state';
 import { ActionableStore } from './actionable.store';
 import { MessageStore } from './message.store';
 import { ResourcesStore } from './resources.store';
-import { LockedContainerState } from '../core/states/locked-container.state';
-import { LockPickingContainerState } from '../core/states/lock-picking-container.state';
+import { LockedContainerState } from '@core/states/locked-container.state';
+import { LockPickingContainerState } from '@core/states/lock-picking-container.state';
 import {
   directionActionableDefinition,
   directionNamesDefinition,
-} from '../core/definitions/directions.definition';
-import { VisibilityState } from '../core/states/visibility.state';
-import { ArrayView } from '../core/view-models/array.view';
-import { LazyHelper } from '../core/helpers/lazy.helper';
-import { ConverterHelper } from '../core/helpers/converter.helper';
-import { SequencerHelper } from '../core/helpers/sequencer.helper';
+} from '@core/definitions/directions.definition';
+import { VisibilityState } from '@core/states/visibility.state';
+import { ArrayView } from '@core/view-models/array.view';
+import { LazyHelper } from '@core/helpers/lazy.helper';
+import { ConverterHelper } from '@core/helpers/converter.helper';
+import { SequencerHelper } from '@core/helpers/sequencer.helper';
 import { LockPickableContainerState } from 'src/core/states/lock-pickable-container.state';
 
 export class StatesStore {

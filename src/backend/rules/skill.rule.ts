@@ -1,12 +1,12 @@
-import { RollHelper } from '../../core/helpers/roll.helper';
-import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
+import { RollHelper } from '@core/helpers/roll.helper';
+import { ActorInterface } from '@core/interfaces/actor.interface';
+import { RuleExtrasInterface } from '@core/interfaces/rule-extras.interface';
 import { MasterRule } from './master.rule';
-import { AffectAxiom } from '../../core/axioms/affect.axiom';
-import { ActionableEvent } from '../../core/events/actionable.event';
+import { AffectAxiom } from '@core/axioms/affect.axiom';
+import { ActionableEvent } from '@core/events/actionable.event';
 import { CheckedService } from '../services/checked.service';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
+import { RuleResultInterface } from '@core/interfaces/rule-result.interface';
+import { RuleNameLiteral } from '@core/literals/rule-name.literal';
 
 export class SkillRule extends MasterRule {
   constructor(

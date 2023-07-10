@@ -1,9 +1,9 @@
-import { CharacteristicSetDefinition } from '../core/definitions/characteristic-set.definition';
-import { SkillDefinition } from '../core/definitions/skill.definition';
-import { ConverterHelper } from '../core/helpers/converter.helper';
-import { KeyValueInterface } from '../core/interfaces/key-value.interface';
+import { CharacteristicSetDefinition } from '@core/definitions/characteristic-set.definition';
+import { SkillDefinition } from '@core/definitions/skill.definition';
+import { ConverterHelper } from '@core/helpers/converter.helper';
+import { KeyValueInterface } from '@core/interfaces/key-value.interface';
 import { ResourcesStore } from './resources.store';
-import { ArrayView } from '../core/view-models/array.view';
+import { ArrayView } from '@core/view-models/array.view';
 
 export class SkillStore {
   private readonly store: Map<string, SkillDefinition>;
