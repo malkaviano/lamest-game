@@ -1,4 +1,4 @@
-import { ItemUsabilityLiteral } from '../../literals/item-usability';
+import { ItemUsabilityLiteral } from '@literals/item-usability';
 
 export interface ReadableStoreInterface {
   readonly readables: {

@@ -2,7 +2,7 @@ import { instance } from 'ts-mockito';
 
 import { ConverterHelper } from './converter.helper';
 import { ActorEntity } from '../entities/actor.entity';
-import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
+import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { emptyState } from '../states/empty.state';
 import { RegeneratorBehavior } from '../behaviors/regenerator.behavior';
 

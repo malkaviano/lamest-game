@@ -1,4 +1,4 @@
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 
 export interface ActorDefenseInterface {
   get dodgesPerRound(): number;

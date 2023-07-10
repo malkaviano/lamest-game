@@ -1,7 +1,7 @@
 import { GeneratorService } from './generator.service';
-import { CharacterIdentityDefinition } from '@conceptual/definitions/character-identity.definition';
+import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
 import { SkillService } from './skill.service';
-import { CharacteristicSetDefinition } from '@conceptual/definitions/characteristic-set.definition';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
 import { ProfessionStore } from '../../stores/profession.store';
 import { SkillStore } from '../../stores/skill.store';
 import { SettingsStore } from '../../stores/settings.store';

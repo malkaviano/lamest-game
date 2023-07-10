@@ -2,7 +2,7 @@ import { instance } from 'ts-mockito';
 
 import { ActionPolicy } from './action.policy';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 
 import {
   mockedActorEntity,

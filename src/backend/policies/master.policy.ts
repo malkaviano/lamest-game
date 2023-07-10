@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { PolicyResultInterface } from '@conceptual/interfaces/policy-result.interface';
 import { PolicyInterface } from '@conceptual/interfaces/policy.interface';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';

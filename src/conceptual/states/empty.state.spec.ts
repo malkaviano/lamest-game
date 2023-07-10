@@ -1,4 +1,4 @@
-import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ActionableDefinition } from '@definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { emptyState } from './empty.state';
 

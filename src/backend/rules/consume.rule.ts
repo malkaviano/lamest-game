@@ -1,8 +1,8 @@
-import { ConsumableDefinition } from '@conceptual/definitions/consumable.definition';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '@conceptual/interfaces/actor.interface';
 import { MasterRule } from './master.rule';
-import { ActionableDefinition } from '@conceptual/definitions/actionable.definition';
+import { ActionableDefinition } from '@definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
 import { ActionableEvent } from '@conceptual/events/actionable.event';

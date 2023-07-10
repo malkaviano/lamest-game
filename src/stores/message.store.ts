@@ -1,4 +1,4 @@
-import { MessageMapDefinition } from '@conceptual/definitions/message-map.definition';
+import { MessageMapDefinition } from '@definitions/message-map.definition';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
 

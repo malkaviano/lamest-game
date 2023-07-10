@@ -5,14 +5,14 @@ import { SimpleStateStoreInterface } from '@conceptual/interfaces/simple-state-s
 import { ConversationStateStoreInterface } from '@conceptual/interfaces/stores/conversation-state-store.interface';
 import { DestroyableStateStoreInterface } from '@conceptual/interfaces/stores/destroyable-state-store.interface';
 import { WeaponStoreInterface } from '@conceptual/interfaces/stores/weapon-store.interface';
-import { createDice } from '@conceptual/definitions/dice.definition';
+import { createDice } from '@definitions/dice.definition';
 import { ConsumableStoreInterface } from '@conceptual/interfaces/stores/consumable-store.interface';
 import { InteractiveStoreInterface } from '@conceptual/interfaces/stores/interactive-store.interface';
 import { ActionableStoreInterface } from '@conceptual/interfaces/stores/actionable-store.interface';
 import { ActionableLiteral } from '@conceptual/literals/actionable.literal';
 import { MessageStoreInterface } from '@conceptual/interfaces/stores/message-store.interface';
-import { CharacteristicSetDefinition } from '@conceptual/definitions/characteristic-set.definition';
-import { CharacteristicDefinition } from '@conceptual/definitions/characteristic.definition';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ItemUsabilityLiteral } from '@conceptual/literals/item-usability';
 import { ActorStoreInterface } from '@conceptual/interfaces/stores/actor-store.interface';
 import { UsablesStoreInterface } from '@conceptual/interfaces/stores/item-store.interface';

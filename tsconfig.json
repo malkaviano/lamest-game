@@ -27,6 +27,9 @@
     "useDefineForClassFields": false,
     "paths": {
         "@conceptual/*": [ "./src/conceptual/*" ],
+        "@definitions/*": [ "./src/conceptual/definitions/*" ],
+        "@interfaces/*": [ "./src/conceptual/interfaces/*" ],
+        "@literals/*": [ "./src/conceptual/literals/*" ],
     }
   },
   "angularCompilerOptions": {

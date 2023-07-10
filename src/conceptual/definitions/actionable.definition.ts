@@ -1,4 +1,4 @@
-import { ActionableLiteral } from '../literals/actionable.literal';
+import { ActionableLiteral } from '@literals/actionable.literal';
 
 export class ActionableDefinition {
   constructor(

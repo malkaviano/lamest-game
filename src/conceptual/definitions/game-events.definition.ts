@@ -4,8 +4,8 @@ import { SceneDefinition } from './scene.definition';
 import { ArrayView } from '../view-models/array.view';
 import { ActionableItemView } from '../view-models/actionable-item.view';
 import { LogMessageDefinition } from './log-message.definition';
-import { ReadableInterface } from '../interfaces/readable.interface';
-import { PlayerInterface } from '../interfaces/player.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
+import { PlayerInterface } from '@interfaces/player.interface';
 
 export class GameEventsDefinition {
   constructor(

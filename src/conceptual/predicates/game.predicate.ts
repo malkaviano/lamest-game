@@ -2,12 +2,12 @@ import { Observable, Subject } from 'rxjs';
 
 import { MasterRule } from '../../backend/rules/master.rule';
 import { SettingsStore } from '../../stores/settings.store';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { ActorInterface } from '../interfaces/actor.interface';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { ActorInterface } from '@interfaces/actor.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { PlayerEntity } from '../entities/player.entity';
-import { LoggerInterface } from '../interfaces/logger.interface';
-import { WeaponDefinition } from '../definitions/weapon.definition';
+import { LoggerInterface } from '@interfaces/logger.interface';
+import { WeaponDefinition } from '@definitions/weapon.definition';
 
 export class GamePredicate implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition> =

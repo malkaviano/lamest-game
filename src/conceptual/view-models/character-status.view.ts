@@ -1,4 +1,4 @@
-import { GameItemDefinition } from '../definitions/game-item.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ArrayView } from './array.view';
 import { KeyValueDescriptionView } from './key-value-description.view';
 

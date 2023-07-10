@@ -1,4 +1,4 @@
-import { CheckResultLiteral } from '../literals/check-result.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 export class RollDefinition {
   constructor(

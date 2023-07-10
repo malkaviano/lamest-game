@@ -1,4 +1,4 @@
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
 import { EffectTypeLiteral } from '@conceptual/literals/effect-type.literal';
 import { LogCategoryLiteral } from '@conceptual/literals/log-category.literal';

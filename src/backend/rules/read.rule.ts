@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 
-import { ReadableDefinition } from '@conceptual/definitions/readable.definition';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { ActorInterface } from '@conceptual/interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';

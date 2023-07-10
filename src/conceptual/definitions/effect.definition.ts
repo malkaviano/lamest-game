@@ -1,4 +1,4 @@
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { Dice } from './dice.definition';
 
 export class EffectDefinition {

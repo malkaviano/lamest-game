@@ -1,6 +1,6 @@
 import { instance } from 'ts-mockito';
 
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { SceneRule } from './scene.rule';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 

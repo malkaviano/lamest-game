@@ -1,6 +1,6 @@
 import { ArrayView } from '../view-models/array.view';
 import { InteractiveEntity } from './interactive.entity';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
 
 export class SceneEntity {
   constructor(

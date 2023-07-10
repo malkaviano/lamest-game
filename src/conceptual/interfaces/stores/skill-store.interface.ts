@@ -1,4 +1,4 @@
-import { SkillAffinityLiteral } from '../../literals/skill-category.literal';
+import { SkillAffinityLiteral } from '@literals/skill-category.literal';
 
 export interface SkillStoreInterface {
   readonly skills: {

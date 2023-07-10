@@ -1,6 +1,6 @@
 import { merge, Observable } from 'rxjs';
 
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { LoggerInterface } from '@conceptual/interfaces/logger.interface';
 import { MasterRule } from '../rules/master.rule';
 import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';

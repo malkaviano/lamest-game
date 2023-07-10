@@ -1,4 +1,4 @@
-import { InteractiveInterface } from '../interfaces/interactive.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ArrayView } from '../view-models/array.view';
 
 export class SceneDefinition {

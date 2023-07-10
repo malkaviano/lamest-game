@@ -1,5 +1,5 @@
-import { ActorIdentityDefinition } from '@conceptual/definitions/actor-identity.definition';
-import { WeaponDefinition } from '@conceptual/definitions/weapon.definition';
+import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
 import { ItemStore } from './item.store';

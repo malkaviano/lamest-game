@@ -1,7 +1,7 @@
-import { ActorSituationLiteral } from '../literals/actor-situation.literal';
-import { ClassificationLiteral } from '../literals/classification.literal';
-import { BehaviorLiteral } from '../literals/behavior.literal';
-import { VisibilityLiteral } from '../literals/visibility.literal';
+import { ActorSituationLiteral } from '@literals/actor-situation.literal';
+import { ClassificationLiteral } from '@literals/classification.literal';
+import { BehaviorLiteral } from '@literals/behavior.literal';
+import { VisibilityLiteral } from '@literals/visibility.literal';
 import { AiBehavior } from './ai.behavior';
 import { ArrayView } from '../view-models/array.view';
 import { ActionableEvent } from '../events/actionable.event';

@@ -1,4 +1,4 @@
-import { CharacterIdentityDefinition } from '../definitions/character-identity.definition';
+import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from './actor.interface';
 

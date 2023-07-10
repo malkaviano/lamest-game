@@ -2,7 +2,7 @@ import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { AffectRule } from './affect.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { RollDefinition } from '@conceptual/definitions/roll.definition';
+import { RollDefinition } from '@definitions/roll.definition';
 import { EffectEvent } from '@conceptual/events/effect.event';
 
 import { ruleScenario } from '../../../tests/scenarios';

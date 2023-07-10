@@ -1,4 +1,4 @@
-import { CharacteristicNameLiteral } from '../literals/characteristic-name.literal';
+import { CharacteristicNameLiteral } from '@literals/characteristic-name.literal';
 
 export class CharacteristicDefinition {
   constructor(

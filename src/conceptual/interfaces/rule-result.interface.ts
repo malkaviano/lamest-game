@@ -1,14 +1,14 @@
 import { ActionableEvent } from '../events/actionable.event';
 import { ActorInterface } from './actor.interface';
 import { InteractiveInterface } from './interactive.interface';
-import { RuleResultLiteral } from '../literals/rule-result.literal';
-import { GameItemDefinition } from '../definitions/game-item.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
-import { UsableDefinition } from '../definitions/usable.definition';
-import { ReadableDefinition } from '../definitions/readable.definition';
-import { ConsumableDefinition } from '../definitions/consumable.definition';
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
-import { RuleNameLiteral } from '../literals/rule-name.literal';
+import { RuleResultLiteral } from '@literals/rule-result.literal';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { UsableDefinition } from '@definitions/usable.definition';
+import { ReadableDefinition } from '@definitions/readable.definition';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
 
 export interface RuleResultInterface {
   readonly name: RuleNameLiteral;

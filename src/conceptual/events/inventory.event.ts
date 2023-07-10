@@ -1,5 +1,5 @@
-import { GameItemDefinition } from '../definitions/game-item.definition';
-import { InventoryLiteral } from '../literals/inventory.literal';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { InventoryLiteral } from '@literals/inventory.literal';
 
 export class InventoryEvent {
   constructor(

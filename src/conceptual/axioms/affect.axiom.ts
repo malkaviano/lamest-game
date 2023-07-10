@@ -1,13 +1,13 @@
 import { Observable, Subject } from 'rxjs';
 
-import { ActionableDefinition } from '../definitions/actionable.definition';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { InteractiveInterface } from '../interfaces/interactive.interface';
-import { LoggerInterface } from '../interfaces/logger.interface';
-import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
+import { ActionableDefinition } from '@definitions/actionable.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
+import { LoggerInterface } from '@interfaces/logger.interface';
+import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActorEntity } from '../entities/actor.entity';
-import { CheckResultLiteral } from '../literals/check-result.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 export class AffectAxiom implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;

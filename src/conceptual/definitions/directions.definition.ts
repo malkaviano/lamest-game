@@ -1,4 +1,4 @@
-import { DirectionLiteral } from '../literals/direction.literal';
+import { DirectionLiteral } from '@literals/direction.literal';
 import { ArrayView } from '../view-models/array.view';
 import { createActionableDefinition } from './actionable.definition';
 

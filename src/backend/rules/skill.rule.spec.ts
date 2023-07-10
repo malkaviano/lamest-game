@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { SkillRule } from './skill.rule';
-import { RollDefinition } from '@conceptual/definitions/roll.definition';
+import { RollDefinition } from '@definitions/roll.definition';
 
 import {
   mockedPlayerEntity,

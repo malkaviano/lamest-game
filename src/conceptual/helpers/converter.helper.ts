@@ -1,6 +1,6 @@
-import { InteractiveInterface } from '../interfaces/interactive.interface';
-import { ActorInterface } from '../interfaces/actor.interface';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActorEntity } from '../entities/actor.entity';
 
 export class ConverterHelper {

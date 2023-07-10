@@ -1,4 +1,4 @@
-import { WeaponDefinition } from '../definitions/weapon.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
 
 export interface WeaponEquippedInterface {
   get weaponEquipped(): WeaponDefinition;

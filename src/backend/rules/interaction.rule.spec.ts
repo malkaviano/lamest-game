@@ -1,7 +1,7 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InteractionRule } from './interaction.rule';
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 
 import {

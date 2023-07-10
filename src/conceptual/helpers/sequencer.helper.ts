@@ -1,4 +1,4 @@
-import { DirectionLiteral } from '../literals/direction.literal';
+import { DirectionLiteral } from '@literals/direction.literal';
 import { RandomIntHelper } from './random-int.helper';
 
 export class SequencerHelper {

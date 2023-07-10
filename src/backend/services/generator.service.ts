@@ -1,12 +1,12 @@
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
 
-import { CharacterIdentityDefinition } from '@conceptual/definitions/character-identity.definition';
-import { CharacteristicDefinition } from '@conceptual/definitions/characteristic.definition';
+import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { AgeLiteral, ages } from '@conceptual/literals/age.literal';
 import { HeightLiteral, heights } from '@conceptual/literals/height.literal';
 import { RaceLiteral, races } from '@conceptual/literals/race.literal';
 import { WeightLiteral, weights } from '@conceptual/literals/weight.literal';
-import { CharacteristicSetDefinition } from '@conceptual/definitions/characteristic-set.definition';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
 import { ProfessionStore } from '../../stores/profession.store';
 import { RandomIntHelper } from '@conceptual/helpers/random-int.helper';
 

@@ -1,13 +1,13 @@
-import { ActionableDefinition } from '../definitions/actionable.definition';
-import { directionNamesDefinition } from '../definitions/directions.definition';
-import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
-import { DirectionLiteral } from '../literals/direction.literal';
+import { ActionableDefinition } from '@definitions/actionable.definition';
+import { directionNamesDefinition } from '@definitions/directions.definition';
+import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { DirectionLiteral } from '@literals/direction.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { LockedContainerState } from './locked-container.state';
 import { ArrayView } from '../view-models/array.view';
 import { LazyHelper } from '../helpers/lazy.helper';
-import { CheckResultLiteral } from '../literals/check-result.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 export class LockPickingContainerState extends LockedContainerState {
   private lockPosition: number;

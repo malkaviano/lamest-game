@@ -1,8 +1,8 @@
 import { anything, instance, when } from 'ts-mockito';
 
 import { GamePredicate } from './game.predicate';
-import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 
 import {
   mockedActorEntity,

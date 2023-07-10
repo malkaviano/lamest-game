@@ -1,6 +1,6 @@
 import { ItemIdentityDefinition } from './item-identity.definition';
 import { GameItemDefinition } from './game-item.definition';
-import { ItemUsabilityLiteral } from '../literals/item-usability';
+import { ItemUsabilityLiteral } from '@literals/item-usability';
 
 export class UsableDefinition extends GameItemDefinition {
   constructor(

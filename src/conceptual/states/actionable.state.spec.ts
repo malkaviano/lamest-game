@@ -1,4 +1,4 @@
-import { createActionableDefinition } from '../definitions/actionable.definition';
+import { createActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '../view-models/array.view';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';

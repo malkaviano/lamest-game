@@ -1,5 +1,5 @@
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
-import { RuleNameLiteral } from '../literals/rule-name.literal';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { ArrayView } from '../view-models/array.view';
 
 export interface GameSettingsInterface {

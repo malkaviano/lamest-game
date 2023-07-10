@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { SceneDefinition } from '@conceptual/definitions/scene.definition';
+import { SceneDefinition } from '@definitions/scene.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { SceneStore } from '../../stores/scene.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';

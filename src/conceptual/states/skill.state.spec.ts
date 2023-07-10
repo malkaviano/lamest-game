@@ -1,4 +1,4 @@
-import { createActionableDefinition } from '../definitions/actionable.definition';
+import { createActionableDefinition } from '@definitions/actionable.definition';
 import { LazyHelper } from '../helpers/lazy.helper';
 import { ArrayView } from '../view-models/array.view';
 import { ActionableState } from './actionable.state';

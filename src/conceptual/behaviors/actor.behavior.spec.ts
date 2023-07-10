@@ -1,8 +1,8 @@
 import { instance } from 'ts-mockito';
 
 import { ActorBehavior } from './actor.behavior';
-import { CharacteristicDefinition } from '../definitions/characteristic.definition';
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { HitPointsEvent } from '../events/hit-points.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';
 

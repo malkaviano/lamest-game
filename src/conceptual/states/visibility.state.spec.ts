@@ -1,7 +1,7 @@
 import { instance } from 'ts-mockito';
 
 import { VisibilityState } from './visibility.state';
-import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ActionableDefinition } from '@definitions/actionable.definition';
 import { emptyState } from './empty.state';
 import { GameStringsStore } from '../../stores/game-strings.store';
 
@@ -22,7 +22,7 @@ import {
 import { PlayerEntity } from '../entities/player.entity';
 import { ActorBehavior } from '../behaviors/actor.behavior';
 import { EquipmentBehavior } from '../behaviors/equipment.behavior';
-import { CheckResultLiteral } from '../literals/check-result.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 const fakeState = (action: ActionableDefinition, tries: number) =>
   new VisibilityState(action, tries);

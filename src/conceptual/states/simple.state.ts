@@ -1,4 +1,4 @@
-import { ActionableDefinition } from '../definitions/actionable.definition';
+import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '../view-models/array.view';
 import { ActionableState } from './actionable.state';
 

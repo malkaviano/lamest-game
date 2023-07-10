@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 
-import { ActionableDefinition } from '@conceptual/definitions/actionable.definition';
+import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { ArrayView } from '@conceptual/view-models/array.view';
 import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';

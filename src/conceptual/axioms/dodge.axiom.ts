@@ -1,9 +1,9 @@
 import { Observable, Subject } from 'rxjs';
 
-import { LogMessageDefinition } from '../definitions/log-message.definition';
-import { ActorDodgedInterface } from '../interfaces/actor-dodged.interface';
-import { ActorInterface } from '../interfaces/actor.interface';
-import { LoggerInterface } from '../interfaces/logger.interface';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { LoggerInterface } from '@interfaces/logger.interface';
 import { RollHelper } from '../helpers/roll.helper';
 import { GamePredicate } from '../predicates/game.predicate';
 

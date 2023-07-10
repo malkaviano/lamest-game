@@ -1,10 +1,10 @@
-import { ActionableDefinition } from '../definitions/actionable.definition';
-import { ReactionValuesInterface } from '../interfaces/reaction-values.interface';
+import { ActionableDefinition } from '@definitions/actionable.definition';
+import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ArrayView } from '../view-models/array.view';
 import { ActionableState } from './actionable.state';
 import { LazyHelper } from '../helpers/lazy.helper';
-import { CheckResultLiteral } from '../literals/check-result.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 export class DestroyableState extends ActionableState {
   constructor(

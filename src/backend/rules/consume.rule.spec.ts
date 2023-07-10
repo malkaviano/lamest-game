@@ -3,9 +3,9 @@ import { instance, when } from 'ts-mockito';
 
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ConsumeRule } from './consume.rule';
-import { ConsumableDefinition } from '@conceptual/definitions/consumable.definition';
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
-import { RollDefinition } from '@conceptual/definitions/roll.definition';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { RollDefinition } from '@definitions/roll.definition';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 
 import {

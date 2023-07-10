@@ -1,10 +1,10 @@
-import { CharacteristicSetDefinition } from '../definitions/characteristic-set.definition';
-import { DerivedAttributeSetDefinition } from '../definitions/derived-attribute-set.definition';
-import { DerivedAttributeDefinition } from '../definitions/derived-attribute.definition';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { MathHelper } from '../helpers/math.helper';
-import { KeyValueInterface } from '../interfaces/key-value.interface';
-import { ActorSituationLiteral } from '../literals/actor-situation.literal';
-import { EffectTypeLiteral } from '../literals/effect-type.literal';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ActorSituationLiteral } from '@literals/actor-situation.literal';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { EffectEvent } from '../events/effect.event';
 import { HitPointsEvent } from '../events/hit-points.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';

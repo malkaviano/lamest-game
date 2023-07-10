@@ -2,7 +2,7 @@ import { instance, when } from 'ts-mockito';
 
 import { ReadRule } from './read.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 
 import {

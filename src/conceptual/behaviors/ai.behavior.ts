@@ -1,8 +1,8 @@
-import { createActionableDefinition } from '../definitions/actionable.definition';
+import { createActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableEvent } from '../events/actionable.event';
-import { SceneActorsInfoInterface } from '../interfaces/scene-actors.interface';
-import { BehaviorLiteral } from '../literals/behavior.literal';
-import { VisibilityLiteral } from '../literals/visibility.literal';
+import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
+import { BehaviorLiteral } from '@literals/behavior.literal';
+import { VisibilityLiteral } from '@literals/visibility.literal';
 import { ArrayView } from '../view-models/array.view';
 
 export class AiBehavior {

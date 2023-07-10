@@ -1,4 +1,4 @@
-import { UsableDefinition } from '@conceptual/definitions/usable.definition';
+import { UsableDefinition } from '@definitions/usable.definition';
 import { ActorInterface } from '@conceptual/interfaces/actor.interface';
 import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';

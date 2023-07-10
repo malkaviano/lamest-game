@@ -1,7 +1,7 @@
 import { instance, verify, when } from 'ts-mockito';
 
 import { UnEquipRule } from './unequip.rule';
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interface';
 

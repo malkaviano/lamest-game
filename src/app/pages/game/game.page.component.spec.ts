@@ -10,7 +10,7 @@ import { GamePageComponent } from './game.page.component';
 import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
 import { ArrayView } from '@conceptual/view-models/array.view';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 

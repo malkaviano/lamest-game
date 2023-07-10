@@ -1,4 +1,4 @@
-import { DerivedAttributeNameLiteral } from '../literals/derived-attribute-name.literal';
+import { DerivedAttributeNameLiteral } from '@literals/derived-attribute-name.literal';
 
 export class DerivedAttributeDefinition {
   constructor(

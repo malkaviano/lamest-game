@@ -5,15 +5,15 @@ import { NarrativeService } from '../../backend/services/narrative.service';
 import { ActorInterface } from '@conceptual/interfaces/actor.interface';
 import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
 import { SceneActorsInfoInterface } from '@conceptual/interfaces/scene-actors.interface';
-import { SceneDefinition } from '@conceptual/definitions/scene.definition';
+import { SceneDefinition } from '@definitions/scene.definition';
 import { RulesHub } from '../hubs/rules.hub';
 import { InventoryService } from '../../backend/services/inventory.service';
-import { GameEventsDefinition } from '@conceptual/definitions/game-events.definition';
+import { GameEventsDefinition } from '@definitions/game-events.definition';
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '@conceptual/definitions/actionable.definition';
-import { GameItemDefinition } from '@conceptual/definitions/game-item.definition';
+} from '@definitions/actionable.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ArrayView } from '@conceptual/view-models/array.view';
 import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
 import { ActionableEvent } from '@conceptual/events/actionable.event';

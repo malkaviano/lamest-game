@@ -1,4 +1,4 @@
-import { VisibilityLiteral } from '../literals/visibility.literal';
+import { VisibilityLiteral } from '@literals/visibility.literal';
 
 export interface PolicyResultInterface {
   readonly visibility?: {

@@ -14,7 +14,7 @@ import { LockPickingContainerState } from '@conceptual/states/lock-picking-conta
 import {
   directionActionableDefinition,
   directionNamesDefinition,
-} from '@conceptual/definitions/directions.definition';
+} from '@definitions/directions.definition';
 import { VisibilityState } from '@conceptual/states/visibility.state';
 import { ArrayView } from '@conceptual/view-models/array.view';
 import { LazyHelper } from '@conceptual/helpers/lazy.helper';

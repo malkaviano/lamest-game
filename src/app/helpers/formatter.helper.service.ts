@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { ArrayView } from '@conceptual/view-models/array.view';
-import { DerivedAttributeDefinition } from '@conceptual/definitions/derived-attribute.definition';
-import { CharacteristicDefinition } from '@conceptual/definitions/characteristic.definition';
+import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { CharacterIdentityLiteral } from '@conceptual/literals/character-identity.literal';
 import { CharacterValuesView } from '@conceptual/view-models/character-values.view';
 import { KeyValueDescriptionView } from '@conceptual/view-models/key-value-description.view';

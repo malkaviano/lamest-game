@@ -1,6 +1,6 @@
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '@conceptual/interfaces/actor.interface';
-import { WeaponDefinition } from '@conceptual/definitions/weapon.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
 import { MasterRule } from './master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';

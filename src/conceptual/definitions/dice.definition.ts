@@ -1,4 +1,4 @@
-import { DiceLiteral } from '../literals/dice.literal';
+import { DiceLiteral } from '@literals/dice.literal';
 
 export type Dice = {
   readonly [key in DiceLiteral]: number;

@@ -1,6 +1,6 @@
 import { Observable, merge } from 'rxjs';
 
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { LoggerInterface } from '@conceptual/interfaces/logger.interface';
 
 export class LoggingHub implements LoggerInterface {

@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { SequencerHelper } from './sequencer.helper';
-import { DirectionLiteral } from '../literals/direction.literal';
+import { DirectionLiteral } from '@literals/direction.literal';
 
 import { mockedRandomIntHelper } from '../../../tests/mocks';
 

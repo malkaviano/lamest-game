@@ -1,6 +1,6 @@
-import { Dice } from '../../definitions/dice.definition';
-import { EffectTypeLiteral } from '../../literals/effect-type.literal';
-import { ItemUsabilityLiteral } from '../../literals/item-usability';
+import { Dice } from '@definitions/dice.definition';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
+import { ItemUsabilityLiteral } from '@literals/item-usability';
 
 export interface WeaponStoreInterface {
   readonly weapons: {

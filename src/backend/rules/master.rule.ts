@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 
-import { LogMessageDefinition } from '@conceptual/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorInterface } from '@conceptual/interfaces/actor.interface';
 import { LoggerInterface } from '@conceptual/interfaces/logger.interface';
 import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
@@ -10,11 +10,11 @@ import { RuleResultInterface } from '@conceptual/interfaces/rule-result.interfac
 import { RuleResultLiteral } from '@conceptual/literals/rule-result.literal';
 import { RuleNameLiteral } from '@conceptual/literals/rule-name.literal';
 import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
-import { GameItemDefinition } from '@conceptual/definitions/game-item.definition';
-import { UsableDefinition } from '@conceptual/definitions/usable.definition';
-import { ReadableDefinition } from '@conceptual/definitions/readable.definition';
-import { WeaponDefinition } from '@conceptual/definitions/weapon.definition';
-import { ConsumableDefinition } from '@conceptual/definitions/consumable.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { UsableDefinition } from '@definitions/usable.definition';
+import { ReadableDefinition } from '@definitions/readable.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectTypeLiteral } from '@conceptual/literals/effect-type.literal';
 
 type Result = {

@@ -1,5 +1,5 @@
-import { GameItemLiteral } from '../literals/game-item.literal';
-import { ItemUsabilityLiteral } from '../literals/item-usability';
+import { GameItemLiteral } from '@literals/game-item.literal';
+import { ItemUsabilityLiteral } from '@literals/item-usability';
 import { ItemIdentityDefinition } from './item-identity.definition';
 
 export abstract class GameItemDefinition {

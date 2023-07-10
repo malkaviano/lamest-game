@@ -1,4 +1,4 @@
-import { LogCategoryLiteral } from '../literals/log-category.literal';
+import { LogCategoryLiteral } from '@literals/log-category.literal';
 
 export class LogMessageDefinition {
   constructor(

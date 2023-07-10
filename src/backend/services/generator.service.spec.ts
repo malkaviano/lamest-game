@@ -1,7 +1,7 @@
 import { anyNumber, instance, when } from 'ts-mockito';
 
-import { CharacterIdentityDefinition } from '@conceptual/definitions/character-identity.definition';
-import { CharacteristicDefinition } from '@conceptual/definitions/characteristic.definition';
+import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ages } from '@conceptual/literals/age.literal';
 import { heights } from '@conceptual/literals/height.literal';
 import { races } from '@conceptual/literals/race.literal';

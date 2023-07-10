@@ -1,6 +1,6 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { LogMessageDefinition } from '../definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { AffectAxiom } from './affect.axiom';
 import { EffectEvent } from '../events/effect.event';
 

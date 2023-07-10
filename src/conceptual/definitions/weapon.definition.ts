@@ -1,4 +1,4 @@
-import { ItemUsabilityLiteral } from '../literals/item-usability';
+import { ItemUsabilityLiteral } from '@literals/item-usability';
 import { EffectDefinition } from './effect.definition';
 import { ItemIdentityDefinition } from './item-identity.definition';
 import { SkillItemDefinition } from './skill-item.definition';

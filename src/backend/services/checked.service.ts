@@ -1,4 +1,4 @@
-import { GameItemDefinition } from '@conceptual/definitions/game-item.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
 import { InteractiveInterface } from '@conceptual/interfaces/interactive.interface';
 import { RuleExtrasInterface } from '@conceptual/interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';

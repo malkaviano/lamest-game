@@ -1,14 +1,14 @@
-import { ConsumableDefinition } from '@conceptual/definitions/consumable.definition';
-import { EffectDefinition } from '@conceptual/definitions/effect.definition';
-import { createDice } from '@conceptual/definitions/dice.definition';
-import { GameItemDefinition } from '@conceptual/definitions/game-item.definition';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { EffectDefinition } from '@definitions/effect.definition';
+import { createDice } from '@definitions/dice.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
 import { KeyValueInterface } from '@conceptual/interfaces/key-value.interface';
 import { ConverterHelper } from '@conceptual/helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
-import { UsableDefinition } from '@conceptual/definitions/usable.definition';
-import { ItemIdentityDefinition } from '@conceptual/definitions/item-identity.definition';
-import { WeaponDefinition } from '@conceptual/definitions/weapon.definition';
-import { ReadableDefinition } from '@conceptual/definitions/readable.definition';
+import { UsableDefinition } from '@definitions/usable.definition';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { ArrayView } from '@conceptual/view-models/array.view';
 
 export class ItemStore {

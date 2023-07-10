@@ -2,13 +2,13 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { ActorEntity } from './actor.entity';
 import { ArrayView } from '../view-models/array.view';
-import { ActorIdentityDefinition } from '../definitions/actor-identity.definition';
-import { WeaponDefinition } from '../definitions/weapon.definition';
-import { VisibilityLiteral } from '../literals/visibility.literal';
+import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { VisibilityLiteral } from '@literals/visibility.literal';
 import { HitPointsEvent } from '../events/hit-points.event';
 import { EnergyPointsEvent } from '../events/energy-points.event';
 import { unarmedWeapon } from '../behaviors/equipment.behavior';
-import { CheckResultLiteral } from '../literals/check-result.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ActionPointsEvent } from '../events/action-points.event';
 
 import {
