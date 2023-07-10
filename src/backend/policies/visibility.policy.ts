@@ -3,9 +3,9 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { PolicyResultInterface } from '@interfaces/policy-result.interface';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { MasterPolicy } from '@policies/master.policy';
+import { PolicyAbstraction } from '@abstractions/policy.abstraction';
 
-export class VisibilityPolicy extends MasterPolicy {
+export class VisibilityPolicy extends PolicyAbstraction {
   public override enforce(
     ruleResult: RuleResultInterface
   ): PolicyResultInterface {
