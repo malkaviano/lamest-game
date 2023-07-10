@@ -1,4 +1,4 @@
-import { RegeneratorBehavior } from './regenerator.behavior';
+import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 
 import { setupMocks } from '../../../tests/mocks';
 

@@ -1,5 +1,5 @@
 import { createActionableDefinition } from '@definitions/actionable.definition';
-import { ActionableEvent } from '../events/actionable.event';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';

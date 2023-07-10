@@ -4,7 +4,7 @@ import { ConverterHelper } from '@helpers/converter.helper';
 import { ActorEntity } from '@conceptual/entities/actor.entity';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { emptyState } from '@conceptual/states/empty.state';
-import { RegeneratorBehavior } from '@conceptual/behaviors/regenerator.behavior';
+import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 
 import {
   mockedActorBehavior,

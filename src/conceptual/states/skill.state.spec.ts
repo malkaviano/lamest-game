@@ -1,5 +1,5 @@
 import { createActionableDefinition } from '@definitions/actionable.definition';
-import { LazyHelper } from '../../backend/helpers/lazy.helper';
+import { LazyHelper } from '@helpers/lazy.helper';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';

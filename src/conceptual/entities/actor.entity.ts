@@ -1,9 +1,9 @@
 import { Observable, Subject } from 'rxjs';
 
-import { ActorBehavior } from '../behaviors/actor.behavior';
-import { AiBehavior } from '../behaviors/ai.behavior';
-import { RegeneratorBehavior } from '../behaviors/regenerator.behavior';
-import { EquipmentBehavior } from '../behaviors/equipment.behavior';
+import { ActorBehavior } from '@behaviors/actor.behavior';
+import { AiBehavior } from '@behaviors/ai.behavior';
+import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
+import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
@@ -20,14 +20,14 @@ import { VisibilityLiteral } from '@literals/visibility.literal';
 import { ActionableState } from '../states/actionable.state';
 import { ArrayView } from '@wrappers/array.view';
 import { InteractiveEntity } from './interactive.entity';
-import { HitPointsEvent } from '../events/hit-points.event';
-import { EnergyPointsEvent } from '../events/energy-points.event';
-import { ActionableEvent } from '../events/actionable.event';
-import { EffectEvent } from '../events/effect.event';
+import { HitPointsEvent } from '@conceptual/events/hit-points.event';
+import { EnergyPointsEvent } from '@conceptual/events/energy-points.event';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { EffectEvent } from '@conceptual/events/effect.event';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { ActionPointsEvent } from '../events/action-points.event';
+import { ActionPointsEvent } from '@conceptual/events/action-points.event';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;

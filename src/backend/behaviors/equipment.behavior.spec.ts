@@ -1,4 +1,7 @@
-import { EquipmentBehavior, unarmedWeapon } from './equipment.behavior';
+import {
+  EquipmentBehavior,
+  unarmedWeapon,
+} from '@behaviors/equipment.behavior';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 
 import { molotov, simpleSword } from '../../../tests/fakes';

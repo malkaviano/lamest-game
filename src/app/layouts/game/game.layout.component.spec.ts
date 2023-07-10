@@ -9,7 +9,7 @@ import { ArrayView } from '@wrappers/array.view';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { SimpleState } from '@conceptual/states/simple.state';
-import { unarmedWeapon } from '@conceptual/behaviors/equipment.behavior';
+import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { InteractiveEntity } from '@conceptual/entities/interactive.entity';
 
 import {

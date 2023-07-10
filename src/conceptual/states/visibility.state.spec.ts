@@ -20,8 +20,8 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import { PlayerEntity } from '../entities/player.entity';
-import { ActorBehavior } from '../behaviors/actor.behavior';
-import { EquipmentBehavior } from '../behaviors/equipment.behavior';
+import { ActorBehavior } from '@behaviors/actor.behavior';
+import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 
 const fakeState = (action: ActionableDefinition, tries: number) =>

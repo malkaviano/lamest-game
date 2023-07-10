@@ -5,11 +5,11 @@ import { ArrayView } from '@wrappers/array.view';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { HitPointsEvent } from '../events/hit-points.event';
-import { EnergyPointsEvent } from '../events/energy-points.event';
-import { unarmedWeapon } from '../behaviors/equipment.behavior';
+import { HitPointsEvent } from '@conceptual/events/hit-points.event';
+import { EnergyPointsEvent } from '@conceptual/events/energy-points.event';
+import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { ActionPointsEvent } from '../events/action-points.event';
+import { ActionPointsEvent } from '@conceptual/events/action-points.event';
 
 import {
   fakeCharacteristics,

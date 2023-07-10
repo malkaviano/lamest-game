@@ -2,9 +2,9 @@ import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { ClassificationLiteral } from '@literals/classification.literal';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { AiBehavior } from './ai.behavior';
+import { AiBehavior } from '@behaviors/ai.behavior';
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableEvent } from '../events/actionable.event';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
 
 import { actionAffect, playerInfo } from '../../../tests/fakes';
 import { setupMocks } from '../../../tests/mocks';

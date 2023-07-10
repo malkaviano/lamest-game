@@ -26,6 +26,7 @@
     "esModuleInterop": true,
     "useDefineForClassFields": false,
     "paths": {
+      "@behaviors/*": [ "./src/backend/behaviors/*" ],
       "@helpers/*": [ "./src/backend/helpers/*" ],
       "@services/*": [ "./src/backend/services/*" ],
       "@rules/*": [ "./src/backend/rules/*" ],

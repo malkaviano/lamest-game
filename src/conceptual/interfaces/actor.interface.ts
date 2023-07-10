@@ -1,4 +1,4 @@
-import { ActionableEvent } from '../events/actionable.event';
+import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { ArrayView } from '@wrappers/array.view';
 import { InteractiveInterface } from './interactive.interface';

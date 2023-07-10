@@ -8,10 +8,10 @@ import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
 import { ArrayView } from '@wrappers/array.view';
 import { ActorEntity } from '@conceptual/entities/actor.entity';
-import { ActorBehavior } from '@conceptual/behaviors/actor.behavior';
-import { EquipmentBehavior } from '@conceptual/behaviors/equipment.behavior';
-import { RegeneratorBehavior } from '@conceptual/behaviors/regenerator.behavior';
-import { AiBehavior } from '@conceptual/behaviors/ai.behavior';
+import { ActorBehavior } from '@behaviors/actor.behavior';
+import { EquipmentBehavior } from '@behaviors/equipment.behavior';
+import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
+import { AiBehavior } from '@behaviors/ai.behavior';
 
 export class ActorStore {
   private readonly store: Map<string, ActorEntity>;
