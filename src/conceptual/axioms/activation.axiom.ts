@@ -5,7 +5,7 @@ import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { GamePredicate } from '../predicates/game.predicate';
+import { GamePredicate } from '@predicates/game.predicate';
 
 export class ActivationAxiom implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;

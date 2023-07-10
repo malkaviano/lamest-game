@@ -26,6 +26,7 @@
     "esModuleInterop": true,
     "useDefineForClassFields": false,
     "paths": {
+      "@predicates/*": [ "./src/backend/predicates/*" ],
       "@events/*": [ "./src/backend/events/*" ],
       "@behaviors/*": [ "./src/backend/behaviors/*" ],
       "@helpers/*": [ "./src/backend/helpers/*" ],

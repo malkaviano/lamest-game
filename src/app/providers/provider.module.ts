@@ -40,7 +40,7 @@ import { RandomCharacterService } from '@services/random-character.service';
 import { SkillService } from '@services/skill.service';
 import { LoggingHub } from '@hubs/logging.hub';
 import { ActionPolicy } from '@policies/action.policy';
-import { GamePredicate } from '@conceptual/predicates/game.predicate';
+import { GamePredicate } from '@predicates/game.predicate';
 
 const gamePredicate = new GamePredicate();
 

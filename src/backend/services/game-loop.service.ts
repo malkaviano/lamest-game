@@ -21,7 +21,7 @@ import { PlayerInterface } from '@interfaces/player.interface';
 import { ActorEntity } from '@conceptual/entities/actor.entity';
 import { PolicyHub } from '@hubs/policy.hub';
 import { LoggingHub } from '@hubs/logging.hub';
-import { GamePredicate } from '@conceptual/predicates/game.predicate';
+import { GamePredicate } from '@predicates/game.predicate';
 import { SettingsStore } from '../../stores/settings.store';
 
 export class GameLoopService {

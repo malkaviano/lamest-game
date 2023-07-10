@@ -5,7 +5,7 @@ import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { RollHelper } from '@helpers/roll.helper';
-import { GamePredicate } from '../predicates/game.predicate';
+import { GamePredicate } from '@predicates/game.predicate';
 
 export class DodgeAxiom implements LoggerInterface, ActorDodgedInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition>;

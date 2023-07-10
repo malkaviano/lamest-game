@@ -8,7 +8,7 @@ import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
-import { GamePredicate } from '@conceptual/predicates/game.predicate';
+import { GamePredicate } from '@predicates/game.predicate';
 
 export class EquipRule extends RuleAbstraction {
   constructor(

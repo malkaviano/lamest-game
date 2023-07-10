@@ -70,7 +70,7 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { GamePredicate } from '@conceptual/predicates/game.predicate';
+import { GamePredicate } from '@predicates/game.predicate';
 
 export const mockedInventoryService = mock(InventoryService);
 
