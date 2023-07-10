@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ActionableEvent } from '@conceptual/events/actionable.event';
-import { CharacterValuesView } from '@conceptual/view-models/character-values.view';
+import { CharacterValuesView } from '../../view-models/character-values.view';
 import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
 
 @Component({

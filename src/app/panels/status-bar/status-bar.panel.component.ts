@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { CharacterStatusView } from '@conceptual/view-models/character-status.view';
+import { CharacterStatusView } from 'src/app/view-models/character-status.view';
 
 @Component({
   selector: 'app-status-bar-panel',

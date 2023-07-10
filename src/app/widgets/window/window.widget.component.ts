@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { KeyValueDescriptionView } from '@conceptual/view-models/key-value-description.view';
+import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 
 @Component({
   selector: 'app-window-widget',

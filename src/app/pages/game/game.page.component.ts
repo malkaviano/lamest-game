@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { SceneDefinition } from '@definitions/scene.definition';
-import { CharacterValuesView } from '@conceptual/view-models/character-values.view';
+import { CharacterValuesView } from '../../view-models/character-values.view';
 import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
 import { GameItemDefinition } from '@definitions/game-item.definition';
-import { CharacterStatusView } from '@conceptual/view-models/character-status.view';
+import { CharacterStatusView } from 'src/app/view-models/character-status.view';
 import { ArrayView } from '@conceptual/view-models/array.view';
-import { KeyValueDescriptionView } from '@conceptual/view-models/key-value-description.view';
+import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 import { GameStringsStore } from '../../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { LogMessageDefinition } from '@definitions/log-message.definition';

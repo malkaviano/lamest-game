@@ -1,6 +1,6 @@
-import { GameItemDefinition } from '@definitions/game-item.definition';
-import { ArrayView } from './array.view';
 import { KeyValueDescriptionView } from './key-value-description.view';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { ArrayView } from '@conceptual/view-models/array.view';
 
 export class CharacterStatusView {
   private constructor(
