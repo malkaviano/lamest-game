@@ -15,7 +15,7 @@ import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { CheckedService } from '../services/checked.service';
-import { MasterRule } from './master.rule';
+import { MasterRule } from '@rules/master.rule';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 
 export class AffectRule extends MasterRule implements ActorDodgedInterface {

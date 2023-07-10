@@ -1,7 +1,7 @@
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { WeaponDefinition } from '@definitions/weapon.definition';
-import { MasterRule } from './master.rule';
+import { MasterRule } from '@rules/master.rule';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';

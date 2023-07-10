@@ -1,7 +1,7 @@
 import { RollHelper } from '@conceptual/helpers/roll.helper';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
-import { MasterRule } from './master.rule';
+import { MasterRule } from '@rules/master.rule';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CheckedService } from '../services/checked.service';

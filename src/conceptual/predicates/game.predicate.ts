@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 
-import { MasterRule } from '../../backend/rules/master.rule';
+import { MasterRule } from '@rules/master.rule';
 import { SettingsStore } from '../../stores/settings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorInterface } from '@interfaces/actor.interface';

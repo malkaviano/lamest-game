@@ -26,13 +26,14 @@
     "esModuleInterop": true,
     "useDefineForClassFields": false,
     "paths": {
+        "@rules/*": [ "./src/backend/rules/*" ],
         "@hubs/*": [ "./src/backend/hubs/*" ],
         "@policies/*": [ "./src/backend/policies/*" ],
-        "@conceptual/*": [ "./src/conceptual/*" ],
         "@definitions/*": [ "./src/conceptual/definitions/*" ],
         "@interfaces/*": [ "./src/conceptual/interfaces/*" ],
         "@literals/*": [ "./src/conceptual/literals/*" ],
         "@wrappers/*": [ "./src/wrappers/*" ],
+        "@conceptual/*": [ "./src/conceptual/*" ],
     }
   },
   "angularCompilerOptions": {

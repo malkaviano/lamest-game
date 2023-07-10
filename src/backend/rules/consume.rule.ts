@@ -1,7 +1,7 @@
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { InventoryService } from '../services/inventory.service';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { MasterRule } from './master.rule';
+import { MasterRule } from '@rules/master.rule';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
