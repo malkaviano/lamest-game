@@ -34,7 +34,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
-import { GameLoopService } from '../../../backend/services/game-loop.service';
+import { GameLoopService } from '@services/game-loop.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;

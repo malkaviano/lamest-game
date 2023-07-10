@@ -1,7 +1,7 @@
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
-import { InventoryService } from '../services/inventory.service';
+import { InventoryService } from '@services/inventory.service';
 import { GameStringsStore } from '../../stores/game-strings.store';
 
 export class CheckedService {

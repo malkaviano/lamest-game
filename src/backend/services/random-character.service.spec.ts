@@ -1,6 +1,6 @@
 import { anyNumber, anything, instance, when } from 'ts-mockito';
 
-import { RandomCharacterService } from './random-character.service';
+import { RandomCharacterService } from '@services/random-character.service';
 import { ArrayView } from '@wrappers/array.view';
 
 import {

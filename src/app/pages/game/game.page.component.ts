@@ -17,7 +17,7 @@ import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { ViewableInterface } from '@interfaces/viewable.interface';
 import { ViewerComponent } from '../../dialogs/viewer/viewer.dialog.component';
-import { GameLoopService } from '../../../backend/services/game-loop.service';
+import { GameLoopService } from '@services/game-loop.service';
 
 @Component({
   selector: 'app-game-page',

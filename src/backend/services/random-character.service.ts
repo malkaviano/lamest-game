@@ -1,6 +1,6 @@
-import { GeneratorService } from './generator.service';
+import { GeneratorService } from '@services/generator.service';
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
-import { SkillService } from './skill.service';
+import { SkillService } from '@services/skill.service';
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
 import { ProfessionStore } from '../../stores/profession.store';
 import { SkillStore } from '../../stores/skill.store';

@@ -2,7 +2,7 @@ import { anyNumber, instance, when } from 'ts-mockito';
 
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
-import { GeneratorService } from './generator.service';
+import { GeneratorService } from '@services/generator.service';
 import { ArrayView } from '@wrappers/array.view';
 import { races } from '@definitions/races.definition';
 import { weights } from '@definitions/weight.definitions';

@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
-import { CharacterService } from './character.service';
+import { CharacterService } from '@services/character.service';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { EnergyPointsEvent } from '@conceptual/events/energy-points.event';

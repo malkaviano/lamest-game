@@ -1,13 +1,13 @@
 import { filter, map } from 'rxjs';
 
-import { CharacterService } from '../../backend/services/character.service';
-import { NarrativeService } from '../../backend/services/narrative.service';
+import { CharacterService } from '@services/character.service';
+import { NarrativeService } from '@services/narrative.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
 import { SceneDefinition } from '@definitions/scene.definition';
-import { RulesHub } from '../hubs/rules.hub';
-import { InventoryService } from '../../backend/services/inventory.service';
+import { RulesHub } from '@hubs/rules.hub';
+import { InventoryService } from '@services/inventory.service';
 import { GameEventsDefinition } from '@definitions/game-events.definition';
 import {
   ActionableDefinition,
