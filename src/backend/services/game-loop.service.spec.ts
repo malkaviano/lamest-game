@@ -5,7 +5,7 @@ import { GameLoopService } from './game-loop.service';
 import { ReadableInterface } from '@conceptual/interfaces/readable.interface';
 import { ItemStoredDefinition } from '@definitions/item-storage.definition';
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { InventoryEvent } from '@conceptual/events/inventory.event';
 
 import {
@@ -127,27 +127,30 @@ describe('GameLoopService', () => {
           playerInfo.id,
           consumableFirstAid
         ),
-        expected: ActionableItemView.create(consumableFirstAid, actionConsume),
+        expected: new ActionableItemDefinition(
+          consumableFirstAid,
+          actionConsume
+        ),
         item: consumableFirstAid,
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, unDodgeableAxe),
-        expected: ActionableItemView.create(unDodgeableAxe, actionEquip),
+        expected: new ActionableItemDefinition(unDodgeableAxe, actionEquip),
         item: unDodgeableAxe,
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, masterKey),
-        expected: ActionableItemView.create(masterKey, actionNoop),
+        expected: new ActionableItemDefinition(masterKey, actionNoop),
         item: masterKey,
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, readable),
-        expected: ActionableItemView.create(readable, actionRead),
+        expected: new ActionableItemDefinition(readable, actionRead),
         item: readable,
       },
     ].forEach(({ invEvent, expected, item }) => {
       it(`should emit event ${invEvent.eventName}`, (done) => {
-        let result: ArrayView<ActionableItemView> | undefined;
+        let result: ArrayView<ActionableItemDefinition> | undefined;
 
         when(mockedInventoryService.list(anyString())).thenReturn(
           ArrayView.create(new ItemStoredDefinition(item, 1))

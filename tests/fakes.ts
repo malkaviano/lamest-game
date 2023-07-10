@@ -19,7 +19,7 @@ import { KeyValueDescriptionView } from '../src/app/view-models/key-value-descri
 import { DiscardState } from '../src/conceptual/states/discard.state';
 import { UsableDefinition } from '@definitions/usable.definition';
 import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
-import { ActionableItemView } from '../src/conceptual/view-models/actionable-item.view';
+import { ActionableItemDefinition } from '../src/conceptual/definitions/actionable-item.definitions';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { SkillDefinition } from '@definitions/skill.definition';
@@ -319,7 +319,7 @@ export const actionNoop = createActionableDefinition('NOOP', 'noop', 'NOOP');
 export const actionableItemView = (
   item: GameItemDefinition,
   action: ActionableDefinition
-): ActionableItemView => ActionableItemView.create(item, action);
+): ActionableItemDefinition => new ActionableItemDefinition(item, action);
 
 export const actionableEvent = (action: ActionableDefinition, id: string) =>
   new ActionableEvent(action, id);

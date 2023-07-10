@@ -6,7 +6,7 @@ import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { CharacterValuesView } from '../../view-models/character-values.view';
-import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ViewableInterface } from '@conceptual/interfaces/viewable.interface';
 
@@ -30,7 +30,7 @@ export class GameLayoutComponent {
 
   @Input() characterValues!: CharacterValuesView;
 
-  @Input() inventory!: ActionableItemView[];
+  @Input() inventory!: ActionableItemDefinition[];
 
   @Input() equipped!: GameItemDefinition;
 

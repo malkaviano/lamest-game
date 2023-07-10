@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { SceneDefinition } from '@definitions/scene.definition';
 import { CharacterValuesView } from '../../view-models/character-values.view';
-import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { CharacterStatusView } from 'src/app/view-models/character-status.view';
 import { ArrayView } from '@wrappers/array.view';
@@ -32,7 +32,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public characterValues: CharacterValuesView;
 
-  public inventory: ActionableItemView[];
+  public inventory: ActionableItemDefinition[];
 
   public equipped!: GameItemDefinition;
 

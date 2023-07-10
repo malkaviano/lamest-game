@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { CharacterValuesView } from '../../view-models/character-values.view';
-import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 
 @Component({
   selector: 'app-sheet-panel',
@@ -14,7 +14,7 @@ export class SheetPanelComponent {
 
   @Input() characterValues!: CharacterValuesView;
 
-  @Input() inventory!: ActionableItemView[];
+  @Input() inventory!: ActionableItemDefinition[];
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();

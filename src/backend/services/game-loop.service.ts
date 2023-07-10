@@ -15,7 +15,7 @@ import {
 } from '@definitions/actionable.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { PlayerInterface } from '@conceptual/interfaces/player.interface';
 import { ActorEntity } from '@conceptual/entities/actor.entity';
@@ -186,15 +186,15 @@ export class GameLoopService {
 
   private playerInventory(
     inventoryService: InventoryService
-  ): ArrayView<ActionableItemView> {
+  ): ArrayView<ActionableItemDefinition> {
     const playerItems = inventoryService.list(this.player.id);
 
-    const inventoryView: ActionableItemView[] = [];
+    const inventoryView: ActionableItemDefinition[] = [];
 
     const items = playerItems.items.reduce((acc, itemStorage) => {
       for (let index = 0; index < itemStorage.quantity; index++) {
         acc.push(
-          ActionableItemView.create(
+          new ActionableItemDefinition(
             itemStorage.item,
             this.inventoryAction(itemStorage.item)
           )

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 
 @Component({
@@ -10,7 +10,7 @@ import { ActionableEvent } from '@conceptual/events/actionable.event';
   styleUrls: ['./equipment.widget.component.css'],
 })
 export class EquipmentWidgetComponent {
-  @Input() equipment!: ActionableItemView;
+  @Input() equipment!: ActionableItemDefinition;
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
   constructor() {

@@ -7,7 +7,7 @@ import { instance, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
-import { ActionableItemView } from '@conceptual/view-models/actionable-item.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableEvent } from '@conceptual/events/actionable.event';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
@@ -71,8 +71,8 @@ describe('GamePageComponent', () => {
     when(mockedGameEventsDefinition.playerInventory$).thenReturn(
       of(
         ArrayView.create(
-          ActionableItemView.create(simpleSword, actionEquip),
-          ActionableItemView.create(unDodgeableAxe, actionEquip)
+          new ActionableItemDefinition(simpleSword, actionEquip),
+          new ActionableItemDefinition(unDodgeableAxe, actionEquip)
         )
       )
     );
