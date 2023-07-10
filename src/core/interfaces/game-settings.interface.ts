@@ -19,4 +19,5 @@ export interface GameSettingsInterface {
     readonly amount: number;
   };
   readonly ruleCost: { [key in RuleNameLiteral]: number };
+  readonly aiLoopMilliseconds: number;
 }

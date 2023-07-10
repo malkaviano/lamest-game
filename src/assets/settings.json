@@ -15,8 +15,8 @@
       "resistances": []
     },
     "apRegeneration": {
-      "intervalMilliseconds": 3000,
-      "amount": 2
+      "intervalMilliseconds": 1500,
+      "amount": 1
     },
     "ruleCost": {
       "AFFECT": 3,
@@ -29,6 +29,7 @@
       "SKILL": 2,
       "UNEQUIP": 1,
       "USE": 1
-    }
+    },
+    "aiLoopMilliseconds": 2000
   }
 }
