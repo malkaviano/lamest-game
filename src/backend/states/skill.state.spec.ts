@@ -1,10 +1,10 @@
 import { createActionableDefinition } from '@definitions/actionable.definition';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableState } from './actionable.state';
-import { emptyState } from './empty.state';
-import { SimpleState } from './simple.state';
-import { SkillState } from './skill.state';
+import { ActionableState } from '@states/actionable.state';
+import { emptyState } from '@states/empty.state';
+import { SimpleState } from '@states/simple.state';
+import { SkillState } from '@states/skill.state';
 
 describe('SkillState', () => {
   describe('when action succeeds', () => {

@@ -4,8 +4,8 @@ import { ActorStore } from './actor.store';
 import { InteractiveStore } from './interactive.store';
 import { ResourcesStore } from './resources.store';
 import { ArrayView } from '@wrappers/array.view';
-import { SceneEntity } from '@conceptual/entities/scene.entity';
-import { InteractiveEntity } from '@conceptual/entities/interactive.entity';
+import { SceneEntity } from '@entities/scene.entity';
+import { InteractiveEntity } from '@entities/interactive.entity';
 
 export class SceneStore {
   private readonly store: Map<string, SceneEntity>;

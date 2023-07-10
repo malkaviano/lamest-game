@@ -1,5 +1,5 @@
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableState } from './actionable.state';
+import { ActionableState } from '@states/actionable.state';
 
 class EmptyState extends ActionableState {
   constructor() {

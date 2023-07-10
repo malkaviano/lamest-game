@@ -1,6 +1,6 @@
 import { instance } from 'ts-mockito';
 
-import { PlayerEntity } from './player.entity';
+import { PlayerEntity } from '@entities/player.entity';
 import { ActionableEvent } from '@events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
 

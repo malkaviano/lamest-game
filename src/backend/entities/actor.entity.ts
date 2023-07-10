@@ -19,7 +19,7 @@ import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { ActionableState } from '@states/actionable.state';
 import { ArrayView } from '@wrappers/array.view';
-import { InteractiveEntity } from './interactive.entity';
+import { InteractiveEntity } from '@entities/interactive.entity';
 import { HitPointsEvent } from '@events/hit-points.event';
 import { EnergyPointsEvent } from '@events/energy-points.event';
 import { ActionableEvent } from '@events/actionable.event';

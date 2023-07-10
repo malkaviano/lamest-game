@@ -1,7 +1,7 @@
 import { createActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { ActionableState } from './actionable.state';
+import { ActionableState } from '@states/actionable.state';
 
 describe('ActionableState', () => {
   describe('execute action', () => {

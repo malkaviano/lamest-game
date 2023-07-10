@@ -10,7 +10,7 @@ import { ActionableEvent } from '@events/actionable.event';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { SimpleState } from '@states/simple.state';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
-import { InteractiveEntity } from '@conceptual/entities/interactive.entity';
+import { InteractiveEntity } from '@entities/interactive.entity';
 
 import {
   actionAsk,

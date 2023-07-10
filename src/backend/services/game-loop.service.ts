@@ -18,7 +18,7 @@ import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ActionableEvent } from '@events/actionable.event';
 import { PlayerInterface } from '@interfaces/player.interface';
-import { ActorEntity } from '@conceptual/entities/actor.entity';
+import { ActorEntity } from '@entities/actor.entity';
 import { PolicyHub } from '@hubs/policy.hub';
 import { LoggingHub } from '@hubs/logging.hub';
 import { GamePredicate } from '@predicates/game.predicate';

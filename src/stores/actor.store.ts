@@ -7,7 +7,7 @@ import { ResourcesStore } from './resources.store';
 import { SkillStore } from './skill.store';
 import { StatesStore } from './states.store';
 import { ArrayView } from '@wrappers/array.view';
-import { ActorEntity } from '@conceptual/entities/actor.entity';
+import { ActorEntity } from '@entities/actor.entity';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';

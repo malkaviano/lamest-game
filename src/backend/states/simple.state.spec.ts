@@ -1,6 +1,6 @@
 import { createActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '@wrappers/array.view';
-import { SimpleState } from './simple.state';
+import { SimpleState } from '@states/simple.state';
 
 describe('SimpleState', () => {
   describe('execute action', () => {

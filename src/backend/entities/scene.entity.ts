@@ -1,5 +1,5 @@
 import { ArrayView } from '@wrappers/array.view';
-import { InteractiveEntity } from './interactive.entity';
+import { InteractiveEntity } from '@entities/interactive.entity';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 
 export class SceneEntity {

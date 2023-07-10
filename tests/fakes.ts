@@ -19,7 +19,7 @@ import { KeyValueDescriptionView } from '../src/app/view-models/key-value-descri
 import { DiscardState } from '@states/discard.state';
 import { UsableDefinition } from '@definitions/usable.definition';
 import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
-import { ActionableItemDefinition } from '@conceptual/definitions/actionable-item.definitions';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { SkillDefinition } from '@definitions/skill.definition';

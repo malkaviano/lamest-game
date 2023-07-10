@@ -6,7 +6,7 @@ import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { GameStringsStore } from '../../stores/game-strings.store';
-import { ActorEntity } from '@conceptual/entities/actor.entity';
+import { ActorEntity } from '@entities/actor.entity';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 
 export class AffectAxiom implements LoggerInterface {

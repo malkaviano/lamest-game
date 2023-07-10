@@ -4,6 +4,10 @@ import { VisibilityState } from './visibility.state';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { emptyState } from './empty.state';
 import { GameStringsStore } from '../../stores/game-strings.store';
+import { PlayerEntity } from '@entities/player.entity';
+import { ActorBehavior } from '@behaviors/actor.behavior';
+import { EquipmentBehavior } from '@behaviors/equipment.behavior';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 import {
   actionAsk,
@@ -19,10 +23,6 @@ import {
   mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
-import { PlayerEntity } from '../../conceptual/entities/player.entity';
-import { ActorBehavior } from '@behaviors/actor.behavior';
-import { EquipmentBehavior } from '@behaviors/equipment.behavior';
-import { CheckResultLiteral } from '@literals/check-result.literal';
 
 const fakeState = (action: ActionableDefinition, tries: number) =>
   new VisibilityState(action, tries);

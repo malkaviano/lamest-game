@@ -1,7 +1,7 @@
 import { instance } from 'ts-mockito';
 
 import { ArrayView } from '@wrappers/array.view';
-import { SceneEntity } from './scene.entity';
+import { SceneEntity } from '@entities/scene.entity';
 
 import { mockedInteractiveEntity, setupMocks } from '../../../tests/mocks';
 

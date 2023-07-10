@@ -41,12 +41,12 @@ import { FormatterHelperService } from '../src/app/helpers/formatter.helper.serv
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 import { AiBehavior } from '@behaviors/ai.behavior';
-import { PlayerEntity } from '@conceptual/entities/player.entity';
-import { InteractiveEntity } from '@conceptual/entities/interactive.entity';
-import { ActorEntity } from '@conceptual/entities/actor.entity';
+import { PlayerEntity } from '@entities/player.entity';
+import { InteractiveEntity } from '@entities/interactive.entity';
+import { ActorEntity } from '@entities/actor.entity';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';
-import { SceneEntity } from '@conceptual/entities/scene.entity';
+import { SceneEntity } from '@entities/scene.entity';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { CheckedService } from '@services/checked.service';
 import { RollHelper } from '@helpers/roll.helper';

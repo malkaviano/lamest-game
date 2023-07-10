@@ -1,6 +1,6 @@
 import { createActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '@wrappers/array.view';
-import { DiscardState } from './discard.state';
+import { DiscardState } from '@states/discard.state';
 
 describe('DiscardState', () => {
   describe('stateResult', () => {

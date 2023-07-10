@@ -5,7 +5,7 @@ import { GameStringsStore } from '../../stores/game-strings.store';
 import { ActionableState } from './actionable.state';
 import { emptyState } from './empty.state';
 import { ArrayView } from '@wrappers/array.view';
-import { ActorEntity } from '@conceptual/entities/actor.entity';
+import { ActorEntity } from '@entities/actor.entity';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 
 export class VisibilityState extends ActionableState {

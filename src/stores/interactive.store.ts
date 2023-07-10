@@ -2,7 +2,7 @@ import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { StatesStore } from './states.store';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
-import { InteractiveEntity } from '@conceptual/entities/interactive.entity';
+import { InteractiveEntity } from '@entities/interactive.entity';
 
 export class InteractiveStore {
   private readonly store: Map<string, InteractiveEntity>;

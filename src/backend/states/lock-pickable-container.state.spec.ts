@@ -4,12 +4,13 @@ import {
 } from '@definitions/directions.definition';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { ArrayView } from '@wrappers/array.view';
-import { DiscardState } from './discard.state';
-import { LockPickableContainerState } from './lock-pickable-container.state';
+import { DiscardState } from '@states/discard.state';
+import { LockPickableContainerState } from '@states/lock-pickable-container.state';
 import { createActionableDefinition } from '@definitions/actionable.definition';
 
 import { actionUseMasterKey, lootState, masterKey } from 'tests/fakes';
-import { LockPickingContainerState } from './lock-picking-container.state';
+import { LockPickingContainerState } from '@states/lock-picking-container.state';
+
 import { setupMocks } from 'tests/mocks';
 
 const f = () => lootState;

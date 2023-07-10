@@ -1,6 +1,6 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { ActionableState } from './actionable.state';
-import { emptyState } from './empty.state';
+import { ActionableState } from '@states/actionable.state';
+import { emptyState } from '@states/empty.state';
 import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { CheckResultLiteral } from '@literals/check-result.literal';

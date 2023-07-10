@@ -2,9 +2,9 @@ import { ActionableDefinition } from '@definitions/actionable.definition';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableState } from './actionable.state';
-import { LockPickingContainerState } from './lock-picking-container.state';
-import { LockedContainerState } from './locked-container.state';
+import { ActionableState } from '@states/actionable.state';
+import { LockPickingContainerState } from '@states/lock-picking-container.state';
+import { LockedContainerState } from '@states/locked-container.state';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { GameStringsStore } from '../../stores/game-strings.store';
 

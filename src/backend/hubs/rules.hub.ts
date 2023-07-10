@@ -2,7 +2,7 @@ import { merge, Observable } from 'rxjs';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { LoggerInterface } from '@interfaces/logger.interface';
-import { RuleAbstraction } from '@conceptual/abstractions/rule.abstraction';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { AffectRule } from '../rules/affect.rule';

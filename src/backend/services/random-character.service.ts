@@ -5,7 +5,7 @@ import { CharacteristicSetDefinition } from '@definitions/characteristic-set.def
 import { ProfessionStore } from '../../stores/profession.store';
 import { SkillStore } from '../../stores/skill.store';
 import { SettingsStore } from '../../stores/settings.store';
-import { PlayerEntity } from '@conceptual/entities/player.entity';
+import { PlayerEntity } from '@entities/player.entity';
 import { PlayerInterface } from '@interfaces/player.interface';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';

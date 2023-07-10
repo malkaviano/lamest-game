@@ -12,7 +12,7 @@ import { MaterialModule } from '../../../material/material.module';
 import { createActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
-import { InteractiveEntity } from '@conceptual/entities/interactive.entity';
+import { InteractiveEntity } from '@entities/interactive.entity';
 
 describe('InteractiveWidgetComponent', () => {
   let fixture: ComponentFixture<InteractiveWidgetComponent>;

@@ -1,5 +1,5 @@
 import { ArrayView } from '@wrappers/array.view';
-import { ConversationState } from './conversation.state';
+import { ConversationState } from '@states/conversation.state';
 import { createActionableDefinition } from '@definitions/actionable.definition';
 import { MessageMapDefinition } from '@definitions/message-map.definition';
 

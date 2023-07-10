@@ -1,6 +1,6 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { ActorEntity } from './actor.entity';
+import { ActorEntity } from '@entities/actor.entity';
 import { ArrayView } from '@wrappers/array.view';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';

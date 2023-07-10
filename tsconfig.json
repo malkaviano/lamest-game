@@ -26,6 +26,7 @@
     "esModuleInterop": true,
     "useDefineForClassFields": false,
     "paths": {
+      "@entities/*": [ "./src/backend/entities/*" ],
       "@states/*": [ "./src/backend/states/*" ],
       "@axioms/*": [ "./src/backend/axioms/*" ],
       "@predicates/*": [ "./src/backend/predicates/*" ],
@@ -40,8 +41,7 @@
       "@abstractions/*": [ "./src/conceptual/abstractions/*" ],
       "@interfaces/*": [ "./src/conceptual/interfaces/*" ],
       "@literals/*": [ "./src/conceptual/literals/*" ],
-      "@wrappers/*": [ "./src/wrappers/*" ],
-      "@conceptual/*": [ "./src/conceptual/*" ],
+      "@wrappers/*": [ "./src/wrappers/*" ]
     }
   },
   "angularCompilerOptions": {
