@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { GameStringsStore } from '../../stores/game-strings.store';
 import { SceneStore } from '../../stores/scene.store';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { SceneEntity } from '@conceptual/entities/scene.entity';
 
 export class NarrativeService {

@@ -1,7 +1,7 @@
 import { instance } from 'ts-mockito';
 
 import { PlayerEntity } from './player.entity';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
 
 import { fakeIdentity, actionConsume } from '../../../tests/fakes';

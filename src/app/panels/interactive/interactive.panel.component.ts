@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 

@@ -3,7 +3,7 @@ import { instance } from 'ts-mockito';
 import { ItemStoredDefinition } from '@definitions/item-storage.definition';
 import { InventoryService } from '@services/inventory.service';
 import { ArrayView } from '@wrappers/array.view';
-import { InventoryEvent } from '@conceptual/events/inventory.event';
+import { InventoryEvent } from '@events/inventory.event';
 
 import {
   consumableAnalgesic,

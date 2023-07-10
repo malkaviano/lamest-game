@@ -1,4 +1,4 @@
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { ActorInterface } from './actor.interface';
 import { InteractiveInterface } from './interactive.interface';
 import { RuleResultLiteral } from '@literals/rule-result.literal';

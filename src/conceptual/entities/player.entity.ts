@@ -12,7 +12,7 @@ import { AgeLiteral } from '@literals/age.literal';
 import { RaceLiteral } from '@literals/race.literal';
 import { HeightLiteral } from '@literals/height.literal';
 import { WeightLiteral } from '@literals/weight.literal';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { PlayerInterface } from '@interfaces/player.interface';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';

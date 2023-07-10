@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { GamePageComponent } from './game.page.component';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';

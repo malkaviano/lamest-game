@@ -3,9 +3,9 @@ import { instance } from 'ts-mockito';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
-import { HitPointsEvent } from '@conceptual/events/hit-points.event';
-import { EnergyPointsEvent } from '@conceptual/events/energy-points.event';
-import { ActionPointsEvent } from '@conceptual/events/action-points.event';
+import { HitPointsEvent } from '@events/hit-points.event';
+import { EnergyPointsEvent } from '@events/energy-points.event';
+import { ActionPointsEvent } from '@events/action-points.event';
 
 import {
   fakeCharacteristics,

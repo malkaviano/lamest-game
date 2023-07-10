@@ -5,7 +5,7 @@ import { ActorInterface } from '@interfaces/actor.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { RuleInterface } from '@interfaces/rule.interface';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';

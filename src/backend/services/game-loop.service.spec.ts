@@ -6,7 +6,7 @@ import { ReadableInterface } from '@interfaces/readable.interface';
 import { ItemStoredDefinition } from '@definitions/item-storage.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
-import { InventoryEvent } from '@conceptual/events/inventory.event';
+import { InventoryEvent } from '@events/inventory.event';
 
 import {
   actionableEvent,

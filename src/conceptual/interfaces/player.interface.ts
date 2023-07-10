@@ -1,5 +1,5 @@
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { ActorInterface } from './actor.interface';
 
 export interface PlayerInterface extends ActorInterface {

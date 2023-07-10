@@ -4,9 +4,9 @@ import { instance, when } from 'ts-mockito';
 import { CharacterService } from '@services/character.service';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { EnergyPointsEvent } from '@conceptual/events/energy-points.event';
-import { HitPointsEvent } from '@conceptual/events/hit-points.event';
-import { ActionPointsEvent } from '@conceptual/events/action-points.event';
+import { EnergyPointsEvent } from '@events/energy-points.event';
+import { HitPointsEvent } from '@events/hit-points.event';
+import { ActionPointsEvent } from '@events/action-points.event';
 
 import { simpleSword } from '../../../tests/fakes';
 import {

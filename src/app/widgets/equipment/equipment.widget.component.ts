@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 
 @Component({
   selector: 'app-equipment-widget',

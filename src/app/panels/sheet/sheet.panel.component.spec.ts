@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { SheetPanelComponent } from './sheet.panel.component';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 
 import {
   actionAsk,

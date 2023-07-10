@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';

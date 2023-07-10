@@ -7,7 +7,7 @@ import { first } from 'rxjs';
 
 import { MaterialModule } from '../../../material/material.module';
 import { EquipmentWidgetComponent } from './equipment.widget.component';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 
 import {
   actionableItemView,

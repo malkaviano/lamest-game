@@ -3,7 +3,7 @@ import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { AffectAxiom } from '@conceptual/axioms/affect.axiom';
-import { ActionableEvent } from '@conceptual/events/actionable.event';
+import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '../services/checked.service';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';

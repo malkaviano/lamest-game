@@ -5,12 +5,12 @@ import { MathHelper } from '@helpers/math.helper';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
-import { EffectEvent } from '@conceptual/events/effect.event';
-import { HitPointsEvent } from '@conceptual/events/hit-points.event';
-import { EnergyPointsEvent } from '@conceptual/events/energy-points.event';
+import { EffectEvent } from '@events/effect.event';
+import { HitPointsEvent } from '@events/hit-points.event';
+import { EnergyPointsEvent } from '@events/energy-points.event';
 import { SkillStore } from '../../stores/skill.store';
 import { SettingsStore } from '../../stores/settings.store';
-import { ActionPointsEvent } from '@conceptual/events/action-points.event';
+import { ActionPointsEvent } from '@events/action-points.event';
 
 export class ActorBehavior {
   private readonly maximumHP: number;
