@@ -1,23 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { SceneDefinition } from '../../../core/definitions/scene.definition';
-import { CharacterValuesView } from '../../../core/view-models/character-values.view';
-import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
-import { GameItemDefinition } from '../../../core/definitions/game-item.definition';
-import { CharacterStatusView } from '../../../core/view-models/character-status.view';
-import { ArrayView } from '../../../core/view-models/array.view';
-import { KeyValueDescriptionView } from '../../../core/view-models/key-value-description.view';
-import { GameStringsStore } from '../../../stores/game-strings.store';
-import { ActionableEvent } from '../../../core/events/actionable.event';
-import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
-import { ReadableInterface } from '../../../core/interfaces/readable.interface';
+import { SceneDefinition } from '@definitions/scene.definition';
+import { CharacterValuesView } from '../../view-models/character-values.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { CharacterStatusView } from 'src/app/view-models/character-status.view';
+import { ArrayView } from '@wrappers/array.view';
+import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { ActionableEvent } from '@events/actionable.event';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { ReadableInterface } from '@interfaces/readable.interface';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ViewableInterface } from '../../../core/interfaces/viewable.interface';
+import { ViewableInterface } from '@interfaces/viewable.interface';
 import { ViewerComponent } from '../../dialogs/viewer/viewer.dialog.component';
-import { GameLoopService } from '../../../backend/services/game-loop.service';
+import { GameLoopService } from '@services/game-loop.service';
 
 @Component({
   selector: 'app-game-page',
@@ -32,7 +32,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public characterValues: CharacterValuesView;
 
-  public inventory: ActionableItemView[];
+  public inventory: ActionableItemDefinition[];
 
   public equipped!: GameItemDefinition;
 

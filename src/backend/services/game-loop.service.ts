@@ -1,28 +1,28 @@
 import { filter, map } from 'rxjs';
 
-import { CharacterService } from '../../backend/services/character.service';
-import { NarrativeService } from '../../backend/services/narrative.service';
-import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { InteractiveInterface } from '../../core/interfaces/interactive.interface';
-import { SceneActorsInfoInterface } from '../../core/interfaces/scene-actors.interface';
-import { SceneDefinition } from '../../core/definitions/scene.definition';
-import { RulesHub } from '../hubs/rules.hub';
-import { InventoryService } from '../../backend/services/inventory.service';
-import { GameEventsDefinition } from '../../core/definitions/game-events.definition';
+import { CharacterService } from '@services/character.service';
+import { NarrativeService } from '@services/narrative.service';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
+import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
+import { SceneDefinition } from '@definitions/scene.definition';
+import { RulesHub } from '@hubs/rules.hub';
+import { InventoryService } from '@services/inventory.service';
+import { GameEventsDefinition } from '@definitions/game-events.definition';
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '../../core/definitions/actionable.definition';
-import { GameItemDefinition } from '../../core/definitions/game-item.definition';
-import { ArrayView } from '../../core/view-models/array.view';
-import { ActionableItemView } from '../../core/view-models/actionable-item.view';
-import { ActionableEvent } from '../../core/events/actionable.event';
-import { PlayerInterface } from '../../core/interfaces/player.interface';
-import { ActorEntity } from '../../core/entities/actor.entity';
-import { PolicyHub } from '../hubs/policy.hub';
-import { LoggingHub } from '../hubs/logging.hub';
-import { GamePredicate } from '../../core/predicates/game.predicate';
-import { SettingsStore } from '../../stores/settings.store';
+} from '@definitions/actionable.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { ArrayView } from '@wrappers/array.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
+import { ActionableEvent } from '@events/actionable.event';
+import { PlayerInterface } from '@interfaces/player.interface';
+import { ActorEntity } from '@entities/actor.entity';
+import { PolicyHub } from '@hubs/policy.hub';
+import { LoggingHub } from '@hubs/logging.hub';
+import { GamePredicate } from '@predicates/game.predicate';
+import { SettingsStore } from '@stores/settings.store';
 
 export class GameLoopService {
   private aiTimer: NodeJS.Timer | undefined;
@@ -186,15 +186,15 @@ export class GameLoopService {
 
   private playerInventory(
     inventoryService: InventoryService
-  ): ArrayView<ActionableItemView> {
+  ): ArrayView<ActionableItemDefinition> {
     const playerItems = inventoryService.list(this.player.id);
 
-    const inventoryView: ActionableItemView[] = [];
+    const inventoryView: ActionableItemDefinition[] = [];
 
     const items = playerItems.items.reduce((acc, itemStorage) => {
       for (let index = 0; index < itemStorage.quantity; index++) {
         acc.push(
-          ActionableItemView.create(
+          new ActionableItemDefinition(
             itemStorage.item,
             this.inventoryAction(itemStorage.item)
           )

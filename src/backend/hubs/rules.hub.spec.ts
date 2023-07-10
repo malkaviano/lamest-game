@@ -1,6 +1,6 @@
 import { instance } from 'ts-mockito';
 
-import { RulesHub } from './rules.hub';
+import { RulesHub } from '@hubs/rules.hub';
 
 import {
   mockedAffectRule,

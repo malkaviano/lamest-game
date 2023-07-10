@@ -1,15 +1,15 @@
-import { GeneratorService } from './generator.service';
-import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
-import { SkillService } from './skill.service';
-import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
-import { ProfessionStore } from '../../stores/profession.store';
-import { SkillStore } from '../../stores/skill.store';
-import { SettingsStore } from '../../stores/settings.store';
-import { PlayerEntity } from '../../core/entities/player.entity';
-import { PlayerInterface } from '../../core/interfaces/player.interface';
-import { ActorBehavior } from '../../core/behaviors/actor.behavior';
-import { EquipmentBehavior } from '../../core/behaviors/equipment.behavior';
-import { RegeneratorBehavior } from '../../core/behaviors/regenerator.behavior';
+import { GeneratorService } from '@services/generator.service';
+import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
+import { SkillService } from '@services/skill.service';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { ProfessionStore } from '@stores/profession.store';
+import { SkillStore } from '@stores/skill.store';
+import { SettingsStore } from '@stores/settings.store';
+import { PlayerEntity } from '@entities/player.entity';
+import { PlayerInterface } from '@interfaces/player.interface';
+import { ActorBehavior } from '@behaviors/actor.behavior';
+import { EquipmentBehavior } from '@behaviors/equipment.behavior';
+import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 
 export class RandomCharacterService {
   constructor(

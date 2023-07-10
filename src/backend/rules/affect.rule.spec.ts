@@ -1,9 +1,9 @@
 import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { AffectRule } from './affect.rule';
-import { GameStringsStore } from '../../stores/game-strings.store';
-import { RollDefinition } from '../../core/definitions/roll.definition';
-import { EffectEvent } from '../../core/events/effect.event';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { RollDefinition } from '@definitions/roll.definition';
+import { EffectEvent } from '@events/effect.event';
 
 import { ruleScenario } from '../../../tests/scenarios';
 import {
@@ -26,7 +26,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../tests/fakes';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 describe('AffectRule', () => {
   let rule: AffectRule;

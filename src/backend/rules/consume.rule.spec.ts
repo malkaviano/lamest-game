@@ -1,12 +1,12 @@
 import { EMPTY } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 import { ConsumeRule } from './consume.rule';
-import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { RollDefinition } from '../../core/definitions/roll.definition';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { RollDefinition } from '@definitions/roll.definition';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
   mockedAffectedAxiom,

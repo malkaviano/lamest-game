@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { ArrayView } from '../../core/view-models/array.view';
-import { DerivedAttributeDefinition } from '../../core/definitions/derived-attribute.definition';
-import { CharacteristicDefinition } from '../../core/definitions/characteristic.definition';
-import { CharacterIdentityLiteral } from '../../core/literals/character-identity.literal';
-import { CharacterValuesView } from '../../core/view-models/character-values.view';
-import { KeyValueDescriptionView } from '../../core/view-models/key-value-description.view';
-import { PlayerInterface } from '../../core/interfaces/player.interface';
-import { SkillStore } from '../../stores/skill.store';
-import { GameStringsStore } from '../../stores/game-strings.store';
+import { ArrayView } from '@wrappers/array.view';
+import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
+import { CharacterIdentityLiteral } from '@literals/character-identity.literal';
+import { CharacterValuesView } from '../view-models/character-values.view';
+import { KeyValueDescriptionView } from '../view-models/key-value-description.view';
+import { PlayerInterface } from '@interfaces/player.interface';
+import { SkillStore } from '@stores/skill.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 
 @Injectable({
   providedIn: 'root',

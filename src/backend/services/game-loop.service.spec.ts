@@ -1,12 +1,12 @@
 import { anyString, anything, instance, verify, when } from 'ts-mockito';
 import { EMPTY, of, Subject } from 'rxjs';
 
-import { GameLoopService } from './game-loop.service';
-import { ReadableInterface } from '../../core/interfaces/readable.interface';
-import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
-import { ArrayView } from '../../core/view-models/array.view';
-import { ActionableItemView } from '../../core/view-models/actionable-item.view';
-import { InventoryEvent } from '../../core/events/inventory.event';
+import { GameLoopService } from '@services/game-loop.service';
+import { ReadableInterface } from '@interfaces/readable.interface';
+import { ItemStoredDefinition } from '@definitions/item-storage.definition';
+import { ArrayView } from '@wrappers/array.view';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
+import { InventoryEvent } from '@events/inventory.event';
 
 import {
   actionableEvent,
@@ -38,7 +38,7 @@ import {
   mockedLoggingHub,
   mockedGamePredicate,
 } from '../../../tests/mocks';
-import { SettingsStore } from '../../stores/settings.store';
+import { SettingsStore } from '@stores/settings.store';
 
 const actor = instance(mockedActorEntity);
 
@@ -127,27 +127,30 @@ describe('GameLoopService', () => {
           playerInfo.id,
           consumableFirstAid
         ),
-        expected: ActionableItemView.create(consumableFirstAid, actionConsume),
+        expected: new ActionableItemDefinition(
+          consumableFirstAid,
+          actionConsume
+        ),
         item: consumableFirstAid,
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, unDodgeableAxe),
-        expected: ActionableItemView.create(unDodgeableAxe, actionEquip),
+        expected: new ActionableItemDefinition(unDodgeableAxe, actionEquip),
         item: unDodgeableAxe,
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, masterKey),
-        expected: ActionableItemView.create(masterKey, actionNoop),
+        expected: new ActionableItemDefinition(masterKey, actionNoop),
         item: masterKey,
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, readable),
-        expected: ActionableItemView.create(readable, actionRead),
+        expected: new ActionableItemDefinition(readable, actionRead),
         item: readable,
       },
     ].forEach(({ invEvent, expected, item }) => {
       it(`should emit event ${invEvent.eventName}`, (done) => {
-        let result: ArrayView<ActionableItemView> | undefined;
+        let result: ArrayView<ActionableItemDefinition> | undefined;
 
         when(mockedInventoryService.list(anyString())).thenReturn(
           ArrayView.create(new ItemStoredDefinition(item, 1))

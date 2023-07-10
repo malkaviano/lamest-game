@@ -1,14 +1,14 @@
-import { ActorInterface } from '../../core/interfaces/actor.interface';
-import { RuleExtrasInterface } from '../../core/interfaces/rule-extras.interface';
-import { MasterRule } from './master.rule';
-import { GameStringsStore } from '../../stores/game-strings.store';
-import { ActionableEvent } from '../../core/events/actionable.event';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '../services/checked.service';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { AffectAxiom } from '../../core/axioms/affect.axiom';
-import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { AffectAxiom } from '@axioms/affect.axiom';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
 
-export class InteractionRule extends MasterRule {
+export class InteractionRule extends RuleAbstraction {
   constructor(
     private readonly checkedService: CheckedService,
     private readonly affectAxiomService: AffectAxiom

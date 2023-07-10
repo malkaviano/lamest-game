@@ -7,10 +7,10 @@ import { instance, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
-import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
-import { ArrayView } from '../../../core/view-models/array.view';
-import { ActionableEvent } from '../../../core/events/actionable.event';
-import { LogMessageDefinition } from '../../../core/definitions/log-message.definition';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
+import { ArrayView } from '@wrappers/array.view';
+import { ActionableEvent } from '@events/actionable.event';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 
@@ -34,7 +34,7 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
-import { GameLoopService } from '../../../backend/services/game-loop.service';
+import { GameLoopService } from '@services/game-loop.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;
@@ -71,8 +71,8 @@ describe('GamePageComponent', () => {
     when(mockedGameEventsDefinition.playerInventory$).thenReturn(
       of(
         ArrayView.create(
-          ActionableItemView.create(simpleSword, actionEquip),
-          ActionableItemView.create(unDodgeableAxe, actionEquip)
+          new ActionableItemDefinition(simpleSword, actionEquip),
+          new ActionableItemDefinition(unDodgeableAxe, actionEquip)
         )
       )
     );

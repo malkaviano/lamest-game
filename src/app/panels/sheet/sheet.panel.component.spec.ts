@@ -3,8 +3,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { SheetPanelComponent } from './sheet.panel.component';
-import { ActionableItemView } from '../../../core/view-models/actionable-item.view';
-import { ActionableEvent } from '../../../core/events/actionable.event';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
+import { ActionableEvent } from '@events/actionable.event';
 
 import {
   actionAsk,
@@ -34,8 +34,8 @@ describe('SheetPanelComponent', () => {
     component.characterValues = fakeCharacterSheet;
 
     component.inventory = [
-      ActionableItemView.create(simpleSword, actionAsk),
-      ActionableItemView.create(molotov, actionAsk),
+      new ActionableItemDefinition(simpleSword, actionAsk),
+      new ActionableItemDefinition(molotov, actionAsk),
     ];
 
     fixture.detectChanges();

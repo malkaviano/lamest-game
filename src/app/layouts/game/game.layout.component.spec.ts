@@ -5,12 +5,12 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { GameLayoutComponent } from './game.layout.component';
-import { ArrayView } from '../../../core/view-models/array.view';
-import { ActionableEvent } from '../../../core/events/actionable.event';
-import { SceneDefinition } from '../../../core/definitions/scene.definition';
-import { SimpleState } from '../../../core/states/simple.state';
-import { unarmedWeapon } from '../../../core/behaviors/equipment.behavior';
-import { InteractiveEntity } from '../../../core/entities/interactive.entity';
+import { ArrayView } from '@wrappers/array.view';
+import { ActionableEvent } from '@events/actionable.event';
+import { SceneDefinition } from '@definitions/scene.definition';
+import { SimpleState } from '@states/simple.state';
+import { unarmedWeapon } from '@behaviors/equipment.behavior';
+import { InteractiveEntity } from '@entities/interactive.entity';
 
 import {
   actionAsk,
@@ -18,7 +18,7 @@ import {
   fakeCharacterStatusView,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
-import { ViewableInterface } from '../../../core/interfaces/viewable.interface';
+import { ViewableInterface } from '@interfaces/viewable.interface';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;

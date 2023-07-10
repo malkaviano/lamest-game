@@ -1,4 +1,4 @@
-import { PolicyHub } from './policy.hub';
+import { PolicyHub } from '@hubs/policy.hub';
 
 describe('PolicyHub', () => {
   it('should create an instance', () => {

@@ -6,7 +6,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { first } from 'rxjs';
 
 import { ImageViewerComponent } from './image-viewer.widget.component';
-import { ViewableInterface } from '../../../core/interfaces/viewable.interface';
+import { ViewableInterface } from '@interfaces/viewable.interface';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;

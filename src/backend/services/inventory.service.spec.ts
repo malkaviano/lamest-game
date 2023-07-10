@@ -1,9 +1,9 @@
 import { instance } from 'ts-mockito';
 
-import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
-import { InventoryService } from './inventory.service';
-import { ArrayView } from '../../core/view-models/array.view';
-import { InventoryEvent } from '../../core/events/inventory.event';
+import { ItemStoredDefinition } from '@definitions/item-storage.definition';
+import { InventoryService } from '@services/inventory.service';
+import { ArrayView } from '@wrappers/array.view';
+import { InventoryEvent } from '@events/inventory.event';
 
 import {
   consumableAnalgesic,
@@ -13,7 +13,7 @@ import {
   simpleSword,
 } from '../../../tests/fakes';
 import { mockedItemStore } from '../../../tests/mocks';
-import { InteractiveStore } from '../../stores/interactive.store';
+import { InteractiveStore } from '@stores/interactive.store';
 
 const interactives = {
   interactives: () => ({}),

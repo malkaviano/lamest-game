@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ArrayView } from '../../../core/view-models/array.view';
-import { KeyValueDescriptionView } from '../../../core/view-models/key-value-description.view';
+import { ArrayView } from '@wrappers/array.view';
+import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 
 @Component({
   selector: 'app-key-value-description-panel',

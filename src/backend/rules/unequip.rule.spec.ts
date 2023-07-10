@@ -1,9 +1,9 @@
 import { instance, verify, when } from 'ts-mockito';
 
 import { UnEquipRule } from './unequip.rule';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { ActionableEvent } from '../../core/events/actionable.event';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { ActionableEvent } from '@events/actionable.event';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
   mockedPlayerEntity,

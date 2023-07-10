@@ -1,17 +1,20 @@
 import { Observable, Subject } from 'rxjs';
 
-import { ReadableDefinition } from '../../core/definitions/readable.definition';
-import { ActorInterface } from '../../core/interfaces/actor.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
+import { ActorInterface } from '@interfaces/actor.interface';
 import { InventoryService } from '../services/inventory.service';
-import { GameStringsStore } from '../../stores/game-strings.store';
-import { MasterRule } from './master.rule';
-import { ActionableEvent } from '../../core/events/actionable.event';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { RuleNameLiteral } from '../../core/literals/rule-name.literal';
-import { DocumentOpenedInterface } from '../../core/interfaces/document-opened.interface';
-import { ReadableInterface } from '../../core/interfaces/readable.interface';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
+import { ActionableEvent } from '@events/actionable.event';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
+import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
 
-export class ReadRule extends MasterRule implements DocumentOpenedInterface {
+export class ReadRule
+  extends RuleAbstraction
+  implements DocumentOpenedInterface
+{
   private readonly documentOpened: Subject<ReadableInterface>;
 
   public readonly documentOpened$: Observable<ReadableInterface>;

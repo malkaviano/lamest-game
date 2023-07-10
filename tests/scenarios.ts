@@ -1,11 +1,11 @@
-import { LogMessageDefinition } from '../src/core/definitions/log-message.definition';
-import { ActionableEvent } from '../src/core/events/actionable.event';
-import { ActorInterface } from '../src/core/interfaces/actor.interface';
-import { RuleExtrasInterface } from '../src/core/interfaces/rule-extras.interface';
-import { MasterRule } from '../src/backend/rules/master.rule';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { ActionableEvent } from '@events/actionable.event';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
+import { RuleAbstraction } from '@abstractions/rule.abstraction';
 
 export const ruleScenario = (
-  service: MasterRule,
+  service: RuleAbstraction,
   actor: ActorInterface,
   actionableEvent: ActionableEvent,
   extras: RuleExtrasInterface,

@@ -1,8 +1,8 @@
 import { instance } from 'ts-mockito';
 
-import { ActionPolicy } from './action.policy';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { ActionPolicy } from '@policies/action.policy';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 
 import {
   mockedActorEntity,

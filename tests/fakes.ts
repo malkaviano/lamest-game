@@ -1,32 +1,32 @@
 import {
   ActionableDefinition,
   createActionableDefinition,
-} from '../src/core/definitions/actionable.definition';
-import { CharacteristicSetDefinition } from '../src/core/definitions/characteristic-set.definition';
-import { CharacteristicDefinition } from '../src/core/definitions/characteristic.definition';
-import { ConsumableDefinition } from '../src/core/definitions/consumable.definition';
-import { EffectDefinition } from '../src/core/definitions/effect.definition';
-import { DerivedAttributeSetDefinition } from '../src/core/definitions/derived-attribute-set.definition';
-import { DerivedAttributeDefinition } from '../src/core/definitions/derived-attribute.definition';
-import { createDice } from '../src/core/definitions/dice.definition';
-import { CharacterIdentityDefinition } from '../src/core/definitions/character-identity.definition';
-import { ActionableEvent } from '../src/core/events/actionable.event';
-import { KeyValueInterface } from '../src/core/interfaces/key-value.interface';
-import { SceneActorsInfoInterface } from '../src/core/interfaces/scene-actors.interface';
-import { ArrayView } from '../src/core/view-models/array.view';
-import { CharacterValuesView } from '../src/core/view-models/character-values.view';
-import { KeyValueDescriptionView } from '../src/core/view-models/key-value-description.view';
-import { DiscardState } from '../src/core/states/discard.state';
-import { UsableDefinition } from '../src/core/definitions/usable.definition';
-import { ItemIdentityDefinition } from '../src/core/definitions/item-identity.definition';
-import { ActionableItemView } from '../src/core/view-models/actionable-item.view';
-import { GameItemDefinition } from '../src/core/definitions/game-item.definition';
-import { WeaponDefinition } from '../src/core/definitions/weapon.definition';
-import { SkillDefinition } from '../src/core/definitions/skill.definition';
-import { EffectEvent } from '../src/core/events/effect.event';
-import { EffectTypeLiteral } from '../src/core/literals/effect-type.literal';
-import { ReadableDefinition } from '../src/core/definitions/readable.definition';
-import { CharacterStatusView } from '../src/core/view-models/character-status.view';
+} from '@definitions/actionable.definition';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { EffectDefinition } from '@definitions/effect.definition';
+import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
+import { createDice } from '@definitions/dice.definition';
+import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
+import { ActionableEvent } from '@events/actionable.event';
+import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
+import { ArrayView } from '@wrappers/array.view';
+import { CharacterValuesView } from '../src/app/view-models/character-values.view';
+import { KeyValueDescriptionView } from '../src/app/view-models/key-value-description.view';
+import { DiscardState } from '@states/discard.state';
+import { UsableDefinition } from '@definitions/usable.definition';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { SkillDefinition } from '@definitions/skill.definition';
+import { EffectEvent } from '@events/effect.event';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
+import { ReadableDefinition } from '@definitions/readable.definition';
+import { CharacterStatusView } from '../src/app/view-models/character-status.view';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
@@ -319,7 +319,7 @@ export const actionNoop = createActionableDefinition('NOOP', 'noop', 'NOOP');
 export const actionableItemView = (
   item: GameItemDefinition,
   action: ActionableDefinition
-): ActionableItemView => ActionableItemView.create(item, action);
+): ActionableItemDefinition => new ActionableItemDefinition(item, action);
 
 export const actionableEvent = (action: ActionableDefinition, id: string) =>
   new ActionableEvent(action, id);

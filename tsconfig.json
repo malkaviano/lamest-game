@@ -24,7 +24,27 @@
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {
+      "@assets/*": [ "./src/assets/*" ],
+      "@stores/*": [ "./src/backend/stores/*" ],
+      "@entities/*": [ "./src/backend/entities/*" ],
+      "@states/*": [ "./src/backend/states/*" ],
+      "@axioms/*": [ "./src/backend/axioms/*" ],
+      "@predicates/*": [ "./src/backend/predicates/*" ],
+      "@events/*": [ "./src/backend/events/*" ],
+      "@behaviors/*": [ "./src/backend/behaviors/*" ],
+      "@helpers/*": [ "./src/backend/helpers/*" ],
+      "@services/*": [ "./src/backend/services/*" ],
+      "@rules/*": [ "./src/backend/rules/*" ],
+      "@hubs/*": [ "./src/backend/hubs/*" ],
+      "@policies/*": [ "./src/backend/policies/*" ],
+      "@definitions/*": [ "./src/backend/conceptual/definitions/*" ],
+      "@abstractions/*": [ "./src/backend/conceptual/abstractions/*" ],
+      "@interfaces/*": [ "./src/backend/conceptual/interfaces/*" ],
+      "@literals/*": [ "./src/backend/conceptual/literals/*" ],
+      "@wrappers/*": [ "./src/wrappers/*" ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

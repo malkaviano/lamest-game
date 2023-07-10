@@ -1,10 +1,10 @@
 import { Observable, merge } from 'rxjs';
 
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
-import { LoggerInterface } from '../../core/interfaces/logger.interface';
-import { PolicyInterface } from '../../core/interfaces/policy.interface';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
-import { ArrayView } from '../../core/view-models/array.view';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { LoggerInterface } from '@interfaces/logger.interface';
+import { PolicyInterface } from '@interfaces/policy.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { ArrayView } from '@wrappers/array.view';
 
 export class PolicyHub implements LoggerInterface {
   private readonly policies: ArrayView<PolicyInterface>;

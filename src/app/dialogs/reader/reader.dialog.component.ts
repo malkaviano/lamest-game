@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { ReadableInterface } from '../../../core/interfaces/readable.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
 
 @Component({
   selector: 'app-reader-dialog',

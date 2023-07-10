@@ -1,8 +1,8 @@
 import { instance } from 'ts-mockito';
 
-import { LogMessageDefinition } from '../../core/definitions/log-message.definition';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { SceneRule } from './scene.rule';
-import { RuleResultInterface } from '../../core/interfaces/rule-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
   mockedCheckedService,

@@ -7,12 +7,12 @@ import {
   Output,
 } from '@angular/core';
 
-import { ActionableDefinition } from '../../../core/definitions/actionable.definition';
-import { ActionableEvent } from '../../../core/events/actionable.event';
-import { ArrayView } from '../../../core/view-models/array.view';
-import { InteractiveInterface } from '../../../core/interfaces/interactive.interface';
+import { ActionableDefinition } from '@definitions/actionable.definition';
+import { ActionableEvent } from '@events/actionable.event';
+import { ArrayView } from '@wrappers/array.view';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { GameStringsStore } from '../../../stores/game-strings.store';
+import { GameStringsStore } from '@stores/game-strings.store';
 
 @Component({
   selector: 'app-interactive-widget',

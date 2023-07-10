@@ -1,15 +1,15 @@
 import { Observable, Subject } from 'rxjs';
 
-import { ConsumableDefinition } from '../../core/definitions/consumable.definition';
-import { GameItemDefinition } from '../../core/definitions/game-item.definition';
-import { ItemStoredDefinition } from '../../core/definitions/item-storage.definition';
-import { ReadableDefinition } from '../../core/definitions/readable.definition';
-import { UsableDefinition } from '../../core/definitions/usable.definition';
-import { WeaponDefinition } from '../../core/definitions/weapon.definition';
-import { ArrayView } from '../../core/view-models/array.view';
-import { InventoryEvent } from '../../core/events/inventory.event';
-import { InteractiveStore } from '../../stores/interactive.store';
-import { ItemStore } from '../../stores/item.store';
+import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { ItemStoredDefinition } from '@definitions/item-storage.definition';
+import { ReadableDefinition } from '@definitions/readable.definition';
+import { UsableDefinition } from '@definitions/usable.definition';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { ArrayView } from '@wrappers/array.view';
+import { InventoryEvent } from '@events/inventory.event';
+import { InteractiveStore } from '@stores/interactive.store';
+import { ItemStore } from '@stores/item.store';
 
 export class InventoryService {
   private readonly inventoryChanged: Subject<InventoryEvent>;

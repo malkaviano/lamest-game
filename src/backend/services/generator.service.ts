@@ -1,14 +1,18 @@
 import { uniqueNamesGenerator, names } from 'unique-names-generator';
 
-import { CharacterIdentityDefinition } from '../../core/definitions/character-identity.definition';
-import { CharacteristicDefinition } from '../../core/definitions/characteristic.definition';
-import { AgeLiteral, ages } from '../../core/literals/age.literal';
-import { HeightLiteral, heights } from '../../core/literals/height.literal';
-import { RaceLiteral, races } from '../../core/literals/race.literal';
-import { WeightLiteral, weights } from '../../core/literals/weight.literal';
-import { CharacteristicSetDefinition } from '../../core/definitions/characteristic-set.definition';
-import { ProfessionStore } from '../../stores/profession.store';
-import { RandomIntHelper } from '../../core/helpers/random-int.helper';
+import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
+import { AgeLiteral } from '@literals/age.literal';
+import { HeightLiteral } from '@literals/height.literal';
+import { RaceLiteral } from '@literals/race.literal';
+import { WeightLiteral } from '@literals/weight.literal';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { ProfessionStore } from '@stores/profession.store';
+import { RandomIntHelper } from '@helpers/random-int.helper';
+import { weights } from '@definitions/weight.definitions';
+import { races } from '@definitions/races.definition';
+import { ages } from '@definitions/ages.definition';
+import { heights } from '@definitions/height.definition';
 
 export class GeneratorService {
   constructor(
@@ -40,27 +44,39 @@ export class GeneratorService {
   }
 
   private height(): HeightLiteral {
-    const index = this.randomIntHelper.getRandomInterval(0, heights.length - 1);
+    const index = this.randomIntHelper.getRandomInterval(
+      0,
+      heights.items.length - 1
+    );
 
-    return heights[index];
+    return heights.items[index];
   }
 
   private weight(): WeightLiteral {
-    const index = this.randomIntHelper.getRandomInterval(0, weights.length - 1);
+    const index = this.randomIntHelper.getRandomInterval(
+      0,
+      weights.items.length - 1
+    );
 
-    return weights[index];
+    return weights.items[index];
   }
 
   private age(): AgeLiteral {
-    const index = this.randomIntHelper.getRandomInterval(0, ages.length - 1);
+    const index = this.randomIntHelper.getRandomInterval(
+      0,
+      ages.items.length - 1
+    );
 
-    return ages[index];
+    return ages.items[index];
   }
 
   private race(): RaceLiteral {
-    const index = this.randomIntHelper.getRandomInterval(0, races.length - 1);
+    const index = this.randomIntHelper.getRandomInterval(
+      0,
+      races.items.length - 1
+    );
 
-    return races[index];
+    return races.items[index];
   }
 
   private profession(): string {

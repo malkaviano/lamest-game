@@ -1,6 +1,7 @@
 import { instance } from 'ts-mockito';
 
-import { LoggingHub } from './logging.hub';
+import { LoggingHub } from '@hubs/logging.hub';
+
 import {
   mockedActivationAxiom,
   mockedAffectedAxiom,
