@@ -1,18 +1,12 @@
 import { Observable, Subject } from 'rxjs';
 
-import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { LoggerInterface } from '@interfaces/logger.interface';
 import { RollHelper } from '@helpers/roll.helper';
 import { GamePredicate } from '@predicates/game.predicate';
 
-export class DodgeAxiom implements LoggerInterface, ActorDodgedInterface {
-  private readonly logMessageProduced: Subject<LogMessageDefinition>;
-
+export class DodgeAxiom implements ActorDodgedInterface {
   private readonly actorDodged: Subject<string>;
-
-  public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
   public readonly actorDodged$: Observable<string>;
 
@@ -20,10 +14,6 @@ export class DodgeAxiom implements LoggerInterface, ActorDodgedInterface {
     private readonly rollService: RollHelper,
     private readonly gamePredicate: GamePredicate
   ) {
-    this.logMessageProduced = new Subject();
-
-    this.logMessageProduced$ = this.logMessageProduced.asObservable();
-
     this.actorDodged = new Subject();
 
     this.actorDodged$ = this.actorDodged.asObservable();

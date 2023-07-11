@@ -129,7 +129,6 @@ const loggingHub = new LoggingHub(
   activationAxiom,
   affectAxiom,
   policyHub,
-  dodgeAxiom,
   gamePredicate
 );
 
