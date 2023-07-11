@@ -14,9 +14,9 @@ import { actionAffect, actionableEvent } from '../../../tests/fakes';
 describe('ActionPolicy', () => {
   const policy = new ActionPolicy();
 
-  const actor = instance(mockedActorEntity);
+  const actor = instance(mockedPlayerEntity);
 
-  const target = instance(mockedPlayerEntity);
+  const target = instance(mockedActorEntity);
 
   const eventAffect = actionableEvent(actionAffect, target.id);
 
@@ -40,7 +40,7 @@ describe('ActionPolicy', () => {
       expected: {
         actionPointsSpent: 3,
       },
-      log: new LogMessageDefinition('AP', 'actor', 'spent 3 action points'),
+      log: new LogMessageDefinition('AP', 'Some Name', 'spent 3 action points'),
     },
     {
       ruleResult: {
