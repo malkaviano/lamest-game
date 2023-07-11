@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs';
-
 import { ActivationAxiom } from '@axioms/activation.axiom';
 import { AffectAxiom } from '@axioms/affect.axiom';
 import { DodgeAxiom } from '@axioms/dodge.axiom';
@@ -14,19 +12,17 @@ import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
-import { CheckedService } from '../services/checked.service';
+import { CheckedService } from '@services/checked.service';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
-import { ItemIdentityDefinition } from '../conceptual/definitions/item-identity.definition';
-import { InteractiveInterface } from '../conceptual/interfaces/interactive.interface';
-import { EffectDefinition } from '../conceptual/definitions/effect.definition';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
+import { EffectDefinition } from '@definitions/effect.definition';
 
 export class AffectRule
   extends RuleAbstraction
   implements ActorDodgedInterface
 {
-  public readonly actorDodged$: Observable<string>;
-
   constructor(
     private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,
@@ -35,8 +31,6 @@ export class AffectRule
     private readonly affectedAxiom: AffectAxiom
   ) {
     super();
-
-    this.actorDodged$ = this.dodgeAxiom.actorDodged$;
   }
 
   public override get name(): RuleNameLiteral {
@@ -116,6 +110,8 @@ export class AffectRule
 
         this.ruleResult.effectType = effect.effectType;
         this.ruleResult.effectAmount = effectAmount;
+      } else if (this.ruleResult.dodged) {
+        this.actorDodged.next(targetActor.id);
       }
 
       targetActor?.afflictedBy(actor.id);

@@ -223,6 +223,28 @@ describe('AffectRule', () => {
 
         expect(result).toEqual(expected);
       });
+
+      it('should emit dodged', (done) => {
+        when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
+
+        when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
+
+        when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(true);
+
+        let result: string | undefined;
+
+        rule.actorDodged$.subscribe((event) => {
+          result = event;
+        });
+
+        rule.execute(actor, eventAttackInteractive, {
+          target,
+        });
+
+        done();
+
+        expect(result).toEqual(dodgedLog);
+      });
     });
 
     describe('when target is affected', () => {
@@ -283,3 +305,5 @@ const eventAttackInteractive = actionableEvent(
   actionAffect,
   interactiveInfo.id
 );
+
+const dodgedLog = 'actorId';

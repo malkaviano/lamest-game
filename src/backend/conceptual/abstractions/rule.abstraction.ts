@@ -17,6 +17,7 @@ import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
+import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 
 type Result = {
   name: RuleNameLiteral;
@@ -45,7 +46,7 @@ type Result = {
 };
 
 export abstract class RuleAbstraction
-  implements RuleInterface, LoggerInterface
+  implements RuleInterface, LoggerInterface, ActorDodgedInterface
 {
   protected ruleResult: {
     target?: InteractiveInterface;
@@ -70,6 +71,10 @@ export abstract class RuleAbstraction
 
   protected readonly ruleLog: Subject<LogMessageDefinition>;
 
+  protected readonly actorDodged: Subject<string>;
+
+  public readonly actorDodged$: Observable<string>;
+
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
   public abstract get name(): RuleNameLiteral;
@@ -78,6 +83,10 @@ export abstract class RuleAbstraction
     this.ruleLog = new Subject();
 
     this.logMessageProduced$ = this.ruleLog.asObservable();
+
+    this.actorDodged = new Subject();
+
+    this.actorDodged$ = this.actorDodged.asObservable();
 
     this.ruleResult = {};
   }

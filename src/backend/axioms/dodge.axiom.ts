@@ -1,23 +1,12 @@
-import { Observable, Subject } from 'rxjs';
-
-import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RollHelper } from '@helpers/roll.helper';
 import { GamePredicate } from '@predicates/game.predicate';
 
-export class DodgeAxiom implements ActorDodgedInterface {
-  private readonly actorDodged: Subject<string>;
-
-  public readonly actorDodged$: Observable<string>;
-
+export class DodgeAxiom {
   constructor(
     private readonly rollService: RollHelper,
     private readonly gamePredicate: GamePredicate
-  ) {
-    this.actorDodged = new Subject();
-
-    this.actorDodged$ = this.actorDodged.asObservable();
-  }
+  ) {}
 
   public dodged(
     target: ActorInterface,
@@ -37,12 +26,6 @@ export class DodgeAxiom implements ActorDodgedInterface {
       'Dodge'
     );
 
-    const dodged = dodgeResult === 'SUCCESS';
-
-    if (dodged) {
-      this.actorDodged.next(targetActor.id);
-    }
-
-    return dodged;
+    return dodgeResult === 'SUCCESS';
   }
 }
