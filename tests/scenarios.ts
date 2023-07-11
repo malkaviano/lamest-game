@@ -10,7 +10,7 @@ export const ruleScenario = (
   actionableEvent: ActionableEvent,
   extras: RuleExtrasInterface,
   expected: LogMessageDefinition[],
-  done: () => void
+  done: DoneFn
 ) => {
   const result: LogMessageDefinition[] = [];
 
@@ -18,9 +18,9 @@ export const ruleScenario = (
     result.push(event);
   });
 
-  service.execute(actor, actionableEvent, extras);
-
   done();
+
+  service.execute(actor, actionableEvent, extras);
 
   expect(result).toEqual(expected);
 };

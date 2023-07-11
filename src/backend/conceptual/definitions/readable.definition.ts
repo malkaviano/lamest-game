@@ -1,7 +1,7 @@
 import { ItemUsabilityLiteral } from '@literals/item-usability';
 import { ArrayView } from '@wrappers/array.view';
-import { GameItemDefinition } from './game-item.definition';
-import { ItemIdentityDefinition } from './item-identity.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
 
 export class ReadableDefinition extends GameItemDefinition {
   constructor(

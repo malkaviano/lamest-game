@@ -110,7 +110,8 @@ describe('ConsumeRule', () => {
             event: eventConsumeFirstAid,
             actor,
             result: 'EXECUTED',
-            skill: { name: 'First Aid', roll: successFirstAidRoll.roll },
+            skillName: 'First Aid',
+            roll: { checkRoll: successFirstAidRoll.roll, result: 'SUCCESS' },
             consumable: {
               consumed: consumableFirstAid,
               hp: 5,
@@ -135,7 +136,8 @@ describe('ConsumeRule', () => {
             event: eventConsumeFirstAid,
             actor,
             result: 'EXECUTED',
-            skill: { name: 'First Aid', roll: failureFirstAidRoll.roll },
+            skillName: 'First Aid',
+            roll: { checkRoll: failureFirstAidRoll.roll, result: 'FAILURE' },
             consumable: {
               consumed: consumableFirstAid,
               hp: 2,
@@ -168,7 +170,7 @@ describe('ConsumeRule', () => {
             event: eventConsumeFirstAid,
             actor,
             result: 'DENIED',
-            skill: { name: 'First Aid' },
+            skillName: 'First Aid',
           };
 
           expect(result).toEqual(expected);

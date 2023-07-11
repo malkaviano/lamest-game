@@ -5,10 +5,9 @@ import { LoggerInterface } from '@interfaces/logger.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
-import { AffectRule } from '../rules/affect.rule';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
 import { ReadableInterface } from '@interfaces/readable.interface';
-import { ReadRule } from '../rules/read.rule';
+import { ReadRule } from '@rules/read.rule';
 
 export class RulesHub
   implements LoggerInterface, ActorDodgedInterface, DocumentOpenedInterface
@@ -35,9 +34,7 @@ export class RulesHub
       ...rules.map((r) => r.logMessageProduced$)
     );
 
-    const affectRule = rules.find((r) => r instanceof AffectRule) as AffectRule;
-
-    this.actorDodged$ = affectRule?.actorDodged$;
+    this.actorDodged$ = merge(...rules.map((r) => r.actorDodged$));
 
     const readRule = rules.find((r) => r instanceof ReadRule) as ReadRule;
 

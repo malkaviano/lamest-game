@@ -1,6 +1,6 @@
 import { DirectionLiteral } from '@literals/direction.literal';
 import { ArrayView } from '@wrappers/array.view';
-import { createActionableDefinition } from './actionable.definition';
+import { createActionableDefinition } from '@definitions/actionable.definition';
 
 export const directionActionableDefinition = (
   direction: DirectionLiteral,

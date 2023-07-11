@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs';
-
 import { ActivationAxiom } from '@axioms/activation.axiom';
 import { AffectAxiom } from '@axioms/affect.axiom';
 import { DodgeAxiom } from '@axioms/dodge.axiom';
@@ -14,16 +12,17 @@ import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
-import { CheckedService } from '../services/checked.service';
+import { CheckedService } from '@services/checked.service';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
+import { EffectDefinition } from '@definitions/effect.definition';
 
 export class AffectRule
   extends RuleAbstraction
   implements ActorDodgedInterface
 {
-  public readonly actorDodged$: Observable<string>;
-
   constructor(
     private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,
@@ -32,8 +31,6 @@ export class AffectRule
     private readonly affectedAxiom: AffectAxiom
   ) {
     super();
-
-    this.actorDodged$ = this.dodgeAxiom.actorDodged$;
   }
 
   public override get name(): RuleNameLiteral {
@@ -73,62 +70,98 @@ export class AffectRule
     if (activated) {
       ruleResult = 'AVOIDED';
 
-      let targetWasHit = true;
-
       const targetActor = ConverterHelper.asActor(target);
 
       if (targetActor) {
-        const { checkResult, roll } = this.checkSkill(
+        this.tryHitTargetActor(
           actor,
           skillName,
           targetActor,
-          identity.label
+          effect,
+          dodgeable,
+          extras
         );
-
-        targetWasHit = checkResult === 'SUCCESS';
-
-        this.ruleResult.checkRoll = roll;
-
-        if (usability === 'DISPOSABLE') {
-          this.disposeItem(actor, identity.label);
-        }
       }
 
-      if (targetWasHit) {
-        const dodged =
-          targetActor?.wannaDodge(effect.effectType) &&
-          this.dodgeAxiom.dodged(
-            targetActor,
-            dodgeable,
-            extras.targetDodgesPerformed ?? 0
-          );
+      const rolled = this.ruleResult.roll?.result !== 'IMPOSSIBLE';
 
-        this.ruleResult.dodged = dodged;
+      if (rolled) {
+        this.logItemUsed(actor, target, identity);
+      }
 
-        if (!dodged) {
-          ruleResult = 'EXECUTED';
+      if (usability === 'DISPOSABLE' && (rolled || !targetActor)) {
+        this.disposeItem(actor, identity.label);
+      }
 
-          const effectAmount =
-            this.rollHelper.roll(effect.diceRoll) + effect.fixed;
+      if (!targetActor || !this.ruleResult.dodged) {
+        ruleResult = 'EXECUTED';
 
-          this.affectedAxiom.affectWith(
-            target,
-            event.actionableDefinition,
-            'SUCCESS',
-            {
-              effect: new EffectEvent(effect.effectType, effectAmount),
-            }
-          );
+        const effectAmount =
+          this.rollHelper.roll(effect.diceRoll) + effect.fixed;
 
-          this.ruleResult.effectType = effect.effectType;
-          this.ruleResult.effectAmount = effectAmount;
-        }
+        this.affectedAxiom.affectWith(
+          target,
+          event.actionableDefinition,
+          'SUCCESS',
+          {
+            effect: new EffectEvent(effect.effectType, effectAmount),
+          }
+        );
+
+        this.ruleResult.effectType = effect.effectType;
+        this.ruleResult.effectAmount = effectAmount;
+      } else if (this.ruleResult.dodged) {
+        this.actorDodged.next(targetActor.id);
       }
 
       targetActor?.afflictedBy(actor.id);
     }
 
     return this.getResult(event, actor, ruleResult);
+  }
+
+  private tryHitTargetActor(
+    actor: ActorInterface,
+    skillName: string,
+    targetActor: ActorInterface,
+    effect: EffectDefinition,
+    dodgeable: boolean,
+    extras: RuleExtrasInterface
+  ) {
+    const { checkResult, roll } = this.checkSkill(actor, skillName);
+
+    const targetWasHit = checkResult === 'SUCCESS';
+
+    this.ruleResult.roll = {
+      checkRoll: roll,
+      result: checkResult,
+    };
+
+    if (targetWasHit) {
+      const dodged =
+        targetActor?.wannaDodge(effect.effectType) &&
+        this.dodgeAxiom.dodged(
+          targetActor,
+          dodgeable,
+          extras.targetDodgesPerformed ?? 0
+        );
+
+      this.ruleResult.dodged = dodged;
+    }
+  }
+
+  private logItemUsed(
+    actor: ActorInterface,
+    target: InteractiveInterface,
+    identity: ItemIdentityDefinition
+  ) {
+    const logMessage = GameStringsStore.createUsedItemLogMessage(
+      actor.name,
+      target.name,
+      identity.label
+    );
+
+    this.ruleLog.next(logMessage);
   }
 
   private disposeItem(actor: ActorInterface, label: string): void {
@@ -144,21 +177,9 @@ export class AffectRule
 
   private checkSkill(
     actor: ActorInterface,
-    skillName: string,
-    target: ActorInterface,
-    weaponLabel: string
+    skillName: string
   ): { checkResult: CheckResultLiteral; roll: number } {
     const { result, roll } = this.rollHelper.actorSkillCheck(actor, skillName);
-
-    if (result === 'SUCCESS') {
-      const logMessage = GameStringsStore.createUsedItemLogMessage(
-        actor.name,
-        target.name,
-        weaponLabel
-      );
-
-      this.ruleLog.next(logMessage);
-    }
 
     return { checkResult: result, roll };
   }

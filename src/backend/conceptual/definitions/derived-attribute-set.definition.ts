@@ -1,4 +1,4 @@
-import { DerivedAttributeDefinition } from './derived-attribute.definition';
+import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { DerivedAttributeNameLiteral } from '@literals/derived-attribute-name.literal';
 
 export type DerivedAttributeSetDefinition = {

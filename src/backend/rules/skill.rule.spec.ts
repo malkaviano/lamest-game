@@ -66,9 +66,10 @@ describe('SkillRule', () => {
         actor,
         target,
         result: 'EXECUTED',
-        skill: {
-          roll: rollResult.roll,
-          name: eventSkillSurvival.actionableDefinition.name,
+        skillName: eventSkillSurvival.actionableDefinition.name,
+        roll: {
+          checkRoll: rollResult.roll,
+          result: 'SUCCESS',
         },
       };
 

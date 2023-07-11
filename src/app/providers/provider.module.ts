@@ -31,7 +31,7 @@ import { SkillRule } from '@rules/skill.rule';
 import { UnEquipRule } from '@rules/unequip.rule';
 import { UseRule } from '@rules/use.rule';
 import { NarrativeService } from '@services/narrative.service';
-import { RulesHub } from '../../backend/hubs/rules.hub';
+import { RulesHub } from '@hubs/rules.hub';
 import { VisibilityPolicy } from '@policies/visibility.policy';
 import { PolicyHub } from '@hubs/policy.hub';
 import { GameLoopService } from '@services/game-loop.service';
@@ -129,7 +129,6 @@ const loggingHub = new LoggingHub(
   activationAxiom,
   affectAxiom,
   policyHub,
-  dodgeAxiom,
   gamePredicate
 );
 

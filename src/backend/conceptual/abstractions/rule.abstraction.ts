@@ -16,6 +16,8 @@ import { ReadableDefinition } from '@definitions/readable.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
+import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 
 type Result = {
   name: RuleNameLiteral;
@@ -29,9 +31,10 @@ type Result = {
   equipped?: WeaponDefinition;
   unequipped?: WeaponDefinition;
   affected?: WeaponDefinition;
-  skill?: {
-    name: string;
-    roll?: number;
+  skillName?: string;
+  roll?: {
+    checkRoll?: number;
+    result: CheckResultLiteral;
   };
   consumable?: {
     consumed: ConsumableDefinition;
@@ -43,7 +46,7 @@ type Result = {
 };
 
 export abstract class RuleAbstraction
-  implements RuleInterface, LoggerInterface
+  implements RuleInterface, LoggerInterface, ActorDodgedInterface
 {
   protected ruleResult: {
     target?: InteractiveInterface;
@@ -54,7 +57,10 @@ export abstract class RuleAbstraction
     unequipped?: WeaponDefinition;
     affected?: WeaponDefinition;
     skillName?: string;
-    checkRoll?: number;
+    roll?: {
+      checkRoll?: number;
+      result: CheckResultLiteral;
+    };
     consumable?: ConsumableDefinition;
     consumableHp?: number;
     consumableEnergy?: number;
@@ -65,6 +71,10 @@ export abstract class RuleAbstraction
 
   protected readonly ruleLog: Subject<LogMessageDefinition>;
 
+  protected readonly actorDodged: Subject<string>;
+
+  public readonly actorDodged$: Observable<string>;
+
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
   public abstract get name(): RuleNameLiteral;
@@ -73,6 +83,10 @@ export abstract class RuleAbstraction
     this.ruleLog = new Subject();
 
     this.logMessageProduced$ = this.ruleLog.asObservable();
+
+    this.actorDodged = new Subject();
+
+    this.actorDodged$ = this.actorDodged.asObservable();
 
     this.ruleResult = {};
   }
@@ -145,13 +159,13 @@ export abstract class RuleAbstraction
 
   private setSkill(r: Result) {
     if (this.ruleResult.skillName) {
-      if (this.ruleResult.checkRoll) {
-        r.skill = {
-          name: this.ruleResult.skillName,
-          roll: this.ruleResult.checkRoll,
+      r.skillName = this.ruleResult.skillName;
+
+      if (this.ruleResult.roll?.checkRoll) {
+        r.roll = {
+          checkRoll: this.ruleResult.roll.checkRoll,
+          result: this.ruleResult.roll.result,
         };
-      } else {
-        r.skill = { name: this.ruleResult.skillName };
       }
     }
   }

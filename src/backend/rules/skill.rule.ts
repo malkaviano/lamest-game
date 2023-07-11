@@ -34,7 +34,7 @@ export class SkillRule extends RuleAbstraction {
 
     this.ruleResult.skillName = skillName;
 
-    this.ruleResult.checkRoll = roll;
+    this.ruleResult.roll = { result, checkRoll: roll };
 
     this.ruleResult.target = target;
 

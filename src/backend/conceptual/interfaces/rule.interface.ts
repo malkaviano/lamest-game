@@ -1,7 +1,7 @@
 import { ActionableEvent } from '@events/actionable.event';
-import { ActorInterface } from './actor.interface';
-import { RuleExtrasInterface } from './rule-extras.interface';
-import { RuleResultInterface } from './rule-result.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
+import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 export interface RuleInterface {
   execute(

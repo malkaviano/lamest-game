@@ -56,7 +56,10 @@ export class ConsumeRule extends RuleAbstraction {
 
       this.ruleResult.skillName = consumed.skillName;
 
-      this.ruleResult.checkRoll = checkRoll.roll;
+      this.ruleResult.roll = {
+        checkRoll: checkRoll.roll,
+        result: rollResult,
+      };
     }
 
     if (rollResult !== 'IMPOSSIBLE') {
