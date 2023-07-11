@@ -1,6 +1,7 @@
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 
 import { setupMocks } from '../../../tests/mocks';
+import { SettingsStore } from '../stores/settings.store';
 
 describe('RegeneratorBehavior', () => {
   beforeEach(() => {
@@ -21,9 +22,17 @@ describe('RegeneratorBehavior', () => {
 
       expect(result).toBeUndefined();
 
-      await new Promise((resolve) => setTimeout(resolve, 400));
+      await new Promise((resolve) =>
+        setTimeout(
+          resolve,
+          SettingsStore.settings.actionPoints.regeneration
+            .intervalMilliseconds + 10
+        )
+      );
 
-      expect(result).toEqual(2);
+      expect(result).toEqual(
+        SettingsStore.settings.actionPoints.regeneration.amount
+      );
 
       b.stopApRegeneration();
     });

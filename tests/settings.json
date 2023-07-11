@@ -11,10 +11,6 @@
     "oneDodgeEveryAgiAmount": 8,
     "intelligencePoints": 10,
     "professionPoints": 300,
-    "apRegeneration": {
-      "intervalMilliseconds": 300,
-      "amount": 2
-    },
     "ruleCost": {
       "AFFECT": 3,
       "CONSUME": 1,
@@ -27,6 +23,14 @@
       "UNEQUIP": 1,
       "USE": 1
     },
-    "aiLoopMilliseconds": 10
+    "aiLoopMilliseconds": 10,
+    "actionPoints": {
+      "oneEveryAgility": 6,
+      "base": 5,
+      "regeneration": {
+        "intervalMilliseconds": 100,
+        "amount": 1
+      }
+    }
   }
 }

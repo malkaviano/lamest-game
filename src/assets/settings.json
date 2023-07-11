@@ -7,16 +7,9 @@
     "oneDodgeEveryAgiAmount": 8,
     "playerEffectDefenses": {
       "immunities": [],
-      "cures": [
-        "REMEDY",
-        "SACRED"
-      ],
+      "cures": ["REMEDY", "SACRED"],
       "vulnerabilities": [],
       "resistances": []
-    },
-    "apRegeneration": {
-      "intervalMilliseconds": 1500,
-      "amount": 1
     },
     "ruleCost": {
       "AFFECT": 3,
@@ -30,6 +23,14 @@
       "UNEQUIP": 1,
       "USE": 1
     },
-    "aiLoopMilliseconds": 2000
+    "aiLoopMilliseconds": 2000,
+    "actionPoints": {
+      "oneEveryAgility": 6,
+      "base": 5,
+      "regeneration": {
+        "intervalMilliseconds": 1500,
+        "amount": 1
+      }
+    }
   }
 }
