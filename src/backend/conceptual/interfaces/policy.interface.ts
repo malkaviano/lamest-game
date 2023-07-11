@@ -1,6 +1,6 @@
-import { LoggerInterface } from './logger.interface';
-import { PolicyResultInterface } from './policy-result.interface';
-import { RuleResultInterface } from './rule-result.interface';
+import { LoggerInterface } from '@interfaces/logger.interface';
+import { PolicyResultInterface } from '@interfaces/policy-result.interface';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 export interface PolicyInterface extends LoggerInterface {
   enforce(result: RuleResultInterface): PolicyResultInterface;

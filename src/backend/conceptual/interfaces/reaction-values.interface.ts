@@ -1,7 +1,7 @@
 import { EffectEvent } from '@events/effect.event';
 import { GameItemDefinition } from '@definitions/game-item.definition';
-import { InteractiveInterface } from './interactive.interface';
-import { ActorInterface } from './actor.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
+import { ActorInterface } from '@interfaces/actor.interface';
 
 export interface ReactionValuesInterface {
   readonly item?: GameItemDefinition;

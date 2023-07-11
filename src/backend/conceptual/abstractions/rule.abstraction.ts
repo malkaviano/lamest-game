@@ -16,6 +16,7 @@ import { ReadableDefinition } from '@definitions/readable.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 type Result = {
   name: RuleNameLiteral;
@@ -29,9 +30,10 @@ type Result = {
   equipped?: WeaponDefinition;
   unequipped?: WeaponDefinition;
   affected?: WeaponDefinition;
-  skill?: {
-    name: string;
-    roll?: number;
+  skillName?: string;
+  roll?: {
+    checkRoll?: number;
+    result: CheckResultLiteral;
   };
   consumable?: {
     consumed: ConsumableDefinition;
@@ -54,7 +56,10 @@ export abstract class RuleAbstraction
     unequipped?: WeaponDefinition;
     affected?: WeaponDefinition;
     skillName?: string;
-    checkRoll?: number;
+    roll?: {
+      checkRoll?: number;
+      result: CheckResultLiteral;
+    };
     consumable?: ConsumableDefinition;
     consumableHp?: number;
     consumableEnergy?: number;
@@ -145,13 +150,13 @@ export abstract class RuleAbstraction
 
   private setSkill(r: Result) {
     if (this.ruleResult.skillName) {
-      if (this.ruleResult.checkRoll) {
-        r.skill = {
-          name: this.ruleResult.skillName,
-          roll: this.ruleResult.checkRoll,
+      r.skillName = this.ruleResult.skillName;
+
+      if (this.ruleResult.roll?.checkRoll) {
+        r.roll = {
+          checkRoll: this.ruleResult.roll.checkRoll,
+          result: this.ruleResult.roll.result,
         };
-      } else {
-        r.skill = { name: this.ruleResult.skillName };
       }
     }
   }

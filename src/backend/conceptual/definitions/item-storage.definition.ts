@@ -1,4 +1,4 @@
-import { GameItemDefinition } from './game-item.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
 
 export class ItemStoredDefinition {
   constructor(

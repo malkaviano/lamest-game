@@ -122,9 +122,7 @@ describe('EquipRule', () => {
             result: 'EXECUTED',
             equipped: simpleSword,
             unequipped: unDodgeableAxe,
-            skill: {
-              name: simpleSword.skillName,
-            },
+            skillName: simpleSword.skillName,
           };
 
           expect(result).toEqual(expected);
@@ -144,9 +142,7 @@ describe('EquipRule', () => {
             event: eventNoSkill,
             actor,
             result: 'DENIED',
-            skill: {
-              name: greatSword.skillName,
-            },
+            skillName: greatSword.skillName,
           };
 
           expect(result).toEqual(expected);

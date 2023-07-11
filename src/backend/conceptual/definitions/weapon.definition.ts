@@ -1,7 +1,7 @@
 import { ItemUsabilityLiteral } from '@literals/item-usability';
-import { EffectDefinition } from './effect.definition';
-import { ItemIdentityDefinition } from './item-identity.definition';
-import { SkillItemDefinition } from './skill-item.definition';
+import { EffectDefinition } from '@definitions/effect.definition';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
+import { SkillItemDefinition } from '@definitions/skill-item.definition';
 
 export class WeaponDefinition extends SkillItemDefinition {
   constructor(

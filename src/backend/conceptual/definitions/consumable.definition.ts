@@ -1,5 +1,5 @@
-import { ItemIdentityDefinition } from './item-identity.definition';
-import { GameItemDefinition } from './game-item.definition';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
+import { GameItemDefinition } from '@definitions/game-item.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 
 export class ConsumableDefinition extends GameItemDefinition {

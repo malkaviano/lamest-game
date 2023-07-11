@@ -21,25 +21,29 @@ export class AffectAxiom implements LoggerInterface {
   }
 
   public affectWith(
-    actor: InteractiveInterface,
+    target: InteractiveInterface,
     action: ActionableDefinition,
     rollResult: CheckResultLiteral,
     values: ReactionValuesInterface
   ): void {
-    const log = actor.reactTo(action, rollResult, values);
+    const log = target.reactTo(action, rollResult, values);
 
     if (log) {
       const logMessage = GameStringsStore.createFreeLogMessage(
         'AFFECTED',
-        actor.name,
+        target.name,
         log
       );
 
       this.logMessageProduced.next(logMessage);
 
-      if (actor && actor instanceof ActorEntity && actor.situation === 'DEAD') {
+      if (
+        target &&
+        target instanceof ActorEntity &&
+        target.situation === 'DEAD'
+      ) {
         this.logMessageProduced.next(
-          GameStringsStore.createActorIsDeadLogMessage(actor.name)
+          GameStringsStore.createActorIsDeadLogMessage(target.name)
         );
       }
     }

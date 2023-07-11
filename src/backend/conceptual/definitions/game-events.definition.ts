@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 
-import { SceneDefinition } from './scene.definition';
+import { SceneDefinition } from '@definitions/scene.definition';
 import { ArrayView } from '@wrappers/array.view';
-import { ActionableItemDefinition } from './actionable-item.definitions';
-import { LogMessageDefinition } from './log-message.definition';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
+import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ReadableInterface } from '@interfaces/readable.interface';
 import { PlayerInterface } from '@interfaces/player.interface';
 

@@ -1,9 +1,10 @@
 import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
-import { AffectRule } from './affect.rule';
+import { AffectRule } from '@rules/affect.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RollDefinition } from '@definitions/roll.definition';
 import { EffectEvent } from '@events/effect.event';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import { ruleScenario } from '../../../tests/scenarios';
 import {
@@ -12,6 +13,7 @@ import {
   mockedAffectedAxiom,
   mockedCheckedService,
   mockedDodgeAxiom,
+  mockedInteractiveEntity,
   mockedPlayerEntity,
   mockedRollHelper,
   setupMocks,
@@ -26,7 +28,6 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../tests/fakes';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 describe('AffectRule', () => {
   let rule: AffectRule;
@@ -56,6 +57,16 @@ describe('AffectRule', () => {
 
     when(
       mockedActorEntity.reactTo(
+        deepEqual(eventAttackInteractive.actionableDefinition),
+        'SUCCESS',
+        deepEqual({
+          effect: new EffectEvent('KINETIC', 2),
+        })
+      )
+    ).thenReturn(damageMessage2);
+
+    when(
+      mockedInteractiveEntity.reactTo(
         deepEqual(eventAttackInteractive.actionableDefinition),
         'SUCCESS',
         deepEqual({
@@ -95,11 +106,9 @@ describe('AffectRule', () => {
 
   describe('execute', () => {
     describe('when throwing molotov', () => {
-      describe('when target is actor', () => {
+      describe('when target is interactive', () => {
         describe('when check skill succeed', () => {
           it('should log used molotov and lost molotov', (done) => {
-            when(mockedDodgeAxiom.dodged(target, false, 0)).thenReturn(false);
-
             when(mockedPlayerEntity.weaponEquipped).thenReturn(molotov);
 
             ruleScenario(
@@ -107,7 +116,7 @@ describe('AffectRule', () => {
               actor,
               eventAttackInteractive,
               {
-                target,
+                target: target2,
               },
               [usedMolotovLog, lostMolotovLog],
               done
@@ -115,19 +124,13 @@ describe('AffectRule', () => {
 
             verify(
               mockedAffectedAxiom.affectWith(
-                target,
+                target2,
                 actionAffect,
                 'SUCCESS',
                 deepEqual({
                   effect: new EffectEvent('FIRE', 2),
                 })
               )
-            ).once();
-
-            verify(mockedDodgeAxiom.dodged(target, false, 0)).once();
-
-            verify(
-              mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
             ).once();
           });
         });
@@ -189,7 +192,7 @@ describe('AffectRule', () => {
           result: 'DENIED',
           target,
           affected: unDodgeableAxe,
-          skill: { name: 'Melee Weapon (Simple)' },
+          skillName: 'Melee Weapon (Simple)',
         };
 
         expect(result).toEqual(expected);
@@ -213,7 +216,8 @@ describe('AffectRule', () => {
           result: 'AVOIDED',
           target,
           affected: simpleSword,
-          skill: { name: 'Melee Weapon (Simple)', roll: 5 },
+          skillName: 'Melee Weapon (Simple)',
+          roll: { checkRoll: 5, result: 'SUCCESS' },
           dodged: true,
         };
 
@@ -238,7 +242,8 @@ describe('AffectRule', () => {
           result: 'EXECUTED',
           target,
           affected: simpleSword,
-          skill: { name: 'Melee Weapon (Simple)', roll: 5 },
+          skillName: 'Melee Weapon (Simple)',
+          roll: { checkRoll: 5, result: 'SUCCESS' },
           dodged: false,
           effect: { type: 'KINETIC', amount: 2 },
         };
@@ -253,11 +258,13 @@ const actor = instance(mockedPlayerEntity);
 
 const target = instance(mockedActorEntity);
 
+const target2 = instance(mockedInteractiveEntity);
+
 const damageMessage2 = `${simpleSword.damage.effectType}-2`;
 
 const usedMolotovLog = GameStringsStore.createUsedItemLogMessage(
   playerInfo.name,
-  actorInfo.name,
+  interactiveInfo.name,
   molotov.identity.label
 );
 

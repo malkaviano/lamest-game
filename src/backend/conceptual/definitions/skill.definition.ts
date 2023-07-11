@@ -1,4 +1,4 @@
-import { CharacteristicSetDefinition } from './characteristic-set.definition';
+import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
 import { SkillAffinityLiteral } from '@literals/skill-category.literal';
 
 export class SkillDefinition {
