@@ -255,11 +255,11 @@ describe('ActorBehavior', () => {
     [
       {
         changes: [-14],
-        expected: [new ActionPointsEvent(10, 0)],
+        expected: [new ActionPointsEvent(6, 0)],
       },
       {
         changes: [-14, 20],
-        expected: [new ActionPointsEvent(10, 0), new ActionPointsEvent(0, 10)],
+        expected: [new ActionPointsEvent(6, 0), new ActionPointsEvent(0, 6)],
       },
     ].forEach(({ changes, expected }) => {
       it('return ActionPointsEvent', () => {

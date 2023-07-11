@@ -111,8 +111,8 @@ export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
   'MAX EP': new DerivedAttributeDefinition('MAX EP', 13),
   'CURRENT HP': new DerivedAttributeDefinition('CURRENT HP', 8),
   'CURRENT EP': new DerivedAttributeDefinition('CURRENT EP', 13),
-  'MAX AP': new DerivedAttributeDefinition('MAX AP', 10),
-  'CURRENT AP': new DerivedAttributeDefinition('CURRENT AP', 10),
+  'MAX AP': new DerivedAttributeDefinition('MAX AP', 6),
+  'CURRENT AP': new DerivedAttributeDefinition('CURRENT AP', 6),
 };
 
 export const fakeSkills: KeyValueInterface<number> = {
@@ -219,12 +219,12 @@ export const fakeCharacterSheetDerivedAttributes = ArrayView.create(
   ),
   KeyValueDescriptionView.create(
     'MAX AP',
-    '10',
+    '6',
     'The character maximum action points'
   ),
   KeyValueDescriptionView.create(
     'CURRENT AP',
-    '10',
+    '6',
     'The character current action points'
   )
 );

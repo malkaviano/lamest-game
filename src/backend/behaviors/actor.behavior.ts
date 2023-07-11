@@ -13,12 +13,6 @@ import { SettingsStore } from '@stores/settings.store';
 import { ActionPointsEvent } from '@events/action-points.event';
 
 export class ActorBehavior {
-  private readonly maximumHP: number;
-
-  private readonly maximumEP: number;
-
-  private readonly maximumAP: number;
-
   private currentHP: number;
 
   private currentEP: number;
@@ -30,19 +24,11 @@ export class ActorBehavior {
     private readonly mSkills: Map<string, number>,
     private readonly skillStore: SkillStore
   ) {
-    this.maximumHP = Math.trunc(
-      (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
-    );
+    this.currentHP = this.maximumHP();
 
-    this.maximumEP = this.characteristics.ESN.value;
+    this.currentEP = this.maximumEP();
 
-    this.maximumAP = 10;
-
-    this.currentHP = this.maximumHP;
-
-    this.currentEP = this.maximumEP;
-
-    this.currentAP = this.maximumAP;
+    this.currentAP = this.maximumAP();
   }
 
   public get characteristics(): CharacteristicSetDefinition {
@@ -51,8 +37,8 @@ export class ActorBehavior {
 
   public get derivedAttributes(): DerivedAttributeSetDefinition {
     return {
-      'MAX HP': new DerivedAttributeDefinition('MAX HP', this.maximumHP),
-      'MAX EP': new DerivedAttributeDefinition('MAX EP', this.maximumEP),
+      'MAX HP': new DerivedAttributeDefinition('MAX HP', this.maximumHP()),
+      'MAX EP': new DerivedAttributeDefinition('MAX EP', this.maximumEP()),
       'CURRENT HP': new DerivedAttributeDefinition(
         'CURRENT HP',
         this.currentHP
@@ -61,7 +47,7 @@ export class ActorBehavior {
         'CURRENT EP',
         this.currentEP
       ),
-      'MAX AP': new DerivedAttributeDefinition('MAX AP', this.maximumAP),
+      'MAX AP': new DerivedAttributeDefinition('MAX AP', this.maximumAP()),
       'CURRENT AP': new DerivedAttributeDefinition(
         'CURRENT AP',
         this.currentAP
@@ -151,7 +137,7 @@ export class ActorBehavior {
 
     this.currentEP += energy;
 
-    this.currentEP = MathHelper.clamp(this.currentEP, 0, this.maximumEP);
+    this.currentEP = MathHelper.clamp(this.currentEP, 0, this.maximumEP());
 
     return new EnergyPointsEvent(previousEP, this.currentEP);
   }
@@ -161,7 +147,7 @@ export class ActorBehavior {
 
     this.currentAP += ap;
 
-    this.currentAP = MathHelper.clamp(this.currentAP, 0, this.maximumAP);
+    this.currentAP = MathHelper.clamp(this.currentAP, 0, this.maximumAP());
 
     return new ActionPointsEvent(previousAP, this.currentAP);
   }
@@ -179,8 +165,28 @@ export class ActorBehavior {
 
     this.currentHP += modified;
 
-    this.currentHP = MathHelper.clamp(this.currentHP, 0, this.maximumHP);
+    this.currentHP = MathHelper.clamp(this.currentHP, 0, this.maximumHP());
 
     return new HitPointsEvent(previousHP, this.currentHP);
+  }
+
+  private maximumHP(): number {
+    return Math.trunc(
+      (this.characteristics.VIT.value + this.characteristics.STR.value) / 2
+    );
+  }
+
+  private maximumEP(): number {
+    return this.characteristics.ESN.value;
+  }
+
+  private maximumAP(): number {
+    return (
+      SettingsStore.settings.actionPoints.base +
+      Math.trunc(
+        this.characteristics.AGI.value /
+          SettingsStore.settings.actionPoints.oneEveryAgility
+      )
+    );
   }
 }
