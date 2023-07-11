@@ -16,7 +16,7 @@ export class SettingsStore {
       resistanceCoefficient,
       playerEffectDefenses,
       oneDodgeEveryAgiAmount,
-      apRegeneration,
+      actionPoints,
       ruleCost,
       aiLoopMilliseconds,
     } = settingsStore.settings;
@@ -49,7 +49,7 @@ export class SettingsStore {
         resistances,
         vulnerabilities,
       },
-      apRegeneration,
+      actionPoints,
       ruleCost,
       aiLoopMilliseconds,
     };

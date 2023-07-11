@@ -14,11 +14,15 @@ export interface SettingsStoreInterface {
       readonly resistances: EffectTypeLiteral[];
     };
     readonly oneDodgeEveryAgiAmount: number;
-    readonly apRegeneration: {
-      readonly intervalMilliseconds: number;
-      readonly amount: number;
-    };
     readonly ruleCost: { [key in RuleNameLiteral]: number };
     readonly aiLoopMilliseconds: number;
+    readonly actionPoints: {
+      readonly oneEveryAgility: number;
+      readonly base: number;
+      readonly regeneration: {
+        readonly intervalMilliseconds: number;
+        readonly amount: number;
+      };
+    };
   };
 }

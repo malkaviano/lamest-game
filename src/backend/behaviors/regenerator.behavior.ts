@@ -29,12 +29,14 @@ export class RegeneratorBehavior {
     if (!this.apRegenerationTimer) {
       this.apRegenerationTimer = setInterval(
         () => this.regenerate(),
-        SettingsStore.settings.apRegeneration.intervalMilliseconds
+        SettingsStore.settings.actionPoints.regeneration.intervalMilliseconds
       );
     }
   }
 
   private regenerate(): void {
-    this.apRegenerated.next(SettingsStore.settings.apRegeneration.amount);
+    this.apRegenerated.next(
+      SettingsStore.settings.actionPoints.regeneration.amount
+    );
   }
 }
