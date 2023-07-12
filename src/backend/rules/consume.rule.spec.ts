@@ -9,6 +9,7 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
   mockedCheckedService,
+  mockedGamePredicate,
   mockedInventoryService,
   mockedPlayerEntity,
   mockedRollHelper,
@@ -32,7 +33,8 @@ describe('ConsumeRule', () => {
     rule = new ConsumeRule(
       instance(mockedInventoryService),
       instance(mockedRollHelper),
-      instance(mockedCheckedService)
+      instance(mockedCheckedService),
+      instance(mockedGamePredicate)
     );
 
     when(
@@ -58,6 +60,8 @@ describe('ConsumeRule', () => {
         consumableFirstAid.identity.name
       )
     ).thenReturn(consumableFirstAid);
+
+    when(mockedGamePredicate.canUseSkill(actor, 'First Aid')).thenReturn(true);
   });
 
   it('should be created', () => {
@@ -145,17 +149,9 @@ describe('ConsumeRule', () => {
       });
 
       describe('when skill could not be checked', () => {
-        it('should log item consume', (done) => {
-          when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
-            impossibleFirstAidRoll
-          );
-
-          ruleScenario(rule, actor, eventConsumeFirstAid, {}, [], done);
-        });
-
         it('return denied result', () => {
-          when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
-            impossibleFirstAidRoll
+          when(mockedGamePredicate.canUseSkill(actor, 'First Aid')).thenReturn(
+            false
           );
 
           const result = rule.execute(actor, eventConsumeFirstAid);
