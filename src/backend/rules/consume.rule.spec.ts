@@ -46,14 +46,6 @@ describe('ConsumeRule', () => {
     ).thenThrow(new Error(GameStringsStore.errorMessages['WRONG-ITEM']));
 
     when(
-      mockedCheckedService.takeItemOrThrow<ConsumableDefinition>(
-        instance(mockedInventoryService),
-        playerInfo.id,
-        consumableFirstAid.identity.name
-      )
-    ).thenReturn(consumableFirstAid);
-
-    when(
       mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(
         instance(mockedInventoryService),
         playerInfo.id,
@@ -91,7 +83,7 @@ describe('ConsumeRule', () => {
           actor,
           eventConsumeFirstAid,
           {},
-          [consumedFirstAidLog, lostFirstAidLog],
+          [consumedFirstAidLog],
           done
         );
       });
@@ -181,12 +173,6 @@ const consumedFirstAidLog = new LogMessageDefinition(
   'CONSUMED',
   playerInfo.name,
   'consumed First Aid Kit'
-);
-
-const lostFirstAidLog = new LogMessageDefinition(
-  'LOST',
-  playerInfo.name,
-  'lost First Aid Kit'
 );
 
 const eventConsumeFirstAid = actionableEvent(

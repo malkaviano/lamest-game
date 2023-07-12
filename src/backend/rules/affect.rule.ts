@@ -47,7 +47,6 @@ export class AffectRule
       damage: effect,
       skillName,
       identity,
-      usability,
       energyActivation,
     } = actor.weaponEquipped;
 
@@ -84,10 +83,6 @@ export class AffectRule
           dodgeable,
           extras
         );
-      }
-
-      if (usability === 'DISPOSABLE') {
-        this.disposeItem(actor, identity.label);
       }
 
       if (
@@ -166,17 +161,6 @@ export class AffectRule
       actor.name,
       target.name,
       identity.label
-    );
-
-    this.ruleLog.next(logMessage);
-  }
-
-  private disposeItem(actor: ActorInterface, label: string): void {
-    actor.unEquip();
-
-    const logMessage = GameStringsStore.createLostItemLogMessage(
-      actor.name,
-      label
     );
 
     this.ruleLog.next(logMessage);
