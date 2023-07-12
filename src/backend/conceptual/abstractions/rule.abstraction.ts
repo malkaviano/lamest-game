@@ -20,7 +20,10 @@ import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { ReadableInterface } from '@interfaces/readable.interface';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
-import { ActionableDefinition } from '@definitions/actionable.definition';
+import {
+  ActionableDefinition,
+  createActionableDefinition,
+} from '@definitions/actionable.definition';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActorEntity } from '@entities/actor.entity';
@@ -178,6 +181,30 @@ export abstract class RuleAbstraction
           GameStringsStore.createActorIsDeadLogMessage(target.name)
         );
       }
+    }
+  }
+
+  protected activation(
+    actor: ActorInterface,
+    energyActivation: number,
+    label: string
+  ): void {
+    const log = actor.reactTo(
+      createActionableDefinition('CONSUME', 'activation', 'Activation'),
+      'NONE',
+      {
+        energy: -energyActivation,
+      }
+    );
+
+    if (log) {
+      const logMessage = GameStringsStore.createEnergySpentLogMessage(
+        actor.name,
+        log,
+        label
+      );
+
+      this.ruleLog.next(logMessage);
     }
   }
 

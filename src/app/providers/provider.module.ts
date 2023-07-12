@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RandomIntHelper } from '@helpers/random-int.helper';
-import { ActivationAxiom } from '@axioms/activation.axiom';
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ResourcesStore } from '@stores/resources.store';
 import { ActionableStore } from '@stores/actionable.store';
@@ -73,14 +72,13 @@ const generatorService = new GeneratorService(randomIntHelper, professionStore);
 const narrativeService = new NarrativeService(sceneStore);
 const checkedService = new CheckedService();
 
-const activationAxiom = new ActivationAxiom(gamePredicate);
 const dodgeAxiom = new DodgeAxiom(rollHelper, gamePredicate);
 
 const combatRule = new AffectRule(
   rollHelper,
   checkedService,
-  activationAxiom,
-  dodgeAxiom
+  dodgeAxiom,
+  gamePredicate
 );
 const consumeRule = new ConsumeRule(
   inventoryService,
@@ -122,7 +120,6 @@ const policyHub = new PolicyHub(visibilityPolicy, actionPolicy);
 const loggingHub = new LoggingHub(
   rollHelper,
   rulesHub,
-  activationAxiom,
   policyHub,
   gamePredicate
 );
@@ -166,7 +163,6 @@ const gameLoopService = new GameLoopService(
     { provide: InteractiveStore, useValue: interactiveStore },
     { provide: SceneStore, useValue: sceneStore },
 
-    { provide: ActivationAxiom, useValue: activationAxiom },
     { provide: DodgeAxiom, useValue: dodgeAxiom },
 
     { provide: CheckedService, useValue: checkedService },

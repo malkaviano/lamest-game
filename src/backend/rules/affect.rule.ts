@@ -1,4 +1,3 @@
-import { ActivationAxiom } from '@axioms/activation.axiom';
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
@@ -17,6 +16,7 @@ import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { EffectDefinition } from '@definitions/effect.definition';
+import { GamePredicate } from '@predicates/game.predicate';
 
 export class AffectRule
   extends RuleAbstraction
@@ -25,8 +25,8 @@ export class AffectRule
   constructor(
     private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,
-    private readonly activationAxiom: ActivationAxiom,
-    private readonly dodgeAxiom: DodgeAxiom
+    private readonly dodgeAxiom: DodgeAxiom,
+    private readonly gamePredicate: GamePredicate
   ) {
     super();
   }
@@ -59,13 +59,15 @@ export class AffectRule
 
     this.ruleResult.affected = actor.weaponEquipped;
 
-    const activated = this.activationAxiom.activation(
+    const canActivate = this.gamePredicate.canActivate(
       actor,
       energyActivation,
       identity.label
     );
 
-    if (activated) {
+    if (canActivate) {
+      this.activation(actor, energyActivation, identity.label);
+
       ruleResult = 'AVOIDED';
 
       const targetActor = ConverterHelper.asActor(target);

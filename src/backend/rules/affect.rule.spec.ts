@@ -8,10 +8,10 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import { ruleScenario } from '../../../tests/scenarios';
 import {
-  mockedActivationAxiom,
   mockedActorEntity,
   mockedCheckedService,
   mockedDodgeAxiom,
+  mockedGamePredicate,
   mockedInteractiveEntity,
   mockedPlayerEntity,
   mockedRollHelper,
@@ -35,8 +35,8 @@ describe('AffectRule', () => {
     rule = new AffectRule(
       instance(mockedRollHelper),
       instance(mockedCheckedService),
-      instance(mockedActivationAxiom),
-      instance(mockedDodgeAxiom)
+      instance(mockedDodgeAxiom),
+      instance(mockedGamePredicate)
     );
 
     setupMocks();
@@ -82,7 +82,7 @@ describe('AffectRule', () => {
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
-      mockedActivationAxiom.activation(
+      mockedGamePredicate.canActivate(
         actor,
         molotov.energyActivation,
         molotov.identity.label
@@ -90,12 +90,20 @@ describe('AffectRule', () => {
     ).thenReturn(true);
 
     when(
-      mockedActivationAxiom.activation(
+      mockedGamePredicate.canActivate(
         actor,
         simpleSword.energyActivation,
         simpleSword.identity.label
       )
     ).thenReturn(true);
+
+    when(
+      mockedGamePredicate.canActivate(
+        actor,
+        unDodgeableAxe.energyActivation,
+        unDodgeableAxe.identity.label
+      )
+    ).thenReturn(false);
   });
 
   it('should be created', () => {

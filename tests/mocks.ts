@@ -34,7 +34,6 @@ import { ActorStore } from '@stores/actor.store';
 import { SkillStore } from '@stores/skill.store';
 import { ReadRule } from '@rules/read.rule';
 import { RulesHub } from '@hubs/rules.hub';
-import { ActivationAxiom } from '@axioms/activation.axiom';
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
@@ -160,8 +159,6 @@ export const mockedMatDialog = mock(MatDialog);
 export const mockedReadRule = mock(ReadRule);
 
 export const mockedCheckedService = mock(CheckedService);
-
-export const mockedActivationAxiom = mock(ActivationAxiom);
 
 export const mockedDodgeAxiom = mock(DodgeAxiom);
 
@@ -446,8 +443,6 @@ const resetMocks = () => {
   reset(mockedActorEntity2);
 
   reset(mockedCheckedService);
-
-  reset(mockedActivationAxiom);
 
   reset(mockedDodgeAxiom);
 
