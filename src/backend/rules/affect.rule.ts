@@ -59,13 +59,14 @@ export class AffectRule
 
     this.ruleResult.affected = actor.weaponEquipped;
 
-    const canActivate = this.gamePredicate.canActivate(
+    const executable = this.canExecute(
       actor,
+      skillName,
       energyActivation,
-      identity.label
+      identity
     );
 
-    if (canActivate) {
+    if (executable) {
       this.activation(actor, energyActivation, identity.label);
 
       ruleResult = 'AVOIDED';
@@ -116,6 +117,18 @@ export class AffectRule
     }
 
     return this.getResult(event, actor, ruleResult);
+  }
+
+  private canExecute(
+    actor: ActorInterface,
+    skillName: string,
+    energyActivation: number,
+    identity: ItemIdentityDefinition
+  ) {
+    return (
+      this.gamePredicate.canUseSkill(actor, skillName) &&
+      this.gamePredicate.canActivate(actor, energyActivation, identity.label)
+    );
   }
 
   private tryHitTargetActor(

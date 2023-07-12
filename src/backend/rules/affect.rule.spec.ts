@@ -117,6 +117,18 @@ describe('AffectRule', () => {
         glock.identity.label
       )
     ).thenReturn(true);
+
+    when(
+      mockedGamePredicate.canUseSkill(actor, 'Melee Weapon (Simple)')
+    ).thenReturn(true);
+
+    when(
+      mockedGamePredicate.canUseSkill(actor, 'Firearm (Handgun)')
+    ).thenReturn(true);
+
+    when(
+      mockedGamePredicate.canUseSkill(actor, 'Ranged Weapon (Throw)')
+    ).thenReturn(true);
   });
 
   it('should be created', () => {
