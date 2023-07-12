@@ -27,22 +27,6 @@ describe('RollHelper', () => {
   });
 
   describe('actorSkillCheck', () => {
-    describe('when skill value is not set or zero', () => {
-      it('return IMPOSSIBLE and 0', () => {
-        const actor = instance(mockedActorEntity);
-
-        when(mockedGamePredicate.canUseSkill(actor, 'Appraise')).thenReturn(
-          false
-        );
-
-        const result = helper.actorSkillCheck(actor, 'Appraise');
-
-        const expected = new RollDefinition('IMPOSSIBLE', 0);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
     describe('when skill value is above zero', () => {
       [
         {

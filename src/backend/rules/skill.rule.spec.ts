@@ -10,6 +10,7 @@ import {
   mockedRollHelper,
   setupMocks,
   mockedCheckedService,
+  mockedGamePredicate,
 } from '../../../tests/mocks';
 import {
   actionableEvent,
@@ -25,7 +26,8 @@ describe('SkillRule', () => {
 
     rule = new SkillRule(
       instance(mockedRollHelper),
-      instance(mockedCheckedService)
+      instance(mockedCheckedService),
+      instance(mockedGamePredicate)
     );
   });
 
@@ -34,31 +36,65 @@ describe('SkillRule', () => {
   });
 
   describe('execute', () => {
-    it('return rule result', () => {
-      const rollResult = new RollDefinition('SUCCESS', 10);
-      when(
-        mockedRollHelper.actorSkillCheck(
+    describe('when rule is executed', () => {
+      it('return success result', () => {
+        when(
+          mockedGamePredicate.canUseSkill(
+            actor,
+            eventSkillSurvival.actionableDefinition.name
+          )
+        ).thenReturn(true);
+
+        const rollResult = new RollDefinition('SUCCESS', 10);
+
+        when(
+          mockedRollHelper.actorSkillCheck(
+            actor,
+            eventSkillSurvival.actionableDefinition.name
+          )
+        ).thenReturn(rollResult);
+
+        const expected: RuleResultInterface = {
+          name: 'SKILL',
+          event: eventSkillSurvival,
           actor,
-          eventSkillSurvival.actionableDefinition.name
-        )
-      ).thenReturn(new RollDefinition('SUCCESS', 10));
+          target,
+          result: 'EXECUTED',
+          skillName: eventSkillSurvival.actionableDefinition.name,
+          roll: {
+            checkRoll: rollResult.roll,
+            result: 'SUCCESS',
+          },
+        };
 
-      const expected: RuleResultInterface = {
-        name: 'SKILL',
-        event: eventSkillSurvival,
-        actor,
-        target,
-        result: 'EXECUTED',
-        skillName: eventSkillSurvival.actionableDefinition.name,
-        roll: {
-          checkRoll: rollResult.roll,
-          result: 'SUCCESS',
-        },
-      };
+        const result = rule.execute(actor, eventSkillSurvival, extras);
 
-      const result = rule.execute(actor, eventSkillSurvival, extras);
+        expect(result).toEqual(expected);
+      });
+    });
 
-      expect(result).toEqual(expected);
+    describe('when rule is not executed', () => {
+      it('return denied result', () => {
+        when(
+          mockedGamePredicate.canUseSkill(
+            actor,
+            eventSkillSurvival.actionableDefinition.name
+          )
+        ).thenReturn(false);
+
+        const expected: RuleResultInterface = {
+          name: 'SKILL',
+          event: eventSkillSurvival,
+          actor,
+          target,
+          result: 'DENIED',
+          skillName: eventSkillSurvival.actionableDefinition.name,
+        };
+
+        const result = rule.execute(actor, eventSkillSurvival, extras);
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 });

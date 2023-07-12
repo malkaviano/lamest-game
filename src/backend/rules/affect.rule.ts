@@ -59,13 +59,16 @@ export class AffectRule
 
     this.ruleResult.affected = actor.weaponEquipped;
 
-    const canActivate = this.gamePredicate.canActivate(
+    const executable = this.canExecute(
       actor,
+      skillName,
       energyActivation,
-      identity.label
+      identity
     );
 
-    if (canActivate) {
+    if (executable) {
+      this.logItemUsed(actor, target, identity);
+
       this.activation(actor, energyActivation, identity.label);
 
       ruleResult = 'AVOIDED';
@@ -83,13 +86,7 @@ export class AffectRule
         );
       }
 
-      const rolled = this.ruleResult.roll?.result !== 'IMPOSSIBLE';
-
-      if (rolled) {
-        this.logItemUsed(actor, target, identity);
-      }
-
-      if (usability === 'DISPOSABLE' && (rolled || !targetActor)) {
+      if (usability === 'DISPOSABLE') {
         this.disposeItem(actor, identity.label);
       }
 
@@ -116,6 +113,18 @@ export class AffectRule
     }
 
     return this.getResult(event, actor, ruleResult);
+  }
+
+  private canExecute(
+    actor: ActorInterface,
+    skillName: string,
+    energyActivation: number,
+    identity: ItemIdentityDefinition
+  ) {
+    return (
+      this.gamePredicate.canUseSkill(actor, skillName) &&
+      this.gamePredicate.canActivate(actor, energyActivation, identity.label)
+    );
   }
 
   private tryHitTargetActor(

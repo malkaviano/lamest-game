@@ -6,11 +6,14 @@ import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '@services/checked.service';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
+import { GamePredicate } from '@predicates/game.predicate';
+import { RuleResultLiteral } from '@literals/rule-result.literal';
 
 export class SkillRule extends RuleAbstraction {
   constructor(
     private readonly rollHelper: RollHelper,
-    private readonly checkedService: CheckedService
+    private readonly checkedService: CheckedService,
+    private readonly gamePredicate: GamePredicate
   ) {
     super();
   }
@@ -28,21 +31,34 @@ export class SkillRule extends RuleAbstraction {
 
     const skillName = event.actionableDefinition.name;
 
-    const { result, roll } = this.rollHelper.actorSkillCheck(actor, skillName);
+    const canExecute = this.canExecute(actor, skillName);
 
     this.ruleResult.skillName = skillName;
 
-    this.ruleResult.roll = { result, checkRoll: roll };
-
     this.ruleResult.target = target;
 
-    if (result !== 'IMPOSSIBLE') {
+    let status: RuleResultLiteral = 'DENIED';
+
+    if (canExecute) {
+      status = 'EXECUTED';
+
+      const { result, roll } = this.rollHelper.actorSkillCheck(
+        actor,
+        skillName
+      );
+
+      this.ruleResult.roll = { result, checkRoll: roll };
+
       this.affectWith(target, event.actionableDefinition, result, {
         actor,
         target,
       });
     }
 
-    return this.getResult(event, actor, 'EXECUTED');
+    return this.getResult(event, actor, status);
+  }
+
+  private canExecute(actor: ActorInterface, skillName?: string) {
+    return !skillName || this.gamePredicate.canUseSkill(actor, skillName);
   }
 }

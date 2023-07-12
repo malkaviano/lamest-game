@@ -29,18 +29,6 @@ describe('DodgeAxiom', () => {
   describe('dodge', () => {
     [
       {
-        dodgeable: false,
-        dodgesPerformed: 0,
-        roll: new RollDefinition('IMPOSSIBLE', 0),
-        expected: false,
-      },
-      {
-        dodgeable: true,
-        dodgesPerformed: 2,
-        roll: new RollDefinition('IMPOSSIBLE', 0),
-        expected: false,
-      },
-      {
         dodgeable: true,
         dodgesPerformed: 1,
         roll: new RollDefinition('SUCCESS', 12),

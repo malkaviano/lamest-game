@@ -83,8 +83,10 @@ const combatRule = new AffectRule(
 const consumeRule = new ConsumeRule(
   inventoryService,
   rollHelper,
-  checkedService
+  checkedService,
+  gamePredicate
 );
+
 const equipRule = new EquipRule(
   inventoryService,
   checkedService,
@@ -94,7 +96,7 @@ const inspectRule = new ReadRule(inventoryService);
 const interactionRule = new InteractionRule(checkedService);
 const pickRule = new PickRule(inventoryService, checkedService);
 const sceneRule = new SceneRule(narrativeService, checkedService);
-const skillRule = new SkillRule(rollHelper, checkedService);
+const skillRule = new SkillRule(rollHelper, checkedService, gamePredicate);
 const unEquipRule = new UnEquipRule(inventoryService);
 const useRule = new UseRule(inventoryService, checkedService);
 

@@ -12,12 +12,14 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
+import { GamePredicate } from '@predicates/game.predicate';
 
 export class ConsumeRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollHelper: RollHelper,
-    private readonly checkedService: CheckedService
+    private readonly checkedService: CheckedService,
+    private readonly gamePredicate: GamePredicate
   ) {
     super();
   }
@@ -44,23 +46,25 @@ export class ConsumeRule extends RuleAbstraction {
 
     this.ruleResult.consumable = consumed;
 
-    if (consumed.skillName) {
-      const checkRoll = this.rollHelper.actorSkillCheck(
-        actor,
-        consumed.skillName
-      );
+    this.ruleResult.skillName = consumed.skillName;
 
-      rollResult = checkRoll.result;
+    const canExecute = this.canExecute(actor, consumed.skillName);
 
-      this.ruleResult.skillName = consumed.skillName;
+    if (canExecute) {
+      if (consumed.skillName) {
+        const checkRoll = this.rollHelper.actorSkillCheck(
+          actor,
+          consumed.skillName
+        );
 
-      this.ruleResult.roll = {
-        checkRoll: checkRoll.roll,
-        result: rollResult,
-      };
-    }
+        rollResult = checkRoll.result;
 
-    if (rollResult !== 'IMPOSSIBLE') {
+        this.ruleResult.roll = {
+          checkRoll: checkRoll.roll,
+          result: rollResult,
+        };
+      }
+
       this.consume(actor, consumed, actionableDefinition, rollResult);
 
       ruleResult = 'EXECUTED';
@@ -111,5 +115,9 @@ export class ConsumeRule extends RuleAbstraction {
     this.ruleResult.consumableHp = hp;
 
     this.ruleResult.consumableEnergy = energy;
+  }
+
+  private canExecute(actor: ActorInterface, skillName?: string) {
+    return !skillName || this.gamePredicate.canUseSkill(actor, skillName);
   }
 }

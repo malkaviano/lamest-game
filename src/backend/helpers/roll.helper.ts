@@ -42,22 +42,18 @@ export class RollHelper implements LoggerInterface {
     actor: ActorInterface,
     skillName: string
   ): RollDefinition {
-    let result = new RollDefinition('IMPOSSIBLE', 0);
+    const skillValue = actor.skills[skillName];
 
-    if (this.gamePredicate.canUseSkill(actor, skillName)) {
-      const skillValue = actor.skills[skillName];
+    const result = this.skillCheck(skillValue);
 
-      result = this.skillCheck(skillValue);
+    const logMessage = GameStringsStore.createSkillCheckLogMessage(
+      actor.name,
+      skillName,
+      result.roll.toString(),
+      result.result
+    );
 
-      const logMessage = GameStringsStore.createSkillCheckLogMessage(
-        actor.name,
-        skillName,
-        result.roll.toString(),
-        result.result
-      );
-
-      this.skillCheckLog.next(logMessage);
-    }
+    this.skillCheckLog.next(logMessage);
 
     return result;
   }
