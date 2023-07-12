@@ -3,16 +3,12 @@ import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
-import { CheckedService } from '../services/checked.service';
+import { CheckedService } from '@services/checked.service';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
-import { AffectAxiom } from '@axioms/affect.axiom';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 
 export class InteractionRule extends RuleAbstraction {
-  constructor(
-    private readonly checkedService: CheckedService,
-    private readonly affectAxiomService: AffectAxiom
-  ) {
+  constructor(private readonly checkedService: CheckedService) {
     super();
   }
 
@@ -37,12 +33,7 @@ export class InteractionRule extends RuleAbstraction {
 
     this.ruleLog.next(logMessage);
 
-    this.affectAxiomService.affectWith(
-      target,
-      event.actionableDefinition,
-      'NONE',
-      {}
-    );
+    this.affectWith(target, event.actionableDefinition, 'NONE', {});
 
     this.ruleResult.target = target;
 

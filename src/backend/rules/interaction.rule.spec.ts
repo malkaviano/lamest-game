@@ -1,11 +1,10 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { InteractionRule } from './interaction.rule';
+import { InteractionRule } from '@rules/interaction.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
-  mockedAffectedAxiom,
   mockedCheckedService,
   mockedInteractiveEntity,
   mockedPlayerEntity,
@@ -20,10 +19,7 @@ describe('InteractionRule', () => {
   beforeEach(() => {
     setupMocks();
 
-    rule = new InteractionRule(
-      instance(mockedCheckedService),
-      instance(mockedAffectedAxiom)
-    );
+    rule = new InteractionRule(instance(mockedCheckedService));
   });
 
   it('should be created', () => {

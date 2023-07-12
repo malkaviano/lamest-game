@@ -1,15 +1,13 @@
-import { EMPTY } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { GameStringsStore } from '@stores/game-strings.store';
-import { ConsumeRule } from './consume.rule';
+import { ConsumeRule } from '@rules/consume.rule';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RollDefinition } from '@definitions/roll.definition';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
-  mockedAffectedAxiom,
   mockedCheckedService,
   mockedInventoryService,
   mockedPlayerEntity,
@@ -34,11 +32,8 @@ describe('ConsumeRule', () => {
     rule = new ConsumeRule(
       instance(mockedInventoryService),
       instance(mockedRollHelper),
-      instance(mockedCheckedService),
-      instance(mockedAffectedAxiom)
+      instance(mockedCheckedService)
     );
-
-    when(mockedAffectedAxiom.logMessageProduced$).thenReturn(EMPTY);
 
     when(
       mockedCheckedService.lookItemOrThrow<ConsumableDefinition>(

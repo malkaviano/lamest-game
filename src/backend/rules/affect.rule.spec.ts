@@ -1,4 +1,4 @@
-import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
+import { deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { AffectRule } from '@rules/affect.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
@@ -8,11 +8,10 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import { ruleScenario } from '../../../tests/scenarios';
 import {
-  mockedActivationAxiom,
   mockedActorEntity,
-  mockedAffectedAxiom,
   mockedCheckedService,
   mockedDodgeAxiom,
+  mockedGamePredicate,
   mockedInteractiveEntity,
   mockedPlayerEntity,
   mockedRollHelper,
@@ -22,6 +21,7 @@ import {
   actionableEvent,
   actionAffect,
   actorInfo,
+  glock,
   interactiveInfo,
   molotov,
   playerInfo,
@@ -36,9 +36,8 @@ describe('AffectRule', () => {
     rule = new AffectRule(
       instance(mockedRollHelper),
       instance(mockedCheckedService),
-      instance(mockedActivationAxiom),
       instance(mockedDodgeAxiom),
-      instance(mockedAffectedAxiom)
+      instance(mockedGamePredicate)
     );
 
     setupMocks();
@@ -84,7 +83,11 @@ describe('AffectRule', () => {
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
-      mockedActivationAxiom.activation(
+      mockedRollHelper.actorSkillCheck(actor, 'Firearm (Handgun)')
+    ).thenReturn(new RollDefinition('FAILURE', 85));
+
+    when(
+      mockedGamePredicate.canActivate(
         actor,
         molotov.energyActivation,
         molotov.identity.label
@@ -92,10 +95,26 @@ describe('AffectRule', () => {
     ).thenReturn(true);
 
     when(
-      mockedActivationAxiom.activation(
+      mockedGamePredicate.canActivate(
         actor,
         simpleSword.energyActivation,
         simpleSword.identity.label
+      )
+    ).thenReturn(true);
+
+    when(
+      mockedGamePredicate.canActivate(
+        actor,
+        unDodgeableAxe.energyActivation,
+        unDodgeableAxe.identity.label
+      )
+    ).thenReturn(false);
+
+    when(
+      mockedGamePredicate.canActivate(
+        actor,
+        glock.energyActivation,
+        glock.identity.label
       )
     ).thenReturn(true);
   });
@@ -121,17 +140,6 @@ describe('AffectRule', () => {
               [usedMolotovLog, lostMolotovLog],
               done
             );
-
-            verify(
-              mockedAffectedAxiom.affectWith(
-                target2,
-                actionAffect,
-                'SUCCESS',
-                deepEqual({
-                  effect: new EffectEvent('FIRE', 2),
-                })
-              )
-            ).once();
           });
         });
       });
@@ -156,15 +164,6 @@ describe('AffectRule', () => {
                 [usedSwordLog],
                 done
               );
-
-              verify(
-                mockedAffectedAxiom.affectWith(
-                  anything(),
-                  anything(),
-                  anything(),
-                  anything()
-                )
-              ).never();
 
               verify(mockedDodgeAxiom.dodged(target, true, 0)).once();
 
@@ -247,30 +246,57 @@ describe('AffectRule', () => {
       });
     });
 
-    describe('when target is affected', () => {
-      it('return affect result', () => {
-        when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
+    describe('when affecting target', () => {
+      describe('when roll succeeds', () => {
+        it('return success result', () => {
+          when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-        when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(false);
+          when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(false);
 
-        const result = rule.execute(actor, eventAttackInteractive, {
-          target,
+          const result = rule.execute(actor, eventAttackInteractive, {
+            target,
+          });
+
+          const expected: RuleResultInterface = {
+            name: 'AFFECT',
+            event: eventAttackInteractive,
+            actor,
+            result: 'EXECUTED',
+            target,
+            affected: simpleSword,
+            skillName: 'Melee Weapon (Simple)',
+            roll: { checkRoll: 5, result: 'SUCCESS' },
+            dodged: false,
+            effect: { type: 'KINETIC', amount: 2 },
+          };
+
+          expect(result).toEqual(expected);
         });
+      });
 
-        const expected: RuleResultInterface = {
-          name: 'AFFECT',
-          event: eventAttackInteractive,
-          actor,
-          result: 'EXECUTED',
-          target,
-          affected: simpleSword,
-          skillName: 'Melee Weapon (Simple)',
-          roll: { checkRoll: 5, result: 'SUCCESS' },
-          dodged: false,
-          effect: { type: 'KINETIC', amount: 2 },
-        };
+      describe('when roll fails', () => {
+        it('return avoided result', () => {
+          when(mockedPlayerEntity.weaponEquipped).thenReturn(glock);
 
-        expect(result).toEqual(expected);
+          when(mockedDodgeAxiom.dodged(target, false, 0)).thenReturn(false);
+
+          const result = rule.execute(actor, eventAttackInteractive, {
+            target,
+          });
+
+          const expected: RuleResultInterface = {
+            name: 'AFFECT',
+            event: eventAttackInteractive,
+            actor,
+            result: 'AVOIDED',
+            target,
+            affected: glock,
+            skillName: 'Firearm (Handgun)',
+            roll: { checkRoll: 85, result: 'FAILURE' },
+          };
+
+          expect(result).toEqual(expected);
+        });
       });
     });
   });

@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material/dialog';
 
-import { EMPTY, of, Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
 import { AffectRule } from '@rules/affect.rule';
@@ -34,8 +34,6 @@ import { ActorStore } from '@stores/actor.store';
 import { SkillStore } from '@stores/skill.store';
 import { ReadRule } from '@rules/read.rule';
 import { RulesHub } from '@hubs/rules.hub';
-import { ActivationAxiom } from '@axioms/activation.axiom';
-import { AffectAxiom } from '@axioms/affect.axiom';
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { FormatterHelperService } from '../src/app/helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../src/app/helpers/with-subscription.helper';
@@ -161,10 +159,6 @@ export const mockedMatDialog = mock(MatDialog);
 export const mockedReadRule = mock(ReadRule);
 
 export const mockedCheckedService = mock(CheckedService);
-
-export const mockedActivationAxiom = mock(ActivationAxiom);
-
-export const mockedAffectedAxiom = mock(AffectAxiom);
 
 export const mockedDodgeAxiom = mock(DodgeAxiom);
 
@@ -364,8 +358,6 @@ export const setupMocks = () => {
 
   when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
 
-  when(mockedAffectedAxiom.logMessageProduced$).thenReturn(EMPTY);
-
   when(mockedAffectRule.name).thenReturn('AFFECT');
 
   mockCheckedHelper();
@@ -451,10 +443,6 @@ const resetMocks = () => {
   reset(mockedActorEntity2);
 
   reset(mockedCheckedService);
-
-  reset(mockedActivationAxiom);
-
-  reset(mockedAffectedAxiom);
 
   reset(mockedDodgeAxiom);
 

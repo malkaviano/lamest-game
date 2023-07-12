@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RandomIntHelper } from '@helpers/random-int.helper';
-import { ActivationAxiom } from '@axioms/activation.axiom';
-import { AffectAxiom } from '@axioms/affect.axiom';
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ResourcesStore } from '@stores/resources.store';
 import { ActionableStore } from '@stores/actionable.store';
@@ -74,22 +72,18 @@ const generatorService = new GeneratorService(randomIntHelper, professionStore);
 const narrativeService = new NarrativeService(sceneStore);
 const checkedService = new CheckedService();
 
-const activationAxiom = new ActivationAxiom(gamePredicate);
-const affectAxiom = new AffectAxiom();
 const dodgeAxiom = new DodgeAxiom(rollHelper, gamePredicate);
 
 const combatRule = new AffectRule(
   rollHelper,
   checkedService,
-  activationAxiom,
   dodgeAxiom,
-  affectAxiom
+  gamePredicate
 );
 const consumeRule = new ConsumeRule(
   inventoryService,
   rollHelper,
-  checkedService,
-  affectAxiom
+  checkedService
 );
 const equipRule = new EquipRule(
   inventoryService,
@@ -97,12 +91,12 @@ const equipRule = new EquipRule(
   gamePredicate
 );
 const inspectRule = new ReadRule(inventoryService);
-const interactionRule = new InteractionRule(checkedService, affectAxiom);
-const pickRule = new PickRule(inventoryService, checkedService, affectAxiom);
+const interactionRule = new InteractionRule(checkedService);
+const pickRule = new PickRule(inventoryService, checkedService);
 const sceneRule = new SceneRule(narrativeService, checkedService);
-const skillRule = new SkillRule(rollHelper, checkedService, affectAxiom);
+const skillRule = new SkillRule(rollHelper, checkedService);
 const unEquipRule = new UnEquipRule(inventoryService);
-const useRule = new UseRule(inventoryService, checkedService, affectAxiom);
+const useRule = new UseRule(inventoryService, checkedService);
 
 const rulesHub = new RulesHub(
   skillRule,
@@ -126,8 +120,6 @@ const policyHub = new PolicyHub(visibilityPolicy, actionPolicy);
 const loggingHub = new LoggingHub(
   rollHelper,
   rulesHub,
-  activationAxiom,
-  affectAxiom,
   policyHub,
   gamePredicate
 );
@@ -171,8 +163,6 @@ const gameLoopService = new GameLoopService(
     { provide: InteractiveStore, useValue: interactiveStore },
     { provide: SceneStore, useValue: sceneStore },
 
-    { provide: ActivationAxiom, useValue: activationAxiom },
-    { provide: AffectAxiom, useValue: affectAxiom },
     { provide: DodgeAxiom, useValue: dodgeAxiom },
 
     { provide: CheckedService, useValue: checkedService },

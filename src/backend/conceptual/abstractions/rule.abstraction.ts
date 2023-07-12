@@ -18,6 +18,15 @@ import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
+import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
+import {
+  ActionableDefinition,
+  createActionableDefinition,
+} from '@definitions/actionable.definition';
+import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { ActorEntity } from '@entities/actor.entity';
 
 type Result = {
   name: RuleNameLiteral;
@@ -46,7 +55,11 @@ type Result = {
 };
 
 export abstract class RuleAbstraction
-  implements RuleInterface, LoggerInterface, ActorDodgedInterface
+  implements
+    RuleInterface,
+    LoggerInterface,
+    ActorDodgedInterface,
+    DocumentOpenedInterface
 {
   protected ruleResult: {
     target?: InteractiveInterface;
@@ -77,6 +90,10 @@ export abstract class RuleAbstraction
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
+  protected readonly documentOpened: Subject<ReadableInterface>;
+
+  public readonly documentOpened$: Observable<ReadableInterface>;
+
   public abstract get name(): RuleNameLiteral;
 
   constructor() {
@@ -87,6 +104,10 @@ export abstract class RuleAbstraction
     this.actorDodged = new Subject();
 
     this.actorDodged$ = this.actorDodged.asObservable();
+
+    this.documentOpened = new Subject();
+
+    this.documentOpened$ = this.documentOpened.asObservable();
 
     this.ruleResult = {};
   }
@@ -132,6 +153,59 @@ export abstract class RuleAbstraction
     this.setEffect(r);
 
     return r;
+  }
+
+  protected affectWith(
+    target: InteractiveInterface,
+    action: ActionableDefinition,
+    rollResult: CheckResultLiteral,
+    values: ReactionValuesInterface
+  ): void {
+    const log = target.reactTo(action, rollResult, values);
+
+    if (log) {
+      const logMessage = GameStringsStore.createFreeLogMessage(
+        'AFFECTED',
+        target.name,
+        log
+      );
+
+      this.ruleLog.next(logMessage);
+
+      if (
+        target &&
+        target instanceof ActorEntity &&
+        target.situation === 'DEAD'
+      ) {
+        this.ruleLog.next(
+          GameStringsStore.createActorIsDeadLogMessage(target.name)
+        );
+      }
+    }
+  }
+
+  protected activation(
+    actor: ActorInterface,
+    energyActivation: number,
+    label: string
+  ): void {
+    const log = actor.reactTo(
+      createActionableDefinition('CONSUME', 'activation', 'Activation'),
+      'NONE',
+      {
+        energy: -energyActivation,
+      }
+    );
+
+    if (log) {
+      const logMessage = GameStringsStore.createEnergySpentLogMessage(
+        actor.name,
+        log,
+        label
+      );
+
+      this.ruleLog.next(logMessage);
+    }
   }
 
   private setEffect(r: Result) {

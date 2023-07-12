@@ -3,8 +3,6 @@ import { instance } from 'ts-mockito';
 import { LoggingHub } from '@hubs/logging.hub';
 
 import {
-  mockedActivationAxiom,
-  mockedAffectedAxiom,
   mockedPolicyHub,
   mockedRollHelper,
   mockedRulesHub,
@@ -14,8 +12,6 @@ describe('LoggingHub', () => {
   const hub = new LoggingHub(
     instance(mockedRollHelper),
     instance(mockedRulesHub),
-    instance(mockedActivationAxiom),
-    instance(mockedAffectedAxiom),
     instance(mockedPolicyHub)
   );
 
