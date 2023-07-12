@@ -139,7 +139,7 @@ export class GameStringsStore {
     skill: string
   ): LogMessageDefinition {
     return new LogMessageDefinition(
-      'CHECK',
+      'DENIED',
       actor,
       GameStringsStore.logMessagesStore['cannotCheckSkillMessage'].replace(
         '${skill}',

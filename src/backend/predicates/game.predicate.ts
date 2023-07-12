@@ -57,25 +57,29 @@ export class GamePredicate implements LoggerInterface {
     actionDodgeable: boolean,
     targetDodgesPerformed: number
   ): boolean {
-    if (!actionDodgeable && actor instanceof PlayerEntity) {
-      const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
-        actor.name
-      );
+    if (this.canUseSkill(actor, 'Dodge')) {
+      if (!actionDodgeable && actor instanceof PlayerEntity) {
+        const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
+          actor.name
+        );
 
-      this.logMessageProduced.next(logMessage);
+        this.logMessageProduced.next(logMessage);
+      }
+
+      const canDodge = actor.dodgesPerRound > targetDodgesPerformed;
+
+      if (!canDodge && actor instanceof PlayerEntity) {
+        const logMessage = GameStringsStore.createOutOfDodgesLogMessage(
+          actor.name
+        );
+
+        this.logMessageProduced.next(logMessage);
+      }
+
+      return actionDodgeable && canDodge;
     }
 
-    const canDodge = actor.dodgesPerRound > targetDodgesPerformed;
-
-    if (!canDodge && actor instanceof PlayerEntity) {
-      const logMessage = GameStringsStore.createOutOfDodgesLogMessage(
-        actor.name
-      );
-
-      this.logMessageProduced.next(logMessage);
-    }
-
-    return actionDodgeable && canDodge;
+    return false;
   }
 
   public canEquip(actor: ActorInterface, equip: WeaponDefinition): boolean {
@@ -97,7 +101,7 @@ export class GamePredicate implements LoggerInterface {
   public canUseSkill(actor: ActorInterface, skillName: string): boolean {
     const canUseSkill = (actor.skills[skillName] ?? 0) > 0;
 
-    if (!canUseSkill) {
+    if (!canUseSkill && actor instanceof PlayerEntity) {
       const logMessage = GameStringsStore.createCannotCheckSkillLogMessage(
         actor.name,
         skillName
