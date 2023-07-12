@@ -96,6 +96,7 @@ describe('GamePredicate', () => {
         targetDodgesPerformed: 0,
         expected: true,
         log: undefined,
+        dodge: 20,
       },
       {
         actor: instance(mockedPlayerEntity),
@@ -107,6 +108,7 @@ describe('GamePredicate', () => {
           'Some Name',
           'attack is not dodgeable'
         ),
+        dodge: 20,
       },
       {
         actor: instance(mockedPlayerEntity),
@@ -118,10 +120,32 @@ describe('GamePredicate', () => {
           'Some Name',
           'was out of dodges'
         ),
+        dodge: 20,
+      },
+      {
+        actor: instance(mockedPlayerEntity),
+        actionDodgeable: true,
+        targetDodgesPerformed: 0,
+        expected: false,
+        log: new LogMessageDefinition(
+          'DENIED',
+          'Some Name',
+          "Dodge skill couldn't be checked because it's value is zero"
+        ),
+        dodge: 0,
       },
     ].forEach(
-      ({ actor, actionDodgeable, targetDodgesPerformed, expected, log }) => {
+      ({
+        actor,
+        actionDodgeable,
+        targetDodgesPerformed,
+        expected,
+        log,
+        dodge,
+      }) => {
         it('return ${expected}', () => {
+          when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
+
           const result = predicate.canDodge(
             actor,
             actionDodgeable,
@@ -132,6 +156,7 @@ describe('GamePredicate', () => {
         });
 
         it('emit log', (done) => {
+          when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
           let result: LogMessageDefinition | undefined;
 
           predicate.logMessageProduced$.subscribe((event) => {
@@ -245,7 +270,7 @@ describe('GamePredicate', () => {
         skillName: 'GG',
         expected: false,
         log: new LogMessageDefinition(
-          'CHECK',
+          'DENIED',
           'Some Name',
           "GG skill couldn't be checked because it's value is zero"
         ),
