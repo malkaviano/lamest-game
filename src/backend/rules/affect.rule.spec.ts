@@ -139,7 +139,7 @@ describe('AffectRule', () => {
     describe('when throwing molotov', () => {
       describe('when target is interactive', () => {
         describe('when check skill succeed', () => {
-          it('should log used molotov and lost molotov', (done) => {
+          it('should log used molotov', (done) => {
             when(mockedPlayerEntity.weaponEquipped).thenReturn(molotov);
 
             ruleScenario(
@@ -149,7 +149,7 @@ describe('AffectRule', () => {
               {
                 target: target2,
               },
-              [usedMolotovLog, lostMolotovLog],
+              [usedMolotovLog],
               done
             );
           });
@@ -325,11 +325,6 @@ const damageMessage2 = `${simpleSword.damage.effectType}-2`;
 const usedMolotovLog = GameStringsStore.createUsedItemLogMessage(
   playerInfo.name,
   interactiveInfo.name,
-  molotov.identity.label
-);
-
-const lostMolotovLog = GameStringsStore.createLostItemLogMessage(
-  playerInfo.name,
   molotov.identity.label
 );
 

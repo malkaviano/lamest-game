@@ -68,19 +68,6 @@ export class ConsumeRule extends RuleAbstraction {
       this.consume(actor, consumed, actionableDefinition, rollResult);
 
       ruleResult = 'EXECUTED';
-
-      this.checkedService.takeItemOrThrow<ConsumableDefinition>(
-        this.inventoryService,
-        actor.id,
-        eventId
-      );
-
-      const logMessage = GameStringsStore.createLostItemLogMessage(
-        actor.name,
-        consumed.identity.label
-      );
-
-      this.ruleLog.next(logMessage);
     }
 
     return this.getResult(event, actor, ruleResult);
