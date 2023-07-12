@@ -394,3 +394,12 @@ export const imageOpened = {
   width: '400',
   height: '400',
 };
+
+export const glock = new WeaponDefinition(
+  new ItemIdentityDefinition('glock', 'Glock', 'Glock 17'),
+  'Firearm (Handgun)',
+  new EffectDefinition(createDice(), 4, 'KINETIC'),
+  false,
+  'PERMANENT',
+  0
+);

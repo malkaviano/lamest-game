@@ -21,6 +21,7 @@ import {
   actionableEvent,
   actionAffect,
   actorInfo,
+  glock,
   interactiveInfo,
   molotov,
   playerInfo,
@@ -82,6 +83,10 @@ describe('AffectRule', () => {
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
+      mockedRollHelper.actorSkillCheck(actor, 'Firearm (Handgun)')
+    ).thenReturn(new RollDefinition('FAILURE', 85));
+
+    when(
       mockedGamePredicate.canActivate(
         actor,
         molotov.energyActivation,
@@ -104,6 +109,14 @@ describe('AffectRule', () => {
         unDodgeableAxe.identity.label
       )
     ).thenReturn(false);
+
+    when(
+      mockedGamePredicate.canActivate(
+        actor,
+        glock.energyActivation,
+        glock.identity.label
+      )
+    ).thenReturn(true);
   });
 
   it('should be created', () => {
@@ -233,30 +246,57 @@ describe('AffectRule', () => {
       });
     });
 
-    describe('when target is affected', () => {
-      it('return affect result', () => {
-        when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
+    describe('when affecting target', () => {
+      describe('when roll succeeds', () => {
+        it('return success result', () => {
+          when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-        when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(false);
+          when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(false);
 
-        const result = rule.execute(actor, eventAttackInteractive, {
-          target,
+          const result = rule.execute(actor, eventAttackInteractive, {
+            target,
+          });
+
+          const expected: RuleResultInterface = {
+            name: 'AFFECT',
+            event: eventAttackInteractive,
+            actor,
+            result: 'EXECUTED',
+            target,
+            affected: simpleSword,
+            skillName: 'Melee Weapon (Simple)',
+            roll: { checkRoll: 5, result: 'SUCCESS' },
+            dodged: false,
+            effect: { type: 'KINETIC', amount: 2 },
+          };
+
+          expect(result).toEqual(expected);
         });
+      });
 
-        const expected: RuleResultInterface = {
-          name: 'AFFECT',
-          event: eventAttackInteractive,
-          actor,
-          result: 'EXECUTED',
-          target,
-          affected: simpleSword,
-          skillName: 'Melee Weapon (Simple)',
-          roll: { checkRoll: 5, result: 'SUCCESS' },
-          dodged: false,
-          effect: { type: 'KINETIC', amount: 2 },
-        };
+      describe('when roll fails', () => {
+        it('return avoided result', () => {
+          when(mockedPlayerEntity.weaponEquipped).thenReturn(glock);
 
-        expect(result).toEqual(expected);
+          when(mockedDodgeAxiom.dodged(target, false, 0)).thenReturn(false);
+
+          const result = rule.execute(actor, eventAttackInteractive, {
+            target,
+          });
+
+          const expected: RuleResultInterface = {
+            name: 'AFFECT',
+            event: eventAttackInteractive,
+            actor,
+            result: 'AVOIDED',
+            target,
+            affected: glock,
+            skillName: 'Firearm (Handgun)',
+            roll: { checkRoll: 85, result: 'FAILURE' },
+          };
+
+          expect(result).toEqual(expected);
+        });
       });
     });
   });

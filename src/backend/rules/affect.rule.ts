@@ -93,7 +93,10 @@ export class AffectRule
         this.disposeItem(actor, identity.label);
       }
 
-      if (!targetActor || !this.ruleResult.dodged) {
+      if (
+        !targetActor ||
+        (!this.ruleResult.dodged && this.ruleResult.roll?.result === 'SUCCESS')
+      ) {
         ruleResult = 'EXECUTED';
 
         const effectAmount =
