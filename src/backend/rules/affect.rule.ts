@@ -67,6 +67,8 @@ export class AffectRule
     );
 
     if (executable) {
+      this.logItemUsed(actor, target, identity);
+
       this.activation(actor, energyActivation, identity.label);
 
       ruleResult = 'AVOIDED';
@@ -84,13 +86,7 @@ export class AffectRule
         );
       }
 
-      const rolled = this.ruleResult.roll?.result !== 'IMPOSSIBLE';
-
-      if (rolled) {
-        this.logItemUsed(actor, target, identity);
-      }
-
-      if (usability === 'DISPOSABLE' && (rolled || !targetActor)) {
+      if (usability === 'DISPOSABLE') {
         this.disposeItem(actor, identity.label);
       }
 

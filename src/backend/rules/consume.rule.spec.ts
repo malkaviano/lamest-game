@@ -177,8 +177,6 @@ const successFirstAidRoll = new RollDefinition('SUCCESS', 10);
 
 const failureFirstAidRoll = new RollDefinition('FAILURE', 90);
 
-const impossibleFirstAidRoll = new RollDefinition('IMPOSSIBLE', 0);
-
 const consumedFirstAidLog = new LogMessageDefinition(
   'CONSUMED',
   playerInfo.name,
