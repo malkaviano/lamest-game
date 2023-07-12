@@ -18,6 +18,8 @@ import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
+import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
 
 type Result = {
   name: RuleNameLiteral;
@@ -46,7 +48,11 @@ type Result = {
 };
 
 export abstract class RuleAbstraction
-  implements RuleInterface, LoggerInterface, ActorDodgedInterface
+  implements
+    RuleInterface,
+    LoggerInterface,
+    ActorDodgedInterface,
+    DocumentOpenedInterface
 {
   protected ruleResult: {
     target?: InteractiveInterface;
@@ -77,6 +83,10 @@ export abstract class RuleAbstraction
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
+  protected readonly documentOpened: Subject<ReadableInterface>;
+
+  public readonly documentOpened$: Observable<ReadableInterface>;
+
   public abstract get name(): RuleNameLiteral;
 
   constructor() {
@@ -87,6 +97,10 @@ export abstract class RuleAbstraction
     this.actorDodged = new Subject();
 
     this.actorDodged$ = this.actorDodged.asObservable();
+
+    this.documentOpened = new Subject();
+
+    this.documentOpened$ = this.documentOpened.asObservable();
 
     this.ruleResult = {};
   }
