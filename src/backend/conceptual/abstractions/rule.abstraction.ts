@@ -20,6 +20,10 @@ import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { ReadableInterface } from '@interfaces/readable.interface';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
+import { ActionableDefinition } from '@definitions/actionable.definition';
+import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { ActorEntity } from '@entities/actor.entity';
 
 type Result = {
   name: RuleNameLiteral;
@@ -146,6 +150,35 @@ export abstract class RuleAbstraction
     this.setEffect(r);
 
     return r;
+  }
+
+  protected affectWith(
+    target: InteractiveInterface,
+    action: ActionableDefinition,
+    rollResult: CheckResultLiteral,
+    values: ReactionValuesInterface
+  ): void {
+    const log = target.reactTo(action, rollResult, values);
+
+    if (log) {
+      const logMessage = GameStringsStore.createFreeLogMessage(
+        'AFFECTED',
+        target.name,
+        log
+      );
+
+      this.ruleLog.next(logMessage);
+
+      if (
+        target &&
+        target instanceof ActorEntity &&
+        target.situation === 'DEAD'
+      ) {
+        this.ruleLog.next(
+          GameStringsStore.createActorIsDeadLogMessage(target.name)
+        );
+      }
+    }
   }
 
   private setEffect(r: Result) {

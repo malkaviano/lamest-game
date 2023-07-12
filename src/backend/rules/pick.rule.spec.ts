@@ -1,10 +1,9 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
-import { PickRule } from './pick.rule';
+import { PickRule } from '@rules/pick.rule';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
-  mockedAffectedAxiom,
   mockedCheckedService,
   mockedInteractiveEntity,
   mockedInventoryService,
@@ -26,8 +25,7 @@ describe('PickRule', () => {
 
     rule = new PickRule(
       instance(mockedInventoryService),
-      instance(mockedCheckedService),
-      instance(mockedAffectedAxiom)
+      instance(mockedCheckedService)
     );
 
     when(
@@ -58,16 +56,6 @@ describe('PickRule', () => {
       });
 
       expect(spy).toHaveBeenCalledWith(actor.id, simpleSword);
-    });
-
-    it('should react to the action', () => {
-      const spy = spyOn(instance(mockedAffectedAxiom), 'affectWith');
-
-      rule.execute(actor, eventPickSimpleSword, {
-        target,
-      });
-
-      expect(spy).toHaveBeenCalled();
     });
 
     it('return item picked', () => {

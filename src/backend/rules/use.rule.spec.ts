@@ -1,12 +1,11 @@
 import { instance, verify, when } from 'ts-mockito';
 
-import { UseRule } from './use.rule';
+import { UseRule } from '@rules/use.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { UsableDefinition } from '@definitions/usable.definition';
 
 import {
-  mockedAffectedAxiom,
   mockedCheckedService,
   mockedInteractiveEntity,
   mockedInventoryService,
@@ -30,8 +29,7 @@ describe('UseRule', () => {
 
     rule = new UseRule(
       instance(mockedInventoryService),
-      instance(mockedCheckedService),
-      instance(mockedAffectedAxiom)
+      instance(mockedCheckedService)
     );
 
     when(

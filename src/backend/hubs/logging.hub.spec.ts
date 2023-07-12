@@ -4,7 +4,6 @@ import { LoggingHub } from '@hubs/logging.hub';
 
 import {
   mockedActivationAxiom,
-  mockedAffectedAxiom,
   mockedPolicyHub,
   mockedRollHelper,
   mockedRulesHub,
@@ -15,7 +14,6 @@ describe('LoggingHub', () => {
     instance(mockedRollHelper),
     instance(mockedRulesHub),
     instance(mockedActivationAxiom),
-    instance(mockedAffectedAxiom),
     instance(mockedPolicyHub)
   );
 

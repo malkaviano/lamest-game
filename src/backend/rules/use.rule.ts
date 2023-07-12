@@ -3,7 +3,6 @@ import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { InventoryService } from '../services/inventory.service';
 import { GameStringsStore } from '@stores/game-strings.store';
-import { AffectAxiom } from '@axioms/affect.axiom';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '../services/checked.service';
@@ -14,8 +13,7 @@ import { RuleResultLiteral } from '@literals/rule-result.literal';
 export class UseRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly checkedService: CheckedService,
-    private readonly affectAxiomService: AffectAxiom
+    private readonly checkedService: CheckedService
   ) {
     super();
   }
@@ -69,7 +67,7 @@ export class UseRule extends RuleAbstraction {
         this.ruleLog.next(logMessage);
       }
 
-      this.affectAxiomService.affectWith(target, actionableDefinition, 'NONE', {
+      this.affectWith(target, actionableDefinition, 'NONE', {
         item: used,
       });
     }

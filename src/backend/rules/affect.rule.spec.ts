@@ -1,4 +1,4 @@
-import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
+import { deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { AffectRule } from '@rules/affect.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
@@ -10,7 +10,6 @@ import { ruleScenario } from '../../../tests/scenarios';
 import {
   mockedActivationAxiom,
   mockedActorEntity,
-  mockedAffectedAxiom,
   mockedCheckedService,
   mockedDodgeAxiom,
   mockedInteractiveEntity,
@@ -37,8 +36,7 @@ describe('AffectRule', () => {
       instance(mockedRollHelper),
       instance(mockedCheckedService),
       instance(mockedActivationAxiom),
-      instance(mockedDodgeAxiom),
-      instance(mockedAffectedAxiom)
+      instance(mockedDodgeAxiom)
     );
 
     setupMocks();
@@ -121,17 +119,6 @@ describe('AffectRule', () => {
               [usedMolotovLog, lostMolotovLog],
               done
             );
-
-            verify(
-              mockedAffectedAxiom.affectWith(
-                target2,
-                actionAffect,
-                'SUCCESS',
-                deepEqual({
-                  effect: new EffectEvent('FIRE', 2),
-                })
-              )
-            ).once();
           });
         });
       });
@@ -156,15 +143,6 @@ describe('AffectRule', () => {
                 [usedSwordLog],
                 done
               );
-
-              verify(
-                mockedAffectedAxiom.affectWith(
-                  anything(),
-                  anything(),
-                  anything(),
-                  anything()
-                )
-              ).never();
 
               verify(mockedDodgeAxiom.dodged(target, true, 0)).once();
 

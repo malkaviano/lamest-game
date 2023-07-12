@@ -1,5 +1,4 @@
 import { ActivationAxiom } from '@axioms/activation.axiom';
-import { AffectAxiom } from '@axioms/affect.axiom';
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
@@ -27,8 +26,7 @@ export class AffectRule
     private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,
     private readonly activationAxiom: ActivationAxiom,
-    private readonly dodgeAxiom: DodgeAxiom,
-    private readonly affectedAxiom: AffectAxiom
+    private readonly dodgeAxiom: DodgeAxiom
   ) {
     super();
   }
@@ -99,14 +97,9 @@ export class AffectRule
         const effectAmount =
           this.rollHelper.roll(effect.diceRoll) + effect.fixed;
 
-        this.affectedAxiom.affectWith(
-          target,
-          event.actionableDefinition,
-          'SUCCESS',
-          {
-            effect: new EffectEvent(effect.effectType, effectAmount),
-          }
-        );
+        this.affectWith(target, event.actionableDefinition, 'SUCCESS', {
+          effect: new EffectEvent(effect.effectType, effectAmount),
+        });
 
         this.ruleResult.effectType = effect.effectType;
         this.ruleResult.effectAmount = effectAmount;

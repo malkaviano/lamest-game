@@ -1,7 +1,8 @@
 import { instance, when } from 'ts-mockito';
 
-import { SkillRule } from './skill.rule';
+import { SkillRule } from '@rules/skill.rule';
 import { RollDefinition } from '@definitions/roll.definition';
+import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 import {
   mockedPlayerEntity,
@@ -9,14 +10,12 @@ import {
   mockedRollHelper,
   setupMocks,
   mockedCheckedService,
-  mockedAffectedAxiom,
 } from '../../../tests/mocks';
 import {
   actionableEvent,
   actionSkillSurvival,
   interactiveInfo,
 } from '../../../tests/fakes';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
 
 describe('SkillRule', () => {
   let rule: SkillRule;
@@ -26,8 +25,7 @@ describe('SkillRule', () => {
 
     rule = new SkillRule(
       instance(mockedRollHelper),
-      instance(mockedCheckedService),
-      instance(mockedAffectedAxiom)
+      instance(mockedCheckedService)
     );
   });
 
@@ -36,21 +34,6 @@ describe('SkillRule', () => {
   });
 
   describe('execute', () => {
-    it('should log target log', () => {
-      when(
-        mockedRollHelper.actorSkillCheck(
-          actor,
-          eventSkillSurvival.actionableDefinition.name
-        )
-      ).thenReturn(new RollDefinition('SUCCESS', 10));
-
-      const spy = spyOn(instance(mockedAffectedAxiom), 'affectWith');
-
-      rule.execute(actor, eventSkillSurvival, extras);
-
-      expect(spy).toHaveBeenCalled();
-    });
-
     it('return rule result', () => {
       const rollResult = new RollDefinition('SUCCESS', 10);
       when(

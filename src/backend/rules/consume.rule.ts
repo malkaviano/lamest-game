@@ -1,13 +1,12 @@
 import { ConsumableDefinition } from '@definitions/consumable.definition';
-import { InventoryService } from '../services/inventory.service';
+import { InventoryService } from '@services/inventory.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
-import { AffectAxiom } from '@axioms/affect.axiom';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
-import { CheckedService } from '../services/checked.service';
+import { CheckedService } from '@services/checked.service';
 import { RollHelper } from '@helpers/roll.helper';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { CheckResultLiteral } from '@literals/check-result.literal';
@@ -18,8 +17,7 @@ export class ConsumeRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly rollHelper: RollHelper,
-    private readonly checkedService: CheckedService,
-    private readonly affectAxiom: AffectAxiom
+    private readonly checkedService: CheckedService
   ) {
     super();
   }
@@ -105,7 +103,7 @@ export class ConsumeRule extends RuleAbstraction {
         ? Math.trunc(consumable.energy / 2)
         : consumable.energy;
 
-    this.affectAxiom.affectWith(actor, actionableDefinition, rollResult, {
+    this.affectWith(actor, actionableDefinition, rollResult, {
       effect: new EffectEvent(consumable.effect, hp),
       energy,
     });
