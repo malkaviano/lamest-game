@@ -4,9 +4,9 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { CheckedService } from '@services/checked.service';
 import { InventoryService } from '@services/inventory.service';
-import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { ActorInterface } from '@interfaces/actor.interface';
 
-export class DisposablePolicy extends PolicyAbstraction {
+export class DisposePolicy extends PolicyAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly checkedService: CheckedService
@@ -34,51 +34,38 @@ export class DisposablePolicy extends PolicyAbstraction {
             disposed,
           };
         }
-      }
-
-      if (
+      } else if (
         result.name === 'CONSUME' &&
         result.consumable?.consumed.usability === 'DISPOSABLE'
       ) {
-        const consumed =
-          this.checkedService.takeItemOrThrow<ConsumableDefinition>(
-            this.inventoryService,
-            result.actor.id,
-            result.consumable.consumed.identity.name
-          );
-
-        const logMessage = GameStringsStore.createLostItemLogMessage(
-          result.actor.name,
-          consumed.identity.label
+        return this.dispose(
+          result.actor,
+          result.consumable.consumed.identity.name
         );
-
-        this.logMessageProduced.next(logMessage);
-
-        return {
-          consumed,
-        };
-      }
-
-      if (result.name === 'DROP' && result.dropped) {
-        const dropped = this.checkedService.takeItemOrThrow(
-          this.inventoryService,
-          result.actor.id,
-          result.dropped.identity.name
-        );
-
-        const logMessage = GameStringsStore.createLostItemLogMessage(
-          result.actor.name,
-          dropped.identity.label
-        );
-
-        this.logMessageProduced.next(logMessage);
-
-        return {
-          dropped,
-        };
+      } else if (result.name === 'DROP' && result.dropped) {
+        return this.dispose(result.actor, result.dropped.identity.name);
       }
     }
 
     return {};
+  }
+
+  private dispose(actor: ActorInterface, name: string) {
+    const disposed = this.checkedService.takeItemOrThrow(
+      this.inventoryService,
+      actor.id,
+      name
+    );
+
+    const logMessage = GameStringsStore.createLostItemLogMessage(
+      actor.name,
+      disposed.identity.label
+    );
+
+    this.logMessageProduced.next(logMessage);
+
+    return {
+      disposed,
+    };
   }
 }

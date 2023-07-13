@@ -39,7 +39,7 @@ import { SkillService } from '@services/skill.service';
 import { LoggingHub } from '@hubs/logging.hub';
 import { ActionPolicy } from '@policies/action.policy';
 import { GamePredicate } from '@predicates/game.predicate';
-import { DisposablePolicy } from '@policies/disposable.policy';
+import { DisposePolicy } from '@policies/dispose.policy';
 import { DropRule } from '@rules/drop.rule';
 
 const gamePredicate = new GamePredicate();
@@ -121,7 +121,7 @@ const visibilityPolicy = new VisibilityPolicy();
 
 const actionPolicy = new ActionPolicy();
 
-const disposablePolicy = new DisposablePolicy(inventoryService, checkedService);
+const disposablePolicy = new DisposePolicy(inventoryService, checkedService);
 
 const policyHub = new PolicyHub(
   visibilityPolicy,
