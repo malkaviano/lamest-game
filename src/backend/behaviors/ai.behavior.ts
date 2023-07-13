@@ -1,4 +1,4 @@
-import { createActionableDefinition } from '@definitions/actionable.definition';
+import { affectActionable } from '@definitions/actionable.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
 import { BehaviorLiteral } from '@literals/behavior.literal';
@@ -23,10 +23,7 @@ export class AiBehavior {
     );
 
     if (player) {
-      const reactEvent = new ActionableEvent(
-        createActionableDefinition('AFFECT', 'affect', 'Use Equipped'),
-        player.id
-      );
+      const reactEvent = new ActionableEvent(affectActionable, player.id);
 
       if (
         (this.aiBehavior === 'RETALIATE' && afflictedBy.includes(player.id)) ||

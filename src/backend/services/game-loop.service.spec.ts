@@ -1,44 +1,44 @@
+import { EMPTY, Subject, of } from 'rxjs';
 import { anyString, anything, instance, verify, when } from 'ts-mockito';
-import { EMPTY, of, Subject } from 'rxjs';
 
-import { GameLoopService } from '@services/game-loop.service';
-import { ReadableInterface } from '@interfaces/readable.interface';
-import { ItemStoredDefinition } from '@definitions/item-storage.definition';
-import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
+import { ItemStoredDefinition } from '@definitions/item-storage.definition';
 import { InventoryEvent } from '@events/inventory.event';
+import { ReadableInterface } from '@interfaces/readable.interface';
+import { GameLoopService } from '@services/game-loop.service';
+import { ArrayView } from '@wrappers/array.view';
+import { dropActionable } from '@definitions/actionable.definition';
+import { SettingsStore } from '@stores/settings.store';
 
 import {
-  actionableEvent,
   actionAffect,
-  interactiveInfo,
-  playerInfo,
-  unDodgeableAxe,
-  actionEquip,
   actionConsume,
-  consumableFirstAid,
-  masterKey,
-  actionNoop,
-  readable,
+  actionEquip,
   actionRead,
+  actionableEvent,
+  consumableFirstAid,
+  interactiveInfo,
+  masterKey,
+  playerInfo,
+  readable,
+  unDodgeableAxe,
 } from '../../../tests/fakes';
 import {
   mockedActorEntity,
   mockedActorEntity2,
-  mockedCharacterService,
   mockedAffectRule,
+  mockedCharacterService,
+  mockedGamePredicate,
+  mockedInteractiveEntity,
+  mockedInventoryService,
+  mockedLoggingHub,
   mockedNarrativeService,
   mockedPlayerEntity,
+  mockedPolicyHub,
   mockedRulesHub,
   mockedSceneEntity,
   setupMocks,
-  mockedInteractiveEntity,
-  mockedInventoryService,
-  mockedPolicyHub,
-  mockedLoggingHub,
-  mockedGamePredicate,
 } from '../../../tests/mocks';
-import { SettingsStore } from '@stores/settings.store';
 
 const actor = instance(mockedActorEntity);
 
@@ -140,7 +140,7 @@ describe('GameLoopService', () => {
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, masterKey),
-        expected: new ActionableItemDefinition(masterKey, actionNoop),
+        expected: new ActionableItemDefinition(masterKey, dropActionable),
         item: masterKey,
       },
       {

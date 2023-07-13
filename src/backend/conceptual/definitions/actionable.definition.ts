@@ -25,3 +25,33 @@ export const createActionableDefinition = (
   name: string,
   label?: string
 ) => new ActionableDefinition(key, name, label ?? name);
+
+export const affectActionable = createActionableDefinition(
+  'AFFECT',
+  'affect',
+  'Use Equipped'
+);
+
+export const consumeActionable = createActionableDefinition(
+  'CONSUME',
+  'consume',
+  'Consume'
+);
+
+export const equipActionable = createActionableDefinition(
+  'EQUIP',
+  'equip',
+  'Equip'
+);
+
+export const readActionable = createActionableDefinition(
+  'READ',
+  'read',
+  'Read'
+);
+
+export const dropActionable = createActionableDefinition(
+  'DROP',
+  'drop',
+  'Drop'
+);

@@ -22,7 +22,7 @@ import { ReadableInterface } from '@interfaces/readable.interface';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
 import {
   ActionableDefinition,
-  createActionableDefinition,
+  consumeActionable,
 } from '@definitions/actionable.definition';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { GameStringsStore } from '@stores/game-strings.store';
@@ -189,13 +189,9 @@ export abstract class RuleAbstraction
     energyActivation: number,
     label: string
   ): void {
-    const log = actor.reactTo(
-      createActionableDefinition('CONSUME', 'activation', 'Activation'),
-      'NONE',
-      {
-        energy: -energyActivation,
-      }
-    );
+    const log = actor.reactTo(consumeActionable, 'NONE', {
+      energy: -energyActivation,
+    });
 
     if (log) {
       const logMessage = GameStringsStore.createEnergySpentLogMessage(
