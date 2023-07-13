@@ -47,8 +47,8 @@ type Result = {
   };
   consumable?: {
     consumed: ConsumableDefinition;
-    hp: number;
-    energy: number;
+    hp?: number;
+    energy?: number;
   };
   dodged?: boolean;
   effect?: { type: EffectTypeLiteral; amount: number };
@@ -216,8 +216,7 @@ export abstract class RuleAbstraction
   private setConsumable(r: Result) {
     if (
       this.ruleResult.consumable &&
-      this.ruleResult.consumableHp &&
-      this.ruleResult.consumableEnergy
+      (this.ruleResult.consumableHp || this.ruleResult.consumableEnergy)
     ) {
       r.consumable = {
         consumed: this.ruleResult.consumable,
