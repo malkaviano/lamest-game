@@ -11,7 +11,10 @@ import { InventoryService } from '@services/inventory.service';
 import { GameEventsDefinition } from '@definitions/game-events.definition';
 import {
   ActionableDefinition,
-  createActionableDefinition,
+  consumeActionable,
+  dropActionable,
+  equipActionable,
+  readActionable,
 } from '@definitions/actionable.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ArrayView } from '@wrappers/array.view';
@@ -209,17 +212,17 @@ export class GameLoopService {
 
   private inventoryAction(item: GameItemDefinition): ActionableDefinition {
     if (item.category === 'WEAPON') {
-      return createActionableDefinition('EQUIP', 'equip', 'Equip');
+      return equipActionable;
     }
 
     if (item.category === 'CONSUMABLE') {
-      return createActionableDefinition('CONSUME', 'consume', 'Consume');
+      return consumeActionable;
     }
 
     if (item.category === 'READABLE') {
-      return createActionableDefinition('READ', 'read', 'Read');
+      return readActionable;
     }
 
-    return createActionableDefinition('NOOP', 'noop', 'NOOP');
+    return dropActionable;
   }
 }

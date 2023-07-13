@@ -30,9 +30,10 @@ export interface RuleResultInterface {
   };
   consumable?: {
     consumed: ConsumableDefinition;
-    hp: number;
-    energy: number;
+    hp?: number;
+    energy?: number;
   };
   dodged?: boolean;
   effect?: { type: EffectTypeLiteral; amount: number };
+  dropped?: GameItemDefinition;
 }

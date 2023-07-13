@@ -34,27 +34,30 @@ export class ConsumeRule extends RuleAbstraction {
   ): RuleResultInterface {
     const { actionableDefinition, eventId } = event;
 
-    const consumed = this.checkedService.lookItemOrThrow<ConsumableDefinition>(
-      this.inventoryService,
-      actor.id,
-      eventId
-    );
+    const consumable =
+      this.checkedService.lookItemOrThrow<ConsumableDefinition>(
+        this.inventoryService,
+        actor.id,
+        eventId
+      );
 
     let ruleResult: RuleResultLiteral = 'DENIED';
 
     let rollResult: CheckResultLiteral = 'NONE';
 
-    this.ruleResult.consumable = consumed;
+    this.ruleResult.consumable = consumable;
 
-    this.ruleResult.skillName = consumed.skillName;
+    this.ruleResult.skillName = consumable.skillName;
 
-    const canExecute = this.canExecute(actor, consumed.skillName);
+    const canExecute = this.canExecute(actor, consumable.skillName);
 
     if (canExecute) {
-      if (consumed.skillName) {
+      ruleResult = 'EXECUTED';
+
+      if (consumable.skillName) {
         const checkRoll = this.rollHelper.actorSkillCheck(
           actor,
-          consumed.skillName
+          consumable.skillName
         );
 
         rollResult = checkRoll.result;
@@ -65,9 +68,7 @@ export class ConsumeRule extends RuleAbstraction {
         };
       }
 
-      this.consume(actor, consumed, actionableDefinition, rollResult);
-
-      ruleResult = 'EXECUTED';
+      this.consume(actor, consumable, actionableDefinition, rollResult);
     }
 
     return this.getResult(event, actor, ruleResult);

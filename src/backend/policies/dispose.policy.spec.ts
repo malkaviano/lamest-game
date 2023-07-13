@@ -1,10 +1,11 @@
 import { instance, when } from 'ts-mockito';
 
-import { DisposablePolicy } from '@policies/disposable.policy';
+import { DisposePolicy } from '@policies/dispose.policy';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { dropActionable } from '@definitions/actionable.definition';
 
 import {
   mockedActorEntity,
@@ -17,9 +18,11 @@ import {
   actionAffect,
   actionConsume,
   actionEquip,
+  actionUseMasterKey,
   actionableEvent,
   consumableFirstAid,
   interactiveInfo,
+  masterKey,
   molotov,
   playerInfo,
 } from '../../../tests/fakes';
@@ -34,6 +37,16 @@ const eventEquipMolotov = actionableEvent(actionEquip, interactiveInfo.id);
 const eventConsumeFirstAid = actionableEvent(
   actionConsume,
   consumableFirstAid.identity.name
+);
+
+const eventDropMasterKey = actionableEvent(
+  dropActionable,
+  masterKey.identity.name
+);
+
+const eventUseMasterKey = actionableEvent(
+  actionUseMasterKey,
+  masterKey.identity.name
 );
 
 const actor = instance(mockedPlayerEntity);
@@ -88,6 +101,24 @@ const executedConsumeResult: RuleResultInterface = {
   roll: { checkRoll: 5, result: 'SUCCESS' },
 };
 
+const executedDropResult: RuleResultInterface = {
+  name: 'DROP',
+  event: eventDropMasterKey,
+  actor,
+  result: 'EXECUTED',
+  target,
+  dropped: masterKey,
+};
+
+const executedUseResult: RuleResultInterface = {
+  name: 'USE',
+  event: eventUseMasterKey,
+  actor,
+  result: 'EXECUTED',
+  target,
+  used: masterKey,
+};
+
 const lostMolotovLog = GameStringsStore.createLostItemLogMessage(
   playerInfo.name,
   molotov.identity.label
@@ -98,8 +129,13 @@ const lostFirstAidLog = GameStringsStore.createLostItemLogMessage(
   consumableFirstAid.identity.label
 );
 
-describe('DisposablePolicy', () => {
-  const policy = new DisposablePolicy(
+const lostMasterKeyLog = GameStringsStore.createLostItemLogMessage(
+  playerInfo.name,
+  masterKey.identity.label
+);
+
+describe('DisposePolicy', () => {
+  const policy = new DisposePolicy(
     instance(mockedInventoryService),
     instance(mockedCheckedService)
   );
@@ -120,6 +156,14 @@ describe('DisposablePolicy', () => {
         consumableFirstAid.identity.name
       )
     ).thenReturn(consumableFirstAid);
+
+    when(
+      mockedCheckedService.takeItemOrThrow(
+        instance(mockedInventoryService),
+        actor.id,
+        masterKey.identity.name
+      )
+    ).thenReturn(masterKey);
   });
 
   it('should create an instance', () => {
@@ -151,9 +195,25 @@ describe('DisposablePolicy', () => {
       {
         ruleResult: executedConsumeResult,
         expected: {
-          consumed: consumableFirstAid,
+          disposed: consumableFirstAid,
         },
         log: lostFirstAidLog,
+        equipped: molotov,
+      },
+      {
+        ruleResult: executedDropResult,
+        expected: {
+          disposed: masterKey,
+        },
+        log: lostMasterKeyLog,
+        equipped: molotov,
+      },
+      {
+        ruleResult: executedUseResult,
+        expected: {
+          disposed: masterKey,
+        },
+        log: lostMasterKeyLog,
         equipped: molotov,
       },
     ].forEach(({ ruleResult, expected, log, equipped }) => {

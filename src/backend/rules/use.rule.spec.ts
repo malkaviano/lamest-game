@@ -1,4 +1,4 @@
-import { instance, verify, when } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { UseRule } from '@rules/use.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
@@ -74,35 +74,12 @@ describe('UseRule', () => {
     });
 
     describe('when item was found', () => {
-      it('should log item lost', (done) => {
-        when(
-          mockedInventoryService.look(playerInfo.id, masterKey.identity.name)
-        ).thenReturn(masterKey);
-
-        ruleScenario(
-          rule,
-          actor,
-          eventUseMasterKey,
-          extras,
-          [itemLostLog],
-          done
-        );
-      });
-
       it('return used result', () => {
         when(
           mockedInventoryService.look(playerInfo.id, masterKey.identity.name)
         ).thenReturn(masterKey);
 
         const result = rule.execute(actor, eventUseMasterKey, extras);
-
-        verify(
-          mockedCheckedService.takeItemOrThrow<UsableDefinition>(
-            instance(mockedInventoryService),
-            actor.id,
-            masterKey.identity.name
-          )
-        ).once();
 
         const expected: RuleResultInterface = {
           name: 'USE',
@@ -123,12 +100,6 @@ const notFoundLog = new LogMessageDefinition(
   'NOT-FOUND',
   playerInfo.name,
   'Master Key failed, required item was not found in inventory'
-);
-
-const itemLostLog = new LogMessageDefinition(
-  'LOST',
-  playerInfo.name,
-  'lost Master Key'
 );
 
 const eventUseMasterKey = actionableEvent(

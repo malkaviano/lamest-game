@@ -22,7 +22,7 @@ import { ReadableInterface } from '@interfaces/readable.interface';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
 import {
   ActionableDefinition,
-  createActionableDefinition,
+  consumeActionable,
 } from '@definitions/actionable.definition';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { GameStringsStore } from '@stores/game-strings.store';
@@ -47,8 +47,8 @@ type Result = {
   };
   consumable?: {
     consumed: ConsumableDefinition;
-    hp: number;
-    energy: number;
+    hp?: number;
+    energy?: number;
   };
   dodged?: boolean;
   effect?: { type: EffectTypeLiteral; amount: number };
@@ -189,13 +189,9 @@ export abstract class RuleAbstraction
     energyActivation: number,
     label: string
   ): void {
-    const log = actor.reactTo(
-      createActionableDefinition('CONSUME', 'activation', 'Activation'),
-      'NONE',
-      {
-        energy: -energyActivation,
-      }
-    );
+    const log = actor.reactTo(consumeActionable, 'NONE', {
+      energy: -energyActivation,
+    });
 
     if (log) {
       const logMessage = GameStringsStore.createEnergySpentLogMessage(
@@ -220,8 +216,7 @@ export abstract class RuleAbstraction
   private setConsumable(r: Result) {
     if (
       this.ruleResult.consumable &&
-      this.ruleResult.consumableHp &&
-      this.ruleResult.consumableEnergy
+      (this.ruleResult.consumableHp || this.ruleResult.consumableEnergy)
     ) {
       r.consumable = {
         consumed: this.ruleResult.consumable,
