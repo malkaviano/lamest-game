@@ -40,6 +40,7 @@ import { LoggingHub } from '@hubs/logging.hub';
 import { ActionPolicy } from '@policies/action.policy';
 import { GamePredicate } from '@predicates/game.predicate';
 import { DisposablePolicy } from '@policies/disposable.policy';
+import { DropRule } from '@rules/drop.rule';
 
 const gamePredicate = new GamePredicate();
 
@@ -100,6 +101,7 @@ const sceneRule = new SceneRule(narrativeService, checkedService);
 const skillRule = new SkillRule(rollHelper, checkedService, gamePredicate);
 const unEquipRule = new UnEquipRule(inventoryService);
 const useRule = new UseRule(inventoryService, checkedService);
+const dropRule = new DropRule(inventoryService, checkedService);
 
 const rulesHub = new RulesHub(
   skillRule,
@@ -111,7 +113,8 @@ const rulesHub = new RulesHub(
   consumeRule,
   interactionRule,
   useRule,
-  inspectRule
+  inspectRule,
+  dropRule
 );
 
 const visibilityPolicy = new VisibilityPolicy();

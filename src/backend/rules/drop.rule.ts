@@ -6,7 +6,6 @@ import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { ActionableEvent } from '@events/actionable.event';
 import { InventoryService } from '@services/inventory.service';
 import { CheckedService } from '@services/checked.service';
-import { GameItemDefinition } from '@definitions/game-item.definition';
 
 export class DropRule extends RuleAbstraction {
   constructor(

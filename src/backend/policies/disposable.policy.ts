@@ -58,6 +58,25 @@ export class DisposablePolicy extends PolicyAbstraction {
           consumed,
         };
       }
+
+      if (result.name === 'DROP' && result.dropped) {
+        const dropped = this.checkedService.takeItemOrThrow(
+          this.inventoryService,
+          result.actor.id,
+          result.dropped.identity.name
+        );
+
+        const logMessage = GameStringsStore.createLostItemLogMessage(
+          result.actor.name,
+          dropped.identity.label
+        );
+
+        this.logMessageProduced.next(logMessage);
+
+        return {
+          dropped,
+        };
+      }
     }
 
     return {};
