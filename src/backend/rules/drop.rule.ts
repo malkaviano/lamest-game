@@ -1,6 +1,5 @@
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { ActionableEvent } from '@events/actionable.event';
