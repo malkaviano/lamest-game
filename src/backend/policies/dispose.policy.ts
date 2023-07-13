@@ -42,6 +42,11 @@ export class DisposePolicy extends PolicyAbstraction {
           result.actor,
           result.consumable.consumed.identity.name
         );
+      } else if (
+        result.name === 'USE' &&
+        result.used?.usability === 'DISPOSABLE'
+      ) {
+        return this.dispose(result.actor, result.used.identity.name);
       } else if (result.name === 'DROP' && result.dropped) {
         return this.dispose(result.actor, result.dropped.identity.name);
       }

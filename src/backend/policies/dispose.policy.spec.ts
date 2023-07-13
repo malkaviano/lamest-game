@@ -18,6 +18,7 @@ import {
   actionAffect,
   actionConsume,
   actionEquip,
+  actionUseMasterKey,
   actionableEvent,
   consumableFirstAid,
   interactiveInfo,
@@ -40,6 +41,11 @@ const eventConsumeFirstAid = actionableEvent(
 
 const eventDropMasterKey = actionableEvent(
   dropActionable,
+  masterKey.identity.name
+);
+
+const eventUseMasterKey = actionableEvent(
+  actionUseMasterKey,
   masterKey.identity.name
 );
 
@@ -102,6 +108,15 @@ const executedDropResult: RuleResultInterface = {
   result: 'EXECUTED',
   target,
   dropped: masterKey,
+};
+
+const executedUseResult: RuleResultInterface = {
+  name: 'USE',
+  event: eventUseMasterKey,
+  actor,
+  result: 'EXECUTED',
+  target,
+  used: masterKey,
 };
 
 const lostMolotovLog = GameStringsStore.createLostItemLogMessage(
@@ -187,6 +202,14 @@ describe('DisposePolicy', () => {
       },
       {
         ruleResult: executedDropResult,
+        expected: {
+          disposed: masterKey,
+        },
+        log: lostMasterKeyLog,
+        equipped: molotov,
+      },
+      {
+        ruleResult: executedUseResult,
         expected: {
           disposed: masterKey,
         },

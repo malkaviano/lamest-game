@@ -52,21 +52,6 @@ export class UseRule extends RuleAbstraction {
 
       ruleResult = 'EXECUTED';
 
-      if (used.usability === 'DISPOSABLE') {
-        this.checkedService.takeItemOrThrow<UsableDefinition>(
-          this.inventoryService,
-          actor.id,
-          used.identity.name
-        );
-
-        const logMessage = GameStringsStore.createLostItemLogMessage(
-          actor.name,
-          used.identity.label
-        );
-
-        this.ruleLog.next(logMessage);
-      }
-
       this.affectWith(target, actionableDefinition, 'NONE', {
         item: used,
       });
