@@ -21,7 +21,8 @@
       "SCENE": 1,
       "SKILL": 2,
       "UNEQUIP": 1,
-      "USE": 1
+      "USE": 1,
+      "DROP": 0
     },
     "aiLoopMilliseconds": 10,
     "actionPoints": {

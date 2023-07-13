@@ -35,4 +35,5 @@ export interface RuleResultInterface {
   };
   dodged?: boolean;
   effect?: { type: EffectTypeLiteral; amount: number };
+  dropped?: GameItemDefinition;
 }
