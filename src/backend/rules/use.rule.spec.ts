@@ -102,12 +102,6 @@ const notFoundLog = new LogMessageDefinition(
   'Master Key failed, required item was not found in inventory'
 );
 
-const itemLostLog = new LogMessageDefinition(
-  'LOST',
-  playerInfo.name,
-  'lost Master Key'
-);
-
 const eventUseMasterKey = actionableEvent(
   actionUseMasterKey,
   interactiveInfo.id
