@@ -21,8 +21,7 @@ export class DropRule extends RuleAbstraction {
 
   public override execute(
     actor: ActorInterface,
-    event: ActionableEvent,
-    extras: RuleExtrasInterface
+    event: ActionableEvent
   ): RuleResultInterface {
     const dropped = this.checkedService.lookItemOrThrow(
       this.inventoryService,

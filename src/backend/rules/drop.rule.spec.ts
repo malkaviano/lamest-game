@@ -35,7 +35,7 @@ describe('DropRule', () => {
 
   describe('execute', () => {
     it('return rule result', () => {
-      const result = rule.execute(actor, event, {});
+      const result = rule.execute(actor, event);
 
       expect(result).toEqual({
         name: 'DROP',
