@@ -1,6 +1,6 @@
 import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
 
-export interface WithDerivedAttibutesInterface {
+export interface WithDerivedAttributesInterface {
   get derivedAttributes(): DerivedAttributeSetDefinition;
 
   apSpent(apSpent: number): void;

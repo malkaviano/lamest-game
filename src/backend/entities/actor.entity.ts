@@ -20,43 +20,33 @@ import { VisibilityLiteral } from '@literals/visibility.literal';
 import { ActionableState } from '@states/actionable.state';
 import { ArrayView } from '@wrappers/array.view';
 import { InteractiveEntity } from '@entities/interactive.entity';
-import { HitPointsEvent } from '@events/hit-points.event';
-import { EnergyPointsEvent } from '@events/energy-points.event';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { ActionPointsEvent } from '@events/action-points.event';
+import { DerivedAttributeEvent } from '@events/derived-attribute.event';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
 
   private readonly mAfflictedBy: Set<string>;
 
-  private readonly hpChanged: Subject<HitPointsEvent>;
+  private readonly derivedAttributeChanged: Subject<DerivedAttributeEvent>;
 
   private readonly weaponEquippedChanged: Subject<WeaponDefinition>;
 
-  private readonly epChanged: Subject<EnergyPointsEvent>;
-
   private readonly visibilityChanged: Subject<VisibilityLiteral>;
-
-  private readonly apChanged: Subject<ActionPointsEvent>;
 
   protected readonly regeneratorBehavior: RegeneratorBehavior;
 
   protected readonly aiBehavior: AiBehavior;
 
-  public readonly hpChanged$: Observable<HitPointsEvent>;
+  public readonly derivedAttributeChanged$: Observable<DerivedAttributeEvent>;
 
   public readonly weaponEquippedChanged$: Observable<WeaponDefinition>;
 
-  public readonly epChanged$: Observable<EnergyPointsEvent>;
-
   public readonly visibilityChanged$: Observable<VisibilityLiteral>;
-
-  public readonly apChanged$: Observable<ActionPointsEvent>;
 
   constructor(
     identity: ActorIdentityDefinition,
@@ -90,25 +80,17 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     this.mAfflictedBy = new Set();
 
-    this.hpChanged = new Subject();
+    this.derivedAttributeChanged = new Subject();
 
-    this.hpChanged$ = this.hpChanged.asObservable();
+    this.derivedAttributeChanged$ = this.derivedAttributeChanged.asObservable();
 
     this.weaponEquippedChanged = new Subject();
 
     this.weaponEquippedChanged$ = this.weaponEquippedChanged.asObservable();
 
-    this.epChanged = new Subject();
-
-    this.epChanged$ = this.epChanged.asObservable();
-
     this.visibilityChanged = new Subject();
 
     this.visibilityChanged$ = this.visibilityChanged.asObservable();
-
-    this.apChanged = new Subject();
-
-    this.apChanged$ = this.apChanged.asObservable();
   }
 
   public get dodgesPerRound(): number {
@@ -250,7 +232,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     let resultLog: string | null;
 
     if (result.effective) {
-      this.hpChanged.next(result);
+      this.derivedAttributeChanged.next(result);
 
       if (this.situation === 'DEAD') {
         this.publish(this.currentState.actions, this.killedState.actions);
@@ -282,7 +264,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     let resultLog: string | null;
 
     if (result.effective) {
-      this.epChanged.next(result);
+      this.derivedAttributeChanged.next(result);
     }
 
     if (result.current > result.previous) {
@@ -304,7 +286,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     const result = this.actorBehavior.actionPointsChange(ap);
 
     if (result.effective) {
-      this.apChanged.next(result);
+      this.derivedAttributeChanged.next(result);
     }
   }
 }
