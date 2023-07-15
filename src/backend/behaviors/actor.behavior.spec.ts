@@ -138,7 +138,7 @@ describe('ActorBehavior', () => {
       it('return HitPointsEvent previous 8 current 4', () => {
         const b = fakeBehavior();
 
-        const result = b.effectReceived(fakeEffect('ARCANE', 4));
+        const result = b.effectReceived(fakeEffect('FIRE', 4));
 
         expect(result).toEqual(new DerivedAttributeEvent('CURRENT HP', 8, 4));
       });
@@ -158,7 +158,7 @@ describe('ActorBehavior', () => {
         it('return HitPointsEvent previous 4 current 8', () => {
           const b = fakeBehavior();
 
-          b.effectReceived(fakeEffect('ARCANE', 4));
+          b.effectReceived(fakeEffect('FIRE', 4));
 
           const result = b.effectReceived(effect);
 
@@ -231,10 +231,6 @@ describe('ActorBehavior', () => {
       },
       {
         effect: 'FIRE',
-        expected: true,
-      },
-      {
-        effect: 'ARCANE',
         expected: true,
       },
       {
