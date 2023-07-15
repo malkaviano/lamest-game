@@ -13,8 +13,8 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT",
-      "energyActivation": 0
+      "usability": "PERMANENT"      ,
+      "quality": "SUPERIOR"
     },
     {
       "name": "winchester88",
@@ -29,8 +29,7 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT",
-      "energyActivation": 0
+      "usability": "PERMANENT"
     },
     {
       "name": "martialArts",
@@ -43,8 +42,7 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT",
-      "energyActivation": 0
+      "usability": "PERMANENT"
     },
     {
       "name": "claw",
@@ -57,8 +55,7 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT",
-      "energyActivation": 0
+      "usability": "PERMANENT"
     },
     {
       "name": "molotov",
@@ -71,8 +68,7 @@
         "effect": "FIRE"
       },
       "dodgeable": false,
-      "usability": "DISPOSABLE",
-      "energyActivation": 0
+      "usability": "DISPOSABLE"
     },
     {
       "name": "g17",
@@ -85,8 +81,7 @@
         "effect": "KINETIC"
       },
       "dodgeable": false,
-      "usability": "PERMANENT",
-      "energyActivation": 0
+      "usability": "PERMANENT"
     },
     {
       "name": "talisman",
@@ -100,7 +95,8 @@
       },
       "dodgeable": false,
       "usability": "PERMANENT",
-      "energyActivation": 2
+      "energyActivation": 2,
+      "quality": "SUPERB"
     },
     {
       "name": "baton",
@@ -113,8 +109,7 @@
         "effect": "KINETIC"
       },
       "dodgeable": true,
-      "usability": "PERMANENT",
-      "energyActivation": 0
+      "usability": "PERMANENT"
     }
   ]
 }

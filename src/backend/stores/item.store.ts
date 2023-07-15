@@ -30,7 +30,8 @@ export class ItemStore {
           ),
           item.dodgeable,
           item.usability,
-          item.energyActivation
+          item.energyActivation,
+          item.quality
         )
       );
     });

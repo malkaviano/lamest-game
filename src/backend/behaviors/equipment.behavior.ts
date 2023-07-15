@@ -14,7 +14,8 @@ export const unarmedWeapon = new WeaponDefinition(
   new EffectDefinition(createDice({ D4: 1 }), 0, 'KINETIC'),
   true,
   'PERMANENT',
-  0
+  0,
+  'COMMON'
 );
 
 export class EquipmentBehavior {

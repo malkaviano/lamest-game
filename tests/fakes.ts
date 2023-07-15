@@ -40,7 +40,8 @@ export const simpleSword = new WeaponDefinition(
   new EffectDefinition(createDice(), 2, 'KINETIC'),
   true,
   'PERMANENT',
-  0
+  0,
+  'COMMON'
 );
 
 export const greatSword = new WeaponDefinition(
@@ -49,7 +50,8 @@ export const greatSword = new WeaponDefinition(
   new EffectDefinition(createDice(), 6, 'KINETIC'),
   true,
   'PERMANENT',
-  0
+  0,
+  'COMMON'
 );
 
 export const unDodgeableAxe = new WeaponDefinition(
@@ -58,7 +60,8 @@ export const unDodgeableAxe = new WeaponDefinition(
   new EffectDefinition(createDice(), 2, 'KINETIC'),
   false,
   'PERMANENT',
-  1000
+  1000,
+  'COMMON'
 );
 
 export const molotov = new WeaponDefinition(
@@ -67,7 +70,8 @@ export const molotov = new WeaponDefinition(
   new EffectDefinition(createDice(), 2, 'FIRE'),
   false,
   'DISPOSABLE',
-  0
+  0,
+  'COMMON'
 );
 
 export const actionEquip = createActionableDefinition(
@@ -345,7 +349,8 @@ export const shadowSword = new WeaponDefinition(
   new EffectDefinition(createDice(), 2, 'PROFANE'),
   true,
   'PERMANENT',
-  20
+  20,
+  'COMMON'
 );
 
 export const shadowDagger = new WeaponDefinition(
@@ -354,7 +359,8 @@ export const shadowDagger = new WeaponDefinition(
   new EffectDefinition(createDice(), 2, 'PROFANE'),
   true,
   'PERMANENT',
-  5
+  5,
+  'COMMON'
 );
 
 export const actionDisguise = createActionableDefinition(
@@ -399,5 +405,6 @@ export const glock = new WeaponDefinition(
   new EffectDefinition(createDice(), 4, 'KINETIC'),
   false,
   'PERMANENT',
-  0
+  0,
+  'COMMON'
 );
