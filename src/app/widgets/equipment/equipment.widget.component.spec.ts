@@ -1,9 +1,6 @@
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
-
-import { first } from 'rxjs';
 
 import { MaterialModule } from '../../../material/material.module';
 import { EquipmentWidgetComponent } from './equipment.widget.component';
@@ -14,6 +11,7 @@ import {
   actionEquip,
   simpleSword,
 } from '../../../../tests/fakes';
+import { testButtonEvent } from '../../../../tests/scenarios';
 
 describe('EquipmentWidgetComponent', () => {
   let component: EquipmentWidgetComponent;
@@ -46,19 +44,7 @@ describe('EquipmentWidgetComponent', () => {
 
   describe('clicking action button', () => {
     it('return the the actionable name and item name', async () => {
-      const button = await loader.getHarness(MatButtonHarness);
-
-      let result: ActionableEvent | undefined;
-
-      fixture.componentInstance.actionSelected
-        .pipe(first())
-        .subscribe((action: ActionableEvent) => {
-          result = action;
-        });
-
-      await button.click();
-
-      fixture.detectChanges();
+      const result = await testButtonEvent(loader, fixture);
 
       expect(result).toEqual(
         new ActionableEvent(actionEquip, simpleSword.identity.name)

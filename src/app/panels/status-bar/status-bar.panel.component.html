@@ -9,9 +9,14 @@
   data-testid="tooltip-equipped"
   class="status"
 >
-  <span data-testid="label-equipped">Equipped</span>
-  <span>:&nbsp;&nbsp;</span>
+  <span data-testid="label-equipped">Equipped: </span>
   <span data-testid="value-equipped">{{ status.weapon.identity.label }}</span>
+  <div *ngIf="status.weapon.identity.name !== 'unarmed'">
+    <button mat-raised-button color="primary" (click)="onActionSelected()"
+      data-testid="equip-action-unequip">
+      UNEQUIP
+    </button>
+  </div>
 </div>
 
 <app-window-widget

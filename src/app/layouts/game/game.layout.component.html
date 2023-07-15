@@ -1,6 +1,6 @@
 <div class="main-bar">
   <div class="content-bar title-text">
-    <app-status-bar-panel [status]="characterStatus"></app-status-bar-panel>
+    <app-status-bar-panel [status]="characterStatus" (actionSelected)="actionSelected.emit($event)"></app-status-bar-panel>
   </div>
   <div class="content-bar title-text">
     <span>Current Scene: {{ scene.description }}</span>

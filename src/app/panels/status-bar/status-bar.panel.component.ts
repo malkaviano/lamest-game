@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CharacterStatusView } from 'src/app/view-models/character-status.view';
+import { CharacterStatusView } from '../../view-models/character-status.view';
+import { ActionableEvent } from '@events/actionable.event';
+import { unequipActionable } from '@definitions/actionable.definition';
 
 @Component({
   selector: 'app-status-bar-panel',
@@ -9,4 +11,15 @@ import { CharacterStatusView } from 'src/app/view-models/character-status.view';
 })
 export class StatusBarPanelComponent {
   @Input() status!: CharacterStatusView;
+  @Output() actionSelected: EventEmitter<ActionableEvent>;
+
+  constructor() {
+    this.actionSelected = new EventEmitter<ActionableEvent>();
+  }
+
+  onActionSelected(): void {
+    this.actionSelected.emit(
+      new ActionableEvent(unequipActionable, this.status.weapon.identity.name)
+    );
+  }
 }

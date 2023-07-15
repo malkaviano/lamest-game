@@ -29,7 +29,7 @@ export class UnEquipRule extends RuleAbstraction {
 
       const logMessage = GameStringsStore.createUnEquippedLogMessage(
         actor.name,
-        event.actionableDefinition.label
+        weapon.identity.label
       );
 
       this.ruleLog.next(logMessage);

@@ -55,3 +55,9 @@ export const dropActionable = createActionableDefinition(
   'drop',
   'Drop'
 );
+
+export const unequipActionable = createActionableDefinition(
+  'UNEQUIP',
+  'unequip',
+  'Unequip'
+);

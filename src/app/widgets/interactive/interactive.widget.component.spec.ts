@@ -2,10 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
 
 import { instance, mock, when } from 'ts-mockito';
-import { first, of } from 'rxjs';
+import { of } from 'rxjs';
 
 import { InteractiveWidgetComponent } from './interactive.widget.component';
 import { MaterialModule } from '../../../material/material.module';
@@ -13,6 +12,8 @@ import { createActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
 import { InteractiveEntity } from '@entities/interactive.entity';
+
+import { testButtonEvent } from '../../../../tests/scenarios';
 
 describe('InteractiveWidgetComponent', () => {
   let fixture: ComponentFixture<InteractiveWidgetComponent>;
@@ -65,21 +66,9 @@ describe('InteractiveWidgetComponent', () => {
 
   describe('clicking action button', () => {
     it('return the the actionable name and interactive id', async () => {
-      const button = await loader.getHarness(MatButtonHarness);
+      const result = await testButtonEvent(loader, fixture);
 
-      let result: ActionableEvent | undefined;
-
-      fixture.componentInstance.actionSelected
-        .pipe(first())
-        .subscribe((action: ActionableEvent) => {
-          result = action;
-
-          expect(result).toEqual(expected);
-        });
-
-      await button.click();
-
-      fixture.detectChanges();
+      expect(result).toEqual(expected);
     });
   });
 });
