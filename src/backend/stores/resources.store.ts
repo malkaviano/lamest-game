@@ -26,7 +26,8 @@ import { VisibilityStateStoreInterface } from '@interfaces/stores/visibility-sta
 import { ArrayView } from '@wrappers/array.view';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { SettingsStore } from './settings.store';
+import { SettingsStore } from '@stores/settings.store';
+import { ItemQualityLiteral } from '@literals/item-quality.literal';
 
 import sceneStore from '@assets/scenes.json';
 import skillStateStore from '@assets/states/skill-states.json';
@@ -112,7 +113,8 @@ export class ResourcesStore {
         },
         dodgeable: w.dodgeable,
         usability: w.usability as ItemUsabilityLiteral,
-        energyActivation: w.energyActivation,
+        energyActivation: w.energyActivation ?? 0,
+        quality: (w.quality ?? 'COMMON') as ItemQualityLiteral,
       };
     });
 

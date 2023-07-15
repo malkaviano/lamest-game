@@ -26,6 +26,7 @@ import { GameStringsStore } from '@stores/game-strings.store';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { DerivedAttributeEvent } from '@events/derived-attribute.event';
+import { SettingsStore } from '@stores/settings.store';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -126,7 +127,24 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public get skills(): KeyValueInterface<number> {
-    return this.actorBehavior.skills;
+    const weaponQuality = this.weaponEquipped.quality;
+
+    let actorSkills = this.actorBehavior.skills;
+
+    if (weaponQuality !== 'COMMON') {
+      const weaponSkillName = this.weaponEquipped.skillName;
+
+      const weaponSkillValue =
+        this.actorBehavior.skills[this.weaponEquipped.skillName] +
+        SettingsStore.settings.weaponQuality[weaponQuality];
+
+      actorSkills = {
+        ...actorSkills,
+        [weaponSkillName]: weaponSkillValue,
+      };
+    }
+
+    return actorSkills;
   }
 
   public get visibility(): VisibilityLiteral {

@@ -21,6 +21,7 @@ import {
   playerInfo,
   actionableEvent,
   actionPickAnalgesic,
+  superbSword,
 } from '../../../tests/fakes';
 import {
   mockedActionableState,
@@ -70,9 +71,17 @@ describe('ActorEntity', () => {
     });
   });
 
-  describe('skill', () => {
+  describe('skills', () => {
     it('return skills', () => {
       expect(fakeActor().skills).toEqual(fakeSkills);
+    });
+
+    it('return skill value with weapon modifier ', () => {
+      when(mockedEquipmentBehavior.weaponEquipped).thenReturn(superbSword);
+
+      const actor = fakeActor();
+
+      expect(actor.skills['Melee Weapon (Simple)']).toEqual(75);
     });
   });
 

@@ -19,6 +19,7 @@ export class SettingsStore {
       actionPoints,
       ruleCost,
       aiLoopMilliseconds,
+      weaponQuality,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(
@@ -52,6 +53,7 @@ export class SettingsStore {
       actionPoints,
       ruleCost,
       aiLoopMilliseconds,
+      weaponQuality,
     };
   }
 

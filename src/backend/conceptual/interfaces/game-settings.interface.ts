@@ -24,4 +24,10 @@ export interface GameSettingsInterface {
       readonly amount: number;
     };
   };
+  readonly weaponQuality: {
+    readonly INFERIOR: number;
+    readonly COMMON: number;
+    readonly SUPERIOR: number;
+    readonly SUPERB: number;
+  };
 }

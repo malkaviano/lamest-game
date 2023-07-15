@@ -43,7 +43,10 @@ import { PlayerEntity } from '@entities/player.entity';
 import { InteractiveEntity } from '@entities/interactive.entity';
 import { ActorEntity } from '@entities/actor.entity';
 import { ActorBehavior } from '@behaviors/actor.behavior';
-import { EquipmentBehavior } from '@behaviors/equipment.behavior';
+import {
+  EquipmentBehavior,
+  unarmedWeapon,
+} from '@behaviors/equipment.behavior';
 import { SceneEntity } from '@entities/scene.entity';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { CheckedService } from '@services/checked.service';
@@ -277,6 +280,8 @@ export const setupMocks = () => {
   when(mockedActorBehavior.derivedAttributes).thenReturn(fakeDerivedAttributes);
 
   when(mockedActorBehavior.situation).thenReturn('ALIVE');
+
+  when(mockedEquipmentBehavior.weaponEquipped).thenReturn(unarmedWeapon);
 
   when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
 
