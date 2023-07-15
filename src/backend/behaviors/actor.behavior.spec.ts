@@ -3,9 +3,7 @@ import { instance } from 'ts-mockito';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
-import { HitPointsEvent } from '@events/hit-points.event';
-import { EnergyPointsEvent } from '@events/energy-points.event';
-import { ActionPointsEvent } from '@events/action-points.event';
+import { DerivedAttributeEvent } from '@events/derived-attribute.event';
 
 import {
   fakeCharacteristics,
@@ -82,7 +80,7 @@ describe('ActorBehavior', () => {
 
         const result = b.effectReceived(fakeEffect('ACID', 4));
 
-        expect(result).toEqual(new HitPointsEvent(8, 8));
+        expect(result).toEqual(new DerivedAttributeEvent('CURRENT HP', 8, 8));
       });
     });
 
@@ -90,15 +88,15 @@ describe('ActorBehavior', () => {
       [
         {
           value: 4,
-          expected: new HitPointsEvent(8, 2),
+          expected: new DerivedAttributeEvent('CURRENT HP', 8, 2),
         },
         {
           value: 1,
-          expected: new HitPointsEvent(8, 7),
+          expected: new DerivedAttributeEvent('CURRENT HP', 8, 7),
         },
         {
           value: 5,
-          expected: new HitPointsEvent(8, 1),
+          expected: new DerivedAttributeEvent('CURRENT HP', 8, 1),
         },
       ].forEach(({ value, expected }) => {
         it(`return HitPointsEvent previous ${expected.previous} current ${expected.current}`, () => {
@@ -115,15 +113,15 @@ describe('ActorBehavior', () => {
       [
         {
           value: 4,
-          expected: new HitPointsEvent(8, 6),
+          expected: new DerivedAttributeEvent('CURRENT HP', 8, 6),
         },
         {
           value: 1,
-          expected: new HitPointsEvent(8, 8),
+          expected: new DerivedAttributeEvent('CURRENT HP', 8, 8),
         },
         {
           value: 5,
-          expected: new HitPointsEvent(8, 6),
+          expected: new DerivedAttributeEvent('CURRENT HP', 8, 6),
         },
       ].forEach(({ value, expected }) => {
         it(`return HitPointsEvent previous ${expected.previous} current ${expected.current}`, () => {
@@ -142,7 +140,7 @@ describe('ActorBehavior', () => {
 
         const result = b.effectReceived(fakeEffect('ARCANE', 4));
 
-        expect(result).toEqual(new HitPointsEvent(8, 4));
+        expect(result).toEqual(new DerivedAttributeEvent('CURRENT HP', 8, 4));
       });
     });
 
@@ -164,7 +162,9 @@ describe('ActorBehavior', () => {
 
           const result = b.effectReceived(effect);
 
-          expect(result).toEqual(new HitPointsEvent(4, current));
+          expect(result).toEqual(
+            new DerivedAttributeEvent('CURRENT HP', 4, current)
+          );
         });
       });
     });
@@ -195,11 +195,14 @@ describe('ActorBehavior', () => {
     [
       {
         changes: [-14],
-        expected: [new EnergyPointsEvent(13, 0)],
+        expected: [new DerivedAttributeEvent('CURRENT EP', 13, 0)],
       },
       {
         changes: [-14, 20],
-        expected: [new EnergyPointsEvent(13, 0), new EnergyPointsEvent(0, 13)],
+        expected: [
+          new DerivedAttributeEvent('CURRENT EP', 13, 0),
+          new DerivedAttributeEvent('CURRENT EP', 0, 13),
+        ],
       },
     ].forEach(({ changes, expected }) => {
       it('return EnergyPointsEvent', () => {
@@ -255,11 +258,14 @@ describe('ActorBehavior', () => {
     [
       {
         changes: [-14],
-        expected: [new ActionPointsEvent(6, 0)],
+        expected: [new DerivedAttributeEvent('CURRENT AP', 6, 0)],
       },
       {
         changes: [-14, 20],
-        expected: [new ActionPointsEvent(6, 0), new ActionPointsEvent(0, 6)],
+        expected: [
+          new DerivedAttributeEvent('CURRENT AP', 6, 0),
+          new DerivedAttributeEvent('CURRENT AP', 0, 6),
+        ],
       },
     ].forEach(({ changes, expected }) => {
       it('return ActionPointsEvent', () => {

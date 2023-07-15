@@ -1,5 +1,6 @@
-export abstract class PreviousCurrentEventAbstraction {
+export abstract class PreviousCurrentEventAbstraction<Category> {
   constructor(
+    public readonly category: Category,
     public readonly previous: number,
     public readonly current: number
   ) {}

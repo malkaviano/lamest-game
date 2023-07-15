@@ -6,11 +6,9 @@ import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { EffectEvent } from '@events/effect.event';
-import { HitPointsEvent } from '@events/hit-points.event';
-import { EnergyPointsEvent } from '@events/energy-points.event';
 import { SkillStore } from '@stores/skill.store';
 import { SettingsStore } from '@stores/settings.store';
-import { ActionPointsEvent } from '@events/action-points.event';
+import { DerivedAttributeEvent } from '@events/derived-attribute.event';
 
 export class ActorBehavior {
   private currentHP: number;
@@ -92,7 +90,7 @@ export class ActorBehavior {
     );
   }
 
-  public effectReceived(effectReceived: EffectEvent): HitPointsEvent {
+  public effectReceived(effectReceived: EffectEvent): DerivedAttributeEvent {
     const { effectType, amount } = effectReceived;
 
     let value = 0;
@@ -132,24 +130,24 @@ export class ActorBehavior {
     return this.modifyHealth(Math.trunc(value));
   }
 
-  public energyChange(energy: number): EnergyPointsEvent {
+  public energyChange(energy: number): DerivedAttributeEvent {
     const previousEP = this.currentEP;
 
     this.currentEP += energy;
 
     this.currentEP = MathHelper.clamp(this.currentEP, 0, this.maximumEP());
 
-    return new EnergyPointsEvent(previousEP, this.currentEP);
+    return new DerivedAttributeEvent('CURRENT EP', previousEP, this.currentEP);
   }
 
-  public actionPointsChange(ap: number): ActionPointsEvent {
+  public actionPointsChange(ap: number): DerivedAttributeEvent {
     const previousAP = this.currentAP;
 
     this.currentAP += ap;
 
     this.currentAP = MathHelper.clamp(this.currentAP, 0, this.maximumAP());
 
-    return new ActionPointsEvent(previousAP, this.currentAP);
+    return new DerivedAttributeEvent('CURRENT AP', previousAP, this.currentAP);
   }
 
   public static create(
@@ -160,14 +158,14 @@ export class ActorBehavior {
     return new ActorBehavior(characteristics, skills, skillStore);
   }
 
-  private modifyHealth(modified: number): HitPointsEvent {
+  private modifyHealth(modified: number): DerivedAttributeEvent {
     const previousHP = this.currentHP;
 
     this.currentHP += modified;
 
     this.currentHP = MathHelper.clamp(this.currentHP, 0, this.maximumHP());
 
-    return new HitPointsEvent(previousHP, this.currentHP);
+    return new DerivedAttributeEvent('CURRENT HP', previousHP, this.currentHP);
   }
 
   private maximumHP(): number {

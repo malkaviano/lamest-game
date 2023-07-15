@@ -4,9 +4,7 @@ import { instance, when } from 'ts-mockito';
 import { CharacterService } from '@services/character.service';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { EnergyPointsEvent } from '@events/energy-points.event';
-import { HitPointsEvent } from '@events/hit-points.event';
-import { ActionPointsEvent } from '@events/action-points.event';
+import { DerivedAttributeEvent } from '@events/derived-attribute.event';
 
 import { simpleSword } from '../../../tests/fakes';
 import {
@@ -25,15 +23,13 @@ describe('CharacterService', () => {
       instance(mockedPlayerEntity)
     );
 
-    when(mockedPlayerEntity.hpChanged$).thenReturn(subjectHP);
-
-    when(mockedPlayerEntity.epChanged$).thenReturn(subjectEP);
+    when(mockedPlayerEntity.derivedAttributeChanged$).thenReturn(
+      subjectDerivedAttribute
+    );
 
     when(mockedPlayerEntity.weaponEquippedChanged$).thenReturn(subjectWeapon);
 
     when(mockedPlayerEntity.visibilityChanged$).thenReturn(subjectVisibility);
-
-    when(mockedPlayerEntity.apChanged$).thenReturn(subjectAP);
 
     service = new CharacterService(instance(mockedRandomCharacterService));
   });
@@ -48,7 +44,9 @@ describe('CharacterService', () => {
     describe('when character takes damage', () => {
       it('should emit an event', (done) => {
         testEvent(service, done, () => {
-          subjectHP.next(new HitPointsEvent(12, 8));
+          subjectDerivedAttribute.next(
+            new DerivedAttributeEvent('CURRENT HP', 12, 8)
+          );
         });
       });
     });
@@ -93,7 +91,9 @@ describe('CharacterService', () => {
   describe('when character spent energy', () => {
     it('should emit an event', (done) => {
       testEvent(service, done, () => {
-        subjectEP.next(new EnergyPointsEvent(12, 8));
+        subjectDerivedAttribute.next(
+          new DerivedAttributeEvent('CURRENT EP', 12, 8)
+        );
       });
     });
   });
@@ -109,21 +109,19 @@ describe('CharacterService', () => {
   describe('when character spent action points', () => {
     it('should emit an event', (done) => {
       testEvent(service, done, () => {
-        subjectAP.next(new ActionPointsEvent(12, 8));
+        subjectDerivedAttribute.next(
+          new DerivedAttributeEvent('CURRENT AP', 12, 8)
+        );
       });
     });
   });
 });
 
-const subjectHP = new Subject<HitPointsEvent>();
-
-const subjectEP = new Subject<EnergyPointsEvent>();
+const subjectDerivedAttribute = new Subject<DerivedAttributeEvent>();
 
 const subjectVisibility = new Subject<VisibilityLiteral>();
 
 const subjectWeapon = new Subject<WeaponDefinition>();
-
-const subjectAP = new Subject<ActionPointsEvent>();
 
 function testEvent(
   service: CharacterService,
