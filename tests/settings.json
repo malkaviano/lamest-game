@@ -32,6 +32,12 @@
         "intervalMilliseconds": 100,
         "amount": 1
       }
+    },
+    "weaponQuality": {
+      "INFERIOR": -10,
+      "COMMON": 0,
+      "SUPERIOR": 15,
+      "SUPERB": 30
     }
   }
 }

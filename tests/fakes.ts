@@ -402,9 +402,19 @@ export const imageOpened = {
 export const glock = new WeaponDefinition(
   new ItemIdentityDefinition('glock', 'Glock', 'Glock 17'),
   'Firearm (Handgun)',
-  new EffectDefinition(createDice(), 4, 'KINETIC'),
+  new EffectDefinition(createDice(), 2, 'KINETIC'),
   false,
   'PERMANENT',
   0,
   'COMMON'
+);
+
+export const superbSword = new WeaponDefinition(
+  new ItemIdentityDefinition('superbSword', 'Superb Sword', 'A Superb Sword'),
+  'Melee Weapon (Simple)',
+  new EffectDefinition(createDice(), 4, 'KINETIC'),
+  false,
+  'PERMANENT',
+  0,
+  'SUPERB'
 );
