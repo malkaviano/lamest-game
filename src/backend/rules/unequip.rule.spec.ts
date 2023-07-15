@@ -1,6 +1,6 @@
 import { instance, verify, when } from 'ts-mockito';
 
-import { UnEquipRule } from './unequip.rule';
+import { UnEquipRule } from '@rules/unequip.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
@@ -83,9 +83,7 @@ const unEquippedLog = new LogMessageDefinition(
   'un-equipped Axe'
 );
 
-const unEquipAction = actionUnEquip(unDodgeableAxe.identity.label);
-
 const unEquipEvent = new ActionableEvent(
-  unEquipAction,
+  actionUnEquip,
   unDodgeableAxe.identity.name
 );

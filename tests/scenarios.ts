@@ -1,3 +1,10 @@
+import { HarnessLoader } from '@angular/cdk/testing';
+import { ComponentFixture } from '@angular/core/testing';
+import { EventEmitter } from '@angular/core';
+import { MatButtonHarness } from '@angular/material/button/testing';
+
+import { first } from 'rxjs';
+
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { ActorInterface } from '@interfaces/actor.interface';
@@ -24,3 +31,24 @@ export const ruleScenario = (
 
   expect(result).toEqual(expected);
 };
+
+export async function testButtonEvent(
+  loader: HarnessLoader,
+  fixture: ComponentFixture<{ actionSelected: EventEmitter<ActionableEvent> }>
+) {
+  const button = await loader.getHarness(MatButtonHarness);
+
+  let result: ActionableEvent | undefined;
+
+  fixture.componentInstance.actionSelected
+    .pipe(first())
+    .subscribe((action: ActionableEvent) => {
+      result = action;
+    });
+
+  await button.click();
+
+  fixture.detectChanges();
+
+  return result;
+}
