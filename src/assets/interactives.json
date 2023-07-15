@@ -174,6 +174,10 @@
         {
           "name": "friendNote",
           "quantity": 1
+        },
+        {
+          "name": "leatherJacket",
+          "quantity": 1
         }
       ]
     },
@@ -214,10 +218,6 @@
       "items": [
         {
           "name": "analgesicBottle",
-          "quantity": 2
-        },
-        {
-          "name": "lockPick",
           "quantity": 2
         },
         {

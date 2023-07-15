@@ -38,6 +38,24 @@
       "COMMON": 0,
       "SUPERIOR": 15,
       "SUPERB": 30
+    },
+    "armorPenalty": {
+      "MINIMAL": {
+        "Dodge": 0,
+        "AGI": 0
+      },
+      "LIGHT": {
+        "Dodge": -10,
+        "AGI": -1
+      },
+      "MEDIUM": {
+        "Dodge": -30,
+        "AGI": -3
+      },
+      "HEAVY": {
+        "Dodge": -60,
+        "AGI": -6
+      }
     }
   }
 }

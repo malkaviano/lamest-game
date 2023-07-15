@@ -16,7 +16,7 @@
 
     {
       "id": "bushesLoot",
-      "actionables": ["pickFriendNote"]
+      "actionables": ["pickFriendNote", "pickLeatherJacket"]
     },
 
     {
@@ -39,13 +39,7 @@
     },
     {
       "id": "storageGuardLoot",
-      "actionables": [
-        "pickBaton",
-        "pickMasterKey",
-        "pickMasterKey",
-        "pickAnalgesic",
-        "pickAnalgesic"
-      ]
+      "actionables": ["pickBaton", "pickAnalgesic", "pickAnalgesic"]
     },
     {
       "id": "storageLocked1Loot",

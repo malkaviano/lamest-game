@@ -198,6 +198,13 @@
       "name": "baton",
       "actionable": "PICK",
       "label": "PICK Baton"
+    },
+
+    {
+      "key": "pickLeatherJacket",
+      "name": "leatherJacket",
+      "actionable": "PICK",
+      "label": "PICK Armor"
     }
   ]
 }

@@ -134,9 +134,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     if (weaponQuality !== 'COMMON') {
       const weaponSkillName = this.weaponEquipped.skillName;
 
-      const weaponSkillValue =
+      const weaponSkillValue = this.minimumValue(
         this.actorBehavior.skills[this.weaponEquipped.skillName] +
-        SettingsStore.settings.weaponQuality[weaponQuality];
+          SettingsStore.settings.weaponQuality[weaponQuality]
+      );
 
       actorSkills = {
         ...actorSkills,
@@ -306,5 +307,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     if (result.effective) {
       this.derivedAttributeChanged.next(result);
     }
+  }
+
+  private minimumValue(value: number): number {
+    return value > 0 ? value : 1;
   }
 }

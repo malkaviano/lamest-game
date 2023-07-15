@@ -10,6 +10,7 @@ import { ArrayView } from '@wrappers/array.view';
 import { InventoryEvent } from '@events/inventory.event';
 import { InteractiveStore } from '@stores/interactive.store';
 import { ItemStore } from '@stores/item.store';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
 export class InventoryService {
   private readonly inventoryChanged: Subject<InventoryEvent>;
@@ -114,6 +115,7 @@ export class InventoryService {
     storage[item.identity.name] = itemStorage;
 
     this.storage.set(key, storage);
+
     return quantity;
   }
 
@@ -123,7 +125,8 @@ export class InventoryService {
         item instanceof ConsumableDefinition) ||
       (item.category === 'READABLE' && item instanceof ReadableDefinition) ||
       (item.category === 'USABLE' && item instanceof UsableDefinition) ||
-      (item.category === 'WEAPON' && item instanceof WeaponDefinition)
+      (item.category === 'WEAPON' && item instanceof WeaponDefinition) ||
+      (item.category === 'ARMOR' && item instanceof ArmorDefinition)
     );
   }
 }
