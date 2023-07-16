@@ -8,7 +8,12 @@ import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { EffectEvent } from '@events/effect.event';
 import { SkillStore } from '@stores/skill.store';
 import { SettingsStore } from '@stores/settings.store';
-import { DerivedAttributeEvent } from '@events/derived-attribute.event';
+import {
+  CurrentAPChangedEvent,
+  CurrentEPChangedEvent,
+  CurrentHPChangedEvent,
+  DerivedAttributeEvent,
+} from '@events/derived-attribute.event';
 
 export class ActorBehavior {
   private currentHP: number;
@@ -137,7 +142,7 @@ export class ActorBehavior {
 
     this.currentEP = MathHelper.clamp(this.currentEP, 0, this.maximumEP());
 
-    return new DerivedAttributeEvent('CURRENT EP', previousEP, this.currentEP);
+    return new CurrentEPChangedEvent(previousEP, this.currentEP);
   }
 
   public actionPointsChange(ap: number): DerivedAttributeEvent {
@@ -147,7 +152,7 @@ export class ActorBehavior {
 
     this.currentAP = MathHelper.clamp(this.currentAP, 0, this.maximumAP());
 
-    return new DerivedAttributeEvent('CURRENT AP', previousAP, this.currentAP);
+    return new CurrentAPChangedEvent(previousAP, this.currentAP);
   }
 
   public static create(
@@ -165,7 +170,7 @@ export class ActorBehavior {
 
     this.currentHP = MathHelper.clamp(this.currentHP, 0, this.maximumHP());
 
-    return new DerivedAttributeEvent('CURRENT HP', previousHP, this.currentHP);
+    return new CurrentHPChangedEvent(previousHP, this.currentHP);
   }
 
   private maximumHP(): number {

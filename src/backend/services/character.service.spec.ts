@@ -4,7 +4,12 @@ import { instance, when } from 'ts-mockito';
 import { CharacterService } from '@services/character.service';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { DerivedAttributeEvent } from '@events/derived-attribute.event';
+import {
+  CurrentAPChangedEvent,
+  CurrentEPChangedEvent,
+  CurrentHPChangedEvent,
+  DerivedAttributeEvent,
+} from '@events/derived-attribute.event';
 
 import { simpleSword } from '../../../tests/fakes';
 import {
@@ -44,9 +49,7 @@ describe('CharacterService', () => {
     describe('when character takes damage', () => {
       it('should emit an event', (done) => {
         testEvent(service, done, () => {
-          subjectDerivedAttribute.next(
-            new DerivedAttributeEvent('CURRENT HP', 12, 8)
-          );
+          subjectDerivedAttribute.next(new CurrentHPChangedEvent(12, 8));
         });
       });
     });
@@ -91,9 +94,7 @@ describe('CharacterService', () => {
   describe('when character spent energy', () => {
     it('should emit an event', (done) => {
       testEvent(service, done, () => {
-        subjectDerivedAttribute.next(
-          new DerivedAttributeEvent('CURRENT EP', 12, 8)
-        );
+        subjectDerivedAttribute.next(new CurrentEPChangedEvent(12, 8));
       });
     });
   });
@@ -109,9 +110,7 @@ describe('CharacterService', () => {
   describe('when character spent action points', () => {
     it('should emit an event', (done) => {
       testEvent(service, done, () => {
-        subjectDerivedAttribute.next(
-          new DerivedAttributeEvent('CURRENT AP', 12, 8)
-        );
+        subjectDerivedAttribute.next(new CurrentAPChangedEvent(12, 8));
       });
     });
   });

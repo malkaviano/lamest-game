@@ -7,7 +7,12 @@ import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { DerivedAttributeEvent } from '@events/derived-attribute.event';
+import {
+  CurrentAPChangedEvent,
+  CurrentEPChangedEvent,
+  CurrentHPChangedEvent,
+  DerivedAttributeEvent,
+} from '@events/derived-attribute.event';
 
 import {
   fakeCharacteristics,
@@ -103,11 +108,11 @@ describe('ActorEntity', () => {
         describe('attack was SUCCESS', () => {
           [
             {
-              event: new DerivedAttributeEvent('CURRENT HP', 9, 0),
+              event: new CurrentHPChangedEvent(9, 0),
               log: acid9Log,
             },
             {
-              event: new DerivedAttributeEvent('CURRENT HP', 9, 9),
+              event: new CurrentHPChangedEvent(9, 9),
               log: hpNotChangedLog,
             },
           ].forEach(({ event, log }) => {
@@ -133,7 +138,7 @@ describe('ActorEntity', () => {
               mockedActorBehavior.effectReceived(
                 deepEqual(fakeEffect('ACID', 6))
               )
-            ).thenReturn(new DerivedAttributeEvent('CURRENT HP', 9, 3));
+            ).thenReturn(new CurrentHPChangedEvent(9, 3));
 
             const char = fakeActor();
 
@@ -147,9 +152,7 @@ describe('ActorEntity', () => {
 
             done();
 
-            expect(result).toEqual([
-              new DerivedAttributeEvent('CURRENT HP', 9, 3),
-            ]);
+            expect(result).toEqual([new CurrentHPChangedEvent(9, 3)]);
           });
         });
 
@@ -199,32 +202,32 @@ describe('ActorEntity', () => {
           result: 'SUCCESS',
           effect: fakeEffect('REMEDY', 10),
           mockedEffect: fakeEffect('REMEDY', 10),
-          resultHpEvent: new DerivedAttributeEvent('CURRENT HP', 4, 9),
+          resultHpEvent: new CurrentHPChangedEvent(4, 9),
           energy: 0,
-          resultEpEvent: new DerivedAttributeEvent('CURRENT EP', 6, 6),
+          resultEpEvent: new CurrentEPChangedEvent(6, 6),
           resultLog: remedy5Log,
-          eventEmitted: [new DerivedAttributeEvent('CURRENT HP', 4, 9)],
+          eventEmitted: [new CurrentHPChangedEvent(4, 9)],
         },
         {
           result: 'NONE',
           effect: fakeEffect('REMEDY', 10),
           mockedEffect: fakeEffect('REMEDY', 10),
-          resultHpEvent: new DerivedAttributeEvent('CURRENT HP', 4, 9),
+          resultHpEvent: new CurrentHPChangedEvent(4, 9),
           energy: 4,
-          resultEpEvent: new DerivedAttributeEvent('CURRENT EP', 2, 6),
+          resultEpEvent: new CurrentEPChangedEvent(2, 6),
           resultLog: `${remedy5Log} and ${energized4Log}`,
           eventEmitted: [
-            new DerivedAttributeEvent('CURRENT HP', 4, 9),
-            new DerivedAttributeEvent('CURRENT EP', 2, 6),
+            new CurrentHPChangedEvent(4, 9),
+            new CurrentEPChangedEvent(2, 6),
           ],
         },
         {
           result: 'NONE',
           effect: fakeEffect('REMEDY', 10),
           mockedEffect: fakeEffect('REMEDY', 10),
-          resultHpEvent: new DerivedAttributeEvent('CURRENT HP', 9, 9),
+          resultHpEvent: new CurrentHPChangedEvent(9, 9),
           energy: 4,
-          resultEpEvent: new DerivedAttributeEvent('CURRENT EP', 6, 6),
+          resultEpEvent: new CurrentEPChangedEvent(6, 6),
           resultLog: `${hpNotChangedLog} and ${epNotChangedLog}`,
           eventEmitted: [],
         },
@@ -232,11 +235,11 @@ describe('ActorEntity', () => {
           result: 'SUCCESS',
           effect: undefined,
           mockedEffect: fakeEffect('REMEDY', 10),
-          resultHpEvent: new DerivedAttributeEvent('CURRENT HP', 9, 9),
+          resultHpEvent: new CurrentHPChangedEvent(9, 9),
           energy: -4,
-          resultEpEvent: new DerivedAttributeEvent('CURRENT EP', 6, 2),
+          resultEpEvent: new CurrentEPChangedEvent(6, 2),
           resultLog: drained4Log,
-          eventEmitted: [new DerivedAttributeEvent('CURRENT EP', 6, 2)],
+          eventEmitted: [new CurrentEPChangedEvent(6, 2)],
         },
       ].forEach(
         ({
@@ -322,7 +325,7 @@ describe('ActorEntity', () => {
         ).thenCall(() => {
           when(mockedActorBehavior.situation).thenReturn('DEAD');
 
-          return new DerivedAttributeEvent('CURRENT HP', 10, 0);
+          return new CurrentHPChangedEvent(10, 0);
         });
 
         const char = fakeActor();
@@ -479,7 +482,7 @@ describe('ActorEntity', () => {
     it('emits ActionPointsEvent', (done) => {
       const actor = fakeActor();
 
-      const expected = new DerivedAttributeEvent('CURRENT AP', 10, 5);
+      const expected = new CurrentAPChangedEvent(10, 5);
 
       apEventTest(actor, done, -5, () => actor.apSpent(5), expected);
     });
@@ -489,7 +492,7 @@ describe('ActorEntity', () => {
     it('emits ActionPointsEvent', (done) => {
       const actor = fakeActor();
 
-      const expected = new DerivedAttributeEvent('CURRENT AP', 5, 12);
+      const expected = new CurrentAPChangedEvent(5, 12);
 
       apEventTest(actor, done, 7, () => actor.apRecovered(7), expected);
     });
