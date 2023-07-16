@@ -4,7 +4,7 @@ import { ActorEntity } from '@entities/actor.entity';
 import { ArrayView } from '@wrappers/array.view';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { unarmedWeapon } from '@behaviors/equipment.behavior';
+import { clothArmor, unarmedWeapon } from '@behaviors/equipment.behavior';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import {
   CurrentAPChangedEvent,
@@ -17,6 +17,7 @@ import {
   WeaponChangedEvent,
 } from '@events/equipment-changed.event';
 import { WeaponDefinition } from '@definitions/weapon.definition';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
 import {
   fakeCharacteristics,
@@ -32,6 +33,8 @@ import {
   actionPickAnalgesic,
   superbSword,
   unDodgeableAxe,
+  kevlarVest,
+  leatherJacket,
 } from '../../../tests/fakes';
 import {
   mockedActionableState,
@@ -480,6 +483,42 @@ describe('ActorEntity', () => {
       apEventTest(actor, done, 7, () => actor.apRecovered(7), expected);
     });
   });
+
+  describe('wear', () => {
+    it('return previous armor', () => {
+      const char = fakeActor();
+
+      const f = () => char.wear(leatherJacket);
+
+      testArmorAction(f, kevlarVest, leatherJacket);
+    });
+
+    it('emit event', (done) => {
+      const char = fakeActor();
+
+      const f = () => char.wear(leatherJacket);
+
+      testArmorEvent(char, f, done, kevlarVest, leatherJacket);
+    });
+  });
+
+  describe('strip', () => {
+    it('return previous armor', () => {
+      const char = fakeActor();
+
+      const f = () => char.strip();
+
+      testArmorAction(f, leatherJacket);
+    });
+
+    it('should emit event', (done) => {
+      const char = fakeActor();
+
+      const f = () => char.strip();
+
+      testArmorEvent(char, f, done, leatherJacket);
+    });
+  });
 });
 
 const killedState = instance(mockedActionableState2);
@@ -556,4 +595,40 @@ function apEventTest(
   done();
 
   expect(result).toEqual(expected);
+}
+
+function testArmorAction(
+  action: () => ArmorDefinition | null,
+  previous: ArmorDefinition,
+  current?: ArmorDefinition
+) {
+  when(mockedEquipmentBehavior.changeArmor(current)).thenReturn(previous);
+
+  const result = action();
+
+  expect(result).toEqual(previous);
+}
+
+function testArmorEvent(
+  char: ActorEntity,
+  action: () => ArmorDefinition | null,
+  done: DoneFn,
+  previous: ArmorDefinition,
+  current?: ArmorDefinition
+) {
+  let result: WeaponChangedEvent | ArmorChangedEvent | undefined;
+
+  when(mockedEquipmentBehavior.changeArmor(current)).thenReturn(previous);
+
+  char.equipmentChanged$.subscribe((event) => {
+    result = event;
+  });
+
+  action();
+
+  done();
+
+  expect(result).toEqual(
+    new ArmorChangedEvent(previous, current ?? clothArmor)
+  );
 }

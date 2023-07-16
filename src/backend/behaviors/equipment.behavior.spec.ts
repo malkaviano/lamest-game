@@ -1,6 +1,6 @@
 import {
   EquipmentBehavior,
-  clothesArmor,
+  clothArmor,
   unarmedWeapon,
 } from '@behaviors/equipment.behavior';
 import { WeaponDefinition } from '@definitions/weapon.definition';
@@ -64,7 +64,7 @@ describe('EquipmentBehavior', () => {
 
       armor.push(char.armorWearing);
 
-      expect(armor).toEqual([clothesArmor, leatherJacket, kevlarVest]);
+      expect(armor).toEqual([clothArmor, leatherJacket, kevlarVest]);
     });
   });
 

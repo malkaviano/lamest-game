@@ -19,7 +19,7 @@ export const unarmedWeapon = new WeaponDefinition(
   'COMMON'
 );
 
-export const clothesArmor = new ArmorDefinition(
+export const clothArmor = new ArmorDefinition(
   new ItemIdentityDefinition(
     'clothes',
     'Clothes',
@@ -52,7 +52,7 @@ export class EquipmentBehavior {
   }
 
   public get armorWearing(): ArmorDefinition {
-    return this.armor ?? clothesArmor;
+    return this.armor ?? clothArmor;
   }
 
   public changeWeapon(weapon?: WeaponDefinition): WeaponDefinition | null {

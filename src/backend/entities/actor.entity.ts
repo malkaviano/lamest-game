@@ -5,7 +5,7 @@ import { AiBehavior } from '@behaviors/ai.behavior';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 import {
   EquipmentBehavior,
-  clothesArmor,
+  clothArmor,
   unarmedWeapon,
 } from '@behaviors/equipment.behavior';
 import { ActionableDefinition } from '@definitions/actionable.definition';
@@ -346,7 +346,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     if (armor || previous) {
       this.equipmentChanged.next(
-        new ArmorChangedEvent(previous ?? clothesArmor, armor ?? clothesArmor)
+        new ArmorChangedEvent(previous ?? clothArmor, armor ?? clothArmor)
       );
     }
 
