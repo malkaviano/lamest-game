@@ -107,6 +107,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.visibilityChanged$ = this.visibilityChanged.asObservable();
   }
 
+  public get armorWearing(): ArmorDefinition {
+    throw new Error('Method not implemented.');
+  }
+
   public get dodgesPerRound(): number {
     return this.actorBehavior.dodgesPerRound;
   }

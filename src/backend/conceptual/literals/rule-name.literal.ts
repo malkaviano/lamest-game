@@ -9,4 +9,6 @@ export type RuleNameLiteral =
   | 'SKILL'
   | 'UNEQUIP'
   | 'USE'
-  | 'DROP';
+  | 'DROP'
+  | 'WEAR'
+  | 'STRIP';

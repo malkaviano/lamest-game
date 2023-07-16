@@ -1,8 +1,8 @@
 import { instance } from 'ts-mockito';
 
-import { VisibilityState } from './visibility.state';
+import { VisibilityState } from '@states/visibility.state';
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { emptyState } from './empty.state';
+import { emptyState } from '@states/empty.state';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { PlayerEntity } from '@entities/player.entity';
 import { ActorBehavior } from '@behaviors/actor.behavior';

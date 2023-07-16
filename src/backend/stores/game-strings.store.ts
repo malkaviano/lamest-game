@@ -156,7 +156,7 @@ export class GameStringsStore {
       'EQUIPPED',
       actor,
       GameStringsStore.logMessagesStore['equippedMessage'].replace(
-        '${equipment}',
+        '${weapon}',
         equipment
       )
     );
@@ -170,7 +170,7 @@ export class GameStringsStore {
       'UNEQUIPPED',
       actor,
       GameStringsStore.logMessagesStore['unEquippedMessage'].replace(
-        '${equipment}',
+        '${weapon}',
         equipment
       )
     );
@@ -389,6 +389,34 @@ export class GameStringsStore {
       GameStringsStore.logMessagesStore[
         'actionPointsInsufficientMessage'
       ].replace('${actionPointsRequired}', required.toString())
+    );
+  }
+
+  public static createWearingLogMessage(
+    actor: string,
+    equipment: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'WEARING',
+      actor,
+      GameStringsStore.logMessagesStore['wearingMessage'].replace(
+        '${armor}',
+        equipment
+      )
+    );
+  }
+
+  public static createStripLogMessage(
+    actor: string,
+    equipment: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'STRIP',
+      actor,
+      GameStringsStore.logMessagesStore['stripMessage'].replace(
+        '${armor}',
+        equipment
+      )
     );
   }
 }

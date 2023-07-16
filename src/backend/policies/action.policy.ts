@@ -3,7 +3,7 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { SettingsStore } from '@stores/settings.store';
 import { PolicyAbstraction } from '@abstractions/policy.abstraction';
-import { PlayerEntity } from '../entities/player.entity';
+import { PlayerEntity } from '@entities/player.entity';
 
 export class ActionPolicy extends PolicyAbstraction {
   public override enforce(result: RuleResultInterface): PolicyResultInterface {

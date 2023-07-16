@@ -22,7 +22,9 @@
       "SKILL": 2,
       "UNEQUIP": 1,
       "USE": 1,
-      "DROP": 0
+      "DROP": 0,
+      "WEAR": 2,
+      "STRIP": 2
     },
     "aiLoopMilliseconds": 2000,
     "actionPoints": {

@@ -1,4 +1,4 @@
-import { InventoryService } from '../services/inventory.service';
+import { InventoryService } from '@services/inventory.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';

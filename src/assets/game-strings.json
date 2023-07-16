@@ -7,8 +7,8 @@
     "isDeadMessage": "is dead",
     "skillCheckMessage": "${skill} skill checked and rolled ${roll}, it was a ${result}",
     "cannotCheckSkillMessage": "${skill} skill couldn't be checked because it's value is zero",
-    "equippedMessage": "equipped ${equipment}",
-    "unEquippedMessage": "un-equipped ${equipment}",
+    "equippedMessage": "equipped ${weapon}",
+    "unEquippedMessage": "un-equipped ${weapon}",
     "consumedMessage": "consumed ${consumable}",
     "usedItemMessage": "used ${item} on ${target}",
     "equipErrorMessage": "${skill} is required to equip ${equipment}",
@@ -32,7 +32,9 @@
     "startLockPickingMessage": "started lock picking the container",
     "visibilityMessage": "visibility changed to ${visibility}",
     "actionPointsSpentMessage": "spent ${actionPointsSpent} action points",
-    "actionPointsInsufficientMessage": "insufficient AP. Action requires ${actionPointsRequired} AP"
+    "actionPointsInsufficientMessage": "insufficient AP. Action requires ${actionPointsRequired} AP",
+    "wearingMessage": "wearing ${armor}",
+    "stripMessage": "strip ${armor}"
   },
   "errors": {
     "INVALID-OPERATION": "Invalid operation ocurred",
