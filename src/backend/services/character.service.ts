@@ -23,7 +23,7 @@ export class CharacterService {
       this.currentCharacter.visibilityChanged$.pipe(
         map(() => this.currentCharacter)
       ),
-      this.currentCharacter.weaponEquippedChanged$.pipe(
+      this.currentCharacter.equipmentChanged$.pipe(
         map(() => this.currentCharacter)
       )
     );

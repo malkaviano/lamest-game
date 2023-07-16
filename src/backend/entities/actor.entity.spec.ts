@@ -1,4 +1,4 @@
-import { deepEqual, instance, when } from 'ts-mockito';
+import { anything, deepEqual, instance, when } from 'ts-mockito';
 
 import { ActorEntity } from '@entities/actor.entity';
 import { ArrayView } from '@wrappers/array.view';
@@ -13,6 +13,10 @@ import {
   CurrentHPChangedEvent,
   DerivedAttributeEvent,
 } from '@events/derived-attribute.event';
+import {
+  ArmorChangedEvent,
+  WeaponChangedEvent,
+} from '@events/equipment-changed.event';
 
 import {
   fakeCharacteristics,
@@ -359,11 +363,11 @@ describe('ActorEntity', () => {
     });
 
     it('should emit event', (done) => {
-      let result: WeaponDefinition | undefined;
+      let result: WeaponChangedEvent | ArmorChangedEvent | undefined;
 
       const char = fakeActor();
 
-      char.weaponEquippedChanged$.subscribe((event) => {
+      char.equipmentChanged$.subscribe((event) => {
         result = event;
       });
 
@@ -371,13 +375,17 @@ describe('ActorEntity', () => {
 
       done();
 
-      expect(result).toEqual(simpleSword);
+      expect(result).toEqual(
+        new WeaponChangedEvent(unarmedWeapon, simpleSword)
+      );
     });
   });
 
   describe('unEquip', () => {
     it('should un-equip current weapon', () => {
-      when(mockedEquipmentBehavior.changeWeapon()).thenReturn(simpleSword);
+      when(mockedEquipmentBehavior.changeWeapon(anything())).thenReturn(
+        simpleSword
+      );
 
       const char = fakeActor();
 
@@ -387,13 +395,15 @@ describe('ActorEntity', () => {
     });
 
     it('should emit event', (done) => {
-      when(mockedEquipmentBehavior.changeWeapon()).thenReturn(simpleSword);
+      when(mockedEquipmentBehavior.changeWeapon(anything())).thenReturn(
+        simpleSword
+      );
 
-      let result: WeaponDefinition | undefined;
+      let result: WeaponChangedEvent | ArmorChangedEvent | undefined;
 
       const char = fakeActor();
 
-      char.weaponEquippedChanged$.subscribe((event) => {
+      char.equipmentChanged$.subscribe((event) => {
         result = event;
       });
 
@@ -401,7 +411,9 @@ describe('ActorEntity', () => {
 
       done();
 
-      expect(result).toEqual(simpleSword);
+      expect(result).toEqual(
+        new WeaponChangedEvent(simpleSword, unarmedWeapon)
+      );
     });
   });
 

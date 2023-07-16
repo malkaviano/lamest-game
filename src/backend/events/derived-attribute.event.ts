@@ -1,7 +1,14 @@
 import { PreviousCurrentEventAbstraction } from '@abstractions/previous-current-event.abstraction';
 import { DerivedAttributeNameLiteral } from '@literals/derived-attribute-name.literal';
 
-export abstract class DerivedAttributeEvent extends PreviousCurrentEventAbstraction<DerivedAttributeNameLiteral> {}
+export abstract class DerivedAttributeEvent extends PreviousCurrentEventAbstraction<
+  DerivedAttributeNameLiteral,
+  number
+> {
+  public get effective(): number {
+    return Math.abs(this.current - this.previous);
+  }
+}
 
 export class CurrentHPChangedEvent extends DerivedAttributeEvent {
   constructor(previous: number, current: number) {

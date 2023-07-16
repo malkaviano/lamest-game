@@ -2,7 +2,6 @@ import { Subject } from 'rxjs';
 import { instance, when } from 'ts-mockito';
 
 import { CharacterService } from '@services/character.service';
-import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import {
   CurrentAPChangedEvent,
@@ -10,6 +9,8 @@ import {
   CurrentHPChangedEvent,
   DerivedAttributeEvent,
 } from '@events/derived-attribute.event';
+import { WeaponChangedEvent } from '@events/equipment-changed.event';
+import { unarmedWeapon } from '@behaviors/equipment.behavior';
 
 import { simpleSword } from '../../../tests/fakes';
 import {
@@ -32,7 +33,7 @@ describe('CharacterService', () => {
       subjectDerivedAttribute
     );
 
-    when(mockedPlayerEntity.weaponEquippedChanged$).thenReturn(subjectWeapon);
+    when(mockedPlayerEntity.equipmentChanged$).thenReturn(subjectWeapon);
 
     when(mockedPlayerEntity.visibilityChanged$).thenReturn(subjectVisibility);
 
@@ -57,7 +58,9 @@ describe('CharacterService', () => {
     describe('when character equips a Weapon', () => {
       it('should emit an event', (done) => {
         testEvent(service, done, () => {
-          subjectWeapon.next(simpleSword);
+          subjectWeapon.next(
+            new WeaponChangedEvent(unarmedWeapon, simpleSword)
+          );
         });
       });
     });
@@ -120,7 +123,7 @@ const subjectDerivedAttribute = new Subject<DerivedAttributeEvent>();
 
 const subjectVisibility = new Subject<VisibilityLiteral>();
 
-const subjectWeapon = new Subject<WeaponDefinition>();
+const subjectWeapon = new Subject<WeaponChangedEvent>();
 
 function testEvent(
   service: CharacterService,
