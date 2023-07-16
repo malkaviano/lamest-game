@@ -1,9 +1,8 @@
-import { anything, deepEqual, instance, when } from 'ts-mockito';
+import { deepEqual, instance, when } from 'ts-mockito';
 
 import { ActorEntity } from '@entities/actor.entity';
 import { ArrayView } from '@wrappers/array.view';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
-import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { CheckResultLiteral } from '@literals/check-result.literal';
@@ -17,6 +16,7 @@ import {
   ArmorChangedEvent,
   WeaponChangedEvent,
 } from '@events/equipment-changed.event';
+import { WeaponDefinition } from '@definitions/weapon.definition';
 
 import {
   fakeCharacteristics,
@@ -31,6 +31,7 @@ import {
   actionableEvent,
   actionPickAnalgesic,
   superbSword,
+  unDodgeableAxe,
 } from '../../../tests/fakes';
 import {
   mockedActionableState,
@@ -352,68 +353,38 @@ describe('ActorEntity', () => {
   });
 
   describe('equip', () => {
-    it('should equip new weapon', () => {
-      when(mockedEquipmentBehavior.weaponEquipped).thenReturn(simpleSword);
-
+    it('return previous weapon', () => {
       const char = fakeActor();
 
-      equipActorScenario(char, simpleSword);
+      const f = () => char.equip(simpleSword);
 
-      expect(char.weaponEquipped).toEqual(simpleSword);
+      testWeaponAction(f, unDodgeableAxe, simpleSword);
     });
 
-    it('should emit event', (done) => {
-      let result: WeaponChangedEvent | ArmorChangedEvent | undefined;
-
+    it('emit event', (done) => {
       const char = fakeActor();
 
-      char.equipmentChanged$.subscribe((event) => {
-        result = event;
-      });
+      const f = () => char.equip(simpleSword);
 
-      equipActorScenario(char, simpleSword);
-
-      done();
-
-      expect(result).toEqual(
-        new WeaponChangedEvent(unarmedWeapon, simpleSword)
-      );
+      testWeaponEvent(char, f, done, unDodgeableAxe, simpleSword);
     });
   });
 
   describe('unEquip', () => {
-    it('should un-equip current weapon', () => {
-      when(mockedEquipmentBehavior.changeWeapon(anything())).thenReturn(
-        simpleSword
-      );
-
+    it('return previous weapon', () => {
       const char = fakeActor();
 
-      const result = unEquipActorScenario(char);
+      const f = () => char.unEquip();
 
-      expect(result).toEqual(simpleSword);
+      testWeaponAction(f, simpleSword);
     });
 
     it('should emit event', (done) => {
-      when(mockedEquipmentBehavior.changeWeapon(anything())).thenReturn(
-        simpleSword
-      );
-
-      let result: WeaponChangedEvent | ArmorChangedEvent | undefined;
-
       const char = fakeActor();
 
-      char.equipmentChanged$.subscribe((event) => {
-        result = event;
-      });
+      const f = () => char.unEquip();
 
-      unEquipActorScenario(char);
-
-      done();
-
-      expect(result).toEqual(
-        new WeaponChangedEvent(simpleSword, unarmedWeapon)
-      );
+      testWeaponEvent(char, f, done, simpleSword);
     });
   });
 
@@ -527,22 +498,43 @@ const fakeActor = () =>
     }
   );
 
-const equipActorScenario = (
-  character: ActorEntity,
-  weapon: WeaponDefinition
-): WeaponDefinition | null => {
-  const previous = character.equip(weapon);
-
-  return previous;
-};
-
-const unEquipActorScenario = (
-  character: ActorEntity
-): WeaponDefinition | null => {
-  return character.unEquip();
-};
-
 const eventAttackPlayer = actionableEvent(actionAffect, playerInfo.id);
+
+function testWeaponEvent(
+  char: ActorEntity,
+  action: () => WeaponDefinition | null,
+  done: DoneFn,
+  previous: WeaponDefinition,
+  current?: WeaponDefinition
+) {
+  let result: WeaponChangedEvent | ArmorChangedEvent | undefined;
+
+  when(mockedEquipmentBehavior.changeWeapon(current)).thenReturn(previous);
+
+  char.equipmentChanged$.subscribe((event) => {
+    result = event;
+  });
+
+  action();
+
+  done();
+
+  expect(result).toEqual(
+    new WeaponChangedEvent(previous, current ?? unarmedWeapon)
+  );
+}
+
+function testWeaponAction(
+  action: () => WeaponDefinition | null,
+  previous: WeaponDefinition,
+  current?: WeaponDefinition
+) {
+  when(mockedEquipmentBehavior.changeWeapon(current)).thenReturn(previous);
+
+  const result = action();
+
+  expect(result).toEqual(previous);
+}
 
 function apEventTest(
   actor: ActorEntity,

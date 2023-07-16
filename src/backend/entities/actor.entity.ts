@@ -5,6 +5,7 @@ import { AiBehavior } from '@behaviors/ai.behavior';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 import {
   EquipmentBehavior,
+  clothesArmor,
   unarmedWeapon,
 } from '@behaviors/equipment.behavior';
 import { ActionableDefinition } from '@definitions/actionable.definition';
@@ -34,6 +35,7 @@ import {
   ArmorChangedEvent,
   WeaponChangedEvent,
 } from '@events/equipment-changed.event';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -197,6 +199,14 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return this.changeWeaponEquipped();
   }
 
+  public wear(armor: ArmorDefinition): ArmorDefinition | null {
+    return this.changeArmorWearing(armor);
+  }
+
+  public strip(): ArmorDefinition | null {
+    return this.changeArmorWearing();
+  }
+
   public override reactTo(
     action: ActionableDefinition,
     result: CheckResultLiteral,
@@ -314,7 +324,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return value > 0 ? value : 1;
   }
 
-  private changeWeaponEquipped(weapon?: WeaponDefinition) {
+  private changeWeaponEquipped(
+    weapon?: WeaponDefinition
+  ): WeaponDefinition | null {
     const previous = this.equipmentBehavior.changeWeapon(weapon);
 
     if (weapon || previous) {
@@ -323,6 +335,18 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
           previous ?? unarmedWeapon,
           weapon ?? unarmedWeapon
         )
+      );
+    }
+
+    return previous;
+  }
+
+  private changeArmorWearing(armor?: ArmorDefinition): ArmorDefinition | null {
+    const previous = this.equipmentBehavior.changeArmor(armor);
+
+    if (armor || previous) {
+      this.equipmentChanged.next(
+        new ArmorChangedEvent(previous ?? clothesArmor, armor ?? clothesArmor)
       );
     }
 
