@@ -4,8 +4,6 @@
   </div>
   <div class="content-bar title-text">
     <span>Current Scene: {{ scene.description }}</span>
-  </div>
-  <div class="content-bar">
     <app-image-viewer-widget
       [image]="{ title: scene.description, src: 'assets/images/' + scene.image, alt: scene.description, width: '400', height: '400'}"
       (imageOpened)="sceneOpened.emit($event)"
