@@ -283,7 +283,7 @@ export const setupMocks = () => {
 
   when(mockedEquipmentBehavior.weaponEquipped).thenReturn(unarmedWeapon);
 
-  when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
+  when(mockedEquipmentBehavior.changeWeapon(simpleSword)).thenReturn(null);
 
   when(mockedResourcesStore.weaponStore).thenReturn({
     weapons: [],

@@ -179,7 +179,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public equip(weapon: WeaponDefinition): WeaponDefinition | null {
-    const previous = this.equipmentBehavior.equip(weapon);
+    const previous = this.equipmentBehavior.changeWeapon(weapon);
 
     this.weaponEquippedChanged.next(weapon);
 
@@ -187,7 +187,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public unEquip(): WeaponDefinition | null {
-    const weapon = this.equipmentBehavior.unEquip();
+    const weapon = this.equipmentBehavior.changeWeapon();
 
     if (weapon) {
       this.weaponEquippedChanged.next(weapon);

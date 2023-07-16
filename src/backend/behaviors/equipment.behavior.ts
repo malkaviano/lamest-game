@@ -55,34 +55,18 @@ export class EquipmentBehavior {
     return this.armor ?? clothesArmor;
   }
 
-  public equip(weapon: WeaponDefinition): WeaponDefinition | null {
-    const previous = this.unEquip();
-
-    this.weapon = weapon;
-
-    return previous;
-  }
-
-  public unEquip(): WeaponDefinition | null {
+  public changeWeapon(weapon?: WeaponDefinition): WeaponDefinition | null {
     const previous = this.weapon;
 
-    this.weapon = null;
+    this.weapon = weapon ?? null;
 
     return previous;
   }
 
-  public wear(armor: ArmorDefinition): ArmorDefinition | null {
-    const previous = this.strip();
-
-    this.armor = armor;
-
-    return previous;
-  }
-
-  public strip(): ArmorDefinition | null {
+  public changeArmor(armor?: ArmorDefinition): ArmorDefinition | null {
     const previous = this.armor;
 
-    this.armor = null;
+    this.armor = armor ?? null;
 
     return previous;
   }

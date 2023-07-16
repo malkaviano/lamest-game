@@ -49,7 +49,7 @@ describe('ActorEntity', () => {
   beforeEach(() => {
     setupMocks();
 
-    when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
+    when(mockedEquipmentBehavior.changeWeapon(simpleSword)).thenReturn(null);
 
     when(mockedActorBehavior.dodgesPerRound).thenReturn(1);
 
@@ -374,7 +374,7 @@ describe('ActorEntity', () => {
 
   describe('unEquip', () => {
     it('should un-equip current weapon', () => {
-      when(mockedEquipmentBehavior.unEquip()).thenReturn(simpleSword);
+      when(mockedEquipmentBehavior.changeWeapon()).thenReturn(simpleSword);
 
       const char = fakeActor();
 
@@ -384,7 +384,7 @@ describe('ActorEntity', () => {
     });
 
     it('should emit event', (done) => {
-      when(mockedEquipmentBehavior.unEquip()).thenReturn(simpleSword);
+      when(mockedEquipmentBehavior.changeWeapon()).thenReturn(simpleSword);
 
       let result: WeaponDefinition | undefined;
 

@@ -34,7 +34,7 @@ describe('EquipmentBehavior', () => {
     });
   });
 
-  describe('equip', () => {
+  describe('changeWeapon', () => {
     it('return previous weapon', () => {
       const char = fakeBehavior();
 
@@ -43,22 +43,6 @@ describe('EquipmentBehavior', () => {
       weapons.push(equipBehavior(char, simpleSword));
 
       weapons.push(equipBehavior(char, molotov));
-
-      expect(weapons).toEqual([null, simpleSword]);
-    });
-  });
-
-  describe('unEquip', () => {
-    it('return previous weapon', () => {
-      const char = fakeBehavior();
-
-      const weapons = [];
-
-      weapons.push(unEquipBehavior(char));
-
-      equipBehavior(char, simpleSword);
-
-      weapons.push(unEquipBehavior(char));
 
       expect(weapons).toEqual([null, simpleSword]);
     });
@@ -84,7 +68,7 @@ describe('EquipmentBehavior', () => {
     });
   });
 
-  describe('wear', () => {
+  describe('changeArmor', () => {
     it('return previous armor', () => {
       const char = fakeBehavior();
 
@@ -97,22 +81,6 @@ describe('EquipmentBehavior', () => {
       expect(armor).toEqual([null, leatherJacket]);
     });
   });
-
-  describe('strip', () => {
-    it('return previous armor', () => {
-      const char = fakeBehavior();
-
-      const armor = [];
-
-      armor.push(stripBehavior(char));
-
-      wearBehavior(char, leatherJacket);
-
-      armor.push(stripBehavior(char));
-
-      expect(armor).toEqual([null, leatherJacket]);
-    });
-  });
 });
 
 const fakeBehavior = () => EquipmentBehavior.create();
@@ -121,28 +89,16 @@ const equipBehavior = (
   character: EquipmentBehavior,
   weapon: WeaponDefinition
 ): WeaponDefinition | null => {
-  const previous = character.equip(weapon);
+  const previous = character.changeWeapon(weapon);
 
   return previous;
-};
-
-const unEquipBehavior = (
-  character: EquipmentBehavior
-): WeaponDefinition | null => {
-  return character.unEquip();
 };
 
 const wearBehavior = (
   character: EquipmentBehavior,
   armor: ArmorDefinition
 ): ArmorDefinition | null => {
-  const previous = character.wear(armor);
+  const previous = character.changeArmor(armor);
 
   return previous;
-};
-
-const stripBehavior = (
-  character: EquipmentBehavior
-): ArmorDefinition | null => {
-  return character.strip();
 };
