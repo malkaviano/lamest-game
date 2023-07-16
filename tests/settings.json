@@ -7,7 +7,7 @@
       "resistances": ["KINETIC", "SACRED"]
     },
     "resistanceCoefficient": 0.5,
-    "vulnerabilityCoefficient": 1.5,
+    "vulnerabilityCoefficient": 0.75,
     "oneDodgeEveryAgiAmount": 8,
     "intelligencePoints": 10,
     "professionPoints": 300,

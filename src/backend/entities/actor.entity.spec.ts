@@ -127,7 +127,8 @@ describe('ActorEntity', () => {
             it('return damage taken', () => {
               when(
                 mockedActorBehavior.effectReceived(
-                  deepEqual(fakeEffect('ACID', 10))
+                  deepEqual(fakeEffect('ACID', 10)),
+                  clothArmor.damageReduction
                 )
               ).thenReturn(event);
 
@@ -144,7 +145,8 @@ describe('ActorEntity', () => {
 
             when(
               mockedActorBehavior.effectReceived(
-                deepEqual(fakeEffect('ACID', 6))
+                deepEqual(fakeEffect('ACID', 6)),
+                clothArmor.damageReduction
               )
             ).thenReturn(new CurrentHPChangedEvent(9, 3));
 
@@ -263,7 +265,10 @@ describe('ActorEntity', () => {
           describe(`action was ${result}`, () => {
             it('return result logs', () => {
               when(
-                mockedActorBehavior.effectReceived(deepEqual(mockedEffect))
+                mockedActorBehavior.effectReceived(
+                  deepEqual(mockedEffect),
+                  clothArmor.damageReduction
+                )
               ).thenReturn(resultHpEvent);
 
               when(mockedActorBehavior.energyChange(energy)).thenReturn(
@@ -284,7 +289,10 @@ describe('ActorEntity', () => {
             const eventResult: DerivedAttributeEvent[] = [];
 
             when(
-              mockedActorBehavior.effectReceived(deepEqual(mockedEffect))
+              mockedActorBehavior.effectReceived(
+                deepEqual(mockedEffect),
+                clothArmor.damageReduction
+              )
             ).thenReturn(resultHpEvent);
 
             when(mockedActorBehavior.energyChange(energy)).thenReturn(
@@ -329,7 +337,10 @@ describe('ActorEntity', () => {
         when(mockedActorBehavior.situation).thenReturn('ALIVE');
 
         when(
-          mockedActorBehavior.effectReceived(deepEqual(fakeEffect('ACID', 10)))
+          mockedActorBehavior.effectReceived(
+            deepEqual(fakeEffect('ACID', 10)),
+            clothArmor.damageReduction
+          )
         ).thenCall(() => {
           when(mockedActorBehavior.situation).thenReturn('DEAD');
 

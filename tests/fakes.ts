@@ -3,10 +3,12 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '@definitions/actionable.definition';
+import { ArmorDefinition } from '@definitions/armor.definition';
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { createDamageReduction } from '@definitions/damage-reduction.definition';
 import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { createDice } from '@definitions/dice.definition';
@@ -27,7 +29,6 @@ import { ArrayView } from '@wrappers/array.view';
 import { CharacterStatusView } from '../src/app/view-models/character-status.view';
 import { CharacterValuesView } from '../src/app/view-models/character-values.view';
 import { KeyValueDescriptionView } from '../src/app/view-models/key-value-description.view';
-import { ArmorDefinition } from '@definitions/armor.definition';
 
 export const playerInfo = { id: 'playerId', name: 'Some Name' };
 
@@ -408,13 +409,11 @@ export const leatherJacket = new ArmorDefinition(
     'Small protection'
   ),
   'PERMANENT',
-  {
+  createDamageReduction({
     ACID: 1,
     FIRE: 1,
     KINETIC: 2,
-    PROFANE: 0,
-    SACRED: 0,
-  },
+  }),
   'LIGHT'
 );
 
@@ -425,13 +424,11 @@ export const kevlarVest = new ArmorDefinition(
     'Best Kinetic protection'
   ),
   'PERMANENT',
-  {
+  createDamageReduction({
     ACID: 3,
     FIRE: 3,
     KINETIC: 6,
-    PROFANE: 0,
-    SACRED: 0,
-  },
+  }),
   'MEDIUM'
 );
 

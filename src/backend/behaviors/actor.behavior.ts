@@ -8,11 +8,11 @@ import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { EffectEvent } from '@events/effect.event';
 import { SkillStore } from '@stores/skill.store';
 import { SettingsStore } from '@stores/settings.store';
+import { DamageReductionDefinition } from '@definitions/damage-reduction.definition';
 import {
   CurrentAPChangedEvent,
   CurrentEPChangedEvent,
   CurrentHPChangedEvent,
-  DerivedAttributeEvent,
 } from '@events/derived-attribute.event';
 
 export class ActorBehavior {
@@ -95,32 +95,40 @@ export class ActorBehavior {
     );
   }
 
-  public effectReceived(effectReceived: EffectEvent): DerivedAttributeEvent {
+  public effectReceived(
+    effectReceived: EffectEvent,
+    reduction: DamageReductionDefinition
+  ): CurrentHPChangedEvent {
     const { effectType, amount } = effectReceived;
 
-    let value = 0;
+    const { value, deflected } = this.deflect(amount, reduction[effectType]);
+
+    let ignored: number = 0;
+    let amplified: number = 0;
+    let resisted: number = 0;
+
+    const cureModifier =
+      SettingsStore.settings.playerEffectDefenses.cures.items.includes(
+        effectType
+      )
+        ? 1
+        : -1;
 
     if (
-      !SettingsStore.settings.playerEffectDefenses.immunities.items.includes(
+      SettingsStore.settings.playerEffectDefenses.immunities.items.includes(
         effectType
       )
     ) {
-      const isCure =
-        SettingsStore.settings.playerEffectDefenses.cures.items.includes(
-          effectType
-        );
-
-      const isVulnerable =
+      ignored = amount;
+    } else {
+      if (
         SettingsStore.settings.playerEffectDefenses.vulnerabilities.items.includes(
           effectType
+        )
+      ) {
+        amplified = Math.trunc(
+          amount * SettingsStore.settings.vulnerabilityCoefficient
         );
-
-      if (isCure) {
-        value += amount;
-      } else {
-        value -= isVulnerable
-          ? amount * SettingsStore.settings.vulnerabilityCoefficient
-          : amount;
       }
 
       if (
@@ -128,14 +136,25 @@ export class ActorBehavior {
           effectType
         )
       ) {
-        value += value * SettingsStore.settings.resistanceCoefficient * -1;
+        resisted = Math.trunc(
+          amount * SettingsStore.settings.resistanceCoefficient
+        );
       }
     }
 
-    return this.modifyHealth(Math.trunc(value));
+    const final = (value - ignored + amplified - resisted) * cureModifier;
+
+    const previousHP = this.modifyHealth(final);
+
+    return new CurrentHPChangedEvent(previousHP, this.currentHP, {
+      ignored,
+      amplified,
+      deflected,
+      resisted,
+    });
   }
 
-  public energyChange(energy: number): DerivedAttributeEvent {
+  public energyChange(energy: number): CurrentEPChangedEvent {
     const previousEP = this.currentEP;
 
     this.currentEP += energy;
@@ -145,7 +164,7 @@ export class ActorBehavior {
     return new CurrentEPChangedEvent(previousEP, this.currentEP);
   }
 
-  public actionPointsChange(ap: number): DerivedAttributeEvent {
+  public actionPointsChange(ap: number): CurrentAPChangedEvent {
     const previousAP = this.currentAP;
 
     this.currentAP += ap;
@@ -163,14 +182,14 @@ export class ActorBehavior {
     return new ActorBehavior(characteristics, skills, skillStore);
   }
 
-  private modifyHealth(modified: number): DerivedAttributeEvent {
+  private modifyHealth(modified: number): number {
     const previousHP = this.currentHP;
 
     this.currentHP += modified;
 
     this.currentHP = MathHelper.clamp(this.currentHP, 0, this.maximumHP());
 
-    return new CurrentHPChangedEvent(previousHP, this.currentHP);
+    return previousHP;
   }
 
   private maximumHP(): number {
@@ -191,5 +210,13 @@ export class ActorBehavior {
           SettingsStore.settings.actionPoints.oneEveryAgility
       )
     );
+  }
+
+  private deflect(amount: number, reduction: number) {
+    const value = amount > reduction ? amount - reduction : 0;
+
+    const deflected = amount - value;
+
+    return { value, deflected };
   }
 }

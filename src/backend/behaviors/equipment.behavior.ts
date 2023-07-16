@@ -4,6 +4,7 @@ import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ArmorDefinition } from '@definitions/armor.definition';
+import { createDamageReduction } from '@definitions/damage-reduction.definition';
 
 export const unarmedWeapon = new WeaponDefinition(
   new ItemIdentityDefinition(
@@ -26,13 +27,7 @@ export const clothArmor = new ArmorDefinition(
     GameStringsStore.descriptions['CLOTHES']
   ),
   'PERMANENT',
-  {
-    ACID: 0,
-    FIRE: 0,
-    KINETIC: 0,
-    PROFANE: 0,
-    SACRED: 0,
-  },
+  createDamageReduction(),
   'MINIMAL'
 );
 

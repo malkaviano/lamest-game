@@ -44,6 +44,7 @@ import { InteractiveEntity } from '@entities/interactive.entity';
 import { ActorEntity } from '@entities/actor.entity';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import {
+  clothArmor,
   EquipmentBehavior,
   unarmedWeapon,
 } from '@behaviors/equipment.behavior';
@@ -251,6 +252,14 @@ export const setupMocks = () => {
   when(mockedPlayerEntity.derivedAttributes).thenReturn(fakeDerivedAttributes);
 
   when(mockedPlayerEntity.skills).thenReturn(fakeSkills);
+
+  when(mockedPlayerEntity.armorWearing).thenReturn(clothArmor);
+
+  when(mockedActorEntity.armorWearing).thenReturn(clothArmor);
+
+  when(mockedActorEntity2.armorWearing).thenReturn(clothArmor);
+
+  when(mockedEquipmentBehavior.armorWearing).thenReturn(clothArmor);
 
   when(mockedAiBehavior.aiBehavior).thenReturn('AGGRESSIVE');
 

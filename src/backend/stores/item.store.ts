@@ -11,6 +11,7 @@ import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ReadableDefinition } from '@definitions/readable.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ArmorDefinition } from '@definitions/armor.definition';
+import { createDamageReduction } from '@definitions/damage-reduction.definition';
 
 export class ItemStore {
   private readonly store: Map<string, GameItemDefinition>;
@@ -102,7 +103,7 @@ export class ItemStore {
         new ArmorDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
           'PERMANENT',
-          item.damageReduction,
+          createDamageReduction(item.damageReduction),
           item.armorPenalty
         )
       );

@@ -261,7 +261,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   private effect(effect: EffectEvent): string | null {
-    const result = this.actorBehavior.effectReceived(effect);
+    const result = this.actorBehavior.effectReceived(
+      effect,
+      this.armorWearing.damageReduction
+    );
 
     let resultLog: string | null;
 
