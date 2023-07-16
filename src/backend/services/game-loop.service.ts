@@ -15,6 +15,7 @@ import {
   dropActionable,
   equipActionable,
   readActionable,
+  wearActionable,
 } from '@definitions/actionable.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ArrayView } from '@wrappers/array.view';
@@ -211,18 +212,17 @@ export class GameLoopService {
   }
 
   private inventoryAction(item: GameItemDefinition): ActionableDefinition {
-    if (item.category === 'WEAPON') {
-      return equipActionable;
+    switch (item.category) {
+      case 'WEAPON':
+        return equipActionable;
+      case 'CONSUMABLE':
+        return consumeActionable;
+      case 'READABLE':
+        return readActionable;
+      case 'ARMOR':
+        return wearActionable;
+      default:
+        return dropActionable;
     }
-
-    if (item.category === 'CONSUMABLE') {
-      return consumeActionable;
-    }
-
-    if (item.category === 'READABLE') {
-      return readActionable;
-    }
-
-    return dropActionable;
   }
 }
