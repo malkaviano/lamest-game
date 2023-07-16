@@ -1,89 +1,116 @@
 import {
   EquipmentBehavior,
+  clothesArmor,
   unarmedWeapon,
 } from '@behaviors/equipment.behavior';
 import { WeaponDefinition } from '@definitions/weapon.definition';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
-import { molotov, simpleSword } from '../../../tests/fakes';
+import {
+  kevlarVest,
+  leatherJacket,
+  molotov,
+  simpleSword,
+} from '../../../tests/fakes';
 
 describe('EquipmentBehavior', () => {
   describe('weaponEquipped', () => {
-    describe('when created', () => {
-      it('return unarmed weapon', () => {
-        expect(fakeBehavior().weaponEquipped).toEqual(unarmedWeapon);
-      });
-    });
+    it('return equipped weapon', () => {
+      const char = fakeBehavior();
 
-    describe('when equipping a weapon', () => {
-      describe('when no weapon was equipped', () => {
-        it('should equip the weapon', () => {
-          const char = fakeBehavior();
+      const equipped = [];
 
-          equipBehavior(char, simpleSword);
+      equipped.push(char.weaponEquipped);
 
-          expect(char.weaponEquipped).toEqual(simpleSword);
-        });
-      });
+      equipBehavior(char, simpleSword);
 
-      describe('when weapon was equipped', () => {
-        it('should equip the weapon', () => {
-          const char = fakeBehavior();
+      equipped.push(char.weaponEquipped);
 
-          equipBehavior(char, simpleSword);
+      equipBehavior(char, molotov);
 
-          equipBehavior(char, molotov);
+      equipped.push(char.weaponEquipped);
 
-          expect(char.weaponEquipped).toEqual(molotov);
-        });
-      });
+      expect(equipped).toEqual([unarmedWeapon, simpleSword, molotov]);
     });
   });
 
   describe('equip', () => {
-    describe('when no weapon was equipped', () => {
-      it('return null', () => {
-        const char = fakeBehavior();
+    it('return previous weapon', () => {
+      const char = fakeBehavior();
 
-        const weapon = equipBehavior(char, simpleSword);
+      const weapons = [];
 
-        expect(weapon).toBeNull();
-      });
-    });
+      weapons.push(equipBehavior(char, simpleSword));
 
-    describe('when weapon was equipped', () => {
-      it('return previous weapon', () => {
-        const char = fakeBehavior();
+      weapons.push(equipBehavior(char, molotov));
 
-        equipBehavior(char, simpleSword);
-
-        const weapon = equipBehavior(char, molotov);
-
-        expect(weapon).toEqual(simpleSword);
-      });
+      expect(weapons).toEqual([null, simpleSword]);
     });
   });
 
   describe('unEquip', () => {
-    describe('when no weapon was equipped', () => {
-      it('return null', () => {
-        const char = fakeBehavior();
+    it('return previous weapon', () => {
+      const char = fakeBehavior();
 
-        const weapon = unEquipBehavior(char);
+      const weapons = [];
 
-        expect(weapon).toBeNull();
-      });
+      weapons.push(unEquipBehavior(char));
+
+      equipBehavior(char, simpleSword);
+
+      weapons.push(unEquipBehavior(char));
+
+      expect(weapons).toEqual([null, simpleSword]);
     });
+  });
 
-    describe('when weapon was equipped', () => {
-      it('return previous weapon', () => {
-        const char = fakeBehavior();
+  describe('armorWearing', () => {
+    it('return wearing armor', () => {
+      const char = fakeBehavior();
 
-        equipBehavior(char, simpleSword);
+      const armor = [];
 
-        const weapon = unEquipBehavior(char);
+      armor.push(char.armorWearing);
 
-        expect(weapon).toEqual(simpleSword);
-      });
+      wearBehavior(char, leatherJacket);
+
+      armor.push(char.armorWearing);
+
+      wearBehavior(char, kevlarVest);
+
+      armor.push(char.armorWearing);
+
+      expect(armor).toEqual([clothesArmor, leatherJacket, kevlarVest]);
+    });
+  });
+
+  describe('wear', () => {
+    it('return previous armor', () => {
+      const char = fakeBehavior();
+
+      const armor = [];
+
+      armor.push(wearBehavior(char, leatherJacket));
+
+      armor.push(wearBehavior(char, kevlarVest));
+
+      expect(armor).toEqual([null, leatherJacket]);
+    });
+  });
+
+  describe('strip', () => {
+    it('return previous armor', () => {
+      const char = fakeBehavior();
+
+      const armor = [];
+
+      armor.push(stripBehavior(char));
+
+      wearBehavior(char, leatherJacket);
+
+      armor.push(stripBehavior(char));
+
+      expect(armor).toEqual([null, leatherJacket]);
     });
   });
 });
@@ -103,4 +130,19 @@ const unEquipBehavior = (
   character: EquipmentBehavior
 ): WeaponDefinition | null => {
   return character.unEquip();
+};
+
+const wearBehavior = (
+  character: EquipmentBehavior,
+  armor: ArmorDefinition
+): ArmorDefinition | null => {
+  const previous = character.wear(armor);
+
+  return previous;
+};
+
+const stripBehavior = (
+  character: EquipmentBehavior
+): ArmorDefinition | null => {
+  return character.strip();
 };

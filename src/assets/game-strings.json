@@ -65,7 +65,8 @@
     "HP": "The character current | max hit points",
     "EP": "The character current | max energy points",
     "AP": "The character current | max action points",
-    "UNARMED": "Actor Natural Weapon"
+    "UNARMED": "Actor Natural Weapon",
+    "CLOTHES": "Actor Basic Armor"
   },
   "tooltips": {
     "aggressive": "Will attack on sight",
