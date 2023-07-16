@@ -1,15 +1,17 @@
 import { instance, verify, when } from 'ts-mockito';
 
-import { EquipRule } from '@rules/equip.rule';
-import { WeaponDefinition } from '@definitions/weapon.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
-import { equipActionable } from '@definitions/actionable.definition';
+import {
+  equipActionable,
+  wearActionable,
+} from '@definitions/actionable.definition';
+import { ArmorDefinition } from '@definitions/armor.definition';
+import { WearRule } from '@rules/wear.rule';
 
 import {
   mockedCheckedService,
-  mockedGamePredicate,
   mockedInventoryService,
   mockedPlayerEntity,
   setupMocks,
@@ -17,27 +19,25 @@ import {
 import {
   actionableEvent,
   consumableAnalgesic,
-  greatSword,
+  kevlarVest,
+  leatherJacket,
   playerInfo,
-  simpleSword,
-  unDodgeableAxe,
 } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
 
-describe('EquipRule', () => {
-  let rule: EquipRule;
+describe('WearRule', () => {
+  let rule: WearRule;
 
   beforeEach(() => {
     setupMocks();
 
-    rule = new EquipRule(
+    rule = new WearRule(
       instance(mockedInventoryService),
-      instance(mockedCheckedService),
-      instance(mockedGamePredicate)
+      instance(mockedCheckedService)
     );
 
     when(
-      mockedCheckedService.lookItemOrThrow<WeaponDefinition>(
+      mockedCheckedService.takeItemOrThrow<ArmorDefinition>(
         instance(mockedInventoryService),
         playerInfo.id,
         consumableAnalgesic.identity.name
@@ -45,30 +45,16 @@ describe('EquipRule', () => {
     ).thenThrow(new Error(GameStringsStore.errorMessages['WRONG-ITEM']));
 
     when(
-      mockedCheckedService.lookItemOrThrow<WeaponDefinition>(
-        instance(mockedInventoryService),
-        playerInfo.id,
-        simpleSword.identity.name
-      )
-    ).thenReturn(simpleSword);
-
-    when(
-      mockedCheckedService.takeItemOrThrow<WeaponDefinition>(
+      mockedCheckedService.takeItemOrThrow<ArmorDefinition>(
         instance(mockedInventoryService),
         actor.id,
-        simpleSword.identity.name
+        leatherJacket.identity.name
       )
-    ).thenReturn(simpleSword);
+    ).thenReturn(leatherJacket);
 
-    when(mockedPlayerEntity.equip(simpleSword)).thenReturn(unDodgeableAxe);
+    when(mockedPlayerEntity.wear(leatherJacket)).thenReturn(kevlarVest);
 
-    when(
-      mockedCheckedService.lookItemOrThrow<WeaponDefinition>(
-        instance(mockedInventoryService),
-        playerInfo.id,
-        greatSword.identity.name
-      )
-    ).thenReturn(greatSword);
+    when(mockedInventoryService.store(actor.id, kevlarVest)).thenReturn(1);
   });
 
   it('should be created', () => {
@@ -76,7 +62,7 @@ describe('EquipRule', () => {
   });
 
   describe('execute', () => {
-    describe('when item was not a weapon', () => {
+    describe('when item was not armor', () => {
       it('throw Wrong item was used', () => {
         expect(() =>
           rule.execute(instance(mockedPlayerEntity), eventWrong)
@@ -84,69 +70,29 @@ describe('EquipRule', () => {
       });
     });
 
-    describe('when item was a weapon', () => {
-      describe('when skill value was above zero', () => {
-        it('should log item was equipped and produce side effects', (done) => {
-          when(mockedGamePredicate.canEquip(actor, simpleSword)).thenReturn(
-            true
-          );
+    describe('when item was a armor', () => {
+      it('log wearing armor and strip armor', (done) => {
+        ruleScenario(rule, actor, eventOk, extras, [stripLog, wearLog], done);
 
-          ruleScenario(
-            rule,
-            actor,
-            eventOk,
-            extras,
-            [unEquipLog, equipLog],
-            done
-          );
+        // cheap side effect verification
+        verify(mockedPlayerEntity.wear(leatherJacket)).once();
 
-          // cheap side effect verification
-          verify(mockedPlayerEntity.equip(simpleSword)).once();
-
-          verify(
-            mockedInventoryService.store(playerInfo.id, unDodgeableAxe)
-          ).once();
-        });
-
-        it('return equipped result', () => {
-          when(mockedGamePredicate.canEquip(actor, simpleSword)).thenReturn(
-            true
-          );
-
-          const result = rule.execute(actor, eventOk);
-
-          const expected: RuleResultInterface = {
-            name: 'EQUIP',
-            event: eventOk,
-            actor,
-            result: 'EXECUTED',
-            equipped: simpleSword,
-            unequipped: unDodgeableAxe,
-            skillName: simpleSword.skillName,
-          };
-
-          expect(result).toEqual(expected);
-        });
+        verify(mockedInventoryService.store(playerInfo.id, kevlarVest)).once();
       });
 
-      describe('when skill value was zero or not set', () => {
-        it('return denied result', () => {
-          const result = rule.execute(actor, eventNoSkill);
+      it('return equipped result', () => {
+        const result = rule.execute(actor, eventOk);
 
-          when(mockedGamePredicate.canEquip(actor, greatSword)).thenReturn(
-            false
-          );
+        const expected: RuleResultInterface = {
+          name: 'WEAR',
+          event: eventOk,
+          actor,
+          result: 'EXECUTED',
+          wearing: leatherJacket,
+          strip: kevlarVest,
+        };
 
-          const expected: RuleResultInterface = {
-            name: 'EQUIP',
-            event: eventNoSkill,
-            actor,
-            result: 'DENIED',
-            skillName: greatSword.skillName,
-          };
-
-          expect(result).toEqual(expected);
-        });
+        expect(result).toEqual(expected);
       });
     });
   });
@@ -161,18 +107,16 @@ const eventWrong = actionableEvent(
   consumableAnalgesic.identity.name
 );
 
-const eventOk = actionableEvent(equipActionable, simpleSword.identity.name);
+const eventOk = actionableEvent(wearActionable, leatherJacket.identity.name);
 
-const eventNoSkill = actionableEvent(equipActionable, greatSword.identity.name);
-
-const equipLog = new LogMessageDefinition(
-  'EQUIPPED',
+const wearLog = new LogMessageDefinition(
+  'WEARING',
   playerInfo.name,
-  'equipped Sword'
+  'wearing Leather Jacket'
 );
 
-const unEquipLog = new LogMessageDefinition(
-  'UNEQUIPPED',
+const stripLog = new LogMessageDefinition(
+  'STRIP',
   playerInfo.name,
-  'un-equipped Axe'
+  'strip Kevlar Vest'
 );

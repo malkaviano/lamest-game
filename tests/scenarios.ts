@@ -35,7 +35,7 @@ export const ruleScenario = (
 export async function testButtonEvent(
   loader: HarnessLoader,
   fixture: ComponentFixture<{ actionSelected: EventEmitter<ActionableEvent> }>,
-  index: number = 0
+  index = 0
 ) {
   const buttons = await loader.getAllHarnesses(MatButtonHarness);
 
