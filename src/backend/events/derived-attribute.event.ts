@@ -28,6 +28,30 @@ export class CurrentHPChangedEvent extends DerivedAttributeEvent {
   ) {
     super('CURRENT HP', previous, current);
   }
+
+  public detailsToStr(): string {
+    const cpy: { [k: string]: number } = {};
+
+    if (this.details['resisted'] !== 0) {
+      cpy['resisted'] = this.details['resisted'];
+    }
+
+    if (this.details['amplified'] !== 0) {
+      cpy['amplified'] = this.details['amplified'];
+    }
+
+    if (this.details['deflected'] !== 0) {
+      cpy['deflected'] = this.details['deflected'];
+    }
+
+    if (this.details['ignored'] !== 0) {
+      cpy['ignored'] = this.details['ignored'];
+    }
+
+    const str = JSON.stringify(cpy);
+
+    return str === '{}' ? '' : ` ${str}`;
+  }
 }
 
 export class CurrentEPChangedEvent extends DerivedAttributeEvent {

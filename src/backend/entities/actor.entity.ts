@@ -292,7 +292,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       resultLog = GameStringsStore.createHPDidNotChangeMessage();
     }
 
-    return resultLog;
+    return `${resultLog}${result.detailsToStr()}`;
   }
 
   private energy(energy: number): string | null {

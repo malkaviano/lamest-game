@@ -103,9 +103,9 @@ export class ActorBehavior {
 
     const { value, deflected } = this.deflect(amount, reduction[effectType]);
 
-    let ignored: number = 0;
-    let amplified: number = 0;
-    let resisted: number = 0;
+    let ignored = 0;
+    let amplified = 0;
+    let resisted = 0;
 
     const cureModifier =
       SettingsStore.settings.playerEffectDefenses.cures.items.includes(
