@@ -36,6 +36,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public equipped!: GameItemDefinition;
 
+  public wearing!: GameItemDefinition;
+
   public characterStatus!: CharacterStatusView;
 
   constructor(
@@ -72,6 +74,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
         this.equipped = character.weaponEquipped;
 
+        this.wearing = character.armorWearing;
+
         const hp = KeyValueDescriptionView.create(
           'HP',
           `${this.characterValues.derivedAttributes.items[2].value}` +
@@ -99,6 +103,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         this.characterStatus = CharacterStatusView.create(
           ArrayView.create(hp, ep, ap),
           this.equipped,
+          this.wearing,
           this.characterValues.identity.items[6]
         );
       })

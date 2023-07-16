@@ -75,18 +75,6 @@ export const molotov = new WeaponDefinition(
   'COMMON'
 );
 
-export const actionEquip = createActionableDefinition(
-  'EQUIP',
-  'equip',
-  'Equip'
-);
-
-export const actionUnEquip = createActionableDefinition(
-  'UNEQUIP',
-  'unequip',
-  'Unequip'
-);
-
 export const actionAffect = createActionableDefinition(
   'AFFECT',
   'affect',
@@ -385,16 +373,6 @@ export const actionDetect = createActionableDefinition(
   'Detect'
 );
 
-export const fakeCharacterStatusView = CharacterStatusView.create(
-  fakeCharacterSheetDerivedAttributes,
-  simpleSword,
-  KeyValueDescriptionView.create(
-    'VISIBILITY',
-    'VISIBLE',
-    'Character current visibility'
-  )
-);
-
 export const imageOpened = {
   title: 'Testing',
   src: 'some image path',
@@ -455,4 +433,15 @@ export const kevlarVest = new ArmorDefinition(
     SACRED: 0,
   },
   'MEDIUM'
+);
+
+export const fakeCharacterStatusView = CharacterStatusView.create(
+  fakeCharacterSheetDerivedAttributes,
+  simpleSword,
+  leatherJacket,
+  KeyValueDescriptionView.create(
+    'VISIBILITY',
+    'VISIBLE',
+    'Character current visibility'
+  )
 );

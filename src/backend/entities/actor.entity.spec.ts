@@ -355,6 +355,14 @@ describe('ActorEntity', () => {
     });
   });
 
+  describe('armorWearing', () => {
+    it('return current armor', () => {
+      when(mockedEquipmentBehavior.armorWearing).thenReturn(clothArmor);
+
+      expect(fakeActor().armorWearing).toEqual(clothArmor);
+    });
+  });
+
   describe('equip', () => {
     it('return previous weapon', () => {
       const char = fakeActor();

@@ -108,7 +108,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public get armorWearing(): ArmorDefinition {
-    throw new Error('Method not implemented.');
+    return this.equipmentBehavior.armorWearing;
   }
 
   public get dodgesPerRound(): number {

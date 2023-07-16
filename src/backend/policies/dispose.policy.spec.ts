@@ -5,7 +5,10 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { dropActionable } from '@definitions/actionable.definition';
+import {
+  dropActionable,
+  equipActionable,
+} from '@definitions/actionable.definition';
 
 import {
   mockedActorEntity,
@@ -17,7 +20,6 @@ import {
 import {
   actionAffect,
   actionConsume,
-  actionEquip,
   actionUseMasterKey,
   actionableEvent,
   consumableFirstAid,
@@ -32,7 +34,7 @@ const eventAttackInteractive = actionableEvent(
   molotov.identity.name
 );
 
-const eventEquipMolotov = actionableEvent(actionEquip, interactiveInfo.id);
+const eventEquipMolotov = actionableEvent(equipActionable, interactiveInfo.id);
 
 const eventConsumeFirstAid = actionableEvent(
   actionConsume,

@@ -19,6 +19,16 @@
   </div>
 </div>
 
+<div matTooltip="{{ status.armor.identity.description }}" data-testid="tooltip-wearing" class="status">
+  <span data-testid="label-wearing">Wearing: </span>
+  <span data-testid="value-wearing">{{ status.armor.identity.label }}</span>
+  <div *ngIf="status.armor.identity.name !== 'clothes'">
+    <button mat-raised-button color="primary" (click)="onActionSelected()" data-testid="wear-action-strip">
+      STRIP
+    </button>
+  </div>
+</div>
+
 <app-window-widget
   [keyValue]="status.visibility"
   class="status"

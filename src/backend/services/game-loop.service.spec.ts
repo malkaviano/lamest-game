@@ -7,13 +7,15 @@ import { InventoryEvent } from '@events/inventory.event';
 import { ReadableInterface } from '@interfaces/readable.interface';
 import { GameLoopService } from '@services/game-loop.service';
 import { ArrayView } from '@wrappers/array.view';
-import { dropActionable } from '@definitions/actionable.definition';
+import {
+  dropActionable,
+  equipActionable,
+} from '@definitions/actionable.definition';
 import { SettingsStore } from '@stores/settings.store';
 
 import {
   actionAffect,
   actionConsume,
-  actionEquip,
   actionRead,
   actionableEvent,
   consumableFirstAid,
@@ -135,7 +137,7 @@ describe('GameLoopService', () => {
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, unDodgeableAxe),
-        expected: new ActionableItemDefinition(unDodgeableAxe, actionEquip),
+        expected: new ActionableItemDefinition(unDodgeableAxe, equipActionable),
         item: unDodgeableAxe,
       },
       {
@@ -196,7 +198,7 @@ const documentSubject = new Subject<ReadableInterface>();
 const inventoryEventSubject = new Subject<InventoryEvent>();
 
 const eventEquipUnDodgeableAxe = actionableEvent(
-  actionEquip,
+  equipActionable,
   unDodgeableAxe.identity.name
 );
 
