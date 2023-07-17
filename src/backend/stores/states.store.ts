@@ -6,9 +6,9 @@ import { DiscardState } from '@states/discard.state';
 import { emptyState } from '@states/empty.state';
 import { SimpleState } from '@states/simple.state';
 import { SkillState } from '@states/skill.state';
-import { ActionableStore } from './actionable.store';
-import { MessageStore } from './message.store';
-import { ResourcesStore } from './resources.store';
+import { ActionableStore } from '@stores/actionable.store';
+import { MessageStore } from '@stores/message.store';
+import { ResourcesStore } from '@stores/resources.store';
 import { LockedContainerState } from '@states/locked-container.state';
 import { LockPickingContainerState } from '@states/lock-picking-container.state';
 import {
@@ -21,6 +21,7 @@ import { LazyHelper } from '@helpers/lazy.helper';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { SequencerHelper } from '@helpers/sequencer.helper';
 import { LockPickableContainerState } from '@states/lock-pickable-container.state';
+import { affectActionable } from '@definitions/actionable.definition';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
@@ -83,12 +84,10 @@ export class StatesStore {
     });
 
     resourcesStore.destroyableStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(actionableStore, state);
-
       this.store.set(
         state.id,
         new DestroyableState(
-          actionables,
+          ArrayView.create(affectActionable),
           this.lazyState(state.destroyedState),
           state.hitpoints
         )
