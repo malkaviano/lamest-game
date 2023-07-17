@@ -17,7 +17,7 @@ export class ConverterHelper {
     );
   }
 
-  public static asActor(target: InteractiveInterface): ActorInterface | null {
+  public static asActor(target?: InteractiveInterface): ActorInterface | null {
     return target instanceof ActorEntity &&
       ['ACTOR', 'PLAYER'].includes(target.classification)
       ? target

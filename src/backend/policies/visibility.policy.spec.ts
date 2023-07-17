@@ -10,7 +10,13 @@ import {
   mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
-import { actionAffect, actionableEvent } from '../../../tests/fakes';
+import {
+  actionAffect,
+  actionDetect,
+  actionDisguise,
+  actionHide,
+  actionableEvent,
+} from '../../../tests/fakes';
 
 describe('VisibilityPolicy', () => {
   const policy = new VisibilityPolicy();
@@ -20,6 +26,12 @@ describe('VisibilityPolicy', () => {
   const target = instance(mockedActorEntity);
 
   const eventAffect = actionableEvent(actionAffect, target.id);
+
+  const eventDetect = actionableEvent(actionDetect, target.id);
+
+  const eventHide = actionableEvent(actionHide, actor.id);
+
+  const eventDisguise = actionableEvent(actionDisguise, actor.id);
 
   beforeEach(() => {
     setupMocks();
@@ -50,6 +62,69 @@ describe('VisibilityPolicy', () => {
 
         expect(result).toEqual({
           visibility: { actor: 'VISIBLE' },
+        });
+      });
+    });
+
+    describe('when passing skill check', () => {
+      [
+        {
+          event: eventHide,
+          skillName: eventHide.actionableDefinition.name,
+          actorVisibility: 'HIDDEN' as VisibilityLiteral,
+        },
+        {
+          event: eventDisguise,
+          skillName: eventDisguise.actionableDefinition.name,
+          actorVisibility: 'DISGUISED' as VisibilityLiteral,
+        },
+      ].forEach(({ event, skillName, actorVisibility }) => {
+        it(`change actor visibility to ${actorVisibility}`, () => {
+          const ruleResult: RuleResultInterface = {
+            name: 'SKILL',
+            actor,
+            event,
+            target,
+            result: 'EXECUTED',
+            skillName,
+            roll: {
+              result: 'SUCCESS',
+              checkRoll: 10,
+            },
+          };
+
+          const result = policy.enforce(ruleResult);
+
+          verify(mockedPlayerEntity.changeVisibility(actorVisibility)).once();
+
+          expect(result).toEqual({
+            visibility: { actor: actorVisibility },
+          });
+        });
+      });
+
+      it('change target visibility to VISIBLE', () => {
+        const ruleResult: RuleResultInterface = {
+          name: 'SKILL',
+          actor,
+          event: eventDetect,
+          target,
+          result: 'EXECUTED',
+          skillName: 'Detect',
+          roll: {
+            result: 'SUCCESS',
+            checkRoll: 10,
+          },
+        };
+
+        when(mockedActorEntity.visibility).thenReturn('HIDDEN');
+
+        const result = policy.enforce(ruleResult);
+
+        verify(mockedActorEntity.changeVisibility('VISIBLE')).once();
+
+        expect(result).toEqual({
+          visibility: { target: 'VISIBLE' },
         });
       });
     });

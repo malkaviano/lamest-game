@@ -4,7 +4,6 @@ import { PolicyResultInterface } from '@interfaces/policy-result.interface';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { PolicyAbstraction } from '@abstractions/policy.abstraction';
-import { ActorEntity } from '../entities/actor.entity';
 
 export class VisibilityPolicy extends PolicyAbstraction {
   public override enforce(
@@ -16,6 +15,8 @@ export class VisibilityPolicy extends PolicyAbstraction {
     } = {};
 
     const visibility = 'VISIBLE';
+
+    const targetActor = ConverterHelper.asActor(ruleResult.target);
 
     if (
       ruleResult.name === 'AFFECT' &&
@@ -39,37 +40,36 @@ export class VisibilityPolicy extends PolicyAbstraction {
       switch (ruleResult.skillName) {
         case 'Disguise':
           ruleResult.actor.changeVisibility('DISGUISED');
+          result.actor = 'DISGUISED';
           break;
         case 'Hide':
           ruleResult.actor.changeVisibility('HIDDEN');
+          result.actor = 'HIDDEN';
           break;
         case 'Detect':
-          if (ruleResult.target && ruleResult.target instanceof ActorEntity) {
-            ruleResult.target.changeVisibility('VISIBLE');
+          if (targetActor && targetActor?.visibility !== visibility) {
+            targetActor.changeVisibility('VISIBLE');
+            result.target = 'VISIBLE';
           }
           break;
       }
     }
 
-    if (ruleResult.target) {
-      const targetActor = ConverterHelper.asActor(ruleResult.target);
+    if (
+      ruleResult.effect &&
+      targetActor &&
+      targetActor?.visibility !== visibility
+    ) {
+      targetActor?.changeVisibility(visibility);
 
-      if (
-        targetActor &&
-        ruleResult.effect &&
-        targetActor.visibility !== visibility
-      ) {
-        targetActor?.changeVisibility(visibility);
+      result.target = visibility;
 
-        result.target = visibility;
+      const logMessage = GameStringsStore.createVisibilityChangedLogMessage(
+        targetActor.name,
+        visibility
+      );
 
-        const logMessage = GameStringsStore.createVisibilityChangedLogMessage(
-          targetActor.name,
-          visibility
-        );
-
-        this.logMessageProduced.next(logMessage);
-      }
+      this.logMessageProduced.next(logMessage);
     }
 
     return { visibility: result };
