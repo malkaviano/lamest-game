@@ -234,15 +234,17 @@ export class GameStringsStore {
 
   public static createSceneLogMessage(
     actor: string,
+    selection: string,
     from: string,
-    selection: string
+    destination: string
   ): LogMessageDefinition {
     return new LogMessageDefinition(
       'SCENE',
       actor,
       GameStringsStore.logMessagesStore['sceneMessage']
-        .replace('${from}', from)
         .replace('${selection}', selection)
+        .replace('${from}', from)
+        .replace('${destination}', destination)
     );
   }
 

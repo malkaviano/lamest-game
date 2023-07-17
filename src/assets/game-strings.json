@@ -13,7 +13,7 @@
     "usedItemMessage": "used ${item} on ${target}",
     "equipErrorMessage": "${skill} is required to equip ${equipment}",
     "tookMessage": "took ${item} from ${from}",
-    "sceneMessage": "selected ${selection} from ${from}",
+    "sceneMessage": "${selection} from ${from} to ${destination}",
     "lostMessage": "lost ${item}",
     "unDodgeableAttackMessage": "attack is not dodgeable",
     "notFoundMessage": "${label} failed, required item was not found in inventory",

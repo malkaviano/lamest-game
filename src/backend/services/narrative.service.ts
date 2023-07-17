@@ -21,6 +21,10 @@ export class NarrativeService {
     this.sceneChanged$ = this.sceneChanged.asObservable();
   }
 
+  public get currentSceneName(): string {
+    return this.currentScene.label;
+  }
+
   public changeScene(action: ActionableEvent): void {
     if (action.actionableDefinition.actionable !== 'SCENE') {
       throw new Error(GameStringsStore.errorMessages['INVALID-OPERATION']);
