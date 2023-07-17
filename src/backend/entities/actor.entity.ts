@@ -146,23 +146,26 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public get skills(): KeyValueInterface<number> {
     const weaponQuality = this.weaponEquipped.quality;
 
-    let actorSkills = this.actorBehavior.skills;
+    const actorSkills = this.actorBehavior.skills;
 
-    if (weaponQuality !== 'COMMON') {
-      const weaponSkillName = this.weaponEquipped.skillName;
+    const weaponSkillName = this.weaponEquipped.skillName;
 
-      const weaponSkillValue = this.minimumValue(
-        this.actorBehavior.skills[this.weaponEquipped.skillName] +
-          SettingsStore.settings.weaponQuality[weaponQuality]
-      );
+    const weaponSkillValue = this.minimumValue(
+      this.actorBehavior.skills[this.weaponEquipped.skillName] +
+        SettingsStore.settings.weaponQuality[weaponQuality]
+    );
 
-      actorSkills = {
-        ...actorSkills,
-        [weaponSkillName]: weaponSkillValue,
-      };
-    }
+    const dodgeValue = this.minimumValue(
+      this.actorBehavior.skills['Dodge'] -
+        SettingsStore.settings.armorPenalty[this.armorWearing.armorPenalty]
+          .Dodge
+    );
 
-    return actorSkills;
+    return {
+      ...actorSkills,
+      [weaponSkillName]: weaponSkillValue,
+      ['Dodge']: dodgeValue,
+    };
   }
 
   public get visibility(): VisibilityLiteral {

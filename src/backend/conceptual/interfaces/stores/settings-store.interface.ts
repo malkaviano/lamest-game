@@ -30,5 +30,23 @@ export interface SettingsStoreInterface {
       readonly SUPERIOR: number;
       readonly SUPERB: number;
     };
+    readonly armorPenalty: {
+      readonly MINIMAL: {
+        readonly Dodge: number;
+        readonly AGI: number;
+      };
+      readonly LIGHT: {
+        readonly Dodge: number;
+        readonly AGI: number;
+      };
+      readonly MEDIUM: {
+        readonly Dodge: number;
+        readonly AGI: number;
+      };
+      readonly HEAVY: {
+        readonly Dodge: number;
+        readonly AGI: number;
+      };
+    };
   };
 }

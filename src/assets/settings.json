@@ -47,16 +47,16 @@
         "AGI": 0
       },
       "LIGHT": {
-        "Dodge": -10,
-        "AGI": -1
+        "Dodge": 10,
+        "AGI": 1
       },
       "MEDIUM": {
-        "Dodge": -30,
-        "AGI": -3
+        "Dodge": 30,
+        "AGI": 3
       },
       "HEAVY": {
-        "Dodge": -60,
-        "AGI": -6
+        "Dodge": 60,
+        "AGI": 6
       }
     }
   }
