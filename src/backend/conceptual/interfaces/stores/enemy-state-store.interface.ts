@@ -5,7 +5,7 @@ export interface EnemyStateStoreInterface {
   readonly states: {
     readonly id: string;
     readonly actionables: string[];
-    readonly killedState: string;
+    readonly lootState: string;
     readonly weaponName: string;
     readonly behavior: BehaviorLiteral;
     readonly characteristics: CharacteristicSetDefinition;

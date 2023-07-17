@@ -20,7 +20,7 @@
         }
       ],
       "equippedWeapon": "claw",
-      "killedState": "emptyState",
+      "lootState": "emptyState",
       "behaviorState": "affectable",
       "immunities": [],
       "cures": [],
@@ -50,7 +50,7 @@
         }
       ],
       "equippedWeapon": "martialArts",
-      "killedState": "villagerLoot",
+      "lootState": "villagerLoot",
       "behaviorState": "affectable",
       "immunities": [],
       "cures": [],
@@ -84,7 +84,7 @@
         }
       ],
       "equippedWeapon": "baton",
-      "killedState": "storageGuardLoot",
+      "lootState": "storageGuardLoot",
       "behaviorState": "affectable",
       "immunities": [],
       "cures": [],

@@ -216,7 +216,7 @@ export class ResourcesStore {
         characteristics: characteristics,
         skills: skills,
         equippedWeapon: a.equippedWeapon,
-        killedState: a.killedState,
+        lootState: a.lootState,
         behaviorState: a.behaviorState,
         actorSettings: {
           vulnerabilityCoefficient:

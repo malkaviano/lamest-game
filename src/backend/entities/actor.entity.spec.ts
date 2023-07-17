@@ -214,7 +214,7 @@ describe('ActorEntity', () => {
             'NONE',
             deepEqual({})
           )
-        ).thenReturn({ state: killedState, log: 'invoked' });
+        ).thenReturn({ state: lootState, log: 'invoked' });
 
         const result = char.reactTo(actionPickAnalgesic, 'NONE', {});
 
@@ -556,7 +556,7 @@ describe('ActorEntity', () => {
   });
 });
 
-const killedState = instance(mockedActionableState2);
+const lootState = instance(mockedActionableState2);
 
 const fakeActor = () =>
   new ActorEntity(
@@ -565,7 +565,7 @@ const fakeActor = () =>
     false,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
-    killedState,
+    lootState,
     {
       regeneratorBehavior: instance(mockedRegeneratorBehavior),
       aiBehavior: instance(mockedAiBehavior),

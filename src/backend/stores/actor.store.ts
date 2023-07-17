@@ -33,7 +33,7 @@ export class ActorStore {
         characteristics,
         skills,
         equippedWeapon,
-        killedState,
+        lootState,
         behaviorState,
         aiBehavior,
         ignores,
@@ -45,7 +45,7 @@ export class ActorStore {
           resettable,
           ActorBehavior.create(characteristics, skills, skillStore),
           EquipmentBehavior.create(),
-          stateStore.states[killedState],
+          stateStore.states[lootState],
           {
             regeneratorBehavior: new RegeneratorBehavior(),
             aiBehavior: AiBehavior.create(
