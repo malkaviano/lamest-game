@@ -29,34 +29,6 @@ import { GameStringsStore } from '@stores/game-strings.store';
 import { ActorEntity } from '@entities/actor.entity';
 import { ArmorDefinition } from '@definitions/armor.definition';
 
-type Result = {
-  name: RuleNameLiteral;
-  event: ActionableEvent;
-  result: RuleResultLiteral;
-  actor: ActorInterface;
-  target?: InteractiveInterface;
-  picked?: GameItemDefinition;
-  used?: UsableDefinition;
-  read?: ReadableDefinition;
-  equipped?: WeaponDefinition;
-  unequipped?: WeaponDefinition;
-  affected?: WeaponDefinition;
-  skillName?: string;
-  roll?: {
-    checkRoll?: number;
-    result: CheckResultLiteral;
-  };
-  consumable?: {
-    consumed: ConsumableDefinition;
-    hp?: number;
-    energy?: number;
-  };
-  dodged?: boolean;
-  effect?: { type: EffectTypeLiteral; amount: number };
-  wearing?: ArmorDefinition;
-  strip?: ArmorDefinition;
-};
-
 export abstract class RuleAbstraction
   implements
     RuleInterface,
@@ -128,7 +100,7 @@ export abstract class RuleAbstraction
     actor: ActorInterface,
     result: RuleResultLiteral
   ): RuleResultInterface {
-    const r: Result = {
+    const r: RuleResultInterface = {
       name: this.name,
       event,
       actor,
@@ -211,7 +183,7 @@ export abstract class RuleAbstraction
     }
   }
 
-  private setEffect(r: Result) {
+  private setEffect(r: RuleResultInterface) {
     if (this.ruleResult.effectAmount && this.ruleResult.effectType) {
       r.effect = {
         type: this.ruleResult.effectType,
@@ -220,7 +192,7 @@ export abstract class RuleAbstraction
     }
   }
 
-  private setConsumable(r: Result) {
+  private setConsumable(r: RuleResultInterface) {
     if (
       this.ruleResult.consumable &&
       (this.ruleResult.consumableHp || this.ruleResult.consumableEnergy)
@@ -233,7 +205,7 @@ export abstract class RuleAbstraction
     }
   }
 
-  private setSkill(r: Result) {
+  private setSkill(r: RuleResultInterface) {
     if (this.ruleResult.skillName) {
       r.skillName = this.ruleResult.skillName;
 
@@ -246,55 +218,55 @@ export abstract class RuleAbstraction
     }
   }
 
-  private setDodged(r: Result) {
+  private setDodged(r: RuleResultInterface) {
     if (this.ruleResult.dodged !== undefined) {
       r.dodged = this.ruleResult.dodged;
     }
   }
 
-  private setAffected(r: Result) {
+  private setAffected(r: RuleResultInterface) {
     if (this.ruleResult.affected) {
       r.affected = this.ruleResult.affected;
     }
   }
 
-  private setUnequipped(r: Result) {
+  private setUnequipped(r: RuleResultInterface) {
     if (this.ruleResult.unequipped) {
       r.unequipped = this.ruleResult.unequipped;
     }
   }
 
-  private setEquipped(r: Result) {
+  private setEquipped(r: RuleResultInterface) {
     if (this.ruleResult.equipped) {
       r.equipped = this.ruleResult.equipped;
     }
   }
 
-  private setRead(r: Result) {
+  private setRead(r: RuleResultInterface) {
     if (this.ruleResult.read) {
       r.read = this.ruleResult.read;
     }
   }
 
-  private setUsed(r: Result) {
+  private setUsed(r: RuleResultInterface) {
     if (this.ruleResult.used) {
       r.used = this.ruleResult.used;
     }
   }
 
-  private setPicked(r: Result) {
+  private setPicked(r: RuleResultInterface) {
     if (this.ruleResult.picked) {
       r.picked = this.ruleResult.picked;
     }
   }
 
-  private setTarget(r: Result) {
+  private setTarget(r: RuleResultInterface) {
     if (this.ruleResult.target) {
       r.target = this.ruleResult.target;
     }
   }
 
-  private setArmor(r: Result) {
+  private setArmor(r: RuleResultInterface) {
     if (this.ruleResult.strip) {
       r.strip = this.ruleResult.strip;
     }
