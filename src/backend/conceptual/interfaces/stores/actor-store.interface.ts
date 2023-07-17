@@ -11,7 +11,6 @@ export interface ActorStoreInterface {
     readonly skills: Map<string, number>;
     readonly equippedWeapon: string;
     readonly lootState: string;
-    readonly behaviorState: string;
     readonly aiBehavior: BehaviorLiteral;
     readonly ignores: VisibilityLiteral[];
     readonly visibility: VisibilityLiteral;
