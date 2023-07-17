@@ -45,7 +45,11 @@ export class StatesStore {
       this.store.set(
         state.id,
         new SkillState(
-          actionableStore.actionables[state.actionable],
+          createActionableDefinition(
+            'SKILL',
+            state.skillName,
+            `CHECK ${state.skillName}`
+          ),
           this.lazyState(state.successState),
           state.maximumTries
         )

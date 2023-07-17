@@ -101,13 +101,6 @@
     },
 
     {
-      "key": "skillMakeFire",
-      "name": "Survival",
-      "actionable": "SKILL",
-      "label": "MAKE Fire"
-    },
-
-    {
       "key": "pickRawMeat",
       "name": "rawMeat",
       "actionable": "PICK",
@@ -119,13 +112,6 @@
       "name": "rawMeat",
       "actionable": "USE",
       "label": "ROAST Meat"
-    },
-
-    {
-      "key": "bushesDetect",
-      "name": "Detect",
-      "actionable": "SKILL",
-      "label": "SEARCH Bushes"
     },
 
     {
