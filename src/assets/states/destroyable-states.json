@@ -2,7 +2,7 @@
   "states": [
     {
       "id": "woodBox",
-      "destroyedState": "lootWoodBox",
+      "lootState": "lootWoodBox",
       "hitpoints": 5
     }
   ]

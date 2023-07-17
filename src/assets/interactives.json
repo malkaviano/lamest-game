@@ -134,6 +134,13 @@
       "description": "Maybe some good stuff inside",
       "state": "storageLocked1",
       "resettable": false
+    },
+    {
+      "id": "woodBox1",
+      "name": "Wooden Box",
+      "description": "Maybe some good stuff inside",
+      "state": "woodBox",
+      "resettable": false
     }
   ],
   "inventoryItems": [

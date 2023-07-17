@@ -88,7 +88,7 @@ export class StatesStore {
         state.id,
         new DestroyableState(
           ArrayView.create(affectActionable),
-          this.lazyState(state.destroyedState),
+          this.lazyState(state.lootState),
           state.hitpoints
         )
       );

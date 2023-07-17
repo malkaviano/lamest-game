@@ -4,7 +4,13 @@
       "name": "clearing",
       "description": "Forest Clearing",
       "image": "clearing.jpg",
-      "interactives": ["campFire", "forestTrail", "bushes", "disguiseVillager"],
+      "interactives": [
+        "campFire",
+        "forestTrail",
+        "bushes",
+        "disguiseVillager",
+        "woodBox1"
+      ],
       "transitions": [
         {
           "name": "forestTrail",
