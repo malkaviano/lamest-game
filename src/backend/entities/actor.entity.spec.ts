@@ -110,6 +110,14 @@ describe('ActorEntity', () => {
     it('return characteristics', () => {
       expect(fakeActor().characteristics).toEqual(fakeCharacteristics);
     });
+
+    it('return attribute value with armor penalty ', () => {
+      when(mockedEquipmentBehavior.armorWearing).thenReturn(leatherJacket);
+
+      const actor = fakeActor();
+
+      expect(actor.characteristics['AGI'].value).toEqual(10);
+    });
   });
 
   describe('classification', () => {
