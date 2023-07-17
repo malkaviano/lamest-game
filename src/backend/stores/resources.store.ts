@@ -48,7 +48,6 @@ import lockedContainerStateStore from '@assets/states/locked-container-state.jso
 import professionStore from '@assets/professions.json';
 import skillStore from '@assets/skills.json';
 import readableStore from '@assets/items/readables.json';
-import visibilityStateStore from '@assets/states/visibility-state.json';
 import armorStore from '@assets/items/armor.json';
 
 export class ResourcesStore {
@@ -86,16 +85,12 @@ export class ResourcesStore {
 
   public readonly readableStore: ReadableStoreInterface;
 
-  public readonly visibilityStateStore: VisibilityStateStoreInterface;
-
   public readonly armorStore: ArmorStoreInterface;
 
   constructor() {
     this.sceneStore = sceneStore;
 
     this.skillStateStore = skillStateStore;
-
-    this.visibilityStateStore = visibilityStateStore;
 
     this.discardStateStore = discardStateStore;
 

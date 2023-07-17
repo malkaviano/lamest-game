@@ -94,13 +94,6 @@
     },
 
     {
-      "key": "skillDisguise",
-      "name": "Disguise",
-      "actionable": "SKILL",
-      "label": "USE Disguise"
-    },
-
-    {
       "key": "pickRawMeat",
       "name": "rawMeat",
       "actionable": "PICK",

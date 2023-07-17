@@ -15,7 +15,6 @@ import {
   directionActionableDefinition,
   directionNamesDefinition,
 } from '@definitions/directions.definition';
-import { VisibilityState } from '@states/visibility.state';
 import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { ConverterHelper } from '@helpers/converter.helper';
@@ -145,16 +144,6 @@ export class StatesStore {
           );
 
       this.store.set(state.id, locked);
-    });
-
-    resourcesStore.visibilityStateStore.states.forEach((state) => {
-      this.store.set(
-        state.id,
-        new VisibilityState(
-          actionableStore.actionables[state.actionable],
-          state.maximumTries
-        )
-      );
     });
   }
 
