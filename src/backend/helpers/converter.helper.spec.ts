@@ -17,7 +17,6 @@ import {
 const actor = new ActorEntity(
   new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
   emptyState,
-  false,
   instance(mockedActorBehavior),
   instance(mockedEquipmentBehavior),
   emptyState,

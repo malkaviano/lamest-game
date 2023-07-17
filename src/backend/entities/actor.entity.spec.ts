@@ -562,7 +562,6 @@ const fakeActor = () =>
   new ActorEntity(
     new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
     instance(mockedActionableState),
-    false,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
     lootState,

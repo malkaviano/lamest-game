@@ -66,7 +66,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   constructor(
     identity: ActorIdentityDefinition,
     currentState: ActionableState,
-    resettable: boolean,
     protected readonly actorBehavior: ActorBehavior,
     protected readonly equipmentBehavior: EquipmentBehavior,
     protected readonly lootState: ActionableState,
@@ -80,7 +79,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       identity.name,
       identity.description,
       currentState,
-      resettable
+      false
     );
 
     this.regeneratorBehavior = behaviors.regeneratorBehavior;

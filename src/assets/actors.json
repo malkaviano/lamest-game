@@ -4,7 +4,6 @@
       "id": "zombie",
       "name": "Nasty Zombie",
       "description": "What the frack is that?",
-      "resettable": false,
       "characteristics": {
         "STR": 10,
         "VIT": 10,
@@ -34,7 +33,6 @@
       "id": "villager",
       "name": "Villager",
       "description": "Punny villager trying to impress",
-      "resettable": false,
       "characteristics": {
         "STR": 5,
         "VIT": 5,
@@ -64,7 +62,6 @@
       "id": "storageGuard",
       "name": "Storage Guard",
       "description": "Competent guard",
-      "resettable": false,
       "characteristics": {
         "STR": 8,
         "VIT": 8,

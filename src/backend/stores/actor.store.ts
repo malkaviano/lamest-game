@@ -29,7 +29,6 @@ export class ActorStore {
         id,
         name,
         description,
-        resettable,
         characteristics,
         skills,
         equippedWeapon,
@@ -42,7 +41,6 @@ export class ActorStore {
         const actor = new ActorEntity(
           new ActorIdentityDefinition(id, name, description, visibility),
           stateStore.states[behaviorState],
-          resettable,
           ActorBehavior.create(characteristics, skills, skillStore),
           EquipmentBehavior.create(),
           stateStore.states[lootState],

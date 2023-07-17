@@ -212,7 +212,6 @@ export class ResourcesStore {
         id: a.id,
         name: a.name,
         description: a.description,
-        resettable: a.resettable,
         characteristics: characteristics,
         skills: skills,
         equippedWeapon: a.equippedWeapon,
