@@ -136,13 +136,6 @@
     },
 
     {
-      "key": "affect",
-      "name": "affect",
-      "actionable": "AFFECT",
-      "label": "USE Equipped"
-    },
-
-    {
       "key": "pickFirstAid",
       "name": "firstAidKit",
       "actionable": "PICK",
@@ -161,12 +154,7 @@
       "actionable": "PICK",
       "label": "PICK Molotov"
     },
-    {
-      "key": "useMasterKey",
-      "name": "masterKey",
-      "actionable": "USE",
-      "label": "USE Master Key"
-    },
+
     {
       "key": "pickMasterKey",
       "name": "masterKey",
