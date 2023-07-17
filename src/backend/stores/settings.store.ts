@@ -1,6 +1,5 @@
 import { GameSettingsInterface } from '@interfaces/game-settings.interface';
 import { ArrayView } from '@wrappers/array.view';
-import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { SettingsStoreInterface } from '@interfaces/stores/settings-store.interface';
 
 import settingsStore from '@assets/settings.json';
@@ -22,20 +21,14 @@ export class SettingsStore {
       weaponQuality,
     } = settingsStore.settings;
 
-    const cures = ArrayView.fromArray(
-      playerEffectDefenses.cures.map((e) => e as EffectTypeLiteral)
-    );
+    const cures = ArrayView.fromArray(playerEffectDefenses.cures);
 
-    const immunities = ArrayView.fromArray(
-      playerEffectDefenses.immunities.map((e) => e as EffectTypeLiteral)
-    );
+    const immunities = ArrayView.fromArray(playerEffectDefenses.immunities);
 
-    const resistances = ArrayView.fromArray(
-      playerEffectDefenses.resistances.map((e) => e as EffectTypeLiteral)
-    );
+    const resistances = ArrayView.fromArray(playerEffectDefenses.resistances);
 
     const vulnerabilities = ArrayView.fromArray(
-      playerEffectDefenses.vulnerabilities.map((e) => e as EffectTypeLiteral)
+      playerEffectDefenses.vulnerabilities
     );
 
     SettingsStore.mSettings = {
@@ -58,7 +51,7 @@ export class SettingsStore {
   }
 
   public static get settings(): GameSettingsInterface {
-    return Object.assign({}, this.mSettings);
+    return { ...this.mSettings };
   }
 }
 

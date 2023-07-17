@@ -35,7 +35,7 @@ export class ActorBehavior {
   }
 
   public get characteristics(): CharacteristicSetDefinition {
-    return Object.assign({}, this.mCharacteristics);
+    return { ...this.mCharacteristics };
   }
 
   public get derivedAttributes(): DerivedAttributeSetDefinition {
