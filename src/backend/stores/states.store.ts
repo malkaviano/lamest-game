@@ -56,9 +56,20 @@ export class StatesStore {
     });
 
     resourcesStore.discardStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(actionableStore, state);
+      const actionables = state.items.map((itemName) => {
+        const item = itemStore.items[itemName];
+        console.log(itemName, item);
+        return createActionableDefinition(
+          'PICK',
+          item.identity.name,
+          item.identity.label
+        );
+      });
 
-      this.store.set(state.id, new DiscardState(actionables));
+      this.store.set(
+        state.id,
+        new DiscardState(ArrayView.fromArray(actionables))
+      );
     });
 
     resourcesStore.simpleStateStore.states.forEach((state) => {
