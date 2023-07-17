@@ -120,7 +120,7 @@ describe('GamePageComponent', () => {
   });
 
   it(`should have description`, () => {
-    expect(component.scene.description).toEqual('this is a test');
+    expect(component.scene.label).toEqual('this is a test');
   });
 
   it(`should have interactives`, () => {

@@ -11,7 +11,7 @@ describe('SceneEntity', () => {
   });
 
   it('should have description', () => {
-    expect(entity.description).toEqual('GG');
+    expect(entity.label).toEqual('GG');
   });
 
   describe('reset', () => {

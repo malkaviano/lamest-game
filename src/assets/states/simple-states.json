@@ -1,10 +1,6 @@
 {
   "states": [
     {
-      "id": "forestTrail",
-      "actionables": ["forestTrail"]
-    },
-    {
       "id": "villageGate",
       "actionables": ["villageGate"]
     },

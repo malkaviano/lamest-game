@@ -1,67 +1,6 @@
 {
   "actionables": [
     {
-      "key": "forestTrail",
-      "name": "forestTrail",
-      "actionable": "SCENE",
-      "label": "FOLLOW Trail"
-    },
-    {
-      "key": "villageGate",
-      "name": "villageGate",
-      "actionable": "SCENE",
-      "label": "USE Gate"
-    },
-    {
-      "key": "mainHouseDoor",
-      "name": "mainHouseDoor",
-      "actionable": "SCENE",
-      "label": "USE Door"
-    },
-    {
-      "key": "mainHouseLibraryDoor",
-      "name": "mainHouseLibraryDoor",
-      "actionable": "SCENE",
-      "label": "USE Door"
-    },
-    {
-      "key": "mainHouseDiningDoor",
-      "name": "mainHouseDiningDoor",
-      "actionable": "SCENE",
-      "label": "USE Door"
-    },
-    {
-      "key": "mainHouseBasementDoor",
-      "name": "mainHouseBasementDoor",
-      "actionable": "SCENE",
-      "label": "USE Door"
-    },
-    {
-      "key": "hunterCabinDoor",
-      "name": "hunterCabinDoor",
-      "actionable": "SCENE",
-      "label": "USE Door"
-    },
-    {
-      "key": "ambulatoryTentEntrance",
-      "name": "ambulatoryTentEntrance",
-      "actionable": "SCENE",
-      "label": "USE Entrance"
-    },
-    {
-      "key": "mysteriousHouseDoor",
-      "name": "mysteriousHouseDoor",
-      "actionable": "SCENE",
-      "label": "USE Door"
-    },
-    {
-      "key": "storageHangarDoor",
-      "name": "storageHangarDoor",
-      "actionable": "SCENE",
-      "label": "USE Door"
-    },
-
-    {
       "key": "pickHunterJournal1",
       "name": "hunterJournal1",
       "actionable": "PICK",

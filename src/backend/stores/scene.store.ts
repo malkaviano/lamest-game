@@ -1,11 +1,14 @@
 import { ConverterHelper } from '@helpers/converter.helper';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
-import { ActorStore } from './actor.store';
-import { InteractiveStore } from './interactive.store';
-import { ResourcesStore } from './resources.store';
+import { ActorStore } from '@stores/actor.store';
+import { InteractiveStore } from '@stores/interactive.store';
+import { ResourcesStore } from '@stores/resources.store';
 import { ArrayView } from '@wrappers/array.view';
 import { SceneEntity } from '@entities/scene.entity';
 import { InteractiveEntity } from '@entities/interactive.entity';
+import { SimpleState } from '@states/simple.state';
+import { createActionableDefinition } from '@definitions/actionable.definition';
+import { GameStringsStore } from '@stores/game-strings.store';
 
 export class SceneStore {
   private readonly store: Map<string, SceneEntity>;
@@ -24,9 +27,6 @@ export class SceneStore {
         return interactiveStore.interactives[id] ?? actorStore.actors[id];
       });
 
-      // Sort interactives
-      this.orderInteractives(interactives);
-
       const transitions = scene.transitions.reduce(
         (obj: { [key: string]: string }, { name, scene }) => {
           obj[name] = scene;
@@ -36,11 +36,38 @@ export class SceneStore {
         {}
       );
 
+      const exits = scene.transitions.map((t) => {
+        const destination = resourcesStore.sceneStore.scenes.find(
+          (s) => s.name === t.scene
+        );
+
+        return new InteractiveEntity(
+          t.name,
+          t.label,
+          `${scene.label} to ${destination?.label}`,
+          new SimpleState(
+            ArrayView.create(
+              createActionableDefinition(
+                'SCENE',
+                t.name,
+                GameStringsStore.descriptions['TRANSIT']
+              )
+            )
+          ),
+          true
+        );
+      });
+
+      const allInteractives = interactives.concat(exits);
+
+      // Sort interactives
+      this.orderInteractives(allInteractives);
+
       this.store.set(
         scene.name,
         new SceneEntity(
-          scene.description,
-          ArrayView.fromArray(interactives),
+          scene.label,
+          ArrayView.fromArray(allInteractives),
           transitions,
           scene.image
         )
