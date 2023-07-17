@@ -4,6 +4,7 @@ import { ReadRule } from './read.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { ReadableInterface } from '@interfaces/readable.interface';
 
 import {
   mockedInventoryService,
@@ -18,7 +19,6 @@ import {
   simpleSword,
 } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
-import { ReadableInterface } from '@interfaces/readable.interface';
 
 describe('ReadRule', () => {
   let rule: ReadRule;

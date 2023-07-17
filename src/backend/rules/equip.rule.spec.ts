@@ -1,10 +1,11 @@
 import { instance, verify, when } from 'ts-mockito';
 
-import { EquipRule } from './equip.rule';
+import { EquipRule } from '@rules/equip.rule';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { equipActionable } from '@definitions/actionable.definition';
 
 import {
   mockedCheckedService,
@@ -15,7 +16,6 @@ import {
 } from '../../../tests/mocks';
 import {
   actionableEvent,
-  actionEquip,
   consumableAnalgesic,
   greatSword,
   playerInfo,
@@ -157,13 +157,13 @@ const actor = instance(mockedPlayerEntity);
 const extras = {};
 
 const eventWrong = actionableEvent(
-  actionEquip,
+  equipActionable,
   consumableAnalgesic.identity.name
 );
 
-const eventOk = actionableEvent(actionEquip, simpleSword.identity.name);
+const eventOk = actionableEvent(equipActionable, simpleSword.identity.name);
 
-const eventNoSkill = actionableEvent(actionEquip, greatSword.identity.name);
+const eventNoSkill = actionableEvent(equipActionable, greatSword.identity.name);
 
 const equipLog = new LogMessageDefinition(
   'EQUIPPED',

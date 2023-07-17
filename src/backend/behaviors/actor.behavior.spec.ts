@@ -3,13 +3,19 @@ import { instance } from 'ts-mockito';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
-import { DerivedAttributeEvent } from '@events/derived-attribute.event';
+import {
+  CurrentAPChangedEvent,
+  CurrentEPChangedEvent,
+  CurrentHPChangedEvent,
+} from '@events/derived-attribute.event';
+import { clothArmor } from '@behaviors/equipment.behavior';
 
 import {
   fakeCharacteristics,
   fakeDerivedAttributes,
   fakeEffect,
   fakeMapSkills,
+  leatherJacket,
 } from '../../../tests/fakes';
 import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
 
@@ -64,9 +70,9 @@ describe('ActorBehavior', () => {
       it('return DEAD', () => {
         const b = fakeBehavior();
 
-        b.effectReceived(fakeEffect('PROFANE', 4));
+        b.effectReceived(fakeEffect('PROFANE', 4), clothArmor.damageReduction);
 
-        b.effectReceived(fakeEffect('PROFANE', 4));
+        b.effectReceived(fakeEffect('PROFANE', 4), clothArmor.damageReduction);
 
         expect(b.situation).toEqual('DEAD');
       });
@@ -78,9 +84,19 @@ describe('ActorBehavior', () => {
       it('return HitPointsEvent previous 8 current 8', () => {
         const b = fakeBehavior();
 
-        const result = b.effectReceived(fakeEffect('ACID', 4));
+        const result = b.effectReceived(
+          fakeEffect('ACID', 4),
+          clothArmor.damageReduction
+        );
 
-        expect(result).toEqual(new DerivedAttributeEvent('CURRENT HP', 8, 8));
+        expect(result).toEqual(
+          new CurrentHPChangedEvent(8, 8, {
+            ignored: 4,
+            amplified: 0,
+            deflected: 0,
+            resisted: 0,
+          })
+        );
       });
     });
 
@@ -88,21 +104,39 @@ describe('ActorBehavior', () => {
       [
         {
           value: 4,
-          expected: new DerivedAttributeEvent('CURRENT HP', 8, 2),
+          expected: new CurrentHPChangedEvent(8, 1, {
+            ignored: 0,
+            amplified: 3,
+            deflected: 0,
+            resisted: 0,
+          }),
         },
         {
           value: 1,
-          expected: new DerivedAttributeEvent('CURRENT HP', 8, 7),
+          expected: new CurrentHPChangedEvent(8, 7, {
+            ignored: 0,
+            amplified: 0,
+            deflected: 0,
+            resisted: 0,
+          }),
         },
         {
           value: 5,
-          expected: new DerivedAttributeEvent('CURRENT HP', 8, 1),
+          expected: new CurrentHPChangedEvent(8, 0, {
+            ignored: 0,
+            amplified: 3,
+            deflected: 0,
+            resisted: 0,
+          }),
         },
       ].forEach(({ value, expected }) => {
         it(`return HitPointsEvent previous ${expected.previous} current ${expected.current}`, () => {
           const b = fakeBehavior();
 
-          const result = b.effectReceived(fakeEffect('PROFANE', value));
+          const result = b.effectReceived(
+            fakeEffect('PROFANE', value),
+            clothArmor.damageReduction
+          );
 
           expect(result).toEqual(expected);
         });
@@ -113,21 +147,39 @@ describe('ActorBehavior', () => {
       [
         {
           value: 4,
-          expected: new DerivedAttributeEvent('CURRENT HP', 8, 6),
+          expected: new CurrentHPChangedEvent(8, 6, {
+            ignored: 0,
+            amplified: 0,
+            deflected: 0,
+            resisted: 2,
+          }),
         },
         {
           value: 1,
-          expected: new DerivedAttributeEvent('CURRENT HP', 8, 8),
+          expected: new CurrentHPChangedEvent(8, 7, {
+            ignored: 0,
+            amplified: 0,
+            deflected: 0,
+            resisted: 0,
+          }),
         },
         {
           value: 5,
-          expected: new DerivedAttributeEvent('CURRENT HP', 8, 6),
+          expected: new CurrentHPChangedEvent(8, 5, {
+            ignored: 0,
+            amplified: 0,
+            deflected: 0,
+            resisted: 2,
+          }),
         },
       ].forEach(({ value, expected }) => {
         it(`return HitPointsEvent previous ${expected.previous} current ${expected.current}`, () => {
           const b = fakeBehavior();
 
-          const result = b.effectReceived(fakeEffect('KINETIC', value));
+          const result = b.effectReceived(
+            fakeEffect('KINETIC', value),
+            clothArmor.damageReduction
+          );
 
           expect(result).toEqual(expected);
         });
@@ -138,9 +190,39 @@ describe('ActorBehavior', () => {
       it('return HitPointsEvent previous 8 current 4', () => {
         const b = fakeBehavior();
 
-        const result = b.effectReceived(fakeEffect('ARCANE', 4));
+        const result = b.effectReceived(
+          fakeEffect('FIRE', 4),
+          clothArmor.damageReduction
+        );
 
-        expect(result).toEqual(new DerivedAttributeEvent('CURRENT HP', 8, 4));
+        expect(result).toEqual(
+          new CurrentHPChangedEvent(8, 4, {
+            ignored: 0,
+            amplified: 0,
+            deflected: 0,
+            resisted: 0,
+          })
+        );
+      });
+
+      describe('when wearing armor', () => {
+        it('return HitPointsEvent previous 8 current 5', () => {
+          const b = fakeBehavior();
+
+          const result = b.effectReceived(
+            fakeEffect('FIRE', 4),
+            leatherJacket.damageReduction
+          );
+
+          expect(result).toEqual(
+            new CurrentHPChangedEvent(8, 5, {
+              ignored: 0,
+              amplified: 0,
+              deflected: 1,
+              resisted: 0,
+            })
+          );
+        });
       });
     });
 
@@ -148,22 +230,29 @@ describe('ActorBehavior', () => {
       {
         effect: fakeEffect('REMEDY', 4),
         current: 8,
+        resisted: 0,
       },
       {
         effect: fakeEffect('SACRED', 4),
         current: 6,
+        resisted: 2,
       },
-    ].forEach(({ effect, current }) => {
+    ].forEach(({ effect, current, resisted }) => {
       describe(`when behavior is cured by ${effect}`, () => {
         it('return HitPointsEvent previous 4 current 8', () => {
           const b = fakeBehavior();
 
-          b.effectReceived(fakeEffect('ARCANE', 4));
+          b.effectReceived(fakeEffect('FIRE', 4), clothArmor.damageReduction);
 
-          const result = b.effectReceived(effect);
+          const result = b.effectReceived(effect, clothArmor.damageReduction);
 
           expect(result).toEqual(
-            new DerivedAttributeEvent('CURRENT HP', 4, current)
+            new CurrentHPChangedEvent(4, current, {
+              ignored: 0,
+              amplified: 0,
+              deflected: 0,
+              resisted,
+            })
           );
         });
       });
@@ -195,13 +284,13 @@ describe('ActorBehavior', () => {
     [
       {
         changes: [-14],
-        expected: [new DerivedAttributeEvent('CURRENT EP', 13, 0)],
+        expected: [new CurrentEPChangedEvent(13, 0)],
       },
       {
         changes: [-14, 20],
         expected: [
-          new DerivedAttributeEvent('CURRENT EP', 13, 0),
-          new DerivedAttributeEvent('CURRENT EP', 0, 13),
+          new CurrentEPChangedEvent(13, 0),
+          new CurrentEPChangedEvent(0, 13),
         ],
       },
     ].forEach(({ changes, expected }) => {
@@ -234,10 +323,6 @@ describe('ActorBehavior', () => {
         expected: true,
       },
       {
-        effect: 'ARCANE',
-        expected: true,
-      },
-      {
         effect: 'ACID',
         expected: false,
       },
@@ -258,13 +343,13 @@ describe('ActorBehavior', () => {
     [
       {
         changes: [-14],
-        expected: [new DerivedAttributeEvent('CURRENT AP', 6, 0)],
+        expected: [new CurrentAPChangedEvent(6, 0)],
       },
       {
         changes: [-14, 20],
         expected: [
-          new DerivedAttributeEvent('CURRENT AP', 6, 0),
-          new DerivedAttributeEvent('CURRENT AP', 0, 6),
+          new CurrentAPChangedEvent(6, 0),
+          new CurrentAPChangedEvent(0, 6),
         ],
       },
     ].forEach(({ changes, expected }) => {

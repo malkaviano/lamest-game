@@ -8,7 +8,12 @@ import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { EffectEvent } from '@events/effect.event';
 import { SkillStore } from '@stores/skill.store';
 import { SettingsStore } from '@stores/settings.store';
-import { DerivedAttributeEvent } from '@events/derived-attribute.event';
+import { DamageReductionDefinition } from '@definitions/damage-reduction.definition';
+import {
+  CurrentAPChangedEvent,
+  CurrentEPChangedEvent,
+  CurrentHPChangedEvent,
+} from '@events/derived-attribute.event';
 
 export class ActorBehavior {
   private currentHP: number;
@@ -30,7 +35,7 @@ export class ActorBehavior {
   }
 
   public get characteristics(): CharacteristicSetDefinition {
-    return Object.assign({}, this.mCharacteristics);
+    return { ...this.mCharacteristics };
   }
 
   public get derivedAttributes(): DerivedAttributeSetDefinition {
@@ -90,32 +95,40 @@ export class ActorBehavior {
     );
   }
 
-  public effectReceived(effectReceived: EffectEvent): DerivedAttributeEvent {
+  public effectReceived(
+    effectReceived: EffectEvent,
+    reduction: DamageReductionDefinition
+  ): CurrentHPChangedEvent {
     const { effectType, amount } = effectReceived;
 
-    let value = 0;
+    const { value, deflected } = this.deflect(amount, reduction[effectType]);
+
+    let ignored = 0;
+    let amplified = 0;
+    let resisted = 0;
+
+    const cureModifier =
+      SettingsStore.settings.playerEffectDefenses.cures.items.includes(
+        effectType
+      )
+        ? 1
+        : -1;
 
     if (
-      !SettingsStore.settings.playerEffectDefenses.immunities.items.includes(
+      SettingsStore.settings.playerEffectDefenses.immunities.items.includes(
         effectType
       )
     ) {
-      const isCure =
-        SettingsStore.settings.playerEffectDefenses.cures.items.includes(
-          effectType
-        );
-
-      const isVulnerable =
+      ignored = amount;
+    } else {
+      if (
         SettingsStore.settings.playerEffectDefenses.vulnerabilities.items.includes(
           effectType
+        )
+      ) {
+        amplified = Math.trunc(
+          amount * SettingsStore.settings.vulnerabilityCoefficient
         );
-
-      if (isCure) {
-        value += amount;
-      } else {
-        value -= isVulnerable
-          ? amount * SettingsStore.settings.vulnerabilityCoefficient
-          : amount;
       }
 
       if (
@@ -123,31 +136,42 @@ export class ActorBehavior {
           effectType
         )
       ) {
-        value += value * SettingsStore.settings.resistanceCoefficient * -1;
+        resisted = Math.trunc(
+          amount * SettingsStore.settings.resistanceCoefficient
+        );
       }
     }
 
-    return this.modifyHealth(Math.trunc(value));
+    const final = (value - ignored + amplified - resisted) * cureModifier;
+
+    const previousHP = this.modifyHealth(final);
+
+    return new CurrentHPChangedEvent(previousHP, this.currentHP, {
+      ignored,
+      amplified,
+      deflected,
+      resisted,
+    });
   }
 
-  public energyChange(energy: number): DerivedAttributeEvent {
+  public energyChange(energy: number): CurrentEPChangedEvent {
     const previousEP = this.currentEP;
 
     this.currentEP += energy;
 
     this.currentEP = MathHelper.clamp(this.currentEP, 0, this.maximumEP());
 
-    return new DerivedAttributeEvent('CURRENT EP', previousEP, this.currentEP);
+    return new CurrentEPChangedEvent(previousEP, this.currentEP);
   }
 
-  public actionPointsChange(ap: number): DerivedAttributeEvent {
+  public actionPointsChange(ap: number): CurrentAPChangedEvent {
     const previousAP = this.currentAP;
 
     this.currentAP += ap;
 
     this.currentAP = MathHelper.clamp(this.currentAP, 0, this.maximumAP());
 
-    return new DerivedAttributeEvent('CURRENT AP', previousAP, this.currentAP);
+    return new CurrentAPChangedEvent(previousAP, this.currentAP);
   }
 
   public static create(
@@ -158,14 +182,14 @@ export class ActorBehavior {
     return new ActorBehavior(characteristics, skills, skillStore);
   }
 
-  private modifyHealth(modified: number): DerivedAttributeEvent {
+  private modifyHealth(modified: number): number {
     const previousHP = this.currentHP;
 
     this.currentHP += modified;
 
     this.currentHP = MathHelper.clamp(this.currentHP, 0, this.maximumHP());
 
-    return new DerivedAttributeEvent('CURRENT HP', previousHP, this.currentHP);
+    return previousHP;
   }
 
   private maximumHP(): number {
@@ -186,5 +210,13 @@ export class ActorBehavior {
           SettingsStore.settings.actionPoints.oneEveryAgility
       )
     );
+  }
+
+  private deflect(amount: number, reduction: number) {
+    const value = amount > reduction ? amount - reduction : 0;
+
+    const deflected = amount - value;
+
+    return { value, deflected };
   }
 }

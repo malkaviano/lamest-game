@@ -7,34 +7,34 @@ import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 
-export class UnEquipRule extends RuleAbstraction {
+export class StripRule extends RuleAbstraction {
   constructor(private readonly inventoryService: InventoryService) {
     super();
   }
 
   public override get name(): RuleNameLiteral {
-    return 'UNEQUIP';
+    return 'STRIP';
   }
 
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResultInterface {
-    const weapon = actor.unEquip();
+    const armor = actor.strip();
 
     let ruleResult: RuleResultLiteral = 'DENIED';
 
-    if (weapon) {
-      this.inventoryService.store(actor.id, weapon);
+    if (armor) {
+      this.inventoryService.store(actor.id, armor);
 
-      const logMessage = GameStringsStore.createUnEquippedLogMessage(
+      const logMessage = GameStringsStore.createStripLogMessage(
         actor.name,
-        weapon.identity.label
+        armor.identity.label
       );
 
       this.ruleLog.next(logMessage);
 
-      this.ruleResult.unequipped = weapon;
+      this.ruleResult.strip = armor;
 
       ruleResult = 'EXECUTED';
     }

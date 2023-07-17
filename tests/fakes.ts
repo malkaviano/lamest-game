@@ -3,10 +3,12 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '@definitions/actionable.definition';
+import { ArmorDefinition } from '@definitions/armor.definition';
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
+import { createDamageReduction } from '@definitions/damage-reduction.definition';
 import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { createDice } from '@definitions/dice.definition';
@@ -72,18 +74,6 @@ export const molotov = new WeaponDefinition(
   'DISPOSABLE',
   0,
   'COMMON'
-);
-
-export const actionEquip = createActionableDefinition(
-  'EQUIP',
-  'equip',
-  'Equip'
-);
-
-export const actionUnEquip = createActionableDefinition(
-  'UNEQUIP',
-  'unequip',
-  'Unequip'
 );
 
 export const actionAffect = createActionableDefinition(
@@ -384,16 +374,6 @@ export const actionDetect = createActionableDefinition(
   'Detect'
 );
 
-export const fakeCharacterStatusView = CharacterStatusView.create(
-  fakeCharacterSheetDerivedAttributes,
-  simpleSword,
-  KeyValueDescriptionView.create(
-    'VISIBILITY',
-    'VISIBLE',
-    'Character current visibility'
-  )
-);
-
 export const imageOpened = {
   title: 'Testing',
   src: 'some image path',
@@ -420,4 +400,45 @@ export const superbSword = new WeaponDefinition(
   'PERMANENT',
   0,
   'SUPERB'
+);
+
+export const leatherJacket = new ArmorDefinition(
+  new ItemIdentityDefinition(
+    'leatherJacket',
+    'Leather Jacket',
+    'Small protection'
+  ),
+  'PERMANENT',
+  createDamageReduction({
+    ACID: 1,
+    FIRE: 1,
+    KINETIC: 2,
+  }),
+  'LIGHT'
+);
+
+export const kevlarVest = new ArmorDefinition(
+  new ItemIdentityDefinition(
+    'kevlarVest',
+    'Kevlar Vest',
+    'Best Kinetic protection'
+  ),
+  'PERMANENT',
+  createDamageReduction({
+    ACID: 3,
+    FIRE: 3,
+    KINETIC: 6,
+  }),
+  'MEDIUM'
+);
+
+export const fakeCharacterStatusView = CharacterStatusView.create(
+  fakeCharacterSheetDerivedAttributes,
+  simpleSword,
+  leatherJacket,
+  KeyValueDescriptionView.create(
+    'VISIBILITY',
+    'VISIBLE',
+    'Character current visibility'
+  )
 );

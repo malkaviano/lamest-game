@@ -4,6 +4,7 @@ import { ItemStoredDefinition } from '@definitions/item-storage.definition';
 import { InventoryService } from '@services/inventory.service';
 import { ArrayView } from '@wrappers/array.view';
 import { InventoryEvent } from '@events/inventory.event';
+import { InteractiveStore } from '@stores/interactive.store';
 
 import {
   consumableAnalgesic,
@@ -13,7 +14,6 @@ import {
   simpleSword,
 } from '../../../tests/fakes';
 import { mockedItemStore } from '../../../tests/mocks';
-import { InteractiveStore } from '@stores/interactive.store';
 
 const interactives = {
   interactives: () => ({}),

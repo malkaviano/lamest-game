@@ -28,6 +28,8 @@ import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { SettingsStore } from '@stores/settings.store';
 import { ItemQualityLiteral } from '@literals/item-quality.literal';
+import { ArmorStoreInterface } from '@interfaces/stores/armor-store.interface';
+import { ArmorPenaltyLiteral } from '@literals/armor-penalty.literal';
 
 import sceneStore from '@assets/scenes.json';
 import skillStateStore from '@assets/states/skill-states.json';
@@ -47,6 +49,7 @@ import professionStore from '@assets/professions.json';
 import skillStore from '@assets/skills.json';
 import readableStore from '@assets/items/readables.json';
 import visibilityStateStore from '@assets/states/visibility-state.json';
+import armorStore from '@assets/items/armor.json';
 
 export class ResourcesStore {
   public readonly sceneStore: SceneStoreInterface;
@@ -85,6 +88,8 @@ export class ResourcesStore {
 
   public readonly visibilityStateStore: VisibilityStateStoreInterface;
 
+  public readonly armorStore: ArmorStoreInterface;
+
   constructor() {
     this.sceneStore = sceneStore;
 
@@ -100,7 +105,49 @@ export class ResourcesStore {
 
     this.destroyableStateStore = destroyableStateStore;
 
-    const weapons = weaponStore.weapons.map((w) => {
+    const weapons = this.extractWeapons();
+
+    this.weaponStore = { weapons };
+
+    const consumables = this.extractConsumables();
+
+    this.consumableStore = { consumables };
+
+    this.interactiveStore = interactiveStore;
+
+    const actionables = this.extractActionables();
+
+    this.actionableStore = { actionables };
+
+    this.messageStore = messageStore;
+
+    const actors = this.extractActors();
+
+    this.actorStore = { actors };
+
+    const usables = this.extractUsables();
+
+    this.usablesStore = { usables };
+
+    this.lockedContainerStateStore = lockedContainerStateStore;
+
+    this.professionStore = professionStore;
+
+    const skills = this.extractSkills();
+
+    this.skillStore = { skills };
+
+    const readables = this.extractReadables();
+
+    this.readableStore = { readables };
+
+    const armor = this.extractArmor();
+
+    this.armorStore = { armor };
+  }
+
+  private extractWeapons() {
+    return weaponStore.weapons.map((w) => {
       return {
         name: w.name,
         label: w.label,
@@ -117,10 +164,10 @@ export class ResourcesStore {
         quality: (w.quality ?? 'COMMON') as ItemQualityLiteral,
       };
     });
+  }
 
-    this.weaponStore = { weapons };
-
-    const consumables = consumableStore.consumables.map((c) => {
+  private extractConsumables() {
+    return consumableStore.consumables.map((c) => {
       return {
         name: c.name,
         label: c.label,
@@ -131,12 +178,10 @@ export class ResourcesStore {
         skillName: c.skillName,
       };
     });
+  }
 
-    this.consumableStore = { consumables };
-
-    this.interactiveStore = interactiveStore;
-
-    const actionables = actionableStore.actionables.map((a) => {
+  private extractActionables() {
+    return actionableStore.actionables.map((a) => {
       return {
         key: a.key,
         name: a.name,
@@ -144,12 +189,10 @@ export class ResourcesStore {
         label: a.label,
       };
     });
+  }
 
-    this.actionableStore = { actionables };
-
-    this.messageStore = messageStore;
-
-    const actors = actorStore.actors.map((a) => {
+  private extractActors() {
+    return actorStore.actors.map((a) => {
       const characteristics: CharacteristicSetDefinition = {
         STR: new CharacteristicDefinition('STR', a.characteristics.STR),
         VIT: new CharacteristicDefinition('VIT', a.characteristics.VIT),
@@ -193,10 +236,10 @@ export class ResourcesStore {
         visibility: a.visibility as VisibilityLiteral,
       };
     });
+  }
 
-    this.actorStore = { actors };
-
-    const usables = usablesStore.usables.map((u) => {
+  private extractUsables() {
+    return usablesStore.usables.map((u) => {
       return {
         name: u.name,
         label: u.label,
@@ -204,14 +247,10 @@ export class ResourcesStore {
         usability: u.usability as ItemUsabilityLiteral,
       };
     });
+  }
 
-    this.usablesStore = { usables };
-
-    this.lockedContainerStateStore = lockedContainerStateStore;
-
-    this.professionStore = professionStore;
-
-    const skills = skillStore.skills.map((s) => {
+  private extractSkills() {
+    return skillStore.skills.map((s) => {
       return {
         name: s.name,
         description: s.description,
@@ -220,10 +259,10 @@ export class ResourcesStore {
         influenced: s.influenced,
       };
     });
+  }
 
-    this.skillStore = { skills };
-
-    const readables = readableStore.readables.map((r) => {
+  private extractReadables() {
+    return readableStore.readables.map((r) => {
       return {
         name: r.name,
         label: r.label,
@@ -233,7 +272,17 @@ export class ResourcesStore {
         usability: r.usability as ItemUsabilityLiteral,
       };
     });
+  }
 
-    this.readableStore = { readables };
+  private extractArmor() {
+    return armorStore.armor.map((a) => {
+      return {
+        name: a.name,
+        label: a.label,
+        description: a.description,
+        damageReduction: a.damageReduction,
+        armorPenalty: a.armorPenalty as ArmorPenaltyLiteral,
+      };
+    });
   }
 }

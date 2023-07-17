@@ -9,4 +9,6 @@ export type ActionableLiteral =
   | 'CONSUME'
   | 'USE'
   | 'DROP'
-  | 'READ';
+  | 'READ'
+  | 'WEAR'
+  | 'STRIP';

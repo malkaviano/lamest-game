@@ -5,10 +5,14 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 import { StatusBarPanelComponent } from './status-bar.panel.component';
 import { ActionableEvent } from '@events/actionable.event';
+import {
+  stripActionable,
+  unequipActionable,
+} from '@definitions/actionable.definition';
 
 import {
-  actionUnEquip,
   fakeCharacterStatusView,
+  leatherJacket,
   simpleSword,
 } from '../../../../tests/fakes';
 import { testButtonEvent } from '../../../../tests/scenarios';
@@ -42,11 +46,26 @@ describe('StatusBarPanelComponent', () => {
     it('should emit event', async () => {
       const result: ActionableEvent | undefined = await testButtonEvent(
         loader,
-        fixture
+        fixture,
+        0
       );
 
       expect(result).toEqual(
-        new ActionableEvent(actionUnEquip, simpleSword.identity.name)
+        new ActionableEvent(unequipActionable, simpleSword.identity.name)
+      );
+    });
+  });
+
+  describe('strip', () => {
+    it('should emit event', async () => {
+      const result: ActionableEvent | undefined = await testButtonEvent(
+        loader,
+        fixture,
+        1
+      );
+
+      expect(result).toEqual(
+        new ActionableEvent(stripActionable, leatherJacket.identity.name)
       );
     });
   });

@@ -1,89 +1,84 @@
 import {
   EquipmentBehavior,
+  clothArmor,
   unarmedWeapon,
 } from '@behaviors/equipment.behavior';
 import { WeaponDefinition } from '@definitions/weapon.definition';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
-import { molotov, simpleSword } from '../../../tests/fakes';
+import {
+  kevlarVest,
+  leatherJacket,
+  molotov,
+  simpleSword,
+} from '../../../tests/fakes';
 
 describe('EquipmentBehavior', () => {
   describe('weaponEquipped', () => {
-    describe('when created', () => {
-      it('return unarmed weapon', () => {
-        expect(fakeBehavior().weaponEquipped).toEqual(unarmedWeapon);
-      });
-    });
+    it('return equipped weapon', () => {
+      const char = fakeBehavior();
 
-    describe('when equipping a weapon', () => {
-      describe('when no weapon was equipped', () => {
-        it('should equip the weapon', () => {
-          const char = fakeBehavior();
+      const equipped = [];
 
-          equipBehavior(char, simpleSword);
+      equipped.push(char.weaponEquipped);
 
-          expect(char.weaponEquipped).toEqual(simpleSword);
-        });
-      });
+      equipBehavior(char, simpleSword);
 
-      describe('when weapon was equipped', () => {
-        it('should equip the weapon', () => {
-          const char = fakeBehavior();
+      equipped.push(char.weaponEquipped);
 
-          equipBehavior(char, simpleSword);
+      equipBehavior(char, molotov);
 
-          equipBehavior(char, molotov);
+      equipped.push(char.weaponEquipped);
 
-          expect(char.weaponEquipped).toEqual(molotov);
-        });
-      });
+      expect(equipped).toEqual([unarmedWeapon, simpleSword, molotov]);
     });
   });
 
-  describe('equip', () => {
-    describe('when no weapon was equipped', () => {
-      it('return null', () => {
-        const char = fakeBehavior();
+  describe('changeWeapon', () => {
+    it('return previous weapon', () => {
+      const char = fakeBehavior();
 
-        const weapon = equipBehavior(char, simpleSword);
+      const weapons = [];
 
-        expect(weapon).toBeNull();
-      });
-    });
+      weapons.push(equipBehavior(char, simpleSword));
 
-    describe('when weapon was equipped', () => {
-      it('return previous weapon', () => {
-        const char = fakeBehavior();
+      weapons.push(equipBehavior(char, molotov));
 
-        equipBehavior(char, simpleSword);
-
-        const weapon = equipBehavior(char, molotov);
-
-        expect(weapon).toEqual(simpleSword);
-      });
+      expect(weapons).toEqual([null, simpleSword]);
     });
   });
 
-  describe('unEquip', () => {
-    describe('when no weapon was equipped', () => {
-      it('return null', () => {
-        const char = fakeBehavior();
+  describe('armorWearing', () => {
+    it('return wearing armor', () => {
+      const char = fakeBehavior();
 
-        const weapon = unEquipBehavior(char);
+      const armor = [];
 
-        expect(weapon).toBeNull();
-      });
+      armor.push(char.armorWearing);
+
+      wearBehavior(char, leatherJacket);
+
+      armor.push(char.armorWearing);
+
+      wearBehavior(char, kevlarVest);
+
+      armor.push(char.armorWearing);
+
+      expect(armor).toEqual([clothArmor, leatherJacket, kevlarVest]);
     });
+  });
 
-    describe('when weapon was equipped', () => {
-      it('return previous weapon', () => {
-        const char = fakeBehavior();
+  describe('changeArmor', () => {
+    it('return previous armor', () => {
+      const char = fakeBehavior();
 
-        equipBehavior(char, simpleSword);
+      const armor = [];
 
-        const weapon = unEquipBehavior(char);
+      armor.push(wearBehavior(char, leatherJacket));
 
-        expect(weapon).toEqual(simpleSword);
-      });
+      armor.push(wearBehavior(char, kevlarVest));
+
+      expect(armor).toEqual([null, leatherJacket]);
     });
   });
 });
@@ -94,13 +89,16 @@ const equipBehavior = (
   character: EquipmentBehavior,
   weapon: WeaponDefinition
 ): WeaponDefinition | null => {
-  const previous = character.equip(weapon);
+  const previous = character.changeWeapon(weapon);
 
   return previous;
 };
 
-const unEquipBehavior = (
-  character: EquipmentBehavior
-): WeaponDefinition | null => {
-  return character.unEquip();
+const wearBehavior = (
+  character: EquipmentBehavior,
+  armor: ArmorDefinition
+): ArmorDefinition | null => {
+  const previous = character.changeArmor(armor);
+
+  return previous;
 };

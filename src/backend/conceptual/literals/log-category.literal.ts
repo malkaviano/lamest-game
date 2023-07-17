@@ -18,4 +18,6 @@ export type LogCategoryLiteral =
   | 'AFFECTED'
   | 'DENIED'
   | 'VISIBILITY'
-  | 'AP';
+  | 'AP'
+  | 'WEARING'
+  | 'STRIP';

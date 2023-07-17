@@ -22,7 +22,9 @@
       "SKILL": 2,
       "UNEQUIP": 1,
       "USE": 1,
-      "DROP": 0
+      "DROP": 0,
+      "WEAR": 2,
+      "STRIP": 2
     },
     "aiLoopMilliseconds": 2000,
     "actionPoints": {
@@ -38,6 +40,24 @@
       "COMMON": 0,
       "SUPERIOR": 15,
       "SUPERB": 30
+    },
+    "armorPenalty": {
+      "MINIMAL": {
+        "Dodge": 0,
+        "AGI": 0
+      },
+      "LIGHT": {
+        "Dodge": -10,
+        "AGI": -1
+      },
+      "MEDIUM": {
+        "Dodge": -30,
+        "AGI": -3
+      },
+      "HEAVY": {
+        "Dodge": -60,
+        "AGI": -6
+      }
     }
   }
 }

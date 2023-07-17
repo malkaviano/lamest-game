@@ -10,6 +10,7 @@ import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
 export interface RuleResultInterface {
   name: RuleNameLiteral;
@@ -36,4 +37,6 @@ export interface RuleResultInterface {
   dodged?: boolean;
   effect?: { type: EffectTypeLiteral; amount: number };
   dropped?: GameItemDefinition;
+  wearing?: ArmorDefinition;
+  strip?: ArmorDefinition;
 }

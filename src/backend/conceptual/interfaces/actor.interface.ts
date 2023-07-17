@@ -10,12 +10,14 @@ import { WeaponEquippedInterface } from '@interfaces/weapon-equipped.interface';
 import { WithCharacteristicsInterface } from '@interfaces/with-characteristics.interface';
 import { WithDerivedAttributesInterface } from '@interfaces/with-derived-attributes.interface';
 import { WithSkillsInterface } from '@interfaces/with-skills.interface';
+import { ArmorWearingInterface } from '@interfaces/armor-wearing.interface';
 
 export interface ActorInterface
   extends WithCharacteristicsInterface,
     WithDerivedAttributesInterface,
     WithSkillsInterface,
     WeaponEquippedInterface,
+    ArmorWearingInterface,
     InteractiveInterface,
     ActorDefenseInterface,
     ActorVisibilityInterface,

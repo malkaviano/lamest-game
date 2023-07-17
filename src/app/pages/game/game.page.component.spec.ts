@@ -13,6 +13,8 @@ import { ActionableEvent } from '@events/actionable.event';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { GameLoopService } from '@services/game-loop.service';
+import { equipActionable } from '@definitions/actionable.definition';
 
 import {
   mockedFormatterHelperService,
@@ -26,7 +28,6 @@ import {
 import {
   actionableItemView,
   actionConsume,
-  actionEquip,
   fakeCharacterSheetCharacteristics,
   fakeCharacterSheetDerivedAttributes,
   fakeCharacterSheetIdentity,
@@ -34,7 +35,6 @@ import {
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
-import { GameLoopService } from '@services/game-loop.service';
 
 describe('GamePageComponent', () => {
   let component: GamePageComponent;
@@ -71,8 +71,8 @@ describe('GamePageComponent', () => {
     when(mockedGameEventsDefinition.playerInventory$).thenReturn(
       of(
         ArrayView.create(
-          new ActionableItemDefinition(simpleSword, actionEquip),
-          new ActionableItemDefinition(unDodgeableAxe, actionEquip)
+          new ActionableItemDefinition(simpleSword, equipActionable),
+          new ActionableItemDefinition(unDodgeableAxe, equipActionable)
         )
       )
     );
@@ -135,8 +135,8 @@ describe('GamePageComponent', () => {
 
   it(`should have inventory`, () => {
     expect(component.inventory).toEqual([
-      actionableItemView(simpleSword, actionEquip),
-      actionableItemView(unDodgeableAxe, actionEquip),
+      actionableItemView(simpleSword, equipActionable),
+      actionableItemView(unDodgeableAxe, equipActionable),
     ]);
   });
 

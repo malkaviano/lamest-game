@@ -3,11 +3,21 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { ActorEntity } from '@entities/actor.entity';
 import { ArrayView } from '@wrappers/array.view';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
-import { WeaponDefinition } from '@definitions/weapon.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { unarmedWeapon } from '@behaviors/equipment.behavior';
+import { clothArmor, unarmedWeapon } from '@behaviors/equipment.behavior';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { DerivedAttributeEvent } from '@events/derived-attribute.event';
+import {
+  CurrentAPChangedEvent,
+  CurrentEPChangedEvent,
+  CurrentHPChangedEvent,
+  DerivedAttributeEvent,
+} from '@events/derived-attribute.event';
+import {
+  ArmorChangedEvent,
+  WeaponChangedEvent,
+} from '@events/equipment-changed.event';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
 import {
   fakeCharacteristics,
@@ -22,6 +32,9 @@ import {
   actionableEvent,
   actionPickAnalgesic,
   superbSword,
+  unDodgeableAxe,
+  kevlarVest,
+  leatherJacket,
 } from '../../../tests/fakes';
 import {
   mockedActionableState,
@@ -49,7 +62,7 @@ describe('ActorEntity', () => {
   beforeEach(() => {
     setupMocks();
 
-    when(mockedEquipmentBehavior.equip(simpleSword)).thenReturn(null);
+    when(mockedEquipmentBehavior.changeWeapon(simpleSword)).thenReturn(null);
 
     when(mockedActorBehavior.dodgesPerRound).thenReturn(1);
 
@@ -103,18 +116,19 @@ describe('ActorEntity', () => {
         describe('attack was SUCCESS', () => {
           [
             {
-              event: new DerivedAttributeEvent('CURRENT HP', 9, 0),
+              event: new CurrentHPChangedEvent(9, 0),
               log: acid9Log,
             },
             {
-              event: new DerivedAttributeEvent('CURRENT HP', 9, 9),
+              event: new CurrentHPChangedEvent(9, 9),
               log: hpNotChangedLog,
             },
           ].forEach(({ event, log }) => {
             it('return damage taken', () => {
               when(
                 mockedActorBehavior.effectReceived(
-                  deepEqual(fakeEffect('ACID', 10))
+                  deepEqual(fakeEffect('ACID', 10)),
+                  clothArmor.damageReduction
                 )
               ).thenReturn(event);
 
@@ -131,9 +145,10 @@ describe('ActorEntity', () => {
 
             when(
               mockedActorBehavior.effectReceived(
-                deepEqual(fakeEffect('ACID', 6))
+                deepEqual(fakeEffect('ACID', 6)),
+                clothArmor.damageReduction
               )
-            ).thenReturn(new DerivedAttributeEvent('CURRENT HP', 9, 3));
+            ).thenReturn(new CurrentHPChangedEvent(9, 3));
 
             const char = fakeActor();
 
@@ -147,9 +162,7 @@ describe('ActorEntity', () => {
 
             done();
 
-            expect(result).toEqual([
-              new DerivedAttributeEvent('CURRENT HP', 9, 3),
-            ]);
+            expect(result).toEqual([new CurrentHPChangedEvent(9, 3)]);
           });
         });
 
@@ -199,32 +212,32 @@ describe('ActorEntity', () => {
           result: 'SUCCESS',
           effect: fakeEffect('REMEDY', 10),
           mockedEffect: fakeEffect('REMEDY', 10),
-          resultHpEvent: new DerivedAttributeEvent('CURRENT HP', 4, 9),
+          resultHpEvent: new CurrentHPChangedEvent(4, 9),
           energy: 0,
-          resultEpEvent: new DerivedAttributeEvent('CURRENT EP', 6, 6),
+          resultEpEvent: new CurrentEPChangedEvent(6, 6),
           resultLog: remedy5Log,
-          eventEmitted: [new DerivedAttributeEvent('CURRENT HP', 4, 9)],
+          eventEmitted: [new CurrentHPChangedEvent(4, 9)],
         },
         {
           result: 'NONE',
           effect: fakeEffect('REMEDY', 10),
           mockedEffect: fakeEffect('REMEDY', 10),
-          resultHpEvent: new DerivedAttributeEvent('CURRENT HP', 4, 9),
+          resultHpEvent: new CurrentHPChangedEvent(4, 9),
           energy: 4,
-          resultEpEvent: new DerivedAttributeEvent('CURRENT EP', 2, 6),
+          resultEpEvent: new CurrentEPChangedEvent(2, 6),
           resultLog: `${remedy5Log} and ${energized4Log}`,
           eventEmitted: [
-            new DerivedAttributeEvent('CURRENT HP', 4, 9),
-            new DerivedAttributeEvent('CURRENT EP', 2, 6),
+            new CurrentHPChangedEvent(4, 9),
+            new CurrentEPChangedEvent(2, 6),
           ],
         },
         {
           result: 'NONE',
           effect: fakeEffect('REMEDY', 10),
           mockedEffect: fakeEffect('REMEDY', 10),
-          resultHpEvent: new DerivedAttributeEvent('CURRENT HP', 9, 9),
+          resultHpEvent: new CurrentHPChangedEvent(9, 9),
           energy: 4,
-          resultEpEvent: new DerivedAttributeEvent('CURRENT EP', 6, 6),
+          resultEpEvent: new CurrentEPChangedEvent(6, 6),
           resultLog: `${hpNotChangedLog} and ${epNotChangedLog}`,
           eventEmitted: [],
         },
@@ -232,11 +245,11 @@ describe('ActorEntity', () => {
           result: 'SUCCESS',
           effect: undefined,
           mockedEffect: fakeEffect('REMEDY', 10),
-          resultHpEvent: new DerivedAttributeEvent('CURRENT HP', 9, 9),
+          resultHpEvent: new CurrentHPChangedEvent(9, 9),
           energy: -4,
-          resultEpEvent: new DerivedAttributeEvent('CURRENT EP', 6, 2),
+          resultEpEvent: new CurrentEPChangedEvent(6, 2),
           resultLog: drained4Log,
-          eventEmitted: [new DerivedAttributeEvent('CURRENT EP', 6, 2)],
+          eventEmitted: [new CurrentEPChangedEvent(6, 2)],
         },
       ].forEach(
         ({
@@ -252,7 +265,10 @@ describe('ActorEntity', () => {
           describe(`action was ${result}`, () => {
             it('return result logs', () => {
               when(
-                mockedActorBehavior.effectReceived(deepEqual(mockedEffect))
+                mockedActorBehavior.effectReceived(
+                  deepEqual(mockedEffect),
+                  clothArmor.damageReduction
+                )
               ).thenReturn(resultHpEvent);
 
               when(mockedActorBehavior.energyChange(energy)).thenReturn(
@@ -273,7 +289,10 @@ describe('ActorEntity', () => {
             const eventResult: DerivedAttributeEvent[] = [];
 
             when(
-              mockedActorBehavior.effectReceived(deepEqual(mockedEffect))
+              mockedActorBehavior.effectReceived(
+                deepEqual(mockedEffect),
+                clothArmor.damageReduction
+              )
             ).thenReturn(resultHpEvent);
 
             when(mockedActorBehavior.energyChange(energy)).thenReturn(
@@ -318,11 +337,14 @@ describe('ActorEntity', () => {
         when(mockedActorBehavior.situation).thenReturn('ALIVE');
 
         when(
-          mockedActorBehavior.effectReceived(deepEqual(fakeEffect('ACID', 10)))
+          mockedActorBehavior.effectReceived(
+            deepEqual(fakeEffect('ACID', 10)),
+            clothArmor.damageReduction
+          )
         ).thenCall(() => {
           when(mockedActorBehavior.situation).thenReturn('DEAD');
 
-          return new DerivedAttributeEvent('CURRENT HP', 10, 0);
+          return new CurrentHPChangedEvent(10, 0);
         });
 
         const char = fakeActor();
@@ -344,61 +366,47 @@ describe('ActorEntity', () => {
     });
   });
 
-  describe('equip', () => {
-    it('should equip new weapon', () => {
-      when(mockedEquipmentBehavior.weaponEquipped).thenReturn(simpleSword);
+  describe('armorWearing', () => {
+    it('return current armor', () => {
+      when(mockedEquipmentBehavior.armorWearing).thenReturn(clothArmor);
 
+      expect(fakeActor().armorWearing).toEqual(clothArmor);
+    });
+  });
+
+  describe('equip', () => {
+    it('return previous weapon', () => {
       const char = fakeActor();
 
-      equipActorScenario(char, simpleSword);
+      const f = () => char.equip(simpleSword);
 
-      expect(char.weaponEquipped).toEqual(simpleSword);
+      testWeaponAction(f, unDodgeableAxe, simpleSword);
     });
 
-    it('should emit event', (done) => {
-      let result: WeaponDefinition | undefined;
-
+    it('emit event', (done) => {
       const char = fakeActor();
 
-      char.weaponEquippedChanged$.subscribe((event) => {
-        result = event;
-      });
+      const f = () => char.equip(simpleSword);
 
-      equipActorScenario(char, simpleSword);
-
-      done();
-
-      expect(result).toEqual(simpleSword);
+      testWeaponEvent(char, f, done, unDodgeableAxe, simpleSword);
     });
   });
 
   describe('unEquip', () => {
-    it('should un-equip current weapon', () => {
-      when(mockedEquipmentBehavior.unEquip()).thenReturn(simpleSword);
-
+    it('return previous weapon', () => {
       const char = fakeActor();
 
-      const result = unEquipActorScenario(char);
+      const f = () => char.unEquip();
 
-      expect(result).toEqual(simpleSword);
+      testWeaponAction(f, simpleSword);
     });
 
     it('should emit event', (done) => {
-      when(mockedEquipmentBehavior.unEquip()).thenReturn(simpleSword);
-
-      let result: WeaponDefinition | undefined;
-
       const char = fakeActor();
 
-      char.weaponEquippedChanged$.subscribe((event) => {
-        result = event;
-      });
+      const f = () => char.unEquip();
 
-      unEquipActorScenario(char);
-
-      done();
-
-      expect(result).toEqual(simpleSword);
+      testWeaponEvent(char, f, done, simpleSword);
     });
   });
 
@@ -479,7 +487,7 @@ describe('ActorEntity', () => {
     it('emits ActionPointsEvent', (done) => {
       const actor = fakeActor();
 
-      const expected = new DerivedAttributeEvent('CURRENT AP', 10, 5);
+      const expected = new CurrentAPChangedEvent(10, 5);
 
       apEventTest(actor, done, -5, () => actor.apSpent(5), expected);
     });
@@ -489,9 +497,45 @@ describe('ActorEntity', () => {
     it('emits ActionPointsEvent', (done) => {
       const actor = fakeActor();
 
-      const expected = new DerivedAttributeEvent('CURRENT AP', 5, 12);
+      const expected = new CurrentAPChangedEvent(5, 12);
 
       apEventTest(actor, done, 7, () => actor.apRecovered(7), expected);
+    });
+  });
+
+  describe('wear', () => {
+    it('return previous armor', () => {
+      const char = fakeActor();
+
+      const f = () => char.wear(leatherJacket);
+
+      testArmorAction(f, kevlarVest, leatherJacket);
+    });
+
+    it('emit event', (done) => {
+      const char = fakeActor();
+
+      const f = () => char.wear(leatherJacket);
+
+      testArmorEvent(char, f, done, kevlarVest, leatherJacket);
+    });
+  });
+
+  describe('strip', () => {
+    it('return previous armor', () => {
+      const char = fakeActor();
+
+      const f = () => char.strip();
+
+      testArmorAction(f, leatherJacket);
+    });
+
+    it('should emit event', (done) => {
+      const char = fakeActor();
+
+      const f = () => char.strip();
+
+      testArmorEvent(char, f, done, leatherJacket);
     });
   });
 });
@@ -512,22 +556,43 @@ const fakeActor = () =>
     }
   );
 
-const equipActorScenario = (
-  character: ActorEntity,
-  weapon: WeaponDefinition
-): WeaponDefinition | null => {
-  const previous = character.equip(weapon);
-
-  return previous;
-};
-
-const unEquipActorScenario = (
-  character: ActorEntity
-): WeaponDefinition | null => {
-  return character.unEquip();
-};
-
 const eventAttackPlayer = actionableEvent(actionAffect, playerInfo.id);
+
+function testWeaponEvent(
+  char: ActorEntity,
+  action: () => WeaponDefinition | null,
+  done: DoneFn,
+  previous: WeaponDefinition,
+  current?: WeaponDefinition
+) {
+  let result: WeaponChangedEvent | ArmorChangedEvent | undefined;
+
+  when(mockedEquipmentBehavior.changeWeapon(current)).thenReturn(previous);
+
+  char.equipmentChanged$.subscribe((event) => {
+    result = event;
+  });
+
+  action();
+
+  done();
+
+  expect(result).toEqual(
+    new WeaponChangedEvent(previous, current ?? unarmedWeapon)
+  );
+}
+
+function testWeaponAction(
+  action: () => WeaponDefinition | null,
+  previous: WeaponDefinition,
+  current?: WeaponDefinition
+) {
+  when(mockedEquipmentBehavior.changeWeapon(current)).thenReturn(previous);
+
+  const result = action();
+
+  expect(result).toEqual(previous);
+}
 
 function apEventTest(
   actor: ActorEntity,
@@ -549,4 +614,40 @@ function apEventTest(
   done();
 
   expect(result).toEqual(expected);
+}
+
+function testArmorAction(
+  action: () => ArmorDefinition | null,
+  previous: ArmorDefinition,
+  current?: ArmorDefinition
+) {
+  when(mockedEquipmentBehavior.changeArmor(current)).thenReturn(previous);
+
+  const result = action();
+
+  expect(result).toEqual(previous);
+}
+
+function testArmorEvent(
+  char: ActorEntity,
+  action: () => ArmorDefinition | null,
+  done: DoneFn,
+  previous: ArmorDefinition,
+  current?: ArmorDefinition
+) {
+  let result: WeaponChangedEvent | ArmorChangedEvent | undefined;
+
+  when(mockedEquipmentBehavior.changeArmor(current)).thenReturn(previous);
+
+  char.equipmentChanged$.subscribe((event) => {
+    result = event;
+  });
+
+  action();
+
+  done();
+
+  expect(result).toEqual(
+    new ArmorChangedEvent(previous, current ?? clothArmor)
+  );
 }

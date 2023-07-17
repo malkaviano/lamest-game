@@ -27,6 +27,7 @@ import {
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActorEntity } from '@entities/actor.entity';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
 type Result = {
   name: RuleNameLiteral;
@@ -52,6 +53,8 @@ type Result = {
   };
   dodged?: boolean;
   effect?: { type: EffectTypeLiteral; amount: number };
+  wearing?: ArmorDefinition;
+  strip?: ArmorDefinition;
 };
 
 export abstract class RuleAbstraction
@@ -80,6 +83,8 @@ export abstract class RuleAbstraction
     dodged?: boolean;
     effectType?: EffectTypeLiteral;
     effectAmount?: number;
+    wearing?: ArmorDefinition;
+    strip?: ArmorDefinition;
   };
 
   protected readonly ruleLog: Subject<LogMessageDefinition>;
@@ -151,6 +156,8 @@ export abstract class RuleAbstraction
     this.setConsumable(r);
 
     this.setEffect(r);
+
+    this.setArmor(r);
 
     return r;
   }
@@ -284,6 +291,16 @@ export abstract class RuleAbstraction
   private setTarget(r: Result) {
     if (this.ruleResult.target) {
       r.target = this.ruleResult.target;
+    }
+  }
+
+  private setArmor(r: Result) {
+    if (this.ruleResult.strip) {
+      r.strip = this.ruleResult.strip;
+    }
+
+    if (this.ruleResult.wearing) {
+      r.wearing = this.ruleResult.wearing;
     }
   }
 }

@@ -3,7 +3,11 @@ import { Observable, Subject } from 'rxjs';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { AiBehavior } from '@behaviors/ai.behavior';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
-import { EquipmentBehavior } from '@behaviors/equipment.behavior';
+import {
+  EquipmentBehavior,
+  clothArmor,
+  unarmedWeapon,
+} from '@behaviors/equipment.behavior';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
@@ -27,6 +31,11 @@ import { BehaviorLiteral } from '@literals/behavior.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { DerivedAttributeEvent } from '@events/derived-attribute.event';
 import { SettingsStore } from '@stores/settings.store';
+import {
+  ArmorChangedEvent,
+  WeaponChangedEvent,
+} from '@events/equipment-changed.event';
+import { ArmorDefinition } from '@definitions/armor.definition';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -35,7 +44,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   private readonly derivedAttributeChanged: Subject<DerivedAttributeEvent>;
 
-  private readonly weaponEquippedChanged: Subject<WeaponDefinition>;
+  private readonly equipmentChanged: Subject<
+    WeaponChangedEvent | ArmorChangedEvent
+  >;
 
   private readonly visibilityChanged: Subject<VisibilityLiteral>;
 
@@ -45,7 +56,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public readonly derivedAttributeChanged$: Observable<DerivedAttributeEvent>;
 
-  public readonly weaponEquippedChanged$: Observable<WeaponDefinition>;
+  public readonly equipmentChanged$: Observable<
+    WeaponChangedEvent | ArmorChangedEvent
+  >;
 
   public readonly visibilityChanged$: Observable<VisibilityLiteral>;
 
@@ -85,13 +98,17 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     this.derivedAttributeChanged$ = this.derivedAttributeChanged.asObservable();
 
-    this.weaponEquippedChanged = new Subject();
+    this.equipmentChanged = new Subject();
 
-    this.weaponEquippedChanged$ = this.weaponEquippedChanged.asObservable();
+    this.equipmentChanged$ = this.equipmentChanged.asObservable();
 
     this.visibilityChanged = new Subject();
 
     this.visibilityChanged$ = this.visibilityChanged.asObservable();
+  }
+
+  public get armorWearing(): ArmorDefinition {
+    return this.equipmentBehavior.armorWearing;
   }
 
   public get dodgesPerRound(): number {
@@ -134,9 +151,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     if (weaponQuality !== 'COMMON') {
       const weaponSkillName = this.weaponEquipped.skillName;
 
-      const weaponSkillValue =
+      const weaponSkillValue = this.minimumValue(
         this.actorBehavior.skills[this.weaponEquipped.skillName] +
-        SettingsStore.settings.weaponQuality[weaponQuality];
+          SettingsStore.settings.weaponQuality[weaponQuality]
+      );
 
       actorSkills = {
         ...actorSkills,
@@ -178,21 +196,19 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public equip(weapon: WeaponDefinition): WeaponDefinition | null {
-    const previous = this.equipmentBehavior.equip(weapon);
-
-    this.weaponEquippedChanged.next(weapon);
-
-    return previous;
+    return this.changeWeaponEquipped(weapon);
   }
 
   public unEquip(): WeaponDefinition | null {
-    const weapon = this.equipmentBehavior.unEquip();
+    return this.changeWeaponEquipped();
+  }
 
-    if (weapon) {
-      this.weaponEquippedChanged.next(weapon);
-    }
+  public wear(armor: ArmorDefinition): ArmorDefinition | null {
+    return this.changeArmorWearing(armor);
+  }
 
-    return weapon;
+  public strip(): ArmorDefinition | null {
+    return this.changeArmorWearing();
   }
 
   public override reactTo(
@@ -245,7 +261,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   private effect(effect: EffectEvent): string | null {
-    const result = this.actorBehavior.effectReceived(effect);
+    const result = this.actorBehavior.effectReceived(
+      effect,
+      this.armorWearing.damageReduction
+    );
 
     let resultLog: string | null;
 
@@ -273,7 +292,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       resultLog = GameStringsStore.createHPDidNotChangeMessage();
     }
 
-    return resultLog;
+    return `${resultLog}${result.detailsToStr()}`;
   }
 
   private energy(energy: number): string | null {
@@ -306,5 +325,38 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     if (result.effective) {
       this.derivedAttributeChanged.next(result);
     }
+  }
+
+  private minimumValue(value: number): number {
+    return value > 0 ? value : 1;
+  }
+
+  private changeWeaponEquipped(
+    weapon?: WeaponDefinition
+  ): WeaponDefinition | null {
+    const previous = this.equipmentBehavior.changeWeapon(weapon);
+
+    if (weapon || previous) {
+      this.equipmentChanged.next(
+        new WeaponChangedEvent(
+          previous ?? unarmedWeapon,
+          weapon ?? unarmedWeapon
+        )
+      );
+    }
+
+    return previous;
+  }
+
+  private changeArmorWearing(armor?: ArmorDefinition): ArmorDefinition | null {
+    const previous = this.equipmentBehavior.changeArmor(armor);
+
+    if (armor || previous) {
+      this.equipmentChanged.next(
+        new ArmorChangedEvent(previous ?? clothArmor, armor ?? clothArmor)
+      );
+    }
+
+    return previous;
   }
 }

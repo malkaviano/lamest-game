@@ -5,12 +5,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../../material/material.module';
 import { EquipmentWidgetComponent } from './equipment.widget.component';
 import { ActionableEvent } from '@events/actionable.event';
+import { equipActionable } from '@definitions/actionable.definition';
 
-import {
-  actionableItemView,
-  actionEquip,
-  simpleSword,
-} from '../../../../tests/fakes';
+import { actionableItemView, simpleSword } from '../../../../tests/fakes';
 import { testButtonEvent } from '../../../../tests/scenarios';
 
 describe('EquipmentWidgetComponent', () => {
@@ -28,7 +25,7 @@ describe('EquipmentWidgetComponent', () => {
 
     fixture.componentInstance.equipment = actionableItemView(
       simpleSword,
-      actionEquip
+      equipActionable
     );
 
     component = fixture.componentInstance;
@@ -47,7 +44,7 @@ describe('EquipmentWidgetComponent', () => {
       const result = await testButtonEvent(loader, fixture);
 
       expect(result).toEqual(
-        new ActionableEvent(actionEquip, simpleSword.identity.name)
+        new ActionableEvent(equipActionable, simpleSword.identity.name)
       );
     });
   });

@@ -61,3 +61,15 @@ export const unequipActionable = createActionableDefinition(
   'unequip',
   'Unequip'
 );
+
+export const wearActionable = createActionableDefinition(
+  'WEAR',
+  'wear',
+  'Wear'
+);
+
+export const stripActionable = createActionableDefinition(
+  'STRIP',
+  'strip',
+  'Strip'
+);

@@ -1,7 +1,7 @@
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
+import { SettingsStore } from '@stores/settings.store';
 
 import { setupMocks } from '../../../tests/mocks';
-import { SettingsStore } from '../stores/settings.store';
 
 describe('RegeneratorBehavior', () => {
   beforeEach(() => {

@@ -1,11 +1,7 @@
-export abstract class PreviousCurrentEventAbstraction<Category> {
+export abstract class PreviousCurrentEventAbstraction<Category, Value> {
   constructor(
     public readonly category: Category,
-    public readonly previous: number,
-    public readonly current: number
+    public readonly previous: Value,
+    public readonly current: Value
   ) {}
-
-  public get effective(): number {
-    return Math.abs(this.current - this.previous);
-  }
 }

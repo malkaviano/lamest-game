@@ -4,18 +4,14 @@ import { UnEquipRule } from '@rules/unequip.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { unequipActionable } from '@definitions/actionable.definition';
 
 import {
   mockedPlayerEntity,
   mockedInventoryService,
   setupMocks,
 } from '../../../tests/mocks';
-import {
-  actionUnEquip,
-  playerInfo,
-  simpleSword,
-  unDodgeableAxe,
-} from '../../../tests/fakes';
+import { playerInfo, simpleSword, unDodgeableAxe } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('UnEquipRule', () => {
@@ -84,6 +80,6 @@ const unEquippedLog = new LogMessageDefinition(
 );
 
 const unEquipEvent = new ActionableEvent(
-  actionUnEquip,
+  unequipActionable,
   unDodgeableAxe.identity.name
 );
