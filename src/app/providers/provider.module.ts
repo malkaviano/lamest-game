@@ -60,7 +60,8 @@ const statesStore = new StatesStore(
   messageStore,
   actionableStore,
   resourcesStore,
-  sequencerHelper
+  sequencerHelper,
+  itemStore
 );
 const actorStore = new ActorStore(
   statesStore,

@@ -21,7 +21,11 @@ import { LazyHelper } from '@helpers/lazy.helper';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { SequencerHelper } from '@helpers/sequencer.helper';
 import { LockPickableContainerState } from '@states/lock-pickable-container.state';
-import { affectActionable } from '@definitions/actionable.definition';
+import {
+  affectActionable,
+  createActionableDefinition,
+} from '@definitions/actionable.definition';
+import { ItemStore } from '@stores/item.store';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
@@ -30,7 +34,8 @@ export class StatesStore {
     messageStore: MessageStore,
     actionableStore: ActionableStore,
     resourcesStore: ResourcesStore,
-    sequencerHelper: SequencerHelper
+    sequencerHelper: SequencerHelper,
+    itemStore: ItemStore
   ) {
     this.store = new Map<string, ActionableState>();
 
@@ -95,7 +100,17 @@ export class StatesStore {
     });
 
     resourcesStore.lockedContainerStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(actionableStore, state);
+      const keyName = state.keyName;
+
+      const key = itemStore.items[keyName];
+
+      const actionables = ArrayView.create(
+        createActionableDefinition(
+          'USE',
+          key.identity.name,
+          `USE ${key.identity.label}`
+        )
+      );
 
       const allDirectionsDefinition = directionNamesDefinition.items.map(
         (direction) => {
