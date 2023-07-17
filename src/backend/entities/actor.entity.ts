@@ -36,6 +36,7 @@ import {
   WeaponChangedEvent,
 } from '@events/equipment-changed.event';
 import { ArmorDefinition } from '@definitions/armor.definition';
+import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -136,7 +137,18 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public get characteristics(): CharacteristicSetDefinition {
-    return this.actorBehavior.characteristics;
+    const characteristics = this.actorBehavior.characteristics;
+
+    const agi = this.actorBehavior.characteristics.AGI;
+
+    const agiValue = this.minimumValue(
+      agi.value -
+        SettingsStore.settings.armorPenalty[this.armorWearing.armorPenalty].AGI
+    );
+
+    const AGI = new CharacteristicDefinition(agi.key, agiValue);
+
+    return { ...characteristics, AGI };
   }
 
   public get derivedAttributes(): DerivedAttributeSetDefinition {
@@ -146,23 +158,26 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public get skills(): KeyValueInterface<number> {
     const weaponQuality = this.weaponEquipped.quality;
 
-    let actorSkills = this.actorBehavior.skills;
+    const actorSkills = this.actorBehavior.skills;
 
-    if (weaponQuality !== 'COMMON') {
-      const weaponSkillName = this.weaponEquipped.skillName;
+    const weaponSkillName = this.weaponEquipped.skillName;
 
-      const weaponSkillValue = this.minimumValue(
-        this.actorBehavior.skills[this.weaponEquipped.skillName] +
-          SettingsStore.settings.weaponQuality[weaponQuality]
-      );
+    const weaponSkillValue = this.minimumValue(
+      this.actorBehavior.skills[this.weaponEquipped.skillName] +
+        SettingsStore.settings.weaponQuality[weaponQuality]
+    );
 
-      actorSkills = {
-        ...actorSkills,
-        [weaponSkillName]: weaponSkillValue,
-      };
-    }
+    const dodgeValue = this.minimumValue(
+      this.actorBehavior.skills['Dodge'] -
+        SettingsStore.settings.armorPenalty[this.armorWearing.armorPenalty]
+          .Dodge
+    );
 
-    return actorSkills;
+    return {
+      ...actorSkills,
+      [weaponSkillName]: weaponSkillValue,
+      ['Dodge']: dodgeValue,
+    };
   }
 
   public get visibility(): VisibilityLiteral {

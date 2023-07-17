@@ -116,6 +116,7 @@ export const fakeSkills: KeyValueInterface<number> = {
   'First Aid': 45,
   'Melee Weapon (Simple)': 45,
   Brawl: 45,
+  Dodge: 30,
 };
 
 const str = (characteristics: CharacteristicSetDefinition) =>
@@ -123,6 +124,9 @@ const str = (characteristics: CharacteristicSetDefinition) =>
 
 const int = (characteristics: CharacteristicSetDefinition) =>
   characteristics.INT.value;
+
+const agi = (characteristics: CharacteristicSetDefinition) =>
+  characteristics.AGI.value;
 
 export const fakeSkillStore: KeyValueInterface<SkillDefinition> = {
   'First Aid': new SkillDefinition(
@@ -140,6 +144,7 @@ export const fakeSkillStore: KeyValueInterface<SkillDefinition> = {
     str
   ),
   Brawl: new SkillDefinition('Brawl', 'Fighting unarmed', 'NATURAL', true, str),
+  Dodge: new SkillDefinition('Dodge', 'Avoid damage', 'NATURAL', true, agi),
 };
 
 export const fakeMapSkills: Map<string, number> = new Map<string, number>([
@@ -228,6 +233,7 @@ export const fakeCharacterSheetDerivedAttributes = ArrayView.create(
 
 export const fakeCharacterSheetSkills = ArrayView.create(
   KeyValueDescriptionView.create('Brawl', '45', 'Fighting unarmed'),
+  KeyValueDescriptionView.create('Dodge', '30', 'Avoid damage'),
   KeyValueDescriptionView.create(
     'First Aid',
     '45',

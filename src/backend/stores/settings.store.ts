@@ -19,6 +19,7 @@ export class SettingsStore {
       ruleCost,
       aiLoopMilliseconds,
       weaponQuality,
+      armorPenalty,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(playerEffectDefenses.cures);
@@ -47,6 +48,7 @@ export class SettingsStore {
       ruleCost,
       aiLoopMilliseconds,
       weaponQuality,
+      armorPenalty,
     };
   }
 

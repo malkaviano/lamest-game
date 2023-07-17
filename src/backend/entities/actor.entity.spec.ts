@@ -96,11 +96,27 @@ describe('ActorEntity', () => {
 
       expect(actor.skills['Melee Weapon (Simple)']).toEqual(75);
     });
+
+    it('return skill value with armor penalty ', () => {
+      when(mockedEquipmentBehavior.armorWearing).thenReturn(leatherJacket);
+
+      const actor = fakeActor();
+
+      expect(actor.skills['Dodge']).toEqual(20);
+    });
   });
 
   describe('characteristics', () => {
     it('return characteristics', () => {
       expect(fakeActor().characteristics).toEqual(fakeCharacteristics);
+    });
+
+    it('return attribute value with armor penalty ', () => {
+      when(mockedEquipmentBehavior.armorWearing).thenReturn(leatherJacket);
+
+      const actor = fakeActor();
+
+      expect(actor.characteristics['AGI'].value).toEqual(10);
     });
   });
 
