@@ -15,6 +15,8 @@ export class SceneStore {
 
   public readonly initial: string;
 
+  public readonly transitions: KeyValueInterface<KeyValueInterface<string>>;
+
   constructor(
     interactiveStore: InteractiveStore,
     actorStore: ActorStore,
@@ -22,43 +24,51 @@ export class SceneStore {
   ) {
     this.store = new Map<string, SceneEntity>();
 
+    this.transitions = resourcesStore.sceneStore.transitions.reduce(
+      (
+        obj: { [key: string]: { [key: string]: string } },
+        { name, sceneA, sceneB }
+      ) => {
+        obj[name] = { [sceneA]: sceneB, [sceneB]: sceneA };
+
+        return obj;
+      },
+      {}
+    );
+
     resourcesStore.sceneStore.scenes.forEach((scene) => {
       const interactives = scene.interactives.map((id) => {
         return interactiveStore.interactives[id] ?? actorStore.actors[id];
       });
 
-      const transitions = scene.transitions.reduce(
-        (obj: { [key: string]: string }, { name, scene }) => {
-          obj[name] = scene;
+      const sceneExits = resourcesStore.sceneStore.transitions
+        .filter((obj) => obj.sceneA === scene.name || obj.sceneB === scene.name)
+        .map((obj) => {
+          const destinationName =
+            obj.sceneA === scene.name ? obj.sceneB : obj.sceneA;
 
-          return obj;
-        },
-        {}
-      );
+          const destination = resourcesStore.sceneStore.scenes.find(
+            (s) => s.name === destinationName
+          );
 
-      const exits = scene.transitions.map((t) => {
-        const destination = resourcesStore.sceneStore.scenes.find(
-          (s) => s.name === t.scene
-        );
-
-        return new InteractiveEntity(
-          t.name,
-          t.label,
-          `${scene.label} to ${destination?.label}`,
-          new SimpleState(
-            ArrayView.create(
-              createActionableDefinition(
-                'SCENE',
-                t.name,
-                GameStringsStore.descriptions['TRANSIT']
+          return new InteractiveEntity(
+            obj.name,
+            obj.label,
+            `${scene.label} <-> ${destination?.label}`,
+            new SimpleState(
+              ArrayView.create(
+                createActionableDefinition(
+                  'SCENE',
+                  obj.name,
+                  GameStringsStore.descriptions['TRANSIT']
+                )
               )
-            )
-          ),
-          true
-        );
-      });
+            ),
+            true
+          );
+        });
 
-      const allInteractives = interactives.concat(exits);
+      const allInteractives = interactives.concat(sceneExits);
 
       // Sort interactives
       this.orderInteractives(allInteractives);
@@ -66,9 +76,9 @@ export class SceneStore {
       this.store.set(
         scene.name,
         new SceneEntity(
+          scene.name,
           scene.label,
           ArrayView.fromArray(allInteractives),
-          transitions,
           scene.image
         )
       );

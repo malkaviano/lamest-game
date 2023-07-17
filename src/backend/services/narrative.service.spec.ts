@@ -34,13 +34,15 @@ describe('NarrativeService', () => {
       sceneExitDoor: instance(mockedInteractiveEntity),
     });
 
-    when(mockedSceneEntity.transitions).thenReturn({
-      sceneExitDoor: 'scene2',
+    when(mockedSceneStore.transitions).thenReturn({
+      scene: { sceneExitDoor: 'scene2' },
     });
 
     when(mockedSceneEntity.interactives).thenReturn(
       ArrayView.create(instance(mockedInteractiveEntity))
     );
+
+    when(mockedSceneEntity.name).thenReturn('sceneExitDoor');
 
     service = new NarrativeService(instance(mockedSceneStore));
   });
@@ -62,7 +64,7 @@ describe('NarrativeService', () => {
           }
         });
 
-        service.changeScene(actionableEvent(actionSceneExit, 'sceneExitDoor'));
+        service.changeScene(actionableEvent(actionSceneExit, 'scene'));
 
         expect(result).toEqual(2);
       });

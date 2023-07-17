@@ -4,163 +4,55 @@
       "name": "clearing",
       "label": "Forest Clearing",
       "image": "clearing.jpg",
-      "interactives": ["campFire", "bushes", "disguiseVillager", "woodBox1"],
-      "transitions": [
-        {
-          "name": "forestTrail",
-          "label": "Forest Trail",
-          "scene": "villageEntrance"
-        }
-      ]
+      "interactives": ["campFire", "bushes", "disguiseVillager", "woodBox1"]
     },
     {
       "name": "villageEntrance",
       "label": "Village Entrance",
       "image": "gate.jpg",
-      "interactives": ["villager"],
-      "transitions": [
-        {
-          "name": "villageGate",
-          "label": "Village Gate",
-          "scene": "mainStreet"
-        },
-        {
-          "name": "forestTrail",
-          "label": "Forest Trail",
-          "scene": "clearing"
-        }
-      ]
+      "interactives": ["villager"]
     },
     {
       "name": "mainStreet",
       "label": "Main Street",
       "image": "village.jpg",
-      "interactives": [],
-      "transitions": [
-        {
-          "name": "villageGate",
-          "label": "Village Gate",
-          "scene": "villageEntrance"
-        },
-        {
-          "name": "hunterCabinDoor",
-          "label": "Hunter Cabin Door",
-          "scene": "hunterCabin"
-        },
-        {
-          "name": "mainHouseDoor",
-          "label": "Main House Door",
-          "scene": "mainHouse"
-        },
-        {
-          "name": "mysteriousHouseDoor",
-          "label": "Mysterious House Door",
-          "scene": "mysteriousHouse"
-        },
-        {
-          "name": "ambulatoryTentEntrance",
-          "label": "Ambulatory Tent Entrance",
-          "scene": "ambulatoryTent"
-        },
-        {
-          "name": "storageHangarDoor",
-          "label": "Storage Hangar Entrance",
-          "scene": "storageHangar"
-        }
-      ]
+      "interactives": []
     },
     {
       "name": "mainHouse",
       "label": "Main House",
       "image": "main.jpg",
-      "interactives": [],
-      "transitions": [
-        {
-          "name": "mainHouseDoor",
-          "label": "Exit Door",
-          "scene": "mainStreet"
-        },
-        {
-          "name": "mainHouseLibraryDoor",
-          "label": "Library Door",
-          "scene": "mainHouseLibrary"
-        },
-        {
-          "name": "mainHouseDiningDoor",
-          "label": "Dining Door",
-          "scene": "mainHouseDining"
-        },
-        {
-          "name": "mainHouseBasementDoor",
-          "label": "Basement Door",
-          "scene": "mainHouseBasement"
-        }
-      ]
+      "interactives": []
     },
     {
       "name": "mainHouseLibrary",
       "label": "Main House Library",
       "image": "library.jpg",
-      "interactives": [],
-      "transitions": [
-        {
-          "name": "mainHouseLibraryDoor",
-          "label": "Library Door",
-          "scene": "mainHouse"
-        }
-      ]
+      "interactives": []
     },
     {
       "name": "mainHouseDining",
       "label": "Main House Dining",
       "image": "dining.jpg",
-      "interactives": [],
-      "transitions": [
-        {
-          "name": "mainHouseDiningDoor",
-          "label": "Dining Door",
-          "scene": "mainHouse"
-        }
-      ]
+      "interactives": []
     },
     {
       "name": "mainHouseBasement",
       "label": "Main House Basement",
       "image": "basement.jpg",
-      "interactives": [],
-      "transitions": [
-        {
-          "name": "mainHouseBasementDoor",
-          "label": "Basement Door",
-          "scene": "mainHouse"
-        }
-      ]
+      "interactives": []
     },
     {
       "name": "hunterCabin",
       "label": "Hunter Cabin",
       "image": "cabin.jpg",
-      "interactives": ["hunterCabinTable", "hunterCabinWall"],
-      "transitions": [
-        {
-          "name": "hunterCabinDoor",
-          "label": "Cabin Door",
-          "scene": "mainStreet"
-        }
-      ]
+      "interactives": ["hunterCabinTable", "hunterCabinWall"]
     },
     {
       "name": "mysteriousHouse",
       "label": "Mysterious House",
       "image": "mysterious.jpg",
-      "interactives": ["zombie"],
-      "transitions": [
-        {
-          "name": "mysteriousHouseDoor",
-          "label": "House Door",
-          "scene": "mainStreet"
-        }
-      ]
+      "interactives": ["zombie"]
     },
     {
       "name": "ambulatoryTent",
@@ -170,28 +62,77 @@
         "medicNPC",
         "ambulatoryLockedCabinet1",
         "ambulatoryMetalShelves1"
-      ],
-      "transitions": [
-        {
-          "name": "ambulatoryTentEntrance",
-          "label": "Tent Entrance",
-          "scene": "mainStreet"
-        }
       ]
     },
     {
       "name": "storageHangar",
       "label": "Storage Hangar",
       "image": "warehouse.jpg",
-      "interactives": ["storageGuard", "storageLockedCabinet1"],
-      "transitions": [
-        {
-          "name": "storageHangarDoor",
-          "label": "Hangar Entrance",
-          "scene": "mainStreet"
-        }
-      ]
+      "interactives": ["storageGuard", "storageLockedCabinet1"]
     }
   ],
-  "initial": "clearing"
+  "initial": "clearing",
+  "transitions": [
+    {
+      "sceneA": "clearing",
+      "sceneB": "villageEntrance",
+      "name": "forestTrail",
+      "label": "Forest Trail"
+    },
+    {
+      "sceneA": "villageEntrance",
+      "sceneB": "mainStreet",
+      "name": "villageGate",
+      "label": "Village Gate"
+    },
+
+    {
+      "sceneA": "mainStreet",
+      "sceneB": "hunterCabin",
+      "name": "hunterCabinDoor",
+      "label": "Hunter Cabin Door"
+    },
+    {
+      "sceneA": "mainStreet",
+      "sceneB": "mainHouse",
+      "name": "mainHouseDoor",
+      "label": "Main House Door"
+    },
+    {
+      "sceneA": "mainStreet",
+      "sceneB": "mysteriousHouse",
+      "name": "mysteriousHouseDoor",
+      "label": "Mysterious House Door"
+    },
+    {
+      "sceneA": "mainStreet",
+      "sceneB": "ambulatoryTent",
+      "name": "ambulatoryTentEntrance",
+      "label": "Ambulatory Tent Entrance"
+    },
+    {
+      "sceneA": "mainStreet",
+      "sceneB": "storageHangar",
+      "name": "storageHangarDoor",
+      "label": "Storage Hangar Entrance"
+    },
+    {
+      "sceneA": "mainHouse",
+      "sceneB": "mainHouseLibrary",
+      "name": "mainHouseLibraryDoor",
+      "label": "Library Door"
+    },
+    {
+      "sceneA": "mainHouse",
+      "sceneB": "mainHouseDining",
+      "name": "mainHouseDiningDoor",
+      "label": "Dining Door"
+    },
+    {
+      "sceneA": "mainHouse",
+      "sceneB": "mainHouseBasement",
+      "name": "mainHouseBasementDoor",
+      "label": "Basement Door"
+    }
+  ]
 }

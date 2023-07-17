@@ -58,7 +58,7 @@ export class StatesStore {
     resourcesStore.discardStateStore.states.forEach((state) => {
       const actionables = state.items.map((itemName) => {
         const item = itemStore.items[itemName];
-        console.log(itemName, item);
+
         return createActionableDefinition(
           'PICK',
           item.identity.name,

@@ -30,7 +30,8 @@ export class NarrativeService {
       throw new Error(GameStringsStore.errorMessages['INVALID-OPERATION']);
     }
 
-    const nextSceneName = this.currentScene.transitions[action.eventId];
+    const nextSceneName =
+      this.sceneStore.transitions[action.eventId][this.currentScene.name];
 
     this.currentScene = this.sceneStore.scenes[nextSceneName];
 
