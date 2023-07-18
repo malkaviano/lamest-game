@@ -6,12 +6,13 @@
   </div>
   <div class="action">
     <button
-      mat-raised-button
+      mat-fab
       color="primary"
       (click)="onActionSelected(equipment.action)"
       attr.data-testid="equip-action-{{ equipment.action.name }}"
+      matTooltip="{{ tooltip }}"
     >
-      {{ equipment.action.label }}
+    <img src="{{ icon }}" alt="{{ tooltip }}" />
     </button>
   </div>
 </div>
