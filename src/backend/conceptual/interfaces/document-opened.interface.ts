@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 
 export interface DocumentOpenedInterface {
-  readonly documentOpened$: Observable<ReadableInterface>;
+  readonly documentOpened$: Observable<ReadableDefinition>;
 }

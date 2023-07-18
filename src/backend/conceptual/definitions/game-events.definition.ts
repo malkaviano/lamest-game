@@ -4,7 +4,7 @@ import { SceneDefinition } from '@definitions/scene.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { PlayerInterface } from '@interfaces/player.interface';
 
 export class GameEventsDefinition {
@@ -15,6 +15,6 @@ export class GameEventsDefinition {
     public readonly playerInventory$: Observable<
       ArrayView<ActionableItemDefinition>
     >,
-    public readonly documentOpened$: Observable<ReadableInterface>
+    public readonly documentOpened$: Observable<ReadableDefinition>
   ) {}
 }

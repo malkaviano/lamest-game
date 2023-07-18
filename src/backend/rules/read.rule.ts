@@ -46,9 +46,6 @@ export class ReadRule extends RuleAbstraction {
   }
 
   private openDocument(item: ReadableDefinition): void {
-    this.documentOpened.next({
-      title: item.title,
-      text: item.text,
-    });
+    this.documentOpened.next(item);
   }
 }

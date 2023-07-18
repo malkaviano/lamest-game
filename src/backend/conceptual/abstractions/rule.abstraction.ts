@@ -12,7 +12,7 @@ import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
 import {
   ActionableDefinition,
@@ -40,9 +40,9 @@ export abstract class RuleAbstraction
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
-  protected readonly documentOpened: Subject<ReadableInterface>;
+  protected readonly documentOpened: Subject<ReadableDefinition>;
 
-  public readonly documentOpened$: Observable<ReadableInterface>;
+  public readonly documentOpened$: Observable<ReadableDefinition>;
 
   public abstract get name(): RuleNameLiteral;
 

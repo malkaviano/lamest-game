@@ -6,7 +6,7 @@ import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 
 export class RulesHub
   implements LoggerInterface, ActorDodgedInterface, DocumentOpenedInterface
@@ -17,7 +17,7 @@ export class RulesHub
 
   public readonly actorDodged$: Observable<string>;
 
-  public readonly documentOpened$: Observable<ReadableInterface>;
+  public readonly documentOpened$: Observable<ReadableDefinition>;
 
   constructor(...rules: RuleAbstraction[]) {
     this.dispatcher = rules.reduce(

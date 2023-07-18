@@ -32,6 +32,7 @@ import {
   fakeCharacterSheetDerivedAttributes,
   fakeCharacterSheetIdentity,
   fakeCharacterSheetSkills,
+  readable,
   simpleSword,
   unDodgeableAxe,
 } from '../../../../tests/fakes';
@@ -79,12 +80,7 @@ describe('GamePageComponent', () => {
 
     when(mockedGameEventsDefinition.actionLogged$).thenReturn(of(log));
 
-    when(mockedGameEventsDefinition.documentOpened$).thenReturn(
-      of({
-        title: 'GG',
-        text: ArrayView.create<string>(),
-      })
-    );
+    when(mockedGameEventsDefinition.documentOpened$).thenReturn(of(readable));
 
     fixture = TestBed.createComponent(GamePageComponent);
 

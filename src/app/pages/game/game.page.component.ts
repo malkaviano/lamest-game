@@ -6,7 +6,7 @@ import { GameItemDefinition } from '@definitions/game-item.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { ActionableEvent } from '@events/actionable.event';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { GameLoopService } from '@services/game-loop.service';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ArrayView } from '@wrappers/array.view';
@@ -152,7 +152,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     return `${logMessage.actor}: ${logMessage.message}`;
   }
 
-  private openReaderDialog(data: ReadableInterface): void {
+  private openReaderDialog(data: ReadableDefinition): void {
     this.dialog.open(ReaderDialogComponent, {
       data,
       autoFocus: false,

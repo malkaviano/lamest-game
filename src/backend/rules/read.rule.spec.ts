@@ -4,7 +4,7 @@ import { ReadRule } from './read.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RuleResult } from '@results/rule.result';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 
 import {
   mockedInventoryService,
@@ -72,7 +72,7 @@ describe('ReadRule', () => {
 
     describe('openDocument', () => {
       it('should emit documentOpened event', (done) => {
-        const result: ReadableInterface[] = [];
+        const result: ReadableDefinition[] = [];
 
         rule.documentOpened$.subscribe((event) => {
           result.push(event);
@@ -82,7 +82,7 @@ describe('ReadRule', () => {
 
         done();
 
-        expect(result).toEqual([docEvent]);
+        expect(result).toEqual([readable]);
       });
     });
   });
@@ -99,8 +99,3 @@ const itemReadLog = new LogMessageDefinition(
   playerInfo.name,
   'read Book'
 );
-
-const docEvent = {
-  title: readable.title,
-  text: readable.text,
-};

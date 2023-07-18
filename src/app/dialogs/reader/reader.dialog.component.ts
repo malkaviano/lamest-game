@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 
 @Component({
   selector: 'app-reader-dialog',
@@ -11,6 +11,6 @@ import { ReadableInterface } from '@interfaces/readable.interface';
 export class ReaderDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public readonly data: ReadableInterface
+    public readonly data: ReadableDefinition
   ) {}
 }
