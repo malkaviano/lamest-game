@@ -1,6 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { SceneDefinition } from '@definitions/scene.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { SceneStore } from '@stores/scene.store';
 import { ActionableEvent } from '@events/actionable.event';
@@ -9,14 +8,14 @@ import { SceneEntity } from '@entities/scene.entity';
 export class NarrativeService {
   private currentScene: SceneEntity;
 
-  private readonly sceneChanged: BehaviorSubject<SceneDefinition>;
+  private readonly sceneChanged: BehaviorSubject<SceneEntity>;
 
-  public readonly sceneChanged$: Observable<SceneDefinition>;
+  public readonly sceneChanged$: Observable<SceneEntity>;
 
   constructor(private readonly sceneStore: SceneStore) {
     this.currentScene = this.sceneStore.scenes[this.sceneStore.initial];
 
-    this.sceneChanged = new BehaviorSubject<SceneDefinition>(this.currentScene);
+    this.sceneChanged = new BehaviorSubject<SceneEntity>(this.currentScene);
 
     this.sceneChanged$ = this.sceneChanged.asObservable();
   }

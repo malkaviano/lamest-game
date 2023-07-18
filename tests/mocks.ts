@@ -27,7 +27,6 @@ import { ResourcesStore } from '@stores/resources.store';
 import { SceneStore } from '@stores/scene.store';
 import { StatesStore } from '@stores/states.store';
 import { GameEventsDefinition } from '@definitions/game-events.definition';
-import { SceneDefinition } from '@definitions/scene.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ProfessionStore } from '@stores/profession.store';
 import { ActorStore } from '@stores/actor.store';
@@ -350,7 +349,8 @@ export const setupMocks = () => {
 
   when(mockedGameEventsDefinition.sceneChanged$).thenReturn(
     of(
-      new SceneDefinition(
+      new SceneEntity(
+        'scene',
         'this is a test',
         ArrayView.create(instance(mockedInteractiveEntity)),
         'gg.jpg'

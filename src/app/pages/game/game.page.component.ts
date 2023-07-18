@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { SceneDefinition } from '@definitions/scene.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { ReadableDefinition } from '@definitions/readable.definition';
 import { GameLoopService } from '@services/game-loop.service';
@@ -18,6 +17,7 @@ import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { ViewableInterface } from '../../interfaces/viewable.interface';
 import { CharacterValuesView } from '../../view-models/character-values.view';
 import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
+import { SceneEntity } from '@entities/scene.entity';
 
 @Component({
   selector: 'app-game-page',
@@ -28,7 +28,7 @@ import { KeyValueDescriptionView } from '../../view-models/key-value-description
 export class GamePageComponent implements OnInit, OnDestroy {
   private readonly gameLogs: string[];
 
-  public scene: SceneDefinition;
+  public scene!: SceneEntity;
 
   public characterValues: CharacterValuesView;
 
@@ -56,8 +56,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
       ArrayView.empty(),
       ArrayView.empty()
     );
-
-    this.scene = new SceneDefinition('', ArrayView.empty(), '');
   }
 
   ngOnDestroy(): void {

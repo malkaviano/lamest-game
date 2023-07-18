@@ -4,7 +4,6 @@ import { CharacterService } from '@services/character.service';
 import { NarrativeService } from '@services/narrative.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
-import { SceneDefinition } from '@definitions/scene.definition';
 import { RulesHub } from '@hubs/rules.hub';
 import { InventoryService } from '@services/inventory.service';
 import { GameEventsDefinition } from '@definitions/game-events.definition';
@@ -27,6 +26,7 @@ import { LoggingHub } from '@hubs/logging.hub';
 import { GamePredicate } from '@predicates/game.predicate';
 import { SettingsStore } from '@stores/settings.store';
 import { SceneActorsInfoValues } from '@values/scene-actors.value';
+import { SceneEntity } from '@entities/scene.entity';
 
 export class GameLoopService {
   private aiTimer: NodeJS.Timer | undefined;
@@ -35,7 +35,7 @@ export class GameLoopService {
 
   private readonly player: PlayerInterface;
 
-  private currentScene!: SceneDefinition;
+  private currentScene!: SceneEntity;
 
   private actionReactives: { [key: string]: InteractiveInterface };
 
