@@ -119,32 +119,25 @@ export const fakeSkills: ReadonlyKeyValueWrapper<number> = {
   Dodge: 30,
 };
 
-const str = (characteristics: CharacteristicValues) =>
-  characteristics.STR.value;
-
-const int = (characteristics: CharacteristicValues) =>
-  characteristics.INT.value;
-
-const agi = (characteristics: CharacteristicValues) =>
-  characteristics.AGI.value;
-
 export const fakeSkillStore: ReadonlyKeyValueWrapper<SkillDefinition> = {
   'First Aid': new SkillDefinition(
     'First Aid',
     'Use emergency kit to heal',
     'NATURAL',
     false,
-    int
+    ['INT']
   ),
   'Melee Weapon (Simple)': new SkillDefinition(
     'Melee Weapon (Simple)',
     'Light close combat weapons, one handed',
     'NATURAL',
     true,
-    str
+    ['STR']
   ),
-  Brawl: new SkillDefinition('Brawl', 'Fighting unarmed', 'NATURAL', true, str),
-  Dodge: new SkillDefinition('Dodge', 'Avoid damage', 'NATURAL', true, agi),
+  Brawl: new SkillDefinition('Brawl', 'Fighting unarmed', 'NATURAL', true, [
+    'STR',
+  ]),
+  Dodge: new SkillDefinition('Dodge', 'Avoid damage', 'NATURAL', true, ['AGI']),
 };
 
 export const fakeMapSkills: Map<string, number> = new Map<string, number>([
