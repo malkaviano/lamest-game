@@ -1,5 +1,5 @@
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
+import { RuleValuesDefinition } from '@definitions/rule-values.definition';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
@@ -19,7 +19,7 @@ export class InteractionRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
-    extras: RuleExtrasInterface
+    extras: RuleValuesDefinition
   ): RuleResult {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 

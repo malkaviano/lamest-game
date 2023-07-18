@@ -4,7 +4,7 @@ import { EffectEvent } from '@events/effect.event';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { RollHelper } from '@helpers/roll.helper';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
+import { RuleValuesDefinition } from '@definitions/rule-values.definition';
 import { RuleResult } from '@results/rule.result';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
@@ -38,7 +38,7 @@ export class AffectRule
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
-    extras: RuleExtrasInterface
+    extras: RuleValuesDefinition
   ): RuleResult {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
@@ -130,7 +130,7 @@ export class AffectRule
     targetActor: ActorInterface,
     effect: EffectDefinition,
     dodgeable: boolean,
-    extras: RuleExtrasInterface
+    extras: RuleValuesDefinition
   ) {
     const { checkResult, roll } = this.checkSkill(actor, skillName);
 

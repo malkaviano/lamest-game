@@ -8,14 +8,14 @@ import { first } from 'rxjs';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
+import { RuleValuesDefinition } from '@definitions/rule-values.definition';
 
 export const ruleScenario = (
   service: RuleAbstraction,
   actor: ActorInterface,
   actionableEvent: ActionableEvent,
-  extras: RuleExtrasInterface,
+  extras: RuleValuesDefinition,
   expected: LogMessageDefinition[],
   done: DoneFn
 ) => {
