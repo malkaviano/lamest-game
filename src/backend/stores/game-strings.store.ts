@@ -1,5 +1,5 @@
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { LogCategoryLiteral } from '@literals/log-category.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
@@ -7,27 +7,27 @@ import { CheckResultLiteral } from '@literals/check-result.literal';
 import gameMessages from '@assets/game-strings.json';
 
 export class GameStringsStore {
-  private static logMessagesStore: KeyValueInterface<string> =
+  private static logMessagesStore: ReadonlyKeyValueWrapper<string> =
     gameMessages.logs;
 
-  private static errorMessagesStore: KeyValueInterface<string> =
+  private static errorMessagesStore: ReadonlyKeyValueWrapper<string> =
     gameMessages.errors;
 
-  private static descriptionsStore: KeyValueInterface<string> =
+  private static descriptionsStore: ReadonlyKeyValueWrapper<string> =
     gameMessages.descriptions;
 
-  private static tooltipsStore: KeyValueInterface<string> =
+  private static tooltipsStore: ReadonlyKeyValueWrapper<string> =
     gameMessages.tooltips;
 
-  public static get errorMessages(): KeyValueInterface<string> {
+  public static get errorMessages(): ReadonlyKeyValueWrapper<string> {
     return GameStringsStore.errorMessagesStore;
   }
 
-  public static get descriptions(): KeyValueInterface<string> {
+  public static get descriptions(): ReadonlyKeyValueWrapper<string> {
     return GameStringsStore.descriptionsStore;
   }
 
-  public static get tooltips(): KeyValueInterface<string> {
+  public static get tooltips(): ReadonlyKeyValueWrapper<string> {
     return GameStringsStore.tooltipsStore;
   }
 

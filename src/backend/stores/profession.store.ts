@@ -1,5 +1,5 @@
 import { ConverterHelper } from '@helpers/converter.helper';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ArrayView } from '@wrappers/array.view';
 import { ResourcesStore } from './resources.store';
 
@@ -14,7 +14,7 @@ export class ProfessionStore {
     });
   }
 
-  public get professions(): KeyValueInterface<ArrayView<string>> {
+  public get professions(): ReadonlyKeyValueWrapper<ArrayView<string>> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

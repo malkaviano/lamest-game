@@ -32,7 +32,7 @@ describe('ConverterHelper', () => {
   });
 
   describe('mapToKeyValueInterface', () => {
-    it('return KeyValueInterface', () => {
+    it('return ROKeyValueWrapper', () => {
       const map = new Map<string, number>();
 
       map.set('gg', 12);

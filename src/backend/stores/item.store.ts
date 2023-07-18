@@ -2,7 +2,7 @@ import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { EffectDefinition } from '@definitions/effect.definition';
 import { createDice } from '@definitions/dice.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { ResourcesStore } from '@stores/resources.store';
 import { UsableDefinition } from '@definitions/usable.definition';
@@ -30,7 +30,7 @@ export class ItemStore {
     this.loadArmor(resourcesStore);
   }
 
-  public get items(): KeyValueInterface<GameItemDefinition> {
+  public get items(): ReadonlyKeyValueWrapper<GameItemDefinition> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 

@@ -14,7 +14,7 @@ import { CharacteristicSetDefinition } from '@definitions/characteristic-set.def
 import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
@@ -154,7 +154,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return this.actorBehavior.derivedAttributes;
   }
 
-  public get skills(): KeyValueInterface<number> {
+  public get skills(): ReadonlyKeyValueWrapper<number> {
     const weaponQuality = this.weaponEquipped.quality;
 
     const actorSkills = this.actorBehavior.skills;

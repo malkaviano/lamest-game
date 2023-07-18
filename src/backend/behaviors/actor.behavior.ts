@@ -2,7 +2,7 @@ import { CharacteristicSetDefinition } from '@definitions/characteristic-set.def
 import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { MathHelper } from '@helpers/math.helper';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { EffectEvent } from '@events/effect.event';
@@ -58,7 +58,7 @@ export class ActorBehavior {
     };
   }
 
-  public get skills(): KeyValueInterface<number> {
+  public get skills(): ReadonlyKeyValueWrapper<number> {
     return Array.from(this.mSkills.entries()).reduce(
       (acc: { [key: string]: number }, [k, v]) => {
         const base = this.skillStore.skills[k].base(this.characteristics);

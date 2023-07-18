@@ -1,5 +1,5 @@
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 
 export interface WithSkillsInterface {
-  get skills(): KeyValueInterface<number>;
+  get skills(): ReadonlyKeyValueWrapper<number>;
 }

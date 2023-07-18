@@ -3,7 +3,7 @@ import {
   createActionableDefinition,
 } from '@definitions/actionable.definition';
 import { ConverterHelper } from '@helpers/converter.helper';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ResourcesStore } from '@stores/resources.store';
 
 export class ActionableStore {
@@ -24,7 +24,7 @@ export class ActionableStore {
     });
   }
 
-  public get actionables(): KeyValueInterface<ActionableDefinition> {
+  public get actionables(): ReadonlyKeyValueWrapper<ActionableDefinition> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

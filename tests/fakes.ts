@@ -21,7 +21,7 @@ import { UsableDefinition } from '@definitions/usable.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { DiscardState } from '@states/discard.state';
@@ -112,7 +112,7 @@ export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
   'CURRENT AP': new DerivedAttributeDefinition('CURRENT AP', 6),
 };
 
-export const fakeSkills: KeyValueInterface<number> = {
+export const fakeSkills: ReadonlyKeyValueWrapper<number> = {
   'First Aid': 45,
   'Melee Weapon (Simple)': 45,
   Brawl: 45,
@@ -128,7 +128,7 @@ const int = (characteristics: CharacteristicSetDefinition) =>
 const agi = (characteristics: CharacteristicSetDefinition) =>
   characteristics.AGI.value;
 
-export const fakeSkillStore: KeyValueInterface<SkillDefinition> = {
+export const fakeSkillStore: ReadonlyKeyValueWrapper<SkillDefinition> = {
   'First Aid': new SkillDefinition(
     'First Aid',
     'Use emergency kit to heal',

@@ -1,7 +1,7 @@
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
 import { SkillDefinition } from '@definitions/skill.definition';
 import { ConverterHelper } from '@helpers/converter.helper';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ResourcesStore } from './resources.store';
 import { ArrayView } from '@wrappers/array.view';
 
@@ -36,7 +36,7 @@ export class SkillStore {
     });
   }
 
-  public get skills(): KeyValueInterface<SkillDefinition> {
+  public get skills(): ReadonlyKeyValueWrapper<SkillDefinition> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 
@@ -67,7 +67,7 @@ const app = (characteristics: CharacteristicSetDefinition) =>
 const vit = (characteristics: CharacteristicSetDefinition) =>
   characteristics.VIT.value;
 
-const influencedDefinitions: KeyValueInterface<
+const influencedDefinitions: ReadonlyKeyValueWrapper<
   (characteristics: CharacteristicSetDefinition) => number
 > = {
   str,

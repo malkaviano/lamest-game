@@ -1,5 +1,5 @@
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 
-export type MessageMapDefinition = KeyValueInterface<
-  KeyValueInterface<{ label: string; answer: string; change?: string }>
+export type MessageMapDefinition = ReadonlyKeyValueWrapper<
+  ReadonlyKeyValueWrapper<{ label: string; answer: string; change?: string }>
 >;
