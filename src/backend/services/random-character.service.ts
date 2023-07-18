@@ -1,7 +1,7 @@
 import { GeneratorService } from '@services/generator.service';
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
 import { SkillService } from '@services/skill.service';
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { ProfessionStore } from '@stores/profession.store';
 import { SkillStore } from '@stores/skill.store';
 import { SettingsStore } from '@stores/settings.store';
@@ -39,7 +39,7 @@ export class RandomCharacterService {
     return this.generator.identity();
   }
 
-  private characteristics(): CharacteristicSetDefinition {
+  private characteristics(): CharacteristicValues {
     return this.generator.characteristics();
   }
 

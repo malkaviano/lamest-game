@@ -5,7 +5,7 @@ import { ConsumeRule } from '@rules/consume.rule';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RollDefinition } from '@definitions/roll.definition';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 
 import {
   mockedCheckedService,
@@ -96,7 +96,7 @@ describe('ConsumeRule', () => {
 
           const result = rule.execute(actor, eventConsumeFirstAid);
 
-          const expected: RuleResultInterface = {
+          const expected: RuleResult = {
             name: 'CONSUME',
             event: eventConsumeFirstAid,
             actor,
@@ -122,7 +122,7 @@ describe('ConsumeRule', () => {
 
           const result = rule.execute(actor, eventConsumeFirstAid);
 
-          const expected: RuleResultInterface = {
+          const expected: RuleResult = {
             name: 'CONSUME',
             event: eventConsumeFirstAid,
             actor,
@@ -148,7 +148,7 @@ describe('ConsumeRule', () => {
 
           const result = rule.execute(actor, eventConsumeFirstAid);
 
-          const expected: RuleResultInterface = {
+          const expected: RuleResult = {
             name: 'CONSUME',
             event: eventConsumeFirstAid,
             actor,

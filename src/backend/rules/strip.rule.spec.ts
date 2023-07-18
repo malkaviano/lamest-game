@@ -2,7 +2,7 @@ import { instance, verify, when } from 'ts-mockito';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@events/actionable.event';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { stripActionable } from '@definitions/actionable.definition';
 import { StripRule } from '@rules/strip.rule';
 
@@ -41,7 +41,7 @@ describe('StripRule', () => {
 
       verify(mockedInventoryService.store(actor.id, kevlarVest)).once();
 
-      const expected: RuleResultInterface = {
+      const expected: RuleResult = {
         name: 'STRIP',
         event: stripEvent,
         result: 'EXECUTED',
@@ -59,7 +59,7 @@ describe('StripRule', () => {
 
       const result = rule.execute(actor, stripEvent);
 
-      const expected: RuleResultInterface = {
+      const expected: RuleResult = {
         name: 'STRIP',
         event: stripEvent,
         result: 'DENIED',

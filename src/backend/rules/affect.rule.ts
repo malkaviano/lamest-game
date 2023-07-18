@@ -4,8 +4,8 @@ import { EffectEvent } from '@events/effect.event';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { RollHelper } from '@helpers/roll.helper';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleValues } from '@values/rule.value';
+import { RuleResult } from '@results/rule.result';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
@@ -38,8 +38,8 @@ export class AffectRule
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
-    extras: RuleExtrasInterface
-  ): RuleResultInterface {
+    extras: RuleValues
+  ): RuleResult {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const {
@@ -98,8 +98,10 @@ export class AffectRule
           effect: new EffectEvent(effect.effectType, effectAmount),
         });
 
-        this.ruleResult.effectType = effect.effectType;
-        this.ruleResult.effectAmount = effectAmount;
+        this.ruleResult.effect = {
+          type: effect.effectType,
+          amount: effectAmount,
+        };
       } else if (this.ruleResult.dodged) {
         this.actorDodged.next(targetActor.id);
       }
@@ -128,7 +130,7 @@ export class AffectRule
     targetActor: ActorInterface,
     effect: EffectDefinition,
     dodgeable: boolean,
-    extras: RuleExtrasInterface
+    extras: RuleValues
   ) {
     const { checkResult, roll } = this.checkSkill(actor, skillName);
 

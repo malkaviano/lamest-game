@@ -1,4 +1,4 @@
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 
@@ -7,7 +7,7 @@ export interface ActorStoreInterface {
     readonly id: string;
     readonly name: string;
     readonly description: string;
-    readonly characteristics: CharacteristicSetDefinition;
+    readonly characteristics: CharacteristicValues;
     readonly skills: Map<string, number>;
     readonly equippedWeapon: string;
     readonly lootState: string;

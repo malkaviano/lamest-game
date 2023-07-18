@@ -5,11 +5,11 @@ import {
 } from '@definitions/actionable.definition';
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { createDamageReduction } from '@definitions/damage-reduction.definition';
-import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { DerivedAttributeValues } from '@values/derived-attribute.value';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { createDice } from '@definitions/dice.definition';
 import { EffectDefinition } from '@definitions/effect.definition';
@@ -21,8 +21,8 @@ import { UsableDefinition } from '@definitions/usable.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
-import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
+import { SceneActorsInfoValues } from '@values/scene-actors.value';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { DiscardState } from '@states/discard.state';
 import { ArrayView } from '@wrappers/array.view';
@@ -94,7 +94,7 @@ export const actionAsk = createActionableDefinition(
   'Got action?'
 );
 
-export const fakeCharacteristics: CharacteristicSetDefinition = {
+export const fakeCharacteristics: CharacteristicValues = {
   STR: new CharacteristicDefinition('STR', 8),
   VIT: new CharacteristicDefinition('VIT', 9),
   AGI: new CharacteristicDefinition('AGI', 11),
@@ -103,7 +103,7 @@ export const fakeCharacteristics: CharacteristicSetDefinition = {
   APP: new CharacteristicDefinition('APP', 14),
 };
 
-export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
+export const fakeDerivedAttributes: DerivedAttributeValues = {
   'MAX HP': new DerivedAttributeDefinition('MAX HP', 8),
   'MAX EP': new DerivedAttributeDefinition('MAX EP', 13),
   'CURRENT HP': new DerivedAttributeDefinition('CURRENT HP', 8),
@@ -112,23 +112,23 @@ export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
   'CURRENT AP': new DerivedAttributeDefinition('CURRENT AP', 6),
 };
 
-export const fakeSkills: KeyValueInterface<number> = {
+export const fakeSkills: ReadonlyKeyValueWrapper<number> = {
   'First Aid': 45,
   'Melee Weapon (Simple)': 45,
   Brawl: 45,
   Dodge: 30,
 };
 
-const str = (characteristics: CharacteristicSetDefinition) =>
+const str = (characteristics: CharacteristicValues) =>
   characteristics.STR.value;
 
-const int = (characteristics: CharacteristicSetDefinition) =>
+const int = (characteristics: CharacteristicValues) =>
   characteristics.INT.value;
 
-const agi = (characteristics: CharacteristicSetDefinition) =>
+const agi = (characteristics: CharacteristicValues) =>
   characteristics.AGI.value;
 
-export const fakeSkillStore: KeyValueInterface<SkillDefinition> = {
+export const fakeSkillStore: ReadonlyKeyValueWrapper<SkillDefinition> = {
   'First Aid': new SkillDefinition(
     'First Aid',
     'Use emergency kit to heal',
@@ -163,7 +163,7 @@ export const fakeIdentity = new CharacterIdentityDefinition(
   'VISIBLE'
 );
 
-export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
+export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoValues> =
   ArrayView.create({
     id: playerInfo.id,
     classification: 'PLAYER',

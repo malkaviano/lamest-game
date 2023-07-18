@@ -1,5 +1,5 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { ReactionValues } from '@values/reaction.value';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from '@states/actionable.state';
@@ -18,7 +18,7 @@ export class DestroyableState extends ActionableState {
   protected override stateResult(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValues
   ): { state: ActionableState; log?: string } {
     if (
       action.actionable === 'AFFECT' &&

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ClassificationLiteral } from '@literals/classification.literal';
-import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { ReactionValues } from '@values/reaction.value';
 import { ArrayView } from '@wrappers/array.view';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
@@ -23,10 +23,11 @@ export interface InteractiveInterface {
 
   readonly actionsChanged$: Observable<ArrayView<ActionableDefinition>>;
 
+  // TODO: improve return type
   reactTo(
     selected: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValues
   ): string | null;
 
   reset(): void;

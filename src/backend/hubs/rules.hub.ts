@@ -3,21 +3,21 @@ import { merge, Observable } from 'rxjs';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 
 export class RulesHub
   implements LoggerInterface, ActorDodgedInterface, DocumentOpenedInterface
 {
-  public readonly dispatcher: KeyValueInterface<RuleAbstraction>;
+  public readonly dispatcher: ReadonlyKeyValueWrapper<RuleAbstraction>;
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
   public readonly actorDodged$: Observable<string>;
 
-  public readonly documentOpened$: Observable<ReadableInterface>;
+  public readonly documentOpened$: Observable<ReadableDefinition>;
 
   constructor(...rules: RuleAbstraction[]) {
     this.dispatcher = rules.reduce(

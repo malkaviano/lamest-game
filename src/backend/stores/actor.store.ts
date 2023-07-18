@@ -1,7 +1,7 @@
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ConverterHelper } from '@helpers/converter.helper';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ItemStore } from '@stores/item.store';
 import { ResourcesStore } from '@stores/resources.store';
 import { SkillStore } from '@stores/skill.store';
@@ -61,7 +61,7 @@ export class ActorStore {
     );
   }
 
-  public get actors(): KeyValueInterface<ActorEntity> {
+  public get actors(): ReadonlyKeyValueWrapper<ActorEntity> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 }

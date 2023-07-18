@@ -2,13 +2,13 @@ import {
   ActionableDefinition,
   createActionableDefinition,
 } from '@definitions/actionable.definition';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { MessageMapDefinition } from '@definitions/message-map.definition';
 import { ActionableState } from '@states/actionable.state';
 import { ArrayView } from '@wrappers/array.view';
 
 export class ConversationState extends ActionableState {
-  protected readonly currentMessages: KeyValueInterface<{
+  protected readonly currentMessages: ReadonlyKeyValueWrapper<{
     label: string;
     answer: string;
     change?: string;

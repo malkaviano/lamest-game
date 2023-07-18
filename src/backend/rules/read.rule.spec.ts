@@ -3,8 +3,8 @@ import { instance, when } from 'ts-mockito';
 import { ReadRule } from './read.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { RuleResult } from '@results/rule.result';
+import { ReadableDefinition } from '@definitions/readable.definition';
 
 import {
   mockedInventoryService,
@@ -58,7 +58,7 @@ describe('ReadRule', () => {
       it('return read result', () => {
         const result = rule.execute(actor, eventRead);
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'READ',
           event: eventRead,
           actor,
@@ -72,7 +72,7 @@ describe('ReadRule', () => {
 
     describe('openDocument', () => {
       it('should emit documentOpened event', (done) => {
-        const result: ReadableInterface[] = [];
+        const result: ReadableDefinition[] = [];
 
         rule.documentOpened$.subscribe((event) => {
           result.push(event);
@@ -82,7 +82,7 @@ describe('ReadRule', () => {
 
         done();
 
-        expect(result).toEqual([docEvent]);
+        expect(result).toEqual([readable]);
       });
     });
   });
@@ -99,8 +99,3 @@ const itemReadLog = new LogMessageDefinition(
   playerInfo.name,
   'read Book'
 );
-
-const docEvent = {
-  title: readable.title,
-  text: readable.text,
-};

@@ -10,13 +10,13 @@ import {
 } from '@behaviors/equipment.behavior';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
-import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
+import { DerivedAttributeValues } from '@values/derived-attribute.value';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
-import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
-import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
+import { ReactionValues } from '@values/reaction.value';
+import { SceneActorsInfoValues } from '@values/scene-actors.value';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { ClassificationLiteral } from '@literals/classification.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
@@ -135,7 +135,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return this.equipmentBehavior.weaponEquipped;
   }
 
-  public get characteristics(): CharacteristicSetDefinition {
+  public get characteristics(): CharacteristicValues {
     const characteristics = this.actorBehavior.characteristics;
 
     const agi = this.actorBehavior.characteristics.AGI;
@@ -150,11 +150,11 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return { ...characteristics, AGI };
   }
 
-  public get derivedAttributes(): DerivedAttributeSetDefinition {
+  public get derivedAttributes(): DerivedAttributeValues {
     return this.actorBehavior.derivedAttributes;
   }
 
-  public get skills(): KeyValueInterface<number> {
+  public get skills(): ReadonlyKeyValueWrapper<number> {
     const weaponQuality = this.weaponEquipped.quality;
 
     const actorSkills = this.actorBehavior.skills;
@@ -196,7 +196,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public action(
-    sceneActorsInfo: ArrayView<SceneActorsInfoInterface>
+    sceneActorsInfo: ArrayView<SceneActorsInfoValues>
   ): ActionableEvent | null {
     this.regeneratorBehavior.startApRegeneration();
 
@@ -228,7 +228,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public override reactTo(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValues
   ): string | null {
     const { actionable } = action;
 

@@ -7,10 +7,11 @@ import { By } from '@angular/platform-browser';
 import { GameLayoutComponent } from './game.layout.component';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableEvent } from '@events/actionable.event';
-import { SceneDefinition } from '@definitions/scene.definition';
 import { SimpleState } from '@states/simple.state';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { InteractiveEntity } from '@entities/interactive.entity';
+import { ViewableInterface } from '../../interfaces/viewable.interface';
+import { SceneEntity } from '@entities/scene.entity';
 
 import {
   actionAsk,
@@ -18,7 +19,6 @@ import {
   fakeCharacterStatusView,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
-import { ViewableInterface } from '@interfaces/viewable.interface';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;
@@ -139,7 +139,8 @@ const fakeInteractive = new InteractiveEntity(
   true
 );
 
-const scene = new SceneDefinition(
+const scene = new SceneEntity(
+  'scene',
   'this is a test',
   ArrayView.create(fakeInteractive),
   'gg.jpg'

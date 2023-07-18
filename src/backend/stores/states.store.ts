@@ -1,4 +1,3 @@
-import { KeyValueInterface } from '@interfaces/key-value.interface';
 import { ActionableState } from '@states/actionable.state';
 import { ConversationState } from '@states/conversation.state';
 import { DestroyableState } from '@states/destroyable.state';
@@ -25,6 +24,7 @@ import {
   createActionableDefinition,
 } from '@definitions/actionable.definition';
 import { ItemStore } from '@stores/item.store';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
@@ -158,7 +158,7 @@ export class StatesStore {
     });
   }
 
-  public get states(): KeyValueInterface<ActionableState> {
+  public get states(): ReadonlyKeyValueWrapper<ActionableState> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 

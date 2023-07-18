@@ -3,9 +3,9 @@ import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
+import { RuleResult } from '@results/rule.result';
 
 export class UnEquipRule extends RuleAbstraction {
   constructor(private readonly inventoryService: InventoryService) {
@@ -19,7 +19,7 @@ export class UnEquipRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent
-  ): RuleResultInterface {
+  ): RuleResult {
     const weapon = actor.unEquip();
 
     let ruleResult: RuleResultLiteral = 'DENIED';

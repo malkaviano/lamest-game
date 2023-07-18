@@ -2,7 +2,7 @@ import { instance, when } from 'ts-mockito';
 
 import { SkillRule } from '@rules/skill.rule';
 import { RollDefinition } from '@definitions/roll.definition';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 
 import {
   mockedPlayerEntity,
@@ -54,7 +54,7 @@ describe('SkillRule', () => {
           )
         ).thenReturn(rollResult);
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'SKILL',
           event: eventSkillSurvival,
           actor,
@@ -82,7 +82,7 @@ describe('SkillRule', () => {
           )
         ).thenReturn(false);
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'SKILL',
           event: eventSkillSurvival,
           actor,

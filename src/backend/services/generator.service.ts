@@ -6,7 +6,7 @@ import { AgeLiteral } from '@literals/age.literal';
 import { HeightLiteral } from '@literals/height.literal';
 import { RaceLiteral } from '@literals/race.literal';
 import { WeightLiteral } from '@literals/weight.literal';
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { ProfessionStore } from '@stores/profession.store';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { weights } from '@definitions/weight.definitions';
@@ -20,7 +20,7 @@ export class GeneratorService {
     private readonly professionStore: ProfessionStore
   ) {}
 
-  public characteristics(): CharacteristicSetDefinition {
+  public characteristics(): CharacteristicValues {
     return {
       STR: new CharacteristicDefinition('STR', this.twoD6Plus6()),
       VIT: new CharacteristicDefinition('VIT', this.twoD6Plus6()),

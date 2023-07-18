@@ -2,7 +2,7 @@ import { instance, when } from 'ts-mockito';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { SceneRule } from '@rules/scene.rule';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 
 import {
   mockedCheckedService,
@@ -52,7 +52,7 @@ describe('SceneRule', () => {
     it('return transitioned result', () => {
       const result = rule.execute(actor, eventSceneExit, extras);
 
-      const expected: RuleResultInterface = {
+      const expected: RuleResult = {
         name: 'SCENE',
         event: eventSceneExit,
         actor,

@@ -1,7 +1,7 @@
 import { SceneStoreInterface } from '@interfaces/stores/scene-store.interface';
 import { SkillStateStoreInterface } from '@interfaces/stores/skill-state-store.interface';
 import { DiscardStateStoreInterface } from '@interfaces/stores/discard-state-store.interface';
-import { SimpleStateStoreInterface } from '@interfaces/simple-state-store.interface';
+import { SimpleStateStoreInterface } from '@interfaces/stores/simple-state-store.interface';
 import { ConversationStateStoreInterface } from '@interfaces/stores/conversation-state-store.interface';
 import { DestroyableStateStoreInterface } from '@interfaces/stores/destroyable-state-store.interface';
 import { WeaponStoreInterface } from '@interfaces/stores/weapon-store.interface';
@@ -11,7 +11,7 @@ import { InteractiveStoreInterface } from '@interfaces/stores/interactive-store.
 import { ActionableStoreInterface } from '@interfaces/stores/actionable-store.interface';
 import { ActionableLiteral } from '@literals/actionable.literal';
 import { MessageStoreInterface } from '@interfaces/stores/message-store.interface';
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ItemUsabilityLiteral } from '@literals/item-usability';
 import { ActorStoreInterface } from '@interfaces/stores/actor-store.interface';
@@ -187,7 +187,7 @@ export class ResourcesStore {
 
   private extractActors() {
     return actorStore.actors.map((a) => {
-      const characteristics: CharacteristicSetDefinition = {
+      const characteristics: CharacteristicValues = {
         STR: new CharacteristicDefinition('STR', a.characteristics.STR),
         VIT: new CharacteristicDefinition('VIT', a.characteristics.VIT),
         AGI: new CharacteristicDefinition('AGI', a.characteristics.AGI),

@@ -4,7 +4,7 @@ import { anyString, anything, instance, verify, when } from 'ts-mockito';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ItemStoredDefinition } from '@definitions/item-storage.definition';
 import { InventoryEvent } from '@events/inventory.event';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { GameLoopService } from '@services/game-loop.service';
 import { ArrayView } from '@wrappers/array.view';
 import {
@@ -193,7 +193,7 @@ const eventAttackInteractive = actionableEvent(
   interactiveInfo.id
 );
 
-const documentSubject = new Subject<ReadableInterface>();
+const documentSubject = new Subject<ReadableDefinition>();
 
 const inventoryEventSubject = new Subject<InventoryEvent>();
 

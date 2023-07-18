@@ -1,5 +1,5 @@
-import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { Dice } from '@definitions/dice.definition';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 
 export class EffectDefinition {
   constructor(

@@ -1,20 +1,20 @@
 import { Observable } from 'rxjs';
 
-import { SceneDefinition } from '@definitions/scene.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { PlayerInterface } from '@interfaces/player.interface';
+import { SceneEntity } from '@entities/scene.entity';
 
-export class GameEventsDefinition {
+export class GameEventsValues {
   constructor(
-    public readonly sceneChanged$: Observable<SceneDefinition>,
+    public readonly sceneChanged$: Observable<SceneEntity>,
     public readonly actionLogged$: Observable<LogMessageDefinition>,
     public readonly playerChanged$: Observable<PlayerInterface>,
     public readonly playerInventory$: Observable<
       ArrayView<ActionableItemDefinition>
     >,
-    public readonly documentOpened$: Observable<ReadableInterface>
+    public readonly documentOpened$: Observable<ReadableDefinition>
   ) {}
 }

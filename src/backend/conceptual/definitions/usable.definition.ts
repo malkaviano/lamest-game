@@ -1,5 +1,5 @@
-import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
+import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
 import { ItemUsabilityLiteral } from '@literals/item-usability';
 
 export class UsableDefinition extends GameItemDefinition {

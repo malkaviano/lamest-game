@@ -3,31 +3,25 @@ import { Observable, Subject } from 'rxjs';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
-import { RuleExtrasInterface } from '@interfaces/rule-extras.interface';
+import { RuleValues } from '@values/rule.value';
 import { RuleInterface } from '@interfaces/rule.interface';
 import { ActionableEvent } from '@events/actionable.event';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult, RuleResultPayload } from '@results/rule.result';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
-import { GameItemDefinition } from '@definitions/game-item.definition';
-import { UsableDefinition } from '@definitions/usable.definition';
-import { ReadableDefinition } from '@definitions/readable.definition';
-import { WeaponDefinition } from '@definitions/weapon.definition';
-import { ConsumableDefinition } from '@definitions/consumable.definition';
-import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
-import { ReadableInterface } from '@interfaces/readable.interface';
+import { ReadableDefinition } from '@definitions/readable.definition';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
 import {
   ActionableDefinition,
   consumeActionable,
 } from '@definitions/actionable.definition';
-import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { ReactionValues } from '@values/reaction.value';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActorEntity } from '@entities/actor.entity';
-import { ArmorDefinition } from '@definitions/armor.definition';
+import { Mutable } from '@wrappers/mutable.wrapper';
 
 export abstract class RuleAbstraction
   implements
@@ -36,28 +30,7 @@ export abstract class RuleAbstraction
     ActorDodgedInterface,
     DocumentOpenedInterface
 {
-  protected ruleResult: {
-    target?: InteractiveInterface;
-    picked?: GameItemDefinition;
-    used?: UsableDefinition;
-    read?: ReadableDefinition;
-    equipped?: WeaponDefinition;
-    unequipped?: WeaponDefinition;
-    affected?: WeaponDefinition;
-    skillName?: string;
-    roll?: {
-      checkRoll?: number;
-      result: CheckResultLiteral;
-    };
-    consumable?: ConsumableDefinition;
-    consumableHp?: number;
-    consumableEnergy?: number;
-    dodged?: boolean;
-    effectType?: EffectTypeLiteral;
-    effectAmount?: number;
-    wearing?: ArmorDefinition;
-    strip?: ArmorDefinition;
-  };
+  protected ruleResult: Mutable<RuleResultPayload>;
 
   protected readonly ruleLog: Subject<LogMessageDefinition>;
 
@@ -67,9 +40,9 @@ export abstract class RuleAbstraction
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
-  protected readonly documentOpened: Subject<ReadableInterface>;
+  protected readonly documentOpened: Subject<ReadableDefinition>;
 
-  public readonly documentOpened$: Observable<ReadableInterface>;
+  public readonly documentOpened$: Observable<ReadableDefinition>;
 
   public abstract get name(): RuleNameLiteral;
 
@@ -92,15 +65,15 @@ export abstract class RuleAbstraction
   public abstract execute(
     actor: ActorInterface,
     event: ActionableEvent,
-    extras: RuleExtrasInterface
-  ): RuleResultInterface;
+    extras: RuleValues
+  ): RuleResult;
 
   protected getResult(
     event: ActionableEvent,
     actor: ActorInterface,
     result: RuleResultLiteral
-  ): RuleResultInterface {
-    const r: RuleResultInterface = {
+  ): RuleResult {
+    const r: Mutable<RuleResult> = {
       name: this.name,
       event,
       actor,
@@ -138,7 +111,7 @@ export abstract class RuleAbstraction
     target: InteractiveInterface,
     action: ActionableDefinition,
     rollResult: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValues
   ): void {
     const log = target.reactTo(action, rollResult, values);
 
@@ -183,29 +156,22 @@ export abstract class RuleAbstraction
     }
   }
 
-  private setEffect(r: RuleResultInterface) {
-    if (this.ruleResult.effectAmount && this.ruleResult.effectType) {
+  private setEffect(r: Mutable<RuleResultPayload>) {
+    if (this.ruleResult.effect?.amount && this.ruleResult.effect.type) {
       r.effect = {
-        type: this.ruleResult.effectType,
-        amount: this.ruleResult.effectAmount,
+        type: this.ruleResult.effect.type,
+        amount: this.ruleResult.effect.amount,
       };
     }
   }
 
-  private setConsumable(r: RuleResultInterface) {
-    if (
-      this.ruleResult.consumable &&
-      (this.ruleResult.consumableHp || this.ruleResult.consumableEnergy)
-    ) {
-      r.consumable = {
-        consumed: this.ruleResult.consumable,
-        hp: this.ruleResult.consumableHp,
-        energy: this.ruleResult.consumableEnergy,
-      };
+  private setConsumable(r: Mutable<RuleResultPayload>) {
+    if (this.ruleResult.consumable?.hp || this.ruleResult.consumable?.energy) {
+      r.consumable = this.ruleResult.consumable;
     }
   }
 
-  private setSkill(r: RuleResultInterface) {
+  private setSkill(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.skillName) {
       r.skillName = this.ruleResult.skillName;
 
@@ -218,55 +184,55 @@ export abstract class RuleAbstraction
     }
   }
 
-  private setDodged(r: RuleResultInterface) {
+  private setDodged(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.dodged !== undefined) {
       r.dodged = this.ruleResult.dodged;
     }
   }
 
-  private setAffected(r: RuleResultInterface) {
+  private setAffected(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.affected) {
       r.affected = this.ruleResult.affected;
     }
   }
 
-  private setUnequipped(r: RuleResultInterface) {
+  private setUnequipped(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.unequipped) {
       r.unequipped = this.ruleResult.unequipped;
     }
   }
 
-  private setEquipped(r: RuleResultInterface) {
+  private setEquipped(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.equipped) {
       r.equipped = this.ruleResult.equipped;
     }
   }
 
-  private setRead(r: RuleResultInterface) {
+  private setRead(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.read) {
       r.read = this.ruleResult.read;
     }
   }
 
-  private setUsed(r: RuleResultInterface) {
+  private setUsed(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.used) {
       r.used = this.ruleResult.used;
     }
   }
 
-  private setPicked(r: RuleResultInterface) {
+  private setPicked(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.picked) {
       r.picked = this.ruleResult.picked;
     }
   }
 
-  private setTarget(r: RuleResultInterface) {
+  private setTarget(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.target) {
       r.target = this.ruleResult.target;
     }
   }
 
-  private setArmor(r: RuleResultInterface) {
+  private setArmor(r: Mutable<RuleResultPayload>) {
     if (this.ruleResult.strip) {
       r.strip = this.ruleResult.strip;
     }

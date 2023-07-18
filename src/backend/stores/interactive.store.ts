@@ -1,4 +1,4 @@
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { StatesStore } from './states.store';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { ResourcesStore } from './resources.store';
@@ -46,11 +46,11 @@ export class InteractiveStore {
     });
   }
 
-  public get interactives(): KeyValueInterface<InteractiveEntity> {
+  public get interactives(): ReadonlyKeyValueWrapper<InteractiveEntity> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 
-  public get interactiveItems(): KeyValueInterface<
+  public get interactiveItems(): ReadonlyKeyValueWrapper<
     {
       readonly name: string;
       readonly quantity: number;

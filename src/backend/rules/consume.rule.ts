@@ -8,7 +8,7 @@ import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
 import { CheckedService } from '@services/checked.service';
 import { RollHelper } from '@helpers/roll.helper';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
@@ -31,7 +31,7 @@ export class ConsumeRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent
-  ): RuleResultInterface {
+  ): RuleResult {
     const { actionableDefinition, eventId } = event;
 
     const consumable =
@@ -44,8 +44,6 @@ export class ConsumeRule extends RuleAbstraction {
     let ruleResult: RuleResultLiteral = 'DENIED';
 
     let rollResult: CheckResultLiteral = 'NONE';
-
-    this.ruleResult.consumable = consumable;
 
     this.ruleResult.skillName = consumable.skillName;
 
@@ -100,9 +98,11 @@ export class ConsumeRule extends RuleAbstraction {
       energy,
     });
 
-    this.ruleResult.consumableHp = hp;
-
-    this.ruleResult.consumableEnergy = energy;
+    this.ruleResult.consumable = {
+      consumed: consumable,
+      hp,
+      energy,
+    };
   }
 
   private canExecute(actor: ActorInterface, skillName?: string) {

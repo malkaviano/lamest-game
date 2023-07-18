@@ -1,8 +1,8 @@
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
-import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
+import { DerivedAttributeValues } from '@values/derived-attribute.value';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { MathHelper } from '@helpers/math.helper';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { EffectEvent } from '@events/effect.event';
@@ -23,7 +23,7 @@ export class ActorBehavior {
   private currentAP: number;
 
   private constructor(
-    private readonly mCharacteristics: CharacteristicSetDefinition,
+    private readonly mCharacteristics: CharacteristicValues,
     private readonly mSkills: Map<string, number>,
     private readonly skillStore: SkillStore
   ) {
@@ -34,11 +34,11 @@ export class ActorBehavior {
     this.currentAP = this.maximumAP();
   }
 
-  public get characteristics(): CharacteristicSetDefinition {
+  public get characteristics(): CharacteristicValues {
     return { ...this.mCharacteristics };
   }
 
-  public get derivedAttributes(): DerivedAttributeSetDefinition {
+  public get derivedAttributes(): DerivedAttributeValues {
     return {
       'MAX HP': new DerivedAttributeDefinition('MAX HP', this.maximumHP()),
       'MAX EP': new DerivedAttributeDefinition('MAX EP', this.maximumEP()),
@@ -58,7 +58,7 @@ export class ActorBehavior {
     };
   }
 
-  public get skills(): KeyValueInterface<number> {
+  public get skills(): ReadonlyKeyValueWrapper<number> {
     return Array.from(this.mSkills.entries()).reduce(
       (acc: { [key: string]: number }, [k, v]) => {
         const base = this.skillStore.skills[k].base(this.characteristics);
@@ -175,7 +175,7 @@ export class ActorBehavior {
   }
 
   public static create(
-    characteristics: CharacteristicSetDefinition,
+    characteristics: CharacteristicValues,
     skills: Map<string, number>,
     skillStore: SkillStore
   ): ActorBehavior {

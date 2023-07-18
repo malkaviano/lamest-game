@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { DisposePolicy } from '@policies/dispose.policy';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
@@ -55,7 +55,7 @@ const actor = instance(mockedPlayerEntity);
 
 const target = instance(mockedActorEntity);
 
-const executedAffectResult: RuleResultInterface = {
+const executedAffectResult: RuleResult = {
   name: 'AFFECT',
   event: eventAttackInteractive,
   actor,
@@ -68,7 +68,7 @@ const executedAffectResult: RuleResultInterface = {
   effect: { type: 'FIRE', amount: 5 },
 };
 
-const executedEquipResult: RuleResultInterface = {
+const executedEquipResult: RuleResult = {
   name: 'EQUIP',
   event: eventEquipMolotov,
   actor,
@@ -78,7 +78,7 @@ const executedEquipResult: RuleResultInterface = {
   skillName: molotov.skillName,
 };
 
-const deniedResult: RuleResultInterface = {
+const deniedResult: RuleResult = {
   name: 'AFFECT',
   event: eventAttackInteractive,
   actor,
@@ -88,7 +88,7 @@ const deniedResult: RuleResultInterface = {
   skillName: molotov.skillName,
 };
 
-const executedConsumeResult: RuleResultInterface = {
+const executedConsumeResult: RuleResult = {
   name: 'CONSUME',
   event: eventConsumeFirstAid,
   actor,
@@ -103,7 +103,7 @@ const executedConsumeResult: RuleResultInterface = {
   roll: { checkRoll: 5, result: 'SUCCESS' },
 };
 
-const executedDropResult: RuleResultInterface = {
+const executedDropResult: RuleResult = {
   name: 'DROP',
   event: eventDropMasterKey,
   actor,
@@ -112,7 +112,7 @@ const executedDropResult: RuleResultInterface = {
   dropped: masterKey,
 };
 
-const executedUseResult: RuleResultInterface = {
+const executedUseResult: RuleResult = {
   name: 'USE',
   event: eventUseMasterKey,
   actor,

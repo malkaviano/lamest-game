@@ -1,6 +1,6 @@
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { ActionableEvent } from '@events/actionable.event';
 import { InventoryService } from '@services/inventory.service';
@@ -21,7 +21,7 @@ export class DropRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent
-  ): RuleResultInterface {
+  ): RuleResult {
     const dropped = this.checkedService.lookItemOrThrow(
       this.inventoryService,
       actor.id,

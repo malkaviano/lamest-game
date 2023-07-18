@@ -26,8 +26,6 @@ import { MessageStore } from '@stores/message.store';
 import { ResourcesStore } from '@stores/resources.store';
 import { SceneStore } from '@stores/scene.store';
 import { StatesStore } from '@stores/states.store';
-import { GameEventsDefinition } from '@definitions/game-events.definition';
-import { SceneDefinition } from '@definitions/scene.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ProfessionStore } from '@stores/profession.store';
 import { ActorStore } from '@stores/actor.store';
@@ -57,6 +55,8 @@ import { GameLoopService } from '@services/game-loop.service';
 import { LoggingHub } from '@hubs/logging.hub';
 import { SettingsStoreInterface } from '@interfaces/stores/settings-store.interface';
 import { SettingsStore } from '@stores/settings.store';
+import { GamePredicate } from '@predicates/game.predicate';
+import { GameEventsValues } from '@values/game-events.value';
 
 import settingsStore from './settings.json';
 
@@ -72,7 +72,6 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { GamePredicate } from '@predicates/game.predicate';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -146,7 +145,7 @@ export const mockedSceneEntity = mock(SceneEntity);
 
 export const mockedUseRule = mock(UseRule);
 
-export const mockedGameEventsDefinition = mock(GameEventsDefinition);
+export const mockedGameEventsValues = mock(GameEventsValues);
 
 export const mockedWithSubscriptionHelper = mock(WithSubscriptionHelper);
 
@@ -341,16 +340,17 @@ export const setupMocks = () => {
   );
 
   when(mockedGameLoopService.events).thenReturn(
-    instance(mockedGameEventsDefinition)
+    instance(mockedGameEventsValues)
   );
 
-  when(mockedGameEventsDefinition.playerChanged$).thenReturn(
+  when(mockedGameEventsValues.playerChanged$).thenReturn(
     of(instance(mockedPlayerEntity))
   );
 
-  when(mockedGameEventsDefinition.sceneChanged$).thenReturn(
+  when(mockedGameEventsValues.sceneChanged$).thenReturn(
     of(
-      new SceneDefinition(
+      new SceneEntity(
+        'scene',
         'this is a test',
         ArrayView.create(instance(mockedInteractiveEntity)),
         'gg.jpg'
@@ -358,7 +358,7 @@ export const setupMocks = () => {
     )
   );
 
-  when(mockedGameEventsDefinition.documentOpened$).thenReturn(of());
+  when(mockedGameEventsValues.documentOpened$).thenReturn(of());
 
   when(
     mockedFormatterHelperService.characterToKeyValueDescription(
@@ -434,7 +434,7 @@ const resetMocks = () => {
 
   reset(mockedUseRule);
 
-  reset(mockedGameEventsDefinition);
+  reset(mockedGameEventsValues);
 
   reset(mockedWithSubscriptionHelper);
 

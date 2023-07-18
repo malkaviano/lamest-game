@@ -4,11 +4,8 @@ import { CharacterService } from '@services/character.service';
 import { NarrativeService } from '@services/narrative.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
-import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
-import { SceneDefinition } from '@definitions/scene.definition';
 import { RulesHub } from '@hubs/rules.hub';
 import { InventoryService } from '@services/inventory.service';
-import { GameEventsDefinition } from '@definitions/game-events.definition';
 import {
   ActionableDefinition,
   consumeActionable,
@@ -27,6 +24,9 @@ import { PolicyHub } from '@hubs/policy.hub';
 import { LoggingHub } from '@hubs/logging.hub';
 import { GamePredicate } from '@predicates/game.predicate';
 import { SettingsStore } from '@stores/settings.store';
+import { SceneActorsInfoValues } from '@values/scene-actors.value';
+import { SceneEntity } from '@entities/scene.entity';
+import { GameEventsValues } from '@values/game-events.value';
 
 export class GameLoopService {
   private aiTimer: NodeJS.Timer | undefined;
@@ -35,7 +35,7 @@ export class GameLoopService {
 
   private readonly player: PlayerInterface;
 
-  private currentScene!: SceneDefinition;
+  private currentScene!: SceneEntity;
 
   private actionReactives: { [key: string]: InteractiveInterface };
 
@@ -43,7 +43,7 @@ export class GameLoopService {
 
   private readonly dodgedThisRound: Map<string, number>;
 
-  public readonly events: GameEventsDefinition;
+  public readonly events: GameEventsValues;
 
   constructor(
     private readonly ruleHub: RulesHub,
@@ -83,7 +83,7 @@ export class GameLoopService {
       })
     );
 
-    this.events = new GameEventsDefinition(
+    this.events = new GameEventsValues(
       narrativeService.sceneChanged$,
       loggingHub.logMessageProduced$,
       characterService.characterChanged$,
@@ -175,7 +175,7 @@ export class GameLoopService {
     this.actors = ArrayView.fromArray(actors);
   }
 
-  private get sceneActorsInfo(): ArrayView<SceneActorsInfoInterface> {
+  private get sceneActorsInfo(): ArrayView<SceneActorsInfoValues> {
     return ArrayView.fromArray(
       this.actors.insert(this.player).items.map((a) => {
         return {

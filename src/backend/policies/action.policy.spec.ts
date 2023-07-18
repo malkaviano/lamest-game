@@ -1,7 +1,7 @@
 import { instance } from 'ts-mockito';
 
 import { ActionPolicy } from '@policies/action.policy';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 
 import {
@@ -56,7 +56,7 @@ describe('ActionPolicy', () => {
   ].forEach(({ ruleResult, expected, log }) => {
     describe('enforce', () => {
       it('return AP spent', () => {
-        const result = policy.enforce(ruleResult as RuleResultInterface);
+        const result = policy.enforce(ruleResult as RuleResult);
 
         expect(result).toEqual(expected);
       });
@@ -68,7 +68,7 @@ describe('ActionPolicy', () => {
           result = event;
         });
 
-        policy.enforce(ruleResult as RuleResultInterface);
+        policy.enforce(ruleResult as RuleResult);
 
         done();
 

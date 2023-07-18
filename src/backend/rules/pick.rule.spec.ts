@@ -1,7 +1,7 @@
 import { deepEqual, instance, when } from 'ts-mockito';
 
 import { PickRule } from '@rules/pick.rule';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 
 import {
   mockedCheckedService,
@@ -63,7 +63,7 @@ describe('PickRule', () => {
         target,
       });
 
-      const expected: RuleResultInterface = {
+      const expected: RuleResult = {
         name: 'PICK',
         actor,
         event: eventPickSimpleSword,

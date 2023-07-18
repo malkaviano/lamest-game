@@ -3,7 +3,7 @@ import { instance, verify, when } from 'ts-mockito';
 import { UnEquipRule } from '@rules/unequip.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@events/actionable.event';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { unequipActionable } from '@definitions/actionable.definition';
 
 import {
@@ -41,7 +41,7 @@ describe('UnEquipRule', () => {
 
       verify(mockedInventoryService.store(actor.id, unDodgeableAxe)).once();
 
-      const expected: RuleResultInterface = {
+      const expected: RuleResult = {
         name: 'UNEQUIP',
         event: unEquipEvent,
         result: 'EXECUTED',
@@ -61,7 +61,7 @@ describe('UnEquipRule', () => {
 
       verify(mockedInventoryService.store(actor.id, simpleSword)).never();
 
-      const expected: RuleResultInterface = {
+      const expected: RuleResult = {
         name: 'UNEQUIP',
         event: unEquipEvent,
         result: 'DENIED',

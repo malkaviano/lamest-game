@@ -1,12 +1,12 @@
-import { PolicyResultInterface } from '@interfaces/policy-result.interface';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { PolicyResult } from '@results/policy.result';
+import { RuleResult } from '@results/rule.result';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { SettingsStore } from '@stores/settings.store';
 import { PolicyAbstraction } from '@abstractions/policy.abstraction';
 import { PlayerEntity } from '@entities/player.entity';
 
 export class ActionPolicy extends PolicyAbstraction {
-  public override enforce(result: RuleResultInterface): PolicyResultInterface {
+  public override enforce(result: RuleResult): PolicyResult {
     if (result.result !== 'DENIED') {
       const ruleCost = SettingsStore.settings.ruleCost[result.name];
 

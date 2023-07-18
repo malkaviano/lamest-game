@@ -1,5 +1,5 @@
 import { ConverterHelper } from '@helpers/converter.helper';
-import { KeyValueInterface } from '@interfaces/key-value.interface';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ActorStore } from '@stores/actor.store';
 import { InteractiveStore } from '@stores/interactive.store';
 import { ResourcesStore } from '@stores/resources.store';
@@ -15,7 +15,9 @@ export class SceneStore {
 
   public readonly initial: string;
 
-  public readonly transitions: KeyValueInterface<KeyValueInterface<string>>;
+  public readonly transitions: ReadonlyKeyValueWrapper<
+    ReadonlyKeyValueWrapper<string>
+  >;
 
   constructor(
     interactiveStore: InteractiveStore,
@@ -87,7 +89,7 @@ export class SceneStore {
     this.initial = resourcesStore.sceneStore.initial;
   }
 
-  public get scenes(): KeyValueInterface<SceneEntity> {
+  public get scenes(): ReadonlyKeyValueWrapper<SceneEntity> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
   }
 
