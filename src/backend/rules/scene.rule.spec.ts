@@ -1,4 +1,4 @@
-import { instance } from 'ts-mockito';
+import { instance, when } from 'ts-mockito';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { SceneRule } from '@rules/scene.rule';
@@ -24,6 +24,8 @@ describe('SceneRule', () => {
 
   beforeEach(() => {
     setupMocks();
+
+    when(mockedNarrativeService.currentSceneName).thenReturn('heaven');
 
     rule = new SceneRule(
       instance(mockedNarrativeService),
@@ -68,7 +70,7 @@ const eventSceneExit = actionableEvent(actionSceneExit, interactiveInfo.id);
 const sceneChangedLog = new LogMessageDefinition(
   'SCENE',
   playerInfo.name,
-  'selected Exit from test'
+  'Exit through test to heaven'
 );
 
 const actor = instance(mockedPlayerEntity);

@@ -2,15 +2,21 @@
   "states": [
     {
       "id": "campFireOff",
-      "actionable": "skillMakeFire",
+      "skillName": "Survival",
       "maximumTries": 100,
       "successState": "campFireOn"
     },
     {
       "id": "bushesDetect",
-      "actionable": "bushesDetect",
+      "skillName": "Detect",
       "maximumTries": 100,
       "successState": "bushesLoot"
+    },
+    {
+      "id": "disguiseVillager",
+      "skillName": "Disguise",
+      "maximumTries": 3,
+      "successState": "emptyState"
     }
   ]
 }

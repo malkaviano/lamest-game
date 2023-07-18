@@ -44,7 +44,6 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
         identity.visibility
       ),
       emptyState,
-      false,
       actorBehavior,
       equipmentBehavior,
       emptyState,

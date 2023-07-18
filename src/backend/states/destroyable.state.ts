@@ -9,7 +9,7 @@ import { CheckResultLiteral } from '@literals/check-result.literal';
 export class DestroyableState extends ActionableState {
   constructor(
     stateActions: ArrayView<ActionableDefinition>,
-    protected readonly destroyedState: LazyHelper<ActionableState>,
+    protected readonly lootState: LazyHelper<ActionableState>,
     public readonly hitPoints: number
   ) {
     super('DestroyableState', stateActions);
@@ -31,11 +31,7 @@ export class DestroyableState extends ActionableState {
 
       if (hp > 0) {
         return {
-          state: new DestroyableState(
-            this.stateActions,
-            this.destroyedState,
-            hp
-          ),
+          state: new DestroyableState(this.stateActions, this.lootState, hp),
           log: GameStringsStore.createEffectDamagedMessage(
             values.effect.effectType,
             dmg.toString()
@@ -44,7 +40,7 @@ export class DestroyableState extends ActionableState {
       }
 
       return {
-        state: this.destroyedState.value,
+        state: this.lootState.value,
         log: GameStringsStore.createDestroyedByDamageMessage(
           values.effect.effectType,
           dmg.toString()

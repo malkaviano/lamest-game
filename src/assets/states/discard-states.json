@@ -2,53 +2,52 @@
   "states": [
     {
       "id": "hunterCabinTableLoot",
-      "actionables": [
-        "pickHunterJournal1",
-        "pickHunterJournal2",
-        "pickHunterJournal3",
-        "pickHuntingKnife"
+      "items": [
+        "hunterJournal1",
+        "hunterJournal2",
+        "hunterJournal3",
+        "huntingKnife"
       ]
     },
     {
       "id": "hunterCabinWallLoot",
-      "actionables": ["pickWinchester88"]
+      "items": ["winchester88"]
     },
 
     {
       "id": "bushesLoot",
-      "actionables": ["pickFriendNote", "pickLeatherJacket"]
+      "items": ["friendNote", "leatherJacket"]
     },
 
     {
       "id": "villagerLoot",
-      "actionables": ["pickMasterKey", "pickRawMeat", "pickRawMeat"]
+      "items": ["masterKey", "rawMeat", "rawMeat"]
     },
     {
       "id": "ambulatoryLocked1Loot",
-      "actionables": ["pickFirstAid", "pickFirstAid", "pickFirstAid"]
+      "items": ["firstAidKit", "firstAidKit", "firstAidKit"]
     },
     {
       "id": "ambulatoryStorage1",
-      "actionables": [
-        "pickAnalgesic",
-        "pickAnalgesic",
-        "pickAnalgesic",
-        "pickAnalgesic",
-        "pickAnalgesic"
+      "items": [
+        "analgesicBottle",
+        "analgesicBottle",
+        "analgesicBottle",
+        "analgesicBottle",
+        "analgesicBottle"
       ]
     },
     {
       "id": "storageGuardLoot",
-      "actionables": ["pickBaton", "pickAnalgesic", "pickAnalgesic"]
+      "items": ["baton", "analgesicBottle", "analgesicBottle"]
     },
     {
       "id": "storageLocked1Loot",
-      "actionables": [
-        "pickMolotov",
-        "pickMolotov",
-        "pickMolotov",
-        "pickGlock17"
-      ]
+      "items": ["molotov", "molotov", "molotov", "g17"]
+    },
+    {
+      "id": "lootWoodBox",
+      "items": []
     }
   ]
 }

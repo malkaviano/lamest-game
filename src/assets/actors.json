@@ -4,7 +4,6 @@
       "id": "zombie",
       "name": "Nasty Zombie",
       "description": "What the frack is that?",
-      "resettable": false,
       "characteristics": {
         "STR": 10,
         "VIT": 10,
@@ -20,8 +19,7 @@
         }
       ],
       "equippedWeapon": "claw",
-      "killedState": "emptyState",
-      "behaviorState": "affectable",
+      "lootState": "emptyState",
       "immunities": [],
       "cures": [],
       "vulnerabilities": [],
@@ -34,7 +32,6 @@
       "id": "villager",
       "name": "Villager",
       "description": "Punny villager trying to impress",
-      "resettable": false,
       "characteristics": {
         "STR": 5,
         "VIT": 5,
@@ -50,8 +47,7 @@
         }
       ],
       "equippedWeapon": "martialArts",
-      "killedState": "villagerLoot",
-      "behaviorState": "affectable",
+      "lootState": "villagerLoot",
       "immunities": [],
       "cures": [],
       "vulnerabilities": [],
@@ -64,7 +60,6 @@
       "id": "storageGuard",
       "name": "Storage Guard",
       "description": "Competent guard",
-      "resettable": false,
       "characteristics": {
         "STR": 8,
         "VIT": 8,
@@ -84,8 +79,7 @@
         }
       ],
       "equippedWeapon": "baton",
-      "killedState": "storageGuardLoot",
-      "behaviorState": "affectable",
+      "lootState": "storageGuardLoot",
       "immunities": [],
       "cures": [],
       "vulnerabilities": [],

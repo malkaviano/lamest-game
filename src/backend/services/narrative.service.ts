@@ -21,12 +21,17 @@ export class NarrativeService {
     this.sceneChanged$ = this.sceneChanged.asObservable();
   }
 
+  public get currentSceneName(): string {
+    return this.currentScene.label;
+  }
+
   public changeScene(action: ActionableEvent): void {
     if (action.actionableDefinition.actionable !== 'SCENE') {
       throw new Error(GameStringsStore.errorMessages['INVALID-OPERATION']);
     }
 
-    const nextSceneName = this.currentScene.transitions[action.eventId];
+    const nextSceneName =
+      this.sceneStore.transitions[action.eventId][this.currentScene.name];
 
     this.currentScene = this.sceneStore.scenes[nextSceneName];
 

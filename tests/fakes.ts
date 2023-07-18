@@ -365,14 +365,10 @@ export const shadowDagger = new WeaponDefinition(
 export const actionDisguise = createActionableDefinition(
   'SKILL',
   'Disguise',
-  'Use Disguise'
+  'Disguise'
 );
 
-export const actionHide = createActionableDefinition(
-  'SKILL',
-  'Hide',
-  'Use Hide'
-);
+export const actionHide = createActionableDefinition('SKILL', 'Hide', 'Hide');
 
 export const actionDetect = createActionableDefinition(
   'SKILL',

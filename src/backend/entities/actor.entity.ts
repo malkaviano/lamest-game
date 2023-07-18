@@ -66,10 +66,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   constructor(
     identity: ActorIdentityDefinition,
     currentState: ActionableState,
-    resettable: boolean,
     protected readonly actorBehavior: ActorBehavior,
     protected readonly equipmentBehavior: EquipmentBehavior,
-    protected readonly killedState: ActionableState,
+    protected readonly lootState: ActionableState,
     behaviors: {
       readonly regeneratorBehavior: RegeneratorBehavior;
       readonly aiBehavior: AiBehavior;
@@ -80,7 +79,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       identity.name,
       identity.description,
       currentState,
-      resettable
+      false
     );
 
     this.regeneratorBehavior = behaviors.regeneratorBehavior;
@@ -287,9 +286,9 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       this.derivedAttributeChanged.next(result);
 
       if (this.situation === 'DEAD') {
-        this.publish(this.currentState.actions, this.killedState.actions);
+        this.publish(this.currentState.actions, this.lootState.actions);
 
-        this.currentState = this.killedState;
+        this.currentState = this.lootState;
       }
     }
 

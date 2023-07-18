@@ -6,21 +6,25 @@ import { DiscardState } from '@states/discard.state';
 import { emptyState } from '@states/empty.state';
 import { SimpleState } from '@states/simple.state';
 import { SkillState } from '@states/skill.state';
-import { ActionableStore } from './actionable.store';
-import { MessageStore } from './message.store';
-import { ResourcesStore } from './resources.store';
+import { ActionableStore } from '@stores/actionable.store';
+import { MessageStore } from '@stores/message.store';
+import { ResourcesStore } from '@stores/resources.store';
 import { LockedContainerState } from '@states/locked-container.state';
 import { LockPickingContainerState } from '@states/lock-picking-container.state';
 import {
   directionActionableDefinition,
   directionNamesDefinition,
 } from '@definitions/directions.definition';
-import { VisibilityState } from '@states/visibility.state';
 import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { SequencerHelper } from '@helpers/sequencer.helper';
 import { LockPickableContainerState } from '@states/lock-pickable-container.state';
+import {
+  affectActionable,
+  createActionableDefinition,
+} from '@definitions/actionable.definition';
+import { ItemStore } from '@stores/item.store';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
@@ -29,7 +33,8 @@ export class StatesStore {
     messageStore: MessageStore,
     actionableStore: ActionableStore,
     resourcesStore: ResourcesStore,
-    sequencerHelper: SequencerHelper
+    sequencerHelper: SequencerHelper,
+    itemStore: ItemStore
   ) {
     this.store = new Map<string, ActionableState>();
 
@@ -39,7 +44,11 @@ export class StatesStore {
       this.store.set(
         state.id,
         new SkillState(
-          actionableStore.actionables[state.actionable],
+          createActionableDefinition(
+            'SKILL',
+            state.skillName,
+            `CHECK ${state.skillName}`
+          ),
           this.lazyState(state.successState),
           state.maximumTries
         )
@@ -47,9 +56,20 @@ export class StatesStore {
     });
 
     resourcesStore.discardStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(actionableStore, state);
+      const actionables = state.items.map((itemName) => {
+        const item = itemStore.items[itemName];
 
-      this.store.set(state.id, new DiscardState(actionables));
+        return createActionableDefinition(
+          'PICK',
+          item.identity.name,
+          item.identity.label
+        );
+      });
+
+      this.store.set(
+        state.id,
+        new DiscardState(ArrayView.fromArray(actionables))
+      );
     });
 
     resourcesStore.simpleStateStore.states.forEach((state) => {
@@ -83,20 +103,28 @@ export class StatesStore {
     });
 
     resourcesStore.destroyableStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(actionableStore, state);
-
       this.store.set(
         state.id,
         new DestroyableState(
-          actionables,
-          this.lazyState(state.destroyedState),
+          ArrayView.create(affectActionable),
+          this.lazyState(state.lootState),
           state.hitpoints
         )
       );
     });
 
     resourcesStore.lockedContainerStateStore.states.forEach((state) => {
-      const actionables = this.getActionables(actionableStore, state);
+      const keyName = state.keyName;
+
+      const key = itemStore.items[keyName];
+
+      const actionables = ArrayView.create(
+        createActionableDefinition(
+          'USE',
+          key.identity.name,
+          `USE ${key.identity.label}`
+        )
+      );
 
       const allDirectionsDefinition = directionNamesDefinition.items.map(
         (direction) => {
@@ -127,16 +155,6 @@ export class StatesStore {
           );
 
       this.store.set(state.id, locked);
-    });
-
-    resourcesStore.visibilityStateStore.states.forEach((state) => {
-      this.store.set(
-        state.id,
-        new VisibilityState(
-          actionableStore.actionables[state.actionable],
-          state.maximumTries
-        )
-      );
     });
   }
 

@@ -31,8 +31,9 @@ export class SceneRule extends RuleAbstraction {
 
     const logMessage = GameStringsStore.createSceneLogMessage(
       actor.name,
+      event.actionableDefinition.label,
       target.name,
-      event.actionableDefinition.label
+      this.narrativeService.currentSceneName
     );
 
     this.ruleLog.next(logMessage);

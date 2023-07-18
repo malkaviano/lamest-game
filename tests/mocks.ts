@@ -310,10 +310,6 @@ export const setupMocks = () => {
     states: [],
   });
 
-  when(mockedResourcesStore.visibilityStateStore).thenReturn({
-    states: [],
-  });
-
   when(mockedResourcesStore.destroyableStateStore).thenReturn({
     states: [],
   });

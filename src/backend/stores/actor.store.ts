@@ -2,16 +2,18 @@ import { ActorIdentityDefinition } from '@definitions/actor-identity.definition'
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
-import { ItemStore } from './item.store';
-import { ResourcesStore } from './resources.store';
-import { SkillStore } from './skill.store';
-import { StatesStore } from './states.store';
+import { ItemStore } from '@stores/item.store';
+import { ResourcesStore } from '@stores/resources.store';
+import { SkillStore } from '@stores/skill.store';
+import { StatesStore } from '@stores/states.store';
 import { ArrayView } from '@wrappers/array.view';
 import { ActorEntity } from '@entities/actor.entity';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 import { AiBehavior } from '@behaviors/ai.behavior';
+import { SimpleState } from '@states/simple.state';
+import { affectActionable } from '@definitions/actionable.definition';
 
 export class ActorStore {
   private readonly store: Map<string, ActorEntity>;
@@ -29,23 +31,20 @@ export class ActorStore {
         id,
         name,
         description,
-        resettable,
         characteristics,
         skills,
         equippedWeapon,
-        killedState,
-        behaviorState,
+        lootState,
         aiBehavior,
         ignores,
         visibility,
       }) => {
         const actor = new ActorEntity(
           new ActorIdentityDefinition(id, name, description, visibility),
-          stateStore.states[behaviorState],
-          resettable,
+          new SimpleState(ArrayView.create(affectActionable)),
           ActorBehavior.create(characteristics, skills, skillStore),
           EquipmentBehavior.create(),
-          stateStore.states[killedState],
+          stateStore.states[lootState],
           {
             regeneratorBehavior: new RegeneratorBehavior(),
             aiBehavior: AiBehavior.create(

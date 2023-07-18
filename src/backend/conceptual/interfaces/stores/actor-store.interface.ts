@@ -7,12 +7,10 @@ export interface ActorStoreInterface {
     readonly id: string;
     readonly name: string;
     readonly description: string;
-    readonly resettable: boolean;
     readonly characteristics: CharacteristicSetDefinition;
     readonly skills: Map<string, number>;
     readonly equippedWeapon: string;
-    readonly killedState: string;
-    readonly behaviorState: string;
+    readonly lootState: string;
     readonly aiBehavior: BehaviorLiteral;
     readonly ignores: VisibilityLiteral[];
     readonly visibility: VisibilityLiteral;

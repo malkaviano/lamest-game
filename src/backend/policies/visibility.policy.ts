@@ -16,6 +16,8 @@ export class VisibilityPolicy extends PolicyAbstraction {
 
     const visibility = 'VISIBLE';
 
+    const targetActor = ConverterHelper.asActor(ruleResult.target);
+
     if (
       ruleResult.name === 'AFFECT' &&
       ruleResult.actor.visibility !== visibility
@@ -30,27 +32,44 @@ export class VisibilityPolicy extends PolicyAbstraction {
       );
 
       this.logMessageProduced.next(logMessage);
+    } else if (
+      ruleResult.name === 'SKILL' &&
+      ruleResult.result === 'EXECUTED' &&
+      ruleResult.roll?.result === 'SUCCESS'
+    ) {
+      switch (ruleResult.skillName) {
+        case 'Disguise':
+          ruleResult.actor.changeVisibility('DISGUISED');
+          result.actor = 'DISGUISED';
+          break;
+        case 'Hide':
+          ruleResult.actor.changeVisibility('HIDDEN');
+          result.actor = 'HIDDEN';
+          break;
+        case 'Detect':
+          if (targetActor && targetActor?.visibility !== visibility) {
+            targetActor.changeVisibility('VISIBLE');
+            result.target = 'VISIBLE';
+          }
+          break;
+      }
     }
 
-    if (ruleResult.target) {
-      const targetActor = ConverterHelper.asActor(ruleResult.target);
+    if (
+      ruleResult.effect &&
+      targetActor &&
+      targetActor?.visibility !== visibility
+    ) {
+      targetActor?.changeVisibility(visibility);
 
-      if (
-        targetActor &&
-        ruleResult.effect &&
-        targetActor.visibility !== visibility
-      ) {
-        targetActor?.changeVisibility(visibility);
+      result.target = visibility;
 
-        result.target = visibility;
+      const logMessage = GameStringsStore.createVisibilityChangedLogMessage(
+        targetActor.name,
+        visibility
+      );
 
-        const logMessage = GameStringsStore.createVisibilityChangedLogMessage(
-          targetActor.name,
-          visibility
-        );
-
-        this.logMessageProduced.next(logMessage);
-      }
+      this.logMessageProduced.next(logMessage);
     }
 
     return { visibility: result };

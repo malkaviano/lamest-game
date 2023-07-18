@@ -22,7 +22,6 @@ import { SkillStoreInterface } from '@interfaces/stores/skill-store.interface';
 import { SkillAffinityLiteral } from '@literals/skill-category.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { ReadableStoreInterface } from '@interfaces/stores/readable-store.interface';
-import { VisibilityStateStoreInterface } from '@interfaces/stores/visibility-state-store.interface';
 import { ArrayView } from '@wrappers/array.view';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
@@ -48,7 +47,6 @@ import lockedContainerStateStore from '@assets/states/locked-container-state.jso
 import professionStore from '@assets/professions.json';
 import skillStore from '@assets/skills.json';
 import readableStore from '@assets/items/readables.json';
-import visibilityStateStore from '@assets/states/visibility-state.json';
 import armorStore from '@assets/items/armor.json';
 
 export class ResourcesStore {
@@ -86,16 +84,12 @@ export class ResourcesStore {
 
   public readonly readableStore: ReadableStoreInterface;
 
-  public readonly visibilityStateStore: VisibilityStateStoreInterface;
-
   public readonly armorStore: ArmorStoreInterface;
 
   constructor() {
     this.sceneStore = sceneStore;
 
     this.skillStateStore = skillStateStore;
-
-    this.visibilityStateStore = visibilityStateStore;
 
     this.discardStateStore = discardStateStore;
 
@@ -212,12 +206,10 @@ export class ResourcesStore {
         id: a.id,
         name: a.name,
         description: a.description,
-        resettable: a.resettable,
         characteristics: characteristics,
         skills: skills,
         equippedWeapon: a.equippedWeapon,
-        killedState: a.killedState,
-        behaviorState: a.behaviorState,
+        lootState: a.lootState,
         actorSettings: {
           vulnerabilityCoefficient:
             SettingsStore.settings.vulnerabilityCoefficient,
