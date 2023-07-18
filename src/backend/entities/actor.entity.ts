@@ -15,8 +15,8 @@ import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-se
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
-import { ReactionValues } from '@values/reaction.values';
-import { SceneActorsInfoDefinition } from '@definitions/scene-actors.definition';
+import { ReactionValues } from '@values/reaction.value';
+import { SceneActorsInfoValues } from '@values/scene-actors.value';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { ClassificationLiteral } from '@literals/classification.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
@@ -196,7 +196,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public action(
-    sceneActorsInfo: ArrayView<SceneActorsInfoDefinition>
+    sceneActorsInfo: ArrayView<SceneActorsInfoValues>
   ): ActionableEvent | null {
     this.regeneratorBehavior.startApRegeneration();
 

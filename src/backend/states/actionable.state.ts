@@ -1,7 +1,7 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { StateLiteral } from '@literals/state.literal';
-import { ReactionValues } from '@values/reaction.values';
+import { ReactionValues } from '@values/reaction.value';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 

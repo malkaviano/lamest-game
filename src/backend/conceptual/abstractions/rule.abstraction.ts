@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
-import { RuleValues } from '@values/rule.values';
+import { RuleValues } from '@values/rule.value';
 import { RuleInterface } from '@interfaces/rule.interface';
 import { ActionableEvent } from '@events/actionable.event';
 import { RuleResult, RuleResultPayload } from '@results/rule.result';
@@ -18,7 +18,7 @@ import {
   ActionableDefinition,
   consumeActionable,
 } from '@definitions/actionable.definition';
-import { ReactionValues } from '@values/reaction.values';
+import { ReactionValues } from '@values/reaction.value';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActorEntity } from '@entities/actor.entity';
 import { Mutable } from '@wrappers/mutable.wrapper';

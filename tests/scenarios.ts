@@ -9,7 +9,7 @@ import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
-import { RuleValues } from '@values/rule.values';
+import { RuleValues } from '@values/rule.value';
 
 export const ruleScenario = (
   service: RuleAbstraction,

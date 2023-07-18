@@ -1,5 +1,5 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { ReactionValues } from '@values/reaction.values';
+import { ReactionValues } from '@values/reaction.value';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from '@states/actionable.state';

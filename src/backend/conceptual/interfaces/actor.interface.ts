@@ -5,7 +5,7 @@ import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ActorDefenseInterface } from '@interfaces/actor-defense.interface';
 import { ActorEventsInterface } from '@interfaces/actor-events.interface';
 import { ActorVisibilityInterface } from '@interfaces/actor-visibility.interface';
-import { SceneActorsInfoDefinition } from '@definitions/scene-actors.definition';
+import { SceneActorsInfoValues } from '@values/scene-actors.value';
 import { WeaponEquippedInterface } from '@interfaces/weapon-equipped.interface';
 import { WithCharacteristicsInterface } from '@interfaces/with-characteristics.interface';
 import { WithDerivedAttributesInterface } from '@interfaces/with-derived-attributes.interface';
@@ -23,7 +23,7 @@ export interface ActorInterface
     ActorVisibilityInterface,
     ActorEventsInterface {
   action(
-    sceneActorsInfo: ArrayView<SceneActorsInfoDefinition>
+    sceneActorsInfo: ArrayView<SceneActorsInfoValues>
   ): ActionableEvent | null;
 
   afflictedBy(actorId: string): void;

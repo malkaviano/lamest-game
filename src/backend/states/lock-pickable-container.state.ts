@@ -1,6 +1,6 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { LazyHelper } from '@helpers/lazy.helper';
-import { ReactionValues } from '@values/reaction.values';
+import { ReactionValues } from '@values/reaction.value';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from '@states/actionable.state';
 import { LockPickingContainerState } from '@states/lock-picking-container.state';

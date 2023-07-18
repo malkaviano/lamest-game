@@ -1,6 +1,6 @@
 import { InventoryService } from '@services/inventory.service';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleValues } from '@values/rule.values';
+import { RuleValues } from '@values/rule.value';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';

@@ -1,6 +1,6 @@
 import { UsableDefinition } from '@definitions/usable.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleValues } from '@values/rule.values';
+import { RuleValues } from '@values/rule.value';
 import { InventoryService } from '@services/inventory.service';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';

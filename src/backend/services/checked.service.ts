@@ -2,7 +2,7 @@ import { GameItemDefinition } from '@definitions/game-item.definition';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { InventoryService } from '@services/inventory.service';
 import { GameStringsStore } from '@stores/game-strings.store';
-import { RuleValues } from '@values/rule.values';
+import { RuleValues } from '@values/rule.value';
 
 export class CheckedService {
   public getRuleTargetOrThrow(

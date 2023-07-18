@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ClassificationLiteral } from '@literals/classification.literal';
-import { ReactionValues } from '@values/reaction.values';
+import { ReactionValues } from '@values/reaction.value';
 import { ArrayView } from '@wrappers/array.view';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';

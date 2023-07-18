@@ -1,6 +1,6 @@
 import { RollHelper } from '@helpers/roll.helper';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleValues } from '@values/rule.values';
+import { RuleValues } from '@values/rule.value';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '@services/checked.service';

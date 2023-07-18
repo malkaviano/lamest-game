@@ -4,7 +4,7 @@ import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableState } from '@states/actionable.state';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ClassificationLiteral } from '@literals/classification.literal';
-import { ReactionValues } from '@values/reaction.values';
+import { ReactionValues } from '@values/reaction.value';
 import { ArrayView } from '@wrappers/array.view';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';

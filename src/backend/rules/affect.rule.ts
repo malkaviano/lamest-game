@@ -4,7 +4,7 @@ import { EffectEvent } from '@events/effect.event';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { RollHelper } from '@helpers/roll.helper';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleValues } from '@values/rule.values';
+import { RuleValues } from '@values/rule.value';
 import { RuleResult } from '@results/rule.result';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';

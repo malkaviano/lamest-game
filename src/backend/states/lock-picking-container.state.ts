@@ -1,6 +1,6 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { directionNamesDefinition } from '@definitions/directions.definition';
-import { ReactionValues } from '@values/reaction.values';
+import { ReactionValues } from '@values/reaction.value';
 import { DirectionLiteral } from '@literals/direction.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableState } from '@states/actionable.state';
