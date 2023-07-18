@@ -79,7 +79,7 @@ export const molotov = new WeaponDefinition(
 export const actionAffect = createActionableDefinition(
   'AFFECT',
   'affect',
-  'Use Equipped'
+  'Attack'
 );
 
 export const actionPickAnalgesic = createActionableDefinition(
