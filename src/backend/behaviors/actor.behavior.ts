@@ -60,12 +60,18 @@ export class ActorBehavior {
 
   public get skills(): ReadonlyKeyValueWrapper<number> {
     return Array.from(this.mSkills.entries()).reduce(
-      (acc: { [key: string]: number }, [k, v]) => {
-        const base = this.skillStore.skills[k].base(this.characteristics);
+      (obj: { [key: string]: number }, [k, v]) => {
+        const skill = this.skillStore.skills[k];
 
-        acc[k] = v + base;
+        const influence = skill.influenced.reduce((acc, name) => {
+          acc += this.characteristics[name].value;
 
-        return acc;
+          return acc;
+        }, 0);
+
+        obj[k] = v + influence;
+
+        return obj;
       },
       {}
     );
