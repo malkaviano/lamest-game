@@ -4,7 +4,7 @@ import {
 } from '@definitions/actionable.definition';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { KeyValueInterface } from '@interfaces/key-value.interface';
-import { ResourcesStore } from './resources.store';
+import { ResourcesStore } from '@stores/resources.store';
 
 export class ActionableStore {
   private readonly store: Map<string, ActionableDefinition>;

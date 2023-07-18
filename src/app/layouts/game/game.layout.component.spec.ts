@@ -11,6 +11,7 @@ import { SceneDefinition } from '@definitions/scene.definition';
 import { SimpleState } from '@states/simple.state';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { InteractiveEntity } from '@entities/interactive.entity';
+import { ViewableInterface } from '../../interfaces/viewable.interface';
 
 import {
   actionAsk,
@@ -18,7 +19,6 @@ import {
   fakeCharacterStatusView,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
-import { ViewableInterface } from '@interfaces/viewable.interface';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;

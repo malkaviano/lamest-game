@@ -1,7 +1,7 @@
 import { SceneStoreInterface } from '@interfaces/stores/scene-store.interface';
 import { SkillStateStoreInterface } from '@interfaces/stores/skill-state-store.interface';
 import { DiscardStateStoreInterface } from '@interfaces/stores/discard-state-store.interface';
-import { SimpleStateStoreInterface } from '@interfaces/simple-state-store.interface';
+import { SimpleStateStoreInterface } from '@interfaces/stores/simple-state-store.interface';
 import { ConversationStateStoreInterface } from '@interfaces/stores/conversation-state-store.interface';
 import { DestroyableStateStoreInterface } from '@interfaces/stores/destroyable-state-store.interface';
 import { WeaponStoreInterface } from '@interfaces/stores/weapon-store.interface';

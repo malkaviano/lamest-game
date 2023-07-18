@@ -1,23 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { SceneDefinition } from '@definitions/scene.definition';
-import { CharacterValuesView } from '../../view-models/character-values.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { GameItemDefinition } from '@definitions/game-item.definition';
-import { CharacterStatusView } from 'src/app/view-models/character-status.view';
-import { ArrayView } from '@wrappers/array.view';
-import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
-import { GameStringsStore } from '@stores/game-strings.store';
-import { ActionableEvent } from '@events/actionable.event';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { SceneDefinition } from '@definitions/scene.definition';
+import { ActionableEvent } from '@events/actionable.event';
 import { ReadableInterface } from '@interfaces/readable.interface';
+import { GameLoopService } from '@services/game-loop.service';
+import { GameStringsStore } from '@stores/game-strings.store';
+import { ArrayView } from '@wrappers/array.view';
+import { CharacterStatusView } from '../../view-models/character-status.view';
 import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.component';
+import { ViewerComponent } from '../../dialogs/viewer/viewer.dialog.component';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
-import { ViewableInterface } from '@interfaces/viewable.interface';
-import { ViewerComponent } from '../../dialogs/viewer/viewer.dialog.component';
-import { GameLoopService } from '@services/game-loop.service';
+import { ViewableInterface } from '../../interfaces/viewable.interface';
+import { CharacterValuesView } from '../../view-models/character-values.view';
+import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 
 @Component({
   selector: 'app-game-page',
