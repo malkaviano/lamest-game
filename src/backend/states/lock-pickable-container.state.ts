@@ -1,6 +1,6 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { LazyHelper } from '@helpers/lazy.helper';
-import { ReactionValuesDefinition } from '@definitions/reaction-values.definition';
+import { ReactionValues } from '@values/reaction.values';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from '@states/actionable.state';
 import { LockPickingContainerState } from '@states/lock-picking-container.state';
@@ -20,7 +20,7 @@ export class LockPickableContainerState extends LockedContainerState {
   protected override stateResult(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesDefinition
+    values: ReactionValues
   ): { state: ActionableState; log?: string } {
     if (
       action.actionable === 'INTERACTION' &&

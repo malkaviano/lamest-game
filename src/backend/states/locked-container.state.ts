@@ -4,7 +4,7 @@ import { ActionableState } from '@states/actionable.state';
 import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { ReactionValuesDefinition } from '@definitions/reaction-values.definition';
+import { ReactionValues } from '@values/reaction.values';
 
 export class LockedContainerState extends ActionableState {
   constructor(
@@ -17,7 +17,7 @@ export class LockedContainerState extends ActionableState {
   protected stateResult(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesDefinition
+    values: ReactionValues
   ): { state: ActionableState; log?: string } {
     const item = values.item;
 

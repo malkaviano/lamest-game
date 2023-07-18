@@ -36,6 +36,7 @@
       "@rules/*": ["./src/backend/rules/*"],
       "@hubs/*": ["./src/backend/hubs/*"],
       "@policies/*": ["./src/backend/policies/*"],
+      "@values/*": ["./src/backend/conceptual/values/*"],
       "@results/*": ["./src/backend/conceptual/results/*"],
       "@definitions/*": ["./src/backend/conceptual/definitions/*"],
       "@abstractions/*": ["./src/backend/conceptual/abstractions/*"],

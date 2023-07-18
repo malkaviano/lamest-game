@@ -1,6 +1,6 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { directionNamesDefinition } from '@definitions/directions.definition';
-import { ReactionValuesDefinition } from '@definitions/reaction-values.definition';
+import { ReactionValues } from '@values/reaction.values';
 import { DirectionLiteral } from '@literals/direction.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableState } from '@states/actionable.state';
@@ -35,7 +35,7 @@ export class LockPickingContainerState extends LockedContainerState {
   protected override stateResult(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesDefinition
+    values: ReactionValues
   ): { state: ActionableState; log?: string } {
     const direction = action.name as DirectionLiteral;
 

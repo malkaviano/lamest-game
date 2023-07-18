@@ -3,7 +3,7 @@ import { GameItemDefinition } from '@definitions/game-item.definition';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ActorInterface } from '@interfaces/actor.interface';
 
-export type ReactionValuesDefinition = {
+export type ReactionValues = {
   readonly item?: GameItemDefinition;
   readonly effect?: EffectEvent;
   readonly energy?: number;
