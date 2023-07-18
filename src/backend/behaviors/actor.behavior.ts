@@ -1,5 +1,5 @@
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
-import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { DerivedAttributeValues } from '@values/derived-attribute.value';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { MathHelper } from '@helpers/math.helper';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
@@ -38,7 +38,7 @@ export class ActorBehavior {
     return { ...this.mCharacteristics };
   }
 
-  public get derivedAttributes(): DerivedAttributeSetDefinition {
+  public get derivedAttributes(): DerivedAttributeValues {
     return {
       'MAX HP': new DerivedAttributeDefinition('MAX HP', this.maximumHP()),
       'MAX EP': new DerivedAttributeDefinition('MAX EP', this.maximumEP()),

@@ -1,7 +1,7 @@
-import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { DerivedAttributeValues } from '@values/derived-attribute.value';
 
 export interface WithDerivedAttributesInterface {
-  get derivedAttributes(): DerivedAttributeSetDefinition;
+  get derivedAttributes(): DerivedAttributeValues;
 
   apSpent(apSpent: number): void;
 

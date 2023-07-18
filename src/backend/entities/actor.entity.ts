@@ -11,7 +11,7 @@ import {
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
-import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { DerivedAttributeValues } from '@values/derived-attribute.value';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
@@ -150,7 +150,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return { ...characteristics, AGI };
   }
 
-  public get derivedAttributes(): DerivedAttributeSetDefinition {
+  public get derivedAttributes(): DerivedAttributeValues {
     return this.actorBehavior.derivedAttributes;
   }
 

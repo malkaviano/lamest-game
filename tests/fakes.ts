@@ -9,7 +9,7 @@ import { CharacteristicSetDefinition } from '@definitions/characteristic-set.def
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { createDamageReduction } from '@definitions/damage-reduction.definition';
-import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-set.definition';
+import { DerivedAttributeValues } from '@values/derived-attribute.value';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { createDice } from '@definitions/dice.definition';
 import { EffectDefinition } from '@definitions/effect.definition';
@@ -103,7 +103,7 @@ export const fakeCharacteristics: CharacteristicSetDefinition = {
   APP: new CharacteristicDefinition('APP', 14),
 };
 
-export const fakeDerivedAttributes: DerivedAttributeSetDefinition = {
+export const fakeDerivedAttributes: DerivedAttributeValues = {
   'MAX HP': new DerivedAttributeDefinition('MAX HP', 8),
   'MAX EP': new DerivedAttributeDefinition('MAX EP', 13),
   'CURRENT HP': new DerivedAttributeDefinition('CURRENT HP', 8),
