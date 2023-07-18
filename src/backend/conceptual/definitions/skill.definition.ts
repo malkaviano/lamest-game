@@ -1,4 +1,4 @@
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { SkillAffinityLiteral } from '@literals/skill-category.literal';
 
 export class SkillDefinition {
@@ -8,11 +8,11 @@ export class SkillDefinition {
     public readonly affinity: SkillAffinityLiteral,
     public readonly combat: boolean,
     private readonly baseGenerator: (
-      characteristics: CharacteristicSetDefinition
+      characteristics: CharacteristicValues
     ) => number
   ) {}
 
-  public base(characteristics: CharacteristicSetDefinition): number {
+  public base(characteristics: CharacteristicValues): number {
     return this.baseGenerator(characteristics);
   }
 }

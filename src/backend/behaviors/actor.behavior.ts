@@ -1,4 +1,4 @@
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { DerivedAttributeValues } from '@values/derived-attribute.value';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { MathHelper } from '@helpers/math.helper';
@@ -23,7 +23,7 @@ export class ActorBehavior {
   private currentAP: number;
 
   private constructor(
-    private readonly mCharacteristics: CharacteristicSetDefinition,
+    private readonly mCharacteristics: CharacteristicValues,
     private readonly mSkills: Map<string, number>,
     private readonly skillStore: SkillStore
   ) {
@@ -34,7 +34,7 @@ export class ActorBehavior {
     this.currentAP = this.maximumAP();
   }
 
-  public get characteristics(): CharacteristicSetDefinition {
+  public get characteristics(): CharacteristicValues {
     return { ...this.mCharacteristics };
   }
 
@@ -175,7 +175,7 @@ export class ActorBehavior {
   }
 
   public static create(
-    characteristics: CharacteristicSetDefinition,
+    characteristics: CharacteristicValues,
     skills: Map<string, number>,
     skillStore: SkillStore
   ): ActorBehavior {

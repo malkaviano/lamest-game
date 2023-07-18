@@ -1,4 +1,4 @@
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { SkillDefinition } from '@definitions/skill.definition';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
@@ -14,11 +14,11 @@ export class SkillStore {
     resourcesStore.skillStore.skills.forEach((skill) => {
       const r = skill.influenced.reduce(
         (acc, f) => {
-          return (characteristics: CharacteristicSetDefinition) =>
+          return (characteristics: CharacteristicValues) =>
             acc(characteristics) + influencedDefinitions[f](characteristics);
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        (_: CharacteristicSetDefinition): number => {
+        (_: CharacteristicValues): number => {
           return 0;
         }
       );
@@ -49,26 +49,26 @@ export class SkillStore {
   }
 }
 
-const str = (characteristics: CharacteristicSetDefinition) =>
+const str = (characteristics: CharacteristicValues) =>
   characteristics.STR.value;
 
-const agi = (characteristics: CharacteristicSetDefinition) =>
+const agi = (characteristics: CharacteristicValues) =>
   characteristics.AGI.value;
 
-const int = (characteristics: CharacteristicSetDefinition) =>
+const int = (characteristics: CharacteristicValues) =>
   characteristics.INT.value;
 
-const esn = (characteristics: CharacteristicSetDefinition) =>
+const esn = (characteristics: CharacteristicValues) =>
   characteristics.ESN.value;
 
-const app = (characteristics: CharacteristicSetDefinition) =>
+const app = (characteristics: CharacteristicValues) =>
   characteristics.APP.value;
 
-const vit = (characteristics: CharacteristicSetDefinition) =>
+const vit = (characteristics: CharacteristicValues) =>
   characteristics.VIT.value;
 
 const influencedDefinitions: ReadonlyKeyValueWrapper<
-  (characteristics: CharacteristicSetDefinition) => number
+  (characteristics: CharacteristicValues) => number
 > = {
   str,
 

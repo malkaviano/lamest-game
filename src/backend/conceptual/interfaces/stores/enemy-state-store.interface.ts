@@ -1,4 +1,4 @@
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic-set.definition';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 
 export interface EnemyStateStoreInterface {
@@ -8,7 +8,7 @@ export interface EnemyStateStoreInterface {
     readonly lootState: string;
     readonly weaponName: string;
     readonly behavior: BehaviorLiteral;
-    readonly characteristics: CharacteristicSetDefinition;
+    readonly characteristics: CharacteristicValues;
     readonly skills: Map<string, number>;
   }[];
 }

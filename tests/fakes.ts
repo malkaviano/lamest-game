@@ -5,7 +5,7 @@ import {
 } from '@definitions/actionable.definition';
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { CharacterIdentityDefinition } from '@definitions/character-identity.definition';
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { createDamageReduction } from '@definitions/damage-reduction.definition';
@@ -94,7 +94,7 @@ export const actionAsk = createActionableDefinition(
   'Got action?'
 );
 
-export const fakeCharacteristics: CharacteristicSetDefinition = {
+export const fakeCharacteristics: CharacteristicValues = {
   STR: new CharacteristicDefinition('STR', 8),
   VIT: new CharacteristicDefinition('VIT', 9),
   AGI: new CharacteristicDefinition('AGI', 11),
@@ -119,13 +119,13 @@ export const fakeSkills: ReadonlyKeyValueWrapper<number> = {
   Dodge: 30,
 };
 
-const str = (characteristics: CharacteristicSetDefinition) =>
+const str = (characteristics: CharacteristicValues) =>
   characteristics.STR.value;
 
-const int = (characteristics: CharacteristicSetDefinition) =>
+const int = (characteristics: CharacteristicValues) =>
   characteristics.INT.value;
 
-const agi = (characteristics: CharacteristicSetDefinition) =>
+const agi = (characteristics: CharacteristicValues) =>
   characteristics.AGI.value;
 
 export const fakeSkillStore: ReadonlyKeyValueWrapper<SkillDefinition> = {

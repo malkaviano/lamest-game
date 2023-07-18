@@ -1,5 +1,5 @@
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 
 export interface WithCharacteristicsInterface {
-  get characteristics(): CharacteristicSetDefinition;
+  get characteristics(): CharacteristicValues;
 }

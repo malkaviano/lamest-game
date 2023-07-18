@@ -10,7 +10,7 @@ import {
 } from '@behaviors/equipment.behavior';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
-import { CharacteristicSetDefinition } from '@definitions/characteristic-set.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 import { DerivedAttributeValues } from '@values/derived-attribute.value';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
@@ -135,7 +135,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return this.equipmentBehavior.weaponEquipped;
   }
 
-  public get characteristics(): CharacteristicSetDefinition {
+  public get characteristics(): CharacteristicValues {
     const characteristics = this.actorBehavior.characteristics;
 
     const agi = this.actorBehavior.characteristics.AGI;
