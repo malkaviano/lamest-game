@@ -32,20 +32,23 @@ export type GameSettingsValues = {
   };
   readonly armorPenalty: {
     readonly MINIMAL: {
-      readonly Dodge: number;
+      readonly DodgeSkill: number;
       readonly AGI: number;
     };
     readonly LIGHT: {
-      readonly Dodge: number;
+      readonly DodgeSkill: number;
       readonly AGI: number;
     };
     readonly MEDIUM: {
-      readonly Dodge: number;
+      readonly DodgeSkill: number;
       readonly AGI: number;
     };
     readonly HEAVY: {
-      readonly Dodge: number;
+      readonly DodgeSkill: number;
       readonly AGI: number;
     };
+  };
+  readonly systemSkills: {
+    dodgeSkill: string;
   };
 };

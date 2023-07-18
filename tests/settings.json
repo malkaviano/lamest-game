@@ -43,21 +43,24 @@
     },
     "armorPenalty": {
       "MINIMAL": {
-        "Dodge": 0,
+        "DodgeSkill": 0,
         "AGI": 0
       },
       "LIGHT": {
-        "Dodge": 10,
+        "DodgeSkill": 10,
         "AGI": 1
       },
       "MEDIUM": {
-        "Dodge": 30,
+        "DodgeSkill": 30,
         "AGI": 3
       },
       "HEAVY": {
-        "Dodge": 60,
+        "DodgeSkill": 60,
         "AGI": 6
       }
+    },
+    "systemSkills": {
+      "dodgeSkill": "Dodge"
     }
   }
 }
