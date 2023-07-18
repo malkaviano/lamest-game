@@ -60,7 +60,9 @@
       }
     },
     "systemSkills": {
-      "dodgeSkill": "Dodge"
+      "dodgeSkill": "Dodge",
+      "disguiseSkill": "Disguise",
+      "stealthSkill": "Hide"
     }
   }
 }

@@ -4,6 +4,7 @@ import { VisibilityLiteral } from '@literals/visibility.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { PolicyAbstraction } from '@abstractions/policy.abstraction';
 import { PolicyResult } from '@results/policy.result';
+import { SettingsStore } from '@stores/settings.store';
 
 export class VisibilityPolicy extends PolicyAbstraction {
   public override enforce(ruleResult: RuleResult): PolicyResult {
@@ -36,11 +37,11 @@ export class VisibilityPolicy extends PolicyAbstraction {
       ruleResult.roll?.result === 'SUCCESS'
     ) {
       switch (ruleResult.skillName) {
-        case 'Disguise':
+        case SettingsStore.settings.systemSkills.disguiseSkill:
           ruleResult.actor.changeVisibility('DISGUISED');
           result.actor = 'DISGUISED';
           break;
-        case 'Hide':
+        case SettingsStore.settings.systemSkills.stealthSkill:
           ruleResult.actor.changeVisibility('HIDDEN');
           result.actor = 'HIDDEN';
           break;

@@ -49,6 +49,8 @@ export type GameSettingsValues = {
     };
   };
   readonly systemSkills: {
-    dodgeSkill: string;
+    readonly dodgeSkill: string;
+    readonly disguiseSkill: string;
+    readonly stealthSkill: string;
   };
 };
