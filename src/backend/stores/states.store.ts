@@ -44,11 +44,7 @@ export class StatesStore {
       this.store.set(
         state.id,
         new SkillState(
-          createActionableDefinition(
-            'SKILL',
-            state.skillName,
-            `CHECK ${state.skillName}`
-          ),
+          createActionableDefinition('SKILL', state.skillName, state.skillName),
           this.lazyState(state.successState),
           state.maximumTries
         )
@@ -119,11 +115,7 @@ export class StatesStore {
       const key = itemStore.items[keyName];
 
       const actionables = ArrayView.create(
-        createActionableDefinition(
-          'USE',
-          key.identity.name,
-          `USE ${key.identity.label}`
-        )
+        createActionableDefinition('USE', key.identity.name, key.identity.label)
       );
 
       const allDirectionsDefinition = directionNamesDefinition.items.map(
