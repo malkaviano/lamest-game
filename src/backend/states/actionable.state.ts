@@ -1,7 +1,7 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { StateLiteral } from '@literals/state.literal';
-import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { ReactionValuesDefinition } from '@definitions/reaction-values.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 
@@ -18,7 +18,7 @@ export abstract class ActionableState {
   public onResult(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValuesDefinition
   ): { state: ActionableState; log?: string } {
     if (!this.stateActions.items.some((a) => a.equals(action))) {
       throw new Error(GameStringsStore.errorMessages['WRONG-ACTION']);
@@ -30,6 +30,6 @@ export abstract class ActionableState {
   protected abstract stateResult(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValuesDefinition
   ): { state: ActionableState; log?: string };
 }

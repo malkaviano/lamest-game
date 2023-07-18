@@ -15,7 +15,7 @@ import { DerivedAttributeSetDefinition } from '@definitions/derived-attribute-se
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
-import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { ReactionValuesDefinition } from '@definitions/reaction-values.definition';
 import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
 import { ActorSituationLiteral } from '@literals/actor-situation.literal';
 import { ClassificationLiteral } from '@literals/classification.literal';
@@ -228,7 +228,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public override reactTo(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValuesDefinition
   ): string | null {
     const { actionable } = action;
 

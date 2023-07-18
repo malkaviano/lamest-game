@@ -1,10 +1,10 @@
 import { ActionableDefinition } from '@definitions/actionable.definition';
-import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableState } from '@states/actionable.state';
 import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { CheckResultLiteral } from '@literals/check-result.literal';
+import { ReactionValuesDefinition } from '@definitions/reaction-values.definition';
 
 export class LockedContainerState extends ActionableState {
   constructor(
@@ -17,7 +17,7 @@ export class LockedContainerState extends ActionableState {
   protected stateResult(
     action: ActionableDefinition,
     result: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValuesDefinition
   ): { state: ActionableState; log?: string } {
     const item = values.item;
 

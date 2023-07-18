@@ -18,7 +18,7 @@ import {
   ActionableDefinition,
   consumeActionable,
 } from '@definitions/actionable.definition';
-import { ReactionValuesInterface } from '@interfaces/reaction-values.interface';
+import { ReactionValuesDefinition } from '@definitions/reaction-values.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActorEntity } from '@entities/actor.entity';
 import { Mutable } from '@wrappers/mutable.wrapper';
@@ -111,7 +111,7 @@ export abstract class RuleAbstraction
     target: InteractiveInterface,
     action: ActionableDefinition,
     rollResult: CheckResultLiteral,
-    values: ReactionValuesInterface
+    values: ReactionValuesDefinition
   ): void {
     const log = target.reactTo(action, rollResult, values);
 
