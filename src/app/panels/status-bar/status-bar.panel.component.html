@@ -12,9 +12,9 @@
   <span data-testid="label-equipped">Equipped: </span>
   <span data-testid="value-equipped">{{ status.weapon.identity.label }}</span>
   <div *ngIf="status.weapon.identity.name !== 'unarmed'">
-    <button mat-raised-button color="primary" (click)="onActionSelected('unequip')"
-      data-testid="equip-action-unequip">
-      UNEQUIP
+    <button mat-fab color="primary" (click)="onActionSelected('unequip')"
+      data-testid="equip-action-unequip"  matTooltip="Unequip weapon">
+      <img src="../../../assets/icons/remove.svg" alt="UNEQUIP" />
     </button>
   </div>
 </div>
@@ -23,8 +23,11 @@
   <span data-testid="label-wearing">Wearing: </span>
   <span data-testid="value-wearing">{{ status.armor.identity.label }}</span>
   <div *ngIf="status.armor.identity.name !== 'clothes'">
-    <button mat-raised-button color="primary" (click)="onActionSelected('strip')" data-testid="wear-action-strip">
-      STRIP
+    <button mat-fab color="primary"
+      (click)="onActionSelected('strip')"
+      data-testid="wear-action-strip"
+      matTooltip="Strip armor">
+      <img src="../../../assets/icons/remove.svg" alt="STRIP" />
     </button>
   </div>
 </div>
