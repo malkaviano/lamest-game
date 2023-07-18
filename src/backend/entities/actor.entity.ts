@@ -166,16 +166,18 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
         SettingsStore.settings.weaponQuality[weaponQuality]
     );
 
+    const dodgeSkillName = SettingsStore.settings.systemSkills.dodgeSkill;
+
     const dodgeValue = this.minimumValue(
-      this.actorBehavior.skills['Dodge'] -
+      this.actorBehavior.skills[dodgeSkillName] -
         SettingsStore.settings.armorPenalty[this.armorWearing.armorPenalty]
-          .Dodge
+          .DodgeSkill
     );
 
     return {
       ...actorSkills,
       [weaponSkillName]: weaponSkillValue,
-      ['Dodge']: dodgeValue,
+      [dodgeSkillName]: dodgeValue,
     };
   }
 

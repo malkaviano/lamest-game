@@ -57,7 +57,9 @@ export class GamePredicate implements LoggerInterface {
     actionDodgeable: boolean,
     targetDodgesPerformed: number
   ): boolean {
-    if (this.canUseSkill(actor, 'Dodge')) {
+    if (
+      this.canUseSkill(actor, SettingsStore.settings.systemSkills.dodgeSkill)
+    ) {
       if (!actionDodgeable && actor instanceof PlayerEntity) {
         const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
           actor.name

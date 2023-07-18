@@ -20,6 +20,7 @@ export class SettingsStore {
       aiLoopMilliseconds,
       weaponQuality,
       armorPenalty,
+      systemSkills,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(playerEffectDefenses.cures);
@@ -49,6 +50,7 @@ export class SettingsStore {
       aiLoopMilliseconds,
       weaponQuality,
       armorPenalty,
+      systemSkills,
     };
   }
 
