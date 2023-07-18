@@ -5,7 +5,7 @@ import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '@services/checked.service';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { GamePredicate } from '@predicates/game.predicate';
@@ -26,7 +26,7 @@ export class EquipRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent
-  ): RuleResultInterface {
+  ): RuleResult {
     const toEquip = this.checkedService.lookItemOrThrow<WeaponDefinition>(
       this.inventoryService,
       actor.id,

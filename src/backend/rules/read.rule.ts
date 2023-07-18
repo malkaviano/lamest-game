@@ -4,7 +4,7 @@ import { InventoryService } from '@services/inventory.service';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableEvent } from '@events/actionable.event';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 
 export class ReadRule extends RuleAbstraction {
@@ -19,7 +19,7 @@ export class ReadRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent
-  ): RuleResultInterface {
+  ): RuleResult {
     const itemName = event.eventId;
 
     const read = this.inventoryService.look<ReadableDefinition>(

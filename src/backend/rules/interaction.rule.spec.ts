@@ -2,7 +2,7 @@ import { deepEqual, instance, when } from 'ts-mockito';
 
 import { InteractionRule } from '@rules/interaction.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 
 import {
   mockedCheckedService,
@@ -49,7 +49,7 @@ describe('InteractionRule', () => {
     it('return interaction result', () => {
       const result = rule.execute(actor, eventInteraction, extras);
 
-      const expected: RuleResultInterface = {
+      const expected: RuleResult = {
         name: 'INTERACTION',
         event: eventInteraction,
         actor,

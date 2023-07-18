@@ -1,6 +1,6 @@
 import { PolicyAbstraction } from '@abstractions/policy.abstraction';
-import { PolicyResultInterface } from '@interfaces/policy-result.interface';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { PolicyResult } from '@results/policy.result';
+import { RuleResult } from '@results/rule.result';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { CheckedService } from '@services/checked.service';
 import { InventoryService } from '@services/inventory.service';
@@ -14,7 +14,7 @@ export class DisposePolicy extends PolicyAbstraction {
     super();
   }
 
-  public override enforce(result: RuleResultInterface): PolicyResultInterface {
+  public override enforce(result: RuleResult): PolicyResult {
     if (result.result !== 'DENIED') {
       if (
         result.name === 'AFFECT' &&

@@ -1,7 +1,7 @@
 import { instance, verify, when } from 'ts-mockito';
 
 import { VisibilityPolicy } from '@policies/visibility.policy';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 
@@ -44,7 +44,7 @@ describe('VisibilityPolicy', () => {
   describe('actor visibility', () => {
     describe('when using affect', () => {
       it('change visibility to VISIBLE', () => {
-        const ruleResult: RuleResultInterface = {
+        const ruleResult: RuleResult = {
           name: 'AFFECT',
           actor,
           event: eventAffect,
@@ -80,7 +80,7 @@ describe('VisibilityPolicy', () => {
         },
       ].forEach(({ event, skillName, actorVisibility }) => {
         it(`change actor visibility to ${actorVisibility}`, () => {
-          const ruleResult: RuleResultInterface = {
+          const ruleResult: RuleResult = {
             name: 'SKILL',
             actor,
             event,
@@ -104,7 +104,7 @@ describe('VisibilityPolicy', () => {
       });
 
       it('change target visibility to VISIBLE', () => {
-        const ruleResult: RuleResultInterface = {
+        const ruleResult: RuleResult = {
           name: 'SKILL',
           actor,
           event: eventDetect,
@@ -133,7 +133,7 @@ describe('VisibilityPolicy', () => {
   describe('target visibility', () => {
     describe('when affected', () => {
       it('change visibility to VISIBLE', () => {
-        const ruleResult: RuleResultInterface = {
+        const ruleResult: RuleResult = {
           name: 'AFFECT',
           actor,
           event: eventAffect,
@@ -188,7 +188,7 @@ describe('VisibilityPolicy', () => {
     it('should log', (done) => {
       const result: LogMessageDefinition[] = [];
 
-      const ruleResult: RuleResultInterface = {
+      const ruleResult: RuleResult = {
         name: 'AFFECT',
         actor,
         event: eventAffect,

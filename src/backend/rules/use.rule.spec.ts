@@ -2,7 +2,7 @@ import { instance, when } from 'ts-mockito';
 
 import { UseRule } from '@rules/use.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { UsableDefinition } from '@definitions/usable.definition';
 
 import {
@@ -61,7 +61,7 @@ describe('UseRule', () => {
       it('return denied result', () => {
         const result = rule.execute(actor, eventUseMasterKey, extras);
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'USE',
           event: eventUseMasterKey,
           result: 'DENIED',
@@ -81,7 +81,7 @@ describe('UseRule', () => {
 
         const result = rule.execute(actor, eventUseMasterKey, extras);
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'USE',
           event: eventUseMasterKey,
           result: 'EXECUTED',

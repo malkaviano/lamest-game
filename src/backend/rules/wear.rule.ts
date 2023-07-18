@@ -4,9 +4,9 @@ import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '@services/checked.service';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { ArmorDefinition } from '@definitions/armor.definition';
+import { RuleResult } from '@results/rule.result';
 
 export class WearRule extends RuleAbstraction {
   constructor(
@@ -23,7 +23,7 @@ export class WearRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent
-  ): RuleResultInterface {
+  ): RuleResult {
     const toWear = this.checkedService.takeItemOrThrow<ArmorDefinition>(
       this.inventoryService,
       actor.id,

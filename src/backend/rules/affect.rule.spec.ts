@@ -4,7 +4,7 @@ import { AffectRule } from '@rules/affect.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RollDefinition } from '@definitions/roll.definition';
 import { EffectEvent } from '@events/effect.event';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 
 import { ruleScenario } from '../../../tests/scenarios';
 import {
@@ -196,7 +196,7 @@ describe('AffectRule', () => {
           target,
         });
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
@@ -220,7 +220,7 @@ describe('AffectRule', () => {
           target,
         });
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'AFFECT',
           event: eventAttackInteractive,
           actor,
@@ -269,7 +269,7 @@ describe('AffectRule', () => {
             target,
           });
 
-          const expected: RuleResultInterface = {
+          const expected: RuleResult = {
             name: 'AFFECT',
             event: eventAttackInteractive,
             actor,
@@ -296,7 +296,7 @@ describe('AffectRule', () => {
             target,
           });
 
-          const expected: RuleResultInterface = {
+          const expected: RuleResult = {
             name: 'AFFECT',
             event: eventAttackInteractive,
             actor,

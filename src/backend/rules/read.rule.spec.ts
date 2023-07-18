@@ -3,7 +3,7 @@ import { instance, when } from 'ts-mockito';
 import { ReadRule } from './read.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { ReadableInterface } from '@interfaces/readable.interface';
 
 import {
@@ -58,7 +58,7 @@ describe('ReadRule', () => {
       it('return read result', () => {
         const result = rule.execute(actor, eventRead);
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'READ',
           event: eventRead,
           actor,

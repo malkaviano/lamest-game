@@ -5,7 +5,7 @@ import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '@services/checked.service';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 
 export class PickRule extends RuleAbstraction {
@@ -24,7 +24,7 @@ export class PickRule extends RuleAbstraction {
     actor: ActorInterface,
     event: ActionableEvent,
     extras: RuleExtrasInterface
-  ): RuleResultInterface {
+  ): RuleResult {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const item = this.checkedService.takeItemOrThrow(

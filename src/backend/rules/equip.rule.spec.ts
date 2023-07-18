@@ -4,7 +4,7 @@ import { EquipRule } from '@rules/equip.rule';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { equipActionable } from '@definitions/actionable.definition';
 
 import {
@@ -115,7 +115,7 @@ describe('EquipRule', () => {
 
           const result = rule.execute(actor, eventOk);
 
-          const expected: RuleResultInterface = {
+          const expected: RuleResult = {
             name: 'EQUIP',
             event: eventOk,
             actor,
@@ -137,7 +137,7 @@ describe('EquipRule', () => {
             false
           );
 
-          const expected: RuleResultInterface = {
+          const expected: RuleResult = {
             name: 'EQUIP',
             event: eventNoSkill,
             actor,

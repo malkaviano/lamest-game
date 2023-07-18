@@ -2,7 +2,7 @@ import { instance, verify, when } from 'ts-mockito';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import {
   equipActionable,
   wearActionable,
@@ -83,7 +83,7 @@ describe('WearRule', () => {
       it('return equipped result', () => {
         const result = rule.execute(actor, eventOk);
 
-        const expected: RuleResultInterface = {
+        const expected: RuleResult = {
           name: 'WEAR',
           event: eventOk,
           actor,

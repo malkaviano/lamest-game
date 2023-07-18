@@ -1,9 +1,9 @@
 import { Observable, Subject } from 'rxjs';
 
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { PolicyResultInterface } from '@interfaces/policy-result.interface';
+import { PolicyResult } from '@results/policy.result';
 import { PolicyInterface } from '@interfaces/policy.interface';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 
 export abstract class PolicyAbstraction implements PolicyInterface {
   protected readonly logMessageProduced: Subject<LogMessageDefinition>;
@@ -16,5 +16,5 @@ export abstract class PolicyAbstraction implements PolicyInterface {
     this.logMessageProduced$ = this.logMessageProduced.asObservable();
   }
 
-  public abstract enforce(result: RuleResultInterface): PolicyResultInterface;
+  public abstract enforce(result: RuleResult): PolicyResult;
 }

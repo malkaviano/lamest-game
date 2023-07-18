@@ -3,7 +3,7 @@ import { Observable, merge } from 'rxjs';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { PolicyInterface } from '@interfaces/policy.interface';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { ArrayView } from '@wrappers/array.view';
 
 export class PolicyHub implements LoggerInterface {
@@ -19,7 +19,7 @@ export class PolicyHub implements LoggerInterface {
     );
   }
 
-  public enforcePolicies(ruleResult: RuleResultInterface): void {
+  public enforcePolicies(ruleResult: RuleResult): void {
     this.policies.items.forEach((p) => p.enforce(ruleResult));
   }
 }

@@ -1,14 +1,12 @@
 import { ConverterHelper } from '@helpers/converter.helper';
-import { RuleResultInterface } from '@interfaces/rule-result.interface';
-import { PolicyResultInterface } from '@interfaces/policy-result.interface';
+import { RuleResult } from '@results/rule.result';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { PolicyAbstraction } from '@abstractions/policy.abstraction';
+import { PolicyResult } from '@results/policy.result';
 
 export class VisibilityPolicy extends PolicyAbstraction {
-  public override enforce(
-    ruleResult: RuleResultInterface
-  ): PolicyResultInterface {
+  public override enforce(ruleResult: RuleResult): PolicyResult {
     const result: {
       actor?: VisibilityLiteral;
       target?: VisibilityLiteral;
