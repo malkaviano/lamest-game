@@ -22,7 +22,7 @@ import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { EffectEvent } from '@events/effect.event';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
-import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
+import { SceneActorsInfoDefinition } from '@definitions/scene-actors.definition';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { DiscardState } from '@states/discard.state';
 import { ArrayView } from '@wrappers/array.view';
@@ -163,7 +163,7 @@ export const fakeIdentity = new CharacterIdentityDefinition(
   'VISIBLE'
 );
 
-export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoInterface> =
+export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoDefinition> =
   ArrayView.create({
     id: playerInfo.id,
     classification: 'PLAYER',

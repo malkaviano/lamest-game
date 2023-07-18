@@ -1,6 +1,6 @@
 import { affectActionable } from '@definitions/actionable.definition';
 import { ActionableEvent } from '@events/actionable.event';
-import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
+import { SceneActorsInfoDefinition } from '@definitions/scene-actors.definition';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { ArrayView } from '@wrappers/array.view';
@@ -12,7 +12,7 @@ export class AiBehavior {
   ) {}
 
   public action(
-    sceneActorsInfo: ArrayView<SceneActorsInfoInterface>,
+    sceneActorsInfo: ArrayView<SceneActorsInfoDefinition>,
     afflictedBy: string[]
   ): ActionableEvent | null {
     const player = sceneActorsInfo.items.find(

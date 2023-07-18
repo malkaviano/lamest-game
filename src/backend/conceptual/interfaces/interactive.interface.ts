@@ -23,6 +23,7 @@ export interface InteractiveInterface {
 
   readonly actionsChanged$: Observable<ArrayView<ActionableDefinition>>;
 
+  // TODO: improve return type
   reactTo(
     selected: ActionableDefinition,
     result: CheckResultLiteral,

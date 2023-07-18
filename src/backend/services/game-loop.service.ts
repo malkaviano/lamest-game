@@ -4,7 +4,7 @@ import { CharacterService } from '@services/character.service';
 import { NarrativeService } from '@services/narrative.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
-import { SceneActorsInfoInterface } from '@interfaces/scene-actors.interface';
+import { SceneActorsInfoDefinition } from '@definitions/scene-actors.definition';
 import { SceneDefinition } from '@definitions/scene.definition';
 import { RulesHub } from '@hubs/rules.hub';
 import { InventoryService } from '@services/inventory.service';
@@ -175,7 +175,7 @@ export class GameLoopService {
     this.actors = ArrayView.fromArray(actors);
   }
 
-  private get sceneActorsInfo(): ArrayView<SceneActorsInfoInterface> {
+  private get sceneActorsInfo(): ArrayView<SceneActorsInfoDefinition> {
     return ArrayView.fromArray(
       this.actors.insert(this.player).items.map((a) => {
         return {
