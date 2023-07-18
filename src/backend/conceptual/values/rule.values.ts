@@ -1,6 +1,6 @@
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 
-export interface RuleValuesDefinition {
+export interface RuleValues {
   readonly target?: InteractiveInterface;
   readonly targetDodgesPerformed?: number;
 }

@@ -1,6 +1,6 @@
 import { UsableDefinition } from '@definitions/usable.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleValuesDefinition } from '@definitions/rule-values.definition';
+import { RuleValues } from '@values/rule.values';
 import { InventoryService } from '@services/inventory.service';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
@@ -25,7 +25,7 @@ export class UseRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
-    extras: RuleValuesDefinition
+    extras: RuleValues
   ): RuleResult {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 

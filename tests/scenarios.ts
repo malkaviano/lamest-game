@@ -9,13 +9,13 @@ import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActionableEvent } from '@events/actionable.event';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
-import { RuleValuesDefinition } from '@definitions/rule-values.definition';
+import { RuleValues } from '@values/rule.values';
 
 export const ruleScenario = (
   service: RuleAbstraction,
   actor: ActorInterface,
   actionableEvent: ActionableEvent,
-  extras: RuleValuesDefinition,
+  extras: RuleValues,
   expected: LogMessageDefinition[],
   done: DoneFn
 ) => {

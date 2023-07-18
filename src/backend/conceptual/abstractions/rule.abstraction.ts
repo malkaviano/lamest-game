@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { LoggerInterface } from '@interfaces/logger.interface';
-import { RuleValuesDefinition } from '@definitions/rule-values.definition';
+import { RuleValues } from '@values/rule.values';
 import { RuleInterface } from '@interfaces/rule.interface';
 import { ActionableEvent } from '@events/actionable.event';
 import { RuleResult, RuleResultPayload } from '@results/rule.result';
@@ -65,7 +65,7 @@ export abstract class RuleAbstraction
   public abstract execute(
     actor: ActorInterface,
     event: ActionableEvent,
-    extras: RuleValuesDefinition
+    extras: RuleValues
   ): RuleResult;
 
   protected getResult(

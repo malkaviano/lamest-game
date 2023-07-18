@@ -1,6 +1,6 @@
 import { NarrativeService } from '@services/narrative.service';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleValuesDefinition } from '@definitions/rule-values.definition';
+import { RuleValues } from '@values/rule.values';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
@@ -23,7 +23,7 @@ export class SceneRule extends RuleAbstraction {
   public override execute(
     actor: ActorInterface,
     event: ActionableEvent,
-    extras: RuleValuesDefinition
+    extras: RuleValues
   ): RuleResult {
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 

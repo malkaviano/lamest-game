@@ -1,12 +1,12 @@
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
-import { RuleValuesDefinition } from '@definitions/rule-values.definition';
 import { InventoryService } from '@services/inventory.service';
 import { GameStringsStore } from '@stores/game-strings.store';
+import { RuleValues } from '@values/rule.values';
 
 export class CheckedService {
   public getRuleTargetOrThrow(
-    ruleExtrasInterface: RuleValuesDefinition
+    ruleExtrasInterface: RuleValues
   ): InteractiveInterface {
     const target = ruleExtrasInterface.target;
 
