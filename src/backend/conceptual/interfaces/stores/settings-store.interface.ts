@@ -1,8 +1,8 @@
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
-import { GameSettingsDefinition } from '@definitions/game-settings.definition';
+import { GameSettingsValues } from '@values/game-settings.value';
 
 export type SettingsStoreInterface = {
-  settings: Omit<GameSettingsDefinition, 'playerEffectDefenses'> & {
+  settings: Omit<GameSettingsValues, 'playerEffectDefenses'> & {
     playerEffectDefenses: {
       immunities: EffectTypeLiteral[];
       cures: EffectTypeLiteral[];

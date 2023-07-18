@@ -2,7 +2,7 @@ import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { ArrayView } from '@wrappers/array.view';
 
-export type GameSettingsDefinition = {
+export type GameSettingsValues = {
   readonly professionPoints: number;
   readonly intelligencePoints: number;
   readonly vulnerabilityCoefficient: number;

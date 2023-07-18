@@ -1,11 +1,11 @@
-import { GameSettingsDefinition } from '@definitions/game-settings.definition';
+import { GameSettingsValues } from '@values/game-settings.value';
 import { ArrayView } from '@wrappers/array.view';
 import { SettingsStoreInterface } from '@interfaces/stores/settings-store.interface';
 
 import settingsStore from '@assets/settings.json';
 
 export class SettingsStore {
-  private static mSettings: GameSettingsDefinition;
+  private static mSettings: GameSettingsValues;
 
   public static initialize(settingsStore: SettingsStoreInterface) {
     const {
@@ -52,7 +52,7 @@ export class SettingsStore {
     };
   }
 
-  public static get settings(): GameSettingsDefinition {
+  public static get settings(): GameSettingsValues {
     return { ...this.mSettings };
   }
 }
