@@ -14,10 +14,6 @@ export class ActionableDefinition {
       this.label === other.label
     );
   }
-
-  public toString(): string {
-    return `${this.actionable} - ${this.label}`;
-  }
 }
 
 export const createActionableDefinition = (
