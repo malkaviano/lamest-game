@@ -13,6 +13,7 @@ import { ArrayView } from '@wrappers/array.view';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameStringsStore } from '@stores/game-strings.store';
+import { ActionableLiteral } from '@literals/actionable.literal';
 
 @Component({
   selector: 'app-interactive-widget',
@@ -21,6 +22,8 @@ import { GameStringsStore } from '@stores/game-strings.store';
   providers: [WithSubscriptionHelper],
 })
 export class InteractiveWidgetComponent implements OnInit, OnDestroy {
+  private readonly basePath: string;
+
   @Input() interactive!: InteractiveInterface;
   @Output() actionSelected: EventEmitter<ActionableEvent>;
   actions: ArrayView<ActionableDefinition>;
@@ -46,6 +49,8 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
 
     this.detectHidden = false;
     this.detectDisguised = false;
+
+    this.basePath = '../../../assets/icons';
   }
 
   ngOnInit(): void {
@@ -71,5 +76,45 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
 
   onActionSelected(action: ActionableDefinition): void {
     this.actionSelected.emit(new ActionableEvent(action, this.interactive.id));
+  }
+
+  public setIcon(actionable: ActionableLiteral) {
+    switch (actionable) {
+      case 'SCENE':
+        return {
+          icon: `${this.basePath}/scene.svg`,
+          tooltip: 'Transit to next scene',
+        };
+      case 'SKILL':
+        return {
+          icon: `${this.basePath}/skill.svg`,
+          tooltip: `Skill check`,
+        };
+      case 'PICK':
+        return {
+          icon: `${this.basePath}/pick.svg`,
+          tooltip: `Pick up item`,
+        };
+      case 'AFFECT':
+        return {
+          icon: `${this.basePath}/affect.svg`,
+          tooltip: `Use equipped weapon on target`,
+        };
+      case 'USE':
+        return {
+          icon: `${this.basePath}/use.svg`,
+          tooltip: `Use item from inventory`,
+        };
+      case 'INTERACTION':
+        return {
+          icon: `${this.basePath}/interaction.svg`,
+          tooltip: `Interact with the target`,
+        };
+      default:
+        return {
+          icon: `${this.basePath}/none.svg`,
+          tooltip: 'Action not recognized',
+        };
+    }
   }
 }

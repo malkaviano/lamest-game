@@ -69,7 +69,8 @@
     "AP": "The character current | max action points",
     "UNARMED": "Actor Natural Weapon",
     "CLOTHES": "Actor Basic Armor",
-    "TRANSIT": "TRANSIT"
+    "TRANSIT": "Exit",
+    "ATTACK": "Attack"
   },
   "tooltips": {
     "aggressive": "Will attack on sight",

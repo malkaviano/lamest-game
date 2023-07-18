@@ -5,8 +5,8 @@
     </mat-card-title>
     <mat-card-content>
       <span [ngSwitch]="interactive.behavior">
-        <img matTooltip="{{ retaliateTooltip }}" 
-          *ngSwitchCase="'RETALIATE'" 
+        <img matTooltip="{{ retaliateTooltip }}"
+          *ngSwitchCase="'RETALIATE'"
           src="assets/icons/shield.png"
           alt="retaliator">
         <img matTooltip="{{ aggressiveTooltip }}"
@@ -32,17 +32,20 @@
     </mat-card-content>
     <mat-card-actions>
       <ng-template ngFor let-action [ngForOf]="actions.items">
-        <div class="action">
-          <button
-            class="action-button"
-            mat-raised-button
-            color="primary"
-            (click)="onActionSelected(action)"
-            attr.data-testid="actionable-{{ action.name }}"
-          >
-            {{ action.label }}
-          </button>
-        </div>
+          <div class="buttons">
+            <button
+              class="action-button"
+              mat-raised-button color="primary"
+              (click)="onActionSelected(action)"
+              attr.data-testid="actionable-{{ action.name }}"
+              matTooltip="{{ setIcon(action.actionable).tooltip }}">
+              <div class="button-content">
+                <img src="{{ setIcon(action.actionable).icon }}"
+                  alt="{{ setIcon(action.actionable).tooltip }}" />
+                <span class="label">{{ action.label }}</span>
+              </div>
+            </button>
+          </div>
       </ng-template>
     </mat-card-actions>
   </mat-card>

@@ -4,14 +4,14 @@
       "key": "roastMeat",
       "name": "rawMeat",
       "actionable": "USE",
-      "label": "ROAST Meat"
+      "label": "Meat"
     },
 
     {
       "key": "interactionPickLock",
       "name": "lockpick",
       "actionable": "INTERACTION",
-      "label": "START Lock Picking"
+      "label": "Lock Picking"
     }
   ]
 }

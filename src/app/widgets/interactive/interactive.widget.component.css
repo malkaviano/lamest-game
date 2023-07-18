@@ -1,24 +1,36 @@
 .card-box {
   margin: 5px;
-  min-width: 100px;
-  text-align: center;
+  min-width: 200px;
+  max-width: 400px;
   display: flex;
   flex-wrap: wrap;
   align-content: space-evenly;
 }
 
-.action {
-  display: inline-block;
-}
-
 .action-button {
   margin: 5px;
-  min-width: 100px;
-  max-width: 200px;
-  min-height: 40px;
+  min-width: 50px;
+  min-height: 30px;
   height: auto;
 }
 
 .card-title {
   padding: 15px;
+}
+
+.button-content {
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+  align-content: space-evenly;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-evenly;
+}
+
+.label {
+  padding-left: 5px;
 }

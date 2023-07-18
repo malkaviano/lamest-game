@@ -1,4 +1,5 @@
 import { ActionableLiteral } from '@literals/actionable.literal';
+import { GameStringsStore } from '../../stores/game-strings.store';
 
 export class ActionableDefinition {
   constructor(
@@ -25,7 +26,7 @@ export const createActionableDefinition = (
 export const affectActionable = createActionableDefinition(
   'AFFECT',
   'affect',
-  'Use Equipped'
+  GameStringsStore.descriptions['ATTACK']
 );
 
 export const consumeActionable = createActionableDefinition(
