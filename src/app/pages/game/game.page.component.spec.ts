@@ -18,7 +18,7 @@ import { equipActionable } from '@definitions/actionable.definition';
 
 import {
   mockedFormatterHelperService,
-  mockedGameEventsDefinition,
+  mockedGameEventsValues,
   mockedGameLoopService,
   mockedInteractiveEntity,
   mockedMatDialog,
@@ -69,7 +69,7 @@ describe('GamePageComponent', () => {
 
     setupMocks();
 
-    when(mockedGameEventsDefinition.playerInventory$).thenReturn(
+    when(mockedGameEventsValues.playerInventory$).thenReturn(
       of(
         ArrayView.create(
           new ActionableItemDefinition(simpleSword, equipActionable),
@@ -78,9 +78,9 @@ describe('GamePageComponent', () => {
       )
     );
 
-    when(mockedGameEventsDefinition.actionLogged$).thenReturn(of(log));
+    when(mockedGameEventsValues.actionLogged$).thenReturn(of(log));
 
-    when(mockedGameEventsDefinition.documentOpened$).thenReturn(of(readable));
+    when(mockedGameEventsValues.documentOpened$).thenReturn(of(readable));
 
     fixture = TestBed.createComponent(GamePageComponent);
 

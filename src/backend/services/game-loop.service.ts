@@ -6,7 +6,6 @@ import { ActorInterface } from '@interfaces/actor.interface';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { RulesHub } from '@hubs/rules.hub';
 import { InventoryService } from '@services/inventory.service';
-import { GameEventsDefinition } from '@definitions/game-events.definition';
 import {
   ActionableDefinition,
   consumeActionable,
@@ -27,6 +26,7 @@ import { GamePredicate } from '@predicates/game.predicate';
 import { SettingsStore } from '@stores/settings.store';
 import { SceneActorsInfoValues } from '@values/scene-actors.value';
 import { SceneEntity } from '@entities/scene.entity';
+import { GameEventsValues } from '@values/game-events.value';
 
 export class GameLoopService {
   private aiTimer: NodeJS.Timer | undefined;
@@ -43,7 +43,7 @@ export class GameLoopService {
 
   private readonly dodgedThisRound: Map<string, number>;
 
-  public readonly events: GameEventsDefinition;
+  public readonly events: GameEventsValues;
 
   constructor(
     private readonly ruleHub: RulesHub,
@@ -83,7 +83,7 @@ export class GameLoopService {
       })
     );
 
-    this.events = new GameEventsDefinition(
+    this.events = new GameEventsValues(
       narrativeService.sceneChanged$,
       loggingHub.logMessageProduced$,
       characterService.characterChanged$,

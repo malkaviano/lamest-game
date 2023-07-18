@@ -7,7 +7,7 @@ import { ReadableDefinition } from '@definitions/readable.definition';
 import { PlayerInterface } from '@interfaces/player.interface';
 import { SceneEntity } from '@entities/scene.entity';
 
-export class GameEventsDefinition {
+export class GameEventsValues {
   constructor(
     public readonly sceneChanged$: Observable<SceneEntity>,
     public readonly actionLogged$: Observable<LogMessageDefinition>,
