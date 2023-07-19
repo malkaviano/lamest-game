@@ -27,6 +27,7 @@ import {
   discardKey,
   molotov,
   playerInfo,
+  permanentKey,
 } from '../../../tests/fakes';
 
 const eventAttackInteractive = actionableEvent(
@@ -41,12 +42,12 @@ const eventConsumeFirstAid = actionableEvent(
   consumableFirstAid.identity.name
 );
 
-const eventDropMasterKey = actionableEvent(
+const eventDropPermanentKey = actionableEvent(
   dropActionable,
-  discardKey.identity.name
+  permanentKey.identity.name
 );
 
-const eventUseMasterKey = actionableEvent(
+const eventUseDiscardKey = actionableEvent(
   actionUseDiscardKey,
   discardKey.identity.name
 );
@@ -105,16 +106,16 @@ const executedConsumeResult: RuleResult = {
 
 const executedDropResult: RuleResult = {
   name: 'DROP',
-  event: eventDropMasterKey,
+  event: eventDropPermanentKey,
   actor,
   result: 'EXECUTED',
   target,
-  dropped: discardKey,
+  dropped: permanentKey,
 };
 
 const executedUseResult: RuleResult = {
   name: 'USE',
-  event: eventUseMasterKey,
+  event: eventUseDiscardKey,
   actor,
   result: 'EXECUTED',
   target,
@@ -131,9 +132,14 @@ const lostFirstAidLog = GameStringsStore.createLostItemLogMessage(
   consumableFirstAid.identity.label
 );
 
-const lostMasterKeyLog = GameStringsStore.createLostItemLogMessage(
+const lostDiscardKeyLog = GameStringsStore.createLostItemLogMessage(
   playerInfo.name,
   discardKey.identity.label
+);
+
+const lostPermanentKeyLog = GameStringsStore.createLostItemLogMessage(
+  playerInfo.name,
+  permanentKey.identity.label
 );
 
 describe('DisposePolicy', () => {
@@ -166,6 +172,14 @@ describe('DisposePolicy', () => {
         discardKey.identity.name
       )
     ).thenReturn(discardKey);
+
+    when(
+      mockedCheckedService.takeItemOrThrow(
+        instance(mockedInventoryService),
+        actor.id,
+        permanentKey.identity.name
+      )
+    ).thenReturn(permanentKey);
   });
 
   it('should create an instance', () => {
@@ -205,9 +219,9 @@ describe('DisposePolicy', () => {
       {
         ruleResult: executedDropResult,
         expected: {
-          disposed: discardKey,
+          disposed: permanentKey,
         },
-        log: lostMasterKeyLog,
+        log: lostPermanentKeyLog,
         equipped: molotov,
       },
       {
@@ -215,7 +229,7 @@ describe('DisposePolicy', () => {
         expected: {
           disposed: discardKey,
         },
-        log: lostMasterKeyLog,
+        log: lostDiscardKeyLog,
         equipped: molotov,
       },
     ].forEach(({ ruleResult, expected, log, equipped }) => {
