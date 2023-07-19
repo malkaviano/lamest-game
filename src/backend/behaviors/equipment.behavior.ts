@@ -5,6 +5,9 @@ import { WeaponDefinition } from '@definitions/weapon.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { createDamageReduction } from '@definitions/damage-reduction.definition';
+import { SettingsStore } from '../stores/settings.store';
+
+const unarmedSettings = SettingsStore.settings.unarmedDamage;
 
 export const unarmedWeapon = new WeaponDefinition(
   new ItemIdentityDefinition(
@@ -13,7 +16,11 @@ export const unarmedWeapon = new WeaponDefinition(
     GameStringsStore.descriptions['UNARMED']
   ),
   'Brawl',
-  new EffectDefinition(createDice({ D4: 1 }), 0, 'KINETIC'),
+  new EffectDefinition(
+    createDice(unarmedSettings.dice),
+    unarmedSettings.fixed,
+    unarmedSettings.effect
+  ),
   true,
   'PERMANENT',
   0,

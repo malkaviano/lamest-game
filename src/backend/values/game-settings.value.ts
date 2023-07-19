@@ -1,6 +1,7 @@
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { ArrayView } from '@wrappers/array.view';
+import { Dice } from '@definitions/dice.definition';
 
 export type GameSettingsValues = {
   readonly professionPoints: number;
@@ -52,5 +53,10 @@ export type GameSettingsValues = {
     readonly dodgeSkill: string;
     readonly disguiseSkill: string;
     readonly stealthSkill: string;
+  };
+  readonly unarmedDamage: {
+    readonly dice: Partial<Dice>;
+    readonly fixed: number;
+    readonly effect: EffectTypeLiteral;
   };
 };

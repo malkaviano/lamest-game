@@ -21,6 +21,7 @@ export class SettingsStore {
       weaponQuality,
       armorPenalty,
       systemSkills,
+      unarmedDamage: unarmed,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(playerEffectDefenses.cures);
@@ -51,6 +52,7 @@ export class SettingsStore {
       weaponQuality,
       armorPenalty,
       systemSkills,
+      unarmedDamage: unarmed,
     };
   }
 
