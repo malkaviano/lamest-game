@@ -279,7 +279,7 @@ export const actionConsume = createActionableDefinition(
 export const actionSceneExit = createActionableDefinition(
   'SCENE',
   'exit',
-  'Exit'
+  'Went out'
 );
 
 export const actionSkillAthleticism = createActionableDefinition(
