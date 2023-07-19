@@ -63,6 +63,15 @@
       "dodgeSkill": "Dodge",
       "disguiseSkill": "Disguise",
       "stealthSkill": "Hide"
+    },
+    "unarmedDamage": {
+      "dice": {},
+      "fixed": 1,
+      "effect": "KINETIC"
+    },
+    "clothArmor": {
+      "reduction": {},
+      "penalty": "MINIMAL"
     }
   }
 }
