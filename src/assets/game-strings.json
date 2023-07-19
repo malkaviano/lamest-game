@@ -79,6 +79,10 @@
   },
   "labels": {
     "unarmedWeapon": "Bare hands",
-    "clothArmor": "Simple Clothes"
+    "clothArmor": "Simple Clothes",
+    "LEFT": "Left",
+    "RIGHT": "Right",
+    "UP": "Up",
+    "DOWN": "Down"
   }
 }
