@@ -70,7 +70,7 @@ const eventSceneExit = actionableEvent(actionSceneExit, interactiveInfo.id);
 const sceneChangedLog = new LogMessageDefinition(
   'SCENE',
   playerInfo.name,
-  'Went out through test to heaven'
+  'went out through test to heaven'
 );
 
 const actor = instance(mockedPlayerEntity);

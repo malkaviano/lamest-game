@@ -19,6 +19,9 @@ export class GameStringsStore {
   private static tooltipsStore: ReadonlyKeyValueWrapper<string> =
     gameMessages.tooltips;
 
+  private static labelsStore: ReadonlyKeyValueWrapper<string> =
+    gameMessages.labels;
+
   public static get errorMessages(): ReadonlyKeyValueWrapper<string> {
     return GameStringsStore.errorMessagesStore;
   }
@@ -29,6 +32,10 @@ export class GameStringsStore {
 
   public static get tooltips(): ReadonlyKeyValueWrapper<string> {
     return GameStringsStore.tooltipsStore;
+  }
+
+  public static get labels(): ReadonlyKeyValueWrapper<string> {
+    return GameStringsStore.labelsStore;
   }
 
   public static createEffectRestoredHPMessage(
@@ -234,7 +241,6 @@ export class GameStringsStore {
 
   public static createSceneLogMessage(
     actor: string,
-    selection: string,
     through: string,
     destination: string
   ): LogMessageDefinition {
@@ -242,7 +248,6 @@ export class GameStringsStore {
       'SCENE',
       actor,
       GameStringsStore.logMessagesStore['sceneMessage']
-        .replace('${selection}', selection)
         .replace('${through}', through)
         .replace('${destination}', destination)
     );

@@ -1,11 +1,14 @@
 import { anyString, anything, instance, when } from 'ts-mockito';
 
-import { ActionableDefinition } from '@definitions/actionable.definition';
+import {
+  ActionableDefinition,
+  consumeActionable,
+} from '@definitions/actionable.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from '@states/actionable.state';
 import { InteractiveEntity } from '@entities/interactive.entity';
 
-import { actionConsume, actionPickAnalgesic } from '../../../tests/fakes';
+import { actionPickAnalgesic } from '../../../tests/fakes';
 import {
   mockedActionableState,
   mockedActionableState2,
@@ -17,7 +20,7 @@ describe('InteractiveEntity', () => {
     setupMocks();
 
     when(mockedActionableState.actions).thenReturn(
-      ArrayView.create(actionConsume)
+      ArrayView.create(consumeActionable)
     );
 
     when(mockedActionableState2.actions).thenReturn(
@@ -27,7 +30,7 @@ describe('InteractiveEntity', () => {
 
   describe('initial state', () => {
     it('push an actionsChanged notification', (done) => {
-      const expected = ArrayView.create(actionConsume);
+      const expected = ArrayView.create(consumeActionable);
 
       const entity = fakeEntity();
 
@@ -82,7 +85,7 @@ describe('InteractiveEntity', () => {
 
         done();
 
-        expect(result).toEqual(ArrayView.create(actionConsume));
+        expect(result).toEqual(ArrayView.create(consumeActionable));
       });
     });
 

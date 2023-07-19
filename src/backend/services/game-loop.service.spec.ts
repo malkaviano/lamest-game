@@ -8,15 +8,15 @@ import { ReadableDefinition } from '@definitions/readable.definition';
 import { GameLoopService } from '@services/game-loop.service';
 import { ArrayView } from '@wrappers/array.view';
 import {
+  affectActionable,
+  consumeActionable,
   dropActionable,
   equipActionable,
+  readActionable,
 } from '@definitions/actionable.definition';
 import { SettingsStore } from '@stores/settings.store';
 
 import {
-  actionAffect,
-  actionConsume,
-  actionRead,
   actionableEvent,
   consumableFirstAid,
   interactiveInfo,
@@ -131,7 +131,7 @@ describe('GameLoopService', () => {
         ),
         expected: new ActionableItemDefinition(
           consumableFirstAid,
-          actionConsume
+          consumeActionable
         ),
         item: consumableFirstAid,
       },
@@ -147,7 +147,7 @@ describe('GameLoopService', () => {
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, readable),
-        expected: new ActionableItemDefinition(readable, actionRead),
+        expected: new ActionableItemDefinition(readable, readActionable),
         item: readable,
       },
     ].forEach(({ invEvent, expected, item }) => {
@@ -186,10 +186,10 @@ describe('GameLoopService', () => {
   });
 });
 
-const eventAttackPlayer = actionableEvent(actionAffect, playerInfo.id);
+const eventAttackPlayer = actionableEvent(affectActionable, playerInfo.id);
 
 const eventAttackInteractive = actionableEvent(
-  actionAffect,
+  affectActionable,
   interactiveInfo.id
 );
 

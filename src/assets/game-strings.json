@@ -13,7 +13,7 @@
     "usedItemMessage": "used ${item} on ${target}",
     "equipErrorMessage": "${skill} is required to equip ${equipment}",
     "tookMessage": "took ${item} from ${from}",
-    "sceneMessage": "${selection} through ${through} to ${destination}",
+    "sceneMessage": "went out through ${through} to ${destination}",
     "lostMessage": "lost ${item}",
     "unDodgeableAttackMessage": "attack is not dodgeable",
     "notFoundMessage": "${label} failed, required item was not found in inventory",
@@ -67,10 +67,8 @@
     "HP": "The character current | max hit points",
     "EP": "The character current | max energy points",
     "AP": "The character current | max action points",
-    "UNARMED": "Actor Natural Weapon",
-    "CLOTHES": "Actor Basic Armor",
-    "TRANSIT": "Went out",
-    "ATTACK": "Attack"
+    "unarmedWeapon": "Actor Natural Weapon",
+    "clothArmor": "Actor Basic Armor"
   },
   "tooltips": {
     "aggressive": "Will attack on sight",
@@ -78,5 +76,13 @@
     "player": "Another player",
     "search": "Detects and breaks disguise",
     "visibility": "Detects and breaks stealth"
+  },
+  "labels": {
+    "unarmedWeapon": "Bare hands",
+    "clothArmor": "Simple Clothes",
+    "LEFT": "Left",
+    "RIGHT": "Right",
+    "UP": "Up",
+    "DOWN": "Down"
   }
 }

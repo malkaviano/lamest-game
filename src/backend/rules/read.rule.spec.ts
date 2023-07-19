@@ -5,6 +5,7 @@ import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RuleResult } from '@results/rule.result';
 import { ReadableDefinition } from '@definitions/readable.definition';
+import { readActionable } from '@definitions/actionable.definition';
 
 import {
   mockedInventoryService,
@@ -13,7 +14,6 @@ import {
 } from '../../../tests/mocks';
 import {
   actionableEvent,
-  actionRead,
   playerInfo,
   readable,
   simpleSword,
@@ -90,9 +90,12 @@ describe('ReadRule', () => {
 
 const actor = instance(mockedPlayerEntity);
 
-const eventRead = actionableEvent(actionRead, readable.identity.name);
+const eventRead = actionableEvent(readActionable, readable.identity.name);
 
-const eventReadWrong = actionableEvent(actionRead, simpleSword.identity.name);
+const eventReadWrong = actionableEvent(
+  readActionable,
+  simpleSword.identity.name
+);
 
 const itemReadLog = new LogMessageDefinition(
   'READ',

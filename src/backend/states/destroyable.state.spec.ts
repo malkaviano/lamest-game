@@ -2,12 +2,9 @@ import { LazyHelper } from '@helpers/lazy.helper';
 import { ArrayView } from '@wrappers/array.view';
 import { DestroyableState } from '@states/destroyable.state';
 import { DiscardState } from '@states/discard.state';
+import { affectActionable } from '@definitions/actionable.definition';
 
-import {
-  actionAffect,
-  actionPickSimpleSword,
-  fakeEffect,
-} from '../../../tests/fakes';
+import { actionPickSimpleSword, fakeEffect } from '../../../tests/fakes';
 import { setupMocks } from '../../../tests/mocks';
 
 const logKinetic6 = 'received 6 KINETIC damage';
@@ -21,7 +18,7 @@ describe('DestroyableState', () => {
 
   describe('when HP <= 0', () => {
     it('return DiscardState', () => {
-      const result = state.onResult(actionAffect, 'SUCCESS', {
+      const result = state.onResult(affectActionable, 'SUCCESS', {
         effect: fakeEffect('KINETIC', 12),
       });
 
@@ -34,7 +31,7 @@ describe('DestroyableState', () => {
 
   describe('when HP > 0', () => {
     it('return DestroyableState with remaining HP', () => {
-      const result = state.onResult(actionAffect, 'SUCCESS', {
+      const result = state.onResult(affectActionable, 'SUCCESS', {
         effect: fakeEffect('KINETIC', 6),
       });
 
@@ -44,7 +41,7 @@ describe('DestroyableState', () => {
 
   describe('when no damage is taken', () => {
     it('return DestroyableState with same HP', () => {
-      const result = state.onResult(actionAffect, 'FAILURE', {});
+      const result = state.onResult(affectActionable, 'FAILURE', {});
 
       expect(result).toEqual({ state });
     });
@@ -59,6 +56,14 @@ const f = () => discardedState;
 
 const lazy = new LazyHelper(f);
 
-const state = new DestroyableState(ArrayView.create(actionAffect), lazy, 10);
+const state = new DestroyableState(
+  ArrayView.create(affectActionable),
+  lazy,
+  10
+);
 
-const state2 = new DestroyableState(ArrayView.create(actionAffect), lazy, 4);
+const state2 = new DestroyableState(
+  ArrayView.create(affectActionable),
+  lazy,
+  4
+);

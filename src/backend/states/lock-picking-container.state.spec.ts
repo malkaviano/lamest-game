@@ -26,7 +26,7 @@ const jammedState = new LockedContainerState(
 
 const allDirectionsDefinition = ArrayView.fromArray(
   directionNamesDefinition.items.map((direction) => {
-    return directionActionableDefinition(direction, `Turn ${direction}`);
+    return directionActionableDefinition(direction, direction);
   })
 );
 
@@ -152,7 +152,7 @@ function scenario(
   log: string
 ) {
   const result = s.onResult(
-    createActionableDefinition('INTERACTION', direction, `Turn ${direction}`),
+    createActionableDefinition('INTERACTION', direction, direction),
     'NONE',
     {}
   );

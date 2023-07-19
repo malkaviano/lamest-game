@@ -5,6 +5,7 @@ import { GameStringsStore } from '@stores/game-strings.store';
 import { RollDefinition } from '@definitions/roll.definition';
 import { EffectEvent } from '@events/effect.event';
 import { RuleResult } from '@results/rule.result';
+import { affectActionable } from '@definitions/actionable.definition';
 
 import { ruleScenario } from '../../../tests/scenarios';
 import {
@@ -19,7 +20,6 @@ import {
 } from '../../../tests/mocks';
 import {
   actionableEvent,
-  actionAffect,
   actorInfo,
   glock,
   interactiveInfo,
@@ -335,7 +335,7 @@ const usedSwordLog = GameStringsStore.createUsedItemLogMessage(
 );
 
 const eventAttackInteractive = actionableEvent(
-  actionAffect,
+  affectActionable,
   interactiveInfo.id
 );
 

@@ -18,6 +18,10 @@ import {
 } from '@events/equipment-changed.event';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ArmorDefinition } from '@definitions/armor.definition';
+import {
+  affectActionable,
+  consumeActionable,
+} from '@definitions/actionable.definition';
 
 import {
   fakeCharacteristics,
@@ -25,9 +29,7 @@ import {
   fakeSkills,
   fakeSceneActorsInfo,
   simpleSword,
-  actionAffect,
   fakeEffect,
-  actionConsume,
   playerInfo,
   actionableEvent,
   actionPickAnalgesic,
@@ -148,7 +150,7 @@ describe('ActorEntity', () => {
                 )
               ).thenReturn(event);
 
-              const result = fakeActor().reactTo(actionAffect, 'SUCCESS', {
+              const result = fakeActor().reactTo(affectActionable, 'SUCCESS', {
                 effect: fakeEffect('ACID', 10),
               });
 
@@ -172,7 +174,7 @@ describe('ActorEntity', () => {
               result.push(event);
             });
 
-            char.reactTo(actionAffect, 'SUCCESS', {
+            char.reactTo(affectActionable, 'SUCCESS', {
               effect: fakeEffect('ACID', 6),
             });
 
@@ -186,7 +188,7 @@ describe('ActorEntity', () => {
           describe(`attack was ${result}`, () => {
             it('return nothing', () => {
               const log = fakeActor().reactTo(
-                actionAffect,
+                affectActionable,
                 result as CheckResultLiteral,
                 deepEqual({ effect: fakeEffect('ACID', 1) })
               );
@@ -292,7 +294,7 @@ describe('ActorEntity', () => {
               );
 
               const log = fakeActor().reactTo(
-                actionConsume,
+                consumeActionable,
                 result as CheckResultLiteral,
                 { effect, energy }
               );
@@ -321,7 +323,7 @@ describe('ActorEntity', () => {
               eventResult.push(event);
             });
 
-            char.reactTo(actionConsume, result as CheckResultLiteral, {
+            char.reactTo(consumeActionable, result as CheckResultLiteral, {
               effect,
               energy,
             });
@@ -337,7 +339,7 @@ describe('ActorEntity', () => {
         describe(`heal was ${result}`, () => {
           it('return nothing', () => {
             const log = fakeActor().reactTo(
-              actionConsume,
+              consumeActionable,
               result as CheckResultLiteral,
               deepEqual({ effect: fakeEffect('REMEDY', 1) })
             );
@@ -365,7 +367,7 @@ describe('ActorEntity', () => {
 
         const char = fakeActor();
 
-        char.reactTo(actionAffect, 'SUCCESS', {
+        char.reactTo(affectActionable, 'SUCCESS', {
           effect: fakeEffect('ACID', 10),
         });
 
@@ -571,7 +573,7 @@ const fakeActor = () =>
     }
   );
 
-const eventAttackPlayer = actionableEvent(actionAffect, playerInfo.id);
+const eventAttackPlayer = actionableEvent(affectActionable, playerInfo.id);
 
 function testWeaponEvent(
   char: ActorEntity,

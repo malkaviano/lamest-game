@@ -5,7 +5,7 @@ import { WeaponDefinition } from '@definitions/weapon.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { createDamageReduction } from '@definitions/damage-reduction.definition';
-import { SettingsStore } from '../stores/settings.store';
+import { SettingsStore } from '@stores/settings.store';
 
 const unarmedSettings = SettingsStore.settings.unarmedDamage;
 
@@ -13,9 +13,9 @@ const clothArmorSettings = SettingsStore.settings.clothArmor;
 
 export const unarmedWeapon = new WeaponDefinition(
   new ItemIdentityDefinition(
-    'unarmed',
-    'Unarmed',
-    GameStringsStore.descriptions['UNARMED']
+    'unarmedWeapon',
+    GameStringsStore.labels['unarmedWeapon'],
+    GameStringsStore.descriptions['unarmedWeapon']
   ),
   'Brawl',
   new EffectDefinition(
@@ -31,9 +31,9 @@ export const unarmedWeapon = new WeaponDefinition(
 
 export const clothArmor = new ArmorDefinition(
   new ItemIdentityDefinition(
-    'clothes',
-    'Clothes',
-    GameStringsStore.descriptions['CLOTHES']
+    'clothArmor',
+    GameStringsStore.labels['clothArmor'],
+    GameStringsStore.descriptions['clothArmor']
   ),
   'PERMANENT',
   createDamageReduction(clothArmorSettings.reduction),

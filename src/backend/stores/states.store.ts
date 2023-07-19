@@ -25,6 +25,7 @@ import {
 } from '@definitions/actionable.definition';
 import { ItemStore } from '@stores/item.store';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
+import { GameStringsStore } from '@stores/game-strings.store';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
@@ -120,7 +121,10 @@ export class StatesStore {
 
       const allDirectionsDefinition = directionNamesDefinition.items.map(
         (direction) => {
-          return directionActionableDefinition(direction, `Turn ${direction}`);
+          return directionActionableDefinition(
+            direction,
+            GameStringsStore.labels[direction]
+          );
         }
       );
 
