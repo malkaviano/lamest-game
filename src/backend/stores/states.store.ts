@@ -120,7 +120,7 @@ export class StatesStore {
 
       const allDirectionsDefinition = directionNamesDefinition.items.map(
         (direction) => {
-          return directionActionableDefinition(direction, `Turn ${direction}`);
+          return directionActionableDefinition(direction, direction);
         }
       );
 

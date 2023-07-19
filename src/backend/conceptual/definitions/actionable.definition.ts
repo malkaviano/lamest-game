@@ -18,28 +18,22 @@ export class ActionableDefinition {
 
 export const createActionableDefinition = (
   key: ActionableLiteral,
-  name: string,
+  name?: string,
   label?: string
-) => new ActionableDefinition(key, name, label ?? name);
+) => new ActionableDefinition(key, name ?? key, label ?? name ?? key);
 
-export const affectActionable = createActionableDefinition('AFFECT', 'affect');
+export const affectActionable = createActionableDefinition('AFFECT');
 
-export const consumeActionable = createActionableDefinition(
-  'CONSUME',
-  'consume'
-);
+export const consumeActionable = createActionableDefinition('CONSUME');
 
-export const equipActionable = createActionableDefinition('EQUIP', 'equip');
+export const equipActionable = createActionableDefinition('EQUIP');
 
-export const readActionable = createActionableDefinition('READ', 'read');
+export const readActionable = createActionableDefinition('READ');
 
-export const dropActionable = createActionableDefinition('DROP', 'drop');
+export const dropActionable = createActionableDefinition('DROP');
 
-export const unequipActionable = createActionableDefinition(
-  'UNEQUIP',
-  'unequip'
-);
+export const unequipActionable = createActionableDefinition('UNEQUIP');
 
-export const wearActionable = createActionableDefinition('WEAR', 'wear');
+export const wearActionable = createActionableDefinition('WEAR');
 
-export const stripActionable = createActionableDefinition('STRIP', 'strip');
+export const stripActionable = createActionableDefinition('STRIP');

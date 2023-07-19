@@ -3,8 +3,9 @@ import { instance } from 'ts-mockito';
 import { PlayerEntity } from '@entities/player.entity';
 import { ActionableEvent } from '@events/actionable.event';
 import { ArrayView } from '@wrappers/array.view';
+import { consumeActionable } from '@definitions/actionable.definition';
 
-import { fakeIdentity, actionConsume } from '../../../tests/fakes';
+import { fakeIdentity } from '../../../tests/fakes';
 import {
   mockedActorBehavior,
   mockedRegeneratorBehavior,
@@ -34,7 +35,7 @@ describe('PlayerEntity', () => {
       it('return consumable event', () => {
         const char = fakeCharacter();
 
-        const expected = new ActionableEvent(actionConsume, 'firstAid');
+        const expected = new ActionableEvent(consumeActionable, 'firstAid');
 
         char.playerDecision(expected);
 

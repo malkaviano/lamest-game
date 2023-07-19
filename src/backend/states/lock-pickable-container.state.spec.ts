@@ -23,7 +23,7 @@ const actionInteractionLockPick = createActionableDefinition(
 
 const allDirectionsDefinition = ArrayView.fromArray(
   directionNamesDefinition.items.map((direction) => {
-    return directionActionableDefinition(direction, `Turn ${direction}`);
+    return directionActionableDefinition(direction, direction);
   })
 );
 

@@ -3,6 +3,7 @@ import { anything, instance, when } from 'ts-mockito';
 import { GamePredicate } from '@predicates/game.predicate';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { affectActionable } from '@definitions/actionable.definition';
 
 import {
   mockedActorEntity,
@@ -11,7 +12,6 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
-  actionAffect,
   actionableEvent,
   greatSword,
   interactiveInfo,
@@ -22,7 +22,7 @@ describe('GamePredicate', () => {
   const rule = instance(mockedAffectRule);
 
   const eventAttackInteractive = actionableEvent(
-    actionAffect,
+    affectActionable,
     interactiveInfo.id
   );
 

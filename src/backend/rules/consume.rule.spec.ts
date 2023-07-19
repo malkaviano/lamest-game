@@ -6,6 +6,7 @@ import { ConsumableDefinition } from '@definitions/consumable.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RollDefinition } from '@definitions/roll.definition';
 import { RuleResult } from '@results/rule.result';
+import { consumeActionable } from '@definitions/actionable.definition';
 
 import {
   mockedCheckedService,
@@ -17,7 +18,6 @@ import {
 } from '../../../tests/mocks';
 import {
   actionableEvent,
-  actionConsume,
   consumableFirstAid,
   playerInfo,
   simpleSword,
@@ -66,7 +66,7 @@ describe('ConsumeRule', () => {
         expect(() =>
           rule.execute(
             instance(mockedPlayerEntity),
-            actionableEvent(actionConsume, simpleSword.identity.name)
+            actionableEvent(consumeActionable, simpleSword.identity.name)
           )
         ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
       });
@@ -176,6 +176,6 @@ const consumedFirstAidLog = new LogMessageDefinition(
 );
 
 const eventConsumeFirstAid = actionableEvent(
-  actionConsume,
+  consumeActionable,
   consumableFirstAid.identity.name
 );

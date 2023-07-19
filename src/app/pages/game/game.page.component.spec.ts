@@ -14,7 +14,10 @@ import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameLoopService } from '@services/game-loop.service';
-import { equipActionable } from '@definitions/actionable.definition';
+import {
+  consumeActionable,
+  equipActionable,
+} from '@definitions/actionable.definition';
 
 import {
   mockedFormatterHelperService,
@@ -27,7 +30,6 @@ import {
 } from '../../../../tests/mocks';
 import {
   actionableItemView,
-  actionConsume,
   fakeCharacterSheetCharacteristics,
   fakeCharacterSheetDerivedAttributes,
   fakeCharacterSheetIdentity,
@@ -138,7 +140,7 @@ describe('GamePageComponent', () => {
 
   describe('actionSelected', () => {
     it('should send an ActionableEvent', () => {
-      const event = new ActionableEvent(actionConsume, 'id1');
+      const event = new ActionableEvent(consumeActionable, 'id1');
 
       const spy = spyOn(instance(mockedGameLoopService), 'actionableReceived');
 

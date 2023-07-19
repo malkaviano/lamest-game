@@ -4,6 +4,7 @@ import { VisibilityPolicy } from '@policies/visibility.policy';
 import { RuleResult } from '@results/rule.result';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
+import { affectActionable } from '@definitions/actionable.definition';
 
 import {
   mockedActorEntity,
@@ -11,7 +12,6 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
-  actionAffect,
   actionDetect,
   actionDisguise,
   actionHide,
@@ -25,7 +25,7 @@ describe('VisibilityPolicy', () => {
 
   const target = instance(mockedActorEntity);
 
-  const eventAffect = actionableEvent(actionAffect, target.id);
+  const eventAffect = actionableEvent(affectActionable, target.id);
 
   const eventDetect = actionableEvent(actionDetect, target.id);
 

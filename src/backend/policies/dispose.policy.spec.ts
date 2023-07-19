@@ -6,6 +6,8 @@ import { unarmedWeapon } from '@behaviors/equipment.behavior';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import {
+  affectActionable,
+  consumeActionable,
   dropActionable,
   equipActionable,
 } from '@definitions/actionable.definition';
@@ -18,8 +20,6 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import {
-  actionAffect,
-  actionConsume,
   actionUseDiscardKey,
   actionableEvent,
   consumableFirstAid,
@@ -31,14 +31,14 @@ import {
 } from '../../../tests/fakes';
 
 const eventAttackInteractive = actionableEvent(
-  actionAffect,
+  affectActionable,
   molotov.identity.name
 );
 
 const eventEquipMolotov = actionableEvent(equipActionable, interactiveInfo.id);
 
 const eventConsumeFirstAid = actionableEvent(
-  actionConsume,
+  consumeActionable,
   consumableFirstAid.identity.name
 );
 

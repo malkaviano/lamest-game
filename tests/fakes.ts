@@ -76,12 +76,6 @@ export const molotov = new WeaponDefinition(
   'COMMON'
 );
 
-export const actionAffect = createActionableDefinition(
-  'AFFECT',
-  'affect',
-  'Attack'
-);
-
 export const actionPickAnalgesic = createActionableDefinition(
   'PICK',
   'analgesic',
@@ -270,12 +264,6 @@ export const consumableAnalgesic = new ConsumableDefinition(
   'DISPOSABLE'
 );
 
-export const actionConsume = createActionableDefinition(
-  'CONSUME',
-  'consume',
-  'Consume'
-);
-
 export const actionSceneExit = createActionableDefinition(
   'SCENE',
   'exit',
@@ -330,8 +318,6 @@ export const documentOpened = {
   title: 'Testing',
   text: ArrayView.create(['GG man']),
 };
-
-export const actionRead = createActionableDefinition('READ', 'read', 'Read');
 
 export const readable = new ReadableDefinition(
   new ItemIdentityDefinition('book', 'Book', 'Some book'),

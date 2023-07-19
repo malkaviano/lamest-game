@@ -3,13 +3,14 @@ import { instance } from 'ts-mockito';
 import { ActionPolicy } from '@policies/action.policy';
 import { RuleResult } from '@results/rule.result';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { affectActionable } from '@definitions/actionable.definition';
 
 import {
   mockedActorEntity,
   mockedPlayerEntity,
   setupMocks,
 } from '../../../tests/mocks';
-import { actionAffect, actionableEvent } from '../../../tests/fakes';
+import { actionableEvent } from '../../../tests/fakes';
 
 describe('ActionPolicy', () => {
   const policy = new ActionPolicy();
@@ -18,7 +19,7 @@ describe('ActionPolicy', () => {
 
   const target = instance(mockedActorEntity);
 
-  const eventAffect = actionableEvent(actionAffect, target.id);
+  const eventAffect = actionableEvent(affectActionable, target.id);
 
   beforeEach(() => {
     setupMocks();

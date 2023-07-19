@@ -5,8 +5,9 @@ import { VisibilityLiteral } from '@literals/visibility.literal';
 import { AiBehavior } from '@behaviors/ai.behavior';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableEvent } from '@events/actionable.event';
+import { affectActionable } from '@definitions/actionable.definition';
 
-import { actionAffect, playerInfo } from '../../../tests/fakes';
+import { playerInfo } from '../../../tests/fakes';
 import { setupMocks } from '../../../tests/mocks';
 
 describe('AiBehavior', () => {
@@ -14,7 +15,7 @@ describe('AiBehavior', () => {
     setupMocks();
   });
 
-  const event = new ActionableEvent(actionAffect, playerInfo.id);
+  const event = new ActionableEvent(affectActionable, playerInfo.id);
 
   [
     {
