@@ -64,7 +64,7 @@ describe('ActionPolicy', () => {
       });
 
       it('logs AP spent', (done) => {
-        let result: LogMessageDefinition[] = [];
+        const result: LogMessageDefinition[] = [];
 
         policy.logMessageProduced$.subscribe((event) => {
           result.push(event);

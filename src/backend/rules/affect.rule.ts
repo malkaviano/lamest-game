@@ -76,8 +76,7 @@ export class AffectRule extends RuleAbstraction {
           skillName,
           targetActor,
           effect,
-          dodgeable,
-          extras
+          dodgeable
         );
       }
 
@@ -125,8 +124,7 @@ export class AffectRule extends RuleAbstraction {
     skillName: string,
     targetActor: ActorInterface,
     effect: EffectDefinition,
-    dodgeable: boolean,
-    extras: RuleValues
+    dodgeable: boolean
   ) {
     const { checkResult, roll } = this.checkSkill(actor, skillName);
 
