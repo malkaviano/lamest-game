@@ -15,7 +15,7 @@
     "tookMessage": "took ${item} from ${from}",
     "sceneMessage": "went out through ${through} to ${destination}",
     "lostMessage": "lost ${item}",
-    "unDodgeableAttackMessage": "attack is not dodgeable",
+    "unDodgeableAttackMessage": "attack is not avoidable",
     "notFoundMessage": "${label} failed, required item was not found in inventory",
     "openedUsingMessage": "was opened using ${item}",
     "lockPickMovedMessage": "Lock Pick moved ${direction}",
@@ -33,7 +33,8 @@
     "actionPointsSpentMessage": "spent ${actionPointsSpent} action points",
     "actionPointsInsufficientMessage": "insufficient AP. Action requires ${actionPointsRequired} AP",
     "wearingMessage": "wearing ${armor}",
-    "stripMessage": "strip ${armor}"
+    "stripMessage": "strip ${armor}",
+    "cannotDodgeWithoutAP": "cannot perform ${Dodge}, not enough AP"
   },
   "errors": {
     "INVALID-OPERATION": "Invalid operation ocurred",

@@ -54,17 +54,29 @@ export class GamePredicate implements LoggerInterface {
 
   public canDodge(actor: ActorInterface, actionDodgeable: boolean): boolean {
     if (
-      this.canUseSkill(actor, SettingsStore.settings.systemSkills.dodgeSkill)
+      actor.derivedAttributes['CURRENT AP'].value >=
+      SettingsStore.settings.dodgeAPCost
     ) {
-      if (!actionDodgeable && actor instanceof PlayerEntity) {
-        const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
-          actor.name
-        );
+      if (
+        this.canUseSkill(actor, SettingsStore.settings.systemSkills.dodgeSkill)
+      ) {
+        if (!actionDodgeable && actor instanceof PlayerEntity) {
+          const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
+            actor.name
+          );
 
-        this.logMessageProduced.next(logMessage);
+          this.logMessageProduced.next(logMessage);
+        }
+
+        return actionDodgeable;
       }
+    } else {
+      const logMessage = GameStringsStore.createCannotDodgeAPLogMessage(
+        actor.name,
+        SettingsStore.settings.systemSkills.dodgeSkill
+      );
 
-      return actionDodgeable;
+      this.logMessageProduced.next(logMessage);
     }
 
     return false;

@@ -416,4 +416,18 @@ export class GameStringsStore {
       )
     );
   }
+
+  public static createCannotDodgeAPLogMessage(
+    actor: string,
+    dodge: string
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'AP',
+      actor,
+      GameStringsStore.logMessagesStore['cannotDodgeWithoutAP'].replace(
+        '${Dodge}',
+        dodge
+      )
+    );
+  }
 }

@@ -13,6 +13,7 @@ import {
 } from '../../../tests/mocks';
 import {
   actionableEvent,
+  fakeDerivedAttributes,
   greatSword,
   interactiveInfo,
   simpleSword,
@@ -94,6 +95,7 @@ describe('GamePredicate', () => {
         expected: true,
         log: undefined,
         dodge: 20,
+        ap: 10,
       },
       {
         actor: instance(mockedPlayerEntity),
@@ -102,9 +104,10 @@ describe('GamePredicate', () => {
         log: new LogMessageDefinition(
           'DENIED',
           'Some Name',
-          'attack is not dodgeable'
+          'attack is not avoidable'
         ),
         dodge: 20,
+        ap: 10,
       },
       {
         actor: instance(mockedPlayerEntity),
@@ -116,9 +119,27 @@ describe('GamePredicate', () => {
           "Dodge skill couldn't be checked because it's value is zero"
         ),
         dodge: 0,
+        ap: 10,
       },
-    ].forEach(({ actor, actionDodgeable, expected, log, dodge }) => {
+      {
+        actor: instance(mockedPlayerEntity),
+        actionDodgeable: true,
+        expected: false,
+        log: new LogMessageDefinition(
+          'AP',
+          'Some Name',
+          'cannot perform Dodge, not enough AP'
+        ),
+        dodge: 20,
+        ap: 0,
+      },
+    ].forEach(({ actor, actionDodgeable, expected, log, dodge, ap }) => {
       it('return ${expected}', () => {
+        when(mockedPlayerEntity.derivedAttributes).thenReturn({
+          ...fakeDerivedAttributes,
+          ['CURRENT AP']: new DerivedAttributeDefinition('CURRENT AP', ap),
+        });
+
         when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
 
         const result = predicate.canDodge(actor, actionDodgeable);
@@ -127,6 +148,11 @@ describe('GamePredicate', () => {
       });
 
       it('emit log', (done) => {
+        when(mockedPlayerEntity.derivedAttributes).thenReturn({
+          ...fakeDerivedAttributes,
+          ['CURRENT AP']: new DerivedAttributeDefinition('CURRENT AP', ap),
+        });
+
         when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
         let result: LogMessageDefinition | undefined;
 
