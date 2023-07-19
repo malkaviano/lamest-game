@@ -234,7 +234,6 @@ export class GameStringsStore {
 
   public static createSceneLogMessage(
     actor: string,
-    selection: string,
     through: string,
     destination: string
   ): LogMessageDefinition {
@@ -242,7 +241,6 @@ export class GameStringsStore {
       'SCENE',
       actor,
       GameStringsStore.logMessagesStore['sceneMessage']
-        .replace('${selection}', selection)
         .replace('${through}', through)
         .replace('${destination}', destination)
     );

@@ -1,5 +1,4 @@
 import { ActionableLiteral } from '@literals/actionable.literal';
-import { GameStringsStore } from '../../stores/game-strings.store';
 
 export class ActionableDefinition {
   constructor(
@@ -23,50 +22,24 @@ export const createActionableDefinition = (
   label?: string
 ) => new ActionableDefinition(key, name, label ?? name);
 
-export const affectActionable = createActionableDefinition(
-  'AFFECT',
-  'affect',
-  GameStringsStore.descriptions['ATTACK']
-);
+export const affectActionable = createActionableDefinition('AFFECT', 'affect');
 
 export const consumeActionable = createActionableDefinition(
   'CONSUME',
-  'consume',
-  'Consume'
+  'consume'
 );
 
-export const equipActionable = createActionableDefinition(
-  'EQUIP',
-  'equip',
-  'Equip'
-);
+export const equipActionable = createActionableDefinition('EQUIP', 'equip');
 
-export const readActionable = createActionableDefinition(
-  'READ',
-  'read',
-  'Read'
-);
+export const readActionable = createActionableDefinition('READ', 'read');
 
-export const dropActionable = createActionableDefinition(
-  'DROP',
-  'drop',
-  'Drop'
-);
+export const dropActionable = createActionableDefinition('DROP', 'drop');
 
 export const unequipActionable = createActionableDefinition(
   'UNEQUIP',
-  'unequip',
-  'Unequip'
+  'unequip'
 );
 
-export const wearActionable = createActionableDefinition(
-  'WEAR',
-  'wear',
-  'Wear'
-);
+export const wearActionable = createActionableDefinition('WEAR', 'wear');
 
-export const stripActionable = createActionableDefinition(
-  'STRIP',
-  'strip',
-  'Strip'
-);
+export const stripActionable = createActionableDefinition('STRIP', 'strip');
