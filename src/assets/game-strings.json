@@ -67,8 +67,8 @@
     "HP": "The character current | max hit points",
     "EP": "The character current | max energy points",
     "AP": "The character current | max action points",
-    "UNARMED": "Actor Natural Weapon",
-    "CLOTHES": "Actor Basic Armor"
+    "unarmedWeapon": "Actor Natural Weapon",
+    "clothArmor": "Actor Basic Armor"
   },
   "tooltips": {
     "aggressive": "Will attack on sight",
@@ -76,5 +76,9 @@
     "player": "Another player",
     "search": "Detects and breaks disguise",
     "visibility": "Detects and breaks stealth"
+  },
+  "labels": {
+    "unarmedWeapon": "Bare hands",
+    "clothArmor": "Simple Clothes"
   }
 }

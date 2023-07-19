@@ -8,7 +8,6 @@ import { SceneEntity } from '@entities/scene.entity';
 import { InteractiveEntity } from '@entities/interactive.entity';
 import { SimpleState } from '@states/simple.state';
 import { createActionableDefinition } from '@definitions/actionable.definition';
-import { GameStringsStore } from '@stores/game-strings.store';
 
 export class SceneStore {
   private readonly store: Map<string, SceneEntity>;
