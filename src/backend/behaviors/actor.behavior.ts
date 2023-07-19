@@ -81,15 +81,6 @@ export class ActorBehavior {
     return this.currentHP > 0 ? 'ALIVE' : 'DEAD';
   }
 
-  public get dodgesPerRound(): number {
-    const dodges = Math.trunc(
-      this.characteristics.AGI.value /
-        SettingsStore.settings.oneDodgeEveryAgiAmount
-    );
-
-    return MathHelper.clamp(dodges, 1, Number.MAX_VALUE);
-  }
-
   public wannaDodge(effect: EffectTypeLiteral): boolean {
     return !(
       SettingsStore.settings.playerEffectDefenses.immunities.items.some(

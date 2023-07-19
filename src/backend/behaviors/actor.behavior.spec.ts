@@ -259,27 +259,6 @@ describe('ActorBehavior', () => {
     });
   });
 
-  describe('dodgesPerRound', () => {
-    [
-      {
-        characteristics: fakeCharacteristicsAgi(12),
-        expected: 1,
-      },
-      {
-        characteristics: fakeCharacteristicsAgi(3),
-        expected: 1,
-      },
-      {
-        characteristics: fakeCharacteristicsAgi(30),
-        expected: 3,
-      },
-    ].forEach(({ characteristics, expected }) => {
-      it(`return ${expected}`, () => {
-        expect(fakeBehavior(characteristics).dodgesPerRound).toEqual(expected);
-      });
-    });
-  });
-
   describe('energyChange', () => {
     [
       {

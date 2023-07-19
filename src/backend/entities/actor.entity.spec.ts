@@ -66,8 +66,6 @@ describe('ActorEntity', () => {
 
     when(mockedEquipmentBehavior.changeWeapon(simpleSword)).thenReturn(null);
 
-    when(mockedActorBehavior.dodgesPerRound).thenReturn(1);
-
     when(
       mockedAiBehavior.action(
         deepEqual(fakeSceneActorsInfo),
@@ -439,12 +437,6 @@ describe('ActorEntity', () => {
 
     it('return action null', () => {
       expect(fakeActor().action(ArrayView.empty())).toBeNull();
-    });
-  });
-
-  describe('dodgesPerRound', () => {
-    it('return 1', () => {
-      expect(fakeActor().dodgesPerRound).toEqual(1);
     });
   });
 

@@ -210,19 +210,6 @@ export class ResourcesStore {
         skills: skills,
         equippedWeapon: a.equippedWeapon,
         lootState: a.lootState,
-        actorSettings: {
-          vulnerabilityCoefficient:
-            SettingsStore.settings.vulnerabilityCoefficient,
-          resistanceCoefficient: SettingsStore.settings.resistanceCoefficient,
-          effectDefenses: {
-            cures: ArrayView.fromArray(a.cures),
-            immunities: ArrayView.fromArray(a.immunities),
-            vulnerabilities: ArrayView.fromArray(a.vulnerabilities),
-            resistances: ArrayView.fromArray(a.resistances),
-          },
-          oneDodgesEveryAgiAmount:
-            SettingsStore.settings.oneDodgeEveryAgiAmount,
-        },
         aiBehavior: a.aiBehavior as BehaviorLiteral,
         ignores: a.ignores.map((i) => i as VisibilityLiteral),
         visibility: a.visibility as VisibilityLiteral,

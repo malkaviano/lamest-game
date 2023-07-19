@@ -12,16 +12,12 @@ import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { CheckedService } from '@services/checked.service';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
-import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { ItemIdentityDefinition } from '@definitions/item-identity.definition';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { EffectDefinition } from '@definitions/effect.definition';
 import { GamePredicate } from '@predicates/game.predicate';
 
-export class AffectRule
-  extends RuleAbstraction
-  implements ActorDodgedInterface
-{
+export class AffectRule extends RuleAbstraction {
   constructor(
     private readonly rollHelper: RollHelper,
     private readonly checkedService: CheckedService,
@@ -144,11 +140,7 @@ export class AffectRule
     if (targetWasHit) {
       const dodged =
         targetActor?.wannaDodge(effect.effectType) &&
-        this.dodgeAxiom.dodged(
-          targetActor,
-          dodgeable,
-          extras.targetDodgesPerformed ?? 0
-        );
+        this.dodgeAxiom.dodged(targetActor, dodgeable);
 
       this.ruleResult.dodged = dodged;
     }

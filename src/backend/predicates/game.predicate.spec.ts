@@ -41,8 +41,6 @@ describe('GamePredicate', () => {
       event: eventAttackInteractive,
       result: 'EXECUTED',
     });
-
-    when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
   });
 
   describe('hasEnoughActionPoints', () => {
@@ -93,7 +91,6 @@ describe('GamePredicate', () => {
       {
         actor: instance(mockedPlayerEntity),
         actionDodgeable: true,
-        targetDodgesPerformed: 0,
         expected: true,
         log: undefined,
         dodge: 20,
@@ -101,7 +98,6 @@ describe('GamePredicate', () => {
       {
         actor: instance(mockedPlayerEntity),
         actionDodgeable: false,
-        targetDodgesPerformed: 0,
         expected: false,
         log: new LogMessageDefinition(
           'DENIED',
@@ -113,19 +109,6 @@ describe('GamePredicate', () => {
       {
         actor: instance(mockedPlayerEntity),
         actionDodgeable: true,
-        targetDodgesPerformed: 2,
-        expected: false,
-        log: new LogMessageDefinition(
-          'DENIED',
-          'Some Name',
-          'was out of dodges'
-        ),
-        dodge: 20,
-      },
-      {
-        actor: instance(mockedPlayerEntity),
-        actionDodgeable: true,
-        targetDodgesPerformed: 0,
         expected: false,
         log: new LogMessageDefinition(
           'DENIED',
@@ -134,43 +117,30 @@ describe('GamePredicate', () => {
         ),
         dodge: 0,
       },
-    ].forEach(
-      ({
-        actor,
-        actionDodgeable,
-        targetDodgesPerformed,
-        expected,
-        log,
-        dodge,
-      }) => {
-        it('return ${expected}', () => {
-          when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
+    ].forEach(({ actor, actionDodgeable, expected, log, dodge }) => {
+      it('return ${expected}', () => {
+        when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
 
-          const result = predicate.canDodge(
-            actor,
-            actionDodgeable,
-            targetDodgesPerformed
-          );
+        const result = predicate.canDodge(actor, actionDodgeable);
 
-          expect(result).toEqual(expected);
+        expect(result).toEqual(expected);
+      });
+
+      it('emit log', (done) => {
+        when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
+        let result: LogMessageDefinition | undefined;
+
+        predicate.logMessageProduced$.subscribe((event) => {
+          result = event;
         });
 
-        it('emit log', (done) => {
-          when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
-          let result: LogMessageDefinition | undefined;
+        predicate.canDodge(actor, actionDodgeable);
 
-          predicate.logMessageProduced$.subscribe((event) => {
-            result = event;
-          });
+        done();
 
-          predicate.canDodge(actor, actionDodgeable, targetDodgesPerformed);
-
-          done();
-
-          expect(result).toEqual(log);
-        });
-      }
-    );
+        expect(result).toEqual(log);
+      });
+    });
   });
 
   describe('canActivate', () => {

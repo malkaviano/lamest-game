@@ -30,29 +30,25 @@ describe('DodgeAxiom', () => {
     [
       {
         dodgeable: true,
-        dodgesPerformed: 1,
         roll: new RollDefinition('SUCCESS', 12),
         expected: true,
       },
       {
         dodgeable: true,
-        dodgesPerformed: 1,
         roll: new RollDefinition('FAILURE', 72),
         expected: false,
       },
-    ].forEach(({ dodgeable, dodgesPerformed, expected, roll }) => {
+    ].forEach(({ dodgeable, expected, roll }) => {
       it(`return ${expected}`, () => {
-        when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
-
         when(mockedRollHelper.actorSkillCheck(target, 'Dodge')).thenReturn(
           roll
         );
 
-        when(
-          mockedGamePredicate.canDodge(target, dodgeable, dodgesPerformed)
-        ).thenReturn(expected);
+        when(mockedGamePredicate.canDodge(target, dodgeable)).thenReturn(
+          expected
+        );
 
-        const result = axiom.dodged(target, dodgeable, dodgesPerformed);
+        const result = axiom.dodged(target, dodgeable);
 
         expect(result).toEqual(expected);
       });

@@ -23,7 +23,6 @@
     "lockPickOpenedMessage": "opened the container",
     "lockPickJammedMessage": "cannot be lock picked anymore",
     "itemReadMessage": "read ${item}",
-    "outOfDodgesMessage": "was out of dodges",
     "energizedMessage": "restored ${energy} energy",
     "energyDrainedMessage": "lost ${energy} energy",
     "energyDidNotChangeMessage": "EP did not change",

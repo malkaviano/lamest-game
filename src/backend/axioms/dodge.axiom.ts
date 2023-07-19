@@ -9,13 +9,9 @@ export class DodgeAxiom {
     private readonly gamePredicate: GamePredicate
   ) {}
 
-  public dodged(
-    target: ActorInterface,
-    actionDodgeable: boolean,
-    dodgesPerformed: number
-  ): boolean {
+  public dodged(target: ActorInterface, actionDodgeable: boolean): boolean {
     const dodged =
-      this.gamePredicate.canDodge(target, actionDodgeable, dodgesPerformed) &&
+      this.gamePredicate.canDodge(target, actionDodgeable) &&
       this.checkDodge(target);
 
     return dodged;

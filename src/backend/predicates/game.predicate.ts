@@ -52,11 +52,7 @@ export class GamePredicate implements LoggerInterface {
     return canActivate;
   }
 
-  public canDodge(
-    actor: ActorInterface,
-    actionDodgeable: boolean,
-    targetDodgesPerformed: number
-  ): boolean {
+  public canDodge(actor: ActorInterface, actionDodgeable: boolean): boolean {
     if (
       this.canUseSkill(actor, SettingsStore.settings.systemSkills.dodgeSkill)
     ) {
@@ -68,17 +64,7 @@ export class GamePredicate implements LoggerInterface {
         this.logMessageProduced.next(logMessage);
       }
 
-      const canDodge = actor.dodgesPerRound > targetDodgesPerformed;
-
-      if (!canDodge && actor instanceof PlayerEntity) {
-        const logMessage = GameStringsStore.createOutOfDodgesLogMessage(
-          actor.name
-        );
-
-        this.logMessageProduced.next(logMessage);
-      }
-
-      return actionDodgeable && canDodge;
+      return actionDodgeable;
     }
 
     return false;

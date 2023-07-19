@@ -54,8 +54,6 @@ describe('GameLoopService', () => {
 
     when(mockedLoggingHub.logMessageProduced$).thenReturn(EMPTY);
 
-    when(mockedRulesHub.actorDodged$).thenReturn(of(playerInfo.id));
-
     when(mockedRulesHub.documentOpened$).thenReturn(documentSubject);
 
     when(mockedSceneEntity.interactives).thenReturn(

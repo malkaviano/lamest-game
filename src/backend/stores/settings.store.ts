@@ -14,7 +14,7 @@ export class SettingsStore {
       vulnerabilityCoefficient,
       resistanceCoefficient,
       playerEffectDefenses,
-      oneDodgeEveryAgiAmount,
+      dodgeAPCost,
       actionPoints,
       ruleCost,
       aiLoopMilliseconds,
@@ -40,7 +40,7 @@ export class SettingsStore {
       intelligencePoints,
       vulnerabilityCoefficient,
       resistanceCoefficient,
-      oneDodgeEveryAgiAmount,
+      dodgeAPCost,
       playerEffectDefenses: {
         cures,
         immunities,

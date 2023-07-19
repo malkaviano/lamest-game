@@ -302,16 +302,6 @@ export class GameStringsStore {
     );
   }
 
-  public static createOutOfDodgesLogMessage(
-    target: string
-  ): LogMessageDefinition {
-    return new LogMessageDefinition(
-      'DENIED',
-      target,
-      GameStringsStore.logMessagesStore['outOfDodgesMessage']
-    );
-  }
-
   public static createNotEnoughEnergyLogMessage(
     actor: string,
     item: string

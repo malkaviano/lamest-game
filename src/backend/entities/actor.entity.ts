@@ -111,10 +111,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     return this.equipmentBehavior.armorWearing;
   }
 
-  public get dodgesPerRound(): number {
-    return this.actorBehavior.dodgesPerRound;
-  }
-
   public get situation(): ActorSituationLiteral {
     return this.actorBehavior.situation;
   }
