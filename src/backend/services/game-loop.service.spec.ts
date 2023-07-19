@@ -20,7 +20,7 @@ import {
   actionableEvent,
   consumableFirstAid,
   interactiveInfo,
-  masterKey,
+  discardKey,
   playerInfo,
   readable,
   unDodgeableAxe,
@@ -141,9 +141,9 @@ describe('GameLoopService', () => {
         item: unDodgeableAxe,
       },
       {
-        invEvent: new InventoryEvent('STORE', playerInfo.id, masterKey),
-        expected: new ActionableItemDefinition(masterKey, dropActionable),
-        item: masterKey,
+        invEvent: new InventoryEvent('STORE', playerInfo.id, discardKey),
+        expected: new ActionableItemDefinition(discardKey, dropActionable),
+        item: discardKey,
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, readable),

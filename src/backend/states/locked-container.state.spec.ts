@@ -3,7 +3,11 @@ import { LockedContainerState } from '@states/locked-container.state';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { DiscardState } from '@states/discard.state';
 
-import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';
+import {
+  actionUseDiscardKey,
+  lootState,
+  discardKey,
+} from '../../../tests/fakes';
 import { setupMocks } from '../../../tests/mocks';
 
 describe('LockedContainerState', () => {
@@ -13,7 +17,7 @@ describe('LockedContainerState', () => {
 
   describe(`when item was not in player's inventory`, () => {
     it('return same state', () => {
-      const result = state.onResult(actionUseMasterKey, 'NONE', {});
+      const result = state.onResult(actionUseDiscardKey, 'NONE', {});
 
       expect(result).toEqual({ state: state });
     });
@@ -21,8 +25,8 @@ describe('LockedContainerState', () => {
 
   describe(`when item was in player's inventory`, () => {
     it('return discarded state and log', () => {
-      const result = state.onResult(actionUseMasterKey, 'NONE', {
-        item: masterKey,
+      const result = state.onResult(actionUseDiscardKey, 'NONE', {
+        item: discardKey,
       });
 
       expect(result).toEqual({
@@ -34,8 +38,8 @@ describe('LockedContainerState', () => {
 });
 
 const state = new LockedContainerState(
-  ArrayView.create(actionUseMasterKey),
+  ArrayView.create(actionUseDiscardKey),
   new LazyHelper<DiscardState>(() => lootState)
 );
 
-const log = 'was opened using Master Key';
+const log = 'was opened using Discard Key';

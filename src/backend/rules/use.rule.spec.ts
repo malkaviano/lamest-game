@@ -15,8 +15,8 @@ import {
 import {
   playerInfo,
   interactiveInfo,
-  actionUseMasterKey,
-  masterKey,
+  actionUseDiscardKey,
+  discardKey,
   actionableEvent,
 } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
@@ -36,9 +36,9 @@ describe('UseRule', () => {
       mockedCheckedService.takeItemOrThrow<UsableDefinition>(
         instance(mockedInventoryService),
         actor.id,
-        masterKey.identity.name
+        discardKey.identity.name
       )
-    ).thenReturn(masterKey);
+    ).thenReturn(discardKey);
   });
 
   it('should be created', () => {
@@ -76,8 +76,8 @@ describe('UseRule', () => {
     describe('when item was found', () => {
       it('return used result', () => {
         when(
-          mockedInventoryService.look(playerInfo.id, masterKey.identity.name)
-        ).thenReturn(masterKey);
+          mockedInventoryService.look(playerInfo.id, discardKey.identity.name)
+        ).thenReturn(discardKey);
 
         const result = rule.execute(actor, eventUseMasterKey, extras);
 
@@ -87,7 +87,7 @@ describe('UseRule', () => {
           result: 'EXECUTED',
           actor,
           target: extras.target,
-          used: masterKey,
+          used: discardKey,
         };
 
         expect(result).toEqual(expected);
@@ -99,11 +99,11 @@ describe('UseRule', () => {
 const notFoundLog = new LogMessageDefinition(
   'NOT-FOUND',
   playerInfo.name,
-  'Master Key failed, required item was not found in inventory'
+  'Discard Key failed, required item was not found in inventory'
 );
 
 const eventUseMasterKey = actionableEvent(
-  actionUseMasterKey,
+  actionUseDiscardKey,
   interactiveInfo.id
 );
 

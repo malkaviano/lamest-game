@@ -20,11 +20,11 @@ import {
 import {
   actionAffect,
   actionConsume,
-  actionUseMasterKey,
+  actionUseDiscardKey,
   actionableEvent,
   consumableFirstAid,
   interactiveInfo,
-  masterKey,
+  discardKey,
   molotov,
   playerInfo,
 } from '../../../tests/fakes';
@@ -43,12 +43,12 @@ const eventConsumeFirstAid = actionableEvent(
 
 const eventDropMasterKey = actionableEvent(
   dropActionable,
-  masterKey.identity.name
+  discardKey.identity.name
 );
 
 const eventUseMasterKey = actionableEvent(
-  actionUseMasterKey,
-  masterKey.identity.name
+  actionUseDiscardKey,
+  discardKey.identity.name
 );
 
 const actor = instance(mockedPlayerEntity);
@@ -109,7 +109,7 @@ const executedDropResult: RuleResult = {
   actor,
   result: 'EXECUTED',
   target,
-  dropped: masterKey,
+  dropped: discardKey,
 };
 
 const executedUseResult: RuleResult = {
@@ -118,7 +118,7 @@ const executedUseResult: RuleResult = {
   actor,
   result: 'EXECUTED',
   target,
-  used: masterKey,
+  used: discardKey,
 };
 
 const lostMolotovLog = GameStringsStore.createLostItemLogMessage(
@@ -133,7 +133,7 @@ const lostFirstAidLog = GameStringsStore.createLostItemLogMessage(
 
 const lostMasterKeyLog = GameStringsStore.createLostItemLogMessage(
   playerInfo.name,
-  masterKey.identity.label
+  discardKey.identity.label
 );
 
 describe('DisposePolicy', () => {
@@ -163,9 +163,9 @@ describe('DisposePolicy', () => {
       mockedCheckedService.takeItemOrThrow(
         instance(mockedInventoryService),
         actor.id,
-        masterKey.identity.name
+        discardKey.identity.name
       )
-    ).thenReturn(masterKey);
+    ).thenReturn(discardKey);
   });
 
   it('should create an instance', () => {
@@ -205,7 +205,7 @@ describe('DisposePolicy', () => {
       {
         ruleResult: executedDropResult,
         expected: {
-          disposed: masterKey,
+          disposed: discardKey,
         },
         log: lostMasterKeyLog,
         equipped: molotov,
@@ -213,7 +213,7 @@ describe('DisposePolicy', () => {
       {
         ruleResult: executedUseResult,
         expected: {
-          disposed: masterKey,
+          disposed: discardKey,
         },
         log: lostMasterKeyLog,
         equipped: molotov,

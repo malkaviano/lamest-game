@@ -10,13 +10,17 @@ import {
   directionNamesDefinition,
 } from '@definitions/directions.definition';
 
-import { actionUseMasterKey, lootState, masterKey } from '../../../tests/fakes';
+import {
+  actionUseDiscardKey,
+  lootState,
+  discardKey,
+} from '../../../tests/fakes';
 import { setupMocks } from '../../../tests/mocks';
 
 const f = () => lootState;
 
 const jammedState = new LockedContainerState(
-  ArrayView.create(actionUseMasterKey),
+  ArrayView.create(actionUseDiscardKey),
   new LazyHelper<DiscardState>(f)
 );
 
@@ -29,7 +33,7 @@ const allDirectionsDefinition = ArrayView.fromArray(
 const fakeState = () =>
   new LockPickingContainerState(
     allDirectionsDefinition,
-    ArrayView.create(actionUseMasterKey),
+    ArrayView.create(actionUseDiscardKey),
     new LazyHelper<DiscardState>(f),
     ArrayView.create('LEFT', 'DOWN'),
     3
@@ -46,7 +50,7 @@ const logUp = 'Lock Pick got stuck moving UP';
 const logJammed =
   'Lock Pick got stuck moving UP and cannot be lock picked anymore';
 
-const log = 'was opened using Master Key';
+const log = 'was opened using Discard Key';
 
 describe('LockPickingContainerState', () => {
   beforeEach(() => {
@@ -55,8 +59,8 @@ describe('LockPickingContainerState', () => {
 
   describe('when using a master key', () => {
     it('return discarded state and log', () => {
-      const result = fakeState().onResult(actionUseMasterKey, 'NONE', {
-        item: masterKey,
+      const result = fakeState().onResult(actionUseDiscardKey, 'NONE', {
+        item: discardKey,
       });
 
       expect(result).toEqual({

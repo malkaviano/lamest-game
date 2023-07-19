@@ -8,7 +8,7 @@ import { DiscardState } from '@states/discard.state';
 import { LockPickableContainerState } from '@states/lock-pickable-container.state';
 import { createActionableDefinition } from '@definitions/actionable.definition';
 
-import { actionUseMasterKey, lootState, masterKey } from 'tests/fakes';
+import { actionUseDiscardKey, lootState, discardKey } from 'tests/fakes';
 import { LockPickingContainerState } from '@states/lock-picking-container.state';
 
 import { setupMocks } from 'tests/mocks';
@@ -29,7 +29,7 @@ const allDirectionsDefinition = ArrayView.fromArray(
 
 const lockpickingState = new LockPickingContainerState(
   allDirectionsDefinition,
-  ArrayView.create(actionUseMasterKey),
+  ArrayView.create(actionUseDiscardKey),
   new LazyHelper<DiscardState>(f),
   ArrayView.create('LEFT', 'DOWN'),
   3
@@ -37,14 +37,14 @@ const lockpickingState = new LockPickingContainerState(
 
 const fakeState = () =>
   new LockPickableContainerState(
-    ArrayView.create(actionInteractionLockPick, actionUseMasterKey),
+    ArrayView.create(actionInteractionLockPick, actionUseDiscardKey),
     lockpickingState,
     new LazyHelper<DiscardState>(f)
   );
 
 const logLockPicking = 'started lock picking the container';
 
-const log = 'was opened using Master Key';
+const log = 'was opened using Discard Key';
 
 describe('LockPickableContainerState', () => {
   beforeEach(() => {
@@ -53,8 +53,8 @@ describe('LockPickableContainerState', () => {
 
   describe('when using a master key', () => {
     it('return discarded state and log', () => {
-      const result = fakeState().onResult(actionUseMasterKey, 'NONE', {
-        item: masterKey,
+      const result = fakeState().onResult(actionUseDiscardKey, 'NONE', {
+        item: discardKey,
       });
 
       expect(result).toEqual({
