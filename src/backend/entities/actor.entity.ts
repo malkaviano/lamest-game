@@ -55,6 +55,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   protected readonly aiBehavior: AiBehavior;
 
+  protected dodgeEnabled: boolean;
+
   public readonly derivedAttributeChanged$: Observable<DerivedAttributeEvent>;
 
   public readonly equipmentChanged$: Observable<
@@ -105,6 +107,12 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.visibilityChanged = new Subject();
 
     this.visibilityChanged$ = this.visibilityChanged.asObservable();
+
+    this.dodgeEnabled = false;
+  }
+
+  public set dodge(enabled: boolean) {
+    this.dodgeEnabled = enabled;
   }
 
   public get armorWearing(): ArmorDefinition {
@@ -190,7 +198,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public wannaDodge(effect: EffectTypeLiteral): boolean {
-    return this.actorBehavior.wannaDodge(effect);
+    return this.dodgeEnabled && this.actorBehavior.wannaDodge(effect);
   }
 
   public action(
