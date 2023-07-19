@@ -20,13 +20,14 @@ import {
 import {
   actionAffect,
   actionConsume,
-  actionUseMasterKey,
+  actionUseDiscardKey,
   actionableEvent,
   consumableFirstAid,
   interactiveInfo,
-  masterKey,
+  discardKey,
   molotov,
   playerInfo,
+  permanentKey,
 } from '../../../tests/fakes';
 
 const eventAttackInteractive = actionableEvent(
@@ -41,14 +42,14 @@ const eventConsumeFirstAid = actionableEvent(
   consumableFirstAid.identity.name
 );
 
-const eventDropMasterKey = actionableEvent(
+const eventDropPermanentKey = actionableEvent(
   dropActionable,
-  masterKey.identity.name
+  permanentKey.identity.name
 );
 
-const eventUseMasterKey = actionableEvent(
-  actionUseMasterKey,
-  masterKey.identity.name
+const eventUseDiscardKey = actionableEvent(
+  actionUseDiscardKey,
+  discardKey.identity.name
 );
 
 const actor = instance(mockedPlayerEntity);
@@ -105,20 +106,20 @@ const executedConsumeResult: RuleResult = {
 
 const executedDropResult: RuleResult = {
   name: 'DROP',
-  event: eventDropMasterKey,
+  event: eventDropPermanentKey,
   actor,
   result: 'EXECUTED',
   target,
-  dropped: masterKey,
+  dropped: permanentKey,
 };
 
 const executedUseResult: RuleResult = {
   name: 'USE',
-  event: eventUseMasterKey,
+  event: eventUseDiscardKey,
   actor,
   result: 'EXECUTED',
   target,
-  used: masterKey,
+  used: discardKey,
 };
 
 const lostMolotovLog = GameStringsStore.createLostItemLogMessage(
@@ -131,9 +132,14 @@ const lostFirstAidLog = GameStringsStore.createLostItemLogMessage(
   consumableFirstAid.identity.label
 );
 
-const lostMasterKeyLog = GameStringsStore.createLostItemLogMessage(
+const lostDiscardKeyLog = GameStringsStore.createLostItemLogMessage(
   playerInfo.name,
-  masterKey.identity.label
+  discardKey.identity.label
+);
+
+const lostPermanentKeyLog = GameStringsStore.createLostItemLogMessage(
+  playerInfo.name,
+  permanentKey.identity.label
 );
 
 describe('DisposePolicy', () => {
@@ -163,9 +169,17 @@ describe('DisposePolicy', () => {
       mockedCheckedService.takeItemOrThrow(
         instance(mockedInventoryService),
         actor.id,
-        masterKey.identity.name
+        discardKey.identity.name
       )
-    ).thenReturn(masterKey);
+    ).thenReturn(discardKey);
+
+    when(
+      mockedCheckedService.takeItemOrThrow(
+        instance(mockedInventoryService),
+        actor.id,
+        permanentKey.identity.name
+      )
+    ).thenReturn(permanentKey);
   });
 
   it('should create an instance', () => {
@@ -205,17 +219,17 @@ describe('DisposePolicy', () => {
       {
         ruleResult: executedDropResult,
         expected: {
-          disposed: masterKey,
+          disposed: permanentKey,
         },
-        log: lostMasterKeyLog,
+        log: lostPermanentKeyLog,
         equipped: molotov,
       },
       {
         ruleResult: executedUseResult,
         expected: {
-          disposed: masterKey,
+          disposed: discardKey,
         },
-        log: lostMasterKeyLog,
+        log: lostDiscardKeyLog,
         equipped: molotov,
       },
     ].forEach(({ ruleResult, expected, log, equipped }) => {

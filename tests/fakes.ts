@@ -288,15 +288,20 @@ export const actionSkillAthleticism = createActionableDefinition(
   'Athleticism'
 );
 
-export const masterKey = new UsableDefinition(
-  new ItemIdentityDefinition('masterKey', 'Master Key', 'Opens stuff'),
+export const discardKey = new UsableDefinition(
+  new ItemIdentityDefinition('discardKey', 'Discard Key', 'Opens stuff'),
   'DISPOSABLE'
 );
 
-export const actionUseMasterKey = createActionableDefinition(
+export const permanentKey = new UsableDefinition(
+  new ItemIdentityDefinition('permanentKey', 'Permanent Key', 'Opens stuff'),
+  'PERMANENT'
+);
+
+export const actionUseDiscardKey = createActionableDefinition(
   'USE',
-  masterKey.identity.name,
-  masterKey.identity.label
+  discardKey.identity.name,
+  discardKey.identity.label
 );
 
 export const actionPickSimpleSword = createActionableDefinition(

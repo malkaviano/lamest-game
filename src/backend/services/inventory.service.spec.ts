@@ -9,7 +9,7 @@ import { InteractiveStore } from '@stores/interactive.store';
 import {
   consumableAnalgesic,
   greatSword,
-  masterKey,
+  discardKey,
   readable,
   simpleSword,
 } from '../../../tests/fakes';
@@ -92,7 +92,7 @@ describe('InventoryService', () => {
     });
 
     describe('when the store has the item', () => {
-      [simpleSword, consumableAnalgesic, readable, masterKey].forEach(
+      [simpleSword, consumableAnalgesic, readable, discardKey].forEach(
         (item) => {
           it('return the item', () => {
             service.store('take', item);
@@ -201,7 +201,7 @@ describe('InventoryService', () => {
     });
 
     describe('when the store has the item', () => {
-      [simpleSword, consumableAnalgesic, readable, masterKey].forEach(
+      [simpleSword, consumableAnalgesic, readable, discardKey].forEach(
         (item) => {
           it('return the item', () => {
             service.store('look', item);
