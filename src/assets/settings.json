@@ -69,6 +69,9 @@
       "fixed": 1,
       "effect": "KINETIC"
     },
-    "clothArmorReduction": {}
+    "clothArmor": {
+      "reduction": {},
+      "penalty": "MINIMAL"
+    }
   }
 }

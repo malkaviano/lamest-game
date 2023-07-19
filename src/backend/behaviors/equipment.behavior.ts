@@ -9,6 +9,8 @@ import { SettingsStore } from '../stores/settings.store';
 
 const unarmedSettings = SettingsStore.settings.unarmedDamage;
 
+const clothArmorSettings = SettingsStore.settings.clothArmor;
+
 export const unarmedWeapon = new WeaponDefinition(
   new ItemIdentityDefinition(
     'unarmed',
@@ -34,8 +36,8 @@ export const clothArmor = new ArmorDefinition(
     GameStringsStore.descriptions['CLOTHES']
   ),
   'PERMANENT',
-  createDamageReduction(),
-  'MINIMAL'
+  createDamageReduction(clothArmorSettings.reduction),
+  clothArmorSettings.penalty
 );
 
 export class EquipmentBehavior {

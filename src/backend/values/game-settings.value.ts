@@ -2,6 +2,7 @@ import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { ArrayView } from '@wrappers/array.view';
 import { Dice } from '@definitions/dice.definition';
+import { ArmorPenaltyLiteral } from '@literals/armor-penalty.literal';
 
 export type GameSettingsValues = {
   readonly professionPoints: number;
@@ -58,5 +59,16 @@ export type GameSettingsValues = {
     readonly dice: Partial<Dice>;
     readonly fixed: number;
     readonly effect: EffectTypeLiteral;
+  };
+  readonly clothArmor: {
+    readonly reduction: {
+      KINETIC?: number;
+      PROFANE?: number;
+      SACRED?: number;
+      REMEDY?: number;
+      ACID?: number;
+      FIRE?: number;
+    };
+    readonly penalty: ArmorPenaltyLiteral;
   };
 };
