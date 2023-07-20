@@ -19,7 +19,6 @@ import {
 } from '@definitions/actionable.definition';
 import { ReactionValues } from '@values/reaction.value';
 import { GameStringsStore } from '@stores/game-strings.store';
-import { ActorEntity } from '@entities/actor.entity';
 import { Mutable } from '@wrappers/mutable.wrapper';
 
 export abstract class RuleAbstraction
@@ -118,17 +117,6 @@ export abstract class RuleAbstraction
       );
 
       this.ruleLog.next(logMessage);
-
-      // TODO: move this into a policy
-      if (
-        target &&
-        target instanceof ActorEntity &&
-        target.situation === 'DEAD'
-      ) {
-        this.ruleLog.next(
-          GameStringsStore.createActorIsDeadLogMessage(target.name)
-        );
-      }
     }
   }
 

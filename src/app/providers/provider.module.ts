@@ -43,6 +43,7 @@ import { DisposePolicy } from '@policies/dispose.policy';
 import { DropRule } from '@rules/drop.rule';
 import { WearRule } from '@rules/wear.rule';
 import { StripRule } from '@rules/strip.rule';
+import { StatusPolicy } from '@policies/status.policy';
 
 const gamePredicate = new GamePredicate();
 
@@ -130,10 +131,13 @@ const actionPolicy = new ActionPolicy();
 
 const disposablePolicy = new DisposePolicy(inventoryService, checkedService);
 
+const statusPolicy = new StatusPolicy();
+
 const policyHub = new PolicyHub(
   visibilityPolicy,
   actionPolicy,
-  disposablePolicy
+  disposablePolicy,
+  statusPolicy
 );
 
 const loggingHub = new LoggingHub(
