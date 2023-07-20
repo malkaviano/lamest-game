@@ -9,7 +9,6 @@ import { ActionableItemDefinition } from '@definitions/actionable-item.definitio
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ViewableInterface } from '../../interfaces/viewable.interface';
 import { SceneEntity } from '@entities/scene.entity';
-import { DodgeDto } from '../../dtos/dodge.dto';
 
 @Component({
   selector: 'app-game-layout',
@@ -37,13 +36,13 @@ export class GameLayoutComponent {
 
   @Output() sceneOpened: EventEmitter<ViewableInterface>;
 
-  @Output() dodgeOption: EventEmitter<DodgeDto>;
+  @Output() dodgeOption: EventEmitter<{ dodge: boolean }>;
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
 
     this.sceneOpened = new EventEmitter<ViewableInterface>();
 
-    this.dodgeOption = new EventEmitter<DodgeDto>();
+    this.dodgeOption = new EventEmitter<{ dodge: boolean }>();
   }
 }
