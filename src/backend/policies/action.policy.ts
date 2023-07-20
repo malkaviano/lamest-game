@@ -22,7 +22,7 @@ export class ActionPolicy extends PolicyAbstraction {
 
       const target = ConverterHelper.asActor(result.target);
 
-      if (target && result.dodged) {
+      if (target && result.dodged !== undefined) {
         const dodgeCost = SettingsStore.settings.dodgeAPCost;
 
         this.spentAP(target, dodgeCost);
