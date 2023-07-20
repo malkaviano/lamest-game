@@ -53,10 +53,6 @@ export class UseRule extends RuleAbstraction {
       this.ruleResult.used = used;
 
       ruleResult = 'EXECUTED';
-
-      this.affectWith(target, actionableDefinition, 'NONE', {
-        item: used,
-      });
     }
 
     return this.getResult(event, actor, ruleResult);

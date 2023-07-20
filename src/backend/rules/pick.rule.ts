@@ -45,8 +45,6 @@ export class PickRule extends RuleAbstraction {
       )
     );
 
-    this.affectWith(target, event.actionableDefinition, 'NONE', {});
-
     this.ruleResult.picked = item;
 
     this.ruleResult.target = target;

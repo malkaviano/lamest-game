@@ -35,8 +35,6 @@ export class InteractionRule extends RuleAbstraction {
 
     this.ruleLog.next(logMessage);
 
-    this.affectWith(target, event.actionableDefinition, 'NONE', {});
-
     this.ruleResult.target = target;
 
     return this.getResult(event, actor, 'EXECUTED');

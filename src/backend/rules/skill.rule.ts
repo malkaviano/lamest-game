@@ -50,11 +50,6 @@ export class SkillRule extends RuleAbstraction {
       );
 
       this.ruleResult.roll = { result, checkRoll: roll };
-
-      this.affectWith(target, event.actionableDefinition, result, {
-        actor,
-        target,
-      });
     }
 
     return this.getResult(event, actor, status);

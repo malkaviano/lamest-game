@@ -44,6 +44,7 @@ import { DropRule } from '@rules/drop.rule';
 import { WearRule } from '@rules/wear.rule';
 import { StripRule } from '@rules/strip.rule';
 import { StatusPolicy } from '@policies/status.policy';
+import { EffectPolicy } from '@policies/effect.policy';
 
 const gamePredicate = new GamePredicate();
 
@@ -133,9 +134,12 @@ const disposablePolicy = new DisposePolicy(inventoryService, checkedService);
 
 const statusPolicy = new StatusPolicy();
 
+const effectPolicy = new EffectPolicy();
+
 const policyHub = new PolicyHub(
-  visibilityPolicy,
   actionPolicy,
+  visibilityPolicy,
+  effectPolicy,
   disposablePolicy,
   statusPolicy
 );

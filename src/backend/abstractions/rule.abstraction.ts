@@ -9,15 +9,9 @@ import { ActionableEvent } from '@events/actionable.event';
 import { RuleResult, RuleResultPayload } from '@results/rule.result';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
-import { InteractiveInterface } from '@interfaces/interactive.interface';
-import { CheckResultLiteral } from '@literals/check-result.literal';
 import { ReadableDefinition } from '@definitions/readable.definition';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
-import {
-  ActionableDefinition,
-  consumeActionable,
-} from '@definitions/actionable.definition';
-import { ReactionValues } from '@values/reaction.value';
+import { consumeActionable } from '@definitions/actionable.definition';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { Mutable } from '@wrappers/mutable.wrapper';
 
@@ -27,10 +21,6 @@ export abstract class RuleAbstraction
   protected ruleResult: Mutable<RuleResultPayload>;
 
   protected readonly ruleLog: Subject<LogMessageDefinition>;
-
-  protected readonly actorDodged: Subject<string>;
-
-  public readonly actorDodged$: Observable<string>;
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
@@ -44,10 +34,6 @@ export abstract class RuleAbstraction
     this.ruleLog = new Subject();
 
     this.logMessageProduced$ = this.ruleLog.asObservable();
-
-    this.actorDodged = new Subject();
-
-    this.actorDodged$ = this.actorDodged.asObservable();
 
     this.documentOpened = new Subject();
 
@@ -99,25 +85,6 @@ export abstract class RuleAbstraction
     this.setArmor(r);
 
     return r;
-  }
-
-  protected affectWith(
-    target: InteractiveInterface,
-    action: ActionableDefinition,
-    rollResult: CheckResultLiteral,
-    values: ReactionValues
-  ): void {
-    const log = target.reactTo(action, rollResult, values);
-
-    if (log) {
-      const logMessage = GameStringsStore.createFreeLogMessage(
-        'AFFECTED',
-        target.name,
-        log
-      );
-
-      this.ruleLog.next(logMessage);
-    }
   }
 
   protected activation(
