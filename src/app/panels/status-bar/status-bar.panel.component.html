@@ -4,36 +4,11 @@
   class="status"
 ></app-window-widget>
 
-<div
-  matTooltip="{{ status.weapon.identity.description }}"
-  data-testid="tooltip-equipped"
-  class="status"
->
-  <span data-testid="label-equipped">Equipped: </span>
-  <span data-testid="value-equipped">{{ status.weapon.identity.label }}</span>
-  <div *ngIf="status.weapon.identity.name !== 'unarmedWeapon'">
-    <button mat-fab color="primary" (click)="onActionSelected('unequip')"
-      data-testid="equip-action-unequip"  matTooltip="Unequip weapon">
-      <img src="../../../assets/icons/remove.svg" alt="UNEQUIP WEAPON" />
-    </button>
-  </div>
-</div>
+<app-equipped-widget [item]="status.weapon" (actionSelected)="actionSelected.emit($event)">
+</app-equipped-widget>
 
-<div
-  matTooltip="{{ status.armor.identity.description }}"
-  data-testid="tooltip-wearing"
-  class="status">
-  <span data-testid="label-wearing">Wearing: </span>
-  <span data-testid="value-wearing">{{ status.armor.identity.label }}</span>
-  <div *ngIf="status.armor.identity.name !== 'clothArmor'">
-    <button mat-fab color="primary"
-      (click)="onActionSelected('strip')"
-      data-testid="wear-action-strip"
-      matTooltip="Strip armor">
-      <img src="../../../assets/icons/remove.svg" alt="STRIP ARMOR" />
-    </button>
-  </div>
-</div>
+<app-equipped-widget [item]="status.armor" (actionSelected)="actionSelected.emit($event)">
+</app-equipped-widget>
 
 <app-window-widget
   [keyValue]="status.visibility"

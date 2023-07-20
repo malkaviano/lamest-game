@@ -1,0 +1,13 @@
+<div
+  matTooltip="{{ item.identity.description }}"
+  data-testid="tooltip-wearing"
+  class="status">
+  <span data-testid="label-wearing">Wearing: </span>
+  <span data-testid="value-wearing">{{ item.identity.label }}</span>
+  <div *ngIf="showButton">
+    <button mat-fab color="primary" (click)="onActionSelected()" data-testid="wear-action-strip"
+      matTooltip="{{ tooltip }}">
+      <img src="{{ icon }}" alt="{{ alt }}" />
+    </button>
+  </div>
+</div>

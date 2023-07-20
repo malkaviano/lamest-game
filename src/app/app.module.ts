@@ -20,6 +20,7 @@ import { SheetPanelComponent } from './panels/sheet/sheet.panel.component';
 import { ProvidersModule } from './providers/provider.module';
 import { ViewerComponent } from './dialogs/viewer/viewer.dialog.component';
 import { ImageViewerComponent } from './widgets/image-viewer/image-viewer.widget.component';
+import { EquippedWidgetComponent } from './widgets/equipped/equipped.widget.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ImageViewerComponent } from './widgets/image-viewer/image-viewer.widget
     SheetPanelComponent,
     ViewerComponent,
     ImageViewerComponent,
+    EquippedWidgetComponent,
   ],
   imports: [
     BrowserModule,
