@@ -28,10 +28,6 @@ export abstract class RuleAbstraction
 
   protected readonly ruleLog: Subject<LogMessageDefinition>;
 
-  protected readonly actorDodged: Subject<string>;
-
-  public readonly actorDodged$: Observable<string>;
-
   public readonly logMessageProduced$: Observable<LogMessageDefinition>;
 
   protected readonly documentOpened: Subject<ReadableDefinition>;
@@ -44,10 +40,6 @@ export abstract class RuleAbstraction
     this.ruleLog = new Subject();
 
     this.logMessageProduced$ = this.ruleLog.asObservable();
-
-    this.actorDodged = new Subject();
-
-    this.actorDodged$ = this.actorDodged.asObservable();
 
     this.documentOpened = new Subject();
 

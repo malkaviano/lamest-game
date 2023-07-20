@@ -230,26 +230,6 @@ describe('AffectRule', () => {
 
         expect(result).toEqual(expected);
       });
-
-      it('should emit dodged', (done) => {
-        when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
-
-        when(mockedDodgeAxiom.dodged(target, true)).thenReturn(true);
-
-        let result: string | undefined;
-
-        rule.actorDodged$.subscribe((event) => {
-          result = event;
-        });
-
-        rule.execute(actor, eventAttackInteractive, {
-          target,
-        });
-
-        done();
-
-        expect(result).toEqual(dodgedLog);
-      });
     });
 
     describe('when affecting target', () => {
@@ -332,5 +312,3 @@ const eventAttackInteractive = actionableEvent(
   affectActionable,
   interactiveInfo.id
 );
-
-const dodgedLog = 'actorId';

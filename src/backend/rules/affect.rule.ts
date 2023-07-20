@@ -91,16 +91,14 @@ export class AffectRule extends RuleAbstraction {
         const effectAmount =
           this.rollHelper.roll(effect.diceRoll) + effect.fixed;
 
-        this.affectWith(target, event.actionableDefinition, 'SUCCESS', {
-          effect: new EffectEvent(effect.effectType, effectAmount),
-        });
-
         this.ruleResult.effect = {
           type: effect.effectType,
           amount: effectAmount,
         };
-      } else if (this.ruleResult.dodged) {
-        this.actorDodged.next(targetActor.id);
+
+        this.affectWith(target, event.actionableDefinition, 'SUCCESS', {
+          effect: new EffectEvent(effect.effectType, effectAmount),
+        });
       }
 
       targetActor?.afflictedBy(actor.id);
