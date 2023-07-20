@@ -1,7 +1,7 @@
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 
 export interface ActorDefenseInterface {
-  get dodgesPerRound(): number;
+  set dodge(enabled: boolean);
 
   wannaDodge(effect: EffectTypeLiteral): boolean;
 }

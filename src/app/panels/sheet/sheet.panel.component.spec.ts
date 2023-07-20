@@ -93,7 +93,7 @@ describe('SheetPanelComponent', () => {
     it(`should have items`, () => {
       const result = fixture.debugElement
         .query(By.css('[data-testid="inventory"]'))
-        .queryAll(By.css('app-equipment-widget'));
+        .queryAll(By.css('app-inventory-equipment-widget'));
 
       expect(result.length).toEqual(2);
     });
@@ -103,7 +103,7 @@ describe('SheetPanelComponent', () => {
 
       const panel = fixture.debugElement
         .query(By.css('[data-testid="inventory"]'))
-        .query(By.css('app-equipment-widget'));
+        .query(By.css('app-inventory-equipment-widget'));
 
       let result: ActionableEvent | undefined;
 

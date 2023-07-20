@@ -5,9 +5,9 @@ import { ActionableItemDefinition } from '@definitions/actionable-item.definitio
 import { ActionableEvent } from '@events/actionable.event';
 
 @Component({
-  selector: 'app-equipment-widget',
-  templateUrl: './equipment.widget.component.html',
-  styleUrls: ['./equipment.widget.component.css'],
+  selector: 'app-inventory-equipment-widget',
+  templateUrl: './inventory-equipment.widget.component.html',
+  styleUrls: ['./inventory-equipment.widget.component.css'],
 })
 export class EquipmentWidgetComponent implements OnInit {
   @Input() equipment!: ActionableItemDefinition;

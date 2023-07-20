@@ -27,6 +27,8 @@ export class SkillRule extends RuleAbstraction {
     event: ActionableEvent,
     extras: RuleValues
   ): RuleResult {
+    this.ruleResult = {};
+
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const skillName = event.actionableDefinition.name;

@@ -20,6 +20,8 @@ export class UnEquipRule extends RuleAbstraction {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResult {
+    this.ruleResult = {};
+
     const weapon = actor.unEquip();
 
     let ruleResult: RuleResultLiteral = 'DENIED';

@@ -66,8 +66,6 @@ describe('ActorEntity', () => {
 
     when(mockedEquipmentBehavior.changeWeapon(simpleSword)).thenReturn(null);
 
-    when(mockedActorBehavior.dodgesPerRound).thenReturn(1);
-
     when(
       mockedAiBehavior.action(
         deepEqual(fakeSceneActorsInfo),
@@ -442,12 +440,6 @@ describe('ActorEntity', () => {
     });
   });
 
-  describe('dodgesPerRound', () => {
-    it('return 1', () => {
-      expect(fakeActor().dodgesPerRound).toEqual(1);
-    });
-  });
-
   describe('visibility', () => {
     describe('current', () => {
       it('return VISIBLE', () => {
@@ -482,10 +474,25 @@ describe('ActorEntity', () => {
   });
 
   describe('wannaDodge', () => {
-    it('return true', () => {
-      when(mockedActorBehavior.wannaDodge('FIRE')).thenReturn(true);
+    [
+      {
+        dodge: true,
+        expected: true,
+      },
+      {
+        dodge: false,
+        expected: false,
+      },
+    ].forEach(({ dodge, expected }) => {
+      it(`return ${expected}`, () => {
+        const actor = fakeActor();
 
-      expect(fakeActor().wannaDodge('FIRE')).toEqual(true);
+        actor.dodge = dodge;
+
+        when(mockedActorBehavior.wannaDodge('FIRE')).thenReturn(true);
+
+        expect(actor.wannaDodge('FIRE')).toEqual(expected);
+      });
     });
   });
 

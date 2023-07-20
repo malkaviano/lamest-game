@@ -20,6 +20,8 @@ export class ReadRule extends RuleAbstraction {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResult {
+    this.ruleResult = {};
+
     const itemName = event.eventId;
 
     const read = this.inventoryService.look<ReadableDefinition>(

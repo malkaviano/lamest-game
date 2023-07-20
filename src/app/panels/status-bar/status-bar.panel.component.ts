@@ -2,10 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { CharacterStatusView } from '../../view-models/character-status.view';
 import { ActionableEvent } from '@events/actionable.event';
-import {
-  stripActionable,
-  unequipActionable,
-} from '@definitions/actionable.definition';
+import { DodgeDto } from '../../dtos/dodge.dto';
 
 @Component({
   selector: 'app-status-bar-panel',
@@ -14,21 +11,18 @@ import {
 })
 export class StatusBarPanelComponent {
   @Input() status!: CharacterStatusView;
+
   @Output() actionSelected: EventEmitter<ActionableEvent>;
+
+  @Output() dodgeOption: EventEmitter<DodgeDto>;
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
+
+    this.dodgeOption = new EventEmitter<DodgeDto>();
   }
 
-  onActionSelected(action: string): void {
-    if (action === 'unequip') {
-      this.actionSelected.emit(
-        new ActionableEvent(unequipActionable, this.status.weapon.identity.name)
-      );
-    } else if (action === 'strip') {
-      this.actionSelected.emit(
-        new ActionableEvent(stripActionable, this.status.armor.identity.name)
-      );
-    }
+  onChange(dodge: boolean) {
+    this.dodgeOption.emit(new DodgeDto(dodge));
   }
 }

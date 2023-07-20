@@ -41,8 +41,6 @@ export class GameLoopService {
 
   private actors: ArrayView<ActorInterface>;
 
-  private readonly dodgedThisRound: Map<string, number>;
-
   public readonly events: GameEventsValues;
 
   constructor(
@@ -66,12 +64,6 @@ export class GameLoopService {
       this.setActionReactives();
 
       this.setActors();
-    });
-
-    this.dodgedThisRound = new Map<string, number>();
-
-    this.ruleHub.actorDodged$.subscribe((actorId) => {
-      this.actorDodged(actorId);
     });
 
     const inventoryChanged = inventoryService.inventoryChanged$.pipe(
@@ -114,10 +106,12 @@ export class GameLoopService {
     this.player.playerDecision(action);
   }
 
+  public actorDodge(option: boolean): void {
+    this.player.dodge = option;
+  }
+
   private run(actors: ArrayView<ActorInterface>): void {
     if (this.isPlayerAlive()) {
-      this.dodgedThisRound.clear();
-
       actors.items.forEach((actor) => {
         const action = actor.action(this.sceneActorsInfo);
 
@@ -130,7 +124,6 @@ export class GameLoopService {
 
             const result = rule.execute(actor, action, {
               target,
-              targetDodgesPerformed: this.dodgedThisRound.get(target?.id),
             });
 
             this.policyHub.enforcePolicies(result);
@@ -138,12 +131,6 @@ export class GameLoopService {
         }
       });
     }
-  }
-
-  private actorDodged(targetId: string): void {
-    const dodges = this.dodgedThisRound.get(targetId) ?? 0;
-
-    this.dodgedThisRound.set(targetId, dodges + 1);
   }
 
   private isPlayerAlive(): boolean {

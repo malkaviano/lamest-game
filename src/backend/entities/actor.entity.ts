@@ -55,6 +55,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   protected readonly aiBehavior: AiBehavior;
 
+  protected dodgeEnabled: boolean;
+
   public readonly derivedAttributeChanged$: Observable<DerivedAttributeEvent>;
 
   public readonly equipmentChanged$: Observable<
@@ -105,14 +107,16 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.visibilityChanged = new Subject();
 
     this.visibilityChanged$ = this.visibilityChanged.asObservable();
+
+    this.dodgeEnabled = false;
+  }
+
+  public set dodge(enabled: boolean) {
+    this.dodgeEnabled = enabled;
   }
 
   public get armorWearing(): ArmorDefinition {
     return this.equipmentBehavior.armorWearing;
-  }
-
-  public get dodgesPerRound(): number {
-    return this.actorBehavior.dodgesPerRound;
   }
 
   public get situation(): ActorSituationLiteral {
@@ -194,14 +198,12 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   }
 
   public wannaDodge(effect: EffectTypeLiteral): boolean {
-    return this.actorBehavior.wannaDodge(effect);
+    return this.dodgeEnabled && this.actorBehavior.wannaDodge(effect);
   }
 
   public action(
     sceneActorsInfo: ArrayView<SceneActorsInfoValues>
   ): ActionableEvent | null {
-    this.regeneratorBehavior.startApRegeneration();
-
     return this.aiBehavior.action(sceneActorsInfo, [
       ...this.mAfflictedBy.values(),
     ]);
@@ -267,13 +269,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public apRecovered(apRecovered: number): void {
     this.apChange(apRecovered);
-
-    if (
-      this.derivedAttributes['CURRENT AP'].value ===
-      this.derivedAttributes['MAX AP'].value
-    ) {
-      this.regeneratorBehavior.stopApRegeneration();
-    }
   }
 
   private effect(effect: EffectEvent): string | null {
@@ -340,6 +335,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     if (result.effective) {
       this.derivedAttributeChanged.next(result);
+
+      this.regeneratorBehavior.startApRegeneration();
+    } else {
+      this.regeneratorBehavior.stopApRegeneration();
     }
   }
 

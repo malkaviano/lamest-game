@@ -96,8 +96,6 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
 
       this.playerAction = null;
 
-      this.regeneratorBehavior.startApRegeneration();
-
       return tmp;
     }
 

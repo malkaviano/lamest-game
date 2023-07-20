@@ -25,6 +25,8 @@ export class SceneRule extends RuleAbstraction {
     event: ActionableEvent,
     extras: RuleValues
   ): RuleResult {
+    this.ruleResult = {};
+
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     this.narrativeService.changeScene(event);

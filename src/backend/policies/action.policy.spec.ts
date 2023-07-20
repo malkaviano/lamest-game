@@ -5,11 +5,7 @@ import { RuleResult } from '@results/rule.result';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { affectActionable } from '@definitions/actionable.definition';
 
-import {
-  mockedActorEntity,
-  mockedPlayerEntity,
-  setupMocks,
-} from '../../../tests/mocks';
+import { mockedPlayerEntity, setupMocks } from '../../../tests/mocks';
 import { actionableEvent } from '../../../tests/fakes';
 
 describe('ActionPolicy', () => {
@@ -17,7 +13,7 @@ describe('ActionPolicy', () => {
 
   const actor = instance(mockedPlayerEntity);
 
-  const target = instance(mockedActorEntity);
+  const target = instance(mockedPlayerEntity);
 
   const eventAffect = actionableEvent(affectActionable, target.id);
 
@@ -37,11 +33,16 @@ describe('ActionPolicy', () => {
         event: eventAffect,
         target,
         result: 'EXECUTED',
+        dodged: true,
       },
       expected: {
-        actionPointsSpent: 3,
+        actorActionPointsSpent: 3,
+        targetActionPointsSpent: 1,
       },
-      log: new LogMessageDefinition('AP', 'Some Name', 'spent 3 action points'),
+      log: [
+        new LogMessageDefinition('AP', 'Some Name', 'spent 3 action points'),
+        new LogMessageDefinition('AP', 'Some Name', 'spent 1 action points'),
+      ],
     },
     {
       ruleResult: {
@@ -52,7 +53,7 @@ describe('ActionPolicy', () => {
         result: 'DENIED',
       },
       expected: {},
-      log: undefined,
+      log: [],
     },
   ].forEach(({ ruleResult, expected, log }) => {
     describe('enforce', () => {
@@ -63,10 +64,10 @@ describe('ActionPolicy', () => {
       });
 
       it('logs AP spent', (done) => {
-        let result: LogMessageDefinition | undefined;
+        const result: LogMessageDefinition[] = [];
 
         policy.logMessageProduced$.subscribe((event) => {
-          result = event;
+          result.push(event);
         });
 
         policy.enforce(ruleResult as RuleResult);

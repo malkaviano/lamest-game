@@ -18,6 +18,7 @@ import { ViewableInterface } from '../../interfaces/viewable.interface';
 import { CharacterValuesView } from '../../view-models/character-values.view';
 import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 import { SceneEntity } from '@entities/scene.entity';
+import { DodgeDto } from '../../dtos/dodge.dto';
 
 @Component({
   selector: 'app-game-page',
@@ -140,6 +141,10 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   public informSceneOpened(image: ViewableInterface): void {
     this.openViewerDialog(image);
+  }
+
+  public informDodgeOption(option: DodgeDto): void {
+    this.gameLoopService.actorDodge(option.dodge);
   }
 
   public get logs(): ArrayView<string> {

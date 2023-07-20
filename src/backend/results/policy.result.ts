@@ -6,6 +6,7 @@ export type PolicyResult = {
     readonly actor?: VisibilityLiteral;
     readonly target?: VisibilityLiteral;
   };
-  readonly actionPointsSpent?: number;
+  readonly actorActionPointsSpent?: number;
+  readonly targetActionPointsSpent?: number;
   readonly disposed?: GameItemDefinition;
 };

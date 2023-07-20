@@ -52,33 +52,31 @@ export class GamePredicate implements LoggerInterface {
     return canActivate;
   }
 
-  public canDodge(
-    actor: ActorInterface,
-    actionDodgeable: boolean,
-    targetDodgesPerformed: number
-  ): boolean {
+  public canDodge(actor: ActorInterface, actionDodgeable: boolean): boolean {
     if (
-      this.canUseSkill(actor, SettingsStore.settings.systemSkills.dodgeSkill)
+      actor.derivedAttributes['CURRENT AP'].value >=
+      SettingsStore.settings.dodgeAPCost
     ) {
-      if (!actionDodgeable && actor instanceof PlayerEntity) {
-        const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
-          actor.name
-        );
+      if (
+        this.canUseSkill(actor, SettingsStore.settings.systemSkills.dodgeSkill)
+      ) {
+        if (!actionDodgeable && actor instanceof PlayerEntity) {
+          const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
+            actor.name
+          );
 
-        this.logMessageProduced.next(logMessage);
+          this.logMessageProduced.next(logMessage);
+        }
+
+        return actionDodgeable;
       }
+    } else {
+      const logMessage = GameStringsStore.createCannotDodgeAPLogMessage(
+        actor.name,
+        SettingsStore.settings.systemSkills.dodgeSkill
+      );
 
-      const canDodge = actor.dodgesPerRound > targetDodgesPerformed;
-
-      if (!canDodge && actor instanceof PlayerEntity) {
-        const logMessage = GameStringsStore.createOutOfDodgesLogMessage(
-          actor.name
-        );
-
-        this.logMessageProduced.next(logMessage);
-      }
-
-      return actionDodgeable && canDodge;
+      this.logMessageProduced.next(logMessage);
     }
 
     return false;

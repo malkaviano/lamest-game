@@ -8,7 +8,7 @@
     },
     "resistanceCoefficient": 0.5,
     "vulnerabilityCoefficient": 0.75,
-    "oneDodgeEveryAgiAmount": 8,
+    "dodgeAPCost": 1,
     "intelligencePoints": 10,
     "professionPoints": 300,
     "ruleCost": {

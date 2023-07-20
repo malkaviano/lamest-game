@@ -22,10 +22,8 @@ import { SkillStoreInterface } from '@interfaces/stores/skill-store.interface';
 import { SkillAffinityLiteral } from '@literals/skill-category.literal';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 import { ReadableStoreInterface } from '@interfaces/stores/readable-store.interface';
-import { ArrayView } from '@wrappers/array.view';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
-import { SettingsStore } from '@stores/settings.store';
 import { ItemQualityLiteral } from '@literals/item-quality.literal';
 import { ArmorStoreInterface } from '@interfaces/stores/armor-store.interface';
 import { ArmorPenaltyLiteral } from '@literals/armor-penalty.literal';
@@ -210,19 +208,6 @@ export class ResourcesStore {
         skills: skills,
         equippedWeapon: a.equippedWeapon,
         lootState: a.lootState,
-        actorSettings: {
-          vulnerabilityCoefficient:
-            SettingsStore.settings.vulnerabilityCoefficient,
-          resistanceCoefficient: SettingsStore.settings.resistanceCoefficient,
-          effectDefenses: {
-            cures: ArrayView.fromArray(a.cures),
-            immunities: ArrayView.fromArray(a.immunities),
-            vulnerabilities: ArrayView.fromArray(a.vulnerabilities),
-            resistances: ArrayView.fromArray(a.resistances),
-          },
-          oneDodgesEveryAgiAmount:
-            SettingsStore.settings.oneDodgeEveryAgiAmount,
-        },
         aiBehavior: a.aiBehavior as BehaviorLiteral,
         ignores: a.ignores.map((i) => i as VisibilityLiteral),
         visibility: a.visibility as VisibilityLiteral,

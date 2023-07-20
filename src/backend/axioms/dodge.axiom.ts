@@ -11,14 +11,15 @@ export class DodgeAxiom {
 
   public dodged(
     target: ActorInterface,
-    actionDodgeable: boolean,
-    dodgesPerformed: number
-  ): boolean {
-    const dodged =
-      this.gamePredicate.canDodge(target, actionDodgeable, dodgesPerformed) &&
-      this.checkDodge(target);
+    actionDodgeable: boolean
+  ): boolean | undefined {
+    let result: boolean | undefined;
 
-    return dodged;
+    if (this.gamePredicate.canDodge(target, actionDodgeable)) {
+      result = this.checkDodge(target);
+    }
+
+    return result;
   }
 
   private checkDodge(targetActor: ActorInterface) {

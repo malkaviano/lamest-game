@@ -4,7 +4,7 @@
     "intelligencePoints": 10,
     "vulnerabilityCoefficient": 1.5,
     "resistanceCoefficient": 0.5,
-    "oneDodgeEveryAgiAmount": 8,
+    "dodgeAPCost": 1,
     "playerEffectDefenses": {
       "immunities": [],
       "cures": ["REMEDY", "SACRED"],

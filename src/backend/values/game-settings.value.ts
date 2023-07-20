@@ -15,7 +15,7 @@ export type GameSettingsValues = {
     readonly vulnerabilities: ArrayView<EffectTypeLiteral>;
     readonly resistances: ArrayView<EffectTypeLiteral>;
   };
-  readonly oneDodgeEveryAgiAmount: number;
+  readonly dodgeAPCost: number;
   readonly ruleCost: { [key in RuleNameLiteral]: number };
   readonly aiLoopMilliseconds: number;
   readonly actionPoints: {

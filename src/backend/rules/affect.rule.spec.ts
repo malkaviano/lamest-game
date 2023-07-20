@@ -46,10 +46,6 @@ describe('AffectRule', () => {
 
     when(mockedRollHelper.roll(unDodgeableAxe.damage.diceRoll)).thenReturn(0);
 
-    when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
-
-    when(mockedActorEntity.dodgesPerRound).thenReturn(2);
-
     when(mockedActorEntity.wannaDodge('KINETIC')).thenReturn(true);
 
     when(mockedActorEntity.wannaDodge('FIRE')).thenReturn(true);
@@ -164,7 +160,7 @@ describe('AffectRule', () => {
             it('should log used sword', (done) => {
               when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-              when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(true);
+              when(mockedDodgeAxiom.dodged(target, true)).thenReturn(true);
 
               ruleScenario(
                 rule,
@@ -177,7 +173,7 @@ describe('AffectRule', () => {
                 done
               );
 
-              verify(mockedDodgeAxiom.dodged(target, true, 0)).once();
+              verify(mockedDodgeAxiom.dodged(target, true)).once();
 
               verify(
                 mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
@@ -214,7 +210,7 @@ describe('AffectRule', () => {
       it('return avoided result', () => {
         when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-        when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(true);
+        when(mockedDodgeAxiom.dodged(target, true)).thenReturn(true);
 
         const result = rule.execute(actor, eventAttackInteractive, {
           target,
@@ -236,11 +232,9 @@ describe('AffectRule', () => {
       });
 
       it('should emit dodged', (done) => {
-        when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
-
         when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-        when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(true);
+        when(mockedDodgeAxiom.dodged(target, true)).thenReturn(true);
 
         let result: string | undefined;
 
@@ -263,7 +257,7 @@ describe('AffectRule', () => {
         it('return success result', () => {
           when(mockedPlayerEntity.weaponEquipped).thenReturn(simpleSword);
 
-          when(mockedDodgeAxiom.dodged(target, true, 0)).thenReturn(false);
+          when(mockedDodgeAxiom.dodged(target, true)).thenReturn(false);
 
           const result = rule.execute(actor, eventAttackInteractive, {
             target,
@@ -290,7 +284,7 @@ describe('AffectRule', () => {
         it('return avoided result', () => {
           when(mockedPlayerEntity.weaponEquipped).thenReturn(glock);
 
-          when(mockedDodgeAxiom.dodged(target, false, 0)).thenReturn(false);
+          when(mockedDodgeAxiom.dodged(target, false)).thenReturn(false);
 
           const result = rule.execute(actor, eventAttackInteractive, {
             target,

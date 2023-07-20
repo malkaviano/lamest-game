@@ -13,6 +13,7 @@ import {
 } from '../../../tests/mocks';
 import {
   actionableEvent,
+  fakeDerivedAttributes,
   greatSword,
   interactiveInfo,
   simpleSword,
@@ -41,8 +42,6 @@ describe('GamePredicate', () => {
       event: eventAttackInteractive,
       result: 'EXECUTED',
     });
-
-    when(mockedPlayerEntity.dodgesPerRound).thenReturn(2);
   });
 
   describe('hasEnoughActionPoints', () => {
@@ -93,39 +92,26 @@ describe('GamePredicate', () => {
       {
         actor: instance(mockedPlayerEntity),
         actionDodgeable: true,
-        targetDodgesPerformed: 0,
         expected: true,
         log: undefined,
         dodge: 20,
+        ap: 10,
       },
       {
         actor: instance(mockedPlayerEntity),
         actionDodgeable: false,
-        targetDodgesPerformed: 0,
         expected: false,
         log: new LogMessageDefinition(
           'DENIED',
           'Some Name',
-          'attack is not dodgeable'
+          'attack is not avoidable'
         ),
         dodge: 20,
+        ap: 10,
       },
       {
         actor: instance(mockedPlayerEntity),
         actionDodgeable: true,
-        targetDodgesPerformed: 2,
-        expected: false,
-        log: new LogMessageDefinition(
-          'DENIED',
-          'Some Name',
-          'was out of dodges'
-        ),
-        dodge: 20,
-      },
-      {
-        actor: instance(mockedPlayerEntity),
-        actionDodgeable: true,
-        targetDodgesPerformed: 0,
         expected: false,
         log: new LogMessageDefinition(
           'DENIED',
@@ -133,44 +119,54 @@ describe('GamePredicate', () => {
           "Dodge skill couldn't be checked because it's value is zero"
         ),
         dodge: 0,
+        ap: 10,
       },
-    ].forEach(
-      ({
-        actor,
-        actionDodgeable,
-        targetDodgesPerformed,
-        expected,
-        log,
-        dodge,
-      }) => {
-        it('return ${expected}', () => {
-          when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
-
-          const result = predicate.canDodge(
-            actor,
-            actionDodgeable,
-            targetDodgesPerformed
-          );
-
-          expect(result).toEqual(expected);
+      {
+        actor: instance(mockedPlayerEntity),
+        actionDodgeable: true,
+        expected: false,
+        log: new LogMessageDefinition(
+          'AP',
+          'Some Name',
+          'cannot perform Dodge, not enough AP'
+        ),
+        dodge: 20,
+        ap: 0,
+      },
+    ].forEach(({ actor, actionDodgeable, expected, log, dodge, ap }) => {
+      it('return ${expected}', () => {
+        when(mockedPlayerEntity.derivedAttributes).thenReturn({
+          ...fakeDerivedAttributes,
+          ['CURRENT AP']: new DerivedAttributeDefinition('CURRENT AP', ap),
         });
 
-        it('emit log', (done) => {
-          when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
-          let result: LogMessageDefinition | undefined;
+        when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
 
-          predicate.logMessageProduced$.subscribe((event) => {
-            result = event;
-          });
+        const result = predicate.canDodge(actor, actionDodgeable);
 
-          predicate.canDodge(actor, actionDodgeable, targetDodgesPerformed);
+        expect(result).toEqual(expected);
+      });
 
-          done();
-
-          expect(result).toEqual(log);
+      it('emit log', (done) => {
+        when(mockedPlayerEntity.derivedAttributes).thenReturn({
+          ...fakeDerivedAttributes,
+          ['CURRENT AP']: new DerivedAttributeDefinition('CURRENT AP', ap),
         });
-      }
-    );
+
+        when(mockedPlayerEntity.skills).thenReturn({ Dodge: dodge });
+        let result: LogMessageDefinition | undefined;
+
+        predicate.logMessageProduced$.subscribe((event) => {
+          result = event;
+        });
+
+        predicate.canDodge(actor, actionDodgeable);
+
+        done();
+
+        expect(result).toEqual(log);
+      });
+    });
   });
 
   describe('canActivate', () => {

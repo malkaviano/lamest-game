@@ -27,6 +27,8 @@ export class EquipRule extends RuleAbstraction {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResult {
+    this.ruleResult = {};
+
     const toEquip = this.checkedService.lookItemOrThrow<WeaponDefinition>(
       this.inventoryService,
       actor.id,

@@ -11,7 +11,6 @@ import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { ActorDodgedInterface } from '@interfaces/actor-dodged.interface';
 import { ReadableDefinition } from '@definitions/readable.definition';
 import { DocumentOpenedInterface } from '@interfaces/document-opened.interface';
 import {
@@ -24,11 +23,7 @@ import { ActorEntity } from '@entities/actor.entity';
 import { Mutable } from '@wrappers/mutable.wrapper';
 
 export abstract class RuleAbstraction
-  implements
-    RuleInterface,
-    LoggerInterface,
-    ActorDodgedInterface,
-    DocumentOpenedInterface
+  implements RuleInterface, LoggerInterface, DocumentOpenedInterface
 {
   protected ruleResult: Mutable<RuleResultPayload>;
 
@@ -124,6 +119,7 @@ export abstract class RuleAbstraction
 
       this.ruleLog.next(logMessage);
 
+      // TODO: move this into a policy
       if (
         target &&
         target instanceof ActorEntity &&
