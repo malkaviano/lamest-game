@@ -9,6 +9,7 @@ import { ActionableItemDefinition } from '@definitions/actionable-item.definitio
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ViewableInterface } from '../../interfaces/viewable.interface';
 import { SceneEntity } from '@entities/scene.entity';
+import { DodgeDto } from '../../dtos/dodge.dto';
 
 @Component({
   selector: 'app-game-layout',
@@ -22,8 +23,6 @@ export class GameLayoutComponent {
 
   @Input() characterStatus!: CharacterStatusView;
 
-  @Output() actionSelected: EventEmitter<ActionableEvent>;
-
   @Input() logs!: ArrayView<string>;
 
   @Input() scene!: SceneEntity;
@@ -34,11 +33,17 @@ export class GameLayoutComponent {
 
   @Input() equipped!: GameItemDefinition;
 
+  @Output() actionSelected: EventEmitter<ActionableEvent>;
+
   @Output() sceneOpened: EventEmitter<ViewableInterface>;
+
+  @Output() dodgeOption: EventEmitter<DodgeDto>;
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
 
     this.sceneOpened = new EventEmitter<ViewableInterface>();
+
+    this.dodgeOption = new EventEmitter<DodgeDto>();
   }
 }

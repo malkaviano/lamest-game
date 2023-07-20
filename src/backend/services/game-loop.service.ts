@@ -106,6 +106,10 @@ export class GameLoopService {
     this.player.playerDecision(action);
   }
 
+  public actorDodge(option: boolean): void {
+    this.player.dodge = option;
+  }
+
   private run(actors: ArrayView<ActorInterface>): void {
     if (this.isPlayerAlive()) {
       actors.items.forEach((actor) => {
