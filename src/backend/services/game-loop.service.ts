@@ -113,20 +113,25 @@ export class GameLoopService {
   private run(actors: ArrayView<ActorInterface>): void {
     if (this.isPlayerAlive()) {
       actors.items.forEach((actor) => {
-        const action = actor.action(this.sceneActorsInfo);
+        const actionableEvent = actor.action(this.sceneActorsInfo);
 
-        if (actor.situation === 'ALIVE' && action) {
+        if (actor.situation === 'ALIVE' && actionableEvent) {
           const rule =
-            this.ruleHub.dispatcher[action.actionableDefinition.actionable];
+            this.ruleHub.dispatcher[
+              actionableEvent.actionableDefinition.actionable
+            ];
 
           if (this.gamePredicate.hasEnoughActionPoints(actor, rule)) {
-            const target = this.actionReactives[action.eventId];
+            const target = this.actionReactives[actionableEvent.eventId];
 
-            const result = rule.execute(actor, action, {
+            const result = rule.execute(actor, actionableEvent, {
               target,
             });
 
-            this.policyHub.enforcePolicies(result);
+            this.policyHub.enforcePolicies(
+              result,
+              actionableEvent.actionableDefinition
+            );
           }
         }
       });

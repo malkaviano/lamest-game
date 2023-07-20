@@ -5,6 +5,7 @@ import { LoggerInterface } from '@interfaces/logger.interface';
 import { PolicyInterface } from '@interfaces/policy.interface';
 import { RuleResult } from '@results/rule.result';
 import { ArrayView } from '@wrappers/array.view';
+import { ActionableDefinition } from '@definitions/actionable.definition';
 
 export class PolicyHub implements LoggerInterface {
   private readonly policies: ArrayView<PolicyInterface>;
@@ -19,7 +20,10 @@ export class PolicyHub implements LoggerInterface {
     );
   }
 
-  public enforcePolicies(ruleResult: RuleResult): void {
-    this.policies.items.forEach((p) => p.enforce(ruleResult));
+  public enforcePolicies(
+    ruleResult: RuleResult,
+    action: ActionableDefinition
+  ): void {
+    this.policies.items.forEach((p) => p.enforce(ruleResult, action));
   }
 }

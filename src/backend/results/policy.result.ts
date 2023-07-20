@@ -1,6 +1,7 @@
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 
 export type PolicyResult = {
   readonly visibility?: {
@@ -11,4 +12,5 @@ export type PolicyResult = {
   readonly targetActionPointsSpent?: number;
   readonly disposed?: GameItemDefinition;
   readonly dead?: ActorInterface;
+  readonly affected?: InteractiveInterface;
 };

@@ -22,7 +22,7 @@ export class DestroyableState extends ActionableState {
   ): { state: ActionableState; log?: string } {
     if (
       action.actionable === 'AFFECT' &&
-      result === 'SUCCESS' &&
+      result !== 'FAILURE' &&
       values.effect
     ) {
       const dmg = values.effect.amount;

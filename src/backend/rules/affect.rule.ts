@@ -1,6 +1,5 @@
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ActionableEvent } from '@events/actionable.event';
-import { EffectEvent } from '@events/effect.event';
 import { ConverterHelper } from '@helpers/converter.helper';
 import { RollHelper } from '@helpers/roll.helper';
 import { ActorInterface } from '@interfaces/actor.interface';
@@ -95,10 +94,6 @@ export class AffectRule extends RuleAbstraction {
           type: effect.effectType,
           amount: effectAmount,
         };
-
-        this.affectWith(target, event.actionableDefinition, 'SUCCESS', {
-          effect: new EffectEvent(effect.effectType, effectAmount),
-        });
       }
 
       targetActor?.afflictedBy(actor.id);

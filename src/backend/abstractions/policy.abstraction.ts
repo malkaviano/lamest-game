@@ -4,6 +4,7 @@ import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { PolicyResult } from '@results/policy.result';
 import { PolicyInterface } from '@interfaces/policy.interface';
 import { RuleResult } from '@results/rule.result';
+import { ActionableDefinition } from '@definitions/actionable.definition';
 
 export abstract class PolicyAbstraction implements PolicyInterface {
   protected readonly logMessageProduced: Subject<LogMessageDefinition>;
@@ -16,5 +17,8 @@ export abstract class PolicyAbstraction implements PolicyInterface {
     this.logMessageProduced$ = this.logMessageProduced.asObservable();
   }
 
-  public abstract enforce(result: RuleResult): PolicyResult;
+  public abstract enforce(
+    result: RuleResult,
+    action: ActionableDefinition
+  ): PolicyResult;
 }
