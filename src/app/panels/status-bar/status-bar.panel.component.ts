@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { CharacterStatusView } from '../../view-models/character-status.view';
 import { ActionableEvent } from '@events/actionable.event';
-import { DodgeDto } from '../../dtos/dodge.dto';
 
 @Component({
   selector: 'app-status-bar-panel',
@@ -14,15 +13,15 @@ export class StatusBarPanelComponent {
 
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
-  @Output() dodgeOption: EventEmitter<DodgeDto>;
+  @Output() dodgeOption: EventEmitter<{ dodge: boolean }>;
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
 
-    this.dodgeOption = new EventEmitter<DodgeDto>();
+    this.dodgeOption = new EventEmitter<{ dodge: boolean }>();
   }
 
   onChange(dodge: boolean) {
-    this.dodgeOption.emit(new DodgeDto(dodge));
+    this.dodgeOption.emit({ dodge });
   }
 }
