@@ -119,6 +119,7 @@ export abstract class RuleAbstraction
 
       this.ruleLog.next(logMessage);
 
+      // TODO: move this into a policy
       if (
         target &&
         target instanceof ActorEntity &&

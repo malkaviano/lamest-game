@@ -204,8 +204,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public action(
     sceneActorsInfo: ArrayView<SceneActorsInfoValues>
   ): ActionableEvent | null {
-    this.regeneratorBehavior.startApRegeneration();
-
     return this.aiBehavior.action(sceneActorsInfo, [
       ...this.mAfflictedBy.values(),
     ]);
@@ -271,13 +269,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public apRecovered(apRecovered: number): void {
     this.apChange(apRecovered);
-
-    if (
-      this.derivedAttributes['CURRENT AP'].value ===
-      this.derivedAttributes['MAX AP'].value
-    ) {
-      this.regeneratorBehavior.stopApRegeneration();
-    }
   }
 
   private effect(effect: EffectEvent): string | null {
@@ -344,6 +335,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     if (result.effective) {
       this.derivedAttributeChanged.next(result);
+
+      this.regeneratorBehavior.startApRegeneration();
+    } else {
+      this.regeneratorBehavior.stopApRegeneration();
     }
   }
 
