@@ -31,21 +31,29 @@ describe('DodgeAxiom', () => {
       {
         dodgeable: true,
         roll: new RollDefinition('SUCCESS', 12),
+        canDodge: true,
         expected: true,
       },
       {
         dodgeable: true,
         roll: new RollDefinition('FAILURE', 72),
+        canDodge: true,
         expected: false,
       },
-    ].forEach(({ dodgeable, expected, roll }) => {
+      {
+        dodgeable: true,
+        roll: new RollDefinition('FAILURE', 72),
+        canDodge: false,
+        expected: undefined,
+      },
+    ].forEach(({ dodgeable, expected, roll, canDodge }) => {
       it(`return ${expected}`, () => {
         when(mockedRollHelper.actorSkillCheck(target, 'Dodge')).thenReturn(
           roll
         );
 
         when(mockedGamePredicate.canDodge(target, dodgeable)).thenReturn(
-          expected
+          canDodge
         );
 
         const result = axiom.dodged(target, dodgeable);

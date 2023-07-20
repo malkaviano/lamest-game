@@ -25,6 +25,8 @@ export class PickRule extends RuleAbstraction {
     event: ActionableEvent,
     extras: RuleValues
   ): RuleResult {
+    this.ruleResult = {};
+
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const item = this.checkedService.takeItemOrThrow(

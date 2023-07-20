@@ -20,6 +20,8 @@ export class StripRule extends RuleAbstraction {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResult {
+    this.ruleResult = {};
+
     const armor = actor.strip();
 
     let ruleResult: RuleResultLiteral = 'DENIED';

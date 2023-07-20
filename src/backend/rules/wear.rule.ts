@@ -24,6 +24,8 @@ export class WearRule extends RuleAbstraction {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResult {
+    this.ruleResult = {};
+
     const toWear = this.checkedService.takeItemOrThrow<ArmorDefinition>(
       this.inventoryService,
       actor.id,

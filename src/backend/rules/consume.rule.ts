@@ -32,6 +32,8 @@ export class ConsumeRule extends RuleAbstraction {
     actor: ActorInterface,
     event: ActionableEvent
   ): RuleResult {
+    this.ruleResult = {};
+
     const { actionableDefinition, eventId } = event;
 
     const consumable =

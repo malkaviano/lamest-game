@@ -36,6 +36,8 @@ export class AffectRule extends RuleAbstraction {
     event: ActionableEvent,
     extras: RuleValues
   ): RuleResult {
+    this.ruleResult = {};
+
     const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const {
@@ -136,11 +138,9 @@ export class AffectRule extends RuleAbstraction {
     };
 
     if (targetWasHit) {
-      const dodged =
-        targetActor?.wannaDodge(effect.effectType) &&
-        this.dodgeAxiom.dodged(targetActor, dodgeable);
-
-      this.ruleResult.dodged = dodged;
+      if (targetActor?.wannaDodge(effect.effectType)) {
+        this.ruleResult.dodged = this.dodgeAxiom.dodged(targetActor, dodgeable);
+      }
     }
   }
 

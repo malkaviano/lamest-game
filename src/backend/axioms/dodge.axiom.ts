@@ -9,12 +9,17 @@ export class DodgeAxiom {
     private readonly gamePredicate: GamePredicate
   ) {}
 
-  public dodged(target: ActorInterface, actionDodgeable: boolean): boolean {
-    const dodged =
-      this.gamePredicate.canDodge(target, actionDodgeable) &&
-      this.checkDodge(target);
+  public dodged(
+    target: ActorInterface,
+    actionDodgeable: boolean
+  ): boolean | undefined {
+    let result: boolean | undefined;
 
-    return dodged;
+    if (this.gamePredicate.canDodge(target, actionDodgeable)) {
+      result = this.checkDodge(target);
+    }
+
+    return result;
   }
 
   private checkDodge(targetActor: ActorInterface) {
