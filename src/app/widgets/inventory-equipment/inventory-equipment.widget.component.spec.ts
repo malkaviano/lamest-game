@@ -3,7 +3,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MaterialModule } from '../../../material/material.module';
-import { EquipmentWidgetComponent } from './equipment.widget.component';
+import { EquipmentWidgetComponent } from './inventory-equipment.widget.component';
 import { ActionableEvent } from '@events/actionable.event';
 import { equipActionable } from '@definitions/actionable.definition';
 

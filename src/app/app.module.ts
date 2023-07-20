@@ -11,7 +11,7 @@ import { GamePageComponent } from './pages/game/game.page.component';
 import { KeyValueDescriptionPanelComponent } from './panels/key-value-description/key-value-description.panel.component';
 import { TextAreaWidgetComponent } from './widgets/text-area/text-area.widget.component';
 import { WindowWidgetComponent } from './widgets/window/window.widget.component';
-import { EquipmentWidgetComponent } from './widgets/equipment/equipment.widget.component';
+import { EquipmentWidgetComponent } from './widgets/inventory-equipment/inventory-equipment.widget.component';
 import { GameLayoutComponent } from './layouts/game/game.layout.component';
 import { InteractivePanelComponent } from './panels/interactive/interactive.panel.component';
 import { ReaderDialogComponent } from './dialogs/reader/reader.dialog.component';
