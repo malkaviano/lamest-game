@@ -17,7 +17,7 @@ import { InteractiveStore } from '@stores/interactive.store';
 import { SceneStore } from '@stores/scene.store';
 import { SequencerHelper } from '@helpers/sequencer.helper';
 import { CheckedService } from '@services/checked.service';
-import { RollHelper } from '@helpers/roll.helper';
+import { RollService } from '@services/roll.service';
 import { AffectRule } from '@rules/affect.rule';
 import { ConsumeRule } from '@rules/consume.rule';
 import { EquipRule } from '@rules/equip.rule';
@@ -50,7 +50,6 @@ const gamePredicate = new GamePredicate();
 
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
-const rollHelper = new RollHelper(randomIntHelper, gamePredicate);
 
 const resourcesStore = new ResourcesStore();
 const actionableStore = new ActionableStore(resourcesStore);
@@ -78,18 +77,19 @@ const inventoryService = new InventoryService(statesStore);
 const generatorService = new GeneratorService(randomIntHelper, professionStore);
 const narrativeService = new NarrativeService(sceneStore);
 const checkedService = new CheckedService();
+const rollService = new RollService(randomIntHelper, skillStore);
 
-const dodgeAxiom = new DodgeAxiom(rollHelper, gamePredicate);
+const dodgeAxiom = new DodgeAxiom(rollService, gamePredicate);
 
 const combatRule = new AffectRule(
-  rollHelper,
+  rollService,
   checkedService,
   dodgeAxiom,
   gamePredicate
 );
 const consumeRule = new ConsumeRule(
   inventoryService,
-  rollHelper,
+  rollService,
   checkedService,
   gamePredicate
 );
@@ -103,7 +103,7 @@ const inspectRule = new ReadRule(inventoryService);
 const interactionRule = new InteractionRule(checkedService);
 const pickRule = new PickRule(inventoryService, checkedService);
 const sceneRule = new SceneRule(narrativeService, checkedService);
-const skillRule = new SkillRule(rollHelper, checkedService, gamePredicate);
+const skillRule = new SkillRule(rollService, checkedService, gamePredicate);
 const unEquipRule = new UnEquipRule(inventoryService);
 const useRule = new UseRule(inventoryService, checkedService);
 const dropRule = new DropRule(inventoryService, checkedService);
@@ -145,7 +145,7 @@ const policyHub = new PolicyHub(
 );
 
 const loggingHub = new LoggingHub(
-  rollHelper,
+  rollService,
   rulesHub,
   policyHub,
   gamePredicate
@@ -177,7 +177,7 @@ const gameLoopService = new GameLoopService(
   providers: [
     { provide: RandomIntHelper, useValue: randomIntHelper },
     { provide: SequencerHelper, useValue: sequencerHelper },
-    { provide: RollHelper, useValue: rollHelper },
+    { provide: RollService, useValue: rollService },
 
     { provide: ResourcesStore, useValue: resourcesStore },
     { provide: ActionableStore, useValue: actionableStore },

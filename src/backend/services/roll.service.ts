@@ -8,9 +8,9 @@ import { LoggerInterface } from '@interfaces/logger.interface';
 import { DiceLiteral } from '@literals/dice.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RandomIntHelper } from '@helpers/random-int.helper';
-import { GamePredicate } from '@predicates/game.predicate';
+import { SkillStore } from '@stores/skill.store';
 
-export class RollHelper implements LoggerInterface {
+export class RollService implements LoggerInterface {
   private readonly diceMap: {
     readonly [key in DiceLiteral]: { min: number; max: number };
   };
@@ -21,7 +21,7 @@ export class RollHelper implements LoggerInterface {
 
   constructor(
     private readonly randomIntHelper: RandomIntHelper,
-    private readonly gamePredicate: GamePredicate
+    private readonly skillStore: SkillStore
   ) {
     this.diceMap = {
       D4: { min: 1, max: 4 },
@@ -44,7 +44,19 @@ export class RollHelper implements LoggerInterface {
   ): RollDefinition {
     const skillValue = actor.skills[skillName];
 
-    const result = this.skillCheck(skillValue);
+    const skill = this.skillStore.skills[skillName];
+
+    const tries = skill.combat ? 1 : 3;
+
+    const results = [];
+
+    for (let n = 0; n < tries; n++) {
+      results.push(this.skillCheck(skillValue));
+    }
+
+    const result = results.reduce((best, r) => {
+      return best.roll < r.roll ? best : r;
+    });
 
     const logMessage = GameStringsStore.createSkillCheckLogMessage(
       actor.name,

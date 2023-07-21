@@ -5,7 +5,7 @@ import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableEvent } from '@events/actionable.event';
 import { CheckedService } from '@services/checked.service';
-import { RollHelper } from '@helpers/roll.helper';
+import { RollService } from '@services/roll.service';
 import { RuleResult } from '@results/rule.result';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
@@ -15,7 +15,7 @@ import { GamePredicate } from '@predicates/game.predicate';
 export class ConsumeRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly rollHelper: RollHelper,
+    private readonly rollHelper: RollService,
     private readonly checkedService: CheckedService,
     private readonly gamePredicate: GamePredicate
   ) {

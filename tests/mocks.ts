@@ -49,7 +49,7 @@ import {
 import { SceneEntity } from '@entities/scene.entity';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { CheckedService } from '@services/checked.service';
-import { RollHelper } from '@helpers/roll.helper';
+import { RollService } from '@services/roll.service';
 import { PolicyHub } from '@hubs/policy.hub';
 import { GameLoopService } from '@services/game-loop.service';
 import { LoggingHub } from '@hubs/logging.hub';
@@ -82,7 +82,7 @@ export const mockedTargetPlayerEntity = mock(PlayerEntity);
 
 export const mockedInteractiveEntity = mock(InteractiveEntity);
 
-export const mockedRollHelper = mock(RollHelper);
+export const mockedRollHelper = mock(RollService);
 
 export const mockedNarrativeService = mock(NarrativeService);
 
