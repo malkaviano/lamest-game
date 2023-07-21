@@ -4,7 +4,6 @@ import { ItemStoredDefinition } from '@definitions/item-storage.definition';
 import { InventoryService } from '@services/inventory.service';
 import { ArrayView } from '@wrappers/array.view';
 import { InventoryEvent } from '@events/inventory.event';
-import { InteractiveStore } from '@stores/interactive.store';
 
 import {
   consumableAnalgesic,
@@ -13,21 +12,13 @@ import {
   readable,
   simpleSword,
 } from '../../../tests/fakes';
-import { mockedItemStore } from '../../../tests/mocks';
-
-const interactives = {
-  interactives: () => ({}),
-  interactiveItems: () => ({}),
-};
+import { mockedStatesStore } from '../../../tests/mocks';
 
 describe('InventoryService', () => {
   let service: InventoryService;
 
   beforeEach(() => {
-    service = new InventoryService(
-      interactives as unknown as InteractiveStore,
-      instance(mockedItemStore)
-    );
+    service = new InventoryService(instance(mockedStatesStore));
   });
 
   it('should be created', () => {

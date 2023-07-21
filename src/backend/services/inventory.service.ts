@@ -8,9 +8,8 @@ import { UsableDefinition } from '@definitions/usable.definition';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { InventoryEvent } from '@events/inventory.event';
-import { InteractiveStore } from '@stores/interactive.store';
-import { ItemStore } from '@stores/item.store';
 import { ArmorDefinition } from '@definitions/armor.definition';
+import { StatesStore } from '@stores/states.store';
 
 export class InventoryService {
   private readonly inventoryChanged: Subject<InventoryEvent>;
@@ -19,20 +18,18 @@ export class InventoryService {
 
   public readonly inventoryChanged$: Observable<InventoryEvent>;
 
-  constructor(interactiveStore: InteractiveStore, itemStore: ItemStore) {
+  constructor(statesStore: StatesStore) {
     this.storage = new Map<string, { [key: string]: ItemStoredDefinition }>();
 
     this.inventoryChanged = new Subject<InventoryEvent>();
 
     this.inventoryChanged$ = this.inventoryChanged.asObservable();
 
-    Object.keys(interactiveStore.interactiveItems).forEach((id) => {
-      interactiveStore.interactiveItems[id].forEach(({ name, quantity }) => {
-        for (let index = 0; index < quantity; index++) {
-          this.putInInventory(id, itemStore.items[name]);
-        }
+    for (const key in statesStore.loot) {
+      statesStore.loot[key].forEach((item) => {
+        this.store(key, item);
       });
-    });
+    }
   }
 
   public store(key: string, item: GameItemDefinition): number {

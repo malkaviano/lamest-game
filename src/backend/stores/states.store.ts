@@ -26,9 +26,12 @@ import {
 import { ItemStore } from '@stores/item.store';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { GameStringsStore } from '@stores/game-strings.store';
+import { GameItemDefinition } from '@definitions/game-item.definition';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
+
+  private readonly mLoot: Map<string, GameItemDefinition[]>;
 
   constructor(
     messageStore: MessageStore,
@@ -40,6 +43,8 @@ export class StatesStore {
     this.store = new Map<string, ActionableState>();
 
     this.store.set('emptyState', emptyState);
+
+    this.mLoot = new Map<string, GameItemDefinition[]>();
 
     resourcesStore.skillStateStore.states.forEach((state) => {
       this.store.set(
@@ -55,6 +60,12 @@ export class StatesStore {
     resourcesStore.discardStateStore.states.forEach((state) => {
       const actionables = state.items.map((itemName) => {
         const item = itemStore.items[itemName];
+
+        const items = this.mLoot.get(state.interactiveId) ?? [];
+
+        items.push(item);
+
+        this.mLoot.set(state.interactiveId, items);
 
         return createActionableDefinition(
           'PICK',
@@ -156,6 +167,10 @@ export class StatesStore {
 
   public get states(): ReadonlyKeyValueWrapper<ActionableState> {
     return ConverterHelper.mapToKeyValueInterface(this.store);
+  }
+
+  public get loot(): ReadonlyKeyValueWrapper<GameItemDefinition[]> {
+    return ConverterHelper.mapToKeyValueInterface(this.mLoot);
   }
 
   public lazyState(stateName: string): LazyHelper<ActionableState> {
