@@ -71,4 +71,8 @@ export type GameSettingsValues = {
     };
     readonly penalty: ArmorPenaltyLiteral;
   };
+  readonly skillCheck: {
+    readonly combatTries: number;
+    readonly normalTries: number;
+  };
 };

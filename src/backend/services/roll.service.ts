@@ -9,6 +9,7 @@ import { DiceLiteral } from '@literals/dice.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { SkillStore } from '@stores/skill.store';
+import { SettingsStore } from '../stores/settings.store';
 
 export class RollService implements LoggerInterface {
   private readonly diceMap: {
@@ -46,7 +47,9 @@ export class RollService implements LoggerInterface {
 
     const skill = this.skillStore.skills[skillName];
 
-    const tries = skill.combat ? 1 : 3;
+    const tries = skill.combat
+      ? SettingsStore.settings.skillCheck.combatTries
+      : SettingsStore.settings.skillCheck.normalTries;
 
     const results = [];
 
