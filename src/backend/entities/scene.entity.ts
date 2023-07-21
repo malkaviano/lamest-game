@@ -18,6 +18,6 @@ export class SceneEntity {
   }
 
   public reset(): void {
-    this.interactives.items.forEach((i) => i.reset());
+    this.mInteractives.items.forEach((i) => i.reset());
   }
 }
