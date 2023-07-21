@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 import { CharacterStatusView } from '../../view-models/character-status.view';
 import { ActionableEvent } from '@events/actionable.event';
@@ -16,7 +23,7 @@ type Action = {
   templateUrl: './status-bar.panel.component.html',
   styleUrls: ['./status-bar.panel.component.css'],
 })
-export class StatusBarPanelComponent implements OnInit {
+export class StatusBarPanelComponent implements OnInit, OnChanges {
   @Input() status!: CharacterStatusView;
 
   @Output() actionSelected: EventEmitter<ActionableEvent>;
@@ -25,10 +32,17 @@ export class StatusBarPanelComponent implements OnInit {
 
   public disguise!: Action;
 
+  public showDisguise!: boolean;
+
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
 
     this.dodgeOption = new EventEmitter<{ dodge: boolean }>();
+  }
+
+  ngOnChanges(): void {
+    this.showDisguise =
+      this.status.visibility.value.toUpperCase() === 'VISIBLE';
   }
 
   ngOnInit(): void {

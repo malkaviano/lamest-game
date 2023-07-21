@@ -3,10 +3,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ActionWidgetComponent } from './action.widget.component';
 import { ActionableEvent } from '@events/actionable.event';
-import {
-  equipActionable,
-  unequipActionable,
-} from '@definitions/actionable.definition';
+import { unequipActionable } from '@definitions/actionable.definition';
 
 import { testButtonEvent } from '../../../../tests/scenarios';
 import { simpleSword } from '../../../../tests/fakes';

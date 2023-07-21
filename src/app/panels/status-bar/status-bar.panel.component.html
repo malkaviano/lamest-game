@@ -24,6 +24,7 @@
     (change)="onChange(dodgeOption.checked)"></mat-checkbox>
 
 <app-action-widget
+  *ngIf="showDisguise"
   [icon]="disguise.icon"
   [alt]="disguise.alt"
   [tooltip]="disguise.tooltip"
