@@ -74,7 +74,7 @@ const actorStore = new ActorStore(
 const interactiveStore = new InteractiveStore(statesStore, resourcesStore);
 const sceneStore = new SceneStore(interactiveStore, actorStore, resourcesStore);
 
-const inventoryService = new InventoryService(interactiveStore, itemStore);
+const inventoryService = new InventoryService(statesStore);
 const generatorService = new GeneratorService(randomIntHelper, professionStore);
 const narrativeService = new NarrativeService(sceneStore);
 const checkedService = new CheckedService();
