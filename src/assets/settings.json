@@ -62,7 +62,8 @@
     "systemSkills": {
       "dodgeSkill": "Dodge",
       "disguiseSkill": "Disguise",
-      "stealthSkill": "Hide"
+      "stealthSkill": "Hide",
+      "detectSkill": "Detect"
     },
     "unarmedDamage": {
       "dice": {},
