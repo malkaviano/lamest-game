@@ -37,6 +37,7 @@ import {
 } from '@events/equipment-changed.event';
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
+import { emptyState } from '@states/empty.state';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -259,7 +260,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       if (logs.length) {
         reactResult = logs.join(' and ');
       }
-    } else {
+    } else if (this.currentState !== emptyState) {
       reactResult = super.reactTo(action, result, values);
     }
 
