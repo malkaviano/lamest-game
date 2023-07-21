@@ -222,6 +222,7 @@ export class ResourcesStore {
         label: u.label,
         description: u.description,
         usability: u.usability as ItemUsabilityLiteral,
+        skillName: u.skillName,
       };
     });
   }
