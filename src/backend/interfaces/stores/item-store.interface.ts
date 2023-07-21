@@ -6,5 +6,6 @@ export interface UsablesStoreInterface {
     readonly label: string;
     readonly description: string;
     readonly usability: ItemUsabilityLiteral;
+    readonly skillName?: string;
   }[];
 }

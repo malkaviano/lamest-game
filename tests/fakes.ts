@@ -292,6 +292,28 @@ export const actionUseDiscardKey = createActionableDefinition(
   discardKey.identity.label
 );
 
+export const actionUsePermanentKey = createActionableDefinition(
+  'USE',
+  permanentKey.identity.name,
+  permanentKey.identity.label
+);
+
+export const heroDisguise = new UsableDefinition(
+  new ItemIdentityDefinition(
+    'heroDisguise',
+    'Hero Disguise',
+    'Looks like an hero'
+  ),
+  'DISPOSABLE',
+  'Disguise'
+);
+
+export const actionUseHeroDisguise = createActionableDefinition(
+  'USE',
+  heroDisguise.identity.name,
+  heroDisguise.identity.label
+);
+
 export const actionPickSimpleSword = createActionableDefinition(
   'PICK',
   simpleSword.identity.name,

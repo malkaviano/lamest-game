@@ -82,7 +82,7 @@ export const mockedTargetPlayerEntity = mock(PlayerEntity);
 
 export const mockedInteractiveEntity = mock(InteractiveEntity);
 
-export const mockedRollHelper = mock(RollService);
+export const mockedRollService = mock(RollService);
 
 export const mockedNarrativeService = mock(NarrativeService);
 
@@ -385,7 +385,7 @@ const resetMocks = () => {
 
   reset(mockedInteractiveEntity);
 
-  reset(mockedRollHelper);
+  reset(mockedRollService);
 
   reset(mockedNarrativeService);
 

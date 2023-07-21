@@ -9,11 +9,13 @@ import { CheckedService } from '@services/checked.service';
 import { RuleResult } from '@results/rule.result';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
+import { RollService } from '@services/roll.service';
 
 export class UseRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly checkedService: CheckedService
+    private readonly checkedService: CheckedService,
+    private readonly rollService: RollService
   ) {
     super();
   }
@@ -52,7 +54,24 @@ export class UseRule extends RuleAbstraction {
     } else {
       this.ruleResult.used = used;
 
-      ruleResult = 'EXECUTED';
+      const skillName = used.skillName;
+
+      this.ruleResult.skillName = skillName;
+
+      if (skillName) {
+        const { result, roll } = this.rollService.actorSkillCheck(
+          actor,
+          skillName
+        );
+
+        this.ruleResult.roll = {
+          checkRoll: roll,
+          result,
+        };
+      }
+
+      ruleResult =
+        this.ruleResult.roll?.result !== 'FAILURE' ? 'EXECUTED' : 'AVOIDED';
     }
 
     return this.getResult(event, actor, ruleResult);

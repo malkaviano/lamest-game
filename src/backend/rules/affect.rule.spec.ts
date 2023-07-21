@@ -15,7 +15,7 @@ import {
   mockedGamePredicate,
   mockedInteractiveEntity,
   mockedPlayerEntity,
-  mockedRollHelper,
+  mockedRollService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -34,7 +34,7 @@ describe('AffectRule', () => {
 
   beforeEach(() => {
     rule = new AffectRule(
-      instance(mockedRollHelper),
+      instance(mockedRollService),
       instance(mockedCheckedService),
       instance(mockedDodgeAxiom),
       instance(mockedGamePredicate)
@@ -42,9 +42,9 @@ describe('AffectRule', () => {
 
     setupMocks();
 
-    when(mockedRollHelper.roll(simpleSword.damage.diceRoll)).thenReturn(0);
+    when(mockedRollService.roll(simpleSword.damage.diceRoll)).thenReturn(0);
 
-    when(mockedRollHelper.roll(unDodgeableAxe.damage.diceRoll)).thenReturn(0);
+    when(mockedRollService.roll(unDodgeableAxe.damage.diceRoll)).thenReturn(0);
 
     when(mockedActorEntity.wannaDodge('KINETIC')).thenReturn(true);
 
@@ -71,15 +71,15 @@ describe('AffectRule', () => {
     ).thenReturn(damageMessage2);
 
     when(
-      mockedRollHelper.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
+      mockedRollService.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
-      mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
+      mockedRollService.actorSkillCheck(actor, 'Melee Weapon (Simple)')
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
-      mockedRollHelper.actorSkillCheck(actor, 'Firearm (Handgun)')
+      mockedRollService.actorSkillCheck(actor, 'Firearm (Handgun)')
     ).thenReturn(new RollDefinition('FAILURE', 85));
 
     when(
@@ -176,7 +176,10 @@ describe('AffectRule', () => {
               verify(mockedDodgeAxiom.dodged(target, true)).once();
 
               verify(
-                mockedRollHelper.actorSkillCheck(actor, 'Melee Weapon (Simple)')
+                mockedRollService.actorSkillCheck(
+                  actor,
+                  'Melee Weapon (Simple)'
+                )
               ).once();
             });
           });

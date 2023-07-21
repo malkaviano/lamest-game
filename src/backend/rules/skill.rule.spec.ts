@@ -7,7 +7,7 @@ import { RuleResult } from '@results/rule.result';
 import {
   mockedPlayerEntity,
   mockedInteractiveEntity,
-  mockedRollHelper,
+  mockedRollService,
   setupMocks,
   mockedCheckedService,
   mockedGamePredicate,
@@ -25,7 +25,7 @@ describe('SkillRule', () => {
     setupMocks();
 
     rule = new SkillRule(
-      instance(mockedRollHelper),
+      instance(mockedRollService),
       instance(mockedCheckedService),
       instance(mockedGamePredicate)
     );
@@ -48,7 +48,7 @@ describe('SkillRule', () => {
         const rollResult = new RollDefinition('SUCCESS', 10);
 
         when(
-          mockedRollHelper.actorSkillCheck(
+          mockedRollService.actorSkillCheck(
             actor,
             eventSkillSurvival.actionableDefinition.name
           )

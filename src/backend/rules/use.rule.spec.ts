@@ -2,14 +2,16 @@ import { instance, when } from 'ts-mockito';
 
 import { UseRule } from '@rules/use.rule';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
-import { RuleResult } from '@results/rule.result';
-import { UsableDefinition } from '@definitions/usable.definition';
+import { RuleResultLiteral } from '@literals/rule-result.literal';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 import {
   mockedCheckedService,
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
+  mockedRollService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -18,26 +20,58 @@ import {
   actionUseDiscardKey,
   discardKey,
   actionableEvent,
+  heroDisguise,
+  actionUseHeroDisguise,
+  actorInfo,
+  actionUsePermanentKey,
 } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
 
+const eventUseDiscardKey = actionableEvent(
+  actionUseDiscardKey,
+  interactiveInfo.id
+);
+
+const eventUseHeroDisguise = actionableEvent(
+  actionUseHeroDisguise,
+  actorInfo.id
+);
+
+const eventUsePermanentKey = actionableEvent(
+  actionUsePermanentKey,
+  interactiveInfo.id
+);
+
 describe('UseRule', () => {
   let rule: UseRule;
+
+  const notFoundLog = new LogMessageDefinition(
+    'NOT-FOUND',
+    playerInfo.name,
+    'Permanent Key failed, required item was not found in inventory'
+  );
+
+  const actor = instance(mockedPlayerEntity);
+
+  const extras = {
+    target: instance(mockedInteractiveEntity),
+  };
 
   beforeEach(() => {
     setupMocks();
 
     rule = new UseRule(
       instance(mockedInventoryService),
-      instance(mockedCheckedService)
+      instance(mockedCheckedService),
+      instance(mockedRollService)
     );
 
     when(
-      mockedCheckedService.takeItemOrThrow<UsableDefinition>(
-        instance(mockedInventoryService),
-        actor.id,
-        discardKey.identity.name
-      )
+      mockedInventoryService.look(actor.id, heroDisguise.identity.name)
+    ).thenReturn(heroDisguise);
+
+    when(
+      mockedInventoryService.look(actor.id, discardKey.identity.name)
     ).thenReturn(discardKey);
   });
 
@@ -51,64 +85,87 @@ describe('UseRule', () => {
         ruleScenario(
           rule,
           actor,
-          eventUseMasterKey,
+          eventUsePermanentKey,
           extras,
           [notFoundLog],
           done
         );
       });
-
-      it('return denied result', () => {
-        const result = rule.execute(actor, eventUseMasterKey, extras);
-
-        const expected: RuleResult = {
-          name: 'USE',
-          event: eventUseMasterKey,
-          result: 'DENIED',
-          actor,
-          target: extras.target,
-        };
-
-        expect(result).toEqual(expected);
-      });
     });
 
     describe('when item was found', () => {
-      it('return used result', () => {
-        when(
-          mockedInventoryService.look(playerInfo.id, discardKey.identity.name)
-        ).thenReturn(discardKey);
+      [
+        {
+          event: eventUsePermanentKey,
+          target: instance(mockedInteractiveEntity),
+          expected: {
+            name: 'USE' as RuleNameLiteral,
+            event: eventUsePermanentKey,
+            result: 'DENIED' as RuleResultLiteral,
+            actor,
+            target: instance(mockedInteractiveEntity),
+          },
+        },
+        {
+          event: eventUseDiscardKey,
+          target: instance(mockedInteractiveEntity),
+          expected: {
+            name: 'USE' as RuleNameLiteral,
+            event: eventUseDiscardKey,
+            result: 'EXECUTED' as RuleResultLiteral,
+            actor,
+            target: instance(mockedInteractiveEntity),
+            used: discardKey,
+          },
+        },
+        {
+          event: eventUseHeroDisguise,
+          target: instance(mockedPlayerEntity),
+          expected: {
+            name: 'USE' as RuleNameLiteral,
+            event: eventUseHeroDisguise,
+            result: 'EXECUTED' as RuleResultLiteral,
+            actor,
+            target: instance(mockedPlayerEntity),
+            used: heroDisguise,
+            skillName: heroDisguise.skillName,
+            roll: {
+              checkRoll: 7,
+              result: 'SUCCESS' as CheckResultLiteral,
+            },
+          },
+        },
+        {
+          event: eventUseHeroDisguise,
+          target: instance(mockedPlayerEntity),
+          expected: {
+            name: 'USE' as RuleNameLiteral,
+            event: eventUseHeroDisguise,
+            result: 'AVOIDED' as RuleResultLiteral,
+            actor,
+            target: instance(mockedPlayerEntity),
+            used: heroDisguise,
+            skillName: heroDisguise.skillName,
+            roll: {
+              checkRoll: 78,
+              result: 'FAILURE' as CheckResultLiteral,
+            },
+          },
+        },
+      ].forEach(({ event, target, expected }) => {
+        it('return used result', () => {
+          when(mockedRollService.actorSkillCheck(actor, 'Disguise')).thenReturn(
+            {
+              result: expected.roll?.result ?? 'FAILURE',
+              roll: expected.roll?.checkRoll ?? 100,
+            }
+          );
 
-        const result = rule.execute(actor, eventUseMasterKey, extras);
+          const result = rule.execute(actor, event, { target });
 
-        const expected: RuleResult = {
-          name: 'USE',
-          event: eventUseMasterKey,
-          result: 'EXECUTED',
-          actor,
-          target: extras.target,
-          used: discardKey,
-        };
-
-        expect(result).toEqual(expected);
+          expect(result).toEqual(expected);
+        });
       });
     });
   });
 });
-
-const notFoundLog = new LogMessageDefinition(
-  'NOT-FOUND',
-  playerInfo.name,
-  'Discard Key failed, required item was not found in inventory'
-);
-
-const eventUseMasterKey = actionableEvent(
-  actionUseDiscardKey,
-  interactiveInfo.id
-);
-
-const actor = instance(mockedPlayerEntity);
-
-const extras = {
-  target: instance(mockedInteractiveEntity),
-};
