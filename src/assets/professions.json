@@ -6,28 +6,13 @@
         "First Aid",
         "Science(Chemistry)",
         "Manipulation",
-        "Research",
+        "Bargain",
         "Detect",
         "Science(Botany)",
         "Sleight of Hand",
         "Knowledge (Linguistics)",
         "Craft (Sewing)",
-        "Etiquette"
-      ]
-    },
-    {
-      "name": "Police Detective",
-      "skills": [
-        "Firearm (Handgun)",
-        "First Aid",
-        "Detect",
-        "Manipulation",
-        "Etiquette",
-        "Research",
-        "Drive (Automobile)",
-        "Firearm (Shooter)",
-        "Brawl",
-        "Dodge"
+        "Discipline"
       ]
     },
     {
@@ -37,10 +22,10 @@
         "First Aid",
         "Detect",
         "Manipulation",
-        "Streetwise",
-        "Research",
-        "Drive (Automobile)",
-        "Hide",
+        "Brawl",
+        "Dodge",
+        "Drive",
+        "Firearm (Shooter)",
         "Engineering (Computer)",
         "Disguise"
       ]
@@ -55,7 +40,7 @@
         "Detect",
         "Ranged Weapon (Throw)",
         "Craft (Leatherworking)",
-        "Hunting",
+        "Melee Weapon (Great)",
         "Survival",
         "Firearm (Shooter)",
         "Melee Weapon (Simple)"
@@ -68,11 +53,11 @@
         "Athleticism",
         "Dodge",
         "First Aid",
-        "Drive (Heavy Vehicles)",
+        "Drive",
         "Firearm (Shooter)",
         "Demolition",
         "Engineering (Electrical)",
-        "Artillery (War)",
+        "Artillery",
         "Survival"
       ]
     },
@@ -83,7 +68,7 @@
         "Craft (Cooking)",
         "Dodge",
         "Ranged Weapon (Throw)",
-        "Pilot (Boat)",
+        "Pilot",
         "Detect",
         "Hide",
         "Engineering (Mechanical)",
@@ -98,8 +83,8 @@
         "Dodge",
         "Melee Weapon (Simple)",
         "Detect",
-        "Streetwise",
-        "Performance",
+        "Brawl",
+        "Endure",
         "Manipulation",
         "Sleight of Hand",
         "Hide",
@@ -111,7 +96,7 @@
       "skills": [
         "First Aid",
         "Detect",
-        "Research",
+        "Bargain",
         "Discipline",
         "Manipulation",
         "Etiquette",
