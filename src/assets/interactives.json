@@ -16,13 +16,6 @@
     },
 
     {
-      "id": "disguiseVillager",
-      "name": "Disguise as Villager",
-      "description": "Try to disguise as a villager",
-      "state": "disguiseVillager",
-      "resettable": false
-    },
-    {
       "id": "campFire",
       "name": "Campfire",
       "description": "Make some fire here",

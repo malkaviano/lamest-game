@@ -4,13 +4,13 @@ import { LoggingHub } from '@hubs/logging.hub';
 
 import {
   mockedPolicyHub,
-  mockedRollHelper,
+  mockedRollService,
   mockedRulesHub,
 } from '../../../tests/mocks';
 
 describe('LoggingHub', () => {
   const hub = new LoggingHub(
-    instance(mockedRollHelper),
+    instance(mockedRollService),
     instance(mockedRulesHub),
     instance(mockedPolicyHub)
   );

@@ -37,6 +37,7 @@ import {
 } from '@events/equipment-changed.event';
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
+import { emptyState } from '@states/empty.state';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private mVisibility: VisibilityLiteral;
@@ -237,7 +238,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     const { actionable } = action;
 
     let resultHPLog: string | null = null;
+
     let resultEPLog: string | null = null;
+
+    let reactResult: string | null = null;
 
     if (
       this.situation === 'ALIVE' &&
@@ -254,13 +258,13 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       const logs = [resultHPLog, resultEPLog].filter((log) => log);
 
       if (logs.length) {
-        return logs.join(' and ');
+        reactResult = logs.join(' and ');
       }
-    } else {
-      return super.reactTo(action, result, values);
+    } else if (this.currentState !== emptyState) {
+      reactResult = super.reactTo(action, result, values);
     }
 
-    return null;
+    return reactResult;
   }
 
   public apSpent(apSpent: number): void {

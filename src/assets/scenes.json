@@ -4,7 +4,7 @@
       "name": "clearing",
       "label": "Forest Clearing",
       "image": "clearing.jpg",
-      "interactives": ["campFire", "bushes", "disguiseVillager", "woodBox1"]
+      "interactives": ["campFire", "bushes", "woodBox1"]
     },
     {
       "name": "villageEntrance",

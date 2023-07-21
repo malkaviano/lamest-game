@@ -11,12 +11,6 @@
       "skillName": "Detect",
       "maximumTries": 100,
       "successState": "bushesLoot"
-    },
-    {
-      "id": "disguiseVillager",
-      "skillName": "Disguise",
-      "maximumTries": 3,
-      "successState": "emptyState"
     }
   ]
 }

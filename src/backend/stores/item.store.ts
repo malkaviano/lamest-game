@@ -55,7 +55,8 @@ export class ItemStore {
         item.name,
         new UsableDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
-          item.usability
+          item.usability,
+          item.skillName
         )
       );
     });

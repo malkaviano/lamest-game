@@ -6,13 +6,13 @@ import { DodgeAxiom } from '@axioms/dodge.axiom';
 import {
   mockedGamePredicate,
   mockedPlayerEntity,
-  mockedRollHelper,
+  mockedRollService,
   setupMocks,
 } from '../../../tests/mocks';
 
 describe('DodgeAxiom', () => {
   const axiom = new DodgeAxiom(
-    instance(mockedRollHelper),
+    instance(mockedRollService),
     instance(mockedGamePredicate)
   );
 
@@ -48,7 +48,7 @@ describe('DodgeAxiom', () => {
       },
     ].forEach(({ dodgeable, expected, roll, canDodge }) => {
       it(`return ${expected}`, () => {
-        when(mockedRollHelper.actorSkillCheck(target, 'Dodge')).thenReturn(
+        when(mockedRollService.actorSkillCheck(target, 'Dodge')).thenReturn(
           roll
         );
 

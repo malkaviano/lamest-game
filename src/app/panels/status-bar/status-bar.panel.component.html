@@ -4,10 +4,18 @@
   class="status"
 ></app-window-widget>
 
-<app-equipped-widget [item]="status.weapon" (actionSelected)="actionSelected.emit($event)">
+<app-equipped-widget
+  [item]="status.weapon"
+  [label]="'Equipped'"
+  (actionSelected)="actionSelected.emit($event)"
+>
 </app-equipped-widget>
 
-<app-equipped-widget [item]="status.armor" (actionSelected)="actionSelected.emit($event)">
+<app-equipped-widget
+  [item]="status.armor"
+  [label]="'Wearing'"
+  (actionSelected)="actionSelected.emit($event)"
+>
 </app-equipped-widget>
 
 <app-window-widget
@@ -15,5 +23,27 @@
   class="status"
 ></app-window-widget>
 
-<span class="status">Dodge?</span><mat-checkbox #dodgeOption
-    (change)="onChange(dodgeOption.checked)"></mat-checkbox>
+<span class="status">Dodge?</span
+><mat-checkbox
+  #dodgeOption
+  (change)="onChange(dodgeOption.checked)"
+></mat-checkbox>
+
+<app-action-widget
+  *ngIf="showDisguise"
+  [icon]="disguise.icon"
+  [alt]="disguise.alt"
+  [tooltip]="disguise.tooltip"
+  [actionEvent]="disguise.actionEvent"
+  (actionSelected)="actionSelected.emit($event)"
+>
+</app-action-widget>
+
+<app-action-widget
+  *ngIf="!showDisguise"
+  [icon]="visible.icon"
+  [alt]="visible.alt"
+  [tooltip]="visible.tooltip"
+  (actionSelected)="becomeVisible()"
+>
+</app-action-widget>

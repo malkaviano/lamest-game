@@ -19,10 +19,13 @@ import {
   styleUrls: ['./equipped.widget.component.css'],
 })
 export class EquippedWidgetComponent implements OnChanges {
-  private action!: ActionableEvent;
-
   @Input() item!: GameItemDefinition;
+
+  @Input() label!: string;
+
   @Output() actionSelected: EventEmitter<ActionableEvent>;
+
+  public actionEvent!: ActionableEvent;
 
   public tooltip!: string;
 
@@ -49,7 +52,7 @@ export class EquippedWidgetComponent implements OnChanges {
       this.tooltip = 'Unequip weapon';
       this.alt = 'UNEQUIP WEAPON';
 
-      this.action = new ActionableEvent(
+      this.actionEvent = new ActionableEvent(
         unequipActionable,
         this.item.identity.name
       );
@@ -57,7 +60,7 @@ export class EquippedWidgetComponent implements OnChanges {
       this.tooltip = 'Strip armor';
       this.alt = 'STRIP ARMOR';
 
-      this.action = new ActionableEvent(
+      this.actionEvent = new ActionableEvent(
         stripActionable,
         this.item.identity.name
       );
@@ -65,6 +68,6 @@ export class EquippedWidgetComponent implements OnChanges {
   }
 
   onActionSelected(): void {
-    this.actionSelected.emit(this.action);
+    this.actionSelected.emit(this.actionEvent);
   }
 }

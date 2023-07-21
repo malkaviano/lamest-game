@@ -13,7 +13,7 @@ import {
   mockedGamePredicate,
   mockedInventoryService,
   mockedPlayerEntity,
-  mockedRollHelper,
+  mockedRollService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -32,7 +32,7 @@ describe('ConsumeRule', () => {
 
     rule = new ConsumeRule(
       instance(mockedInventoryService),
-      instance(mockedRollHelper),
+      instance(mockedRollService),
       instance(mockedCheckedService),
       instance(mockedGamePredicate)
     );
@@ -74,7 +74,7 @@ describe('ConsumeRule', () => {
 
     describe('when item was a consumable', () => {
       it('should log item consume', (done) => {
-        when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
+        when(mockedRollService.actorSkillCheck(actor, 'First Aid')).thenReturn(
           successFirstAidRoll
         );
 
@@ -90,9 +90,9 @@ describe('ConsumeRule', () => {
 
       describe('when skill check passes', () => {
         it('return consumed result', () => {
-          when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
-            successFirstAidRoll
-          );
+          when(
+            mockedRollService.actorSkillCheck(actor, 'First Aid')
+          ).thenReturn(successFirstAidRoll);
 
           const result = rule.execute(actor, eventConsumeFirstAid);
 
@@ -116,9 +116,9 @@ describe('ConsumeRule', () => {
 
       describe('when skill check failed', () => {
         it('return consumed result with half effect', () => {
-          when(mockedRollHelper.actorSkillCheck(actor, 'First Aid')).thenReturn(
-            failureFirstAidRoll
-          );
+          when(
+            mockedRollService.actorSkillCheck(actor, 'First Aid')
+          ).thenReturn(failureFirstAidRoll);
 
           const result = rule.execute(actor, eventConsumeFirstAid);
 

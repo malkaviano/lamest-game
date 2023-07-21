@@ -32,7 +32,6 @@ export class VisibilityPolicy extends PolicyAbstraction {
 
       this.logMessageProduced.next(logMessage);
     } else if (
-      ruleResult.name === 'SKILL' &&
       ruleResult.result === 'EXECUTED' &&
       ruleResult.roll?.result === 'SUCCESS'
     ) {
@@ -45,7 +44,7 @@ export class VisibilityPolicy extends PolicyAbstraction {
           ruleResult.actor.changeVisibility('HIDDEN');
           result.actor = 'HIDDEN';
           break;
-        case 'Detect':
+        case SettingsStore.settings.systemSkills.detectSkill:
           if (targetActor && targetActor?.visibility !== visibility) {
             targetActor.changeVisibility('VISIBLE');
             result.target = 'VISIBLE';

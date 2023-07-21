@@ -54,6 +54,7 @@ export type GameSettingsValues = {
     readonly dodgeSkill: string;
     readonly disguiseSkill: string;
     readonly stealthSkill: string;
+    readonly detectSkill: string;
   };
   readonly unarmedDamage: {
     readonly dice: Partial<Dice>;

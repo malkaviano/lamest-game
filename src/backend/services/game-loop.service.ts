@@ -110,6 +110,10 @@ export class GameLoopService {
     this.player.dodge = option;
   }
 
+  public becomeVisible(): void {
+    this.player.changeVisibility('VISIBLE');
+  }
+
   private run(actors: ArrayView<ActorInterface>): void {
     if (this.isPlayerAlive()) {
       actors.items.forEach((actor) => {

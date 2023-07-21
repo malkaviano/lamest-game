@@ -21,6 +21,7 @@ import { ProvidersModule } from './providers/provider.module';
 import { ViewerComponent } from './dialogs/viewer/viewer.dialog.component';
 import { ImageViewerComponent } from './widgets/image-viewer/image-viewer.widget.component';
 import { EquippedWidgetComponent } from './widgets/equipped/equipped.widget.component';
+import { ActionWidgetComponent } from './widgets/action/action.widget.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { EquippedWidgetComponent } from './widgets/equipped/equipped.widget.comp
     ViewerComponent,
     ImageViewerComponent,
     EquippedWidgetComponent,
+    ActionWidgetComponent,
   ],
   imports: [
     BrowserModule,
