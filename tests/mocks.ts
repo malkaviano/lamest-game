@@ -72,6 +72,7 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
+import { affectActionable } from '../src/backend/conceptual/definitions/actionable.definition';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -207,6 +208,10 @@ export const setupMocks = () => {
   when(mockedInteractiveEntity.name).thenReturn(interactiveInfo.name);
 
   when(mockedInteractiveEntity.classification).thenReturn('REACTIVE');
+
+  when(mockedInteractiveEntity.actions).thenReturn(
+    ArrayView.create(affectActionable)
+  );
 
   when(mockedActorEntity.id).thenReturn(actorInfo.id);
 

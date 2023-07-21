@@ -21,6 +21,8 @@ export interface InteractiveInterface {
 
   get ignores(): ArrayView<VisibilityLiteral>;
 
+  get actions(): ArrayView<ActionableDefinition>;
+
   readonly actionsChanged$: Observable<ArrayView<ActionableDefinition>>;
 
   // TODO: improve return type

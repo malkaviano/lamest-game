@@ -24,4 +24,8 @@ export class ArrayView<T> {
   public concat(other: ArrayView<T>): ArrayView<T> {
     return ArrayView.create(...this.items, ...other.items);
   }
+
+  public filter(f: (element: T) => boolean): ArrayView<T> {
+    return ArrayView.fromArray(this.items.filter(f));
+  }
 }

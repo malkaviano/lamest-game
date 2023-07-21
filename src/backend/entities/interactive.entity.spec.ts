@@ -131,6 +131,12 @@ describe('InteractiveEntity', () => {
       expect(fakeEntity().ignores).toEqual(ArrayView.empty());
     });
   });
+
+  describe('actions', () => {
+    it('return current actions', () => {
+      expect(fakeEntity().actions).toEqual(ArrayView.create(consumeActionable));
+    });
+  });
 });
 
 const state1 = instance(mockedActionableState);

@@ -37,7 +37,7 @@ export class GameLoopService {
 
   private currentScene!: SceneEntity;
 
-  private actionReactives: { [key: string]: InteractiveInterface };
+  private interactives: { [key: string]: InteractiveInterface };
 
   private actors: ArrayView<ActorInterface>;
 
@@ -54,14 +54,14 @@ export class GameLoopService {
   ) {
     this.player = this.characterService.currentCharacter;
 
-    this.actionReactives = {};
+    this.interactives = {};
 
     this.actors = ArrayView.empty();
 
     this.narrativeService.sceneChanged$.subscribe((scene) => {
       this.currentScene = scene;
 
-      this.setActionReactives();
+      this.setInteractives();
 
       this.setActors();
     });
@@ -113,7 +113,7 @@ export class GameLoopService {
   private run(actors: ArrayView<ActorInterface>): void {
     if (this.isPlayerAlive()) {
       actors.items.forEach((actor) => {
-        const actionableEvent = actor.action(this.sceneActorsInfo);
+        const actionableEvent = actor.action(this.sceneActorsInfo());
 
         if (actor.situation === 'ALIVE' && actionableEvent) {
           const rule =
@@ -122,7 +122,7 @@ export class GameLoopService {
             ];
 
           if (this.gamePredicate.hasEnoughActionPoints(actor, rule)) {
-            const target = this.actionReactives[actionableEvent.eventId];
+            const target = this.interactives[actionableEvent.eventId];
 
             const result = rule.execute(actor, actionableEvent, {
               target,
@@ -142,8 +142,8 @@ export class GameLoopService {
     return this.player.situation === 'ALIVE';
   }
 
-  private setActionReactives(): void {
-    this.actionReactives = this.currentScene.interactives.items.reduce(
+  private setInteractives(): void {
+    this.interactives = this.currentScene.interactives.items.reduce(
       (map: { [key: string]: InteractiveInterface }, i) => {
         map[i.id] = i;
 
@@ -152,7 +152,7 @@ export class GameLoopService {
       {}
     );
 
-    this.actionReactives[this.player.id] = this.player;
+    this.interactives[this.player.id] = this.player;
   }
 
   private setActors(): void {
@@ -167,7 +167,7 @@ export class GameLoopService {
     this.actors = ArrayView.fromArray(actors);
   }
 
-  private get sceneActorsInfo(): ArrayView<SceneActorsInfoValues> {
+  private sceneActorsInfo(): ArrayView<SceneActorsInfoValues> {
     return ArrayView.fromArray(
       this.actors.insert(this.player).items.map((a) => {
         return {
