@@ -4,10 +4,15 @@
   class="status"
 ></app-window-widget>
 
-<app-equipped-widget [item]="status.weapon" (actionSelected)="actionSelected.emit($event)">
+<app-equipped-widget
+  [item]="status.weapon" [label]="'Equipped'"
+  (actionSelected)="actionSelected.emit($event)"
+  >
 </app-equipped-widget>
 
-<app-equipped-widget [item]="status.armor" (actionSelected)="actionSelected.emit($event)">
+<app-equipped-widget [item]="status.armor" [label]="'Wearing'"
+  (actionSelected)="actionSelected.emit($event)"
+  >
 </app-equipped-widget>
 
 <app-window-widget

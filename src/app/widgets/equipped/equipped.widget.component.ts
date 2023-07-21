@@ -19,10 +19,13 @@ import {
   styleUrls: ['./equipped.widget.component.css'],
 })
 export class EquippedWidgetComponent implements OnChanges {
-  private action!: ActionableEvent;
-
   @Input() item!: GameItemDefinition;
+
+  @Input() label!: string;
+
   @Output() actionSelected: EventEmitter<ActionableEvent>;
+
+  public action!: ActionableEvent;
 
   public tooltip!: string;
 
