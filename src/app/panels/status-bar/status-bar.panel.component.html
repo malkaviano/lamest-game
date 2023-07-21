@@ -30,7 +30,7 @@
 ></mat-checkbox>
 
 <app-action-widget
-  *ngIf="showDisguise"
+  *ngIf="isVisible"
   [icon]="disguise.icon"
   [alt]="disguise.alt"
   [tooltip]="disguise.tooltip"
@@ -40,10 +40,21 @@
 </app-action-widget>
 
 <app-action-widget
-  *ngIf="!showDisguise"
-  [icon]="visible.icon"
-  [alt]="visible.alt"
-  [tooltip]="visible.tooltip"
+  class="padding"
+  *ngIf="isVisible"
+  [icon]="hide.icon"
+  [alt]="hide.alt"
+  [tooltip]="hide.tooltip"
+  [actionEvent]="hide.actionEvent"
+  (actionSelected)="actionSelected.emit($event)"
+>
+</app-action-widget>
+
+<app-action-widget
+  *ngIf="!isVisible"
+  [icon]="visibility.icon"
+  [alt]="visibility.alt"
+  [tooltip]="visibility.tooltip"
   (actionSelected)="becomeVisible()"
 >
 </app-action-widget>
