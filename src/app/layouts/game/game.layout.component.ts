@@ -36,13 +36,16 @@ export class GameLayoutComponent {
 
   @Output() sceneOpened: EventEmitter<ViewableInterface>;
 
-  @Output() dodgeOption: EventEmitter<{ dodge: boolean }>;
+  @Output() playerOptions: EventEmitter<{
+    readonly dodge?: boolean;
+    readonly visible?: boolean;
+  }>;
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
 
     this.sceneOpened = new EventEmitter<ViewableInterface>();
 
-    this.dodgeOption = new EventEmitter<{ dodge: boolean }>();
+    this.playerOptions = new EventEmitter();
   }
 }

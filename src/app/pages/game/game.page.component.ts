@@ -143,8 +143,17 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.openViewerDialog(image);
   }
 
-  public informDodgeOption(option: { dodge: boolean }): void {
-    this.gameLoopService.actorDodge(option.dodge);
+  public informDodgeOption(options: {
+    readonly dodge?: boolean;
+    readonly visible?: boolean;
+  }): void {
+    if (options?.dodge) {
+      this.gameLoopService.actorDodge(options.dodge);
+    }
+
+    if (options?.visible) {
+      this.gameLoopService.becomeVisible();
+    }
   }
 
   public get logs(): ArrayView<string> {

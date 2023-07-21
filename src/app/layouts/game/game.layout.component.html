@@ -3,13 +3,20 @@
     <app-status-bar-panel
       [status]="characterStatus"
       (actionSelected)="actionSelected.emit($event)"
-      (dodgeOption)="dodgeOption.emit($event)">
+      (playerOptions)="playerOptions.emit($event)"
+    >
     </app-status-bar-panel>
   </div>
   <div class="content-bar title-text">
     <span>Current Scene: {{ scene.label }}</span>
     <app-image-viewer-widget
-      [image]="{ title: scene.label, src: 'assets/images/' + scene.image, alt: scene.label, width: '400', height: '400'}"
+      [image]="{
+        title: scene.label,
+        src: 'assets/images/' + scene.image,
+        alt: scene.label,
+        width: '400',
+        height: '400'
+      }"
       (imageOpened)="sceneOpened.emit($event)"
     >
     </app-image-viewer-widget>

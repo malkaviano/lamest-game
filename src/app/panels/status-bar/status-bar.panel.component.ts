@@ -28,16 +28,21 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
 
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
-  @Output() dodgeOption: EventEmitter<{ dodge: boolean }>;
+  @Output() playerOptions: EventEmitter<{
+    readonly dodge?: boolean;
+    readonly visible?: boolean;
+  }>;
 
   public disguise!: Action;
+
+  public visible!: Omit<Action, 'actionEvent'>;
 
   public showDisguise!: boolean;
 
   constructor() {
-    this.actionSelected = new EventEmitter<ActionableEvent>();
+    this.actionSelected = new EventEmitter();
 
-    this.dodgeOption = new EventEmitter<{ dodge: boolean }>();
+    this.playerOptions = new EventEmitter();
   }
 
   ngOnChanges(): void {
@@ -55,9 +60,19 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
         this.status.playerId
       ),
     };
+
+    this.visible = {
+      icon: '../../../assets/icons/visible.svg',
+      tooltip: 'Show yourself',
+      alt: 'VISIBLE',
+    };
   }
 
-  onChange(dodge: boolean) {
-    this.dodgeOption.emit({ dodge });
+  public onChange(dodge: boolean) {
+    this.playerOptions.emit({ dodge });
+  }
+
+  public becomeVisible() {
+    this.playerOptions.emit({ visible: true });
   }
 }
