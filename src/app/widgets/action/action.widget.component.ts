@@ -14,7 +14,7 @@ export class ActionWidgetComponent {
 
   @Input() alt!: string;
 
-  @Input() action!: ActionableEvent;
+  @Input() actionEvent!: ActionableEvent;
 
   @Input() tooltip!: string;
 
@@ -23,6 +23,6 @@ export class ActionWidgetComponent {
   }
 
   onActionSelected(): void {
-    this.actionSelected.emit(this.action);
+    this.actionSelected.emit(this.actionEvent);
   }
 }

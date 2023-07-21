@@ -4,7 +4,7 @@
   <span>{{ label }}: </span>
   <span>{{ item.identity.label }}</span>
   <div *ngIf="showButton">
-    <app-action-widget [action]="action" [icon]="icon" [alt]="alt" [tooltip]="tooltip"
+    <app-action-widget [actionEvent]="actionEvent" [icon]="icon" [alt]="alt" [tooltip]="tooltip"
       (actionSelected)="actionSelected.emit($event)">
     </app-action-widget>
   </div>

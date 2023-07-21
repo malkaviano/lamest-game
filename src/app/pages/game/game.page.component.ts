@@ -99,6 +99,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
         );
 
         this.characterStatus = CharacterStatusView.create(
+          character.id,
           ArrayView.create(hp, ep, ap),
           this.equipped,
           this.wearing,

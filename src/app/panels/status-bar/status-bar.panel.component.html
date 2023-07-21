@@ -22,3 +22,12 @@
 
 <span class="status">Dodge?</span><mat-checkbox #dodgeOption
     (change)="onChange(dodgeOption.checked)"></mat-checkbox>
+
+<app-action-widget
+  [icon]="disguise.icon"
+  [alt]="disguise.alt"
+  [tooltip]="disguise.tooltip"
+  [actionEvent]="disguise.actionEvent"
+  (actionSelected)="actionSelected.emit($event)"
+>
+</app-action-widget>

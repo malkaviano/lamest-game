@@ -55,7 +55,7 @@
     },
     {
       "id": "lootWoodBox",
-      "items": ["villagerDisguise"],
+      "items": ["disguise"],
       "interactiveId": "woodBox1"
     }
   ]

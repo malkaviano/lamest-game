@@ -441,6 +441,7 @@ export const kevlarVest = new ArmorDefinition(
 );
 
 export const fakeCharacterStatusView = CharacterStatusView.create(
+  playerInfo.id,
   fakeCharacterSheetDerivedAttributes,
   simpleSword,
   leatherJacket,
