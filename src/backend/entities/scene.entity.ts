@@ -1,11 +1,11 @@
 import { ArrayView } from '@wrappers/array.view';
-import { InteractiveEntity } from '@entities/interactive.entity';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 
 export class SceneEntity {
   constructor(
     public readonly name: string,
     public readonly label: string,
-    public readonly interactives: ArrayView<InteractiveEntity>,
+    public readonly interactives: ArrayView<InteractiveInterface>,
     public readonly image: string
   ) {}
 

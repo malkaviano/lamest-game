@@ -35,6 +35,10 @@ export class InteractiveEntity implements InteractiveInterface {
     this.actionsChanged$ = this.actionsChanged.asObservable();
   }
 
+  public get actions(): ArrayView<ActionableDefinition> {
+    return this.currentState.actions;
+  }
+
   public get ignores(): ArrayView<VisibilityLiteral> {
     return ArrayView.empty<VisibilityLiteral>();
   }
