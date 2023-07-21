@@ -7,25 +7,30 @@
         "hunterJournal2",
         "hunterJournal3",
         "huntingKnife"
-      ]
+      ],
+      "interactiveId": "hunterCabinTable"
     },
     {
       "id": "hunterCabinWallLoot",
-      "items": ["winchester88"]
+      "items": ["winchester88"],
+      "interactiveId": "hunterCabinWall"
     },
 
     {
       "id": "bushesLoot",
-      "items": ["friendNote", "leatherJacket"]
+      "items": ["friendNote", "leatherJacket"],
+      "interactiveId": "bushes"
     },
 
     {
       "id": "villagerLoot",
-      "items": ["masterKey", "rawMeat", "rawMeat"]
+      "items": ["masterKey", "rawMeat", "rawMeat"],
+      "interactiveId": "villager"
     },
     {
       "id": "ambulatoryLocked1Loot",
-      "items": ["firstAidKit", "firstAidKit", "firstAidKit"]
+      "items": ["firstAidKit", "firstAidKit", "firstAidKit"],
+      "interactiveId": "ambulatoryLockedCabinet1"
     },
     {
       "id": "ambulatoryStorage1",
@@ -35,19 +40,23 @@
         "analgesicBottle",
         "analgesicBottle",
         "analgesicBottle"
-      ]
+      ],
+      "interactiveId": "ambulatoryMetalShelves1"
     },
     {
       "id": "storageGuardLoot",
-      "items": ["baton", "analgesicBottle", "analgesicBottle"]
+      "items": ["baton", "analgesicBottle", "analgesicBottle"],
+      "interactiveId": "storageGuard"
     },
     {
       "id": "storageLocked1Loot",
-      "items": ["molotov", "molotov", "molotov", "g17"]
+      "items": ["molotov", "molotov", "molotov", "g17"],
+      "interactiveId": "storageLockedCabinet1"
     },
     {
       "id": "lootWoodBox",
-      "items": []
+      "items": [],
+      "interactiveId": "woodBox1"
     }
   ]
 }
