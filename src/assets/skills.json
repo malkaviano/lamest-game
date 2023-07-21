@@ -2,42 +2,35 @@
   "skills": [
     {
       "name": "Athleticism",
-      "description": "Swim, Jump, Climb and related basic actions",
+      "description": "Use this when in need of STR or AGI check",
       "affinity": "NATURAL",
       "combat": false,
       "influenced": ["STR", "AGI"]
     },
     {
       "name": "Endure",
-      "description": "Body resistance against poisons and other internal body attacks",
+      "description": "Use this when in need of VIT check",
       "affinity": "NATURAL",
       "combat": false,
       "influenced": ["VIT"]
     },
     {
       "name": "Discipline",
-      "description": "Mental resistance, willpower and concentration",
+      "description": "Use this when in need of INT or ESN check",
       "affinity": "NATURAL",
       "combat": false,
       "influenced": ["INT", "ESN"]
     },
     {
-      "name": "Manipulation",
-      "description": "Mind and looks working together to mislead others",
+      "name": "Etiquette",
+      "description": "Use this when in need of APP check",
       "affinity": "NATURAL",
       "combat": false,
       "influenced": ["INT", "APP"]
     },
     {
-      "name": "Artillery (Siege)",
-      "description": "Medieval siege weapons",
-      "affinity": "TRAINED",
-      "combat": false,
-      "influenced": ["INT"]
-    },
-    {
-      "name": "Artillery (War)",
-      "description": "Modern artillery weapons and mortars",
+      "name": "Artillery",
+      "description": "Artillery weapons and mortars",
       "affinity": "TRAINED",
       "combat": true,
       "influenced": ["INT"]
@@ -88,7 +81,7 @@
       "name": "Demolition",
       "description": "Use and disarm explosives",
       "affinity": "TRAINED",
-      "combat": false,
+      "combat": true,
       "influenced": ["INT"]
     },
     {
@@ -106,32 +99,11 @@
       "influenced": ["APP"]
     },
     {
-      "name": "Drive (Automobile)",
-      "description": "Drive motor light vehicles",
+      "name": "Drive",
+      "description": "Drive all kinds of vehicles",
       "affinity": "TRAINED",
       "combat": false,
       "influenced": ["INT"]
-    },
-    {
-      "name": "Drive (Traction)",
-      "description": "Drive animal traction vehicles",
-      "affinity": "TRAINED",
-      "combat": false,
-      "influenced": ["INT"]
-    },
-    {
-      "name": "Drive (Heavy Vehicles)",
-      "description": "Drive motor heavy vehicles",
-      "affinity": "TRAINED",
-      "combat": false,
-      "influenced": ["INT"]
-    },
-    {
-      "name": "Etiquette",
-      "description": "Knowing and adapting own behavior to the situation",
-      "affinity": "TRAINED",
-      "combat": false,
-      "influenced": ["APP"]
     },
     {
       "name": "Engineering (Computer)",
@@ -176,8 +148,8 @@
       "influenced": ["INT", "INT"]
     },
     {
-      "name": "Streetwise",
-      "description": "Hearing gossip and making small change on the streets",
+      "name": "Manipulation",
+      "description": "Convince others to give you stuff or info without aggression",
       "affinity": "NATURAL",
       "combat": false,
       "influenced": ["INT"]
@@ -246,35 +218,14 @@
       "influenced": ["AGI"]
     },
     {
-      "name": "Performance",
-      "description": "Personification of other",
-      "affinity": "NATURAL",
-      "combat": false,
-      "influenced": ["APP"]
-    },
-    {
-      "name": "Pilot (Airplane)",
-      "description": "Piloting anything that flies",
+      "name": "Pilot",
+      "description": "Piloting air and sea ships",
       "affinity": "TRAINED",
       "combat": false,
       "influenced": ["INT"]
     },
     {
-      "name": "Pilot (Boat)",
-      "description": "Piloting anything that goes in the sea",
-      "affinity": "TRAINED",
-      "combat": false,
-      "influenced": ["INT"]
-    },
-    {
-      "name": "Research",
-      "description": "Looking for clues on documents and related",
-      "affinity": "NATURAL",
-      "combat": false,
-      "influenced": ["INT"]
-    },
-    {
-      "name": "Ride (Horse)",
+      "name": "Ride",
       "description": "Riding horses and other mountable animals",
       "affinity": "TRAINED",
       "combat": false,
@@ -312,13 +263,6 @@
       "name": "Survival",
       "description": "Navigation, camping and find food in the wilds",
       "affinity": "NATURAL",
-      "combat": false,
-      "influenced": ["INT"]
-    },
-    {
-      "name": "Hunting",
-      "description": "Tracking and knowledge about prey",
-      "affinity": "TRAINED",
       "combat": false,
       "influenced": ["INT"]
     }

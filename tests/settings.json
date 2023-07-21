@@ -63,6 +63,10 @@
       "dodgeSkill": "Dodge",
       "disguiseSkill": "Disguise",
       "stealthSkill": "Hide"
+    },
+    "skillCheck": {
+      "combatTries": 1,
+      "normalTries": 3
     }
   }
 }

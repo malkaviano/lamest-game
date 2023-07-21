@@ -23,6 +23,7 @@ export class SettingsStore {
       systemSkills,
       unarmedDamage,
       clothArmor,
+      skillCheck,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(playerEffectDefenses.cures);
@@ -55,6 +56,7 @@ export class SettingsStore {
       systemSkills,
       unarmedDamage,
       clothArmor,
+      skillCheck,
     };
   }
 

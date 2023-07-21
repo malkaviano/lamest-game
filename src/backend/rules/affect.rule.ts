@@ -1,7 +1,7 @@
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ActionableEvent } from '@events/actionable.event';
 import { ConverterHelper } from '@helpers/converter.helper';
-import { RollHelper } from '@helpers/roll.helper';
+import { RollService } from '@services/roll.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleValues } from '@values/rule.value';
 import { RuleResult } from '@results/rule.result';
@@ -18,7 +18,7 @@ import { GamePredicate } from '@predicates/game.predicate';
 
 export class AffectRule extends RuleAbstraction {
   constructor(
-    private readonly rollHelper: RollHelper,
+    private readonly rollHelper: RollService,
     private readonly checkedService: CheckedService,
     private readonly dodgeAxiom: DodgeAxiom,
     private readonly gamePredicate: GamePredicate

@@ -1,7 +1,7 @@
 import { instance, when } from 'ts-mockito';
 
 import { RollDefinition } from '@definitions/roll.definition';
-import { RollHelper } from '@helpers/roll.helper';
+import { RollService } from '@services/roll.service';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 
@@ -9,17 +9,36 @@ import {
   mockedActorEntity,
   mockedGamePredicate,
   mockedRandomIntHelper,
+  mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
+import { SkillDefinition } from '../conceptual/definitions/skill.definition';
 
-describe('RollHelper', () => {
-  const helper = new RollHelper(
+describe('RollService', () => {
+  const helper = new RollService(
     instance(mockedRandomIntHelper),
-    instance(mockedGamePredicate)
+    instance(mockedSkillStore)
   );
 
   beforeEach(() => {
     setupMocks();
+
+    when(mockedSkillStore.skills).thenReturn({
+      'First Aid': new SkillDefinition(
+        'First Aid',
+        'First Aid',
+        'TRAINED',
+        false,
+        ['INT']
+      ),
+      'Melee Weapon (Simple)': new SkillDefinition(
+        'Melee Weapon (Simple)',
+        'Melee Weapon (Simple)',
+        'NATURAL',
+        true,
+        ['STR']
+      ),
+    });
   });
 
   it('should be created', () => {
@@ -30,30 +49,43 @@ describe('RollHelper', () => {
     describe('when skill value is above zero', () => {
       [
         {
+          skillName: 'Melee Weapon (Simple)',
           checkResult: 'FAILURE',
-          roll: 80,
+          rolls: [80],
           message:
             'Melee Weapon (Simple) skill checked and rolled 80, it was a FAILURE',
+          roll: 80,
         },
         {
+          skillName: 'Melee Weapon (Simple)',
           checkResult: 'SUCCESS',
-          roll: 10,
+          rolls: [10],
           message:
             'Melee Weapon (Simple) skill checked and rolled 10, it was a SUCCESS',
+          roll: 10,
         },
-      ].forEach(({ checkResult, roll, message }) => {
+
+        {
+          skillName: 'First Aid',
+          checkResult: 'SUCCESS',
+          rolls: [80, 5, 55],
+          message: 'First Aid skill checked and rolled 5, it was a SUCCESS',
+          roll: 5,
+        },
+      ].forEach(({ skillName, checkResult, rolls, message, roll }) => {
         it(`return ${checkResult} and ${roll}`, () => {
           const actor = instance(mockedActorEntity);
 
-          when(mockedRandomIntHelper.getRandomInterval(1, 100)).thenReturn(
-            roll
+          when(mockedRandomIntHelper.getRandomInterval(1, 100))
+            .thenReturn(rolls[0])
+            .thenReturn(rolls[1])
+            .thenReturn(rolls[2]);
+
+          when(mockedGamePredicate.canUseSkill(actor, skillName)).thenReturn(
+            true
           );
 
-          when(
-            mockedGamePredicate.canUseSkill(actor, 'Melee Weapon (Simple)')
-          ).thenReturn(true);
-
-          const result = helper.actorSkillCheck(actor, 'Melee Weapon (Simple)');
+          const result = helper.actorSkillCheck(actor, skillName);
 
           const expected = new RollDefinition(
             checkResult as CheckResultLiteral,
@@ -80,10 +112,7 @@ describe('RollHelper', () => {
             roll
           );
 
-          helper.actorSkillCheck(
-            instance(mockedActorEntity),
-            'Melee Weapon (Simple)'
-          );
+          helper.actorSkillCheck(instance(mockedActorEntity), skillName);
 
           const expected = new LogMessageDefinition(
             'CHECK',

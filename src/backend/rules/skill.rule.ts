@@ -1,4 +1,4 @@
-import { RollHelper } from '@helpers/roll.helper';
+import { RollService } from '@services/roll.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleValues } from '@values/rule.value';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
@@ -11,7 +11,7 @@ import { RuleResultLiteral } from '@literals/rule-result.literal';
 
 export class SkillRule extends RuleAbstraction {
   constructor(
-    private readonly rollHelper: RollHelper,
+    private readonly rollHelper: RollService,
     private readonly checkedService: CheckedService,
     private readonly gamePredicate: GamePredicate
   ) {

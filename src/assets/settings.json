@@ -72,6 +72,10 @@
     "clothArmor": {
       "reduction": {},
       "penalty": "MINIMAL"
+    },
+    "skillCheck": {
+      "combatTries": 1,
+      "normalTries": 3
     }
   }
 }
