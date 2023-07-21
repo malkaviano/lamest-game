@@ -1,43 +1,6 @@
 {
   "states": [
     {
-      "id": "villageGate",
-      "actionables": ["villageGate"]
-    },
-    {
-      "id": "mainHouseDoor",
-      "actionables": ["mainHouseDoor"]
-    },
-    {
-      "id": "mainHouseLibraryDoor",
-      "actionables": ["mainHouseLibraryDoor"]
-    },
-    {
-      "id": "mainHouseDiningDoor",
-      "actionables": ["mainHouseDiningDoor"]
-    },
-    {
-      "id": "mainHouseBasementDoor",
-      "actionables": ["mainHouseBasementDoor"]
-    },
-    {
-      "id": "hunterCabinDoor",
-      "actionables": ["hunterCabinDoor"]
-    },
-    {
-      "id": "mysteriousHouseDoor",
-      "actionables": ["mysteriousHouseDoor"]
-    },
-    {
-      "id": "storageHangarDoor",
-      "actionables": ["storageHangarDoor"]
-    },
-    {
-      "id": "ambulatoryTentEntrance",
-      "actionables": ["ambulatoryTentEntrance"]
-    },
-
-    {
       "id": "campFireOn",
       "actionables": ["roastMeat"]
     }
