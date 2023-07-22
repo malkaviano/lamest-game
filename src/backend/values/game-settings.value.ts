@@ -76,4 +76,8 @@ export type GameSettingsValues = {
     readonly combatTries: number;
     readonly normalTries: number;
   };
+  readonly actorVisibilityBreak: {
+    readonly disguised: ArrayView<RuleNameLiteral>;
+    readonly hidden: ArrayView<RuleNameLiteral>;
+  };
 };

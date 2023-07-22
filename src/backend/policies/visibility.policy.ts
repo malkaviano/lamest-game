@@ -79,9 +79,13 @@ export class VisibilityPolicy extends PolicyAbstraction {
     if (ruleResult.result !== 'DENIED') {
       if (
         (ruleResult.actor.visibility === 'DISGUISED' &&
-          ruleResult.name === 'AFFECT') ||
+          SettingsStore.settings.actorVisibilityBreak.disguised.items.includes(
+            ruleResult.name
+          )) ||
         (ruleResult.actor.visibility === 'HIDDEN' &&
-          ruleResult.name !== 'SCENE')
+          SettingsStore.settings.actorVisibilityBreak.hidden.items.includes(
+            ruleResult.name
+          ))
       ) {
         visibility.actor = 'VISIBLE';
       }
