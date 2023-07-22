@@ -6,6 +6,7 @@ import { PolicyInterface } from '@interfaces/policy.interface';
 import { RuleResult } from '@results/rule.result';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableDefinition } from '@definitions/actionable.definition';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 
 export class PolicyHub implements LoggerInterface {
   private readonly policies: ArrayView<PolicyInterface>;
@@ -22,8 +23,11 @@ export class PolicyHub implements LoggerInterface {
 
   public enforcePolicies(
     ruleResult: RuleResult,
-    action: ActionableDefinition
+    action: ActionableDefinition,
+    invisibleInteractives: ArrayView<InteractiveInterface>
   ): void {
-    this.policies.items.forEach((p) => p.enforce(ruleResult, action));
+    this.policies.items.forEach((p) =>
+      p.enforce(ruleResult, { action, invisibleInteractives })
+    );
   }
 }

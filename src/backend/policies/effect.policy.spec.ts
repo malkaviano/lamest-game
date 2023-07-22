@@ -18,6 +18,7 @@ import {
 } from '../../../tests/mocks';
 import { actionableEvent, consumableAnalgesic } from '../../../tests/fakes';
 import { EffectEvent } from '../events/effect.event';
+import { ArrayView } from '../../wrappers/array.view';
 
 describe('EffectPolicy', () => {
   const policy = new EffectPolicy();
@@ -113,10 +114,10 @@ describe('EffectPolicy', () => {
       },
     ].forEach(({ ruleResult, expected, logs }) => {
       it('return effect result', () => {
-        const result = policy.enforce(
-          ruleResult,
-          ruleResult.event.actionableDefinition
-        );
+        const result = policy.enforce(ruleResult, {
+          action: ruleResult.event.actionableDefinition,
+          invisibleInteractives: ArrayView.empty(),
+        });
 
         expect(result).toEqual(expected);
       });
@@ -128,7 +129,10 @@ describe('EffectPolicy', () => {
           result.push(event);
         });
 
-        policy.enforce(ruleResult, ruleResult.event.actionableDefinition);
+        policy.enforce(ruleResult, {
+          action: ruleResult.event.actionableDefinition,
+          invisibleInteractives: ArrayView.empty(),
+        });
 
         expect(result).toEqual(logs);
       });
