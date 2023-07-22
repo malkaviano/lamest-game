@@ -8,15 +8,18 @@ import { SettingsStore } from '@stores/settings.store';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { ArrayView } from '@wrappers/array.view';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
+import { PolicyValues } from '@values/policy.values';
 
 export class VisibilityPolicy extends PolicyAbstraction {
-  public override enforce(ruleResult: RuleResult): PolicyResult {
+  public override enforce(
+    ruleResult: RuleResult,
+    policyValues: PolicyValues
+  ): PolicyResult {
     const visibility: {
       actor?: VisibilityLiteral;
       target?: VisibilityLiteral;
-    } = {};
-
-    const targetActor = ConverterHelper.asActor(ruleResult.target);
+      detected: ArrayView<string>;
+    } = { detected: ArrayView.empty() };
 
     if (
       ruleResult.result === 'EXECUTED' &&
@@ -30,9 +33,13 @@ export class VisibilityPolicy extends PolicyAbstraction {
           visibility.actor = 'HIDDEN';
           break;
         case SettingsStore.settings.systemSkills.detectSkill:
-          if (targetActor && targetActor?.visibility !== 'VISIBLE') {
-            visibility.target = 'VISIBLE';
-          }
+          visibility.detected = ArrayView.fromArray(
+            policyValues.invisibleInteractives.items.map((i) => {
+              i.changeVisibility('VISIBLE');
+
+              return i.id;
+            })
+          );
           break;
       }
     }
@@ -44,6 +51,8 @@ export class VisibilityPolicy extends PolicyAbstraction {
 
       this.logVisibilityChange(ruleResult.actor, visibility.actor);
     }
+
+    const targetActor = ConverterHelper.asActor(ruleResult.target);
 
     if (targetActor) {
       this.checkTargetVisibility(targetActor, ruleResult, visibility);
