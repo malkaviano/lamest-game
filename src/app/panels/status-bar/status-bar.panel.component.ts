@@ -35,9 +35,11 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
 
   public disguise!: Action;
 
-  public visible!: Omit<Action, 'actionEvent'>;
+  public hide!: Action;
 
-  public showDisguise!: boolean;
+  public visibility!: Omit<Action, 'actionEvent'>;
+
+  public isVisible!: boolean;
 
   constructor() {
     this.actionSelected = new EventEmitter();
@@ -46,8 +48,7 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    this.showDisguise =
-      this.status.visibility.value.toUpperCase() === 'VISIBLE';
+    this.isVisible = this.status.visibility.value.toUpperCase() === 'VISIBLE';
   }
 
   ngOnInit(): void {
@@ -61,7 +62,17 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
       ),
     };
 
-    this.visible = {
+    this.hide = {
+      icon: '../../../assets/icons/hide.svg',
+      tooltip: 'Hide yourself',
+      alt: 'HIDE',
+      actionEvent: new ActionableEvent(
+        createActionableDefinition('SKILL', 'Hide'),
+        this.status.playerId
+      ),
+    };
+
+    this.visibility = {
       icon: '../../../assets/icons/visible.svg',
       tooltip: 'Show yourself',
       alt: 'VISIBLE',
