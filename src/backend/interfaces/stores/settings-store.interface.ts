@@ -5,7 +5,7 @@ import { RuleNameLiteral } from '@literals/rule-name.literal';
 export type SettingsStoreInterface = {
   settings: Omit<
     GameSettingsValues,
-    'playerEffectDefenses' | 'actorVisibilityBreak'
+    'playerEffectDefenses' | 'visibilityBreak'
   > & {
     readonly playerEffectDefenses: {
       readonly immunities: EffectTypeLiteral[];
@@ -13,9 +13,15 @@ export type SettingsStoreInterface = {
       readonly vulnerabilities: EffectTypeLiteral[];
       readonly resistances: EffectTypeLiteral[];
     };
-    readonly actorVisibilityBreak: {
-      readonly disguised: RuleNameLiteral[];
-      readonly hidden: RuleNameLiteral[];
+    readonly visibilityBreak: {
+      readonly actor: {
+        readonly disguised: RuleNameLiteral[];
+        readonly hidden: RuleNameLiteral[];
+      };
+      readonly target: {
+        readonly disguised: RuleNameLiteral[];
+        readonly hidden: RuleNameLiteral[];
+      };
     };
   };
 };

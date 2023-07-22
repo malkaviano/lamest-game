@@ -1,9 +1,9 @@
 import { GameSettingsValues } from '@values/game-settings.value';
 import { ArrayView } from '@wrappers/array.view';
 import { SettingsStoreInterface } from '@interfaces/stores/settings-store.interface';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
 
 import settingsStore from '@assets/settings.json';
-import { RuleNameLiteral } from '../conceptual/literals/rule-name.literal';
 
 export class SettingsStore {
   private static mSettings: GameSettingsValues;
@@ -25,7 +25,7 @@ export class SettingsStore {
       unarmedDamage,
       clothArmor,
       skillCheck,
-      actorVisibilityBreak,
+      visibilityBreak,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(playerEffectDefenses.cures);
@@ -38,11 +38,23 @@ export class SettingsStore {
       playerEffectDefenses.vulnerabilities
     );
 
-    const actorVisibilityBreakOn = {
-      disguised: ArrayView.fromArray<RuleNameLiteral>(
-        actorVisibilityBreak.disguised
-      ),
-      hidden: ArrayView.fromArray<RuleNameLiteral>(actorVisibilityBreak.hidden),
+    const onVisibilityBreak = {
+      actor: {
+        disguised: ArrayView.fromArray<RuleNameLiteral>(
+          visibilityBreak.actor.disguised
+        ),
+        hidden: ArrayView.fromArray<RuleNameLiteral>(
+          visibilityBreak.actor.hidden
+        ),
+      },
+      target: {
+        disguised: ArrayView.fromArray<RuleNameLiteral>(
+          visibilityBreak.target.disguised
+        ),
+        hidden: ArrayView.fromArray<RuleNameLiteral>(
+          visibilityBreak.target.hidden
+        ),
+      },
     };
 
     SettingsStore.mSettings = {
@@ -66,7 +78,7 @@ export class SettingsStore {
       unarmedDamage,
       clothArmor,
       skillCheck,
-      actorVisibilityBreak: actorVisibilityBreakOn,
+      visibilityBreak: onVisibilityBreak,
     };
   }
 
