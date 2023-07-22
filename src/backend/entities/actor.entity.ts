@@ -40,8 +40,6 @@ import { CharacteristicDefinition } from '@definitions/characteristic.definition
 import { emptyState } from '@states/empty.state';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
-  private mVisibility: VisibilityLiteral;
-
   private readonly mAfflictedBy: Set<string>;
 
   private readonly derivedAttributeChanged: Subject<DerivedAttributeEvent>;
@@ -49,8 +47,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private readonly equipmentChanged: Subject<
     WeaponChangedEvent | ArmorChangedEvent
   >;
-
-  private readonly visibilityChanged: Subject<VisibilityLiteral>;
 
   protected readonly regeneratorBehavior: RegeneratorBehavior;
 
@@ -63,8 +59,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   public readonly equipmentChanged$: Observable<
     WeaponChangedEvent | ArmorChangedEvent
   >;
-
-  public readonly visibilityChanged$: Observable<VisibilityLiteral>;
 
   constructor(
     identity: ActorIdentityDefinition,
@@ -82,7 +76,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       identity.name,
       identity.description,
       currentState,
-      false
+      false,
+      identity.visibility
     );
 
     this.regeneratorBehavior = behaviors.regeneratorBehavior;
@@ -93,8 +88,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
     this.aiBehavior = behaviors.aiBehavior;
 
-    this.mVisibility = identity.visibility;
-
     this.mAfflictedBy = new Set();
 
     this.derivedAttributeChanged = new Subject();
@@ -104,10 +97,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     this.equipmentChanged = new Subject();
 
     this.equipmentChanged$ = this.equipmentChanged.asObservable();
-
-    this.visibilityChanged = new Subject();
-
-    this.visibilityChanged$ = this.visibilityChanged.asObservable();
 
     this.dodgeEnabled = false;
   }
@@ -184,18 +173,6 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
       [weaponSkillName]: weaponSkillValue,
       [dodgeSkillName]: dodgeValue,
     };
-  }
-
-  public get visibility(): VisibilityLiteral {
-    return this.mVisibility;
-  }
-
-  public changeVisibility(visibility: VisibilityLiteral): void {
-    if (visibility !== this.visibility) {
-      this.mVisibility = visibility;
-
-      this.visibilityChanged.next(this.visibility);
-    }
   }
 
   public wannaDodge(effect: EffectTypeLiteral): boolean {

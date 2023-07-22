@@ -19,7 +19,8 @@ export class InteractiveStore {
             name,
             description,
             stateStore.states[state],
-            resettable
+            resettable,
+            'VISIBLE'
           )
         );
       }

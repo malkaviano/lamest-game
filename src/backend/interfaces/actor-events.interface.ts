@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 
-import { VisibilityLiteral } from '@literals/visibility.literal';
 import { DerivedAttributeEvent } from '@events/derived-attribute.event';
 import {
   ArmorChangedEvent,
@@ -12,5 +11,4 @@ export interface ActorEventsInterface {
   readonly equipmentChanged$: Observable<
     WeaponChangedEvent | ArmorChangedEvent
   >;
-  readonly visibilityChanged$: Observable<VisibilityLiteral>;
 }
