@@ -5,6 +5,9 @@ import { RuleResult } from '@results/rule.result';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { affectActionable } from '@definitions/actionable.definition';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
+import { RuleResultLiteral } from '@literals/rule-result.literal';
+import { CheckResultLiteral } from '@literals/check-result.literal';
 
 import {
   mockedActorEntity,
@@ -15,7 +18,9 @@ import {
   actionDetect,
   actionDisguise,
   actionHide,
+  actionUseDiscardKey,
   actionableEvent,
+  discardKey,
 } from '../../../tests/fakes';
 
 describe('VisibilityPolicy', () => {
@@ -33,6 +38,11 @@ describe('VisibilityPolicy', () => {
 
   const eventDisguise = actionableEvent(actionDisguise, actor.id);
 
+  const eventUseDiscardKey = actionableEvent(
+    actionUseDiscardKey,
+    discardKey.identity.name
+  );
+
   beforeEach(() => {
     setupMocks();
   });
@@ -42,26 +52,52 @@ describe('VisibilityPolicy', () => {
   });
 
   describe('actor visibility', () => {
-    describe('when using affect', () => {
-      it('change visibility to VISIBLE', () => {
-        const ruleResult: RuleResult = {
-          name: 'AFFECT',
-          actor,
-          event: eventAffect,
-          target,
-          result: 'EXECUTED',
-        };
+    describe('when breaking disguise or stealth', () => {
+      [
+        {
+          ruleResult: {
+            name: 'AFFECT' as RuleNameLiteral,
+            actor,
+            event: eventAffect,
+            target,
+            result: 'EXECUTED' as RuleResultLiteral,
+          },
+          visibility: 'DISGUISED' as VisibilityLiteral,
+        },
+        {
+          ruleResult: {
+            name: 'SKILL' as RuleNameLiteral,
+            actor,
+            event: eventDetect,
+            target,
+            result: 'EXECUTED' as RuleResultLiteral,
+            roll: { checkRoll: 2, result: 'SUCCESS' as CheckResultLiteral },
+            skillName: 'Detect',
+          },
+          visibility: 'HIDDEN' as VisibilityLiteral,
+        },
+        {
+          ruleResult: {
+            name: 'USE' as RuleNameLiteral,
+            actor,
+            event: eventUseDiscardKey,
+            target,
+            result: 'EXECUTED' as RuleResultLiteral,
+            used: discardKey,
+          },
+          visibility: 'HIDDEN' as VisibilityLiteral,
+        },
+      ].forEach(({ ruleResult, visibility }) => {
+        it('change visibility to VISIBLE', () => {
+          when(mockedPlayerEntity.visibility).thenReturn(visibility);
 
-        when(mockedPlayerEntity.visibility).thenReturn('DISGUISED');
+          const result = policy.enforce(ruleResult);
 
-        const result = policy.enforce(ruleResult);
+          verify(mockedPlayerEntity.changeVisibility('VISIBLE')).once();
 
-        verify(mockedPlayerEntity.changeVisibility('VISIBLE')).once();
-
-        verify(mockedActorEntity.changeVisibility('VISIBLE')).never();
-
-        expect(result).toEqual({
-          visibility: { actor: 'VISIBLE' },
+          expect(result).toEqual({
+            visibility: { actor: 'VISIBLE' },
+          });
         });
       });
     });
