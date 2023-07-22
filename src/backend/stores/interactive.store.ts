@@ -11,7 +11,7 @@ export class InteractiveStore {
     this.store = new Map<string, InteractiveEntity>();
 
     resourcesStore.interactiveStore.interactives.forEach(
-      ({ id, name, description, state, resettable }) => {
+      ({ id, name, description, state, resettable, visibility }) => {
         this.store.set(
           id,
           new InteractiveEntity(
@@ -20,7 +20,7 @@ export class InteractiveStore {
             description,
             stateStore.states[state],
             resettable,
-            'VISIBLE'
+            visibility
           )
         );
       }

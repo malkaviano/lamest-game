@@ -62,7 +62,8 @@
       "name": "Wooden Box",
       "description": "Maybe some good stuff inside",
       "state": "woodBox",
-      "resettable": false
+      "resettable": false,
+      "visibility": "HIDDEN"
     }
   ]
 }

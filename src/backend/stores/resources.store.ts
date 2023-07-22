@@ -105,7 +105,9 @@ export class ResourcesStore {
 
     this.consumableStore = { consumables };
 
-    this.interactiveStore = interactiveStore;
+    const interactives = this.extractInteractives();
+
+    this.interactiveStore = { interactives };
 
     const actionables = this.extractActionables();
 
@@ -136,6 +138,19 @@ export class ResourcesStore {
     const armor = this.extractArmor();
 
     this.armorStore = { armor };
+  }
+
+  private extractInteractives() {
+    return interactiveStore.interactives.map((i) => {
+      return {
+        id: i.id,
+        name: i.name,
+        description: i.description,
+        state: i.state,
+        resettable: i.resettable,
+        visibility: (i.visibility ?? 'VISIBLE') as VisibilityLiteral,
+      };
+    });
   }
 
   private extractWeapons() {
