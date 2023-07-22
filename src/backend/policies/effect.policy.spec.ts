@@ -10,6 +10,8 @@ import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { CheckResultLiteral } from '@literals/check-result.literal';
+import { EffectEvent } from '@events/effect.event';
+import { ArrayView } from '@wrappers/array.view';
 
 import {
   mockedActorEntity,
@@ -17,8 +19,6 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import { actionableEvent, consumableAnalgesic } from '../../../tests/fakes';
-import { EffectEvent } from '../events/effect.event';
-import { ArrayView } from '../../wrappers/array.view';
 
 describe('EffectPolicy', () => {
   const policy = new EffectPolicy();

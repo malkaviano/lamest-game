@@ -58,3 +58,13 @@
   (actionSelected)="becomeVisible()"
 >
 </app-action-widget>
+
+<app-action-widget
+  class="padding"
+  [icon]="detect.icon"
+  [alt]="detect.alt"
+  [tooltip]="detect.tooltip"
+  [actionEvent]="detect.actionEvent"
+  (actionSelected)="actionSelected.emit($event)"
+>
+</app-action-widget>
