@@ -1,6 +1,7 @@
 import { GameSettingsValues } from '@values/game-settings.value';
 import { ArrayView } from '@wrappers/array.view';
 import { SettingsStoreInterface } from '@interfaces/stores/settings-store.interface';
+import { RuleNameLiteral } from '@literals/rule-name.literal';
 
 import settingsStore from '@assets/settings.json';
 
@@ -24,6 +25,7 @@ export class SettingsStore {
       unarmedDamage,
       clothArmor,
       skillCheck,
+      visibilityBreak,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(playerEffectDefenses.cures);
@@ -35,6 +37,25 @@ export class SettingsStore {
     const vulnerabilities = ArrayView.fromArray(
       playerEffectDefenses.vulnerabilities
     );
+
+    const onVisibilityBreak = {
+      actor: {
+        disguised: ArrayView.fromArray<RuleNameLiteral>(
+          visibilityBreak.actor.disguised
+        ),
+        hidden: ArrayView.fromArray<RuleNameLiteral>(
+          visibilityBreak.actor.hidden
+        ),
+      },
+      target: {
+        disguised: ArrayView.fromArray<RuleNameLiteral>(
+          visibilityBreak.target.disguised
+        ),
+        hidden: ArrayView.fromArray<RuleNameLiteral>(
+          visibilityBreak.target.hidden
+        ),
+      },
+    };
 
     SettingsStore.mSettings = {
       professionPoints,
@@ -57,6 +78,7 @@ export class SettingsStore {
       unarmedDamage,
       clothArmor,
       skillCheck,
+      visibilityBreak: onVisibilityBreak,
     };
   }
 

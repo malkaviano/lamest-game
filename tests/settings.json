@@ -68,6 +68,25 @@
     "skillCheck": {
       "combatTries": 1,
       "normalTries": 3
+    },
+    "visibilityBreak": {
+      "actor": {
+        "disguised": ["AFFECT"],
+        "hidden": [
+          "AFFECT",
+          "EQUIP",
+          "INTERACTION",
+          "SKILL",
+          "UNEQUIP",
+          "USE",
+          "WEAR",
+          "STRIP"
+        ]
+      },
+      "target": {
+        "disguised": ["AFFECT"],
+        "hidden": ["AFFECT", "INTERACTION"]
+      }
     }
   }
 }
