@@ -37,6 +37,8 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
 
   public hide!: Action;
 
+  public detect!: Action;
+
   public visibility!: Omit<Action, 'actionEvent'>;
 
   public isVisible!: boolean;
@@ -68,6 +70,16 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
       alt: 'HIDE',
       actionEvent: new ActionableEvent(
         createActionableDefinition('SKILL', 'Hide'),
+        this.status.playerId
+      ),
+    };
+
+    this.detect = {
+      icon: '../../../assets/icons/detect.svg',
+      tooltip: 'Detect hidden or disguised',
+      alt: 'DETECT',
+      actionEvent: new ActionableEvent(
+        createActionableDefinition('SKILL', 'Detect'),
         this.status.playerId
       ),
     };

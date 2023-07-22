@@ -7,6 +7,7 @@ import {
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableState } from '@states/actionable.state';
 import { InteractiveEntity } from '@entities/interactive.entity';
+import { VisibilityLiteral } from '@literals/visibility.literal';
 
 import { actionPickAnalgesic } from '../../../tests/fakes';
 import {
@@ -137,6 +138,39 @@ describe('InteractiveEntity', () => {
       expect(fakeEntity().actions).toEqual(ArrayView.create(consumeActionable));
     });
   });
+
+  describe('visibility', () => {
+    describe('current', () => {
+      it('return VISIBLE', () => {
+        expect(fakeEntity().visibility).toEqual('VISIBLE');
+      });
+    });
+
+    describe('set visibility', () => {
+      it('return DISGUISED', () => {
+        const actor = fakeEntity();
+
+        actor.changeVisibility('DISGUISED');
+
+        expect(actor.visibility).toEqual('DISGUISED');
+      });
+
+      it('emits DISGUISED', (done) => {
+        const actor = fakeEntity();
+
+        let result: VisibilityLiteral = 'VISIBLE';
+
+        actor.visibilityChanged$.subscribe((event) => {
+          result = event;
+          done();
+        });
+
+        actor.changeVisibility('DISGUISED');
+
+        expect(result).toEqual('DISGUISED');
+      });
+    });
+  });
 });
 
 const state1 = instance(mockedActionableState);
@@ -149,5 +183,6 @@ const fakeEntity = (resettable = true, state: ActionableState = state1) =>
     'SomeEntity',
     'Testing Entity',
     state,
-    resettable
+    resettable,
+    'VISIBLE'
   );

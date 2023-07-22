@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableState } from '@states/actionable.state';
@@ -17,14 +17,21 @@ export class InteractiveEntity implements InteractiveInterface {
     ArrayView<ActionableDefinition>
   >;
 
+  private readonly visibilityChanged: Subject<VisibilityLiteral>;
+
+  protected mVisibility: VisibilityLiteral;
+
   public readonly actionsChanged$: Observable<ArrayView<ActionableDefinition>>;
+
+  public readonly visibilityChanged$: Observable<VisibilityLiteral>;
 
   constructor(
     public readonly id: string,
     public readonly name: string,
     public readonly description: string,
     protected currentState: ActionableState,
-    protected readonly resettable: boolean
+    protected readonly resettable: boolean,
+    visibility: VisibilityLiteral
   ) {
     this.initialState = this.currentState;
 
@@ -33,6 +40,24 @@ export class InteractiveEntity implements InteractiveInterface {
     );
 
     this.actionsChanged$ = this.actionsChanged.asObservable();
+
+    this.mVisibility = visibility;
+
+    this.visibilityChanged = new Subject();
+
+    this.visibilityChanged$ = this.visibilityChanged.asObservable();
+  }
+
+  public get visibility(): VisibilityLiteral {
+    return this.mVisibility;
+  }
+
+  public changeVisibility(visibility: VisibilityLiteral): void {
+    if (visibility !== this.visibility) {
+      this.mVisibility = visibility;
+
+      this.visibilityChanged.next(this.visibility);
+    }
   }
 
   public get actions(): ArrayView<ActionableDefinition> {

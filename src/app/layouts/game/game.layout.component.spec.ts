@@ -136,7 +136,8 @@ const fakeInteractive = new InteractiveEntity(
   'props1',
   'This is props1',
   new SimpleState(ArrayView.create(actionAsk)),
-  true
+  true,
+  'VISIBLE'
 );
 
 const scene = new SceneEntity(

@@ -1,3 +1,5 @@
+import { VisibilityLiteral } from '@literals/visibility.literal';
+
 export interface InteractiveStoreInterface {
   readonly interactives: {
     readonly id: string;
@@ -5,5 +7,6 @@ export interface InteractiveStoreInterface {
     readonly description: string;
     readonly state: string;
     readonly resettable: boolean;
+    readonly visibility: VisibilityLiteral;
   }[];
 }

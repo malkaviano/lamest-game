@@ -7,8 +7,9 @@ import { ArrayView } from '@wrappers/array.view';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
+import { VisibilityInterface } from '@interfaces/visibility.interface';
 
-export interface InteractiveInterface {
+export interface InteractiveInterface extends VisibilityInterface {
   get id(): string;
 
   get name(): string;

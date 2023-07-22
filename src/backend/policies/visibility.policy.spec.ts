@@ -8,6 +8,7 @@ import { affectActionable } from '@definitions/actionable.definition';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
+import { ArrayView } from '@wrappers/array.view';
 
 import {
   mockedActorEntity,
@@ -91,12 +92,15 @@ describe('VisibilityPolicy', () => {
         it('change visibility to VISIBLE', () => {
           when(mockedPlayerEntity.visibility).thenReturn(visibility);
 
-          const result = policy.enforce(ruleResult);
+          const result = policy.enforce(ruleResult, {
+            action: ruleResult.event.actionableDefinition,
+            invisibleInteractives: ArrayView.empty(),
+          });
 
           verify(mockedPlayerEntity.changeVisibility('VISIBLE')).once();
 
           expect(result).toEqual({
-            visibility: { actor: 'VISIBLE' },
+            visibility: { actor: 'VISIBLE', detected: ArrayView.empty() },
           });
         });
       });
@@ -129,12 +133,15 @@ describe('VisibilityPolicy', () => {
             },
           };
 
-          const result = policy.enforce(ruleResult);
+          const result = policy.enforce(ruleResult, {
+            action: event.actionableDefinition,
+            invisibleInteractives: ArrayView.empty(),
+          });
 
           verify(mockedPlayerEntity.changeVisibility(actorVisibility)).once();
 
           expect(result).toEqual({
-            visibility: { actor: actorVisibility },
+            visibility: { actor: actorVisibility, detected: ArrayView.empty() },
           });
         });
       });
@@ -144,7 +151,7 @@ describe('VisibilityPolicy', () => {
           name: 'SKILL',
           actor,
           event: eventDetect,
-          target,
+          target: actor,
           result: 'EXECUTED',
           skillName: 'Detect',
           roll: {
@@ -155,12 +162,17 @@ describe('VisibilityPolicy', () => {
 
         when(mockedActorEntity.visibility).thenReturn('HIDDEN');
 
-        const result = policy.enforce(ruleResult);
+        const result = policy.enforce(ruleResult, {
+          action: eventDetect.actionableDefinition,
+          invisibleInteractives: ArrayView.create(target),
+        });
 
         verify(mockedActorEntity.changeVisibility('VISIBLE')).once();
 
         expect(result).toEqual({
-          visibility: { target: 'VISIBLE' },
+          visibility: {
+            detected: ArrayView.create(target.id),
+          },
         });
       });
     });
@@ -185,14 +197,17 @@ describe('VisibilityPolicy', () => {
 
         when(mockedActorEntity.visibility).thenReturn('HIDDEN');
 
-        const result = policy.enforce(ruleResult);
+        const result = policy.enforce(ruleResult, {
+          action: eventAffect.actionableDefinition,
+          invisibleInteractives: ArrayView.empty(),
+        });
 
         verify(mockedPlayerEntity.changeVisibility('VISIBLE')).never();
 
         verify(mockedActorEntity.changeVisibility('VISIBLE')).once();
 
         expect(result).toEqual({
-          visibility: { target: 'VISIBLE' },
+          visibility: { target: 'VISIBLE', detected: ArrayView.empty() },
         });
       });
     });
@@ -244,7 +259,10 @@ describe('VisibilityPolicy', () => {
         result.push(event);
       });
 
-      policy.enforce(ruleResult);
+      policy.enforce(ruleResult, {
+        action: eventAffect.actionableDefinition,
+        invisibleInteractives: ArrayView.empty(),
+      });
 
       done();
 

@@ -3,7 +3,6 @@ import { deepEqual, instance, when } from 'ts-mockito';
 import { ActorEntity } from '@entities/actor.entity';
 import { ArrayView } from '@wrappers/array.view';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
-import { VisibilityLiteral } from '@literals/visibility.literal';
 import { clothArmor, unarmedWeapon } from '@behaviors/equipment.behavior';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import {
@@ -437,39 +436,6 @@ describe('ActorEntity', () => {
 
     it('return action null', () => {
       expect(fakeActor().action(ArrayView.empty())).toBeNull();
-    });
-  });
-
-  describe('visibility', () => {
-    describe('current', () => {
-      it('return VISIBLE', () => {
-        expect(fakeActor().visibility).toEqual('VISIBLE');
-      });
-    });
-
-    describe('set visibility', () => {
-      it('return DISGUISED', () => {
-        const actor = fakeActor();
-
-        actor.changeVisibility('DISGUISED');
-
-        expect(actor.visibility).toEqual('DISGUISED');
-      });
-
-      it('emits DISGUISED', (done) => {
-        const actor = fakeActor();
-
-        let result: VisibilityLiteral = 'VISIBLE';
-
-        actor.visibilityChanged$.subscribe((event) => {
-          result = event;
-          done();
-        });
-
-        actor.changeVisibility('DISGUISED');
-
-        expect(result).toEqual('DISGUISED');
-      });
     });
   });
 

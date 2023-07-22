@@ -1,8 +1,8 @@
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { PolicyResult } from '@results/policy.result';
 import { RuleResult } from '@results/rule.result';
-import { ActionableDefinition } from '@definitions/actionable.definition';
+import { PolicyValues } from '@values/policy.values';
 
 export interface PolicyInterface extends LoggerInterface {
-  enforce(result: RuleResult, action: ActionableDefinition): PolicyResult;
+  enforce(result: RuleResult, policyValues: PolicyValues): PolicyResult;
 }

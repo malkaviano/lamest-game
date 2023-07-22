@@ -5,12 +5,6 @@
       "skillName": "Survival",
       "maximumTries": 100,
       "successState": "campFireOn"
-    },
-    {
-      "id": "bushesDetect",
-      "skillName": "Detect",
-      "maximumTries": 100,
-      "successState": "bushesLoot"
     }
   ]
 }

@@ -134,7 +134,8 @@ export class GameLoopService {
 
             this.policyHub.enforcePolicies(
               result,
-              actionableEvent.actionableDefinition
+              actionableEvent.actionableDefinition,
+              this.invisibleInteractives()
             );
           }
         }
@@ -220,5 +221,11 @@ export class GameLoopService {
       default:
         return dropActionable;
     }
+  }
+
+  private invisibleInteractives(): ArrayView<InteractiveInterface> {
+    return this.currentScene.interactives.filter(
+      (i) => i.visibility !== 'VISIBLE'
+    );
   }
 }

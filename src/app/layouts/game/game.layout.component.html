@@ -45,7 +45,7 @@
         <div data-testid="interactives">
           <app-interactive-panel
             [panelName]="'interactives'"
-            [interactives]="scene.interactives"
+            [interactives]="scene.visibleInteractives"
             (actionSelected)="actionSelected.emit($event)"
           ></app-interactive-panel>
         </div>

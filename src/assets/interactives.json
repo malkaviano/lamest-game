@@ -26,8 +26,9 @@
       "id": "bushes",
       "name": "Bushes",
       "description": "Looks like some branches are broken",
-      "state": "bushesDetect",
-      "resettable": false
+      "state": "bushesLoot",
+      "resettable": false,
+      "visibility": "HIDDEN"
     },
     {
       "id": "ambulatoryLockedCabinet1",

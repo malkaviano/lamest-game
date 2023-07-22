@@ -4,7 +4,6 @@ import { ArrayView } from '@wrappers/array.view';
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ActorDefenseInterface } from '@interfaces/actor-defense.interface';
 import { ActorEventsInterface } from '@interfaces/actor-events.interface';
-import { ActorVisibilityInterface } from '@interfaces/actor-visibility.interface';
 import { SceneActorsInfoValues } from '@values/scene-actors.value';
 import { WeaponEquippedInterface } from '@interfaces/weapon-equipped.interface';
 import { WithCharacteristicsInterface } from '@interfaces/with-characteristics.interface';
@@ -20,7 +19,6 @@ export interface ActorInterface
     ArmorWearingInterface,
     InteractiveInterface,
     ActorDefenseInterface,
-    ActorVisibilityInterface,
     ActorEventsInterface {
   action(
     sceneActorsInfo: ArrayView<SceneActorsInfoValues>

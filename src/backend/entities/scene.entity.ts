@@ -17,6 +17,10 @@ export class SceneEntity {
     return this.mInteractives.filter((i) => i.actions.items.length > 0);
   }
 
+  public get visibleInteractives(): ArrayView<InteractiveInterface> {
+    return this.interactives.filter((i) => i.visibility === 'VISIBLE');
+  }
+
   public reset(): void {
     this.mInteractives.items.forEach((i) => i.reset());
   }

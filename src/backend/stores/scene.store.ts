@@ -59,7 +59,8 @@ export class SceneStore {
             new SimpleState(
               ArrayView.create(createActionableDefinition('SCENE', obj.name))
             ),
-            true
+            true,
+            'VISIBLE'
           );
         });
 

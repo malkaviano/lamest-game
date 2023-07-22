@@ -104,7 +104,9 @@ describe('GameLoopService', () => {
         mockedAffectRule.execute(anything(), anything(), anything())
       ).twice();
 
-      verify(mockedPolicyHub.enforcePolicies(anything(), anything())).twice();
+      verify(
+        mockedPolicyHub.enforcePolicies(anything(), anything(), anything())
+      ).twice();
 
       expect(result).toEqual(true);
     });

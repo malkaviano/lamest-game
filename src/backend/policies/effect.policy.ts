@@ -3,13 +3,13 @@ import { PolicyResult } from '@results/policy.result';
 import { RuleResult } from '@results/rule.result';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { EffectEvent } from '@events/effect.event';
-import { ActionableDefinition } from '@definitions/actionable.definition';
+import { PolicyValues } from '@values/policy.values';
 
 // DEBIT: subpar implementation, just migrated
 export class EffectPolicy extends PolicyAbstraction {
   public override enforce(
     result: RuleResult,
-    action: ActionableDefinition
+    policyValues: PolicyValues
   ): PolicyResult {
     let policyResult: PolicyResult = {};
 
@@ -43,7 +43,7 @@ export class EffectPolicy extends PolicyAbstraction {
         target: result.target,
       };
 
-      const log = target.reactTo(action, rollResult, values);
+      const log = target.reactTo(policyValues.action, rollResult, values);
 
       if (log) {
         const logMessage = GameStringsStore.createFreeLogMessage(
