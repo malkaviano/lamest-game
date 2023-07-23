@@ -106,11 +106,15 @@ export class GamePredicate implements LoggerInterface {
 
     const canUseSkill = (actor.skills[skillName] ?? 0) > 0;
 
-    const skillCooldown = (actor as PlayerEntity).cooldowns[skillName];
+    const skillCooldown = isPlayer
+      ? (actor as PlayerEntity).cooldowns[skillName]
+      : undefined;
 
     const skill = this.skillStore.skills[skillName];
 
-    const aggressiveTimer = (actor as PlayerEntity).cooldowns['COMBAT'];
+    const aggressiveTimer = isPlayer
+      ? (actor as PlayerEntity)?.cooldowns['COMBAT']
+      : undefined;
 
     const blockedByAggressiveTimer = !!aggressiveTimer && !skill.combat;
 

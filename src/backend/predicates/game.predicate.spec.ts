@@ -293,7 +293,7 @@ describe('GamePredicate', () => {
         log: new LogMessageDefinition(
           'COOLDOWN',
           'Some Name',
-          'skill Bargain cannot be used while on aggressive timer'
+          'skill Bargain cannot be used while on aggressive timer (1 seconds remaining)'
         ),
         cooldowns: { COMBAT: 1000 },
       },
