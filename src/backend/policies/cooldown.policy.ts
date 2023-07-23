@@ -16,6 +16,12 @@ export class CooldownPolicy extends PolicyAbstraction {
   public override enforce(ruleResult: RuleResult): PolicyResult {
     let policyResult = {};
 
+    policyResult = this.checkActorEngagement(ruleResult, policyResult);
+
+    return policyResult;
+  }
+
+  private checkActorEngagement(ruleResult: RuleResult, policyResult: {}) {
     if (
       ruleResult.actor instanceof PlayerEntity &&
       ruleResult.result !== 'DENIED' &&
@@ -33,12 +39,12 @@ export class CooldownPolicy extends PolicyAbstraction {
 
       if (skill.combat) {
         if (ruleResult.target instanceof ActorEntity) {
-          cooldownKey = 'COMBAT';
+          cooldownKey = 'ENGAGEMENT';
 
           cooldownDuration =
-            SettingsStore.settings.timersInMilliseconds.aggressiveTimer;
+            SettingsStore.settings.timersInMilliseconds.engagementTimer;
 
-          log = GameStringsStore.createAggressiveTimerLogMessage(
+          log = GameStringsStore.createEngagementTimerLogMessage(
             ruleResult.actor.name,
             cooldownDuration
           );
@@ -61,15 +67,16 @@ export class CooldownPolicy extends PolicyAbstraction {
 
         policyResult = {
           cooldown: {
-            name: cooldownKey,
-            duration: cooldownDuration,
+            actor: {
+              name: cooldownKey,
+              duration: cooldownDuration,
+            },
           },
         };
 
         this.logMessageProduced.next(log);
       }
     }
-
     return policyResult;
   }
 }

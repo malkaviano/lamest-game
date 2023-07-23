@@ -293,9 +293,9 @@ describe('GamePredicate', () => {
         log: new LogMessageDefinition(
           'COOLDOWN',
           'Some Name',
-          'skill Bargain cannot be used while on aggressive timer (1 seconds remaining)'
+          'skill Bargain cannot be used while on engagement timer (1 seconds remaining)'
         ),
-        cooldowns: { COMBAT: 1000 },
+        cooldowns: { ENGAGEMENT: 1000 },
       },
     ].forEach(({ actor, skillName, expected, log, cooldowns }) => {
       it(`return ${expected}`, () => {

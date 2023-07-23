@@ -90,7 +90,7 @@
     },
     "timersInMilliseconds": {
       "skillCooldown": 120000,
-      "aggressiveTimer": 30000
+      "engagementTimer": 30000
     }
   }
 }

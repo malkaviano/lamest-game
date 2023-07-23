@@ -445,21 +445,21 @@ export class GameStringsStore {
     );
   }
 
-  public static createAggressiveTimerLogMessage(
+  public static createEngagementTimerLogMessage(
     actor: string,
     cooldown: number
   ): LogMessageDefinition {
     return new LogMessageDefinition(
       'COOLDOWN',
       actor,
-      GameStringsStore.logMessagesStore['aggressiveTimer'].replace(
+      GameStringsStore.logMessagesStore['engagementTimer'].replace(
         '${cooldown}',
         Math.ceil(cooldown / 1000).toString()
       )
     );
   }
 
-  public static createSkillDeniedAggressiveTimerLogMessage(
+  public static createSkillDeniedEngagementTimerLogMessage(
     actor: string,
     skillName: string,
     remaining: number
@@ -467,7 +467,7 @@ export class GameStringsStore {
     return new LogMessageDefinition(
       'COOLDOWN',
       actor,
-      GameStringsStore.logMessagesStore['skillDeniedAggressiveTimer']
+      GameStringsStore.logMessagesStore['skillDeniedEngagementTimer']
         .replace('${skill}', skillName)
         .replace('${remaining}', Math.ceil(remaining / 1000).toString())
     );

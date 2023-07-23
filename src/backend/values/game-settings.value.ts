@@ -88,6 +88,6 @@ export type GameSettingsValues = {
   };
   readonly timersInMilliseconds: {
     readonly skillCooldown: number;
-    readonly aggressiveTimer: number;
+    readonly engagementTimer: number;
   };
 };

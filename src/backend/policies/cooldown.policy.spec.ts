@@ -69,7 +69,7 @@ describe('CooldownPolicy', () => {
             roll: { checkRoll: 2, result: 'SUCCESS' as CheckResultLiteral },
             skillName: 'Detect',
           },
-          expected: { cooldown: { name: 'Detect', duration: 120 } },
+          expected: { cooldown: { actor: { name: 'Detect', duration: 120 } } },
           logs: [
             new LogMessageDefinition(
               'COOLDOWN',
@@ -100,12 +100,14 @@ describe('CooldownPolicy', () => {
             roll: { checkRoll: 2, result: 'SUCCESS' as CheckResultLiteral },
             skillName: 'Melee Weapon (Simple)',
           },
-          expected: { cooldown: { name: 'COMBAT', duration: 30 } },
+          expected: {
+            cooldown: { actor: { name: 'ENGAGEMENT', duration: 30 } },
+          },
           logs: [
             new LogMessageDefinition(
               'COOLDOWN',
               'Some Name',
-              'has aggressed another actor and is on aggressive timer for 1 seconds'
+              'has engaged another actor and is on engagement timer for 1 seconds'
             ),
           ],
         },

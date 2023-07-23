@@ -112,11 +112,11 @@ export class GamePredicate implements LoggerInterface {
 
     const skill = this.skillStore.skills[skillName];
 
-    const aggressiveTimer = isPlayer
-      ? (actor as PlayerEntity)?.cooldowns['COMBAT']
+    const engagementTimer = isPlayer
+      ? (actor as PlayerEntity)?.cooldowns['ENGAGEMENT']
       : undefined;
 
-    const blockedByAggressiveTimer = !!aggressiveTimer && !skill.combat;
+    const blockedByengagementTimer = !!engagementTimer && !skill.combat;
 
     if (!canUseSkill && isPlayer) {
       const logMessage = GameStringsStore.createCannotCheckSkillLogMessage(
@@ -133,18 +133,18 @@ export class GamePredicate implements LoggerInterface {
       );
 
       this.logMessageProduced.next(logMessage);
-    } else if (blockedByAggressiveTimer) {
+    } else if (blockedByengagementTimer) {
       const logMessage =
-        GameStringsStore.createSkillDeniedAggressiveTimerLogMessage(
+        GameStringsStore.createSkillDeniedEngagementTimerLogMessage(
           actor.name,
           skillName,
-          aggressiveTimer
+          engagementTimer
         );
 
       this.logMessageProduced.next(logMessage);
     }
 
-    return canUseSkill && !skillCooldown && !blockedByAggressiveTimer;
+    return canUseSkill && !skillCooldown && !blockedByengagementTimer;
   }
 
   private isPlayer(actor: ActorInterface) {
