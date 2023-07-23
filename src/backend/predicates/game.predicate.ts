@@ -8,6 +8,7 @@ import { GameStringsStore } from '@stores/game-strings.store';
 import { PlayerEntity } from '@entities/player.entity';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { WeaponDefinition } from '@definitions/weapon.definition';
+import { SkillStore } from '@stores/skill.store';
 
 export class GamePredicate implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition> =
@@ -15,6 +16,8 @@ export class GamePredicate implements LoggerInterface {
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition> =
     this.logMessageProduced.asObservable();
+
+  constructor(private readonly skillStore: SkillStore) {}
 
   public hasEnoughActionPoints(
     actor: ActorInterface,
@@ -101,19 +104,15 @@ export class GamePredicate implements LoggerInterface {
   public canUseSkill(actor: ActorInterface, skillName: string): boolean {
     const isPlayer = this.isPlayer(actor);
 
+    const canUseSkill = (actor.skills[skillName] ?? 0) > 0;
+
     const skillCooldown = (actor as PlayerEntity).cooldowns[skillName];
 
-    if (skillCooldown) {
-      const logMessage = GameStringsStore.createSkillOnCooldownLogMessage(
-        actor.name,
-        skillName,
-        skillCooldown
-      );
+    const skill = this.skillStore.skills[skillName];
 
-      this.logMessageProduced.next(logMessage);
-    }
+    const aggressiveTimer = (actor as PlayerEntity).cooldowns['COMBAT'];
 
-    const canUseSkill = (actor.skills[skillName] ?? 0) > 0;
+    const blockedByAggressiveTimer = !!aggressiveTimer && !skill.combat;
 
     if (!canUseSkill && isPlayer) {
       const logMessage = GameStringsStore.createCannotCheckSkillLogMessage(
@@ -122,9 +121,26 @@ export class GamePredicate implements LoggerInterface {
       );
 
       this.logMessageProduced.next(logMessage);
+    } else if (skillCooldown) {
+      const logMessage = GameStringsStore.createSkillOnCooldownLogMessage(
+        actor.name,
+        skillName,
+        skillCooldown
+      );
+
+      this.logMessageProduced.next(logMessage);
+    } else if (blockedByAggressiveTimer) {
+      const logMessage =
+        GameStringsStore.createSkillDeniedAggressiveTimerLogMessage(
+          actor.name,
+          skillName,
+          aggressiveTimer
+        );
+
+      this.logMessageProduced.next(logMessage);
     }
 
-    return canUseSkill && !skillCooldown;
+    return canUseSkill && !skillCooldown && !blockedByAggressiveTimer;
   }
 
   private isPlayer(actor: ActorInterface) {

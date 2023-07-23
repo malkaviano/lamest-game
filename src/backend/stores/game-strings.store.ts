@@ -458,4 +458,18 @@ export class GameStringsStore {
       )
     );
   }
+
+  public static createSkillDeniedAggressiveTimerLogMessage(
+    actor: string,
+    skillName: string,
+    remaining: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'COOLDOWN',
+      actor,
+      GameStringsStore.logMessagesStore['skillDeniedAggressiveTimer']
+        .replace('${skill}', skillName)
+        .replace('${remaining}', Math.ceil(remaining / 1000).toString())
+    );
+  }
 }

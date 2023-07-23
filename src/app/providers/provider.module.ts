@@ -47,8 +47,6 @@ import { StatusPolicy } from '@policies/status.policy';
 import { EffectPolicy } from '@policies/effect.policy';
 import { CooldownPolicy } from '@policies/cooldown.policy';
 
-const gamePredicate = new GamePredicate();
-
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
 
@@ -73,6 +71,8 @@ const actorStore = new ActorStore(
 );
 const interactiveStore = new InteractiveStore(statesStore, resourcesStore);
 const sceneStore = new SceneStore(interactiveStore, actorStore, resourcesStore);
+
+const gamePredicate = new GamePredicate(skillStore);
 
 const inventoryService = new InventoryService(statesStore);
 const generatorService = new GeneratorService(randomIntHelper, professionStore);

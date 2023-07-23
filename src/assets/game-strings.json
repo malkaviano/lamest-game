@@ -36,7 +36,8 @@
     "stripMessage": "strip ${armor}",
     "cannotDodgeWithoutAP": "cannot perform ${Dodge}, not enough AP",
     "skillOnCooldown": "skill ${skill} is on cooldown for ${cooldown} seconds",
-    "aggressiveTimer": "has aggressed another actor and is on aggressive timer for ${cooldown} seconds"
+    "aggressiveTimer": "has aggressed another actor and is on aggressive timer for ${cooldown} seconds",
+    "skillDeniedAggressiveTimer": "skill ${skill} cannot be used while on aggressive timer (${remaining} seconds remaining)"
   },
   "errors": {
     "INVALID-OPERATION": "Invalid operation ocurred",
