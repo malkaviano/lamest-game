@@ -87,6 +87,10 @@
         "disguised": ["AFFECT"],
         "hidden": ["AFFECT", "INTERACTION"]
       }
+    },
+    "timersInMilliseconds": {
+      "skillCooldown": 120000,
+      "aggressiveTimer": 30000
     }
   }
 }

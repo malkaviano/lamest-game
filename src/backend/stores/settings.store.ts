@@ -26,6 +26,7 @@ export class SettingsStore {
       clothArmor,
       skillCheck,
       visibilityBreak,
+      timersInMilliseconds,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(playerEffectDefenses.cures);
@@ -79,6 +80,7 @@ export class SettingsStore {
       clothArmor,
       skillCheck,
       visibilityBreak: onVisibilityBreak,
+      timersInMilliseconds,
     };
   }
 

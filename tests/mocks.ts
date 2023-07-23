@@ -55,6 +55,8 @@ import { SettingsStoreInterface } from '@interfaces/stores/settings-store.interf
 import { SettingsStore } from '@stores/settings.store';
 import { GamePredicate } from '@predicates/game.predicate';
 import { GameEventsValues } from '@values/game-events.value';
+import { affectActionable } from '@definitions/actionable.definition';
+import { CooldownBehavior } from '@behaviors/cooldown.behavior';
 
 import settingsStore from './settings.json';
 
@@ -70,8 +72,6 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { affectActionable } from '../src/backend/conceptual/definitions/actionable.definition';
-import { CooldownBehavior } from '../src/backend/behaviors/cooldown.behavior';
 
 export const mockedInventoryService = mock(InventoryService);
 
