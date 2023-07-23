@@ -278,7 +278,7 @@ describe('GamePredicate', () => {
         skillName: 'First Aid',
         expected: false,
         log: new LogMessageDefinition(
-          'DENIED',
+          'COOLDOWN',
           'Some Name',
           'skill First Aid is on cooldown for 2 seconds'
         ),

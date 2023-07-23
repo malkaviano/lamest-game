@@ -11,7 +11,6 @@ import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { EffectEvent } from '@events/effect.event';
-import { ArrayView } from '@wrappers/array.view';
 
 import {
   mockedActorEntity,
@@ -114,10 +113,7 @@ describe('EffectPolicy', () => {
       },
     ].forEach(({ ruleResult, expected, logs }) => {
       it('return effect result', () => {
-        const result = policy.enforce(ruleResult, {
-          action: ruleResult.event.actionableDefinition,
-          invisibleInteractives: ArrayView.empty(),
-        });
+        const result = policy.enforce(ruleResult);
 
         expect(result).toEqual(expected);
       });
@@ -129,10 +125,7 @@ describe('EffectPolicy', () => {
           result.push(event);
         });
 
-        policy.enforce(ruleResult, {
-          action: ruleResult.event.actionableDefinition,
-          invisibleInteractives: ArrayView.empty(),
-        });
+        policy.enforce(ruleResult);
 
         expect(result).toEqual(logs);
       });

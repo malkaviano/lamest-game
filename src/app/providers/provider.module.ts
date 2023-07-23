@@ -45,6 +45,7 @@ import { WearRule } from '@rules/wear.rule';
 import { StripRule } from '@rules/strip.rule';
 import { StatusPolicy } from '@policies/status.policy';
 import { EffectPolicy } from '@policies/effect.policy';
+import { CooldownPolicy } from '@policies/cooldown.policy';
 
 const gamePredicate = new GamePredicate();
 
@@ -136,12 +137,15 @@ const statusPolicy = new StatusPolicy();
 
 const effectPolicy = new EffectPolicy();
 
+const cooldownPolicy = new CooldownPolicy(skillStore);
+
 const policyHub = new PolicyHub(
   actionPolicy,
   visibilityPolicy,
   effectPolicy,
   disposablePolicy,
-  statusPolicy
+  statusPolicy,
+  cooldownPolicy
 );
 
 const loggingHub = new LoggingHub(

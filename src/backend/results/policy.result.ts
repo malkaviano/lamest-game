@@ -15,4 +15,8 @@ export type PolicyResult = {
   readonly disposed?: GameItemDefinition;
   readonly dead?: ActorInterface;
   readonly affected?: InteractiveInterface;
+  readonly cooldown?: {
+    name: string;
+    duration: number;
+  };
 };

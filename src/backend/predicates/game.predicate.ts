@@ -107,7 +107,7 @@ export class GamePredicate implements LoggerInterface {
       const logMessage = GameStringsStore.createSkillOnCooldownLogMessage(
         actor.name,
         skillName,
-        Math.ceil(skillCooldown / 1000)
+        skillCooldown
       );
 
       this.logMessageProduced.next(logMessage);

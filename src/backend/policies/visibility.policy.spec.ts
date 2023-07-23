@@ -93,7 +93,6 @@ describe('VisibilityPolicy', () => {
           when(mockedPlayerEntity.visibility).thenReturn(visibility);
 
           const result = policy.enforce(ruleResult, {
-            action: ruleResult.event.actionableDefinition,
             invisibleInteractives: ArrayView.empty(),
           });
 
@@ -134,7 +133,6 @@ describe('VisibilityPolicy', () => {
           };
 
           const result = policy.enforce(ruleResult, {
-            action: event.actionableDefinition,
             invisibleInteractives: ArrayView.empty(),
           });
 
@@ -163,7 +161,6 @@ describe('VisibilityPolicy', () => {
         when(mockedActorEntity.visibility).thenReturn('HIDDEN');
 
         const result = policy.enforce(ruleResult, {
-          action: eventDetect.actionableDefinition,
           invisibleInteractives: ArrayView.create(target),
         });
 
@@ -198,7 +195,6 @@ describe('VisibilityPolicy', () => {
         when(mockedActorEntity.visibility).thenReturn('HIDDEN');
 
         const result = policy.enforce(ruleResult, {
-          action: eventAffect.actionableDefinition,
           invisibleInteractives: ArrayView.empty(),
         });
 
@@ -260,7 +256,6 @@ describe('VisibilityPolicy', () => {
       });
 
       policy.enforce(ruleResult, {
-        action: eventAffect.actionableDefinition,
         invisibleInteractives: ArrayView.empty(),
       });
 

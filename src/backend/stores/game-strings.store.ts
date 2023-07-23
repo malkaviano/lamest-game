@@ -437,11 +437,25 @@ export class GameStringsStore {
     cooldown: number
   ): LogMessageDefinition {
     return new LogMessageDefinition(
-      'DENIED',
+      'COOLDOWN',
       actor,
       GameStringsStore.logMessagesStore['skillOnCooldown']
         .replace('${skill}', skill)
-        .replace('${cooldown}', cooldown.toString())
+        .replace('${cooldown}', Math.ceil(cooldown / 1000).toString())
+    );
+  }
+
+  public static createAggressiveTimerLogMessage(
+    actor: string,
+    cooldown: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'COOLDOWN',
+      actor,
+      GameStringsStore.logMessagesStore['aggressiveTimer'].replace(
+        '${cooldown}',
+        Math.ceil(cooldown / 1000).toString()
+      )
     );
   }
 }
