@@ -10,6 +10,7 @@ import { PlayerInterface } from '@interfaces/player.interface';
 import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
+import { CooldownBehavior } from '../behaviors/cooldown.behavior';
 
 export class RandomCharacterService {
   constructor(
@@ -31,7 +32,8 @@ export class RandomCharacterService {
         this.skillStore
       ),
       EquipmentBehavior.create(),
-      new RegeneratorBehavior()
+      new RegeneratorBehavior(),
+      new CooldownBehavior(500)
     );
   }
 

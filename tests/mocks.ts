@@ -73,6 +73,7 @@ import {
   simpleSword,
 } from './fakes';
 import { affectActionable } from '../src/backend/conceptual/definitions/actionable.definition';
+import { CooldownBehavior } from '../src/backend/behaviors/cooldown.behavior';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -167,6 +168,8 @@ export const mockedCheckedService = mock(CheckedService);
 export const mockedDodgeAxiom = mock(DodgeAxiom);
 
 export const mockedRegeneratorBehavior = mock(RegeneratorBehavior);
+
+export const mockedCooldownBehavior = mock(CooldownBehavior);
 
 export const mockedAiBehavior = mock(AiBehavior);
 
@@ -470,6 +473,8 @@ const resetMocks = () => {
   reset(mockedLoggingHub);
 
   reset(mockedGamePredicate);
+
+  reset(mockedCooldownBehavior);
 };
 
 function mockCheckedHelper() {
