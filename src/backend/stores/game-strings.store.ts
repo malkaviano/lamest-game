@@ -430,4 +430,18 @@ export class GameStringsStore {
       )
     );
   }
+
+  public static createSkillOnCooldownLogMessage(
+    actor: string,
+    skill: string,
+    cooldown: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'DENIED',
+      actor,
+      GameStringsStore.logMessagesStore['skillOnCooldown']
+        .replace('${skill}', skill)
+        .replace('${cooldown}', cooldown.toString())
+    );
+  }
 }

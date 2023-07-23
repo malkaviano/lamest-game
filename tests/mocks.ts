@@ -258,6 +258,8 @@ export const setupMocks = () => {
 
   when(mockedPlayerEntity.armorWearing).thenReturn(clothArmor);
 
+  when(mockedPlayerEntity.cooldowns).thenReturn({});
+
   when(mockedActorEntity.armorWearing).thenReturn(clothArmor);
 
   when(mockedActorEntity2.armorWearing).thenReturn(clothArmor);

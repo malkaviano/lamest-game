@@ -42,6 +42,8 @@ describe('GamePredicate', () => {
       event: eventAttackInteractive,
       result: 'EXECUTED',
     });
+
+    when(mockedPlayerEntity.cooldowns).thenReturn({ 'First Aid': 2000 });
   });
 
   describe('hasEnoughActionPoints', () => {
@@ -269,6 +271,16 @@ describe('GamePredicate', () => {
           'DENIED',
           'Some Name',
           "GG skill couldn't be checked because it's value is zero"
+        ),
+      },
+      {
+        actor: instance(mockedPlayerEntity),
+        skillName: 'First Aid',
+        expected: false,
+        log: new LogMessageDefinition(
+          'DENIED',
+          'Some Name',
+          'skill First Aid is on cooldown for 2 seconds'
         ),
       },
     ].forEach(({ actor, skillName, expected, log }) => {

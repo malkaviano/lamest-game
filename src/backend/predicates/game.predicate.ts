@@ -24,7 +24,7 @@ export class GamePredicate implements LoggerInterface {
 
     const result = actor.derivedAttributes['CURRENT AP'].value >= ruleCost;
 
-    if (!result && actor instanceof PlayerEntity) {
+    if (!result && this.isPlayer(actor)) {
       this.logMessageProduced.next(
         GameStringsStore.createInsufficientAPLogMessage(actor.name, ruleCost)
       );
@@ -40,7 +40,7 @@ export class GamePredicate implements LoggerInterface {
   ): boolean {
     const canActivate = actor.derivedAttributes['CURRENT EP'].value >= energy;
 
-    if (!canActivate && actor instanceof PlayerEntity) {
+    if (!canActivate && this.isPlayer(actor)) {
       const logMessage = GameStringsStore.createNotEnoughEnergyLogMessage(
         actor.name,
         label
@@ -60,7 +60,7 @@ export class GamePredicate implements LoggerInterface {
       if (
         this.canUseSkill(actor, SettingsStore.settings.systemSkills.dodgeSkill)
       ) {
-        if (!actionDodgeable && actor instanceof PlayerEntity) {
+        if (!actionDodgeable && this.isPlayer(actor)) {
           const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
             actor.name
           );
@@ -99,9 +99,23 @@ export class GamePredicate implements LoggerInterface {
   }
 
   public canUseSkill(actor: ActorInterface, skillName: string): boolean {
+    const isPlayer = this.isPlayer(actor);
+
+    const skillCooldown = (actor as PlayerEntity).cooldowns[skillName];
+
+    if (skillCooldown) {
+      const logMessage = GameStringsStore.createSkillOnCooldownLogMessage(
+        actor.name,
+        skillName,
+        Math.ceil(skillCooldown / 1000)
+      );
+
+      this.logMessageProduced.next(logMessage);
+    }
+
     const canUseSkill = (actor.skills[skillName] ?? 0) > 0;
 
-    if (!canUseSkill && actor instanceof PlayerEntity) {
+    if (!canUseSkill && isPlayer) {
       const logMessage = GameStringsStore.createCannotCheckSkillLogMessage(
         actor.name,
         skillName
@@ -110,6 +124,10 @@ export class GamePredicate implements LoggerInterface {
       this.logMessageProduced.next(logMessage);
     }
 
-    return canUseSkill;
+    return canUseSkill && !skillCooldown;
+  }
+
+  private isPlayer(actor: ActorInterface) {
+    return actor instanceof PlayerEntity;
   }
 }
