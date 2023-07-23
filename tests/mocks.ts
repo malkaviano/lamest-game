@@ -1,5 +1,3 @@
-import { MatDialog } from '@angular/material/dialog';
-
 import { of, Subject } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
@@ -158,8 +156,6 @@ export const mockedActorStore = mock(ActorStore);
 export const mockedFormatterHelperService = mock(FormatterHelperService);
 
 export const mockedSkillStore = mock(SkillStore);
-
-export const mockedMatDialog = mock(MatDialog);
 
 export const mockedReadRule = mock(ReadRule);
 
@@ -453,8 +449,6 @@ const resetMocks = () => {
   reset(mockedFormatterHelperService);
 
   reset(mockedSkillStore);
-
-  reset(mockedMatDialog);
 
   reset(mockedReadRule);
 

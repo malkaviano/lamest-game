@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { instance, when } from 'ts-mockito';
+import { instance, mock, when } from 'ts-mockito';
 import { of } from 'rxjs';
 
 import { GamePageComponent } from './game.page.component';
@@ -24,7 +24,6 @@ import {
   mockedGameEventsValues,
   mockedGameLoopService,
   mockedInteractiveEntity,
-  mockedMatDialog,
   mockedWithSubscriptionHelper,
   setupMocks,
 } from '../../../../tests/mocks';
@@ -40,6 +39,8 @@ import {
 } from '../../../../tests/fakes';
 
 describe('GamePageComponent', () => {
+  const mockedMatDialog = mock(MatDialog);
+
   let component: GamePageComponent;
   let fixture: ComponentFixture<GamePageComponent>;
 
