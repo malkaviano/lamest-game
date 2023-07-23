@@ -18,6 +18,7 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import { actionableEvent, consumableAnalgesic } from '../../../tests/fakes';
+import { testPolicy } from '../../../tests/scenarios';
 
 describe('EffectPolicy', () => {
   const policy = new EffectPolicy();
@@ -112,23 +113,7 @@ describe('EffectPolicy', () => {
         ],
       },
     ].forEach(({ ruleResult, expected, logs }) => {
-      it('return effect result', () => {
-        const result = policy.enforce(ruleResult);
-
-        expect(result).toEqual(expected);
-      });
-
-      it('log interactive response', () => {
-        const result: LogMessageDefinition[] = [];
-
-        policy.logMessageProduced$.subscribe((event) => {
-          result.push(event);
-        });
-
-        policy.enforce(ruleResult);
-
-        expect(result).toEqual(logs);
-      });
+      testPolicy(policy, ruleResult, expected, logs);
     });
   });
 });

@@ -19,6 +19,7 @@ import {
   actionHide,
   actionableEvent,
 } from '../../../tests/fakes';
+import { testPolicy } from '../../../tests/scenarios';
 
 const actor = instance(mockedPlayerEntity);
 
@@ -109,23 +110,7 @@ describe('CooldownPolicy', () => {
           ],
         },
       ].forEach(({ ruleResult, expected, logs }) => {
-        it('return cooldown policy result', () => {
-          const result = policy.enforce(ruleResult);
-
-          expect(result).toEqual(expected);
-        });
-
-        it('logs', () => {
-          const result: LogMessageDefinition[] = [];
-
-          policy.logMessageProduced$.subscribe((event) => {
-            result.push(event);
-          });
-
-          policy.enforce(ruleResult);
-
-          expect(result).toEqual(logs);
-        });
+        testPolicy(policy, ruleResult, expected, logs);
       });
     });
   });

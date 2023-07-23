@@ -10,6 +10,11 @@ import { ActionableEvent } from '@events/actionable.event';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { RuleValues } from '@values/rule.value';
+import { RuleResult } from '@results/rule.result';
+import { PolicyResult } from '@results/policy.result';
+import { PolicyAbstraction } from '@abstractions/policy.abstraction';
+import { PolicyValues } from '@values/policy.values';
+import { ArrayView } from '@wrappers/array.view';
 
 export const ruleScenario = (
   service: RuleAbstraction,
@@ -52,4 +57,30 @@ export async function testButtonEvent(
   fixture.detectChanges();
 
   return result;
+}
+
+export function testPolicy(
+  policy: PolicyAbstraction,
+  ruleResult: RuleResult,
+  expected: PolicyResult,
+  logs: LogMessageDefinition[],
+  values: PolicyValues = { invisibleInteractives: ArrayView.empty() }
+) {
+  it('return policy result', () => {
+    const result = policy.enforce(ruleResult, values);
+
+    expect(result).toEqual(expected);
+  });
+
+  it('logs', () => {
+    const result: LogMessageDefinition[] = [];
+
+    policy.logMessageProduced$.subscribe((event) => {
+      result.push(event);
+    });
+
+    policy.enforce(ruleResult, values);
+
+    expect(result).toEqual(logs);
+  });
 }
