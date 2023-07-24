@@ -7,6 +7,15 @@ import { SettingsStore } from '@stores/settings.store';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActorEntity } from '@entities/actor.entity';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
+import { ActorInterface } from '@interfaces/actor.interface';
+
+type CheckResult =
+  | {
+      readonly name: string;
+      readonly duration: number;
+      readonly log: LogMessageDefinition;
+    }
+  | undefined;
 
 export class CooldownPolicy extends PolicyAbstraction {
   constructor(private readonly skillStore: SkillStore) {
@@ -14,60 +23,70 @@ export class CooldownPolicy extends PolicyAbstraction {
   }
 
   public override enforce(ruleResult: RuleResult): PolicyResult {
-    let actorResult:
-      | {
-          readonly name: string;
-          readonly duration: number;
-        }
-      | undefined;
+    let policyResult = {};
 
-    let targetResult = false;
+    let actorResult: CheckResult;
+
+    let targetResult: CheckResult;
 
     if (ruleResult.result !== 'DENIED') {
       actorResult = this.checkPlayerEngagement(ruleResult);
 
-      targetResult = this.checkTargetEngagement(ruleResult, targetResult);
+      this.processResult(ruleResult.actor, actorResult);
+
+      targetResult = this.checkTargetEngagement(ruleResult);
+
+      this.processResult(ruleResult.target as ActorInterface, targetResult);
+
+      policyResult = actorResult
+        ? {
+            cooldown: {
+              name: actorResult.name,
+              duration: actorResult.duration,
+              target: !!targetResult,
+            },
+          }
+        : {};
     }
 
-    return actorResult
-      ? { cooldown: { ...actorResult, target: targetResult } }
-      : {};
+    return policyResult;
   }
 
-  private checkTargetEngagement(ruleResult: RuleResult, targetResult: boolean) {
+  private checkTargetEngagement(ruleResult: RuleResult): CheckResult {
+    let targetResult: CheckResult;
+
+    let cooldownKey: string | undefined;
+
+    let cooldownDuration: number | undefined;
+
+    let log: LogMessageDefinition | undefined;
+
     if (
       ruleResult.name === 'AFFECT' &&
       ruleResult.target instanceof PlayerEntity
     ) {
-      const targetDuration =
+      cooldownKey = 'ENGAGEMENT';
+
+      cooldownDuration =
         SettingsStore.settings.timersInMilliseconds.engagementTimer;
 
-      const log = GameStringsStore.createEngagementTimerLogMessage(
+      log = GameStringsStore.createEngagementTimerLogMessage(
         ruleResult.target.name,
-        targetDuration
+        cooldownDuration
       );
 
-      this.logMessageProduced.next(log);
-
-      ruleResult.target.addCooldown('ENGAGEMENT', targetDuration);
-
-      targetResult = true;
+      targetResult = {
+        name: cooldownKey,
+        duration: cooldownDuration,
+        log,
+      };
     }
+
     return targetResult;
   }
 
-  private checkPlayerEngagement(ruleResult: RuleResult):
-    | {
-        name: string;
-        duration: number;
-      }
-    | undefined {
-    let actorResult:
-      | {
-          name: string;
-          duration: number;
-        }
-      | undefined;
+  private checkPlayerEngagement(ruleResult: RuleResult): CheckResult {
+    let actorResult: CheckResult;
 
     if (ruleResult.actor instanceof PlayerEntity && ruleResult.skillName) {
       const skillName = ruleResult.skillName;
@@ -106,17 +125,34 @@ export class CooldownPolicy extends PolicyAbstraction {
       }
 
       if (cooldownKey && cooldownDuration && log) {
-        ruleResult.actor.addCooldown(cooldownKey, cooldownDuration);
-
         actorResult = {
           name: cooldownKey,
           duration: cooldownDuration,
+          log,
         };
-
-        this.logMessageProduced.next(log);
       }
     }
 
     return actorResult;
+  }
+
+  private processResult(actor: ActorInterface, result: CheckResult): void {
+    if (result) {
+      this.addCooldown(actor, result.name, result.duration);
+
+      this.log(result.log);
+    }
+  }
+
+  private log(log: LogMessageDefinition): void {
+    this.logMessageProduced.next(log);
+  }
+
+  private addCooldown(
+    actor: ActorInterface,
+    key: string,
+    duration: number
+  ): void {
+    actor.addCooldown(key, duration);
   }
 }
