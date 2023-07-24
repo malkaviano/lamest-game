@@ -45,6 +45,7 @@ import {
   mockedRegeneratorBehavior,
   mockedEquipmentBehavior,
   setupMocks,
+  mockedCooldownBehavior,
 } from '../../../tests/mocks';
 
 const remedy5Log = 'received REMEDY effect, healed 5 hp';
@@ -543,6 +544,7 @@ const fakeActor = () =>
     {
       regeneratorBehavior: instance(mockedRegeneratorBehavior),
       aiBehavior: instance(mockedAiBehavior),
+      cooldownBehavior: instance(mockedCooldownBehavior),
     }
   );
 

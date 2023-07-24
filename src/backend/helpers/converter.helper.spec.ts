@@ -12,6 +12,7 @@ import {
   mockedInteractiveEntity,
   setupMocks,
   mockedAiBehavior,
+  mockedCooldownBehavior,
 } from '../../../tests/mocks';
 
 const actor = new ActorEntity(
@@ -23,6 +24,7 @@ const actor = new ActorEntity(
   {
     regeneratorBehavior: new RegeneratorBehavior(),
     aiBehavior: instance(mockedAiBehavior),
+    cooldownBehavior: instance(mockedCooldownBehavior),
   }
 );
 

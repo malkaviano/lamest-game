@@ -17,7 +17,6 @@ import { PlayerInterface } from '@interfaces/player.interface';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
 import { CooldownBehavior } from '@behaviors/cooldown.behavior';
-import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 
 export class PlayerEntity extends ActorEntity implements PlayerInterface {
   private playerAction: ActionableEvent | null;
@@ -37,7 +36,7 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
     actorBehavior: ActorBehavior,
     equipmentBehavior: EquipmentBehavior,
     regeneratorBehavior: RegeneratorBehavior,
-    private readonly cooldownBehavior: CooldownBehavior
+    cooldownBehavior: CooldownBehavior
   ) {
     super(
       new ActorIdentityDefinition(
@@ -51,8 +50,9 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
       equipmentBehavior,
       emptyState,
       {
-        regeneratorBehavior: regeneratorBehavior,
+        regeneratorBehavior,
         aiBehavior: AiBehavior.create('PASSIVE', ArrayView.empty()),
+        cooldownBehavior,
       }
     );
 
@@ -93,10 +93,6 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
     return ArrayView.empty();
   }
 
-  public get cooldowns(): ReadonlyKeyValueWrapper<number> {
-    return this.cooldownBehavior.cooldowns;
-  }
-
   public override action(): ActionableEvent | null {
     if (this.playerAction) {
       const tmp = this.playerAction;
@@ -111,9 +107,5 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
 
   public playerDecision(event: ActionableEvent | null): void {
     this.playerAction = event;
-  }
-
-  public addCooldown(key: string, durationMilliseconds: number): void {
-    this.cooldownBehavior.addCooldown(key, durationMilliseconds);
   }
 }

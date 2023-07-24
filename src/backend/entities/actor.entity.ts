@@ -38,6 +38,7 @@ import {
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { emptyState } from '@states/empty.state';
+import { CooldownBehavior } from '@behaviors/cooldown.behavior';
 
 export class ActorEntity extends InteractiveEntity implements ActorInterface {
   private readonly mAfflictedBy: Set<string>;
@@ -51,6 +52,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
   protected readonly regeneratorBehavior: RegeneratorBehavior;
 
   protected readonly aiBehavior: AiBehavior;
+
+  protected readonly cooldownBehavior: CooldownBehavior;
 
   protected dodgeEnabled: boolean;
 
@@ -69,6 +72,7 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     behaviors: {
       readonly regeneratorBehavior: RegeneratorBehavior;
       readonly aiBehavior: AiBehavior;
+      readonly cooldownBehavior: CooldownBehavior;
     }
   ) {
     super(
@@ -87,6 +91,8 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     );
 
     this.aiBehavior = behaviors.aiBehavior;
+
+    this.cooldownBehavior = behaviors.cooldownBehavior;
 
     this.mAfflictedBy = new Set();
 
@@ -175,6 +181,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
     };
   }
 
+  public get cooldowns(): ReadonlyKeyValueWrapper<number> {
+    return this.cooldownBehavior.cooldowns;
+  }
+
   public wannaDodge(effect: EffectTypeLiteral): boolean {
     return this.dodgeEnabled && this.actorBehavior.wannaDodge(effect);
   }
@@ -250,6 +260,10 @@ export class ActorEntity extends InteractiveEntity implements ActorInterface {
 
   public apRecovered(apRecovered: number): void {
     this.apChange(apRecovered);
+  }
+
+  public addCooldown(key: string, durationMilliseconds: number): void {
+    this.cooldownBehavior.addCooldown(key, durationMilliseconds);
   }
 
   private effect(effect: EffectEvent): string | null {

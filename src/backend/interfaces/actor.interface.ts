@@ -10,6 +10,7 @@ import { WithCharacteristicsInterface } from '@interfaces/with-characteristics.i
 import { WithDerivedAttributesInterface } from '@interfaces/with-derived-attributes.interface';
 import { WithSkillsInterface } from '@interfaces/with-skills.interface';
 import { ArmorWearingInterface } from '@interfaces/armor-wearing.interface';
+import { ActorCooldown } from '@interfaces/actor-cooldown.interface';
 
 export interface ActorInterface
   extends WithCharacteristicsInterface,
@@ -19,7 +20,8 @@ export interface ActorInterface
     ArmorWearingInterface,
     InteractiveInterface,
     ActorDefenseInterface,
-    ActorEventsInterface {
+    ActorEventsInterface,
+    ActorCooldown {
   action(
     sceneActorsInfo: ArrayView<SceneActorsInfoValues>
   ): ActionableEvent | null;
