@@ -45,8 +45,7 @@ import { WearRule } from '@rules/wear.rule';
 import { StripRule } from '@rules/strip.rule';
 import { StatusPolicy } from '@policies/status.policy';
 import { EffectPolicy } from '@policies/effect.policy';
-
-const gamePredicate = new GamePredicate();
+import { CooldownPolicy } from '@policies/cooldown.policy';
 
 const randomIntHelper = new RandomIntHelper();
 const sequencerHelper = new SequencerHelper(randomIntHelper);
@@ -72,6 +71,8 @@ const actorStore = new ActorStore(
 );
 const interactiveStore = new InteractiveStore(statesStore, resourcesStore);
 const sceneStore = new SceneStore(interactiveStore, actorStore, resourcesStore);
+
+const gamePredicate = new GamePredicate(skillStore);
 
 const inventoryService = new InventoryService(statesStore);
 const generatorService = new GeneratorService(randomIntHelper, professionStore);
@@ -136,12 +137,15 @@ const statusPolicy = new StatusPolicy();
 
 const effectPolicy = new EffectPolicy();
 
+const cooldownPolicy = new CooldownPolicy(skillStore);
+
 const policyHub = new PolicyHub(
   actionPolicy,
   visibilityPolicy,
   effectPolicy,
   disposablePolicy,
-  statusPolicy
+  statusPolicy,
+  cooldownPolicy
 );
 
 const loggingHub = new LoggingHub(

@@ -20,4 +20,5 @@ export type LogCategoryLiteral =
   | 'VISIBILITY'
   | 'AP'
   | 'WEARING'
-  | 'STRIP';
+  | 'STRIP'
+  | 'COOLDOWN';

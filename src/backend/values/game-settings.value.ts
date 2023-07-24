@@ -86,4 +86,8 @@ export type GameSettingsValues = {
       readonly hidden: ArrayView<RuleNameLiteral>;
     };
   };
+  readonly timersInMilliseconds: {
+    readonly skillCooldown: number;
+    readonly engagementTimer: number;
+  };
 };

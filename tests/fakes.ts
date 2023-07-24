@@ -111,6 +111,7 @@ export const fakeSkills: ReadonlyKeyValueWrapper<number> = {
   'Melee Weapon (Simple)': 45,
   Brawl: 45,
   Dodge: 30,
+  Bargain: 25,
 };
 
 export const fakeSkillStore: ReadonlyKeyValueWrapper<SkillDefinition> = {
@@ -132,6 +133,9 @@ export const fakeSkillStore: ReadonlyKeyValueWrapper<SkillDefinition> = {
     'STR',
   ]),
   Dodge: new SkillDefinition('Dodge', 'Avoid damage', 'NATURAL', true, ['AGI']),
+  Bargain: new SkillDefinition('Bargain', 'Better prices', 'NATURAL', false, [
+    'APP',
+  ]),
 };
 
 export const fakeMapSkills: Map<string, number> = new Map<string, number>([
@@ -219,6 +223,7 @@ export const fakeCharacterSheetDerivedAttributes = ArrayView.create(
 );
 
 export const fakeCharacterSheetSkills = ArrayView.create(
+  KeyValueDescriptionView.create('Bargain', '25', 'Better prices'),
   KeyValueDescriptionView.create('Brawl', '45', 'Fighting unarmed'),
   KeyValueDescriptionView.create('Dodge', '30', 'Avoid damage'),
   KeyValueDescriptionView.create(

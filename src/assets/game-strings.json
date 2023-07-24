@@ -34,7 +34,10 @@
     "actionPointsInsufficientMessage": "insufficient AP. Action requires ${actionPointsRequired} AP",
     "wearingMessage": "wearing ${armor}",
     "stripMessage": "strip ${armor}",
-    "cannotDodgeWithoutAP": "cannot perform ${Dodge}, not enough AP"
+    "cannotDodgeWithoutAP": "cannot perform ${Dodge}, not enough AP",
+    "skillOnCooldown": "skill ${skill} is on cooldown for ${cooldown} seconds",
+    "engagementTimer": "has engaged another actor and is on engagement timer for ${cooldown} seconds",
+    "skillDeniedEngagementTimer": "skill ${skill} cannot be used while on engagement timer (${remaining} seconds remaining)"
   },
   "errors": {
     "INVALID-OPERATION": "Invalid operation ocurred",

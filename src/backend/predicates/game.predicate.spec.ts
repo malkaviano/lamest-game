@@ -4,11 +4,13 @@ import { GamePredicate } from '@predicates/game.predicate';
 import { DerivedAttributeDefinition } from '@definitions/derived-attribute.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { affectActionable } from '@definitions/actionable.definition';
+import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 
 import {
   mockedActorEntity,
   mockedAffectRule,
   mockedPlayerEntity,
+  mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -32,7 +34,7 @@ describe('GamePredicate', () => {
   beforeEach(() => {
     setupMocks();
 
-    predicate = new GamePredicate();
+    predicate = new GamePredicate(instance(mockedSkillStore));
 
     when(
       mockedAffectRule.execute(anything(), anything(), anything())
@@ -260,6 +262,7 @@ describe('GamePredicate', () => {
         skillName: 'Brawl',
         expected: true,
         log: undefined,
+        cooldowns: {},
       },
       {
         actor: instance(mockedPlayerEntity),
@@ -270,15 +273,46 @@ describe('GamePredicate', () => {
           'Some Name',
           "GG skill couldn't be checked because it's value is zero"
         ),
+        cooldowns: {},
       },
-    ].forEach(({ actor, skillName, expected, log }) => {
+      {
+        actor: instance(mockedPlayerEntity),
+        skillName: 'First Aid',
+        expected: false,
+        log: new LogMessageDefinition(
+          'COOLDOWN',
+          'Some Name',
+          'skill First Aid is on cooldown for 2 seconds'
+        ),
+        cooldowns: { 'First Aid': 2000 },
+      },
+      {
+        actor: instance(mockedPlayerEntity),
+        skillName: 'Bargain',
+        expected: false,
+        log: new LogMessageDefinition(
+          'COOLDOWN',
+          'Some Name',
+          'skill Bargain cannot be used while on engagement timer (1 seconds remaining)'
+        ),
+        cooldowns: { ENGAGEMENT: 1000 },
+      },
+    ].forEach(({ actor, skillName, expected, log, cooldowns }) => {
       it(`return ${expected}`, () => {
+        when(mockedPlayerEntity.cooldowns).thenReturn(
+          cooldowns as ReadonlyKeyValueWrapper<number>
+        );
+
         const result = predicate.canUseSkill(actor, skillName);
 
         expect(result).toEqual(expected);
       });
 
       it('emit log', (done) => {
+        when(mockedPlayerEntity.cooldowns).thenReturn(
+          cooldowns as ReadonlyKeyValueWrapper<number>
+        );
+
         let result: LogMessageDefinition | undefined;
 
         predicate.logMessageProduced$.subscribe((event) => {

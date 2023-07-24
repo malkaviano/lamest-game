@@ -11,6 +11,7 @@ import {
   mockedRegeneratorBehavior,
   mockedEquipmentBehavior,
   setupMocks,
+  mockedCooldownBehavior,
 } from '../../../tests/mocks';
 
 beforeEach(() => {
@@ -62,5 +63,6 @@ const fakeCharacter = () =>
     fakeIdentity,
     instance(mockedActorBehavior),
     instance(mockedEquipmentBehavior),
-    instance(mockedRegeneratorBehavior)
+    instance(mockedRegeneratorBehavior),
+    instance(mockedCooldownBehavior)
   );

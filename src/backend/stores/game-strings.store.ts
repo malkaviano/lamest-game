@@ -430,4 +430,46 @@ export class GameStringsStore {
       )
     );
   }
+
+  public static createSkillOnCooldownLogMessage(
+    actor: string,
+    skill: string,
+    cooldown: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'COOLDOWN',
+      actor,
+      GameStringsStore.logMessagesStore['skillOnCooldown']
+        .replace('${skill}', skill)
+        .replace('${cooldown}', Math.ceil(cooldown / 1000).toString())
+    );
+  }
+
+  public static createEngagementTimerLogMessage(
+    actor: string,
+    cooldown: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'COOLDOWN',
+      actor,
+      GameStringsStore.logMessagesStore['engagementTimer'].replace(
+        '${cooldown}',
+        Math.ceil(cooldown / 1000).toString()
+      )
+    );
+  }
+
+  public static createSkillDeniedEngagementTimerLogMessage(
+    actor: string,
+    skillName: string,
+    remaining: number
+  ): LogMessageDefinition {
+    return new LogMessageDefinition(
+      'COOLDOWN',
+      actor,
+      GameStringsStore.logMessagesStore['skillDeniedEngagementTimer']
+        .replace('${skill}', skillName)
+        .replace('${remaining}', Math.ceil(remaining / 1000).toString())
+    );
+  }
 }

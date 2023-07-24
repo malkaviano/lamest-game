@@ -27,7 +27,7 @@ export class PolicyHub implements LoggerInterface {
     invisibleInteractives: ArrayView<InteractiveInterface>
   ): void {
     this.policies.items.forEach((p) =>
-      p.enforce(ruleResult, { action, invisibleInteractives })
+      p.enforce(ruleResult, { invisibleInteractives })
     );
   }
 }

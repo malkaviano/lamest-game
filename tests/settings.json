@@ -65,6 +65,15 @@
       "stealthSkill": "Hide",
       "detectSkill": "Detect"
     },
+    "unarmedDamage": {
+      "dice": {},
+      "fixed": 1,
+      "effect": "KINETIC"
+    },
+    "clothArmor": {
+      "reduction": {},
+      "penalty": "MINIMAL"
+    },
     "skillCheck": {
       "combatTries": 1,
       "normalTries": 3
@@ -87,6 +96,10 @@
         "disguised": ["AFFECT"],
         "hidden": ["AFFECT", "INTERACTION"]
       }
+    },
+    "timersInMilliseconds": {
+      "skillCooldown": 120,
+      "engagementTimer": 30
     }
   }
 }

@@ -1,5 +1,3 @@
-import { MatDialog } from '@angular/material/dialog';
-
 import { of, Subject } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
@@ -57,6 +55,8 @@ import { SettingsStoreInterface } from '@interfaces/stores/settings-store.interf
 import { SettingsStore } from '@stores/settings.store';
 import { GamePredicate } from '@predicates/game.predicate';
 import { GameEventsValues } from '@values/game-events.value';
+import { affectActionable } from '@definitions/actionable.definition';
+import { CooldownBehavior } from '@behaviors/cooldown.behavior';
 
 import settingsStore from './settings.json';
 
@@ -72,7 +72,6 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { affectActionable } from '../src/backend/conceptual/definitions/actionable.definition';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -158,8 +157,6 @@ export const mockedFormatterHelperService = mock(FormatterHelperService);
 
 export const mockedSkillStore = mock(SkillStore);
 
-export const mockedMatDialog = mock(MatDialog);
-
 export const mockedReadRule = mock(ReadRule);
 
 export const mockedCheckedService = mock(CheckedService);
@@ -167,6 +164,8 @@ export const mockedCheckedService = mock(CheckedService);
 export const mockedDodgeAxiom = mock(DodgeAxiom);
 
 export const mockedRegeneratorBehavior = mock(RegeneratorBehavior);
+
+export const mockedCooldownBehavior = mock(CooldownBehavior);
 
 export const mockedAiBehavior = mock(AiBehavior);
 
@@ -258,6 +257,8 @@ export const setupMocks = () => {
   when(mockedPlayerEntity.skills).thenReturn(fakeSkills);
 
   when(mockedPlayerEntity.armorWearing).thenReturn(clothArmor);
+
+  when(mockedPlayerEntity.cooldowns).thenReturn({});
 
   when(mockedActorEntity.armorWearing).thenReturn(clothArmor);
 
@@ -451,8 +452,6 @@ const resetMocks = () => {
 
   reset(mockedSkillStore);
 
-  reset(mockedMatDialog);
-
   reset(mockedReadRule);
 
   reset(mockedActorEntity2);
@@ -470,6 +469,8 @@ const resetMocks = () => {
   reset(mockedLoggingHub);
 
   reset(mockedGamePredicate);
+
+  reset(mockedCooldownBehavior);
 };
 
 function mockCheckedHelper() {

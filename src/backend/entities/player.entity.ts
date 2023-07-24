@@ -3,7 +3,7 @@ import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { ClassificationLiteral } from '@literals/classification.literal';
 import { emptyState } from '@states/empty.state';
-import { ActorEntity } from './actor.entity';
+import { ActorEntity } from '@entities/actor.entity';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 import { AiBehavior } from '@behaviors/ai.behavior';
@@ -16,6 +16,7 @@ import { ActionableEvent } from '@events/actionable.event';
 import { PlayerInterface } from '@interfaces/player.interface';
 import { BehaviorLiteral } from '@literals/behavior.literal';
 import { VisibilityLiteral } from '@literals/visibility.literal';
+import { CooldownBehavior } from '@behaviors/cooldown.behavior';
 
 export class PlayerEntity extends ActorEntity implements PlayerInterface {
   private playerAction: ActionableEvent | null;
@@ -34,7 +35,8 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
     identity: CharacterIdentityDefinition,
     actorBehavior: ActorBehavior,
     equipmentBehavior: EquipmentBehavior,
-    cooldownBehavior: RegeneratorBehavior
+    regeneratorBehavior: RegeneratorBehavior,
+    cooldownBehavior: CooldownBehavior
   ) {
     super(
       new ActorIdentityDefinition(
@@ -48,8 +50,9 @@ export class PlayerEntity extends ActorEntity implements PlayerInterface {
       equipmentBehavior,
       emptyState,
       {
-        regeneratorBehavior: cooldownBehavior,
+        regeneratorBehavior,
         aiBehavior: AiBehavior.create('PASSIVE', ArrayView.empty()),
+        cooldownBehavior,
       }
     );
 

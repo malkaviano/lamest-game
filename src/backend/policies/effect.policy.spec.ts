@@ -11,7 +11,6 @@ import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { CheckResultLiteral } from '@literals/check-result.literal';
 import { EffectEvent } from '@events/effect.event';
-import { ArrayView } from '@wrappers/array.view';
 
 import {
   mockedActorEntity,
@@ -19,6 +18,7 @@ import {
   setupMocks,
 } from '../../../tests/mocks';
 import { actionableEvent, consumableAnalgesic } from '../../../tests/fakes';
+import { testPolicy } from '../../../tests/scenarios';
 
 describe('EffectPolicy', () => {
   const policy = new EffectPolicy();
@@ -113,29 +113,7 @@ describe('EffectPolicy', () => {
         ],
       },
     ].forEach(({ ruleResult, expected, logs }) => {
-      it('return effect result', () => {
-        const result = policy.enforce(ruleResult, {
-          action: ruleResult.event.actionableDefinition,
-          invisibleInteractives: ArrayView.empty(),
-        });
-
-        expect(result).toEqual(expected);
-      });
-
-      it('log interactive response', () => {
-        const result: LogMessageDefinition[] = [];
-
-        policy.logMessageProduced$.subscribe((event) => {
-          result.push(event);
-        });
-
-        policy.enforce(ruleResult, {
-          action: ruleResult.event.actionableDefinition,
-          invisibleInteractives: ArrayView.empty(),
-        });
-
-        expect(result).toEqual(logs);
-      });
+      testPolicy(policy, ruleResult, expected, logs);
     });
   });
 });

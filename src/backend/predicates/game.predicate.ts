@@ -8,6 +8,8 @@ import { GameStringsStore } from '@stores/game-strings.store';
 import { PlayerEntity } from '@entities/player.entity';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { WeaponDefinition } from '@definitions/weapon.definition';
+import { SkillStore } from '@stores/skill.store';
+import { TimerNameDefinition } from '@definitions/timer-name.definition';
 
 export class GamePredicate implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition> =
@@ -15,6 +17,8 @@ export class GamePredicate implements LoggerInterface {
 
   public readonly logMessageProduced$: Observable<LogMessageDefinition> =
     this.logMessageProduced.asObservable();
+
+  constructor(private readonly skillStore: SkillStore) {}
 
   public hasEnoughActionPoints(
     actor: ActorInterface,
@@ -24,7 +28,7 @@ export class GamePredicate implements LoggerInterface {
 
     const result = actor.derivedAttributes['CURRENT AP'].value >= ruleCost;
 
-    if (!result && actor instanceof PlayerEntity) {
+    if (!result && this.isPlayer(actor)) {
       this.logMessageProduced.next(
         GameStringsStore.createInsufficientAPLogMessage(actor.name, ruleCost)
       );
@@ -40,7 +44,7 @@ export class GamePredicate implements LoggerInterface {
   ): boolean {
     const canActivate = actor.derivedAttributes['CURRENT EP'].value >= energy;
 
-    if (!canActivate && actor instanceof PlayerEntity) {
+    if (!canActivate && this.isPlayer(actor)) {
       const logMessage = GameStringsStore.createNotEnoughEnergyLogMessage(
         actor.name,
         label
@@ -60,7 +64,7 @@ export class GamePredicate implements LoggerInterface {
       if (
         this.canUseSkill(actor, SettingsStore.settings.systemSkills.dodgeSkill)
       ) {
-        if (!actionDodgeable && actor instanceof PlayerEntity) {
+        if (!actionDodgeable && this.isPlayer(actor)) {
           const logMessage = GameStringsStore.createUnDodgeableAttackLogMessage(
             actor.name
           );
@@ -99,17 +103,52 @@ export class GamePredicate implements LoggerInterface {
   }
 
   public canUseSkill(actor: ActorInterface, skillName: string): boolean {
+    const isPlayer = this.isPlayer(actor);
+
     const canUseSkill = (actor.skills[skillName] ?? 0) > 0;
 
-    if (!canUseSkill && actor instanceof PlayerEntity) {
+    const skillCooldown = isPlayer
+      ? (actor as PlayerEntity).cooldowns[skillName]
+      : undefined;
+
+    const skill = this.skillStore.skills[skillName];
+
+    const engagementTimer = isPlayer
+      ? (actor as PlayerEntity)?.cooldowns[TimerNameDefinition.ENGAGEMENT]
+      : undefined;
+
+    const blockedByengagementTimer = !!engagementTimer && !skill.combat;
+
+    if (!canUseSkill && isPlayer) {
       const logMessage = GameStringsStore.createCannotCheckSkillLogMessage(
         actor.name,
         skillName
       );
 
       this.logMessageProduced.next(logMessage);
+    } else if (skillCooldown) {
+      const logMessage = GameStringsStore.createSkillOnCooldownLogMessage(
+        actor.name,
+        skillName,
+        skillCooldown
+      );
+
+      this.logMessageProduced.next(logMessage);
+    } else if (blockedByengagementTimer) {
+      const logMessage =
+        GameStringsStore.createSkillDeniedEngagementTimerLogMessage(
+          actor.name,
+          skillName,
+          engagementTimer
+        );
+
+      this.logMessageProduced.next(logMessage);
     }
 
-    return canUseSkill;
+    return canUseSkill && !skillCooldown && !blockedByengagementTimer;
+  }
+
+  private isPlayer(actor: ActorInterface) {
+    return actor instanceof PlayerEntity;
   }
 }
