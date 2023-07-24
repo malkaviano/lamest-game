@@ -12,7 +12,7 @@ describe('CooldownBehavior', () => {
   });
 
   afterEach(() => {
-    behavior.stop();
+    behavior.stopTimer();
   });
 
   it('should create an instance', () => {
