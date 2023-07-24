@@ -9,7 +9,6 @@ import { SkillDefinition } from '@definitions/skill.definition';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 
 import {
-  mockedActorEntity,
   mockedPlayerEntity,
   mockedSkillStore,
   setupMocks,
@@ -23,7 +22,7 @@ import { testPolicy } from '../../../tests/scenarios';
 
 const actor = instance(mockedPlayerEntity);
 
-const target = instance(mockedActorEntity);
+const target = instance(mockedPlayerEntity);
 
 const eventDetect = actionableEvent(actionDetect, target.id);
 
@@ -69,7 +68,13 @@ describe('CooldownPolicy', () => {
             roll: { checkRoll: 2, result: 'SUCCESS' as CheckResultLiteral },
             skillName: 'Detect',
           },
-          expected: { cooldown: { actor: { name: 'Detect', duration: 120 } } },
+          expected: {
+            cooldown: {
+              name: 'Detect',
+              duration: 120,
+              target: false,
+            },
+          },
           logs: [
             new LogMessageDefinition(
               'COOLDOWN',
@@ -101,9 +106,18 @@ describe('CooldownPolicy', () => {
             skillName: 'Melee Weapon (Simple)',
           },
           expected: {
-            cooldown: { actor: { name: 'ENGAGEMENT', duration: 30 } },
+            cooldown: {
+              name: 'ENGAGEMENT',
+              duration: 30,
+              target: true,
+            },
           },
           logs: [
+            new LogMessageDefinition(
+              'COOLDOWN',
+              'Some Name',
+              'has engaged another actor and is on engagement timer for 1 seconds'
+            ),
             new LogMessageDefinition(
               'COOLDOWN',
               'Some Name',

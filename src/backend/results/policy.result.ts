@@ -16,10 +16,8 @@ export type PolicyResult = {
   readonly dead?: ActorInterface;
   readonly affected?: InteractiveInterface;
   readonly cooldown?: {
-    readonly actor: {
-      readonly name: string;
-      readonly duration: number;
-    };
-    readonly target?: string;
+    readonly name: string;
+    readonly duration: number;
+    readonly target: boolean;
   };
 };

@@ -14,19 +14,62 @@ export class CooldownPolicy extends PolicyAbstraction {
   }
 
   public override enforce(ruleResult: RuleResult): PolicyResult {
-    let policyResult = {};
+    let actorResult:
+      | {
+          readonly name: string;
+          readonly duration: number;
+        }
+      | undefined;
 
-    policyResult = this.checkActorEngagement(ruleResult, policyResult);
+    let targetResult = false;
 
-    return policyResult;
+    if (ruleResult.result !== 'DENIED') {
+      actorResult = this.checkPlayerEngagement(ruleResult);
+
+      targetResult = this.checkTargetEngagement(ruleResult, targetResult);
+    }
+
+    return actorResult
+      ? { cooldown: { ...actorResult, target: targetResult } }
+      : {};
   }
 
-  private checkActorEngagement(ruleResult: RuleResult, policyResult: {}) {
+  private checkTargetEngagement(ruleResult: RuleResult, targetResult: boolean) {
     if (
-      ruleResult.actor instanceof PlayerEntity &&
-      ruleResult.result !== 'DENIED' &&
-      ruleResult.skillName
+      ruleResult.name === 'AFFECT' &&
+      ruleResult.target instanceof PlayerEntity
     ) {
+      const targetDuration =
+        SettingsStore.settings.timersInMilliseconds.engagementTimer;
+
+      const log = GameStringsStore.createEngagementTimerLogMessage(
+        ruleResult.target.name,
+        targetDuration
+      );
+
+      this.logMessageProduced.next(log);
+
+      ruleResult.target.addCooldown('ENGAGEMENT', targetDuration);
+
+      targetResult = true;
+    }
+    return targetResult;
+  }
+
+  private checkPlayerEngagement(ruleResult: RuleResult):
+    | {
+        name: string;
+        duration: number;
+      }
+    | undefined {
+    let actorResult:
+      | {
+          name: string;
+          duration: number;
+        }
+      | undefined;
+
+    if (ruleResult.actor instanceof PlayerEntity && ruleResult.skillName) {
       const skillName = ruleResult.skillName;
 
       const skill = this.skillStore.skills[skillName];
@@ -65,18 +108,15 @@ export class CooldownPolicy extends PolicyAbstraction {
       if (cooldownKey && cooldownDuration && log) {
         ruleResult.actor.addCooldown(cooldownKey, cooldownDuration);
 
-        policyResult = {
-          cooldown: {
-            actor: {
-              name: cooldownKey,
-              duration: cooldownDuration,
-            },
-          },
+        actorResult = {
+          name: cooldownKey,
+          duration: cooldownDuration,
         };
 
         this.logMessageProduced.next(log);
       }
     }
-    return policyResult;
+
+    return actorResult;
   }
 }
