@@ -9,6 +9,7 @@ import { PlayerEntity } from '@entities/player.entity';
 import { LoggerInterface } from '@interfaces/logger.interface';
 import { WeaponDefinition } from '@definitions/weapon.definition';
 import { SkillStore } from '@stores/skill.store';
+import { TimerNameDefinition } from '@definitions/timer-name.definition';
 
 export class GamePredicate implements LoggerInterface {
   private readonly logMessageProduced: Subject<LogMessageDefinition> =
@@ -113,7 +114,7 @@ export class GamePredicate implements LoggerInterface {
     const skill = this.skillStore.skills[skillName];
 
     const engagementTimer = isPlayer
-      ? (actor as PlayerEntity)?.cooldowns['ENGAGEMENT']
+      ? (actor as PlayerEntity)?.cooldowns[TimerNameDefinition.ENGAGEMENT]
       : undefined;
 
     const blockedByengagementTimer = !!engagementTimer && !skill.combat;

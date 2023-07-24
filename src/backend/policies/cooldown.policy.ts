@@ -8,6 +8,7 @@ import { GameStringsStore } from '@stores/game-strings.store';
 import { ActorEntity } from '@entities/actor.entity';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
+import { TimerNameDefinition } from '@definitions/timer-name.definition';
 
 type CheckResult =
   | {
@@ -65,7 +66,7 @@ export class CooldownPolicy extends PolicyAbstraction {
       ruleResult.name === 'AFFECT' &&
       ruleResult.target instanceof PlayerEntity
     ) {
-      cooldownKey = 'ENGAGEMENT';
+      cooldownKey = TimerNameDefinition.ENGAGEMENT;
 
       cooldownDuration =
         SettingsStore.settings.timersInMilliseconds.engagementTimer;
@@ -101,7 +102,7 @@ export class CooldownPolicy extends PolicyAbstraction {
 
       if (skill.combat) {
         if (ruleResult.target instanceof ActorEntity) {
-          cooldownKey = 'ENGAGEMENT';
+          cooldownKey = TimerNameDefinition.ENGAGEMENT;
 
           cooldownDuration =
             SettingsStore.settings.timersInMilliseconds.engagementTimer;
@@ -137,12 +138,12 @@ export class CooldownPolicy extends PolicyAbstraction {
   }
 
   private processResult(actor: ActorInterface, result: CheckResult): void {
-    const hadEngagement = actor.cooldowns['ENGAGEMENT'];
+    const hadEngagement = actor.cooldowns[TimerNameDefinition.ENGAGEMENT];
 
     if (result) {
       this.addCooldown(actor, result.name, result.duration);
 
-      if (!(result.name === 'ENGAGEMENT' && hadEngagement)) {
+      if (!(result.name === TimerNameDefinition.ENGAGEMENT && hadEngagement)) {
         this.log(result.log);
       }
     }
