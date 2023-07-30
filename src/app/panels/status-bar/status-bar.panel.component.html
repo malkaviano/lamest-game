@@ -18,16 +18,29 @@
 >
 </app-equipped-widget>
 
-<app-window-widget
-  [keyValue]="status.visibility"
-  class="status"
-></app-window-widget>
-
 <span class="status">Dodge?</span
 ><mat-checkbox
   #dodgeOption
   (change)="onChange(dodgeOption.checked)"
 ></mat-checkbox>
+
+<span [ngSwitch]="status.visibility.value">
+  <mat-icon
+    *ngSwitchCase="'VISIBLE'"
+    fontIcon="visibility"
+    matTooltip="Visible"
+  ></mat-icon>
+  <mat-icon
+    *ngSwitchCase="'HIDDEN'"
+    fontIcon="visibility_off"
+    matTooltip="Hidden"
+  ></mat-icon>
+  <mat-icon
+    *ngSwitchCase="'DISGUISED'"
+    fontIcon="face"
+    matTooltip="Disguised"
+  ></mat-icon>
+</span>
 
 <app-action-widget
   *ngIf="isVisible"

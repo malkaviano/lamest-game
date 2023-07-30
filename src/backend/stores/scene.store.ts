@@ -57,7 +57,9 @@ export class SceneStore {
             obj.label,
             `${scene.label} <-> ${destination?.label}`,
             new SimpleState(
-              ArrayView.create(createActionableDefinition('SCENE', obj.name))
+              ArrayView.create(
+                createActionableDefinition('SCENE', obj.name, obj.label)
+              )
             ),
             true,
             'VISIBLE'
