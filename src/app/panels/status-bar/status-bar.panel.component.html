@@ -1,7 +1,7 @@
 <app-window-widget
   *ngFor="let keyValue of status.derivedAttributes.items"
   [keyValue]="keyValue"
-  class="status"
+  class="inline padding-sides"
 ></app-window-widget>
 
 <app-equipped-widget
@@ -18,13 +18,15 @@
 >
 </app-equipped-widget>
 
-<span class="status">Dodge?</span
-><mat-checkbox
-  #dodgeOption
-  (change)="onChange(dodgeOption.checked)"
-></mat-checkbox>
+<div class="inline">
+  <span>Dodge?</span
+  ><mat-checkbox
+    #dodgeOption
+    (change)="onChange(dodgeOption.checked)"
+  ></mat-checkbox>
+</div>
 
-<span [ngSwitch]="status.visibility.value">
+<span [ngSwitch]="status.visibility.value" class="padding-sides">
   <mat-icon
     *ngSwitchCase="'VISIBLE'"
     fontIcon="visibility"
@@ -53,7 +55,7 @@
 </app-action-widget>
 
 <app-action-widget
-  class="padding"
+  class="margin-left"
   *ngIf="isVisible"
   [icon]="hide.icon"
   [alt]="hide.alt"
@@ -73,7 +75,7 @@
 </app-action-widget>
 
 <app-action-widget
-  class="padding"
+  class="margin-left"
   [icon]="detect.icon"
   [alt]="detect.alt"
   [tooltip]="detect.tooltip"

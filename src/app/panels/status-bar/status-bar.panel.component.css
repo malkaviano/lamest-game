@@ -1,8 +1,11 @@
-.status {
+.inline {
   display: inline-block;
-  padding: 0 10px;
 }
 
-.padding {
+.margin-left {
   margin-left: 5px;
+}
+
+.padding-sides {
+  padding: 0 10px;
 }
