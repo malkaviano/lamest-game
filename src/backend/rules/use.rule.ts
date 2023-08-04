@@ -9,13 +9,13 @@ import { CheckedService } from '@services/checked.service';
 import { RuleResult } from '@results/rule.result';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
-import { RollService } from '@services/roll.service';
+import { RpgService } from '@services/rpg.service';
 
 export class UseRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly checkedService: CheckedService,
-    private readonly rollService: RollService
+    private readonly rollService: RpgService
   ) {
     super();
   }

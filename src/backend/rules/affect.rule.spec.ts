@@ -1,4 +1,4 @@
-import { deepEqual, instance, verify, when } from 'ts-mockito';
+import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { AffectRule } from '@rules/affect.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
@@ -15,7 +15,7 @@ import {
   mockedGamePredicate,
   mockedInteractiveEntity,
   mockedPlayerEntity,
-  mockedRollService,
+  mockedRpgService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -34,7 +34,7 @@ describe('AffectRule', () => {
 
   beforeEach(() => {
     rule = new AffectRule(
-      instance(mockedRollService),
+      instance(mockedRpgService),
       instance(mockedCheckedService),
       instance(mockedDodgeAxiom),
       instance(mockedGamePredicate)
@@ -42,9 +42,11 @@ describe('AffectRule', () => {
 
     setupMocks();
 
-    when(mockedRollService.roll(simpleSword.damage.diceRoll)).thenReturn(0);
+    when(mockedRpgService.weaponDamage(simpleSword, anything())).thenReturn(2);
 
-    when(mockedRollService.roll(unDodgeableAxe.damage.diceRoll)).thenReturn(0);
+    when(mockedRpgService.weaponDamage(unDodgeableAxe, anything())).thenReturn(
+      2
+    );
 
     when(mockedActorEntity.wannaDodge('KINETIC')).thenReturn(true);
 
@@ -71,15 +73,15 @@ describe('AffectRule', () => {
     ).thenReturn(damageMessage2);
 
     when(
-      mockedRollService.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
+      mockedRpgService.actorSkillCheck(actor, 'Ranged Weapon (Throw)')
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
-      mockedRollService.actorSkillCheck(actor, 'Melee Weapon (Simple)')
+      mockedRpgService.actorSkillCheck(actor, 'Melee Weapon (Simple)')
     ).thenReturn(new RollDefinition('SUCCESS', 5));
 
     when(
-      mockedRollService.actorSkillCheck(actor, 'Firearm (Handgun)')
+      mockedRpgService.actorSkillCheck(actor, 'Firearm (Handgun)')
     ).thenReturn(new RollDefinition('FAILURE', 85));
 
     when(
@@ -176,10 +178,7 @@ describe('AffectRule', () => {
               verify(mockedDodgeAxiom.dodged(target, true)).once();
 
               verify(
-                mockedRollService.actorSkillCheck(
-                  actor,
-                  'Melee Weapon (Simple)'
-                )
+                mockedRpgService.actorSkillCheck(actor, 'Melee Weapon (Simple)')
               ).once();
             });
           });

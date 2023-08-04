@@ -27,6 +27,7 @@ export class SettingsStore {
       skillCheck,
       visibilityBreak,
       timersInMilliseconds,
+      strBonusDamageEvery,
     } = settingsStore.settings;
 
     const cures = ArrayView.fromArray(playerEffectDefenses.cures);
@@ -81,6 +82,7 @@ export class SettingsStore {
       skillCheck,
       visibilityBreak: onVisibilityBreak,
       timersInMilliseconds,
+      strBonusDamageEvery,
     };
   }
 

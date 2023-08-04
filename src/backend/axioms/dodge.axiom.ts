@@ -1,11 +1,11 @@
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RollService } from '@services/roll.service';
+import { RpgService } from '@services/rpg.service';
 import { GamePredicate } from '@predicates/game.predicate';
 import { SettingsStore } from '@stores/settings.store';
 
 export class DodgeAxiom {
   constructor(
-    private readonly rollService: RollService,
+    private readonly rollService: RpgService,
     private readonly gamePredicate: GamePredicate
   ) {}
 

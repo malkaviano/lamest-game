@@ -112,6 +112,7 @@ export const fakeSkills: ReadonlyKeyValueWrapper<number> = {
   Brawl: 45,
   Dodge: 30,
   Bargain: 25,
+  'Firearm (Handgun)': 28,
 };
 
 export const fakeSkillStore: ReadonlyKeyValueWrapper<SkillDefinition> = {
@@ -136,6 +137,13 @@ export const fakeSkillStore: ReadonlyKeyValueWrapper<SkillDefinition> = {
   Bargain: new SkillDefinition('Bargain', 'Better prices', 'NATURAL', false, [
     'APP',
   ]),
+  'Firearm (Handgun)': new SkillDefinition(
+    'Firearm (Handgun)',
+    'Shoot people',
+    'NATURAL',
+    true,
+    ['AGI']
+  ),
 };
 
 export const fakeMapSkills: Map<string, number> = new Map<string, number>([
@@ -226,6 +234,7 @@ export const fakeCharacterSheetSkills = ArrayView.create(
   KeyValueDescriptionView.create('Bargain', '25', 'Better prices'),
   KeyValueDescriptionView.create('Brawl', '45', 'Fighting unarmed'),
   KeyValueDescriptionView.create('Dodge', '30', 'Avoid damage'),
+  KeyValueDescriptionView.create('Firearm (Handgun)', '28', 'Shoot people'),
   KeyValueDescriptionView.create(
     'First Aid',
     '45',

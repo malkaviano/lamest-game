@@ -17,7 +17,7 @@ import { InteractiveStore } from '@stores/interactive.store';
 import { SceneStore } from '@stores/scene.store';
 import { SequencerHelper } from '@helpers/sequencer.helper';
 import { CheckedService } from '@services/checked.service';
-import { RollService } from '@services/roll.service';
+import { RpgService } from '@services/rpg.service';
 import { AffectRule } from '@rules/affect.rule';
 import { ConsumeRule } from '@rules/consume.rule';
 import { EquipRule } from '@rules/equip.rule';
@@ -78,7 +78,7 @@ const inventoryService = new InventoryService(statesStore);
 const generatorService = new GeneratorService(randomIntHelper, professionStore);
 const narrativeService = new NarrativeService(sceneStore);
 const checkedService = new CheckedService();
-const rollService = new RollService(randomIntHelper, skillStore);
+const rollService = new RpgService(randomIntHelper, skillStore);
 
 const dodgeAxiom = new DodgeAxiom(rollService, gamePredicate);
 
@@ -181,7 +181,7 @@ const gameLoopService = new GameLoopService(
   providers: [
     { provide: RandomIntHelper, useValue: randomIntHelper },
     { provide: SequencerHelper, useValue: sequencerHelper },
-    { provide: RollService, useValue: rollService },
+    { provide: RpgService, useValue: rollService },
 
     { provide: ResourcesStore, useValue: resourcesStore },
     { provide: ActionableStore, useValue: actionableStore },

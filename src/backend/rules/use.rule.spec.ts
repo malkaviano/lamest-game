@@ -11,7 +11,7 @@ import {
   mockedInteractiveEntity,
   mockedInventoryService,
   mockedPlayerEntity,
-  mockedRollService,
+  mockedRpgService,
   setupMocks,
 } from '../../../tests/mocks';
 import {
@@ -63,7 +63,7 @@ describe('UseRule', () => {
     rule = new UseRule(
       instance(mockedInventoryService),
       instance(mockedCheckedService),
-      instance(mockedRollService)
+      instance(mockedRpgService)
     );
 
     when(
@@ -154,12 +154,10 @@ describe('UseRule', () => {
         },
       ].forEach(({ event, target, expected }) => {
         it('return used result', () => {
-          when(mockedRollService.actorSkillCheck(actor, 'Disguise')).thenReturn(
-            {
-              result: expected.roll?.result ?? 'FAILURE',
-              roll: expected.roll?.checkRoll ?? 100,
-            }
-          );
+          when(mockedRpgService.actorSkillCheck(actor, 'Disguise')).thenReturn({
+            result: expected.roll?.result ?? 'FAILURE',
+            roll: expected.roll?.checkRoll ?? 100,
+          });
 
           const result = rule.execute(actor, event, { target });
 

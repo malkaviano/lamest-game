@@ -9,9 +9,11 @@ import { DiceLiteral } from '@literals/dice.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { SkillStore } from '@stores/skill.store';
-import { SettingsStore } from '../stores/settings.store';
+import { SettingsStore } from '@stores/settings.store';
+import { WeaponDefinition } from '@definitions/weapon.definition';
+import { CharacteristicValues } from '@values/characteristic.value';
 
-export class RollService implements LoggerInterface {
+export class RpgService implements LoggerInterface {
   private readonly diceMap: {
     readonly [key in DiceLiteral]: { min: number; max: number };
   };
@@ -91,6 +93,23 @@ export class RollService implements LoggerInterface {
     }
 
     return acc;
+  }
+
+  public weaponDamage(
+    weapon: WeaponDefinition,
+    characteristics: CharacteristicValues
+  ): number {
+    const influenced = this.skillStore.skills[weapon.skillName].influenced;
+
+    let bonus = 0;
+
+    if (influenced.includes('STR')) {
+      bonus += Math.trunc(
+        characteristics.STR.value / SettingsStore.settings.strBonusDamageEvery
+      );
+    }
+
+    return this.roll(weapon.damage.diceRoll) + weapon.damage.fixed + bonus;
   }
 
   private skillCheck(skillValue: number): RollDefinition {

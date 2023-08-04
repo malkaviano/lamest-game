@@ -1,7 +1,7 @@
 import { DodgeAxiom } from '@axioms/dodge.axiom';
 import { ActionableEvent } from '@events/actionable.event';
 import { ConverterHelper } from '@helpers/converter.helper';
-import { RollService } from '@services/roll.service';
+import { RpgService } from '@services/rpg.service';
 import { ActorInterface } from '@interfaces/actor.interface';
 import { RuleValues } from '@values/rule.value';
 import { RuleResult } from '@results/rule.result';
@@ -18,7 +18,7 @@ import { GamePredicate } from '@predicates/game.predicate';
 
 export class AffectRule extends RuleAbstraction {
   constructor(
-    private readonly rollHelper: RollService,
+    private readonly rollHelper: RpgService,
     private readonly checkedService: CheckedService,
     private readonly dodgeAxiom: DodgeAxiom,
     private readonly gamePredicate: GamePredicate
@@ -87,8 +87,10 @@ export class AffectRule extends RuleAbstraction {
       ) {
         ruleResult = 'EXECUTED';
 
-        const effectAmount =
-          this.rollHelper.roll(effect.diceRoll) + effect.fixed;
+        const effectAmount = this.rollHelper.weaponDamage(
+          actor.weaponEquipped,
+          actor.characteristics
+        );
 
         this.ruleResult.effect = {
           type: effect.effectType,
