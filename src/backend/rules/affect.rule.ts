@@ -87,8 +87,10 @@ export class AffectRule extends RuleAbstraction {
       ) {
         ruleResult = 'EXECUTED';
 
-        const effectAmount =
-          this.rollHelper.roll(effect.diceRoll) + effect.fixed;
+        const effectAmount = this.rollHelper.weaponDamage(
+          actor.weaponEquipped,
+          actor.characteristics
+        );
 
         this.ruleResult.effect = {
           type: effect.effectType,

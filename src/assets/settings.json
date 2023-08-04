@@ -91,6 +91,7 @@
     "timersInMilliseconds": {
       "skillCooldown": 120000,
       "engagementTimer": 30000
-    }
+    },
+    "strBonusDamageEvery": 8
   }
 }

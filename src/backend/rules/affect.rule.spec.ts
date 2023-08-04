@@ -1,4 +1,4 @@
-import { deepEqual, instance, verify, when } from 'ts-mockito';
+import { anything, deepEqual, instance, verify, when } from 'ts-mockito';
 
 import { AffectRule } from '@rules/affect.rule';
 import { GameStringsStore } from '@stores/game-strings.store';
@@ -42,9 +42,11 @@ describe('AffectRule', () => {
 
     setupMocks();
 
-    when(mockedRpgService.roll(simpleSword.damage.diceRoll)).thenReturn(0);
+    when(mockedRpgService.weaponDamage(simpleSword, anything())).thenReturn(2);
 
-    when(mockedRpgService.roll(unDodgeableAxe.damage.diceRoll)).thenReturn(0);
+    when(mockedRpgService.weaponDamage(unDodgeableAxe, anything())).thenReturn(
+      2
+    );
 
     when(mockedActorEntity.wannaDodge('KINETIC')).thenReturn(true);
 

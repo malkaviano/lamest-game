@@ -90,4 +90,5 @@ export type GameSettingsValues = {
     readonly skillCooldown: number;
     readonly engagementTimer: number;
   };
+  readonly strBonusDamageEvery: number;
 };

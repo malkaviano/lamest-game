@@ -4,7 +4,6 @@ import { RollDefinition } from '@definitions/roll.definition';
 import { RpgService } from '@services/rpg.service';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { CheckResultLiteral } from '@literals/check-result.literal';
-import { SkillDefinition } from '@definitions/skill.definition';
 
 import {
   mockedActorEntity,
@@ -13,9 +12,15 @@ import {
   mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
+import {
+  fakeCharacteristics,
+  fakeSkillStore,
+  glock,
+  simpleSword,
+} from '../../../tests/fakes';
 
 describe('RpgService', () => {
-  const helper = new RpgService(
+  const service = new RpgService(
     instance(mockedRandomIntHelper),
     instance(mockedSkillStore)
   );
@@ -23,26 +28,11 @@ describe('RpgService', () => {
   beforeEach(() => {
     setupMocks();
 
-    when(mockedSkillStore.skills).thenReturn({
-      'First Aid': new SkillDefinition(
-        'First Aid',
-        'First Aid',
-        'TRAINED',
-        false,
-        ['INT']
-      ),
-      'Melee Weapon (Simple)': new SkillDefinition(
-        'Melee Weapon (Simple)',
-        'Melee Weapon (Simple)',
-        'NATURAL',
-        true,
-        ['STR']
-      ),
-    });
+    when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
   });
 
   it('should be created', () => {
-    expect(helper).toBeTruthy();
+    expect(service).toBeTruthy();
   });
 
   describe('actorSkillCheck', () => {
@@ -85,7 +75,7 @@ describe('RpgService', () => {
             true
           );
 
-          const result = helper.actorSkillCheck(actor, skillName);
+          const result = service.actorSkillCheck(actor, skillName);
 
           const expected = new RollDefinition(
             checkResult as CheckResultLiteral,
@@ -104,7 +94,7 @@ describe('RpgService', () => {
             mockedGamePredicate.canUseSkill(actor, 'Melee Weapon (Simple)')
           ).thenReturn(true);
 
-          helper.logMessageProduced$.subscribe((event) => {
+          service.logMessageProduced$.subscribe((event) => {
             result = event;
           });
 
@@ -112,7 +102,7 @@ describe('RpgService', () => {
             roll
           );
 
-          helper.actorSkillCheck(instance(mockedActorEntity), skillName);
+          service.actorSkillCheck(instance(mockedActorEntity), skillName);
 
           const expected = new LogMessageDefinition(
             'CHECK',
@@ -138,7 +128,7 @@ describe('RpgService', () => {
       when(mockedRandomIntHelper.getRandomInterval(1, 6)).thenReturn(3);
       when(mockedRandomIntHelper.getRandomInterval(1, 4)).thenReturn(2);
 
-      const result = helper.roll({
+      const result = service.roll({
         D4: 1,
         D6: 1,
         D8: 1,
@@ -149,6 +139,25 @@ describe('RpgService', () => {
       });
 
       expect(result).toEqual(80);
+    });
+  });
+
+  describe('weaponDamage', () => {
+    [
+      {
+        weapon: simpleSword,
+        expected: 4,
+      },
+      {
+        weapon: glock,
+        expected: 2,
+      },
+    ].forEach(({ weapon, expected }) => {
+      it('returns weapon damage plus str bonus', () => {
+        const result = service.weaponDamage(weapon, fakeCharacteristics);
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 });
