@@ -1,9 +1,10 @@
 import { instance, when } from 'ts-mockito';
 
 import { RollDefinition } from '@definitions/roll.definition';
-import { RollService } from '@services/roll.service';
+import { RpgService } from '@services/rpg.service';
 import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { CheckResultLiteral } from '@literals/check-result.literal';
+import { SkillDefinition } from '@definitions/skill.definition';
 
 import {
   mockedActorEntity,
@@ -12,10 +13,9 @@ import {
   mockedSkillStore,
   setupMocks,
 } from '../../../tests/mocks';
-import { SkillDefinition } from '../conceptual/definitions/skill.definition';
 
-describe('RollService', () => {
-  const helper = new RollService(
+describe('RpgService', () => {
+  const helper = new RpgService(
     instance(mockedRandomIntHelper),
     instance(mockedSkillStore)
   );

@@ -14,7 +14,7 @@ import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 import { AiBehavior } from '@behaviors/ai.behavior';
 import { SimpleState } from '@states/simple.state';
 import { affectActionable } from '@definitions/actionable.definition';
-import { CooldownBehavior } from '../behaviors/cooldown.behavior';
+import { CooldownBehavior } from '@behaviors/cooldown.behavior';
 
 export class ActorStore {
   private readonly store: Map<string, ActorEntity>;

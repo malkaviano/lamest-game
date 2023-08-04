@@ -9,9 +9,9 @@ import { DiceLiteral } from '@literals/dice.literal';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { SkillStore } from '@stores/skill.store';
-import { SettingsStore } from '../stores/settings.store';
+import { SettingsStore } from '@stores/settings.store';
 
-export class RollService implements LoggerInterface {
+export class RpgService implements LoggerInterface {
   private readonly diceMap: {
     readonly [key in DiceLiteral]: { min: number; max: number };
   };

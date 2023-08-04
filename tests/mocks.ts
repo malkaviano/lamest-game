@@ -47,7 +47,7 @@ import {
 import { SceneEntity } from '@entities/scene.entity';
 import { RandomIntHelper } from '@helpers/random-int.helper';
 import { CheckedService } from '@services/checked.service';
-import { RollService } from '@services/roll.service';
+import { RpgService } from '@services/rpg.service';
 import { PolicyHub } from '@hubs/policy.hub';
 import { GameLoopService } from '@services/game-loop.service';
 import { LoggingHub } from '@hubs/logging.hub';
@@ -81,7 +81,7 @@ export const mockedTargetPlayerEntity = mock(PlayerEntity);
 
 export const mockedInteractiveEntity = mock(InteractiveEntity);
 
-export const mockedRollService = mock(RollService);
+export const mockedRpgService = mock(RpgService);
 
 export const mockedNarrativeService = mock(NarrativeService);
 
@@ -386,7 +386,7 @@ const resetMocks = () => {
 
   reset(mockedInteractiveEntity);
 
-  reset(mockedRollService);
+  reset(mockedRpgService);
 
   reset(mockedNarrativeService);
 
