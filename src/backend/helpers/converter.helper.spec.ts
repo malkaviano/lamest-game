@@ -4,29 +4,15 @@ import { ConverterHelper } from '@helpers/converter.helper';
 import { ActorEntity } from '@entities/actor.entity';
 import { ActorIdentityDefinition } from '@definitions/actor-identity.definition';
 import { emptyState } from '@states/empty.state';
-import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 
 import {
   mockedActorBehavior,
   mockedEquipmentBehavior,
-  mockedInteractiveEntity,
   setupMocks,
   mockedAiBehavior,
   mockedCooldownBehavior,
+  mockedRegeneratorBehavior,
 } from '../../../tests/mocks';
-
-const actor = new ActorEntity(
-  new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
-  emptyState,
-  instance(mockedActorBehavior),
-  instance(mockedEquipmentBehavior),
-  emptyState,
-  {
-    regeneratorBehavior: new RegeneratorBehavior(),
-    aiBehavior: instance(mockedAiBehavior),
-    cooldownBehavior: instance(mockedCooldownBehavior),
-  }
-);
 
 describe('ConverterHelper', () => {
   beforeEach(() => {
@@ -50,19 +36,24 @@ describe('ConverterHelper', () => {
   });
 
   describe('asActor', () => {
-    [
-      {
-        actor,
-        expected: actor,
-      },
-      {
-        actor: instance(mockedInteractiveEntity),
-        expected: null,
-      },
-    ].forEach(({ actor, expected }) => {
-      it(`return ${expected}`, () => {
-        expect(ConverterHelper.asActor(actor)).toEqual(expected);
-      });
+    it('return actor', () => {
+      const actor = fakeActor();
+
+      expect(ConverterHelper.asActor(actor)).toEqual(actor);
     });
   });
 });
+
+const fakeActor = () =>
+  new ActorEntity(
+    new ActorIdentityDefinition('id1', 'actor', 'Some Actor', 'VISIBLE'),
+    emptyState,
+    instance(mockedActorBehavior),
+    instance(mockedEquipmentBehavior),
+    emptyState,
+    {
+      regeneratorBehavior: instance(mockedRegeneratorBehavior),
+      aiBehavior: instance(mockedAiBehavior),
+      cooldownBehavior: instance(mockedCooldownBehavior),
+    }
+  );

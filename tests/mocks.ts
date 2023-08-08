@@ -376,6 +376,8 @@ export const setupMocks = () => {
 
   when(mockedAffectRule.name).thenReturn('AFFECT');
 
+  when(mockedRegeneratorBehavior.apRegenerated$).thenReturn(new Subject());
+
   mockCheckedHelper();
 };
 

@@ -32,8 +32,8 @@ export class RandomCharacterService {
         this.skillStore
       ),
       EquipmentBehavior.create(),
-      new RegeneratorBehavior(),
-      new CooldownBehavior(500)
+      new RegeneratorBehavior(identity.name),
+      new CooldownBehavior(identity.name, 500)
     );
   }
 

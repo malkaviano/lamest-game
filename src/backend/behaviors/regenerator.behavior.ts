@@ -1,33 +1,27 @@
 import { Observable, Subject } from 'rxjs';
 
 import { SettingsStore } from '@stores/settings.store';
+import { TimerHelper } from '@helpers/timer.helper';
 
 export class RegeneratorBehavior {
-  private apRegenerationTimer: NodeJS.Timer | null;
-
   private readonly apRegenerated: Subject<number>;
 
   public readonly apRegenerated$: Observable<number>;
 
-  constructor() {
-    this.apRegenerationTimer = null;
-
+  constructor(private readonly key: string) {
     this.apRegenerated = new Subject();
 
     this.apRegenerated$ = this.apRegenerated.asObservable();
   }
 
   public stopApRegeneration(): void {
-    if (this.apRegenerationTimer) {
-      clearInterval(this.apRegenerationTimer);
-
-      this.apRegenerationTimer = null;
-    }
+    TimerHelper.removeInterval(this.key);
   }
 
   public startApRegeneration(): void {
-    if (!this.apRegenerationTimer) {
-      this.apRegenerationTimer = setInterval(
+    if (!TimerHelper.intervals.items.includes(this.key)) {
+      TimerHelper.createInterval(
+        this.key,
         () => this.regenerate(),
         SettingsStore.settings.actionPoints.regeneration.intervalMilliseconds
       );

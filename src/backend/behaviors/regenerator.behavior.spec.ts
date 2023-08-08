@@ -39,4 +39,4 @@ describe('RegeneratorBehavior', () => {
   });
 });
 
-const behavior = () => new RegeneratorBehavior();
+const behavior = () => new RegeneratorBehavior('test');
