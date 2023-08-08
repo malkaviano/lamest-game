@@ -9,7 +9,7 @@ export class RegeneratorBehavior {
 
   public readonly apRegenerated$: Observable<number>;
 
-  constructor() {
+  constructor(private readonly key: string) {
     this.apRegenerationTimer = null;
 
     this.apRegenerated = new Subject();

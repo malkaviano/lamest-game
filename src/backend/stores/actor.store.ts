@@ -47,7 +47,7 @@ export class ActorStore {
           EquipmentBehavior.create(),
           stateStore.states[lootState],
           {
-            regeneratorBehavior: new RegeneratorBehavior(),
+            regeneratorBehavior: new RegeneratorBehavior(id),
             aiBehavior: AiBehavior.create(
               aiBehavior,
               ArrayView.fromArray(ignores)

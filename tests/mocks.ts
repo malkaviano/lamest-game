@@ -1,4 +1,4 @@
-import { of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
 import { AffectRule } from '@rules/affect.rule';
@@ -375,6 +375,8 @@ export const setupMocks = () => {
   when(mockedSkillStore.skills).thenReturn(fakeSkillStore);
 
   when(mockedAffectRule.name).thenReturn('AFFECT');
+
+  when(mockedRegeneratorBehavior.apRegenerated$).thenReturn(new Subject());
 
   mockCheckedHelper();
 };
