@@ -11,7 +11,6 @@ import { ActorBehavior } from '@behaviors/actor.behavior';
 import { EquipmentBehavior } from '@behaviors/equipment.behavior';
 import { RegeneratorBehavior } from '@behaviors/regenerator.behavior';
 import { CooldownBehavior } from '@behaviors/cooldown.behavior';
-import { TimerHelper } from '@helpers/timer.helper';
 
 export class RandomCharacterService {
   constructor(

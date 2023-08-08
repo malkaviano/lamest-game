@@ -8,7 +8,6 @@ import { emptyState } from '@states/empty.state';
 import {
   mockedActorBehavior,
   mockedEquipmentBehavior,
-  mockedInteractiveEntity,
   setupMocks,
   mockedAiBehavior,
   mockedCooldownBehavior,
