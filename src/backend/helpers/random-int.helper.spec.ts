@@ -26,4 +26,12 @@ describe('RandomIntHelper', () => {
       expect(final).toBe(true);
     });
   });
+
+  describe('generating lock picking sequence', () => {
+    it('return sequence', () => {
+      const result = helper.lockPickSequence(4);
+
+      expect(result.length).toEqual(4);
+    });
+  });
 });

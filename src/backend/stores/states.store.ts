@@ -17,7 +17,6 @@ import {
 import { ArrayView } from '@wrappers/array.view';
 import { LazyHelper } from '@helpers/lazy.helper';
 import { ConverterHelper } from '@helpers/converter.helper';
-import { SequencerHelper } from '@helpers/sequencer.helper';
 import { LockPickableContainerState } from '@states/lock-pickable-container.state';
 import {
   affectActionable,
@@ -27,6 +26,7 @@ import { ItemStore } from '@stores/item.store';
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { GameItemDefinition } from '@definitions/game-item.definition';
+import { RandomIntHelper } from '@helpers/random-int.helper';
 
 export class StatesStore {
   private readonly store: Map<string, ActionableState>;
@@ -37,7 +37,7 @@ export class StatesStore {
     messageStore: MessageStore,
     actionableStore: ActionableStore,
     resourcesStore: ResourcesStore,
-    sequencerHelper: SequencerHelper,
+    sequencerHelper: RandomIntHelper,
     itemStore: ItemStore
   ) {
     this.store = new Map<string, ActionableState>();

@@ -15,7 +15,6 @@ import { ActorStore } from '@stores/actor.store';
 import { InventoryService } from '@services/inventory.service';
 import { InteractiveStore } from '@stores/interactive.store';
 import { SceneStore } from '@stores/scene.store';
-import { SequencerHelper } from '@helpers/sequencer.helper';
 import { CheckedService } from '@services/checked.service';
 import { RpgService } from '@services/rpg.service';
 import { AffectRule } from '@rules/affect.rule';
@@ -48,7 +47,6 @@ import { EffectPolicy } from '@policies/effect.policy';
 import { CooldownPolicy } from '@policies/cooldown.policy';
 
 const randomIntHelper = new RandomIntHelper();
-const sequencerHelper = new SequencerHelper(randomIntHelper);
 
 const resourcesStore = new ResourcesStore();
 const actionableStore = new ActionableStore(resourcesStore);
@@ -60,7 +58,7 @@ const statesStore = new StatesStore(
   messageStore,
   actionableStore,
   resourcesStore,
-  sequencerHelper,
+  randomIntHelper,
   itemStore
 );
 const actorStore = new ActorStore(
@@ -180,7 +178,6 @@ const gameLoopService = new GameLoopService(
   declarations: [],
   providers: [
     { provide: RandomIntHelper, useValue: randomIntHelper },
-    { provide: SequencerHelper, useValue: sequencerHelper },
     { provide: RpgService, useValue: rollService },
 
     { provide: ResourcesStore, useValue: resourcesStore },
