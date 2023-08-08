@@ -1,4 +1,4 @@
-import { Observable, of, Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { deepEqual, instance, mock, reset, when } from 'ts-mockito';
 
 import { AffectRule } from '@rules/affect.rule';
