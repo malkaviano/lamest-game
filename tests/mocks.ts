@@ -72,7 +72,6 @@ import {
   playerInfo,
   simpleSword,
 } from './fakes';
-import { TimerHelper } from '../src/backend/helpers/timer.helper';
 
 export const mockedInventoryService = mock(InventoryService);
 
@@ -177,8 +176,6 @@ export const mockedLoggingHub = mock(LoggingHub);
 export const apRegeneratedSubject = new Subject<number>();
 
 export const mockedGamePredicate = mock(GamePredicate);
-
-export const mockedTimerHelper = mock(TimerHelper);
 
 export const setupMocks = () => {
   resetMocks();
@@ -474,8 +471,6 @@ const resetMocks = () => {
   reset(mockedGamePredicate);
 
   reset(mockedCooldownBehavior);
-
-  reset(mockedTimerHelper);
 };
 
 function mockCheckedHelper() {

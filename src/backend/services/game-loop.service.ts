@@ -47,8 +47,7 @@ export class GameLoopService {
     private readonly policyHub: PolicyHub,
     private readonly gamePredicate: GamePredicate,
     inventoryService: InventoryService,
-    loggingHub: LoggingHub,
-    private readonly timerHelper: TimerHelper
+    loggingHub: LoggingHub
   ) {
     this.player = this.characterService.currentCharacter;
 
@@ -83,13 +82,13 @@ export class GameLoopService {
   }
 
   public start(): void {
-    this.timerHelper.createInterval(
+    TimerHelper.createInterval(
       'aiTimer',
       () => this.run(this.actors),
       SettingsStore.settings.aiLoopMilliseconds
     );
 
-    this.timerHelper.createInterval(
+    TimerHelper.createInterval(
       'playerTimer',
       () => this.run(ArrayView.create(this.player)),
       250
@@ -97,8 +96,8 @@ export class GameLoopService {
   }
 
   public stop(): void {
-    this.timerHelper.intervals.items.forEach((key) => {
-      this.timerHelper.removeInterval(key);
+    TimerHelper.intervals.items.forEach((key) => {
+      TimerHelper.removeInterval(key);
     });
   }
 

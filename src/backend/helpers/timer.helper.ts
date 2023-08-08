@@ -1,21 +1,21 @@
 import { ArrayView } from '../../wrappers/array.view';
 
 export class TimerHelper {
-  private readonly mIntervals: Map<string, NodeJS.Timer>;
+  private static readonly mIntervals: Map<string, NodeJS.Timer> = new Map();
 
-  constructor() {
-    this.mIntervals = new Map();
-  }
-
-  public get intervals(): ArrayView<string> {
+  public static get intervals(): ArrayView<string> {
     return ArrayView.create(...this.mIntervals.keys());
   }
 
-  public createInterval(id: string, f: () => void, interval: number): void {
+  public static createInterval(
+    id: string,
+    f: () => void,
+    interval: number
+  ): void {
     this.mIntervals.set(id, setInterval(f, interval));
   }
 
-  public removeInterval(id: string): void {
+  public static removeInterval(id: string): void {
     const timer = this.mIntervals.get(id);
 
     if (timer) {

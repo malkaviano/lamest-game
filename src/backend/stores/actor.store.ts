@@ -52,7 +52,7 @@ export class ActorStore {
               aiBehavior,
               ArrayView.fromArray(ignores)
             ),
-            cooldownBehavior: new CooldownBehavior(500),
+            cooldownBehavior: new CooldownBehavior(id, 500),
           }
         );
 

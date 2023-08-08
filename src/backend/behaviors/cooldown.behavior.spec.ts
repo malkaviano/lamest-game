@@ -8,7 +8,7 @@ describe('CooldownBehavior', () => {
   beforeEach(() => {
     setupMocks();
 
-    behavior = new CooldownBehavior(100);
+    behavior = new CooldownBehavior('test', 100);
   });
 
   afterEach(() => {

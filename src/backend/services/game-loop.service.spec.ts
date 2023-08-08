@@ -38,7 +38,6 @@ import {
   mockedPolicyHub,
   mockedRulesHub,
   mockedSceneEntity,
-  mockedTimerHelper,
   setupMocks,
 } from '../../../tests/mocks';
 
@@ -81,8 +80,6 @@ describe('GameLoopService', () => {
       mockedGamePredicate.hasEnoughActionPoints(anything(), anything())
     ).thenReturn(true);
 
-    when(mockedTimerHelper.intervals).thenReturn(ArrayView.empty());
-
     service = new GameLoopService(
       instance(mockedRulesHub),
       instance(mockedCharacterService),
@@ -90,8 +87,7 @@ describe('GameLoopService', () => {
       instance(mockedPolicyHub),
       instance(mockedGamePredicate),
       instance(mockedInventoryService),
-      instance(mockedLoggingHub),
-      instance(mockedTimerHelper)
+      instance(mockedLoggingHub)
     );
   });
 

@@ -1,14 +1,14 @@
 import { ReadonlyKeyValueWrapper } from '@wrappers/key-value.wrapper';
 import { ConverterHelper } from '@helpers/converter.helper';
+import { TimerHelper } from '@helpers/timer.helper';
 
 export class CooldownBehavior {
-  private timer: NodeJS.Timer | null;
-
   private readonly onCooldown: Map<string, number>;
 
-  constructor(private readonly intervalMilliseconds: number) {
-    this.timer = null;
-
+  constructor(
+    private readonly key: string,
+    private readonly intervalMilliseconds: number
+  ) {
     this.onCooldown = new Map();
   }
 
@@ -23,16 +23,16 @@ export class CooldownBehavior {
   }
 
   public stopTimer(): void {
-    if (this.timer) {
-      clearInterval(this.timer);
-
-      this.timer = null;
-    }
+    TimerHelper.removeInterval(this.key);
   }
 
   private startTimer() {
-    if (!this.timer) {
-      this.timer = setInterval(() => this.run(), this.intervalMilliseconds);
+    if (!this.exists()) {
+      TimerHelper.createInterval(
+        this.key,
+        () => this.run(),
+        this.intervalMilliseconds
+      );
     }
   }
 
@@ -52,5 +52,9 @@ export class CooldownBehavior {
     if (Object.keys(this.cooldowns).length === 0) {
       this.stopTimer();
     }
+  }
+
+  private exists() {
+    return TimerHelper.intervals.items.includes(this.key);
   }
 }

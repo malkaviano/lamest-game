@@ -45,10 +45,8 @@ import { StripRule } from '@rules/strip.rule';
 import { StatusPolicy } from '@policies/status.policy';
 import { EffectPolicy } from '@policies/effect.policy';
 import { CooldownPolicy } from '@policies/cooldown.policy';
-import { TimerHelper } from '@helpers/timer.helper';
 
 const randomIntHelper = new RandomIntHelper();
-const timerHelper = new TimerHelper();
 
 const resourcesStore = new ResourcesStore();
 const actionableStore = new ActionableStore(resourcesStore);
@@ -173,8 +171,7 @@ const gameLoopService = new GameLoopService(
   policyHub,
   gamePredicate,
   inventoryService,
-  loggingHub,
-  timerHelper
+  loggingHub
 );
 
 @NgModule({
