@@ -27,12 +27,9 @@ import { SettingsStore } from '@stores/settings.store';
 import { SceneActorsInfoValues } from '@values/scene-actors.value';
 import { SceneEntity } from '@entities/scene.entity';
 import { GameEventsValues } from '@values/game-events.value';
+import { TimerHelper } from '@helpers/timer.helper';
 
 export class GameLoopService {
-  private aiTimer: NodeJS.Timer | undefined;
-
-  private playerTimer: NodeJS.Timer | undefined;
-
   private readonly player: PlayerInterface;
 
   private currentScene!: SceneEntity;
@@ -50,7 +47,8 @@ export class GameLoopService {
     private readonly policyHub: PolicyHub,
     private readonly gamePredicate: GamePredicate,
     inventoryService: InventoryService,
-    loggingHub: LoggingHub
+    loggingHub: LoggingHub,
+    private readonly timerHelper: TimerHelper
   ) {
     this.player = this.characterService.currentCharacter;
 
@@ -85,21 +83,23 @@ export class GameLoopService {
   }
 
   public start(): void {
-    this.aiTimer = setInterval(
+    this.timerHelper.createInterval(
+      'aiTimer',
       () => this.run(this.actors),
       SettingsStore.settings.aiLoopMilliseconds
     );
 
-    this.playerTimer = setInterval(
+    this.timerHelper.createInterval(
+      'playerTimer',
       () => this.run(ArrayView.create(this.player)),
       250
     );
   }
 
   public stop(): void {
-    clearInterval(this.aiTimer);
-
-    clearInterval(this.playerTimer);
+    this.timerHelper.intervals.items.forEach((key) => {
+      this.timerHelper.removeInterval(key);
+    });
   }
 
   public actionableReceived(action: ActionableEvent): void {

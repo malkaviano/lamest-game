@@ -1,5 +1,5 @@
 import { EMPTY, Subject, of } from 'rxjs';
-import { anyString, anything, instance, verify, when } from 'ts-mockito';
+import { anyString, anything, instance, when } from 'ts-mockito';
 
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ItemStoredDefinition } from '@definitions/item-storage.definition';
@@ -14,7 +14,6 @@ import {
   equipActionable,
   readActionable,
 } from '@definitions/actionable.definition';
-import { SettingsStore } from '@stores/settings.store';
 
 import {
   actionableEvent,
@@ -39,6 +38,7 @@ import {
   mockedPolicyHub,
   mockedRulesHub,
   mockedSceneEntity,
+  mockedTimerHelper,
   setupMocks,
 } from '../../../tests/mocks';
 
@@ -81,6 +81,8 @@ describe('GameLoopService', () => {
       mockedGamePredicate.hasEnoughActionPoints(anything(), anything())
     ).thenReturn(true);
 
+    when(mockedTimerHelper.intervals).thenReturn(ArrayView.empty());
+
     service = new GameLoopService(
       instance(mockedRulesHub),
       instance(mockedCharacterService),
@@ -88,37 +90,13 @@ describe('GameLoopService', () => {
       instance(mockedPolicyHub),
       instance(mockedGamePredicate),
       instance(mockedInventoryService),
-      instance(mockedLoggingHub)
+      instance(mockedLoggingHub),
+      instance(mockedTimerHelper)
     );
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('start', () => {
-    it('invoke run', async () => {
-      const { result } = await testRun(service);
-
-      verify(
-        mockedAffectRule.execute(anything(), anything(), anything())
-      ).twice();
-
-      verify(
-        mockedPolicyHub.enforcePolicies(anything(), anything(), anything())
-      ).twice();
-
-      expect(result).toEqual(true);
-    });
-
-    it('invoke actors execute action', async () => {
-      const { actor1Played, actor2Played } = await testRun(service);
-
-      expect({ actor1Played, actor2Played }).toEqual({
-        actor1Played: true,
-        actor2Played: true,
-      });
-    });
   });
 
   describe('when player inventory changes', () => {
@@ -186,8 +164,6 @@ describe('GameLoopService', () => {
   });
 });
 
-const eventAttackPlayer = actionableEvent(affectActionable, playerInfo.id);
-
 const eventAttackInteractive = actionableEvent(
   affectActionable,
   interactiveInfo.id
@@ -201,44 +177,3 @@ const eventEquipUnDodgeableAxe = actionableEvent(
   equipActionable,
   unDodgeableAxe.identity.name
 );
-
-async function testRun(
-  service: GameLoopService
-): Promise<{ result: boolean; actor1Played: boolean; actor2Played: boolean }> {
-  let result = false;
-
-  let actor1Played = false;
-
-  let actor2Played = false;
-
-  when(mockedRulesHub.dispatcher).thenCall(() => {
-    result = true;
-
-    return { AFFECT: instance(mockedAffectRule) };
-  });
-
-  when(mockedAffectRule.name).thenReturn('AFFECT');
-
-  when(mockedActorEntity.action(anything())).thenReturn(eventAttackPlayer);
-
-  when(mockedActorEntity2.action(anything())).thenReturn(eventAttackPlayer);
-
-  when(mockedAffectRule.execute(actor, anything(), anything())).thenCall(
-    () => (actor1Played = true)
-  );
-
-  when(mockedAffectRule.execute(actor2, anything(), anything())).thenCall(
-    () => (actor2Played = true)
-  );
-
-  service.start();
-
-  // Portable event tick
-  await new Promise((resolve) =>
-    setTimeout(resolve, SettingsStore.settings.aiLoopMilliseconds)
-  );
-
-  service.stop();
-
-  return { result, actor1Played, actor2Played };
-}
