@@ -8,20 +8,20 @@ export class TimerHelper {
   }
 
   public static createInterval(
-    id: string,
+    key: string,
     f: () => void,
     interval: number
   ): void {
-    this.mIntervals.set(id, setInterval(f, interval));
+    this.mIntervals.set(key, setInterval(f, interval));
   }
 
-  public static removeInterval(id: string): void {
-    const timer = this.mIntervals.get(id);
+  public static removeInterval(key: string): void {
+    const timer = this.mIntervals.get(key);
 
     if (timer) {
       clearInterval(timer);
     }
 
-    this.mIntervals.delete(id);
+    this.mIntervals.delete(key);
   }
 }

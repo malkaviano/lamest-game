@@ -47,12 +47,12 @@ export class ActorStore {
           EquipmentBehavior.create(),
           stateStore.states[lootState],
           {
-            regeneratorBehavior: new RegeneratorBehavior(id),
+            regeneratorBehavior: new RegeneratorBehavior(`${id}-R`),
             aiBehavior: AiBehavior.create(
               aiBehavior,
               ArrayView.fromArray(ignores)
             ),
-            cooldownBehavior: new CooldownBehavior(id, 500),
+            cooldownBehavior: new CooldownBehavior(`${id}-C`, 500),
           }
         );
 

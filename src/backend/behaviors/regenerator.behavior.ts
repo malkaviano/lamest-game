@@ -8,20 +8,20 @@ export class RegeneratorBehavior {
 
   public readonly apRegenerated$: Observable<number>;
 
-  constructor(private readonly key: string) {
+  constructor(private readonly id: string) {
     this.apRegenerated = new Subject();
 
     this.apRegenerated$ = this.apRegenerated.asObservable();
   }
 
   public stopApRegeneration(): void {
-    TimerHelper.removeInterval(this.key);
+    TimerHelper.removeInterval(this.id);
   }
 
   public startApRegeneration(): void {
-    if (!TimerHelper.intervals.items.includes(this.key)) {
+    if (!TimerHelper.intervals.items.includes(this.id)) {
       TimerHelper.createInterval(
-        this.key,
+        this.id,
         () => this.regenerate(),
         SettingsStore.settings.actionPoints.regeneration.intervalMilliseconds
       );

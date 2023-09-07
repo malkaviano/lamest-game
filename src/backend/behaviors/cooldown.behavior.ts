@@ -6,7 +6,7 @@ export class CooldownBehavior {
   private readonly onCooldown: Map<string, number>;
 
   constructor(
-    private readonly key: string,
+    private readonly id: string,
     private readonly intervalMilliseconds: number
   ) {
     this.onCooldown = new Map();
@@ -23,13 +23,13 @@ export class CooldownBehavior {
   }
 
   public stopTimer(): void {
-    TimerHelper.removeInterval(this.key);
+    TimerHelper.removeInterval(this.id);
   }
 
   private startTimer() {
     if (!this.exists()) {
       TimerHelper.createInterval(
-        this.key,
+        this.id,
         () => this.run(),
         this.intervalMilliseconds
       );
@@ -55,6 +55,6 @@ export class CooldownBehavior {
   }
 
   private exists() {
-    return TimerHelper.intervals.items.includes(this.key);
+    return TimerHelper.intervals.items.includes(this.id);
   }
 }
