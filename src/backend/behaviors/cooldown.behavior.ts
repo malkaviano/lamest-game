@@ -39,6 +39,7 @@ export class CooldownBehavior {
   private run(): void {
     const elapsed = this.intervalMilliseconds;
 
+    console.log(elapsed);
     for (const key in this.cooldowns) {
       const value = (this.onCooldown.get(key) ?? 0) - elapsed;
 
