@@ -1,14 +1,19 @@
 {
   "states": [
     {
+      "id": "bossLoot",
+      "items": ["secretChestKey"],
+      "interactiveId": "boss"
+    },
+    {
       "id": "masterRoomCabinetLoot",
       "items": ["sacredTalisman", "militaryOvercoat"],
       "interactiveId": "masterRoomCabinet"
     },
     {
-      "id": "basementTableLoot",
+      "id": "basementChestLoot",
       "items": ["secretDocuments"],
-      "interactiveId": "basementTable"
+      "interactiveId": "basementChest"
     },
     {
       "id": "hunterCabinTableLoot",

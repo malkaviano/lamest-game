@@ -19,7 +19,7 @@
         }
       ],
       "equippedWeapon": "winchester88",
-      "lootState": "emptyState",
+      "lootState": "bossLoot",
       "immunities": [],
       "cures": ["SACRED"],
       "vulnerabilities": ["FIRE", "ACID"],

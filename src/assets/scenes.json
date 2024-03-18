@@ -68,7 +68,7 @@
       "name": "mainHouseBasement",
       "label": "Main House Basement",
       "image": "basement.jpg",
-      "interactives": ["basementTable"]
+      "interactives": ["basementChest"]
     }
   ],
   "initial": "clearing",

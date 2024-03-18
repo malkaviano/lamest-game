@@ -8,10 +8,10 @@
       "resettable": false
     },
     {
-      "id": "basementTable",
-      "name": "Common old dirty table",
-      "description": "The secret document is right in front of you",
-      "state": "basementTableLoot",
+      "id": "basementChest",
+      "name": "Common old dirty chest",
+      "description": "The secret document must be inside",
+      "state": "basementChestLocked1",
       "resettable": false
     },
     {
