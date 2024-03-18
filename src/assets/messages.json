@@ -31,6 +31,26 @@
           "change": "map1"
         }
       ]
+    },
+    {
+      "id": "map3",
+      "options": [
+        {
+          "name": "boss",
+          "label": "Where's Raskolnikov",
+          "answer": "In the lib, he does not want to be disturbed"
+        },
+        {
+          "name": "masterRoom",
+          "label": "He asked me to grab his stuff",
+          "answer": "Upstairs in the master room"
+        },
+        {
+          "name": "basement",
+          "label": "About the basement",
+          "answer": "It's forbidden to go there, it's locked"
+        }
+      ]
     }
   ]
 }

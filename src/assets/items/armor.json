@@ -1,15 +1,28 @@
 {
   "armor": [
     {
-      "name": "leatherJacket",
-      "label": "Hard Leather Jacket",
+      "name": "hardenedJacket",
+      "label": "Hardened Jacket",
       "description": "A jacket made of hard leather, light protection",
       "damageReduction": {
-        "KINETIC": 2,
+        "KINETIC": 3,
         "PROFANE": 0,
         "SACRED": 0,
-        "ACID": 1,
-        "FIRE": 1
+        "ACID": 0,
+        "FIRE": 0
+      },
+      "armorPenalty": "LIGHT"
+    },
+    {
+      "name": "militaryOvercoat",
+      "label": "Especially made overcoat",
+      "description": "An overcoat made of hard leather and kevlar plates",
+      "damageReduction": {
+        "KINETIC": 5,
+        "PROFANE": 0,
+        "SACRED": 0,
+        "ACID": 3,
+        "FIRE": 3
       },
       "armorPenalty": "LIGHT"
     }

@@ -4,6 +4,11 @@
       "id": "medicConversation",
       "maps": ["map1", "map2"],
       "initialMap": "map1"
+    },
+    {
+      "id": "maidConversation",
+      "maps": ["map3"],
+      "initialMap": "map3"
     }
   ]
 }

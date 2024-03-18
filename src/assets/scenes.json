@@ -19,30 +19,6 @@
       "interactives": []
     },
     {
-      "name": "mainHouse",
-      "label": "Main House",
-      "image": "main.jpg",
-      "interactives": []
-    },
-    {
-      "name": "mainHouseLibrary",
-      "label": "Main House Library",
-      "image": "library.jpg",
-      "interactives": []
-    },
-    {
-      "name": "mainHouseDining",
-      "label": "Main House Dining",
-      "image": "dining.jpg",
-      "interactives": []
-    },
-    {
-      "name": "mainHouseBasement",
-      "label": "Main House Basement",
-      "image": "basement.jpg",
-      "interactives": []
-    },
-    {
       "name": "hunterCabin",
       "label": "Hunter Cabin",
       "image": "cabin.jpg",
@@ -69,6 +45,30 @@
       "label": "Storage Hangar",
       "image": "warehouse.jpg",
       "interactives": ["storageGuard", "storageLockedCabinet1"]
+    },
+    {
+      "name": "mainHouse",
+      "label": "Main House",
+      "image": "main.jpg",
+      "interactives": ["maidNPC"]
+    },
+    {
+      "name": "mainHouseLibrary",
+      "label": "Main House Library",
+      "image": "library.jpg",
+      "interactives": ["boss"]
+    },
+    {
+      "name": "mainHouseMasterRoom",
+      "label": "Master Room",
+      "image": "dining.jpg",
+      "interactives": ["masterRoomCabinet"]
+    },
+    {
+      "name": "mainHouseBasement",
+      "label": "Main House Basement",
+      "image": "basement.jpg",
+      "interactives": ["basementTable"]
     }
   ],
   "initial": "clearing",
@@ -124,9 +124,9 @@
     },
     {
       "sceneA": "mainHouse",
-      "sceneB": "mainHouseDining",
-      "name": "mainHouseDiningDoor",
-      "label": "Dining Door"
+      "sceneB": "mainHouseMasterRoom",
+      "name": "mainHouseMasterRoom",
+      "label": "Master Room Door"
     },
     {
       "sceneA": "mainHouse",

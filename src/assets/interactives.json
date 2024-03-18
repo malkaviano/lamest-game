@@ -1,6 +1,27 @@
 {
   "interactives": [
     {
+      "id": "masterRoomCabinet",
+      "name": "Wooden Ornated Cabinet",
+      "description": "Cabinet with the good stuff",
+      "state": "masterRoomCabinetLoot",
+      "resettable": false
+    },
+    {
+      "id": "basementTable",
+      "name": "Common old dirty table",
+      "description": "The secret document is right in front of you",
+      "state": "basementTableLoot",
+      "resettable": false
+    },
+    {
+      "id": "maidNPC",
+      "name": "Maid",
+      "description": "Cleans the house",
+      "state": "maidConversation",
+      "resettable": true
+    },
+    {
       "id": "hunterCabinTable",
       "name": "Wooden Table",
       "description": "Made of sturdy wood",

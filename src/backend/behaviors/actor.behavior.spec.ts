@@ -14,7 +14,7 @@ import {
   fakeDerivedAttributes,
   fakeEffect,
   fakeMapSkills,
-  leatherJacket,
+  hardenedJacket,
 } from '../../../tests/fakes';
 import { mockedSkillStore, setupMocks } from '../../../tests/mocks';
 
@@ -199,7 +199,7 @@ describe('ActorBehavior', () => {
 
           const result = b.effectReceived(
             fakeEffect('FIRE', 4),
-            leatherJacket.damageReduction
+            hardenedJacket.damageReduction
           );
 
           expect(result).toEqual(
