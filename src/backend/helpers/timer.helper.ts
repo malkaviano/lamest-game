@@ -1,4 +1,4 @@
-import { ArrayView } from '../../wrappers/array.view';
+import { ArrayView } from '@wrappers/array.view';
 
 export class TimerHelper {
   private static readonly mIntervals: Map<string, NodeJS.Timer> = new Map();

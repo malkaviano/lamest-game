@@ -179,14 +179,14 @@
       "name": "Knowledge (Occult)",
       "description": "Knowledge of the obscure",
       "affinity": "TRAINED",
-      "combat": false,
+      "combat": true,
       "influenced": ["INT"]
     },
     {
       "name": "Knowledge (Religion)",
       "description": "Knowledge of most common religions",
       "affinity": "TRAINED",
-      "combat": false,
+      "combat": true,
       "influenced": ["INT"]
     },
     {

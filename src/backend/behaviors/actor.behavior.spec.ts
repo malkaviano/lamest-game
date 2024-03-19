@@ -8,6 +8,7 @@ import {
   CurrentHPChangedEvent,
 } from '@events/derived-attribute.event';
 import { clothArmor } from '@behaviors/equipment.behavior';
+import { ArrayView } from '@wrappers/array.view';
 
 import {
   fakeCharacteristics,
@@ -220,13 +221,8 @@ describe('ActorBehavior', () => {
         current: 8,
         resisted: 0,
       },
-      {
-        effect: fakeEffect('SACRED', 4),
-        current: 6,
-        resisted: 2,
-      },
     ].forEach(({ effect, current, resisted }) => {
-      describe(`when behavior is cured by ${effect}`, () => {
+      describe(`when behavior is cured by ${effect.effectType}`, () => {
         it('return HitPointsEvent previous 4 current 8', () => {
           const b = fakeBehavior();
 
@@ -335,5 +331,11 @@ const fakeBehavior = (characteristics = fakeCharacteristics) =>
   ActorBehavior.create(
     characteristics,
     fakeMapSkills,
-    instance(mockedSkillStore)
+    instance(mockedSkillStore),
+    {
+      cures: ArrayView.create('SACRED', 'REMEDY'),
+      immunities: ArrayView.create('ACID'),
+      resistances: ArrayView.create('KINETIC'),
+      vulnerabilities: ArrayView.create('PROFANE'),
+    }
   );

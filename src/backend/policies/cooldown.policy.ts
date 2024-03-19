@@ -138,7 +138,7 @@ export class CooldownPolicy extends PolicyAbstraction {
   }
 
   private processResult(actor: ActorInterface, result: CheckResult): void {
-    if (actor.cooldowns) {
+    if (actor?.cooldowns) {
       const hadEngagement = actor.cooldowns[TimerNameDefinition.ENGAGEMENT];
 
       if (result) {
