@@ -63,10 +63,13 @@ describe('WearRule', () => {
 
   describe('execute', () => {
     describe('when item was not armor', () => {
+      const execution = () =>
+        rule.execute(instance(mockedPlayerEntity), eventWrong);
+
       it('throw Wrong item was used', () => {
-        expect(() =>
-          rule.execute(instance(mockedPlayerEntity), eventWrong)
-        ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
+        expect(execution).toThrowError(
+          GameStringsStore.errorMessages['WRONG-ITEM']
+        );
       });
     });
 
