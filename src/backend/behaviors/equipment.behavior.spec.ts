@@ -8,7 +8,7 @@ import { ArmorDefinition } from '@definitions/armor.definition';
 
 import {
   kevlarVest,
-  leatherJacket,
+  hardenedJacket,
   molotov,
   simpleSword,
 } from '../../../tests/fakes';
@@ -56,7 +56,7 @@ describe('EquipmentBehavior', () => {
 
       armor.push(char.armorWearing);
 
-      wearBehavior(char, leatherJacket);
+      wearBehavior(char, hardenedJacket);
 
       armor.push(char.armorWearing);
 
@@ -64,7 +64,7 @@ describe('EquipmentBehavior', () => {
 
       armor.push(char.armorWearing);
 
-      expect(armor).toEqual([clothArmor, leatherJacket, kevlarVest]);
+      expect(armor).toEqual([clothArmor, hardenedJacket, kevlarVest]);
     });
   });
 
@@ -74,11 +74,11 @@ describe('EquipmentBehavior', () => {
 
       const armor = [];
 
-      armor.push(wearBehavior(char, leatherJacket));
+      armor.push(wearBehavior(char, hardenedJacket));
 
       armor.push(wearBehavior(char, kevlarVest));
 
-      expect(armor).toEqual([null, leatherJacket]);
+      expect(armor).toEqual([null, hardenedJacket]);
     });
   });
 });

@@ -424,9 +424,9 @@ export const superbSword = new WeaponDefinition(
   'SUPERB'
 );
 
-export const leatherJacket = new ArmorDefinition(
+export const hardenedJacket = new ArmorDefinition(
   new ItemIdentityDefinition(
-    'leatherJacket',
+    'hardenedJacket',
     'Leather Jacket',
     'Small protection'
   ),
@@ -458,7 +458,7 @@ export const fakeCharacterStatusView = CharacterStatusView.create(
   playerInfo.id,
   fakeCharacterSheetDerivedAttributes,
   simpleSword,
-  leatherJacket,
+  hardenedJacket,
   KeyValueDescriptionView.create(
     'VISIBILITY',
     'VISIBLE',

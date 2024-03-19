@@ -39,11 +39,20 @@ export class ActorStore {
         aiBehavior,
         ignores,
         visibility,
+        immunities,
+        cures,
+        resistances,
+        vulnerabilities,
       }) => {
         const actor = new ActorEntity(
           new ActorIdentityDefinition(id, name, description, visibility),
           new SimpleState(ArrayView.create(affectActionable)),
-          ActorBehavior.create(characteristics, skills, skillStore),
+          ActorBehavior.create(characteristics, skills, skillStore, {
+            cures: ArrayView.fromArray(cures),
+            immunities: ArrayView.fromArray(immunities),
+            resistances: ArrayView.fromArray(resistances),
+            vulnerabilities: ArrayView.fromArray(vulnerabilities),
+          }),
           EquipmentBehavior.create(),
           stateStore.states[lootState],
           {

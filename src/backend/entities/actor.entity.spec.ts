@@ -35,7 +35,7 @@ import {
   superbSword,
   unDodgeableAxe,
   kevlarVest,
-  leatherJacket,
+  hardenedJacket,
 } from '../../../tests/fakes';
 import {
   mockedActionableState,
@@ -98,7 +98,7 @@ describe('ActorEntity', () => {
     });
 
     it('return skill value with armor penalty ', () => {
-      when(mockedEquipmentBehavior.armorWearing).thenReturn(leatherJacket);
+      when(mockedEquipmentBehavior.armorWearing).thenReturn(hardenedJacket);
 
       const actor = fakeActor();
 
@@ -112,7 +112,7 @@ describe('ActorEntity', () => {
     });
 
     it('return attribute value with armor penalty ', () => {
-      when(mockedEquipmentBehavior.armorWearing).thenReturn(leatherJacket);
+      when(mockedEquipmentBehavior.armorWearing).thenReturn(hardenedJacket);
 
       const actor = fakeActor();
 
@@ -499,17 +499,17 @@ describe('ActorEntity', () => {
     it('return previous armor', () => {
       const char = fakeActor();
 
-      const f = () => char.wear(leatherJacket);
+      const f = () => char.wear(hardenedJacket);
 
-      testArmorAction(f, kevlarVest, leatherJacket);
+      testArmorAction(f, kevlarVest, hardenedJacket);
     });
 
     it('emit event', (done) => {
       const char = fakeActor();
 
-      const f = () => char.wear(leatherJacket);
+      const f = () => char.wear(hardenedJacket);
 
-      testArmorEvent(char, f, done, kevlarVest, leatherJacket);
+      testArmorEvent(char, f, done, kevlarVest, hardenedJacket);
     });
   });
 
@@ -519,7 +519,7 @@ describe('ActorEntity', () => {
 
       const f = () => char.strip();
 
-      testArmorAction(f, leatherJacket);
+      testArmorAction(f, hardenedJacket);
     });
 
     it('should emit event', (done) => {
@@ -527,7 +527,7 @@ describe('ActorEntity', () => {
 
       const f = () => char.strip();
 
-      testArmorEvent(char, f, done, leatherJacket);
+      testArmorEvent(char, f, done, hardenedJacket);
     });
   });
 });

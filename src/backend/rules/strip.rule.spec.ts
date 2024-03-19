@@ -11,7 +11,7 @@ import {
   mockedInventoryService,
   setupMocks,
 } from '../../../tests/mocks';
-import { kevlarVest, leatherJacket, playerInfo } from '../../../tests/fakes';
+import { kevlarVest, hardenedJacket, playerInfo } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
 
 describe('StripRule', () => {
@@ -79,5 +79,5 @@ const stripLog = new LogMessageDefinition(
 
 const stripEvent = new ActionableEvent(
   stripActionable,
-  leatherJacket.identity.name
+  hardenedJacket.identity.name
 );

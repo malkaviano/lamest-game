@@ -29,7 +29,8 @@ export class RandomCharacterService {
       ActorBehavior.create(
         characteristics,
         this.skills(identity.profession, characteristics.INT.value),
-        this.skillStore
+        this.skillStore,
+        SettingsStore.settings.playerEffectDefenses
       ),
       EquipmentBehavior.create(),
       new RegeneratorBehavior(`${identity.name}-R`),

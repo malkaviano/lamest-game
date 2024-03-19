@@ -1,6 +1,21 @@
 {
   "readables": [
     {
+      "name": "secretDocuments",
+      "label": "Secret Documents",
+      "description": "Your goal",
+      "title": "Thank you for toying around",
+      "text": [
+        "This project is a prototype for fast testing RPG ideas.",
+        "At the time it looked like a good idea, nowadays I'm more involved with Unreal Engine.",
+        "I made it with Angular 2+, there's no backend, because I did not want costs.",
+        "After learning React.js, it sounded like a more viable approach for the project.",
+        "That's all, all assets are json files, fork the project and toy around.",
+        "Don't mind asking for help, github tickets are the better way to do it."
+      ],
+      "usability": "PERMANENT"
+    },
+    {
       "name": "hunterJournal1",
       "label": "Hunter's Journal #1",
       "description": "Part of a journal",

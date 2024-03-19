@@ -1,6 +1,15 @@
 {
   "states": [
     {
+      "id": "basementChestLocked1",
+      "keyName": "secretChestKey",
+      "openedState": "basementChestLoot",
+      "lockPicking": {
+        "complexity": 6,
+        "maximumTries": 3
+      }
+    },
+    {
       "id": "ambulatoryLocked1",
       "keyName": "masterKey",
       "openedState": "ambulatoryLocked1Loot",

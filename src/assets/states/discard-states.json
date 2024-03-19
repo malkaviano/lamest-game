@@ -1,6 +1,21 @@
 {
   "states": [
     {
+      "id": "bossLoot",
+      "items": ["secretChestKey"],
+      "interactiveId": "boss"
+    },
+    {
+      "id": "masterRoomCabinetLoot",
+      "items": ["sacredTalisman", "militaryOvercoat"],
+      "interactiveId": "masterRoomCabinet"
+    },
+    {
+      "id": "basementChestLoot",
+      "items": ["secretDocuments"],
+      "interactiveId": "basementChest"
+    },
+    {
       "id": "hunterCabinTableLoot",
       "items": [
         "hunterJournal1",
@@ -18,7 +33,7 @@
 
     {
       "id": "bushesLoot",
-      "items": ["friendNote", "leatherJacket"],
+      "items": ["friendNote", "hardenedJacket"],
       "interactiveId": "bushes"
     },
 

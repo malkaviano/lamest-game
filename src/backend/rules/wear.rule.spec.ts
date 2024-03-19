@@ -20,7 +20,7 @@ import {
   actionableEvent,
   consumableAnalgesic,
   kevlarVest,
-  leatherJacket,
+  hardenedJacket,
   playerInfo,
 } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
@@ -48,11 +48,11 @@ describe('WearRule', () => {
       mockedCheckedService.takeItemOrThrow<ArmorDefinition>(
         instance(mockedInventoryService),
         actor.id,
-        leatherJacket.identity.name
+        hardenedJacket.identity.name
       )
-    ).thenReturn(leatherJacket);
+    ).thenReturn(hardenedJacket);
 
-    when(mockedPlayerEntity.wear(leatherJacket)).thenReturn(kevlarVest);
+    when(mockedPlayerEntity.wear(hardenedJacket)).thenReturn(kevlarVest);
 
     when(mockedInventoryService.store(actor.id, kevlarVest)).thenReturn(1);
   });
@@ -63,10 +63,13 @@ describe('WearRule', () => {
 
   describe('execute', () => {
     describe('when item was not armor', () => {
+      const execution = () =>
+        rule.execute(instance(mockedPlayerEntity), eventWrong);
+
       it('throw Wrong item was used', () => {
-        expect(() =>
-          rule.execute(instance(mockedPlayerEntity), eventWrong)
-        ).toThrowError(GameStringsStore.errorMessages['WRONG-ITEM']);
+        expect(execution).toThrowError(
+          GameStringsStore.errorMessages['WRONG-ITEM']
+        );
       });
     });
 
@@ -75,7 +78,7 @@ describe('WearRule', () => {
         ruleScenario(rule, actor, eventOk, extras, [stripLog, wearLog], done);
 
         // cheap side effect verification
-        verify(mockedPlayerEntity.wear(leatherJacket)).once();
+        verify(mockedPlayerEntity.wear(hardenedJacket)).once();
 
         verify(mockedInventoryService.store(playerInfo.id, kevlarVest)).once();
       });
@@ -88,7 +91,7 @@ describe('WearRule', () => {
           event: eventOk,
           actor,
           result: 'EXECUTED',
-          wearing: leatherJacket,
+          wearing: hardenedJacket,
           strip: kevlarVest,
         };
 
@@ -107,7 +110,7 @@ const eventWrong = actionableEvent(
   consumableAnalgesic.identity.name
 );
 
-const eventOk = actionableEvent(wearActionable, leatherJacket.identity.name);
+const eventOk = actionableEvent(wearActionable, hardenedJacket.identity.name);
 
 const wearLog = new LogMessageDefinition(
   'WEARING',

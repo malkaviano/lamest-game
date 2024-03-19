@@ -1,6 +1,12 @@
 {
   "usables": [
     {
+      "name": "secretChestKey",
+      "label": "Secret Chest Key",
+      "description": "Use to open the secret chest",
+      "usability": "PERMANENT"
+    },
+    {
       "name": "masterKey",
       "label": "Master Key",
       "description": "Use to open locked containers",

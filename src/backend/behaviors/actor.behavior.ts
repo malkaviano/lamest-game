@@ -14,6 +14,14 @@ import {
   CurrentEPChangedEvent,
   CurrentHPChangedEvent,
 } from '@events/derived-attribute.event';
+import { ArrayView } from '@wrappers/array.view';
+
+type ActorDefenses = {
+  readonly immunities: ArrayView<EffectTypeLiteral>;
+  readonly cures: ArrayView<EffectTypeLiteral>;
+  readonly vulnerabilities: ArrayView<EffectTypeLiteral>;
+  readonly resistances: ArrayView<EffectTypeLiteral>;
+};
 
 export class ActorBehavior {
   private currentHP: number;
@@ -25,7 +33,8 @@ export class ActorBehavior {
   private constructor(
     private readonly mCharacteristics: CharacteristicValues,
     private readonly mSkills: Map<string, number>,
-    private readonly skillStore: SkillStore
+    private readonly skillStore: SkillStore,
+    private readonly actorDefenses: ActorDefenses
   ) {
     this.currentHP = this.maximumHP();
 
@@ -83,12 +92,8 @@ export class ActorBehavior {
 
   public wannaDodge(effect: EffectTypeLiteral): boolean {
     return !(
-      SettingsStore.settings.playerEffectDefenses.immunities.items.some(
-        (i) => i === effect
-      ) ||
-      SettingsStore.settings.playerEffectDefenses.cures.items.some(
-        (i) => i === effect
-      )
+      this.actorDefenses.immunities.items.some((i) => i === effect) ||
+      this.actorDefenses.cures.items.some((i) => i === effect)
     );
   }
 
@@ -104,35 +109,20 @@ export class ActorBehavior {
     let amplified = 0;
     let resisted = 0;
 
-    const cureModifier =
-      SettingsStore.settings.playerEffectDefenses.cures.items.includes(
-        effectType
-      )
-        ? 1
-        : -1;
+    const cureModifier = this.actorDefenses.cures.items.includes(effectType)
+      ? 1
+      : -1;
 
-    if (
-      SettingsStore.settings.playerEffectDefenses.immunities.items.includes(
-        effectType
-      )
-    ) {
+    if (this.actorDefenses.immunities.items.includes(effectType)) {
       ignored = amount;
     } else {
-      if (
-        SettingsStore.settings.playerEffectDefenses.vulnerabilities.items.includes(
-          effectType
-        )
-      ) {
+      if (this.actorDefenses.vulnerabilities.items.includes(effectType)) {
         amplified = Math.trunc(
           amount * SettingsStore.settings.vulnerabilityCoefficient
         );
       }
 
-      if (
-        SettingsStore.settings.playerEffectDefenses.resistances.items.includes(
-          effectType
-        )
-      ) {
+      if (this.actorDefenses.resistances.items.includes(effectType)) {
         resisted = Math.trunc(
           amount * SettingsStore.settings.resistanceCoefficient
         );
@@ -174,9 +164,15 @@ export class ActorBehavior {
   public static create(
     characteristics: CharacteristicValues,
     skills: Map<string, number>,
-    skillStore: SkillStore
+    skillStore: SkillStore,
+    actorDefenses: ActorDefenses
   ): ActorBehavior {
-    return new ActorBehavior(characteristics, skills, skillStore);
+    return new ActorBehavior(
+      characteristics,
+      skills,
+      skillStore,
+      actorDefenses
+    );
   }
 
   private modifyHealth(modified: number): number {

@@ -1,6 +1,34 @@
 {
   "actors": [
     {
+      "id": "boss",
+      "name": "Raskolnikov",
+      "description": "He's not happy seeing you here",
+      "characteristics": {
+        "STR": 11,
+        "VIT": 12,
+        "AGI": 14,
+        "INT": 16,
+        "ESN": 15,
+        "APP": 13
+      },
+      "skills": [
+        {
+          "name": "Firearm (Shooter)",
+          "value": 75
+        }
+      ],
+      "equippedWeapon": "winchester88",
+      "lootState": "bossLoot",
+      "immunities": [],
+      "cures": ["REMEDY"],
+      "vulnerabilities": ["FIRE", "ACID"],
+      "resistances": ["KINETIC"],
+      "aiBehavior": "AGGRESSIVE",
+      "ignores": ["HIDDEN"],
+      "visibility": "VISIBLE"
+    },
+    {
       "id": "zombie",
       "name": "Nasty Zombie",
       "description": "What the frack is that?",
@@ -20,10 +48,10 @@
       ],
       "equippedWeapon": "claw",
       "lootState": "emptyState",
-      "immunities": [],
+      "immunities": ["PROFANE"],
       "cures": [],
-      "vulnerabilities": [],
-      "resistances": [],
+      "vulnerabilities": ["SACRED", "FIRE"],
+      "resistances": ["ACID"],
       "aiBehavior": "AGGRESSIVE",
       "ignores": ["HIDDEN"],
       "visibility": "VISIBLE"
@@ -43,14 +71,14 @@
       "skills": [
         {
           "name": "Brawl",
-          "value": 20
+          "value": 35
         }
       ],
       "equippedWeapon": "martialArts",
       "lootState": "villagerLoot",
       "immunities": [],
-      "cures": [],
-      "vulnerabilities": [],
+      "cures": ["REMEDY"],
+      "vulnerabilities": ["FIRE", "ACID"],
       "resistances": [],
       "aiBehavior": "RETALIATE",
       "ignores": ["HIDDEN", "DISGUISED"],
@@ -71,7 +99,7 @@
       "skills": [
         {
           "name": "Melee Weapon (Simple)",
-          "value": 40
+          "value": 60
         },
         {
           "name": "Dodge",
@@ -81,8 +109,8 @@
       "equippedWeapon": "baton",
       "lootState": "storageGuardLoot",
       "immunities": [],
-      "cures": [],
-      "vulnerabilities": [],
+      "cures": ["REMEDY"],
+      "vulnerabilities": ["FIRE", "ACID"],
       "resistances": [],
       "aiBehavior": "AGGRESSIVE",
       "ignores": ["HIDDEN", "DISGUISED"],

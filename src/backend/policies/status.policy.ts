@@ -10,7 +10,7 @@ export class StatusPolicy extends PolicyAbstraction {
 
     const target = ConverterHelper.asActor(result.target);
 
-    if (target && target.situation === 'DEAD') {
+    if (target && target.situation === 'DEAD' && result.name !== 'PICK') {
       this.logMessageProduced.next(
         GameStringsStore.createActorIsDeadLogMessage(target.name)
       );
