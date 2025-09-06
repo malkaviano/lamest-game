@@ -36,6 +36,10 @@ export class CombatTimelinePanelComponent implements OnInit, OnDestroy {
     if (this.events.length > this.maxItems) this.events.length = this.maxItems;
   }
 
+  clear(): void {
+    this.events = [];
+  }
+
   iconFor(ev: CombatEvent): string {
     switch (ev.outcome) {
       case 'CRIT':
@@ -61,4 +65,3 @@ export class CombatTimelinePanelComponent implements OnInit, OnDestroy {
     if (ev.targetId) this.highlight.flashInteractiveCard(ev.targetId, ev.effectType);
   }
 }
-

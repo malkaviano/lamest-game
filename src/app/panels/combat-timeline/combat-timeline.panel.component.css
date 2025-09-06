@@ -12,6 +12,9 @@
   min-height: 0;
 }
 
+.controls { display: flex; align-items: center; padding: 4px 0; }
+.controls .spacer { flex: 1; }
+
 /* header removed; panel title handled by parent layout */
 
 .list {

@@ -1,4 +1,8 @@
 <div class="combat-timeline">
+  <div class="controls">
+    <span class="spacer"></span>
+    <button mat-stroked-button color="warn" (click)="clear()">Clear</button>
+  </div>
   <div class="list" *ngIf="events.length; else empty">
     <div class="event" *ngFor="let ev of events; index as i" (click)="onHighlight(ev)" [attr.data-testid]="'combat-event-' + i">
       <span class="icon">{{ iconFor(ev) }}</span>
