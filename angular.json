@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "lamest-game:build:production"
+              "buildTarget": "lamest-game:build:production"
             },
             "development": {
-              "browserTarget": "lamest-game:build:development"
+              "buildTarget": "lamest-game:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lamest-game:build"
+            "buildTarget": "lamest-game:build"
           }
         },
         "test": {
