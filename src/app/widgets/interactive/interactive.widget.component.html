@@ -37,12 +37,14 @@
               class="action-button"
               mat-raised-button color="primary"
               (click)="onActionSelected(action)"
+              [disabled]="!canAfford(action)"
               attr.data-testid="actionable-{{ action.name }}"
-              matTooltip="{{ setIcon(action.actionable).tooltip }}">
+              matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}">
               <div class="button-content">
                 <img src="{{ setIcon(action.actionable).icon }}"
                   alt="{{ setIcon(action.actionable).tooltip }}" />
                 <span class="label">{{ action.label }}</span>
+                <span class="ap-pill" *ngIf="apCost(action) > 0">{{ apCost(action) }} AP</span>
               </div>
             </button>
           </div>

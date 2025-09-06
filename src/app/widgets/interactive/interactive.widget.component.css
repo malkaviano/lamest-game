@@ -23,6 +23,7 @@
   text-align: center;
   vertical-align: middle;
   align-content: space-evenly;
+  gap: 6px;
 }
 
 .buttons {
@@ -33,4 +34,15 @@
 
 .label {
   padding-left: 5px;
+}
+
+.ap-pill {
+  margin-left: auto;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(255, 235, 59, 0.2);
+  border: 1px solid rgba(255, 235, 59, 0.6);
+  color: #ffeb3b;
+  font-size: 11px;
+  align-self: center;
 }
