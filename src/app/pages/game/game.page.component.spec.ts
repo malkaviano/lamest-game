@@ -14,6 +14,8 @@ import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameLoopService } from '@services/game-loop.service';
+import { FeedbackService } from '../../services/feedback.service';
+import { FloatingNumbersService } from '../../services/floating-numbers.service';
 import {
   consumeActionable,
   equipActionable,
@@ -40,6 +42,8 @@ import {
 
 describe('GamePageComponent', () => {
   const mockedMatDialog = mock(MatDialog);
+  const mockedFeedbackService = mock(FeedbackService);
+  const mockedFloatingNumbersService = mock(FloatingNumbersService);
 
   let component: GamePageComponent;
   let fixture: ComponentFixture<GamePageComponent>;
@@ -66,6 +70,14 @@ describe('GamePageComponent', () => {
         {
           provide: MatDialog,
           useValue: instance(mockedMatDialog),
+        },
+        {
+          provide: FeedbackService,
+          useValue: instance(mockedFeedbackService),
+        },
+        {
+          provide: FloatingNumbersService,
+          useValue: instance(mockedFloatingNumbersService),
         },
       ],
     }).compileComponents();
