@@ -1,7 +1,7 @@
 import { ArrayView } from '@wrappers/array.view';
 
 export class TimerHelper {
-  private static readonly mIntervals: Map<string, NodeJS.Timer> = new Map();
+  private static readonly mIntervals: Map<string, number> = new Map();
 
   public static get intervals(): ArrayView<string> {
     return ArrayView.create(...this.mIntervals.keys());

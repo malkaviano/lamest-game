@@ -25,24 +25,3 @@ tone
 lottie-web
 ngx-lottie
 gsap
-
-## Comandos de Instalação
-
-### Fase 1
-npm install rpgui
-npm install ngx-toastr
-# @angular/animations já disponível
-
-### Fase 2  
-npm install primeng primeicons
-npm install @ngx-loading-bar/core @ngx-loading-bar/router
-npm install @angular/cdk
-
-### Fase 3
-npm install ngx-infinite-scroll
-npm install @angular/flex-layout
-npm install angular-svg-icon
-npm install howler
-npm install tone
-npm install lottie-web ngx-lottie
-npm install gsap
