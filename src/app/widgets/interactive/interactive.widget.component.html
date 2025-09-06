@@ -12,7 +12,6 @@
     </span>
     <span class="detect-icon" *ngIf="detectDisguised" matTooltip="{{ searchTooltip }}" aria-label="Disguise detection">🔎</span>
     <span class="detect-icon" *ngIf="detectHidden" matTooltip="{{ visibilityTooltip }}" aria-label="Stealth detection">👁️</span>
-    <span class="eng-chip" *ngIf="hasEngagementChip()">ENG</span>
   </div>
     <!-- Mini-bars for HP/EP/AP when available -->
     <div class="mini-bars" *ngIf="hasDerivedAttributes()">

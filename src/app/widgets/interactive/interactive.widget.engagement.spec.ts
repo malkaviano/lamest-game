@@ -62,9 +62,9 @@ function stubCharacterService(
   derived: Record<string, number>,
   cooldowns: Record<string, number>
 ) {
-  const char = {
-    derivedAttributes: Object.keys(derived).reduce((acc, k) => {
-      (acc as any)[k] = { value: derived[k] };
+  const char: { derivedAttributes: Record<string, { value: number }>; cooldowns: Record<string, number> } = {
+    derivedAttributes: Object.keys(derived).reduce((acc: Record<string, { value: number }>, k: string) => {
+      acc[k] = { value: derived[k] };
       return acc;
     }, {} as Record<string, { value: number }>),
     cooldowns,
@@ -74,4 +74,3 @@ function stubCharacterService(
     characterChanged$: of(char),
   } as Partial<CharacterService>;
 }
-
