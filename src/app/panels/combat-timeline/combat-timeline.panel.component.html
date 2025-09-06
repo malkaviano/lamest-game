@@ -1,9 +1,4 @@
 <div class="combat-timeline">
-  <div class="header">
-    <span class="title">⚔️ Combat Timeline</span>
-    <span class="count">{{ events.length }}</span>
-  </div>
-
   <div class="list" *ngIf="events.length; else empty">
     <div class="event" *ngFor="let ev of events; index as i" (click)="onHighlight(ev)" [attr.data-testid]="'combat-event-' + i">
       <span class="icon">{{ iconFor(ev) }}</span>
@@ -32,4 +27,3 @@
     <div class="empty">No combat events yet.</div>
   </ng-template>
 </div>
-
