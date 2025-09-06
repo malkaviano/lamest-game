@@ -7,28 +7,31 @@
     >
     </app-status-bar-panel>
   </div>
-  <div class="content-bar title-text">
-    <span>Current Scene: {{ scene.label }}</span>
-    <app-image-viewer-widget
-      [image]="{
-        title: scene.label,
-        src: 'assets/images/' + scene.image,
-        alt: scene.label,
-        width: '400',
-        height: '400'
-      }"
-      (imageOpened)="sceneOpened.emit($event)"
-    >
-    </app-image-viewer-widget>
+  <div class="section scene-area">
+    <div class="scene-zone">
+      <div class="logs-header">
+        <span class="logs-title">🗺️ {{ scene.label }}</span>
+      </div>
+      <div class="panel-content">
+        <app-image-viewer-widget
+          [image]="{
+            title: scene.label,
+            src: 'assets/images/' + scene.image,
+            alt: scene.label,
+            width: '400',
+            height: '400'
+          }"
+          (imageOpened)="sceneOpened.emit($event)"
+        >
+        </app-image-viewer-widget>
+      </div>
+    </div>
   </div>
 </div>
 
 <section name="content">
   <div class="flex-panel">
     <div class="section content-box character-section">
-      <div class="title-text">
-        <span class="mat-h3">Character</span>
-      </div>
       <div data-testid="character">
         <app-sheet-panel
           [characterValues]="characterValues"
@@ -62,9 +65,6 @@
     </div>
 
     <div class="section large-box">
-      <div class="title-text">
-        <span class="mat-h3">Scene Interactives</span>
-      </div>
       <div class="vertical-scrollable">
         <div data-testid="interactives">
           <app-interactive-panel
@@ -76,27 +76,31 @@
       </div>
     </div>
     <div class="section feedback-area">
-      <div class="title-text">
-        <span class="mat-h3">Game Feedback</span>
-      </div>
       <div class="feedback-zone">
-        <!-- Toast notifications container inside panel -->
-        <div id="toast-feedback-container" class="toast-feedback-container">
-          <!-- Toasts will appear here -->
+        <div class="logs-header">
+          <span class="logs-title">📣 Feedback</span>
         </div>
-        <p class="feedback-hint">
-          Interactive feedback appears in this panel
-        </p>
+        <div class="panel-content">
+          <!-- Toast notifications container inside panel -->
+          <div id="toast-feedback-container" class="toast-feedback-container">
+            <!-- Toasts will appear here -->
+          </div>
+          <p class="feedback-hint">
+            Interactive feedback appears in this panel
+          </p>
+        </div>
       </div>
     </div>
 
     <!-- Separate panel for Combat Timeline -->
     <div class="section timeline-area">
-      <div class="title-text">
-        <span class="mat-h3">Combat Timeline</span>
-      </div>
       <div class="timeline-zone">
-        <app-combat-timeline-panel></app-combat-timeline-panel>
+        <div class="logs-header">
+          <span class="logs-title">⚔️ Combat</span>
+        </div>
+        <div class="panel-content">
+          <app-combat-timeline-panel></app-combat-timeline-panel>
+        </div>
       </div>
     </div>
   </div>
