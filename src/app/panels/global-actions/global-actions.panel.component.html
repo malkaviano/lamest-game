@@ -1,9 +1,17 @@
 <div class="global-actions-panel">
   <div class="actions-header">
     <span class="actions-title">🎮 Global Actions</span>
+    <button 
+      mat-icon-button 
+      class="collapse-toggle"
+      (click)="toggleCollapse()"
+      [attr.aria-label]="isCollapsed ? 'Expand global actions panel' : 'Collapse global actions panel'"
+      matTooltip="{{ isCollapsed ? 'Expand' : 'Collapse' }} global actions">
+      <mat-icon>{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+    </button>
   </div>
   
-  <div class="actions-content">
+  <div class="actions-content" [class.collapsed]="isCollapsed">
     <!-- Equipment Actions -->
     <div class="equipment-actions">
       <app-equipped-widget

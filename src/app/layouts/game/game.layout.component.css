@@ -11,7 +11,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 16px;
+  gap: 8px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   min-height: 100px;
@@ -31,6 +31,12 @@
   max-width: 500px;
 }
 
+.travel-header-panel {
+  flex: 1 1 auto;
+  max-width: 800px;
+  min-width: 300px;
+}
+
 /* Make panels more responsive */
 @media (max-width: 768px) {
   .header-panel {
@@ -43,7 +49,7 @@
     flex-direction: column;
     align-items: center;
     min-height: auto;
-    gap: 12px;
+    gap: 8px;
   }
 }
 

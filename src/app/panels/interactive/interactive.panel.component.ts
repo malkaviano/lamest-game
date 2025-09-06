@@ -23,4 +23,10 @@ export class InteractivePanelComponent {
 
     this.actionSelected = new EventEmitter<ActionableEvent>();
   }
+
+  public get nonTravelInteractives(): ArrayView<InteractiveInterface> {
+    return this.interactives.filter(interactive => 
+      !interactive.actions.items.some(action => action.actionable === 'SCENE')
+    );
+  }
 }

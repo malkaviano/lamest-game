@@ -21,6 +21,8 @@ export class GlobalActionsPanelComponent {
   }>();
   @Output() public sceneOpened = new EventEmitter<ViewableInterface>();
 
+  public isCollapsed = false;
+
   public get isVisible(): boolean {
     return this.status.visibility.value === 'VISIBLE';
   }
@@ -89,5 +91,9 @@ export class GlobalActionsPanelComponent {
 
   public openScene(): void {
     this.sceneOpened.emit(this.sceneImage);
+  }
+
+  public toggleCollapse(): void {
+    this.isCollapsed = !this.isCollapsed;
   }
 }
