@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
@@ -28,6 +28,7 @@ import { SceneEntity } from '@entities/scene.entity';
   providers: [WithSubscriptionHelper],
 })
 export class GamePageComponent implements OnInit, OnDestroy {
+  @ViewChild('floatingContainer', { read: ViewContainerRef, static: true }) floatingContainer!: ViewContainerRef;
   private readonly gameLogs: string[];
 
   public scene!: SceneEntity;
@@ -69,6 +70,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Configure the floating numbers service early to catch initial events
+    this.floatingNumbersService.setViewContainer(this.floatingContainer);
+
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.playerChanged$.subscribe((character) => {
         this.characterValues =
@@ -185,23 +189,72 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   private handleFloatingNumbers(log: LogMessageDefinition): void {
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    
+    // Try to anchor near target actor's UI container; fallback to screen center
+    const anchor = this.getActorAnchorCenter(log.actor);
+    const centerX = anchor?.x ?? window.innerWidth / 2;
+    const centerY = anchor?.y ?? window.innerHeight / 2;
+
     // Extract numeric values from log messages
-    const damageMatch = log.message.match(/(\d+)\s*damage/i);
-    const healMatch = log.message.match(/(\d+)\s*(heal|restore|recover)/i);
-    const expMatch = log.message.match(/(\d+)\s*(xp|experience)/i);
-    
+    // Damage examples: "received 12 fire damage"
+    // Heal examples:   "received poison effect, healed 5 hp"
+    const damageMatch = log.message.match(/\b(\d+)\b[^\d]*\bdamage\b/i);
+    const damageTypeMatch = log.message.match(/\b\d+\b\s+([A-Za-z]+)\s+damage\b/i);
+    const healMatch = log.message.match(/\bhealed\s+(\d+)\b/i);
+    const expMatch = log.message.match(/\b(\d+)\b\s*(xp|experience)\b/i);
+
     if (damageMatch && log.category === 'AFFECTED') {
-      const damage = parseInt(damageMatch[1]);
-      this.floatingNumbersService.showDamage(damage, centerX, centerY - 50);
+      const damage = parseInt(damageMatch[1], 10);
+      const effectType = damageTypeMatch ? (damageTypeMatch[1].toUpperCase() as any) : undefined;
+      // Damage: slightly above the anchor
+      this.floatingNumbersService.showDamage(damage, centerX, centerY - 30, effectType);
     } else if (healMatch && log.category === 'AFFECTED') {
-      const heal = parseInt(healMatch[1]);
-      this.floatingNumbersService.showHealing(heal, centerX, centerY - 50);
+      const heal = parseInt(healMatch[1], 10);
+      // Heal: slightly below the anchor
+      this.floatingNumbersService.showHealing(heal, centerX, centerY + 10);
     } else if (expMatch) {
-      const exp = parseInt(expMatch[1]);
-      this.floatingNumbersService.showExperience(exp, centerX + 100, centerY);
+      const exp = parseInt(expMatch[1], 10);
+      // XP: near the character panel
+      const charEl = document.querySelector('[data-testid="character"]') as HTMLElement | null;
+      if (charEl) {
+        const rect = charEl.getBoundingClientRect();
+        this.floatingNumbersService.showExperience(exp, rect.left + rect.width / 2, rect.top - 10);
+      } else {
+        this.floatingNumbersService.showExperience(exp, centerX + 100, centerY);
+      }
     }
+  }
+
+  private getActorAnchorCenter(actorName: string): { x: number; y: number } | null {
+    // 1) Try to find interactive by name in current scene and use its DOM card rect
+    try {
+      const interactive = this.scene?.visibleInteractives?.items?.find?.(
+        (i: any) => i?.name === actorName
+      );
+
+      if (interactive?.id) {
+        const el = document.querySelector(
+          `[data-testid="interactive-${interactive.id}"]`
+        ) as HTMLElement | null;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+        }
+      }
+    } catch {
+      // ignore lookup errors, fallback below
+    }
+
+    // 2) If it's the player (actor not in interactives), use the character panel as anchor
+    const characterEl = document.querySelector(
+      '[data-testid="character"]'
+    ) as HTMLElement | null;
+
+    if (characterEl) {
+      const rect = characterEl.getBoundingClientRect();
+      return { x: rect.left + rect.width / 2, y: rect.top + 40 };
+    }
+
+    // 3) No anchor found
+    return null;
   }
 }

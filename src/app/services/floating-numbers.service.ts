@@ -1,5 +1,6 @@
 import { Injectable, ComponentRef, ViewContainerRef, ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { FloatingNumberWidgetComponent, FloatingNumberData } from '../widgets/floating-number/floating-number.widget.component';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +35,11 @@ export class FloatingNumbersService {
     componentRef.instance.startY = y;
   }
 
-  public showDamage(damage: number, x: number, y: number): void {
+  public showDamage(damage: number, x: number, y: number, effectType?: EffectTypeLiteral): void {
     this.showFloatingNumber({
       value: damage,
-      type: 'damage'
+      type: 'damage',
+      effectType
     }, x, y);
   }
 

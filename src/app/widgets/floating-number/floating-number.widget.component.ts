@@ -1,10 +1,12 @@
 import { Component, Input, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { gsap } from 'gsap';
+import { EffectTypeLiteral } from '@literals/effect-type.literal';
 
 export interface FloatingNumberData {
   value: number;
   type: 'damage' | 'heal' | 'experience' | 'info';
   duration?: number;
+  effectType?: EffectTypeLiteral; // used to colorize damage types
 }
 
 @Component({
@@ -12,7 +14,7 @@ export interface FloatingNumberData {
   template: `
     <div #floatingElement 
          class="floating-number"
-         [ngClass]="'floating-number--' + data.type">
+         [ngClass]="classes()">
       {{ formatValue() }}
     </div>
   `,
@@ -29,6 +31,22 @@ export interface FloatingNumberData {
     
     .floating-number--damage {
       color: #ff4444;
+    }
+    /* Damage subtypes override the generic damage color */
+    .floating-number--kinetic {
+      color: #ffffff;
+    }
+    .floating-number--fire {
+      color: #ff6b00;
+    }
+    .floating-number--acid {
+      color: #66ff66;
+    }
+    .floating-number--profane {
+      color: #b084f5;
+    }
+    .floating-number--sacred {
+      color: #ffd700;
     }
     
     .floating-number--heal {
@@ -116,5 +134,13 @@ export class FloatingNumberWidgetComponent implements OnInit, AfterViewInit {
       default:
         return `${value}`;
     }
+  }
+
+  public classes(): string[] {
+    const base = `floating-number--${this.data.type}`;
+    const subtype = this.data.type === 'damage' && this.data.effectType
+      ? `floating-number--${this.data.effectType.toLowerCase()}`
+      : '';
+    return subtype ? ['floating-number', base, subtype] : ['floating-number', base];
   }
 }

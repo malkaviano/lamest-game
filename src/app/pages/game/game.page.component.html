@@ -1,11 +1,16 @@
-<app-game-layout
-  [logs]="logs"
-  [equipped]="equipped"
-  [characterValues]="characterValues"
-  [inventory]="inventory"
-  [scene]="scene"
-  [characterStatus]="characterStatus"
-  (actionSelected)="informActionSelected($event)"
-  (sceneOpened)="informSceneOpened($event)"
-  (playerOptions)="informDodgeOption($event)"
-></app-game-layout>
+<div class="game-container">
+  <app-game-layout
+    [logs]="logs"
+    [equipped]="equipped"
+    [characterValues]="characterValues"
+    [inventory]="inventory"
+    [scene]="scene"
+    [characterStatus]="characterStatus"
+    (actionSelected)="informActionSelected($event)"
+    (sceneOpened)="informSceneOpened($event)"
+    (playerOptions)="informDodgeOption($event)"
+  ></app-game-layout>
+  
+  <!-- Container for floating numbers -->
+  <div class="floating-numbers-container" #floatingContainer></div>
+</div>

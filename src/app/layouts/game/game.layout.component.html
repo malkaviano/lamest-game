@@ -25,7 +25,7 @@
 
 <section name="content">
   <div class="flex-panel">
-    <div class="section content-box">
+    <div class="section content-box character-section">
       <div class="title-text">
         <span class="mat-h3">Character</span>
       </div>
@@ -36,7 +36,31 @@
           (actionSelected)="actionSelected.emit($event)"
         ></app-sheet-panel>
       </div>
+
+      <!-- Compact logs panel below character -->
+      <div class="compact-logs-panel">
+        <div class="logs-header">
+          <span class="logs-title"
+            >📜 Text Logs ({{ logs.items.length || 0 }} entries)</span
+          >
+        </div>
+        <div class="compact-logs-container">
+          <app-text-area-widget
+            [paragraphs]="logs"
+            data-testid="log"
+          ></app-text-area-widget>
+          <!-- Debug info -->
+          <div
+            *ngIf="!logs?.items || logs.items.length === 0"
+            style="color: yellow; padding: 10px"
+          >
+            No logs available yet. Logs will appear here as actions are
+            performed.
+          </div>
+        </div>
+      </div>
     </div>
+
     <div class="section large-box">
       <div class="title-text">
         <span class="mat-h3">Scene Interactives</span>
@@ -51,15 +75,18 @@
         </div>
       </div>
     </div>
-    <div class="section content-box">
+    <div class="section feedback-area">
       <div class="title-text">
-        <span class="mat-h3">Action Logs</span>
+        <span class="mat-h3">Game Feedback</span>
       </div>
-      <div>
-        <app-text-area-widget
-          [paragraphs]="logs"
-          data-testid="log"
-        ></app-text-area-widget>
+      <div class="feedback-zone">
+        <!-- Toast notifications container inside panel -->
+        <div id="toast-feedback-container" class="toast-feedback-container">
+          <!-- Toasts will appear here -->
+        </div>
+        <p class="feedback-hint">
+          Interactive feedback appears in this panel
+        </p>
       </div>
     </div>
   </div>

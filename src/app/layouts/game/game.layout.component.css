@@ -34,3 +34,163 @@
   width: 400px;
   height: 400px;
 }
+
+/* New feedback area styles */
+.feedback-area {
+  min-width: 400px;
+  max-width: 550px;
+  position: relative;
+}
+
+.feedback-zone {
+  height: 450px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.toast-feedback-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Custom toast styles for feedback panel */
+.toast-feedback-container .toast {
+  position: relative !important;
+  margin: 5px 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+  font-size: 0.85rem !important;
+}
+
+.toast-feedback-container .toast-success {
+  background-color: rgba(76, 175, 80, 0.9) !important;
+}
+
+.toast-feedback-container .toast-error {
+  background-color: rgba(244, 67, 54, 0.9) !important;
+}
+
+.toast-feedback-container .toast-warning {
+  background-color: rgba(255, 152, 0, 0.9) !important;
+}
+
+.toast-feedback-container .toast-info {
+  background-color: rgba(33, 150, 243, 0.9) !important;
+}
+
+.feedback-hint {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  text-align: center;
+  margin: auto;
+  font-size: 0.9rem;
+}
+
+.compact-logs {
+  margin-top: auto;
+}
+
+.compact-logs details {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.compact-logs summary {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  padding: 5px;
+}
+
+.compact-logs summary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.small-logs {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 5px;
+  font-size: 0.75rem;
+}
+
+/* Character section */
+.character-section {
+  position: relative;
+}
+
+/* Compact logs panel styles */
+.compact-logs-panel {
+  margin-top: 15px;
+  background: rgba(0, 0, 0, 0.85) !important;
+  border: 2px solid #607D8B !important;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 380px;
+  display: block !important;
+  visibility: visible !important;
+  min-height: 80px !important;
+}
+
+.logs-header {
+  background: rgba(255, 235, 59, 0.1);
+  border-bottom: 1px solid rgba(255, 235, 59, 0.3);
+  padding: 8px 12px;
+  border-radius: 10px 10px 0 0;
+}
+
+.logs-title {
+  color: rgb(255, 235, 59);
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.compact-logs-container {
+  max-height: 120px;
+  min-height: 60px;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 0.75rem;
+  display: block;
+  visibility: visible;
+}
+
+/* Ensure text-area widget is visible */
+.compact-logs-container app-text-area-widget {
+  display: block !important;
+  visibility: visible !important;
+}
+
+
+.compact-logs-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.compact-logs-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.compact-logs-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 235, 59, 0.5);
+  border-radius: 3px;
+}
+
+.compact-logs-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 235, 59, 0.7);
+}
