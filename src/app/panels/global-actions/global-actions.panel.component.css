@@ -97,28 +97,71 @@
   flex: 0 0 auto;
 }
 
-/* Override action widget styles */
-.skill-button ::ng-deep .action-widget {
-  background: rgba(0, 0, 0, 0.3) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+/* Override action widget styles to match scene button */
+.skill-button ::ng-deep button {
+  background: rgba(76, 175, 80, 0.2) !important;
+  border: 1px solid rgba(76, 175, 80, 0.5) !important;
   border-radius: 6px !important;
-  padding: 8px !important;
-  min-width: 44px;
-  min-height: 44px;
-  transition: all 0.2s ease;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  transition: all 0.2s ease !important;
 }
 
-.skill-button ::ng-deep .action-widget:hover {
-  border-color: rgba(76, 175, 80, 0.5) !important;
-  background: rgba(76, 175, 80, 0.1) !important;
-  transform: translateY(-1px);
+.skill-button ::ng-deep button:hover {
+  background: rgba(76, 175, 80, 0.3) !important;
+  border-color: rgba(76, 175, 80, 0.7) !important;
+  transform: translateY(-1px) !important;
 }
 
-.skill-button ::ng-deep .action-widget mat-icon {
-  font-size: 1.2rem;
-  width: 1.2rem;
-  height: 1.2rem;
-  color: rgba(255, 255, 255, 0.9);
+.skill-button ::ng-deep button img {
+  width: 24px !important;
+  height: 24px !important;
+  filter: brightness(0) saturate(100%) invert(62%) sepia(98%) saturate(344%) hue-rotate(86deg) brightness(119%) contrast(119%) !important;
+  transition: filter 0.2s ease !important;
+}
+
+.skill-button ::ng-deep button:hover img {
+  filter: brightness(0) saturate(100%) invert(84%) sepia(29%) saturate(1567%) hue-rotate(87deg) brightness(118%) contrast(119%) !important;
+}
+
+/* Alternative approach - target by component selector */
+.global-actions-panel app-action-widget ::ng-deep button.mat-mdc-fab,
+.global-actions-panel app-action-widget ::ng-deep button.mat-fab {
+  background: rgba(76, 175, 80, 0.2) !important;
+  border: 1px solid rgba(76, 175, 80, 0.5) !important;
+  border-radius: 6px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  transition: all 0.2s ease !important;
+  color: rgba(76, 175, 80, 0.9) !important;
+  box-shadow: none !important;
+}
+
+.global-actions-panel app-action-widget ::ng-deep button.mat-mdc-fab:hover,
+.global-actions-panel app-action-widget ::ng-deep button.mat-fab:hover {
+  background: rgba(76, 175, 80, 0.3) !important;
+  border-color: rgba(76, 175, 80, 0.7) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
+}
+
+.global-actions-panel app-action-widget ::ng-deep button img {
+  width: 24px !important;
+  height: 24px !important;
+  filter: brightness(0) saturate(100%) invert(62%) sepia(98%) saturate(344%) hue-rotate(86deg) brightness(119%) contrast(119%) !important;
+  transition: filter 0.2s ease !important;
+}
+
+.global-actions-panel app-action-widget ::ng-deep button:hover img {
+  filter: brightness(0) saturate(100%) invert(84%) sepia(29%) saturate(1567%) hue-rotate(87deg) brightness(118%) contrast(119%) !important;
+}
+
+/* Force all action buttons in this panel to have green theme */
+.global-actions-panel .skill-actions ::ng-deep * {
+  --mdc-fab-container-color: rgba(76, 175, 80, 0.2) !important;
+  --mdc-fab-icon-color: rgba(76, 175, 80, 0.9) !important;
 }
 
 /* Scene Button Styling */
