@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
@@ -32,8 +38,9 @@ import { InteractiveInterface } from '@interfaces/interactive.interface';
   providers: [WithSubscriptionHelper],
 })
 export class GamePageComponent implements OnInit, OnDestroy {
-  @ViewChild('floatingContainer', { read: ViewContainerRef, static: true }) floatingContainer!: ViewContainerRef;
-  private readonly gameLogs: string[];
+  @ViewChild('floatingContainer', { read: ViewContainerRef, static: true })
+  floatingContainer!: ViewContainerRef;
+  private gameLogs: ArrayView<string>;
 
   public scene!: SceneEntity;
 
@@ -57,7 +64,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
     private readonly combatFeed: CombatFeedService,
     private readonly highlight: HighlightService
   ) {
-    this.gameLogs = [];
+    this.gameLogs = ArrayView.empty();
 
     this.inventory = [];
 
@@ -130,7 +137,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.actionLogged$.subscribe((log) => {
-        this.gameLogs.unshift(this.printLog(log));
+        this.gameLogs = this.gameLogs.insert(this.printLog(log));
+
         // Avoid double-playing sounds if combat events are active
         if (this.gameLoopService.events.combatEvents$) {
           this.feedbackService.showToastOnly(log);
@@ -144,9 +152,11 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     if (this.gameLoopService.events.combatEvents$) {
       this.withSubscriptionHelper.addSubscription(
-        this.gameLoopService.events.combatEvents$.subscribe((event: CombatEvent) => {
-          this.handleCombatEvent(event);
-        })
+        this.gameLoopService.events.combatEvents$.subscribe(
+          (event: CombatEvent) => {
+            this.handleCombatEvent(event);
+          }
+        )
       );
     }
 
@@ -168,7 +178,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
   private handleCombatEvent(event: CombatEvent): void {
     const anchor = this.getTargetAnchor(event.targetId, event.targetName);
     this.combatFeed.handle(event, anchor ?? undefined);
-    if (event.targetId) this.highlight.flashInteractiveCard(event.targetId, event.effectType);
+    if (event.targetId)
+      this.highlight.flashInteractiveCard(event.targetId, event.effectType);
   }
 
   private handleXP(log: LogMessageDefinition): void {
@@ -178,10 +189,16 @@ export class GamePageComponent implements OnInit, OnDestroy {
     const expMatch = log.message.match(/\b(\d+)\b\s*(xp|experience)\b/i);
     if (expMatch) {
       const exp = parseInt(expMatch[1], 10);
-      const charEl = document.querySelector('[data-testid="character"]') as HTMLElement | null;
+      const charEl = document.querySelector(
+        '[data-testid="character"]'
+      ) as HTMLElement | null;
       if (charEl) {
         const rect = charEl.getBoundingClientRect();
-        this.floatingNumbersService.showExperience(exp, rect.left + rect.width / 2, rect.top - 10);
+        this.floatingNumbersService.showExperience(
+          exp,
+          rect.left + rect.width / 2,
+          rect.top - 10
+        );
       } else {
         this.floatingNumbersService.showExperience(exp, centerX + 100, centerY);
       }
@@ -210,7 +227,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   public get logs(): ArrayView<string> {
-    return ArrayView.fromArray(this.gameLogs);
+    return this.gameLogs;
   }
 
   private printLog(logMessage: LogMessageDefinition): string {
@@ -233,7 +250,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   // Removed log-parsing for damage/heal. Combat visuals come from CombatEvent stream.
 
-  private getActorAnchorCenter(actorName: string): { x: number; y: number } | null {
+  private getActorAnchorCenter(
+    actorName: string
+  ): { x: number; y: number } | null {
     // 1) Try to find interactive by name in current scene and use its DOM card rect
     try {
       const interactive = this.scene?.visibleInteractives?.items?.find?.(
@@ -246,7 +265,10 @@ export class GamePageComponent implements OnInit, OnDestroy {
         ) as HTMLElement | null;
         if (el) {
           const rect = el.getBoundingClientRect();
-          return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+          return {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          };
         }
       }
     } catch {
@@ -267,9 +289,14 @@ export class GamePageComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  private getTargetAnchor(targetId: string, targetName: string): { x: number; y: number } | null {
+  private getTargetAnchor(
+    targetId: string,
+    targetName: string
+  ): { x: number; y: number } | null {
     if (targetId) {
-      const el = document.querySelector(`[data-testid="interactive-${targetId}"]`) as HTMLElement | null;
+      const el = document.querySelector(
+        `[data-testid="interactive-${targetId}"]`
+      ) as HTMLElement | null;
       if (el) {
         const rect = el.getBoundingClientRect();
         return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
