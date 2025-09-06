@@ -3,6 +3,27 @@
     <mat-card-title class="card-title">
       {{ interactive.name }}
     </mat-card-title>
+    <!-- Mini-bars for HP/EP/AP when available -->
+    <div class="mini-bars" *ngIf="hasDerivedAttributes()">
+      <div class="bar hp" *ngIf="ratio('CURRENT HP','MAX HP') as hp">
+        <div class="fill" [style.width.%]="hp"></div>
+        <span class="label">HP</span>
+        <span class="value">{{ attrValue('CURRENT HP') }}/{{ attrValue('MAX HP') }}</span>
+      </div>
+      <div class="bar ep" *ngIf="ratio('CURRENT EP','MAX EP') as ep">
+        <div class="fill" [style.width.%]="ep"></div>
+        <span class="label">EP</span>
+        <span class="value">{{ attrValue('CURRENT EP') }}/{{ attrValue('MAX EP') }}</span>
+      </div>
+      <div class="bar ap" *ngIf="ratio('CURRENT AP','MAX AP') as ap">
+        <div class="fill" [style.width.%]="ap"></div>
+        <span class="label">AP</span>
+        <span class="value">{{ attrValue('CURRENT AP') }}/{{ attrValue('MAX AP') }}</span>
+      </div>
+      <div class="status-chips">
+        <span class="eng-chip" *ngIf="hasEngagementChip()">ENG</span>
+      </div>
+    </div>
     <mat-card-content>
       <span [ngSwitch]="interactive.behavior">
         <img matTooltip="{{ retaliateTooltip }}"

@@ -229,4 +229,27 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
         };
     }
   }
+
+  // --- Mini-bars helpers (HP/EP/AP) ---
+  public hasDerivedAttributes(): boolean {
+    const i = this.interactive as unknown as { derivedAttributes?: Record<string, { value: number }> };
+    return !!i?.derivedAttributes;
+  }
+
+  public attrValue(key: string): number | null {
+    const i = this.interactive as unknown as { derivedAttributes?: Record<string, { value: number }> };
+    const v = i?.derivedAttributes?.[key]?.value;
+    return typeof v === 'number' ? v : null;
+  }
+
+  public ratio(currentKey: string, maxKey: string): number | null {
+    const cur = this.attrValue(currentKey);
+    const max = this.attrValue(maxKey);
+    if (cur === null || max === null || max <= 0) return null;
+    return Math.max(0, Math.min(100, Math.round((cur / max) * 100)));
+  }
+
+  public hasEngagementChip(): boolean {
+    return !!this.cooldowns && typeof this.cooldowns['ENGAGEMENT'] === 'number' && this.cooldowns['ENGAGEMENT'] > 0;
+  }
 }
