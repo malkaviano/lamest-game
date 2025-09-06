@@ -42,13 +42,12 @@ export class CombatFeedService {
         break;
       }
       case 'DODGE': {
-        // Placeholder: show small info blip; can replace with text overlay later
-        this.floating.showInfo(0, x, y - 10);
+        this.floating.showText('Dodge', x, y - 10);
         this.sound.playSound('MISSED' as LogCategoryLiteral);
         break;
       }
       case 'MISS': {
-        this.floating.showInfo(0, x, y - 10);
+        this.floating.showText('Miss', x, y - 10);
         this.sound.playSound('MISSED' as LogCategoryLiteral);
         break;
       }

@@ -1,17 +1,16 @@
 Interactivity Suggestions (GPT)
 
-1) Structured Combat UI
+1) Structured Combat UI [DONE]
 - Emit structured combat events from `GameLoopService` (actorId, targetId, effectType, amount, hit/miss, crit, dodge).
 - Use these to drive UI without parsing logs. Add a `CombatFeedService` to fan-out events to animations, sounds, and UI badges.
 
-2) Per-Actor Visuals
-- Add HP/EP/AP mini-bars to each interactive card (top-right overlay).
+- Add HP/EP/AP mini-bars to each interactive card (top-right overlay). [DONE]
 - Show status effect chips (e.g., Burning, Poisoned) with timers; fade when expired.
 - Display cooldown badges for actions that a target imposes (e.g., engagement timer) with countdown.
 
-3) Action Affordances
-- Contextual hints on actionable buttons (AP cost, cooldown remaining, hit chance estimate) shown as small pill labels.
-- Disable buttons with tooltip explaining reason (e.g., “Insufficient AP” or “Engagement timer”).
+3) Action Affordances [DONE]
+- Contextual hints on actionable buttons (AP cost, cooldown remaining, hit chance estimate) shown as small pill labels. [DONE]
+- Disable buttons with tooltip explaining reason (e.g., “Insufficient AP” or “Engagement timer”). [DONE]
 
 4) Targeted Animations
 - Expand floating numbers: offset and color per subtype are in place; add critical hit variant (bigger, shake, flash).
@@ -22,9 +21,9 @@ Interactivity Suggestions (GPT)
 - Map `EffectTypeLiteral` to specific sounds (fire sizzle, acid hiss, kinetic thud, sacred chime, profane distortion).
 - Add cooldown/deny beeps for invalid actions; success/level-up fanfare.
 
-6) Combat Timeline Panel
-- Optional side panel that lists recent structured events with icons, amounts, and actor portraits.
-- Click an entry to highlight the involved cards briefly (scroll into view if off-screen).
+6) Combat Timeline Panel [DONE]
+- Optional side panel that lists recent structured events with icons, amounts, and actor portraits. [DONE]
+- Click an entry to highlight the involved cards briefly (scroll into view if off-screen). [DONE]
 
 7) Input Micro-interactions
 - Hovering an interactive card could reveal quick actions as floating icon buttons.
@@ -34,7 +33,7 @@ Interactivity Suggestions (GPT)
 - When an action involves the current scene (e.g., opening a door), briefly animate the scene image (shake/open overlay) and show a small floating label near it.
 
 9) Accessibility & Clarity
-- Add ARIA labels to action buttons and status chips.
+- Add ARIA labels to action buttons and status chips. [PARTIAL]
 - Offer a colorblind-friendly palette for damage types; allow toggling high-contrast mode.
 
 10) Performance Considerations
@@ -42,16 +41,15 @@ Interactivity Suggestions (GPT)
 - Batch animations where possible; limit simultaneous GSAP timelines to prevent jank under heavy combat.
 
 Implementation Sketches
-- Add `CombatEvent` interface and `combatEvents$` in `GameLoopService`.
-- Create `combat-feed.service.ts` to subscribe to `combatEvents$` and trigger:
-  - `FloatingNumbersService.showDamage(..)` with precise anchors.
-  - `SoundService.playEffect(effectType)`.
-  - `HighlightService.flashCard(targetId, effectType)`.
-- Extend `InteractiveWidgetComponent` to accept live stats (HP/EP/AP snapshot) and effects, rendering mini-bars and chips.
-- Introduce `cooldown-badge` and `status-chip` small components for reuse.
+- Add `CombatEvent` interface and `combatEvents$` in `GameLoopService`. [DONE]
+- Create `combat-feed.service.ts` to subscribe to `combatEvents$` and trigger: [DONE]
+  - `FloatingNumbersService.showDamage(..)` with precise anchors. [DONE]
+  - `SoundService.playEffect(effectType)`. [PARTIAL]
+  - `HighlightService.flashCard(targetId, effectType)`. [DONE]
+- Extend `InteractiveWidgetComponent` to accept live stats (HP/EP/AP snapshot) and effects, rendering mini-bars and chips. [PARTIAL]
+- Introduce `cooldown-badge` and `status-chip` small components for reuse. [PARTIAL]
 
-Small Quick Wins
-- Add miss/dodge floating texts immediately by detecting `MISSED` / dodge messages.
-- Animate the interactive card border on affect: a quick `gsap.to` pulse.
-- Add AP cost pills to action buttons using existing settings store.
-
+Small Quick Wins [DONE]
+- Add miss/dodge floating texts immediately by detecting `MISSED` / dodge messages. [DONE]
+- Animate the interactive card border on affect: a quick `gsap.to` pulse. [DONE]
+- Add AP cost pills to action buttons using existing settings store. [DONE]

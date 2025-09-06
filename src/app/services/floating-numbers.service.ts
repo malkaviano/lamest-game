@@ -63,4 +63,11 @@ export class FloatingNumbersService {
       type: 'info'
     }, x, y);
   }
+
+  public showText(label: string, x: number, y: number): void {
+    this.showFloatingNumber({
+      type: 'text',
+      label
+    }, x, y);
+  }
 }

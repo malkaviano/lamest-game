@@ -3,10 +3,11 @@ import { gsap } from 'gsap';
 import { EffectTypeLiteral } from '@literals/effect-type.literal';
 
 export interface FloatingNumberData {
-  value: number;
-  type: 'damage' | 'heal' | 'experience' | 'info';
+  value?: number;
+  type: 'damage' | 'heal' | 'experience' | 'info' | 'text';
   duration?: number;
   effectType?: EffectTypeLiteral; // used to colorize damage types
+  label?: string; // used when type is 'text'
 }
 
 @Component({
@@ -29,6 +30,10 @@ export interface FloatingNumberData {
       opacity: 0;
     }
     
+    .floating-number--text {
+      color: #b0bec5;
+      font-weight: 600;
+    }
     .floating-number--damage {
       color: #ff4444;
     }
@@ -120,7 +125,10 @@ export class FloatingNumberWidgetComponent implements OnInit, AfterViewInit {
   }
 
   public formatValue(): string {
-    const value = Math.abs(this.data.value);
+    if (this.data.type === 'text' && this.data.label) {
+      return this.data.label;
+    }
+    const value = Math.abs(this.data.value ?? 0);
     
     switch (this.data.type) {
       case 'damage':
