@@ -18,12 +18,61 @@
   padding: 15px;
 }
 
+.behavior-icons { display: inline-flex; gap: 6px; align-items: center; margin: 0 8px 6px 12px; }
+.behavior-icon { font-size: 18px; line-height: 1; }
+
+.meta-row { display: flex; align-items: center; gap: 8px; padding: 0 12px 6px 12px; }
+
+.detect-icon { font-size: 16px; line-height: 1; opacity: 0.9; }
+
+.mini-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 12px 8px 12px;
+}
+
+.mini-bars .bar {
+  position: relative;
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mini-bars .bar .fill { height: 100%; }
+.mini-bars .bar.hp .fill { background: rgba(244, 67, 54, 0.6); }
+.mini-bars .bar.ep .fill { background: rgba(33, 150, 243, 0.6); }
+.mini-bars .bar.ap .fill { background: rgba(255, 235, 59, 0.6); }
+
+.mini-bars .bar .label, .mini-bars .bar .value {
+  position: absolute;
+  top: -14px;
+  font-size: 10px;
+  opacity: 0.8;
+}
+.mini-bars .bar .label { left: 0; }
+.mini-bars .bar .value { right: 0; }
+
+.status-chips { display: flex; gap: 6px; padding-top: 2px; }
+.eng-chip {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(176, 132, 245, 0.2);
+  border: 1px solid rgba(176, 132, 245, 0.6);
+  color: #b084f5;
+  font-size: 10px;
+}
+
 .button-content {
   display: flex;
   text-align: center;
   vertical-align: middle;
   align-content: space-evenly;
+  gap: 6px;
 }
+
+.action-emoji { font-size: 18px; line-height: 1; }
 
 .buttons {
   display: flex;
@@ -33,4 +82,35 @@
 
 .label {
   padding-left: 5px;
+}
+
+.ap-pill {
+  margin-left: auto;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(255, 235, 59, 0.2);
+  border: 1px solid rgba(255, 235, 59, 0.6);
+  color: #ffeb3b;
+  font-size: 11px;
+  align-self: center;
+}
+
+.cd-pill {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(96, 125, 139, 0.2);
+  border: 1px solid rgba(96, 125, 139, 0.6);
+  color: #b0bec5;
+  font-size: 11px;
+  align-self: center;
+}
+
+.eng-pill {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(176, 132, 245, 0.2);
+  border: 1px solid rgba(176, 132, 245, 0.6);
+  color: #b084f5;
+  font-size: 11px;
+  align-self: center;
 }

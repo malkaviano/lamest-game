@@ -3,29 +3,35 @@
     <mat-card-title class="card-title">
       {{ interactive.name }}
     </mat-card-title>
+  <!-- Meta row: behavior icon + ENG chip side by side -->
+  <div class="meta-row">
+    <span class="behavior-icons" [ngSwitch]="interactive.behavior">
+      <span class="behavior-icon" *ngSwitchCase="'RETALIATE'" matTooltip="{{ retaliateTooltip }}" aria-label="Retaliator">🛡️</span>
+      <span class="behavior-icon" *ngSwitchCase="'AGGRESSIVE'" matTooltip="{{ aggressiveTooltip }}" aria-label="Aggressor">⚔️</span>
+      <span class="behavior-icon" *ngSwitchCase="'PLAYER'" matTooltip="{{ playerTooltip }}" aria-label="Player">🧍</span>
+    </span>
+    <span class="detect-icon" *ngIf="detectDisguised" matTooltip="{{ searchTooltip }}" aria-label="Disguise detection">🔎</span>
+    <span class="detect-icon" *ngIf="detectHidden" matTooltip="{{ visibilityTooltip }}" aria-label="Stealth detection">👁️</span>
+  </div>
+    <!-- Mini-bars for HP/EP/AP when available -->
+    <div class="mini-bars" *ngIf="hasDerivedAttributes()">
+      <div class="bar hp" *ngIf="ratio('CURRENT HP','MAX HP') as hp">
+        <div class="fill" [style.width.%]="hp"></div>
+        <span class="label">HP</span>
+        <span class="value">{{ attrValue('CURRENT HP') }}/{{ attrValue('MAX HP') }}</span>
+      </div>
+      <div class="bar ep" *ngIf="ratio('CURRENT EP','MAX EP') as ep">
+        <div class="fill" [style.width.%]="ep"></div>
+        <span class="label">EP</span>
+        <span class="value">{{ attrValue('CURRENT EP') }}/{{ attrValue('MAX EP') }}</span>
+      </div>
+      <div class="bar ap" *ngIf="ratio('CURRENT AP','MAX AP') as ap">
+        <div class="fill" [style.width.%]="ap"></div>
+        <span class="label">AP</span>
+        <span class="value">{{ attrValue('CURRENT AP') }}/{{ attrValue('MAX AP') }}</span>
+      </div>
+    </div>
     <mat-card-content>
-      <span [ngSwitch]="interactive.behavior">
-        <img matTooltip="{{ retaliateTooltip }}"
-          *ngSwitchCase="'RETALIATE'"
-          src="assets/icons/shield.png"
-          alt="retaliator">
-        <img matTooltip="{{ aggressiveTooltip }}"
-          *ngSwitchCase="'AGGRESSIVE'"
-          src="assets/icons/swords.png"
-          alt="aggressor">
-        <img matTooltip="{{ playerTooltip }}"
-          *ngSwitchCase="'PLAYER'"
-          src="assets/icons/person.png"
-          alt="player">
-      </span>
-      <img *ngIf="detectDisguised"
-        matTooltip="{{ searchTooltip }}"
-        src="assets/icons/search.png"
-        alt="disguise breaker">
-      <img *ngIf="detectHidden"
-        matTooltip="{{ visibilityTooltip }}"
-        src="assets/icons/visibility.png"
-        alt="stealth breaker">
       <div>
         {{ interactive.description }}
       </div>
@@ -37,12 +43,15 @@
               class="action-button"
               mat-raised-button color="primary"
               (click)="onActionSelected(action)"
+              [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
               attr.data-testid="actionable-{{ action.name }}"
-              matTooltip="{{ setIcon(action.actionable).tooltip }}">
+              matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}">
               <div class="button-content">
-                <img src="{{ setIcon(action.actionable).icon }}"
-                  alt="{{ setIcon(action.actionable).tooltip }}" />
+                <span class="action-emoji" aria-hidden="true">{{ actionEmoji(action.actionable) }}</span>
                 <span class="label">{{ action.label }}</span>
+                <span class="ap-pill" *ngIf="apCost(action) > 0">{{ apCost(action) }} AP</span>
+                <span class="cd-pill" *ngIf="cooldownSeconds(action) as cd">CD {{ cd }}s</span>
+                <span class="eng-pill" *ngIf="isEngagementBlocked(action) && engagementSeconds() as eng">ENG {{ eng }}s</span>
               </div>
             </button>
           </div>

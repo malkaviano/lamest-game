@@ -1,0 +1,52 @@
+Lamest Game — Project Analysis (GPT)
+
+Overview
+- Framework: Angular 17 with RxJS; modular separation between frontend UI and a domain-centric “backend” layer implemented in TypeScript.
+- Architecture: Clean-ish layering using conceptual definitions, entities, behaviors, rules, policies, and stores under `src/backend/`. UI consumes a `GameLoopService` that emits domain events and log messages used to drive panels/widgets.
+- Rendering: UI composed of panels and widgets (status bar, sheet, interactive list, logs, image viewer). Feedback via `ngx-toastr`, audio via `howler`, animated widgets (e.g., GSAP for floating numbers, custom progress bar).
+
+Key Modules
+- Backend domain model:
+  - Entities: `ActorEntity`, `SceneEntity`, `InteractiveEntity` encapsulate state and behavior.
+  - Behaviors: `actor.behavior`, `equipment.behavior`, `regenerator.behavior`, `cooldown.behavior`, `ai.behavior` define core game mechanics and AI decisions.
+  - Rules/Policies: Actions like `affect.rule`, `consume.rule`, `equip.rule`, etc., produce `RuleResult`s; policies (e.g., `effect.policy`) translate results into log messages and side-effects.
+  - Stores/Values: Access to settings, strings, items, scenes; strongly typed literals and definitions define vocab and enumerations.
+  - Events: Domain events (`effect.event`, `derived-attribute.event`, actionable events) flow through services and behaviors.
+
+- Frontend UI:
+  - Layout: `GameLayoutComponent` organizes status, scene view, character sheet, interactives, and compact logs.
+  - Pages: `GamePageComponent` coordinates subscriptions to `GameLoopService` and drives UI state; now also anchors floating numbers to actor containers.
+  - Widgets: Interactive buttons, image viewer, animated progress bar, floating numbers.
+  - Feedback: `FeedbackService` maps log categories to toast styles; `SoundService` maps categories to sounds.
+
+Event/Data Flow
+- Player/AI actions -> Rules -> Policies -> Log messages + state changes.
+- `GameLoopService.events.*` Observables feed into `GamePageComponent` which updates view models for panels and triggers feedback (toasts, sounds, floating numbers).
+
+Quality/Testing
+- Unit tests cover a large portion of backend rules, behaviors, and helpers; also basic component/service specs on the UI side.
+- Type safety: strict TS settings and path aliases in `tsconfig.json`; literals prevent accidental string drift.
+
+Recent Fixes (observed)
+- Floating numbers: regex adjusted to match actual combat logs; early init of `ViewContainerRef` to avoid missing first events; anchoring to target containers; color styling per damage type (KINETIC/FIRE/ACID/PROFANE/SACRED).
+
+Strengths
+- Clear separation of domain logic from UI, enabling deterministic testing.
+- Descriptive literals/definitions improve maintainability and readability.
+- Stores centralize text and settings; logs/messages are templated and localized via JSON.
+
+Gaps/Risks
+- UI currently relies on text logs to derive combat visuals (parsing strings). This is fragile compared to structured event payloads.
+- Limited visual state for actors (e.g., no per-actor HP bars or dynamic status effects rendered alongside interactives).
+- The AI/loop feedback is primarily non-visual; few micro-interactions beyond toasts and floating numbers.
+- Some features (sounds, GSAP animations) are present but could be further synchronized with game events (e.g., per-effect sound or staggered animations).
+
+Performance/UX Notes
+- Angular change detection should be fine given the scope, though heavy log streams may cause reflows in the compact logs panel.
+- GSAP animations are lightweight and isolated; container is `fixed` and pointer-events disabled to avoid interference.
+
+Opportunities
+- Emit structured combat events (with actor/target IDs, effect type, amount) directly to the UI to eliminate regex parsing.
+- Enrich interactive cards with transient UI (HP/EP/AP mini-bars, cooldown chips, status effect badges) and contextual action hints.
+- Expand feedback mapping (category -> sound/animation) to cover damage subtypes and misses/dodges.
+

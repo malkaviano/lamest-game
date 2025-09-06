@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
@@ -14,10 +14,16 @@ import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.compon
 import { ViewerComponent } from '../../dialogs/viewer/viewer.dialog.component';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { FeedbackService } from '../../services/feedback.service';
+import { FloatingNumbersService } from '../../services/floating-numbers.service';
+import { CombatFeedService } from '../../services/combat-feed.service';
+import { HighlightService } from '../../services/highlight.service';
 import { ViewableInterface } from '../../interfaces/viewable.interface';
 import { CharacterValuesView } from '../../view-models/character-values.view';
 import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 import { SceneEntity } from '@entities/scene.entity';
+import { CombatEvent } from '@interfaces/combat-event.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 
 @Component({
   selector: 'app-game-page',
@@ -26,6 +32,7 @@ import { SceneEntity } from '@entities/scene.entity';
   providers: [WithSubscriptionHelper],
 })
 export class GamePageComponent implements OnInit, OnDestroy {
+  @ViewChild('floatingContainer', { read: ViewContainerRef, static: true }) floatingContainer!: ViewContainerRef;
   private readonly gameLogs: string[];
 
   public scene!: SceneEntity;
@@ -44,7 +51,11 @@ export class GamePageComponent implements OnInit, OnDestroy {
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly formatterHelperService: FormatterHelperService,
     private readonly dialog: MatDialog,
-    private readonly gameLoopService: GameLoopService
+    private readonly gameLoopService: GameLoopService,
+    private readonly feedbackService: FeedbackService,
+    private readonly floatingNumbersService: FloatingNumbersService,
+    private readonly combatFeed: CombatFeedService,
+    private readonly highlight: HighlightService
   ) {
     this.gameLogs = [];
 
@@ -65,6 +76,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Configure the floating numbers service early to catch initial events
+    this.floatingNumbersService.setViewContainer(this.floatingContainer);
+
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.playerChanged$.subscribe((character) => {
         this.characterValues =
@@ -117,8 +131,24 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.actionLogged$.subscribe((log) => {
         this.gameLogs.unshift(this.printLog(log));
+        // Avoid double-playing sounds if combat events are active
+        if (this.gameLoopService.events.combatEvents$) {
+          this.feedbackService.showToastOnly(log);
+        } else {
+          this.feedbackService.showFeedback(log);
+        }
+        // Only XP still comes from logs
+        this.handleXP(log);
       })
     );
+
+    if (this.gameLoopService.events.combatEvents$) {
+      this.withSubscriptionHelper.addSubscription(
+        this.gameLoopService.events.combatEvents$.subscribe((event: CombatEvent) => {
+          this.handleCombatEvent(event);
+        })
+      );
+    }
 
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.playerInventory$.subscribe((inventory) => {
@@ -133,6 +163,29 @@ export class GamePageComponent implements OnInit, OnDestroy {
     );
 
     this.gameLoopService.start();
+  }
+
+  private handleCombatEvent(event: CombatEvent): void {
+    const anchor = this.getTargetAnchor(event.targetId, event.targetName);
+    this.combatFeed.handle(event, anchor ?? undefined);
+    if (event.targetId) this.highlight.flashInteractiveCard(event.targetId, event.effectType);
+  }
+
+  private handleXP(log: LogMessageDefinition): void {
+    const anchor = this.getActorAnchorCenter(log.actor);
+    const centerX = anchor?.x ?? window.innerWidth / 2;
+    const centerY = anchor?.y ?? window.innerHeight / 2;
+    const expMatch = log.message.match(/\b(\d+)\b\s*(xp|experience)\b/i);
+    if (expMatch) {
+      const exp = parseInt(expMatch[1], 10);
+      const charEl = document.querySelector('[data-testid="character"]') as HTMLElement | null;
+      if (charEl) {
+        const rect = charEl.getBoundingClientRect();
+        this.floatingNumbersService.showExperience(exp, rect.left + rect.width / 2, rect.top - 10);
+      } else {
+        this.floatingNumbersService.showExperience(exp, centerX + 100, centerY);
+      }
+    }
   }
 
   public informActionSelected(action: ActionableEvent): void {
@@ -176,5 +229,52 @@ export class GamePageComponent implements OnInit, OnDestroy {
       data,
       autoFocus: false,
     });
+  }
+
+  // Removed log-parsing for damage/heal. Combat visuals come from CombatEvent stream.
+
+  private getActorAnchorCenter(actorName: string): { x: number; y: number } | null {
+    // 1) Try to find interactive by name in current scene and use its DOM card rect
+    try {
+      const interactive = this.scene?.visibleInteractives?.items?.find?.(
+        (i: InteractiveInterface) => i?.name === actorName
+      );
+
+      if (interactive?.id) {
+        const el = document.querySelector(
+          `[data-testid="interactive-${interactive.id}"]`
+        ) as HTMLElement | null;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+        }
+      }
+    } catch {
+      // ignore lookup errors, fallback below
+    }
+
+    // 2) If it's the player (actor not in interactives), use the character panel as anchor
+    const characterEl = document.querySelector(
+      '[data-testid="character"]'
+    ) as HTMLElement | null;
+
+    if (characterEl) {
+      const rect = characterEl.getBoundingClientRect();
+      return { x: rect.left + rect.width / 2, y: rect.top + 40 };
+    }
+
+    // 3) No anchor found
+    return null;
+  }
+
+  private getTargetAnchor(targetId: string, targetName: string): { x: number; y: number } | null {
+    if (targetId) {
+      const el = document.querySelector(`[data-testid="interactive-${targetId}"]`) as HTMLElement | null;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+      }
+    }
+    return this.getActorAnchorCenter(targetName);
   }
 }

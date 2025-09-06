@@ -77,7 +77,8 @@ export class GameLoopService {
       loggingHub.logMessageProduced$,
       characterService.characterChanged$,
       inventoryChanged,
-      this.ruleHub.documentOpened$
+      this.ruleHub.documentOpened$,
+      this.policyHub.combatEventProduced$
     );
   }
 

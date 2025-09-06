@@ -17,3 +17,49 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; font-size: 
 .vertical-scrollable {
   overflow-y: auto;
 }
+
+/* Toast container when moved to feedback panel */
+#toast-feedback-container .toast-container {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  height: auto !important;
+  z-index: 1 !important;
+}
+
+#toast-feedback-container .toast {
+  position: relative !important;
+  float: none !important;
+  width: 100% !important;
+  margin: 3px 0 !important;
+  transform: none !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+  border-radius: 6px !important;
+  font-size: 0.85rem !important;
+}
+
+/* Quick highlight flashes for hit feedback */
+.highlight-hit {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}
+.highlight-hit-fire {
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}
+.highlight-hit-acid {
+  box-shadow: 0 0 0 3px rgba(102, 255, 102, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}
+.highlight-hit-profane {
+  box-shadow: 0 0 0 3px rgba(176, 132, 245, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}
+.highlight-hit-sacred {
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}

@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { CombatEvent } from '@interfaces/combat-event.interface';
 
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
@@ -15,6 +16,7 @@ export class GameEventsValues {
     public readonly playerInventory$: Observable<
       ArrayView<ActionableItemDefinition>
     >,
-    public readonly documentOpened$: Observable<ReadableDefinition>
+    public readonly documentOpened$: Observable<ReadableDefinition>,
+    public readonly combatEvents$?: Observable<CombatEvent>
   ) {}
 }

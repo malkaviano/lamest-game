@@ -19,6 +19,8 @@ import {
 } from '../../../tests/mocks';
 import { actionableEvent, consumableAnalgesic } from '../../../tests/fakes';
 import { testPolicy } from '../../../tests/scenarios';
+import { CombatEvent } from '@interfaces/combat-event.interface';
+import { RuleResult } from '@results/rule.result';
 
 describe('EffectPolicy', () => {
   const policy = new EffectPolicy();
@@ -114,6 +116,127 @@ describe('EffectPolicy', () => {
       },
     ].forEach(({ ruleResult, expected, logs }) => {
       testPolicy(policy, ruleResult, expected, logs);
+    });
+
+    it('emits combat event on AFFECT EXECUTED', (done) => {
+      const ruleResult = {
+        name: 'AFFECT' as RuleNameLiteral,
+        result: 'EXECUTED' as RuleResultLiteral,
+        event: actionableEvent(affectActionable, target.id),
+        actor,
+        target,
+        effect: {
+          amount: 1,
+          type: unarmedWeapon.damage.effectType,
+        },
+        affected: unarmedWeapon,
+        skillName: 'Brawl',
+        roll: {
+          checkRoll: 4,
+          result: 'SUCCESS' as CheckResultLiteral,
+        },
+      };
+
+      let received: CombatEvent | undefined;
+      policy.combatEventProduced$.subscribe((ev) => (received = ev));
+
+      policy.enforce(ruleResult as unknown as RuleResult);
+
+      expect(received).toEqual(
+        jasmine.objectContaining({
+          category: 'AFFECTED',
+          actorName: 'Some Name',
+          targetName: 'actor',
+          effectType: 'KINETIC',
+          amount: 1,
+          outcome: 'HIT',
+          timestamp: jasmine.any(Number),
+        })
+      );
+      done();
+    });
+
+    it('emits HEAL event on CONSUME EXECUTED', (done) => {
+      const ruleResult = {
+        name: 'CONSUME' as RuleNameLiteral,
+        result: 'EXECUTED' as RuleResultLiteral,
+        event: actionableEvent(consumeActionable, actor.id),
+        actor,
+        consumable: {
+          consumed: consumableAnalgesic,
+          hp: consumableAnalgesic.hp,
+          energy: consumableAnalgesic.energy,
+        },
+      };
+
+      let received: CombatEvent | undefined;
+      policy.combatEventProduced$.subscribe((ev) => (received = ev));
+
+      policy.enforce(ruleResult as unknown as RuleResult);
+
+      expect(received).toEqual(
+        jasmine.objectContaining({
+          category: 'AFFECTED',
+          actorName: 'Some Name',
+          targetName: 'Some Name',
+          amount: consumableAnalgesic.hp,
+          outcome: 'HEAL',
+          timestamp: jasmine.any(Number),
+        })
+      );
+      done();
+    });
+
+    it('emits MISS on AVOIDED (not dodged)', (done) => {
+      const ruleResult = {
+        name: 'AFFECT' as RuleNameLiteral,
+        result: 'AVOIDED' as RuleResultLiteral,
+        event: actionableEvent(affectActionable, target.id),
+        actor,
+        target,
+        dodged: false,
+      };
+
+      let received: CombatEvent | undefined;
+      policy.combatEventProduced$.subscribe((ev) => (received = ev));
+
+      policy.enforce(ruleResult as unknown as RuleResult);
+
+      expect(received).toEqual(
+        jasmine.objectContaining({
+          outcome: 'MISS',
+          actorName: 'Some Name',
+          targetName: 'actor',
+          timestamp: jasmine.any(Number),
+        })
+      );
+      done();
+    });
+
+    it('emits DODGE on AVOIDED (dodged)', (done) => {
+      const ruleResult = {
+        name: 'AFFECT' as RuleNameLiteral,
+        result: 'AVOIDED' as RuleResultLiteral,
+        event: actionableEvent(affectActionable, target.id),
+        actor,
+        target,
+        dodged: true,
+      };
+
+      let received: CombatEvent | undefined;
+      policy.combatEventProduced$.subscribe((ev) => (received = ev));
+
+      policy.enforce(ruleResult as unknown as RuleResult);
+
+      expect(received).toEqual(
+        jasmine.objectContaining({
+          outcome: 'DODGE',
+          actorName: 'Some Name',
+          targetName: 'actor',
+          timestamp: jasmine.any(Number),
+        })
+      );
+      done();
     });
   });
 });

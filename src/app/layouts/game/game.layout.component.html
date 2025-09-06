@@ -7,28 +7,31 @@
     >
     </app-status-bar-panel>
   </div>
-  <div class="content-bar title-text">
-    <span>Current Scene: {{ scene.label }}</span>
-    <app-image-viewer-widget
-      [image]="{
-        title: scene.label,
-        src: 'assets/images/' + scene.image,
-        alt: scene.label,
-        width: '400',
-        height: '400'
-      }"
-      (imageOpened)="sceneOpened.emit($event)"
-    >
-    </app-image-viewer-widget>
+  <div class="section scene-area">
+    <div class="scene-zone">
+      <div class="logs-header">
+        <span class="logs-title">🗺️ {{ scene.label }}</span>
+      </div>
+      <div class="panel-content">
+        <app-image-viewer-widget
+          [image]="{
+            title: scene.label,
+            src: 'assets/images/' + scene.image,
+            alt: scene.label,
+            width: '400',
+            height: '400'
+          }"
+          (imageOpened)="sceneOpened.emit($event)"
+        >
+        </app-image-viewer-widget>
+      </div>
+    </div>
   </div>
 </div>
 
 <section name="content">
   <div class="flex-panel">
-    <div class="section content-box">
-      <div class="title-text">
-        <span class="mat-h3">Character</span>
-      </div>
+    <div class="section content-box character-section">
       <div data-testid="character">
         <app-sheet-panel
           [characterValues]="characterValues"
@@ -36,11 +39,32 @@
           (actionSelected)="actionSelected.emit($event)"
         ></app-sheet-panel>
       </div>
-    </div>
-    <div class="section large-box">
-      <div class="title-text">
-        <span class="mat-h3">Scene Interactives</span>
+
+      <!-- Compact logs panel below character -->
+      <div class="compact-logs-panel">
+        <div class="logs-header">
+          <span class="logs-title"
+            >📜 Text Logs ({{ logs.items.length || 0 }} entries)</span
+          >
+        </div>
+        <div class="compact-logs-container">
+          <app-text-area-widget
+            [paragraphs]="logs"
+            data-testid="log"
+          ></app-text-area-widget>
+          <!-- Debug info -->
+          <div
+            *ngIf="!logs?.items || logs.items.length === 0"
+            style="color: yellow; padding: 10px"
+          >
+            No logs available yet. Logs will appear here as actions are
+            performed.
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="section large-box">
       <div class="vertical-scrollable">
         <div data-testid="interactives">
           <app-interactive-panel
@@ -51,15 +75,32 @@
         </div>
       </div>
     </div>
-    <div class="section content-box">
-      <div class="title-text">
-        <span class="mat-h3">Action Logs</span>
+    <div class="section feedback-area">
+      <div class="feedback-zone">
+        <div class="logs-header">
+          <span class="logs-title">📣 Feedback</span>
+        </div>
+        <div class="panel-content">
+          <!-- Toast notifications container inside panel -->
+          <div id="toast-feedback-container" class="toast-feedback-container">
+            <!-- Toasts will appear here -->
+          </div>
+          <p class="feedback-hint">
+            Interactive feedback appears in this panel
+          </p>
+        </div>
       </div>
-      <div>
-        <app-text-area-widget
-          [paragraphs]="logs"
-          data-testid="log"
-        ></app-text-area-widget>
+    </div>
+
+    <!-- Separate panel for Combat Timeline -->
+    <div class="section timeline-area">
+      <div class="timeline-zone">
+        <div class="logs-header">
+          <span class="logs-title">⚔️ Combat</span>
+        </div>
+        <div class="panel-content">
+          <app-combat-timeline-panel></app-combat-timeline-panel>
+        </div>
       </div>
     </div>
   </div>

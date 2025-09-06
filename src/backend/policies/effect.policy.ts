@@ -3,6 +3,7 @@ import { PolicyResult } from '@results/policy.result';
 import { RuleResult } from '@results/rule.result';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { EffectEvent } from '@events/effect.event';
+import { CombatEvent } from '@interfaces/combat-event.interface';
 
 // DEBIT: subpar implementation, just migrated
 export class EffectPolicy extends PolicyAbstraction {
@@ -53,7 +54,38 @@ export class EffectPolicy extends PolicyAbstraction {
         );
 
         this.logMessageProduced.next(logMessage);
+
+        // Emit structured combat event for UI consumption
+        if (effect) {
+          const combatEvent: CombatEvent = {
+            timestamp: Date.now(),
+            category: 'AFFECTED',
+            actorId: result.actor.id,
+            actorName: result.actor.name,
+            targetId: target.id,
+            targetName: target.name,
+            effectType: effect.effectType,
+            amount: effect.amount,
+            outcome: effect.effectType === 'REMEDY' ? 'HEAL' : 'HIT',
+          };
+
+          this.combatEventProduced.next(combatEvent);
+        }
       }
+    } else if (result.result === 'AVOIDED') {
+      // Emit MISS or DODGE based on rule result payload
+      const target = result.target ?? result.actor;
+      const outcome = result.dodged ? 'DODGE' : 'MISS';
+      const combatEvent: CombatEvent = {
+        timestamp: Date.now(),
+        category: 'AFFECTED',
+        actorId: result.actor.id,
+        actorName: result.actor.name,
+        targetId: target.id,
+        targetName: target.name,
+        outcome,
+      } as CombatEvent;
+      this.combatEventProduced.next(combatEvent);
     }
 
     return policyResult;

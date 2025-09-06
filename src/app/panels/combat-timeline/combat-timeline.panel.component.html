@@ -1,0 +1,33 @@
+<div class="combat-timeline">
+  <div class="controls">
+    <span class="spacer"></span>
+    <button mat-stroked-button color="warn" (click)="clear()">Clear</button>
+  </div>
+  <div class="list" *ngIf="events.length; else empty">
+    <div class="event" *ngFor="let ev of events; index as i" (click)="onHighlight(ev)" [attr.data-testid]="'combat-event-' + i">
+      <span class="icon">{{ iconFor(ev) }}</span>
+      <div class="body">
+        <div class="line">
+          <span class="actor">{{ ev.actorName }}</span>
+          <span class="arrow">→</span>
+          <span class="target">{{ ev.targetName }}</span>
+        </div>
+        <div class="meta">
+          <ng-container [ngSwitch]="ev.outcome">
+            <span *ngSwitchCase="'HIT'" class="amount damage">-{{ ev.amount }}</span>
+            <span *ngSwitchCase="'CRIT'" class="amount crit">-{{ ev.amount }}</span>
+            <span *ngSwitchCase="'HEAL'" class="amount heal">+{{ ev.amount }}</span>
+            <span *ngSwitchCase="'MISS'" class="tag miss">Miss</span>
+            <span *ngSwitchCase="'DODGE'" class="tag dodge">Dodge</span>
+            <span *ngSwitchDefault class="tag">{{ ev.outcome }}</span>
+          </ng-container>
+          <span *ngIf="effectBadge(ev)" class="badge">{{ effectBadge(ev) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #empty>
+    <div class="empty">No combat events yet.</div>
+  </ng-template>
+</div>
