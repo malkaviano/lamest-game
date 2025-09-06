@@ -6,16 +6,42 @@
 }
 
 .main-bar {
-  padding: 10px;
+  padding: 8px 12px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: flex-start; /* independent heights for top panels */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 120px;
 }
 
-.content-bar {
-  justify-content: center;
-  padding: 10px 20px;
+@media (max-width: 1200px) {
+  .main-bar {
+    justify-content: center;
+  }
+}
+
+.header-panel {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+/* Make panels more responsive */
+@media (max-width: 768px) {
+  .header-panel {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+  
+  .main-bar {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+  }
 }
 
 .section {
@@ -38,20 +64,34 @@
   height: 400px;
 }
 
-/* Scene area styled like logs */
+/* Scene area styled like other panels */
 .scene-area {
-  min-width: 220px;
-  max-width: 220px;
+  min-width: 200px;
+  max-width: 280px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .scene-area {
+    min-width: 180px;
+    max-width: 100%;
+  }
 }
 
 .scene-zone {
-  background: rgba(0, 0, 0, 0.85) !important;
-  border: 2px solid #607D8B !important;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  padding: 12px;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease !important;
+  padding: 8px;
   display: flex;
   flex-direction: column;
+}
+
+.scene-zone:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Center the scene action button within the panel */
@@ -221,13 +261,14 @@
 .logs-header {
   background: rgba(255, 235, 59, 0.1);
   border-bottom: 1px solid rgba(255, 235, 59, 0.3);
-  padding: 8px 12px;
-  border-radius: 10px 10px 0 0;
+  padding: 6px 12px;
+  border-radius: 7px 7px 0 0;
+  margin: -8px -8px 8px -8px;
 }
 
 .logs-title {
   color: rgb(255, 235, 59);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 

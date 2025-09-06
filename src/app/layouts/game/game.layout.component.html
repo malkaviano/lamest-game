@@ -1,13 +1,22 @@
 <div class="main-bar">
-  <div class="content-bar title-text">
-    <app-status-bar-panel
+  <!-- Tactical Status Panel -->
+  <div class="header-panel">
+    <app-tactical-status-panel
+      [status]="characterStatus"
+    ></app-tactical-status-panel>
+  </div>
+  
+  <!-- Global Actions Panel -->
+  <div class="header-panel">
+    <app-global-actions-panel
       [status]="characterStatus"
       (actionSelected)="actionSelected.emit($event)"
       (playerOptions)="playerOptions.emit($event)"
-    >
-    </app-status-bar-panel>
+    ></app-global-actions-panel>
   </div>
-  <div class="section scene-area">
+  
+  <!-- Scene Panel -->
+  <div class="header-panel scene-area">
     <div class="scene-zone">
       <div class="logs-header">
         <span class="logs-title">🗺️ {{ scene.label }}</span>

@@ -26,6 +26,8 @@ import { ActionWidgetComponent } from './widgets/action/action.widget.component'
 import { FloatingNumberWidgetComponent } from './widgets/floating-number/floating-number.widget.component';
 import { AnimatedProgressBarWidgetComponent } from './widgets/animated-progress-bar/animated-progress-bar.widget.component';
 import { CombatTimelinePanelComponent } from './panels/combat-timeline/combat-timeline.panel.component';
+import { TacticalStatusPanelComponent } from './panels/tactical-status/tactical-status.panel.component';
+import { GlobalActionsPanelComponent } from './panels/global-actions/global-actions.panel.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { CombatTimelinePanelComponent } from './panels/combat-timeline/combat-ti
     FloatingNumberWidgetComponent,
     AnimatedProgressBarWidgetComponent,
     CombatTimelinePanelComponent,
+    TacticalStatusPanelComponent,
+    GlobalActionsPanelComponent,
   ],
   imports: [
     BrowserModule,

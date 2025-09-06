@@ -1,0 +1,130 @@
+.global-actions-panel {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease !important;
+  min-width: 320px;
+  max-width: 480px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .global-actions-panel {
+    min-width: 280px;
+    max-width: 100%;
+  }
+}
+
+.global-actions-panel:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.actions-header {
+  background: rgba(76, 175, 80, 0.1);
+  border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+  padding: 6px 12px;
+  border-radius: 7px 7px 0 0;
+}
+
+.actions-title {
+  color: rgb(76, 175, 80);
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.actions-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.equipment-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.equipment-widget {
+  flex: 1;
+}
+
+/* Override equipped widget styles */
+.equipment-widget ::ng-deep .equipped-widget {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px !important;
+  padding: 8px !important;
+  transition: all 0.2s ease;
+}
+
+.equipment-widget ::ng-deep .equipped-widget:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+.combat-options {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.dodge-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.option-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.skill-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.skill-button {
+  flex: 0 0 auto;
+}
+
+/* Override action widget styles */
+.skill-button ::ng-deep .action-widget {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px !important;
+  padding: 8px !important;
+  min-width: 44px;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+.skill-button ::ng-deep .action-widget:hover {
+  border-color: rgba(76, 175, 80, 0.5) !important;
+  background: rgba(76, 175, 80, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+.skill-button ::ng-deep .action-widget mat-icon {
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Custom checkbox styling */
+.dodge-option ::ng-deep .mat-mdc-checkbox {
+  --mdc-checkbox-selected-focus-icon-color: #4caf50;
+  --mdc-checkbox-selected-hover-icon-color: #4caf50;
+  --mdc-checkbox-selected-icon-color: #4caf50;
+  --mdc-checkbox-selected-pressed-icon-color: #4caf50;
+}
