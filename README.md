@@ -2,18 +2,13 @@
 
 A demo of a web text game using Angular 2+
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=malkaviano_lamest-game&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=malkaviano_lamest-game)
-
-[![CodeFactor](https://www.codefactor.io/repository/github/malkaviano/lamest-game/badge)](https://www.codefactor.io/repository/github/malkaviano/lamest-game)
-
 ## Demo
 
 https://lamest-game.web.app/
 
 ## About
-~~Scenario descriptions were generated using ChatGPT~~
 
-Texts were replaced by AI generated images.
+Project was reworked and improved by Claude and mostly by ChatGPT-5.
 
 This project was started as an exercise about agile mentality, MVP and XP principles, the game engine was an accident the initial thought was to produce a simple web text game.
 
