@@ -37,7 +37,7 @@
               class="action-button"
               mat-raised-button color="primary"
               (click)="onActionSelected(action)"
-              [disabled]="!canAfford(action)"
+              [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
               attr.data-testid="actionable-{{ action.name }}"
               matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}">
               <div class="button-content">
@@ -45,6 +45,8 @@
                   alt="{{ setIcon(action.actionable).tooltip }}" />
                 <span class="label">{{ action.label }}</span>
                 <span class="ap-pill" *ngIf="apCost(action) > 0">{{ apCost(action) }} AP</span>
+                <span class="cd-pill" *ngIf="cooldownSeconds(action) as cd">CD {{ cd }}s</span>
+                <span class="eng-pill" *ngIf="isEngagementBlocked(action) && engagementSeconds() as eng">ENG {{ eng }}s</span>
               </div>
             </button>
           </div>
