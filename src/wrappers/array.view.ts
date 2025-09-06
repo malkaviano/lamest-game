@@ -6,11 +6,11 @@ export class ArrayView<T> {
   }
 
   public static create<T>(...collection: T[]): ArrayView<T> {
-    return new ArrayView(collection);
+    return ArrayView.limitMessages(collection);
   }
 
   public static fromArray<T>(collection: T[]): ArrayView<T> {
-    return new ArrayView(collection);
+    return ArrayView.limitMessages(collection);
   }
 
   public static empty<T>(): ArrayView<T> {
@@ -27,5 +27,25 @@ export class ArrayView<T> {
 
   public filter(f: (element: T) => boolean): ArrayView<T> {
     return ArrayView.fromArray(this.items.filter(f));
+  }
+
+  public static limitMessages<T>(
+    items: T[],
+    maxMessages: number = 150,
+    removeCount: number = 50
+  ): ArrayView<T> {
+    if (items.length > maxMessages) {
+      const keepCount = items.length - removeCount;
+
+      if (keepCount <= 0) {
+        return ArrayView.empty();
+      }
+
+      const limitedItems = items.slice(0, keepCount);
+
+      return new ArrayView(limitedItems);
+    }
+
+    return new ArrayView(items);
   }
 }

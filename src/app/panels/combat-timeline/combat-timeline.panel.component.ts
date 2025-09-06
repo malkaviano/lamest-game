@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { CombatEvent } from '@interfaces/combat-event.interface';
 import { GameLoopService } from '@services/game-loop.service';
+import { ArrayView } from '@wrappers/array.view';
 import { HighlightService } from '../../services/highlight.service';
 
 @Component({
@@ -11,9 +12,8 @@ import { HighlightService } from '../../services/highlight.service';
   styleUrls: ['./combat-timeline.panel.component.css'],
 })
 export class CombatTimelinePanelComponent implements OnInit, OnDestroy {
-  events: CombatEvent[] = [];
+  events: ArrayView<CombatEvent> = ArrayView.empty();
   private sub?: Subscription;
-  private readonly maxItems = 30;
 
   constructor(
     private readonly gameLoop: GameLoopService,
@@ -32,12 +32,11 @@ export class CombatTimelinePanelComponent implements OnInit, OnDestroy {
   }
 
   addEvent(ev: CombatEvent): void {
-    this.events.unshift(ev);
-    if (this.events.length > this.maxItems) this.events.length = this.maxItems;
+    this.events = this.events.insert(ev);
   }
 
   clear(): void {
-    this.events = [];
+    this.events = ArrayView.empty();
   }
 
   iconFor(ev: CombatEvent): string {
