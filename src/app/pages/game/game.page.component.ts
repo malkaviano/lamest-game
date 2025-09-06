@@ -14,6 +14,8 @@ import { ReaderDialogComponent } from '../../dialogs/reader/reader.dialog.compon
 import { ViewerComponent } from '../../dialogs/viewer/viewer.dialog.component';
 import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
+import { FeedbackService } from '../../services/feedback.service';
+import { FloatingNumbersService } from '../../services/floating-numbers.service';
 import { ViewableInterface } from '../../interfaces/viewable.interface';
 import { CharacterValuesView } from '../../view-models/character-values.view';
 import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
@@ -44,7 +46,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly formatterHelperService: FormatterHelperService,
     private readonly dialog: MatDialog,
-    private readonly gameLoopService: GameLoopService
+    private readonly gameLoopService: GameLoopService,
+    private readonly feedbackService: FeedbackService,
+    private readonly floatingNumbersService: FloatingNumbersService
   ) {
     this.gameLogs = [];
 
@@ -117,6 +121,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.actionLogged$.subscribe((log) => {
         this.gameLogs.unshift(this.printLog(log));
+        this.feedbackService.showFeedback(log);
+        this.handleFloatingNumbers(log);
       })
     );
 
@@ -176,5 +182,26 @@ export class GamePageComponent implements OnInit, OnDestroy {
       data,
       autoFocus: false,
     });
+  }
+
+  private handleFloatingNumbers(log: LogMessageDefinition): void {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    
+    // Extract numeric values from log messages
+    const damageMatch = log.message.match(/(\d+)\s*damage/i);
+    const healMatch = log.message.match(/(\d+)\s*(heal|restore|recover)/i);
+    const expMatch = log.message.match(/(\d+)\s*(xp|experience)/i);
+    
+    if (damageMatch && log.category === 'AFFECTED') {
+      const damage = parseInt(damageMatch[1]);
+      this.floatingNumbersService.showDamage(damage, centerX, centerY - 50);
+    } else if (healMatch && log.category === 'AFFECTED') {
+      const heal = parseInt(healMatch[1]);
+      this.floatingNumbersService.showHealing(heal, centerX, centerY - 50);
+    } else if (expMatch) {
+      const exp = parseInt(expMatch[1]);
+      this.floatingNumbersService.showExperience(exp, centerX + 100, centerY);
+    }
   }
 }

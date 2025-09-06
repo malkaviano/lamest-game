@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,8 @@ import { ViewerComponent } from './dialogs/viewer/viewer.dialog.component';
 import { ImageViewerComponent } from './widgets/image-viewer/image-viewer.widget.component';
 import { EquippedWidgetComponent } from './widgets/equipped/equipped.widget.component';
 import { ActionWidgetComponent } from './widgets/action/action.widget.component';
+import { FloatingNumberWidgetComponent } from './widgets/floating-number/floating-number.widget.component';
+import { AnimatedProgressBarWidgetComponent } from './widgets/animated-progress-bar/animated-progress-bar.widget.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,8 @@ import { ActionWidgetComponent } from './widgets/action/action.widget.component'
     ImageViewerComponent,
     EquippedWidgetComponent,
     ActionWidgetComponent,
+    FloatingNumberWidgetComponent,
+    AnimatedProgressBarWidgetComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +54,11 @@ import { ActionWidgetComponent } from './widgets/action/action.widget.component'
     MaterialModule,
     HttpClientModule,
     ProvidersModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
   ],
   bootstrap: [AppComponent],
 })

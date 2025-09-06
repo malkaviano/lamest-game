@@ -1,0 +1,64 @@
+import { Injectable, ComponentRef, ViewContainerRef, ComponentFactory, ComponentFactoryResolver } from '@angular/core';
+import { FloatingNumberWidgetComponent, FloatingNumberData } from '../widgets/floating-number/floating-number.widget.component';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FloatingNumbersService {
+  private viewContainer?: ViewContainerRef;
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+
+  public setViewContainer(viewContainer: ViewContainerRef): void {
+    this.viewContainer = viewContainer;
+  }
+
+  public showFloatingNumber(
+    data: FloatingNumberData, 
+    x: number, 
+    y: number
+  ): void {
+    if (!this.viewContainer) {
+      console.warn('ViewContainer not set for FloatingNumbersService');
+      return;
+    }
+
+    const factory: ComponentFactory<FloatingNumberWidgetComponent> = 
+      this.componentFactoryResolver.resolveComponentFactory(FloatingNumberWidgetComponent);
+    
+    const componentRef: ComponentRef<FloatingNumberWidgetComponent> = 
+      this.viewContainer.createComponent(factory);
+
+    componentRef.instance.data = data;
+    componentRef.instance.startX = x;
+    componentRef.instance.startY = y;
+  }
+
+  public showDamage(damage: number, x: number, y: number): void {
+    this.showFloatingNumber({
+      value: damage,
+      type: 'damage'
+    }, x, y);
+  }
+
+  public showHealing(healing: number, x: number, y: number): void {
+    this.showFloatingNumber({
+      value: healing,
+      type: 'heal'
+    }, x, y);
+  }
+
+  public showExperience(exp: number, x: number, y: number): void {
+    this.showFloatingNumber({
+      value: exp,
+      type: 'experience'
+    }, x, y);
+  }
+
+  public showInfo(value: number, x: number, y: number): void {
+    this.showFloatingNumber({
+      value: value,
+      type: 'info'
+    }, x, y);
+  }
+}
