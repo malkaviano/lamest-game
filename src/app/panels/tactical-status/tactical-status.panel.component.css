@@ -1,0 +1,134 @@
+.tactical-status-panel {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease !important;
+  min-width: 280px;
+  max-width: 380px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .tactical-status-panel {
+    min-width: 260px;
+    max-width: 100%;
+  }
+}
+
+.tactical-status-panel:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.tactical-header {
+  background: rgba(255, 152, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 152, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 7px 7px 0 0;
+}
+
+.tactical-title {
+  color: rgb(255, 152, 0);
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.tactical-content {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.tactical-card {
+  min-height: 60px !important;
+}
+
+/* Override window widget styles for tactical cards */
+.tactical-card ::ng-deep .window-widget {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px !important;
+  padding: 6px !important;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.tactical-card ::ng-deep .window-key {
+  font-size: 0.7rem !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  margin-bottom: 2px;
+}
+
+.tactical-card ::ng-deep .window-value {
+  font-size: 0.75rem !important;
+  font-weight: bold;
+  color: #fff !important;
+}
+
+.equipment-section {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.equipment-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 4px 8px;
+  flex: 1;
+}
+
+.equipment-label {
+  font-size: 0.9rem;
+}
+
+.equipment-name {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.visibility-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+.visibility-status {
+  display: flex;
+  align-items: center;
+}
+
+.visibility-status mat-icon {
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.visibility-text {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}

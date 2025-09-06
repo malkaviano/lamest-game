@@ -1,0 +1,50 @@
+<div class="tactical-status-panel">
+  <div class="tactical-header">
+    <span class="tactical-title">⚔️ {{ sceneLabel }}</span>
+  </div>
+  
+  <div class="tactical-content">
+    <!-- Health/Energy/Action Points in compact grid -->
+    <div class="status-grid">
+      <app-window-widget
+        *ngFor="let keyValue of status.derivedAttributes.items"
+        [keyValue]="keyValue"
+        class="tactical-card"
+      ></app-window-widget>
+    </div>
+    
+    <!-- Equipment info -->
+    <div class="equipment-section">
+      <div class="equipment-item">
+        <span class="equipment-label">🗡️</span>
+        <span class="equipment-name">{{ status.weapon.identity.label }}</span>
+      </div>
+      <div class="equipment-item">
+        <span class="equipment-label">🛡️</span>
+        <span class="equipment-name">{{ status.armor.identity.label }}</span>
+      </div>
+    </div>
+    
+    <!-- Visibility status -->
+    <div class="visibility-section">
+      <span [ngSwitch]="status.visibility.value" class="visibility-status">
+        <mat-icon
+          *ngSwitchCase="'VISIBLE'"
+          fontIcon="visibility"
+          matTooltip="Visible"
+        ></mat-icon>
+        <mat-icon
+          *ngSwitchCase="'HIDDEN'"
+          fontIcon="visibility_off"
+          matTooltip="Hidden"
+        ></mat-icon>
+        <mat-icon
+          *ngSwitchCase="'DISGUISED'"
+          fontIcon="face"
+          matTooltip="Disguised"
+        ></mat-icon>
+      </span>
+      <span class="visibility-text">{{ status.visibility.value | titlecase }}</span>
+    </div>
+  </div>
+</div>

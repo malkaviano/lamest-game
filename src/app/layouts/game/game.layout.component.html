@@ -1,31 +1,21 @@
 <div class="main-bar">
-  <div class="content-bar title-text">
-    <app-status-bar-panel
+  <!-- Tactical Status Panel -->
+  <div class="header-panel">
+    <app-tactical-status-panel
       [status]="characterStatus"
+      [sceneLabel]="scene.label"
+    ></app-tactical-status-panel>
+  </div>
+  
+  <!-- Global Actions Panel -->
+  <div class="header-panel">
+    <app-global-actions-panel
+      [status]="characterStatus"
+      [scene]="scene"
       (actionSelected)="actionSelected.emit($event)"
       (playerOptions)="playerOptions.emit($event)"
-    >
-    </app-status-bar-panel>
-  </div>
-  <div class="section scene-area">
-    <div class="scene-zone">
-      <div class="logs-header">
-        <span class="logs-title">🗺️ {{ scene.label }}</span>
-      </div>
-      <div class="panel-content">
-        <app-image-viewer-widget
-          [image]="{
-            title: scene.label,
-            src: 'assets/images/' + scene.image,
-            alt: scene.label,
-            width: '400',
-            height: '400'
-          }"
-          (imageOpened)="sceneOpened.emit($event)"
-        >
-        </app-image-viewer-widget>
-      </div>
-    </div>
+      (sceneOpened)="sceneOpened.emit($event)"
+    ></app-global-actions-panel>
   </div>
 </div>
 

@@ -1,0 +1,193 @@
+.global-actions-panel {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease !important;
+  min-width: 320px;
+  max-width: 480px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .global-actions-panel {
+    min-width: 280px;
+    max-width: 100%;
+  }
+}
+
+.global-actions-panel:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.actions-header {
+  background: rgba(76, 175, 80, 0.1);
+  border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+  padding: 6px 12px;
+  border-radius: 7px 7px 0 0;
+}
+
+.actions-title {
+  color: rgb(76, 175, 80);
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.actions-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.equipment-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.equipment-widget {
+  flex: 1;
+}
+
+/* Override equipped widget styles */
+.equipment-widget ::ng-deep .equipped-widget {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px !important;
+  padding: 8px !important;
+  transition: all 0.2s ease;
+}
+
+.equipment-widget ::ng-deep .equipped-widget:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+.combat-options {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.dodge-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.option-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.skill-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.skill-button {
+  flex: 0 0 auto;
+}
+
+/* Override action widget styles to match scene button */
+.skill-button ::ng-deep button {
+  background: rgba(76, 175, 80, 0.2) !important;
+  border: 1px solid rgba(76, 175, 80, 0.5) !important;
+  border-radius: 6px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  transition: all 0.2s ease !important;
+}
+
+.skill-button ::ng-deep button:hover {
+  background: rgba(76, 175, 80, 0.3) !important;
+  border-color: rgba(76, 175, 80, 0.7) !important;
+  transform: translateY(-1px) !important;
+}
+
+.skill-button ::ng-deep button img {
+  width: 24px !important;
+  height: 24px !important;
+  filter: brightness(0) saturate(100%) invert(62%) sepia(98%) saturate(344%) hue-rotate(86deg) brightness(119%) contrast(119%) !important;
+  transition: filter 0.2s ease !important;
+}
+
+.skill-button ::ng-deep button:hover img {
+  filter: brightness(0) saturate(100%) invert(84%) sepia(29%) saturate(1567%) hue-rotate(87deg) brightness(118%) contrast(119%) !important;
+}
+
+/* Alternative approach - target by component selector */
+.global-actions-panel app-action-widget ::ng-deep button.mat-mdc-fab,
+.global-actions-panel app-action-widget ::ng-deep button.mat-fab {
+  background: rgba(76, 175, 80, 0.2) !important;
+  border: 1px solid rgba(76, 175, 80, 0.5) !important;
+  border-radius: 6px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  transition: all 0.2s ease !important;
+  color: rgba(76, 175, 80, 0.9) !important;
+  box-shadow: none !important;
+}
+
+.global-actions-panel app-action-widget ::ng-deep button.mat-mdc-fab:hover,
+.global-actions-panel app-action-widget ::ng-deep button.mat-fab:hover {
+  background: rgba(76, 175, 80, 0.3) !important;
+  border-color: rgba(76, 175, 80, 0.7) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
+}
+
+.global-actions-panel app-action-widget ::ng-deep button img {
+  width: 24px !important;
+  height: 24px !important;
+  filter: brightness(0) saturate(100%) invert(62%) sepia(98%) saturate(344%) hue-rotate(86deg) brightness(119%) contrast(119%) !important;
+  transition: filter 0.2s ease !important;
+}
+
+.global-actions-panel app-action-widget ::ng-deep button:hover img {
+  filter: brightness(0) saturate(100%) invert(84%) sepia(29%) saturate(1567%) hue-rotate(87deg) brightness(118%) contrast(119%) !important;
+}
+
+/* Force all action buttons in this panel to have green theme */
+.global-actions-panel .skill-actions ::ng-deep * {
+  --mdc-fab-container-color: rgba(76, 175, 80, 0.2) !important;
+  --mdc-fab-icon-color: rgba(76, 175, 80, 0.9) !important;
+}
+
+/* Scene Button Styling */
+.scene-button {
+  background: rgba(255, 193, 7, 0.2) !important;
+  border: 1px solid rgba(255, 193, 7, 0.5) !important;
+  width: 44px !important;
+  height: 44px !important;
+  transition: all 0.2s ease;
+}
+
+.scene-button:hover {
+  background: rgba(255, 193, 7, 0.3) !important;
+  border-color: rgba(255, 193, 7, 0.7) !important;
+  transform: translateY(-1px);
+}
+
+.scene-button mat-icon {
+  color: rgba(255, 193, 7, 0.9) !important;
+  font-size: 1.2rem;
+}
+
+/* Custom checkbox styling */
+.dodge-option ::ng-deep .mat-mdc-checkbox {
+  --mdc-checkbox-selected-focus-icon-color: #4caf50;
+  --mdc-checkbox-selected-hover-icon-color: #4caf50;
+  --mdc-checkbox-selected-icon-color: #4caf50;
+  --mdc-checkbox-selected-pressed-icon-color: #4caf50;
+}

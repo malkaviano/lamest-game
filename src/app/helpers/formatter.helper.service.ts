@@ -24,7 +24,8 @@ export class FormatterHelperService {
         return KeyValueDescriptionView.create(
           key.toUpperCase(),
           value,
-          GameStringsStore.descriptions[key as CharacterIdentityLiteral]
+          GameStringsStore.descriptions[key as CharacterIdentityLiteral] || `Character ${key}`,
+          'identity'
         );
       })
     );
@@ -35,7 +36,8 @@ export class FormatterHelperService {
           return KeyValueDescriptionView.create(
             c.key,
             c.value.toString(),
-            GameStringsStore.descriptions[c.key]
+            GameStringsStore.descriptions[c.key] || `Characteristic: ${c.key}`,
+            'characteristic'
           );
         }
       )
@@ -47,7 +49,8 @@ export class FormatterHelperService {
           return KeyValueDescriptionView.create(
             da.key,
             da.value.toString(),
-            GameStringsStore.descriptions[da.key]
+            GameStringsStore.descriptions[da.key] || `Derived Attribute: ${da.key}`,
+            'derived-attribute'
           );
         }
       )
@@ -56,10 +59,14 @@ export class FormatterHelperService {
     const skills = ArrayView.fromArray(
       Object.entries(character.skills)
         .map(([key, value]) => {
+          const skillDefinition = this.skillStore.skills[key];
+          const description = skillDefinition?.description || `Skill: ${key} - Level ${value}`;
+          
           return KeyValueDescriptionView.create(
             key,
             value.toString(),
-            this.skillStore.skills[key].description
+            description,
+            'skill'
           );
         })
         .sort((a, b) => (a.key < b.key ? -1 : 1))

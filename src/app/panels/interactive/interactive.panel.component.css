@@ -1,7 +1,54 @@
+/* Fluid grid layout for interactive cards */
 .flex-panel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
   min-height: 300px;
   max-height: 500px;
+}
+
+/* Ensure interactive cards are responsive */
+.flex-panel app-interactive-widget {
+  width: 100%;
+  min-height: 200px;
+}
+
+/* Responsive adjustments for interactive cards */
+@media (max-width: 1200px) {
+  .flex-panel {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .flex-panel {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 8px;
+    padding: 6px;
+  }
+  
+  .flex-panel app-interactive-widget {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+  .flex-panel {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  
+  .flex-panel app-interactive-widget {
+    min-height: 160px;
+  }
+}
+
+/* Override scrollable class to maintain grid layout */
+.vertical-scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
 }

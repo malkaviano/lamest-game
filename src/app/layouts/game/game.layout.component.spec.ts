@@ -103,7 +103,7 @@ describe('GameLayoutComponent', () => {
   });
 
   describe('Scene image', () => {
-    it('show scene image', (done) => {
+    it('show scene image via global actions panel', (done) => {
       const event = {
         title: 'title',
         src: 'image.jpg',
@@ -112,8 +112,8 @@ describe('GameLayoutComponent', () => {
         height: '400',
       };
 
-      const widget = fixture.debugElement.query(
-        By.css(`app-image-viewer-widget`)
+      const globalActionsPanel = fixture.debugElement.query(
+        By.css(`app-global-actions-panel`)
       );
 
       let result: ViewableInterface | undefined;
@@ -122,7 +122,7 @@ describe('GameLayoutComponent', () => {
         result = event;
       });
 
-      widget.triggerEventHandler('imageOpened', event);
+      globalActionsPanel.triggerEventHandler('sceneOpened', event);
 
       done();
 

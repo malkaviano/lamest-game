@@ -34,7 +34,7 @@ describe('WindowWidgetComponent', () => {
   it('should have name', async () => {
     const input = fixture.debugElement.query(By.css('[data-testid="key-STR"]'));
 
-    expect(input.nativeElement.innerHTML).toEqual('Str');
+    expect(input.nativeElement.textContent.trim()).toEqual('Str');
   });
 
   it('should have value', async () => {
@@ -42,9 +42,9 @@ describe('WindowWidgetComponent', () => {
       By.css('[data-testid="value-STR"]')
     );
 
-    expect(input.nativeElement.innerHTML).toEqual('8');
+    expect(input.nativeElement.textContent.trim()).toEqual('8');
   });
 });
 
 const characteristic = (name: string, value: string, description: string) =>
-  KeyValueDescriptionView.create(name, value, description);
+  KeyValueDescriptionView.create(name, value, description, 'characteristic');

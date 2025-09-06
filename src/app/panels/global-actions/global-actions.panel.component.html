@@ -1,0 +1,87 @@
+<div class="global-actions-panel">
+  <div class="actions-header">
+    <span class="actions-title">🎮 Global Actions</span>
+  </div>
+  
+  <div class="actions-content">
+    <!-- Equipment Actions -->
+    <div class="equipment-actions">
+      <app-equipped-widget
+        [item]="status.weapon"
+        [label]="'Equipped'"
+        (actionSelected)="actionSelected.emit($event)"
+        class="equipment-widget"
+      ></app-equipped-widget>
+
+      <app-equipped-widget
+        [item]="status.armor"
+        [label]="'Wearing'"
+        (actionSelected)="actionSelected.emit($event)"
+        class="equipment-widget"
+      ></app-equipped-widget>
+    </div>
+
+    <!-- Combat Options -->
+    <div class="combat-options">
+      <div class="dodge-option">
+        <mat-checkbox
+          #dodgeOption
+          (change)="onChange(dodgeOption.checked)"
+        ></mat-checkbox>
+        <span class="option-label">Auto Dodge</span>
+      </div>
+    </div>
+
+    <!-- Skill Actions -->
+    <div class="skill-actions">
+      <app-action-widget
+        *ngIf="isVisible"
+        [icon]="disguise.icon"
+        [alt]="disguise.alt"
+        [tooltip]="disguise.tooltip"
+        [actionEvent]="disguise.actionEvent"
+        (actionSelected)="actionSelected.emit($event)"
+        class="skill-button"
+      ></app-action-widget>
+
+      <app-action-widget
+        *ngIf="isVisible"
+        [icon]="hide.icon"
+        [alt]="hide.alt"
+        [tooltip]="hide.tooltip"
+        [actionEvent]="hide.actionEvent"
+        (actionSelected)="actionSelected.emit($event)"
+        class="skill-button"
+      ></app-action-widget>
+
+      <app-action-widget
+        *ngIf="!isVisible"
+        [icon]="visibility.icon"
+        [alt]="visibility.alt"
+        [tooltip]="visibility.tooltip"
+        (actionSelected)="becomeVisible()"
+        class="skill-button"
+      ></app-action-widget>
+
+      <app-action-widget
+        [icon]="detect.icon"
+        [alt]="detect.alt"
+        [tooltip]="detect.tooltip"
+        [actionEvent]="detect.actionEvent"
+        (actionSelected)="actionSelected.emit($event)"
+        class="skill-button"
+      ></app-action-widget>
+
+      <!-- Scene View Button -->
+      <button
+        mat-mini-fab
+        color="accent"
+        (click)="openScene()"
+        matTooltip="View {{ scene.label }} scene"
+        class="scene-button"
+      >
+        <mat-icon>map</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

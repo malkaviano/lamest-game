@@ -6,16 +6,55 @@
 }
 
 .main-bar {
-  padding: 10px;
+  padding: 8px 12px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: flex-start; /* independent heights for top panels */
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 100px;
 }
 
-.content-bar {
-  justify-content: center;
-  padding: 10px 20px;
+@media (min-width: 1024px) {
+  .main-bar {
+    justify-content: space-evenly;
+  }
+}
+
+.header-panel {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 280px;
+  max-width: 500px;
+}
+
+/* Make panels more responsive */
+@media (max-width: 768px) {
+  .header-panel {
+    flex: 1 1 100%;
+    justify-content: center;
+    min-width: 260px;
+  }
+  
+  .main-bar {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-bar {
+    padding: 6px 8px;
+  }
+  
+  .header-panel {
+    min-width: 240px;
+  }
 }
 
 .section {
@@ -38,31 +77,7 @@
   height: 400px;
 }
 
-/* Scene area styled like logs */
-.scene-area {
-  min-width: 220px;
-  max-width: 220px;
-}
-
-.scene-zone {
-  background: rgba(0, 0, 0, 0.85) !important;
-  border: 2px solid #607D8B !important;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Center the scene action button within the panel */
-.scene-zone .panel-content {
-  flex: 0 0 auto;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 0; /* vertical breathing room around the button */
-}
+/* Removed scene panel styles - no longer needed */
 
 /* New feedback area styles */
 .feedback-area {
@@ -191,6 +206,19 @@
   position: relative;
 }
 
+/* Enhanced character sheet styling */
+.character-section [data-testid="character"] {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* Ensure the sheet panel takes full width in the character section */
+.character-section app-sheet-panel {
+  display: block;
+  width: 100%;
+}
+
 /* Compact logs panel styles */
 .compact-logs-panel {
   margin-top: 15px;
@@ -208,13 +236,14 @@
 .logs-header {
   background: rgba(255, 235, 59, 0.1);
   border-bottom: 1px solid rgba(255, 235, 59, 0.3);
-  padding: 8px 12px;
-  border-radius: 10px 10px 0 0;
+  padding: 6px 12px;
+  border-radius: 7px 7px 0 0;
+  margin: -8px -8px 8px -8px;
 }
 
 .logs-title {
   color: rgb(255, 235, 59);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 
