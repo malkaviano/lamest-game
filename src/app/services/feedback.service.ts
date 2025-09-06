@@ -39,6 +39,11 @@ export class FeedbackService {
     this.soundService.playSound(log.category);
   }
 
+  // When combat events drive sounds, avoid double-playing by showing only toasts
+  public showToastOnly(log: LogMessageDefinition): void {
+    this.showToast(log);
+  }
+
   private showToast(log: LogMessageDefinition): void {
     const config = this.getToastConfig(log.category);
     const title = this.getToastTitle(log.category);

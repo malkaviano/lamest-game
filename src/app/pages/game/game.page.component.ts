@@ -16,10 +16,14 @@ import { FormatterHelperService } from '../../helpers/formatter.helper.service';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { FeedbackService } from '../../services/feedback.service';
 import { FloatingNumbersService } from '../../services/floating-numbers.service';
+import { CombatFeedService } from '../../services/combat-feed.service';
+import { HighlightService } from '../../services/highlight.service';
 import { ViewableInterface } from '../../interfaces/viewable.interface';
 import { CharacterValuesView } from '../../view-models/character-values.view';
 import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 import { SceneEntity } from '@entities/scene.entity';
+import { CombatEvent } from '@interfaces/combat-event.interface';
+import { InteractiveInterface } from '@interfaces/interactive.interface';
 
 @Component({
   selector: 'app-game-page',
@@ -49,7 +53,9 @@ export class GamePageComponent implements OnInit, OnDestroy {
     private readonly dialog: MatDialog,
     private readonly gameLoopService: GameLoopService,
     private readonly feedbackService: FeedbackService,
-    private readonly floatingNumbersService: FloatingNumbersService
+    private readonly floatingNumbersService: FloatingNumbersService,
+    private readonly combatFeed: CombatFeedService,
+    private readonly highlight: HighlightService
   ) {
     this.gameLogs = [];
 
@@ -125,10 +131,24 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.actionLogged$.subscribe((log) => {
         this.gameLogs.unshift(this.printLog(log));
-        this.feedbackService.showFeedback(log);
-        this.handleFloatingNumbers(log);
+        // Avoid double-playing sounds if combat events are active
+        if (this.gameLoopService.events.combatEvents$) {
+          this.feedbackService.showToastOnly(log);
+        } else {
+          this.feedbackService.showFeedback(log);
+        }
+        // Only XP still comes from logs
+        this.handleXP(log);
       })
     );
+
+    if (this.gameLoopService.events.combatEvents$) {
+      this.withSubscriptionHelper.addSubscription(
+        this.gameLoopService.events.combatEvents$.subscribe((event: CombatEvent) => {
+          this.handleCombatEvent(event);
+        })
+      );
+    }
 
     this.withSubscriptionHelper.addSubscription(
       this.gameLoopService.events.playerInventory$.subscribe((inventory) => {
@@ -143,6 +163,29 @@ export class GamePageComponent implements OnInit, OnDestroy {
     );
 
     this.gameLoopService.start();
+  }
+
+  private handleCombatEvent(event: CombatEvent): void {
+    const anchor = this.getTargetAnchor(event.targetId, event.targetName);
+    this.combatFeed.handle(event, anchor ?? undefined);
+    if (event.targetId) this.highlight.flashInteractiveCard(event.targetId, event.effectType);
+  }
+
+  private handleXP(log: LogMessageDefinition): void {
+    const anchor = this.getActorAnchorCenter(log.actor);
+    const centerX = anchor?.x ?? window.innerWidth / 2;
+    const centerY = anchor?.y ?? window.innerHeight / 2;
+    const expMatch = log.message.match(/\b(\d+)\b\s*(xp|experience)\b/i);
+    if (expMatch) {
+      const exp = parseInt(expMatch[1], 10);
+      const charEl = document.querySelector('[data-testid="character"]') as HTMLElement | null;
+      if (charEl) {
+        const rect = charEl.getBoundingClientRect();
+        this.floatingNumbersService.showExperience(exp, rect.left + rect.width / 2, rect.top - 10);
+      } else {
+        this.floatingNumbersService.showExperience(exp, centerX + 100, centerY);
+      }
+    }
   }
 
   public informActionSelected(action: ActionableEvent): void {
@@ -188,47 +231,13 @@ export class GamePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private handleFloatingNumbers(log: LogMessageDefinition): void {
-    // Try to anchor near target actor's UI container; fallback to screen center
-    const anchor = this.getActorAnchorCenter(log.actor);
-    const centerX = anchor?.x ?? window.innerWidth / 2;
-    const centerY = anchor?.y ?? window.innerHeight / 2;
-
-    // Extract numeric values from log messages
-    // Damage examples: "received 12 fire damage"
-    // Heal examples:   "received poison effect, healed 5 hp"
-    const damageMatch = log.message.match(/\b(\d+)\b[^\d]*\bdamage\b/i);
-    const damageTypeMatch = log.message.match(/\b\d+\b\s+([A-Za-z]+)\s+damage\b/i);
-    const healMatch = log.message.match(/\bhealed\s+(\d+)\b/i);
-    const expMatch = log.message.match(/\b(\d+)\b\s*(xp|experience)\b/i);
-
-    if (damageMatch && log.category === 'AFFECTED') {
-      const damage = parseInt(damageMatch[1], 10);
-      const effectType = damageTypeMatch ? (damageTypeMatch[1].toUpperCase() as any) : undefined;
-      // Damage: slightly above the anchor
-      this.floatingNumbersService.showDamage(damage, centerX, centerY - 30, effectType);
-    } else if (healMatch && log.category === 'AFFECTED') {
-      const heal = parseInt(healMatch[1], 10);
-      // Heal: slightly below the anchor
-      this.floatingNumbersService.showHealing(heal, centerX, centerY + 10);
-    } else if (expMatch) {
-      const exp = parseInt(expMatch[1], 10);
-      // XP: near the character panel
-      const charEl = document.querySelector('[data-testid="character"]') as HTMLElement | null;
-      if (charEl) {
-        const rect = charEl.getBoundingClientRect();
-        this.floatingNumbersService.showExperience(exp, rect.left + rect.width / 2, rect.top - 10);
-      } else {
-        this.floatingNumbersService.showExperience(exp, centerX + 100, centerY);
-      }
-    }
-  }
+  // Removed log-parsing for damage/heal. Combat visuals come from CombatEvent stream.
 
   private getActorAnchorCenter(actorName: string): { x: number; y: number } | null {
     // 1) Try to find interactive by name in current scene and use its DOM card rect
     try {
       const interactive = this.scene?.visibleInteractives?.items?.find?.(
-        (i: any) => i?.name === actorName
+        (i: InteractiveInterface) => i?.name === actorName
       );
 
       if (interactive?.id) {
@@ -256,5 +265,16 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
     // 3) No anchor found
     return null;
+  }
+
+  private getTargetAnchor(targetId: string, targetName: string): { x: number; y: number } | null {
+    if (targetId) {
+      const el = document.querySelector(`[data-testid="interactive-${targetId}"]`) as HTMLElement | null;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+      }
+    }
+    return this.getActorAnchorCenter(targetName);
   }
 }

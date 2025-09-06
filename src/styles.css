@@ -41,3 +41,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; font-size: 
   border-radius: 6px !important;
   font-size: 0.85rem !important;
 }
+
+/* Quick highlight flashes for hit feedback */
+.highlight-hit {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}
+.highlight-hit-fire {
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}
+.highlight-hit-acid {
+  box-shadow: 0 0 0 3px rgba(102, 255, 102, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}
+.highlight-hit-profane {
+  box-shadow: 0 0 0 3px rgba(176, 132, 245, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}
+.highlight-hit-sacred {
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.85) inset;
+  transition: box-shadow 120ms ease;
+}

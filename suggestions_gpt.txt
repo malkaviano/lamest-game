@@ -1,0 +1,57 @@
+Interactivity Suggestions (GPT)
+
+1) Structured Combat UI
+- Emit structured combat events from `GameLoopService` (actorId, targetId, effectType, amount, hit/miss, crit, dodge).
+- Use these to drive UI without parsing logs. Add a `CombatFeedService` to fan-out events to animations, sounds, and UI badges.
+
+2) Per-Actor Visuals
+- Add HP/EP/AP mini-bars to each interactive card (top-right overlay).
+- Show status effect chips (e.g., Burning, Poisoned) with timers; fade when expired.
+- Display cooldown badges for actions that a target imposes (e.g., engagement timer) with countdown.
+
+3) Action Affordances
+- Contextual hints on actionable buttons (AP cost, cooldown remaining, hit chance estimate) shown as small pill labels.
+- Disable buttons with tooltip explaining reason (e.g., “Insufficient AP” or “Engagement timer”).
+
+4) Targeted Animations
+- Expand floating numbers: offset and color per subtype are in place; add critical hit variant (bigger, shake, flash).
+- Apply subtle hit flash on the target card (border glow by effect type; short pulse via CSS/GSAP).
+- Miss/Dodge animations: slide “Miss” or “Dodge” text over target, faint swoosh sound.
+
+5) Audio Feedback
+- Map `EffectTypeLiteral` to specific sounds (fire sizzle, acid hiss, kinetic thud, sacred chime, profane distortion).
+- Add cooldown/deny beeps for invalid actions; success/level-up fanfare.
+
+6) Combat Timeline Panel
+- Optional side panel that lists recent structured events with icons, amounts, and actor portraits.
+- Click an entry to highlight the involved cards briefly (scroll into view if off-screen).
+
+7) Input Micro-interactions
+- Hovering an interactive card could reveal quick actions as floating icon buttons.
+- Keyboard shortcuts: cycle targets, confirm last action, quick use of a bound skill.
+
+8) Scene Visual Feedback
+- When an action involves the current scene (e.g., opening a door), briefly animate the scene image (shake/open overlay) and show a small floating label near it.
+
+9) Accessibility & Clarity
+- Add ARIA labels to action buttons and status chips.
+- Offer a colorblind-friendly palette for damage types; allow toggling high-contrast mode.
+
+10) Performance Considerations
+- Use `OnPush` for display-only components (cards, chips, bars).
+- Batch animations where possible; limit simultaneous GSAP timelines to prevent jank under heavy combat.
+
+Implementation Sketches
+- Add `CombatEvent` interface and `combatEvents$` in `GameLoopService`.
+- Create `combat-feed.service.ts` to subscribe to `combatEvents$` and trigger:
+  - `FloatingNumbersService.showDamage(..)` with precise anchors.
+  - `SoundService.playEffect(effectType)`.
+  - `HighlightService.flashCard(targetId, effectType)`.
+- Extend `InteractiveWidgetComponent` to accept live stats (HP/EP/AP snapshot) and effects, rendering mini-bars and chips.
+- Introduce `cooldown-badge` and `status-chip` small components for reuse.
+
+Small Quick Wins
+- Add miss/dodge floating texts immediately by detecting `MISSED` / dodge messages.
+- Animate the interactive card border on affect: a quick `gsap.to` pulse.
+- Add AP cost pills to action buttons using existing settings store.
+
