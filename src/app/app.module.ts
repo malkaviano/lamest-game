@@ -28,6 +28,8 @@ import { AnimatedProgressBarWidgetComponent } from './widgets/animated-progress-
 import { CombatTimelinePanelComponent } from './panels/combat-timeline/combat-timeline.panel.component';
 import { TacticalStatusPanelComponent } from './panels/tactical-status/tactical-status.panel.component';
 import { GlobalActionsPanelComponent } from './panels/global-actions/global-actions.panel.component';
+import { TravelWidgetComponent } from './widgets/travel/travel.widget.component';
+import { TravelPanelComponent } from './panels/travel/travel.panel.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { GlobalActionsPanelComponent } from './panels/global-actions/global-acti
     CombatTimelinePanelComponent,
     TacticalStatusPanelComponent,
     GlobalActionsPanelComponent,
+    TravelWidgetComponent,
+    TravelPanelComponent,
   ],
   imports: [
     BrowserModule,

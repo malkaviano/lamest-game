@@ -476,3 +476,6 @@ export const fakeCharacterStatusView = CharacterStatusView.create(
     'identity'
   )
 );
+
+// Export utility function for creating actionable definitions in tests
+export { createActionableDefinition };

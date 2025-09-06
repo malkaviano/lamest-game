@@ -1,0 +1,21 @@
+<div class="travel-panel" *ngIf="hasTravelOptions" attr.data-testid="{{ panelName }}">
+  <div class="panel-header">
+    <h2 class="panel-title">🗺️ Travel Options</h2>
+    <button 
+      mat-icon-button 
+      class="collapse-toggle"
+      (click)="toggleCollapse()"
+      [attr.aria-label]="isCollapsed ? 'Expand travel panel' : 'Collapse travel panel'"
+      matTooltip="{{ isCollapsed ? 'Expand' : 'Collapse' }} travel options">
+      <mat-icon>{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+    </button>
+  </div>
+  
+  <div class="travel-grid" [class.collapsed]="isCollapsed">
+    <app-travel-widget
+      *ngFor="let interactive of travelInteractives.items"
+      [interactive]="interactive"
+      (actionSelected)="onActionSelected($event)">
+    </app-travel-widget>
+  </div>
+</div>

@@ -17,6 +17,15 @@
       (sceneOpened)="sceneOpened.emit($event)"
     ></app-global-actions-panel>
   </div>
+  
+  <!-- Travel Panel -->
+  <div class="header-panel travel-header-panel">
+    <app-travel-panel
+      [panelName]="'travel'"
+      [interactives]="scene.visibleInteractives"
+      (actionSelected)="actionSelected.emit($event)"
+    ></app-travel-panel>
+  </div>
 </div>
 
 <section name="content">

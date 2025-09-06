@@ -1,0 +1,22 @@
+<div class="travel-card" *ngIf="hasSceneActions" attr.data-testid="travel-{{ interactive.id }}">
+  <div class="travel-header">
+    <span class="travel-icon">🗺️</span>
+    <h3 class="travel-name">{{ interactive.name }}</h3>
+  </div>
+  
+  <!-- Description removed for cleaner travel cards -->
+
+  <div class="travel-actions">
+    <button
+      *ngFor="let action of actions.items"
+      class="travel-button"
+      mat-raised-button
+      color="primary"
+      (click)="onActionSelected(action)"
+      attr.data-testid="travel-action-{{ action.name }}"
+      matTooltip="Transit to {{ action.label }}">
+      <span class="button-icon">🚶</span>
+      <span class="button-text">{{ action.label }}</span>
+    </button>
+  </div>
+</div>

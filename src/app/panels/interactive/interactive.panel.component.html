@@ -3,7 +3,7 @@
   attr.data-testid="key-value-panel-{{ panelName }}"
 >
   <app-interactive-widget
-    *ngFor="let interactive of interactives.items"
+    *ngFor="let interactive of nonTravelInteractives.items"
     [interactive]="interactive"
     (actionSelected)="actionSelected.emit($event)"
   ></app-interactive-widget>
