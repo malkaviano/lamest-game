@@ -1,0 +1,24 @@
+<div class="actor-card" *ngIf="isActor && hasActions" attr.data-testid="actor-{{ interactive.id }}">
+  <div class="actor-header">
+    <span class="actor-icon">🤖</span>
+    <h3 class="actor-name">{{ interactive.name }}</h3>
+  </div>
+  
+  <div class="actor-description">
+    {{ interactive.description }}
+  </div>
+
+  <div class="actor-actions">
+    <button
+      *ngFor="let action of actions.items"
+      class="actor-button"
+      mat-raised-button
+      color="primary"
+      (click)="onActionSelected(action)"
+      attr.data-testid="actor-action-{{ action.name }}"
+      matTooltip="{{ action.label }}">
+      <span class="button-icon">⚔️</span>
+      <span class="button-text">{{ action.label }}</span>
+    </button>
+  </div>
+</div>

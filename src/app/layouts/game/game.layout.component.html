@@ -31,15 +31,27 @@
 <section name="content">
   <div class="flex-panel">
     <div class="section content-box character-section">
-      <div data-testid="character">
-        <app-sheet-panel
-          [characterValues]="characterValues"
-          [inventory]="inventory"
-          (actionSelected)="actionSelected.emit($event)"
-        ></app-sheet-panel>
+      <div class="character-and-actors-container">
+        <!-- Character sheet -->
+        <div class="character-sheet-container" data-testid="character">
+          <app-sheet-panel
+            [characterValues]="characterValues"
+            [inventory]="inventory"
+            (actionSelected)="actionSelected.emit($event)"
+          ></app-sheet-panel>
+        </div>
+
+        <!-- AI Actors panel beside character -->
+        <div class="actors-container">
+          <app-actors-panel
+            [panelName]="'actors'"
+            [interactives]="scene.visibleInteractives"
+            (actionSelected)="actionSelected.emit($event)"
+          ></app-actors-panel>
+        </div>
       </div>
 
-      <!-- Compact logs panel below character -->
+      <!-- Compact logs panel below both character and actors -->
       <div class="compact-logs-panel">
         <div class="logs-header">
           <span class="logs-title"

@@ -212,6 +212,37 @@
   position: relative;
 }
 
+/* Character and actors container */
+.character-and-actors-container {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.character-sheet-container {
+  flex: 0 0 auto;
+  width: 380px;
+}
+
+.actors-container {
+  flex: 0 0 auto;
+  min-width: 200px;
+  max-width: 380px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .character-and-actors-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .actors-container {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 /* Enhanced character sheet styling */
 .character-section [data-testid="character"] {
   background: transparent;
@@ -219,8 +250,15 @@
   margin: 0;
 }
 
-/* Ensure the sheet panel takes full width in the character section */
-.character-section app-sheet-panel {
+/* Ensure the sheet panel takes full width in its container */
+.character-sheet-container app-sheet-panel {
+  display: block;
+  width: 100%;
+  min-width: 300px;
+}
+
+/* Keep original width for character section when not in flex container */
+.character-section:not(.character-and-actors-container) app-sheet-panel {
   display: block;
   width: 100%;
 }
@@ -233,7 +271,6 @@
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 380px;
   display: block !important;
   visibility: visible !important;
   min-height: 80px !important;

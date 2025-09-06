@@ -30,6 +30,8 @@ import { TacticalStatusPanelComponent } from './panels/tactical-status/tactical-
 import { GlobalActionsPanelComponent } from './panels/global-actions/global-actions.panel.component';
 import { TravelWidgetComponent } from './widgets/travel/travel.widget.component';
 import { TravelPanelComponent } from './panels/travel/travel.panel.component';
+import { ActorWidgetComponent } from './widgets/actor/actor.widget.component';
+import { ActorsPanelComponent } from './panels/actors/actors.panel.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { TravelPanelComponent } from './panels/travel/travel.panel.component';
     GlobalActionsPanelComponent,
     TravelWidgetComponent,
     TravelPanelComponent,
+    ActorWidgetComponent,
+    ActorsPanelComponent,
   ],
   imports: [
     BrowserModule,
