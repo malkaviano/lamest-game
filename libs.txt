@@ -1,0 +1,48 @@
+# Bibliotecas UI/UX Recomendadas para Lamest Game
+
+## Essenciais (Fase 1)
+rpgui
+ngx-toastr
+@angular/animations
+
+## Componentes Avançados (Fase 2)
+primeng
+primeicons
+@ngx-loading-bar/core
+@ngx-loading-bar/router
+@angular/cdk
+
+## Interatividade e Performance (Fase 3)
+ngx-infinite-scroll
+@angular/flex-layout
+angular-svg-icon
+
+## Áudio e Efeitos
+howler
+tone
+
+## Animações Avançadas
+lottie-web
+ngx-lottie
+gsap
+
+## Comandos de Instalação
+
+### Fase 1
+npm install rpgui
+npm install ngx-toastr
+# @angular/animations já disponível
+
+### Fase 2  
+npm install primeng primeicons
+npm install @ngx-loading-bar/core @ngx-loading-bar/router
+npm install @angular/cdk
+
+### Fase 3
+npm install ngx-infinite-scroll
+npm install @angular/flex-layout
+npm install angular-svg-icon
+npm install howler
+npm install tone
+npm install lottie-web ngx-lottie
+npm install gsap
