@@ -100,7 +100,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
           `${this.characterValues.derivedAttributes.items[2].value}` +
             ' | ' +
             `${this.characterValues.derivedAttributes.items[0].value}`,
-          GameStringsStore.descriptions['HP']
+          GameStringsStore.descriptions['HP'],
+          'derived-attribute'
         );
 
         const ep = KeyValueDescriptionView.create(
@@ -108,7 +109,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
           `${this.characterValues.derivedAttributes.items[3].value}` +
             ' | ' +
             `${this.characterValues.derivedAttributes.items[1].value}`,
-          GameStringsStore.descriptions['EP']
+          GameStringsStore.descriptions['EP'],
+          'derived-attribute'
         );
 
         const ap = KeyValueDescriptionView.create(
@@ -116,7 +118,8 @@ export class GamePageComponent implements OnInit, OnDestroy {
           `${this.characterValues.derivedAttributes.items[5].value}` +
             ' | ' +
             `${this.characterValues.derivedAttributes.items[4].value}`,
-          GameStringsStore.descriptions['AP']
+          GameStringsStore.descriptions['AP'],
+          'derived-attribute'
         );
 
         this.characterStatus = CharacterStatusView.create(

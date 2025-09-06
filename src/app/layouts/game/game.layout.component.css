@@ -191,6 +191,19 @@
   position: relative;
 }
 
+/* Enhanced character sheet styling */
+.character-section [data-testid="character"] {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* Ensure the sheet panel takes full width in the character section */
+.character-section app-sheet-panel {
+  display: block;
+  width: 100%;
+}
+
 /* Compact logs panel styles */
 .compact-logs-panel {
   margin-top: 15px;

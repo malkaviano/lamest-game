@@ -1,12 +1,23 @@
 <div
-  matTooltip="{{ keyValue.description }}"
+  class="window-widget"
+  [matTooltip]="getTooltipText(keyValue)"
+  matTooltipPosition="above"
   attr.data-testid="tooltip-{{ keyValue.key }}"
 >
-  <span attr.data-testid="key-{{ keyValue.key }}">{{
-    keyValue.key | titlecase
-  }}</span>
-  <span>:&nbsp;&nbsp;</span>
-  <span attr.data-testid="value-{{ keyValue.key }}">{{
-    keyValue.value | titlecase
-  }}</span>
+  <div class="window-key" attr.data-testid="key-{{ keyValue.key }}">
+    {{ keyValue.key | titlecase }}
+  </div>
+  <div 
+    class="window-value"
+    [ngClass]="{
+      'numeric': isNumeric(keyValue.value),
+      'stat': isStatValue(keyValue)
+    }"
+    attr.data-testid="value-{{ keyValue.key }}"
+  >
+    {{ keyValue.value | titlecase }}
+  </div>
+  <div class="window-description" *ngIf="keyValue.description">
+    {{ keyValue.description }}
+  </div>
 </div>

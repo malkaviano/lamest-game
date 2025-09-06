@@ -1,10 +1,59 @@
+/* Fluid grid layout for attributes */
 .flex-panel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  min-width: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Ensure uniform sizing for all attribute items */
 .panel-item {
-  padding: 5px;
+  padding: 0;
+  display: flex;
+  min-height: 120px; /* Uniform height for all items */
+  width: 100%;
+}
+
+/* Special grid layouts for different attribute types */
+.flex-panel[data-testid*="identity"] {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.flex-panel[data-testid*="characteristics"] {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.flex-panel[data-testid*="derived-attributes"] {
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.flex-panel[data-testid*="skills"] {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .flex-panel {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 6px;
+    padding: 6px;
+  }
+  
+  .panel-item {
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .flex-panel {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  
+  .panel-item {
+    min-height: 90px;
+  }
 }
