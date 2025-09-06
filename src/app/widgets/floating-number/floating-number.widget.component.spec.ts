@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ElementRef } from '@angular/core';
-import { FloatingNumberWidgetComponent, FloatingNumberData } from './floating-number.widget.component';
+import { FloatingNumberWidgetComponent } from './floating-number.widget.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FloatingNumberWidgetComponent', () => {
