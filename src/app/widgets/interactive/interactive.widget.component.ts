@@ -194,39 +194,63 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
     switch (actionable) {
       case 'SCENE':
         return {
-          icon: `${this.basePath}/scene.svg`,
           tooltip: 'Transit to next scene',
         };
       case 'SKILL':
         return {
-          icon: `${this.basePath}/skill.svg`,
           tooltip: `Skill check`,
         };
       case 'PICK':
         return {
-          icon: `${this.basePath}/pick.svg`,
           tooltip: `Pick up item`,
         };
       case 'AFFECT':
         return {
-          icon: `${this.basePath}/affect.svg`,
           tooltip: `Use equipped weapon on target`,
         };
       case 'USE':
         return {
-          icon: `${this.basePath}/use.svg`,
           tooltip: `Use item from inventory`,
         };
       case 'INTERACTION':
         return {
-          icon: `${this.basePath}/interaction.svg`,
           tooltip: `Interact with the target`,
         };
       default:
         return {
-          icon: `${this.basePath}/none.svg`,
           tooltip: 'Action not recognized',
         };
+    }
+  }
+
+  public actionEmoji(actionable: ActionableLiteral): string {
+    switch (actionable) {
+      case 'SCENE':
+        return '🗺️';
+      case 'SKILL':
+        return '🎯';
+      case 'PICK':
+        return '📦';
+      case 'AFFECT':
+        return '⚔️';
+      case 'USE':
+        return '🛠️';
+      case 'INTERACTION':
+        return '💬';
+      case 'EQUIP':
+        return '🗡️';
+      case 'UNEQUIP':
+        return '📥';
+      case 'READ':
+        return '📖';
+      case 'DROP':
+        return '🗑️';
+      case 'WEAR':
+        return '🛡️';
+      case 'STRIP':
+        return '🧥';
+      default:
+        return '❔';
     }
   }
 

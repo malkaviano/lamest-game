@@ -18,6 +18,13 @@
   padding: 15px;
 }
 
+.behavior-icons { display: inline-flex; gap: 6px; align-items: center; margin: 0 8px 6px 12px; }
+.behavior-icon { font-size: 18px; line-height: 1; }
+
+.meta-row { display: flex; align-items: center; gap: 8px; padding: 0 12px 6px 12px; }
+
+.detect-icon { font-size: 16px; line-height: 1; opacity: 0.9; }
+
 .mini-bars {
   display: flex;
   flex-direction: column;
@@ -64,6 +71,8 @@
   align-content: space-evenly;
   gap: 6px;
 }
+
+.action-emoji { font-size: 18px; line-height: 1; }
 
 .buttons {
   display: flex;
