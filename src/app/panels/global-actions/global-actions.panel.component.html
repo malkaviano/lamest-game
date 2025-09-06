@@ -71,6 +71,17 @@
         (actionSelected)="actionSelected.emit($event)"
         class="skill-button"
       ></app-action-widget>
+
+      <!-- Scene View Button -->
+      <button
+        mat-mini-fab
+        color="accent"
+        (click)="openScene()"
+        matTooltip="View {{ scene.label }} scene"
+        class="scene-button"
+      >
+        <mat-icon>map</mat-icon>
+      </button>
     </div>
   </div>
 </div>

@@ -9,4 +9,5 @@ import { CharacterStatusView } from '../../view-models/character-status.view';
 })
 export class TacticalStatusPanelComponent {
   @Input() public status!: CharacterStatusView;
+  @Input() public sceneLabel!: string;
 }

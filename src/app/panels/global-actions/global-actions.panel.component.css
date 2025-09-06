@@ -121,6 +121,26 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Scene Button Styling */
+.scene-button {
+  background: rgba(255, 193, 7, 0.2) !important;
+  border: 1px solid rgba(255, 193, 7, 0.5) !important;
+  width: 44px !important;
+  height: 44px !important;
+  transition: all 0.2s ease;
+}
+
+.scene-button:hover {
+  background: rgba(255, 193, 7, 0.3) !important;
+  border-color: rgba(255, 193, 7, 0.7) !important;
+  transform: translateY(-1px);
+}
+
+.scene-button mat-icon {
+  color: rgba(255, 193, 7, 0.9) !important;
+  font-size: 1.2rem;
+}
+
 /* Custom checkbox styling */
 .dodge-option ::ng-deep .mat-mdc-checkbox {
   --mdc-checkbox-selected-focus-icon-color: #4caf50;

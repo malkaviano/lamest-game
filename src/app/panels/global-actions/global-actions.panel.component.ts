@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActionableEvent } from '@events/actionable.event';
 import { createActionableDefinition } from '@definitions/actionable.definition';
 import { CharacterStatusView } from '../../view-models/character-status.view';
+import { SceneEntity } from '@entities/scene.entity';
+import { ViewableInterface } from '../../interfaces/viewable.interface';
 
 @Component({
   selector: 'app-global-actions-panel',
@@ -11,11 +13,13 @@ import { CharacterStatusView } from '../../view-models/character-status.view';
 })
 export class GlobalActionsPanelComponent {
   @Input() public status!: CharacterStatusView;
+  @Input() public scene!: SceneEntity;
   @Output() public actionSelected = new EventEmitter<ActionableEvent>();
   @Output() public playerOptions = new EventEmitter<{
     readonly dodge?: boolean;
     readonly visible?: boolean;
   }>();
+  @Output() public sceneOpened = new EventEmitter<ViewableInterface>();
 
   public get isVisible(): boolean {
     return this.status.visibility.value === 'VISIBLE';
@@ -71,5 +75,19 @@ export class GlobalActionsPanelComponent {
 
   public becomeVisible(): void {
     this.playerOptions.emit({ visible: true });
+  }
+
+  public get sceneImage(): ViewableInterface {
+    return {
+      title: this.scene.label,
+      src: 'assets/images/' + this.scene.image,
+      alt: this.scene.label,
+      width: '400',
+      height: '400'
+    };
+  }
+
+  public openScene(): void {
+    this.sceneOpened.emit(this.sceneImage);
   }
 }
