@@ -1,4 +1,15 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Optional, Output, NgZone } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  NgZone,
+} from '@angular/core';
+
+import { interval, Subscription } from 'rxjs';
 
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ActionableEvent } from '@events/actionable.event';
@@ -10,7 +21,7 @@ import { SettingsStore } from '@stores/settings.store';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableLiteral } from '@literals/actionable.literal';
 import skillsData from '@assets/skills.json';
-import { interval, Subscription } from 'rxjs';
+import { PlayerInterface } from '../../../backend/interfaces/player.interface';
 
 @Component({
   selector: 'app-actor-widget',
@@ -45,11 +56,15 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
   }
 
   // Tooltips
-  public readonly aggressiveTooltip: string = GameStringsStore.tooltips['aggressive'];
-  public readonly retaliateTooltip: string = GameStringsStore.tooltips['retaliate'];
-  public readonly playerTooltip: string = GameStringsStore.tooltips['retaliate'];
+  public readonly aggressiveTooltip: string =
+    GameStringsStore.tooltips['aggressive'];
+  public readonly retaliateTooltip: string =
+    GameStringsStore.tooltips['retaliate'];
+  public readonly playerTooltip: string =
+    GameStringsStore.tooltips['retaliate'];
   public readonly searchTooltip: string = GameStringsStore.tooltips['search'];
-  public readonly visibilityTooltip: string = GameStringsStore.tooltips['visibility'];
+  public readonly visibilityTooltip: string =
+    GameStringsStore.tooltips['visibility'];
 
   // Detection capabilities
   public detectHidden = false;
@@ -69,18 +84,20 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.characterService) {
-      try {
-        this.currentAP = this.characterService.currentCharacter.derivedAttributes['CURRENT AP'].value;
-      } catch {}
+      this.currentAP =
+        this.characterService.currentCharacter.derivedAttributes[
+          'CURRENT AP'
+        ].value;
       this.withSubscriptionHelper.addSubscription(
-        this.characterService.characterChanged$.subscribe((c: any) => {
-          try {
+        this.characterService.characterChanged$.subscribe(
+          (c: PlayerInterface) => {
             this.currentAP = c.derivedAttributes['CURRENT AP'].value;
-          } catch {}
-          this.cooldowns = c.cooldowns as { [key: string]: number };
-          this.cooldownsCapturedAt = Date.now();
-          this.ensureTicker();
-        })
+
+            this.cooldowns = c.cooldowns as { [key: string]: number };
+            this.cooldownsCapturedAt = Date.now();
+            this.ensureTicker();
+          }
+        )
       );
     } else {
       this.currentAP = Number.MAX_SAFE_INTEGER;
@@ -88,7 +105,7 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
 
     // start ticker lazily when there is any skill or engagement active
     this.withSubscriptionHelper.addSubscription(
-      this.interactive.actionsChanged$.subscribe((actions) => {
+      this.interactive.actionsChanged$.subscribe(() => {
         this.ensureTicker();
       })
     );
@@ -98,7 +115,8 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
       this.interactive.ignores?.items.length
     ) {
       this.detectHidden = !this.interactive.ignores.items.includes('HIDDEN');
-      this.detectDisguised = !this.interactive.ignores.items.includes('DISGUISED');
+      this.detectDisguised =
+        !this.interactive.ignores.items.includes('DISGUISED');
     }
   }
 
@@ -108,7 +126,8 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
 
   // Costs/Tooltips
   public apCost(action: ActionableDefinition): number {
-    const key = action.actionable as unknown as keyof typeof SettingsStore.settings.ruleCost;
+    const key =
+      action.actionable as unknown as keyof typeof SettingsStore.settings.ruleCost;
     const cost = SettingsStore.settings.ruleCost[key] ?? 0;
     return cost;
   }
@@ -151,7 +170,9 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
 
   private isNonCombatSkill(action: ActionableDefinition): boolean {
     if (action.actionable !== 'SKILL') return false;
-    const skills = (skillsData as { skills: { name: string; combat: boolean }[] }).skills;
+    const skills = (
+      skillsData as { skills: { name: string; combat: boolean }[] }
+    ).skills;
     const key = (action.label || action.name) as string;
     const found = skills.find((s) => s.name === key);
     return !!found && !found.combat;
@@ -172,7 +193,9 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
 
   private ensureTicker(): void {
     if (this.tickerSub) return;
-    const hasSkill = !!this.interactive.actions.items.find((a) => a.actionable === 'SKILL');
+    const hasSkill = !!this.interactive.actions.items.find(
+      (a) => a.actionable === 'SKILL'
+    );
     const hasEng = this.hasEngagement();
     if (hasSkill || hasEng) {
       this.ngZone.runOutsideAngular(() => {
@@ -238,12 +261,16 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
 
   // Mini-bars helpers
   public hasDerivedAttributes(): boolean {
-    const i = this.interactive as unknown as { derivedAttributes?: Record<string, { value: number }> };
+    const i = this.interactive as unknown as {
+      derivedAttributes?: Record<string, { value: number }>;
+    };
     return !!i?.derivedAttributes;
   }
 
   public attrValue(key: string): number | null {
-    const i = this.interactive as unknown as { derivedAttributes?: Record<string, { value: number }> };
+    const i = this.interactive as unknown as {
+      derivedAttributes?: Record<string, { value: number }>;
+    };
     const v = i?.derivedAttributes?.[key]?.value;
     return typeof v === 'number' ? v : null;
   }
@@ -256,6 +283,10 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
   }
 
   public hasEngagementChip(): boolean {
-    return !!this.cooldowns && typeof this.cooldowns['ENGAGEMENT'] === 'number' && this.cooldowns['ENGAGEMENT'] > 0;
+    return (
+      !!this.cooldowns &&
+      typeof this.cooldowns['ENGAGEMENT'] === 'number' &&
+      this.cooldowns['ENGAGEMENT'] > 0
+    );
   }
 }
