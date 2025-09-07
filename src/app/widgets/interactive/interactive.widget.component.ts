@@ -19,6 +19,7 @@ import { SettingsStore } from '@stores/settings.store';
 import { CharacterService } from '@services/character.service';
 import skillsData from '@assets/skills.json';
 import { interval, Subscription } from 'rxjs';
+import { NgZone } from '@angular/core';
 
 type PlayerLike = {
   readonly derivedAttributes: { [key: string]: { value: number } };
@@ -56,6 +57,7 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
+    private readonly ngZone: NgZone,
     @Optional() private readonly characterService?: CharacterService
   ) {
     this.actionSelected = new EventEmitter<ActionableEvent>();
@@ -87,6 +89,7 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
           this.currentAP = c.derivedAttributes['CURRENT AP'].value;
           this.cooldowns = c.cooldowns as { [key: string]: number };
           this.cooldownsCapturedAt = Date.now();
+          this.ensureTicker();
         })
       );
     } else {
@@ -94,19 +97,11 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
       this.currentAP = Number.MAX_SAFE_INTEGER;
     }
 
-    // Ticker will be started lazily when there are skill actions to show cooldown
+    // Ticker will be started lazily when there are skill actions or engagement active
     this.withSubscriptionHelper.addSubscription(
       this.interactive.actionsChanged$.subscribe((actions) => {
         this.actions = actions;
-        if (!this.tickerSub && this.characterService) {
-          const hasSkill = !!actions.items.find((a) => a.actionable === 'SKILL');
-          if (hasSkill) {
-            this.tickerSub = interval(1000).subscribe(() => {
-              this.cooldownsCapturedAt = this.cooldownsCapturedAt - 0;
-            });
-            this.withSubscriptionHelper.addSubscription(this.tickerSub);
-          }
-        }
+        this.ensureTicker();
       })
     );
 
@@ -126,6 +121,22 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
 
   onActionSelected(action: ActionableDefinition): void {
     this.actionSelected.emit(new ActionableEvent(action, this.interactive.id));
+  }
+
+  private ensureTicker(): void {
+    if (this.tickerSub || !this.characterService) return;
+    const hasSkill = !!this.actions.items.find((a) => a.actionable === 'SKILL');
+    const hasEng = this.hasEngagement();
+    if (hasSkill || hasEng) {
+      this.ngZone.runOutsideAngular(() => {
+        this.tickerSub = interval(1000).subscribe(() => {
+          this.cooldownsCapturedAt = this.cooldownsCapturedAt - 0;
+        });
+      });
+      if (this.tickerSub) {
+        this.withSubscriptionHelper.addSubscription(this.tickerSub);
+      }
+    }
   }
 
   public apCost(action: ActionableDefinition): number {
@@ -166,7 +177,11 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
   }
 
   private hasEngagement(): boolean {
-    return !!this.cooldowns && typeof this.cooldowns['ENGAGEMENT'] === 'number' && this.cooldowns['ENGAGEMENT'] > 0;
+    if (!this.cooldowns) return false;
+    const base = this.cooldowns['ENGAGEMENT'];
+    if (typeof base !== 'number' || base <= 0) return false;
+    const elapsed = Date.now() - this.cooldownsCapturedAt;
+    return base - elapsed > 0;
   }
 
   private isNonCombatSkill(action: ActionableDefinition): boolean {
@@ -274,6 +289,6 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
   }
 
   public hasEngagementChip(): boolean {
-    return !!this.cooldowns && typeof this.cooldowns['ENGAGEMENT'] === 'number' && this.cooldowns['ENGAGEMENT'] > 0;
+    return this.hasEngagement();
   }
 }

@@ -29,7 +29,7 @@ export class CombatFeedService {
       case 'CRIT': {
         if (event.amount && event.amount > 0) {
           const offset = event.outcome === 'CRIT' ? 50 : 30;
-          this.floating.showDamage(event.amount, x, y - offset, event.effectType);
+          this.floating.showDamage(event.amount, x, y - offset, event.effectType, event.outcome === 'CRIT');
         }
         this.sound.playSound('AFFECTED' as LogCategoryLiteral);
         break;

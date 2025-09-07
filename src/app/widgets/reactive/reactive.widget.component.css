@@ -59,6 +59,10 @@
   gap: 6px;
 }
 
+.action-row { display: flex; flex-direction: column; gap: 2px; }
+.cooldown-line { display: flex; justify-content: flex-end; padding: 0 2px; }
+.chips-line { display: flex; justify-content: flex-end; gap: 6px; padding: 0 2px; }
+
 .reactive-button {
   background: rgba(255, 152, 0, 0.2) !important;
   border: 1px solid rgba(255, 152, 0, 0.5) !important;
@@ -67,17 +71,24 @@
   padding: 6px 10px !important;
   min-height: 28px !important;
   font-size: 11px !important;
-  transition: all 0.2s ease !important;
+  transition: var(--btn-transition) !important;
   display: flex !important;
   align-items: center !important;
   gap: 4px !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+}
+
+.reactive-button[disabled] {
+  background: var(--btn-disabled-bg) !important;
+  border-color: var(--btn-disabled-border) !important;
+  color: var(--btn-disabled-text) !important;
 }
 
 .reactive-button:hover {
   background: rgba(255, 152, 0, 0.3) !important;
   border-color: rgba(255, 152, 0, 0.7) !important;
-  transform: translateY(-1px) !important;
+  transform: translateY(var(--btn-hover-translate-y)) !important;
 }
 
 .button-icon {
@@ -87,4 +98,97 @@
 
 .button-text {
   font-weight: 500;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+/* Ported styles for meta/detection/bars and chips */
+.behavior-icons { display: inline-flex; gap: 6px; align-items: center; margin: 0 8px 6px 0; }
+.behavior-icon { font-size: 18px; line-height: 1; }
+
+.meta-row { display: flex; align-items: center; gap: 8px; padding: 0 0 6px 0; }
+
+.detect-icon { font-size: 16px; line-height: 1; opacity: 0.9; }
+
+.mini-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 0 8px 0;
+}
+
+.mini-bars .bar {
+  position: relative;
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mini-bars .bar .fill { height: 100%; }
+.mini-bars .bar.hp .fill { background: rgba(244, 67, 54, 0.6); }
+.mini-bars .bar.ep .fill { background: rgba(33, 150, 243, 0.6); }
+.mini-bars .bar.ap .fill { background: rgba(255, 235, 59, 0.6); }
+
+.mini-bars .bar .label, .mini-bars .bar .value {
+  position: absolute;
+  top: -14px;
+  font-size: 10px;
+  opacity: 0.8;
+}
+.mini-bars .bar .label { left: 0; }
+.mini-bars .bar .value { right: 0; }
+
+.status-chips { display: flex; gap: 6px; padding-top: 2px; }
+.eng-chip {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(176, 132, 245, 0.2);
+  border: 1px solid rgba(176, 132, 245, 0.6);
+  color: #b084f5;
+  font-size: 10px;
+}
+
+.button-content {
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+  align-content: space-evenly;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+}
+
+/* Pills styling centralized in global styles.css */
+
+@media (max-width: 600px) {
+  .button-content { gap: 4px; }
+  .button-icon { font-size: 12px; }
+  .ap-pill, .cd-pill, .eng-pill { font-size: 10px; padding: 1px 4px; }
+}
+
+@media (max-width: 400px) {
+  .ap-pill, .cd-pill, .eng-pill { font-size: 9px; padding: 1px 3px; }
+}
+
+.chip-row {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+/* Density modifiers */
+.reactive-card.density-compact .chip-row { gap: 4px; }
+.reactive-card.density-compact .ap-pill,
+.reactive-card.density-compact .cd-pill,
+.reactive-card.density-compact .eng-pill { padding: 1px 4px; font-size: 10px; }
+
+.reactive-card.density-comfortable .chip-row { gap: 8px; }
+.reactive-card.density-comfortable .ap-pill,
+.reactive-card.density-comfortable .cd-pill,
+.reactive-card.density-comfortable .eng-pill { padding: 3px 8px; font-size: 12px; }

@@ -145,6 +145,7 @@
   /* Column 3: Feedback + Timeline */
   grid-column: 3;
   max-width: 420px;
+  min-width: 0; /* allow shrinking inside grid without overflow */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -186,14 +187,10 @@
 }
 
 /* Separate timeline area */
-.timeline-area {
-  min-width: 360px;
-  max-width: 520px;
-  position: relative;
-}
+.timeline-area { min-width: 0; max-width: 520px; position: relative; }
 
 .timeline-zone {
-  height: 45vh;
+  height: 90vh; /* doubled from 45vh */
   /* Match compact logs panel visual */
   background: rgba(0, 0, 0, 0.85) !important;
   border: 2px solid #607D8B !important;
@@ -202,8 +199,22 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden; /* clip any horizontal overflow */
   min-height: 0;
+}
+
+/* Ensure the combat timeline element consumes available space and scrolls internally */
+.timeline-zone .panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.timeline-zone .panel-content app-combat-timeline-panel {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0; /* allow inner list to compute scroll height */
 }
 
 .toast-feedback-container {

@@ -147,6 +147,8 @@
 .characteristics-panel .window-widget {
   background: linear-gradient(135deg, rgba(76, 175, 80, 0.08), rgba(76, 175, 80, 0.04));
   border-color: rgba(76, 175, 80, 0.2);
+  padding: 8px;
+  min-height: 80px;
 }
 
 .characteristics-panel .window-widget:hover {
@@ -207,6 +209,7 @@
     padding: 8px;
     min-height: 90px;
   }
+  .characteristics-panel .window-widget { min-height: 72px; padding: 6px; }
   
   .window-key {
     font-size: 0.8rem;

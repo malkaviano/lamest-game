@@ -1,24 +1,68 @@
-<div class="reactive-card" *ngIf="isReactive && hasActions" attr.data-testid="reactive-{{ interactive.id }}">
+<div *ngIf="isReactive && hasActions" [attr.data-testid]="'interactive-' + interactive.id">
+  <div class="reactive-card" [ngClass]="densityClass" attr.data-testid="reactive-{{ interactive.id }}">
   <div class="reactive-header">
     <span class="reactive-icon">⚙️</span>
     <h3 class="reactive-name">{{ interactive.name }}</h3>
   </div>
-  
+
+  <!-- Meta row: behavior and detection icons -->
+  <div class="meta-row">
+    <span class="behavior-icons" [ngSwitch]="interactive.behavior">
+      <span class="behavior-icon" *ngSwitchCase="'RETALIATE'" matTooltip="{{ retaliateTooltip }}" aria-label="Retaliator">🛡️</span>
+      <span class="behavior-icon" *ngSwitchCase="'AGGRESSIVE'" matTooltip="{{ aggressiveTooltip }}" aria-label="Aggressor">⚔️</span>
+      <span class="behavior-icon" *ngSwitchCase="'PLAYER'" matTooltip="{{ playerTooltip }}" aria-label="Player">🧍</span>
+    </span>
+    <span class="detect-icon" *ngIf="detectDisguised" matTooltip="{{ searchTooltip }}" aria-label="Disguise detection">🔎</span>
+    <span class="detect-icon" *ngIf="detectHidden" matTooltip="{{ visibilityTooltip }}" aria-label="Stealth detection">👁️</span>
+  </div>
+
+  <!-- Mini-bars for HP/EP/AP when available -->
+  <div class="mini-bars" *ngIf="hasDerivedAttributes()">
+    <div class="bar hp" *ngIf="ratio('CURRENT HP','MAX HP') as hp">
+      <div class="fill" [style.width.%]="hp"></div>
+      <span class="label">HP</span>
+      <span class="value">{{ attrValue('CURRENT HP') }}/{{ attrValue('MAX HP') }}</span>
+    </div>
+    <div class="bar ep" *ngIf="ratio('CURRENT EP','MAX EP') as ep">
+      <div class="fill" [style.width.%]="ep"></div>
+      <span class="label">EP</span>
+      <span class="value">{{ attrValue('CURRENT EP') }}/{{ attrValue('MAX EP') }}</span>
+    </div>
+    <div class="bar ap" *ngIf="ratio('CURRENT AP','MAX AP') as ap">
+      <div class="fill" [style.width.%]="ap"></div>
+      <span class="label">AP</span>
+      <span class="value">{{ attrValue('CURRENT AP') }}/{{ attrValue('MAX AP') }}</span>
+    </div>
+  </div>
+
   <div class="reactive-description">
     {{ interactive.description }}
   </div>
 
+
   <div class="reactive-actions">
-    <button
-      *ngFor="let action of actions.items"
-      class="reactive-button"
-      mat-raised-button
-      color="primary"
-      (click)="onActionSelected(action)"
-      attr.data-testid="reactive-action-{{ action.name }}"
-      matTooltip="{{ action.label }}">
-      <span class="button-icon">🔧</span>
-      <span class="button-text">{{ action.label }}</span>
-    </button>
+    <div class="action-row" *ngFor="let action of actions.items">
+      <button
+        class="reactive-button"
+        mat-raised-button
+        color="primary"
+        (click)="onActionSelected(action)"
+        [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
+        attr.data-testid="reactive-action-{{ action.name }}"
+        matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}">
+        <div class="button-content">
+          <span class="button-icon" aria-hidden="true">{{ actionEmoji(action.actionable) }}</span>
+          <span class="button-text">{{ action.label }}</span>
+        </div>
+      </button>
+      <div class="chips-line" *ngIf="(apCost(action) > 0) || isEngagementBlocked(action)">
+        <span class="ap-pill" *ngIf="apCost(action) > 0">{{ apCost(action) }} AP</span>
+        <span class="eng-pill" *ngIf="isEngagementBlocked(action) && engagementSeconds() as eng">ENG {{ eng }}s</span>
+      </div>
+      <div class="cooldown-line" *ngIf="cooldownSeconds(action) as cd">
+        <span class="cd-pill">CD {{ cd }}s</span>
+      </div>
+    </div>
+  </div>
   </div>
 </div>
