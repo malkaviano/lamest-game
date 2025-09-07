@@ -28,29 +28,44 @@ export class EquipmentWidgetComponent implements OnInit {
     switch (this.equipment.action.actionable) {
       case 'WEAR':
         this.icon = `${this.basePath}/wear.svg`;
-        this.tooltip = 'WEAR';
+        this.tooltip = 'Wear';
         break;
       case 'EQUIP':
         this.icon = `${this.basePath}/equip.svg`;
-        this.tooltip = 'EQUIP';
+        this.tooltip = 'Equip';
         break;
       case 'READ':
         this.icon = `${this.basePath}/read.svg`;
-        this.tooltip = 'READ';
+        this.tooltip = 'Read';
         break;
       case 'CONSUME':
         this.icon = `${this.basePath}/consume.svg`;
-        this.tooltip = 'CONSUME';
+        this.tooltip = 'Consume';
         break;
       default:
         this.icon = `${this.basePath}/drop.svg`;
-        this.tooltip = 'DROP';
+        this.tooltip = 'Drop';
         break;
     }
   }
 
   public ngOnInit() {
     this.setIcon();
+  }
+
+  public getActionClass(): string {
+    switch (this.equipment.action.actionable) {
+      case 'WEAR':
+        return 'wear-action';
+      case 'EQUIP':
+        return 'equip-action';
+      case 'READ':
+        return 'read-action';
+      case 'CONSUME':
+        return 'consume-action';
+      default:
+        return 'drop-action';
+    }
   }
 
   onActionSelected(action: ActionableDefinition): void {

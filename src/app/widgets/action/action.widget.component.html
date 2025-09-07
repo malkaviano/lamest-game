@@ -1,7 +1,11 @@
 <button
-  mat-fab color="primary"
+  mat-raised-button
+  color="primary"
+  class="action-button"
   (click)="onActionSelected()"
   attr.data-testid="action-{{ alt }}"
   matTooltip="{{ tooltip }}">
-  <img src="{{ icon }}" alt="{{ alt }}" />
+  <mat-icon class="action-icon">
+    <img src="{{ icon }}" alt="{{ alt }}" class="action-image" />
+  </mat-icon>
 </button>

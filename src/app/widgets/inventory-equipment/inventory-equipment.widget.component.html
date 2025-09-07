@@ -1,18 +1,21 @@
-<div class="card-box" matTooltip="{{ equipment.item.identity.description }}">
-  <div class="label">
-    <span attr.data-testid="equip-label-{{ equipment.item.identity.name }}">{{
+<div class="item-card" matTooltip="{{ equipment.item.identity.description }}">
+  <div class="item-info">
+    <span class="item-label" attr.data-testid="equip-label-{{ equipment.item.identity.name }}">{{
       equipment.item.identity.label
     }}</span>
   </div>
-  <div class="action">
+  <div class="item-action">
     <button
-      mat-fab
-      color="primary"
+      mat-raised-button
+      [class]="'action-button ' + getActionClass()"
       (click)="onActionSelected(equipment.action)"
       attr.data-testid="equip-action-{{ equipment.action.name }}"
       matTooltip="{{ tooltip }}"
     >
-    <img src="{{ icon }}" alt="{{ tooltip }}" />
+      <mat-icon class="action-icon">
+        <img src="{{ icon }}" alt="{{ tooltip }}" class="action-image" />
+      </mat-icon>
+      <span class="action-text">{{ tooltip }}</span>
     </button>
   </div>
 </div>
