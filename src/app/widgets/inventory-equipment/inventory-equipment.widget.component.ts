@@ -42,6 +42,10 @@ export class EquipmentWidgetComponent implements OnInit {
         this.icon = `${this.basePath}/consume.svg`;
         this.tooltip = 'Consume';
         break;
+      case 'USE':
+        this.icon = `${this.basePath}/use.svg`;
+        this.tooltip = 'Use';
+        break;
       default:
         this.icon = `${this.basePath}/drop.svg`;
         this.tooltip = 'Drop';
@@ -63,6 +67,8 @@ export class EquipmentWidgetComponent implements OnInit {
         return 'read-action';
       case 'CONSUME':
         return 'consume-action';
+      case 'USE':
+        return 'use-action';
       default:
         return 'drop-action';
     }

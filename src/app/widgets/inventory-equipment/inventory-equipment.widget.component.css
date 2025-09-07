@@ -106,3 +106,8 @@
   background-color: #607D8B !important;
   color: white !important;
 }
+
+.action-button.use-action {
+  background-color: #FF5722 !important;
+  color: white !important;
+}

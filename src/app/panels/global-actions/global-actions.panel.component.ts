@@ -27,17 +27,6 @@ export class GlobalActionsPanelComponent {
     return this.status.visibility.value === 'VISIBLE';
   }
 
-  public get disguise() {
-    return {
-      icon: '../../../assets/icons/disguise.svg',
-      alt: 'Disguise',
-      tooltip: 'Disguise yourself',
-      actionEvent: new ActionableEvent(
-        createActionableDefinition('SKILL', 'Disguise', 'Disguise'),
-        this.status.playerId
-      ),
-    };
-  }
 
   public get hide() {
     return {

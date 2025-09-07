@@ -25,15 +25,6 @@
 
     <!-- Skill Actions -->
     <div class="skill-actions">
-      <app-action-widget
-        *ngIf="isVisible"
-        [icon]="disguise.icon"
-        [alt]="disguise.alt"
-        [tooltip]="disguise.tooltip"
-        [actionEvent]="disguise.actionEvent"
-        (actionSelected)="actionSelected.emit($event)"
-        class="skill-button"
-      ></app-action-widget>
 
       <app-action-widget
         *ngIf="isVisible"
