@@ -18,12 +18,6 @@ export class ActorsPanelComponent {
 
   public isCollapsed = false;
 
-  // public get actorInteractives(): ArrayView<ActorInterface> {
-  //   return this.interactives.filter(
-  //     (interactive) => interactive.classification === 'ACTOR'
-  //   );
-  // }
-
   public get hasActors(): boolean {
     return this.actors.items.length > 0;
   }

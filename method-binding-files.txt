@@ -1,16 +1,5 @@
 Arquivos que usam method binding em property binding:
 
-=== Dynamic CSS Classes ===
-/home/malkaviano/Code/lamest-game/src/app/widgets/inventory-equipment/inventory-equipment.widget.component.html
-- [class]="'action-button ' + getActionClass()"
-
-/home/malkaviano/Code/lamest-game/src/app/widgets/window/window.widget.component.html
-- [ngClass]="{ 'numeric': isNumeric(keyValue.value), 'stat': isStatValue(keyValue) }"
-
-=== Dynamic Content ===
-/home/malkaviano/Code/lamest-game/src/app/widgets/window/window.widget.component.html
-- [matTooltip]="getTooltipText(keyValue)"
-
 === Conditional Logic (Multiple Conditions) ===
 /home/malkaviano/Code/lamest-game/src/app/widgets/actor/actor.widget.component.html
 - [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"

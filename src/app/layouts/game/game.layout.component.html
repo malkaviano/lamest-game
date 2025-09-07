@@ -7,7 +7,7 @@
       (actionSelected)="actionSelected.emit($event)"
     ></app-tactical-status-panel>
   </div>
-  
+
   <!-- Global Actions Panel -->
   <div class="header-panel">
     <app-global-actions-panel
@@ -18,7 +18,7 @@
       (sceneOpened)="sceneOpened.emit($event)"
     ></app-global-actions-panel>
   </div>
-  
+
   <!-- Travel Panel -->
   <div class="header-panel travel-header-panel">
     <app-travel-panel
@@ -69,7 +69,7 @@
     <div class="section interactive-panels-section">
       <app-actors-panel
         [panelName]="'actors'"
-        [interactives]="scene.visibleInteractives"
+        [actors]="scene.visibleActors"
         (actionSelected)="actionSelected.emit($event)"
       ></app-actors-panel>
 
