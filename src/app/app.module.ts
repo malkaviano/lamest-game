@@ -32,6 +32,8 @@ import { TravelWidgetComponent } from './widgets/travel/travel.widget.component'
 import { TravelPanelComponent } from './panels/travel/travel.panel.component';
 import { ActorWidgetComponent } from './widgets/actor/actor.widget.component';
 import { ActorsPanelComponent } from './panels/actors/actors.panel.component';
+import { ReactiveWidgetComponent } from './widgets/reactive/reactive.widget.component';
+import { ReactivesPanelComponent } from './panels/reactives/reactives.panel.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { ActorsPanelComponent } from './panels/actors/actors.panel.component';
     TravelPanelComponent,
     ActorWidgetComponent,
     ActorsPanelComponent,
+    ReactiveWidgetComponent,
+    ReactivesPanelComponent,
   ],
   imports: [
     BrowserModule,

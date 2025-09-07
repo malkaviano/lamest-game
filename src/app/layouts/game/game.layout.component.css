@@ -1,8 +1,63 @@
 .flex-panel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: flex-start; /* prevent equal-height stretch across siblings */
+  display: grid;
+  grid-template-columns: 30% 40% 30%;
+  gap: 20px;
+  align-items: start;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Better spacing for large screens */
+@media (min-width: 1600px) {
+  .flex-panel {
+    max-width: 1800px;
+    gap: 30px;
+    padding: 0 40px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .flex-panel {
+    max-width: 2000px;
+    gap: 40px;
+    padding: 0 60px;
+  }
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 1200px) {
+  .flex-panel {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .character-section {
+    grid-column: 1;
+  }
+  
+  .interactive-panels-section {
+    grid-column: 1 / -1; /* Spans both columns */
+    grid-row: 2;
+  }
+  
+  .feedback-timeline-section {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .flex-panel {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .character-section,
+  .interactive-panels-section,
+  .feedback-timeline-section {
+    grid-column: 1;
+    max-width: none;
+  }
 }
 
 .main-bar {
@@ -65,17 +120,35 @@
 
 .section {
   padding: 10px;
-  align-self: flex-start; /* ensure each section keeps its own height */
+  width: 100%;
+  min-height: 0;
 }
 
-.content-box {
-  min-width: 200px;
-  max-width: 400px;
+/* Grid column specific styling */
+.character-section {
+  /* Column 1: Character + Logs */
+  grid-column: 1;
+  max-width: 420px;
+  width: 100%;
 }
 
-.large-box {
-  min-width: 400px;
-  max-width: 600px;
+.interactive-panels-section {
+  /* Column 2: AI Actors + Reactives (40% width) */
+  grid-column: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.feedback-timeline-section {
+  /* Column 3: Feedback + Timeline */
+  grid-column: 3;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .image {
@@ -224,8 +297,11 @@
   width: 380px;
 }
 
-.actors-container {
+.interactives-panels-container {
   flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   min-width: 200px;
   max-width: 380px;
 }
@@ -237,7 +313,7 @@
     gap: 10px;
   }
   
-  .actors-container {
+  .interactives-panels-container {
     width: 100%;
     max-width: none;
   }

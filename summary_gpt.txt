@@ -1,52 +1,63 @@
-Lamest Game — Project Analysis (GPT)
+Lamest Game — Nova Análise do Projeto (GPT)
 
-Overview
-- Framework: Angular 17 with RxJS; modular separation between frontend UI and a domain-centric “backend” layer implemented in TypeScript.
-- Architecture: Clean-ish layering using conceptual definitions, entities, behaviors, rules, policies, and stores under `src/backend/`. UI consumes a `GameLoopService` that emits domain events and log messages used to drive panels/widgets.
-- Rendering: UI composed of panels and widgets (status bar, sheet, interactive list, logs, image viewer). Feedback via `ngx-toastr`, audio via `howler`, animated widgets (e.g., GSAP for floating numbers, custom progress bar).
+Visão Geral
+- Framework: Angular 17 + RxJS; lógica de domínio TypeScript sob `src/backend/` consumida pela UI.
+- Arquitetura: camadas bem definidas com Entities, Behaviors, Rules, Policies, Stores e Events. UI orquestrada por `GameLoopService` e serviços auxiliares.
+- Rendering/Feedback: painéis e widgets (interactive, actor, reactive, status, timeline, image-viewer), toasts (`ngx-toastr`), áudio (`howler`), animações (GSAP), barras de progresso animadas.
 
-Key Modules
-- Backend domain model:
-  - Entities: `ActorEntity`, `SceneEntity`, `InteractiveEntity` encapsulate state and behavior.
-  - Behaviors: `actor.behavior`, `equipment.behavior`, `regenerator.behavior`, `cooldown.behavior`, `ai.behavior` define core game mechanics and AI decisions.
-  - Rules/Policies: Actions like `affect.rule`, `consume.rule`, `equip.rule`, etc., produce `RuleResult`s; policies (e.g., `effect.policy`) translate results into log messages and side-effects.
-  - Stores/Values: Access to settings, strings, items, scenes; strongly typed literals and definitions define vocab and enumerations.
-  - Events: Domain events (`effect.event`, `derived-attribute.event`, actionable events) flow through services and behaviors.
+Domínio/Backend
+- Entities/Services: `ActorEntity`, `SceneEntity`, `InteractiveEntity`, `GameLoopService`, `CharacterService`, `InventoryService`, `RPGService`, `NarrativeService`.
+- Behaviors/Rules/Policies: comportamento de AI, cooldown/regeneration/equipment; regras (`affect`, `skill`, `pick`, `wear`, `strip`, `read`, etc.) com Policies convertendo resultados em efeitos e logs.
+- Stores/Literals: strings, mensagens, cenas, itens e configurações centralizadas; literais/definitions fortes para evitar drift de texto.
+- Eventos: eventos de domínio e combate sustentam integrações com UI e feedback.
 
-- Frontend UI:
-  - Layout: `GameLayoutComponent` organizes status, scene view, character sheet, interactives, and compact logs.
-  - Pages: `GamePageComponent` coordinates subscriptions to `GameLoopService` and drives UI state; now also anchors floating numbers to actor containers.
-  - Widgets: Interactive buttons, image viewer, animated progress bar, floating numbers.
-  - Feedback: `FeedbackService` maps log categories to toast styles; `SoundService` maps categories to sounds.
+Frontend/UI
+- Página: `GamePageComponent` assina eventos e atualiza view-models; integra numeração flutuante e timeline de combate.
+- Widgets: 
+  - Interactive: cartão rico com ícones de comportamento, detecção, mini-barras HP/EP/AP, chips/aprimoramentos de ação (AP cost, cooldown, ENG) e tooltips de contexto.
+  - Actor/Reactive: cartões especializados e simplificados focados em apresentação de ações básicas.
+- Feedback/Animação: Floating numbers ancorados aos alvos com estilos por tipo de dano; progress bar animada; mapeamento de sons por categoria parcial.
 
-Event/Data Flow
-- Player/AI actions -> Rules -> Policies -> Log messages + state changes.
-- `GameLoopService.events.*` Observables feed into `GamePageComponent` which updates view models for panels and triggers feedback (toasts, sounds, floating numbers).
+Fluxo de Dados
+- Ações (Player/AI) → Rules → Policies → Atualizações de estado + logs/eventos → UI (widgets, toasts, sons, animações).
+- Trabalho em andamento para eventos estruturados de combate reduzir dependência de parsing de logs.
 
-Quality/Testing
-- Unit tests cover a large portion of backend rules, behaviors, and helpers; also basic component/service specs on the UI side.
-- Type safety: strict TS settings and path aliases in `tsconfig.json`; literals prevent accidental string drift.
+Qualidade/Testes
+- Extensa suíte de testes em regras/serviços/estados; specs de componentes essenciais; TS em modo estrito e aliases por caminho.
 
-Recent Fixes (observed)
-- Floating numbers: regex adjusted to match actual combat logs; early init of `ViewContainerRef` to avoid missing first events; anchoring to target containers; color styling per damage type (KINETIC/FIRE/ACID/PROFANE/SACRED).
+Melhorias Recentes Observadas
+- Floating numbers: regex aprimorado, ancoragem por alvo, cores por subtipo (KINETIC/FIRE/ACID/PROFANE/SACRED), inicialização antecipada de refs.
+- Interactive Widget: mini-barras HP/EP/AP, ícones de comportamento, detecção de HIDDEN/DISGUISED, chips de custo AP, cooldown e ENG com timers e desabilitação condicional.
 
-Strengths
-- Clear separation of domain logic from UI, enabling deterministic testing.
-- Descriptive literals/definitions improve maintainability and readability.
-- Stores centralize text and settings; logs/messages are templated and localized via JSON.
+Itens Perdidos (conforme lost_features.txt)
+- Ícones de comportamento AI: RETALIATE, AGGRESSIVE, PLAYER com tooltips dedicados.
+- Barras de status HP/EP/AP: barras responsivas com labels e valores (condicionais a derived attributes).
+- Chips de status e timers: AP cost, cooldown (CD s), engagement (ENG s) e ENG chip ativo.
+- Detecção de habilidades especiais: Detect Disguised/Hidden conforme capacidades do personagem.
+- Sistema de cooldown/engagement: desabilitar botões durante cooldown/engajamento, timers reativos e tooltips explicativas.
+- Sistema de custos/recursos: `canAfford(action)` e tooltips de custo (`apTooltipSuffix`).
+- Ícones de ações melhorados: mapeamento detalhado por tipo (`setIcon`) com imagens/ícones e tooltips informativas.
+- Layout avançado: meta-row (comportamento + detecção), mini-bars separadas e botão com chips.
+- Onde falta: esses recursos estão presentes no `InteractiveWidget`, mas foram perdidos/omitidos nos widgets especializados `Actor` e `Reactive` (componentes estão básicos, com emojis e sem timers/custos/barras).
 
-Gaps/Risks
-- UI currently relies on text logs to derive combat visuals (parsing strings). This is fragile compared to structured event payloads.
-- Limited visual state for actors (e.g., no per-actor HP bars or dynamic status effects rendered alongside interactives).
-- The AI/loop feedback is primarily non-visual; few micro-interactions beyond toasts and floating numbers.
-- Some features (sounds, GSAP animations) are present but could be further synchronized with game events (e.g., per-effect sound or staggered animations).
+Riscos/Gaps
+- Parsing de logs para feedback visual ainda existe em pontos: eventos estruturados devem substituir regex.
+- Inconsistência de UX entre widgets: `Interactive` rico vs. `Actor`/`Reactive` minimalistas sem barras/ícones/chips.
+- Sincronização parcial de sons/animações por tipo de evento/efeito.
 
-Performance/UX Notes
-- Angular change detection should be fine given the scope, though heavy log streams may cause reflows in the compact logs panel.
-- GSAP animations are lightweight and isolated; container is `fixed` and pointer-events disabled to avoid interference.
+Oportunidades/Prioridades
+- Unificar UX dos widgets: portar barras HP/EP/AP, ícones de AI, detecção, chips AP/CD/ENG e validações para `ActorWidget` e `ReactiveWidget` (reutilizar helpers de `InteractiveWidget`).
+- Eventos estruturados de combate end-to-end: garantir emissão e consumo em UI, eliminando parsing de logs.
+- Componentizar chips/badges: `status-chip` e `cooldown-badge` reutilizáveis com `OnPush`.
+- Tooltips acessíveis: mensagens claras de indisponibilidade (AP insuficiente, cooldown, engajamento) com ARIA.
+- Sons/Feedback: mapear mais efeitos e outcomes (MISS/DODGE/CRIT) a sons/anim.
 
-Opportunities
-- Emit structured combat events (with actor/target IDs, effect type, amount) directly to the UI to eliminate regex parsing.
-- Enrich interactive cards with transient UI (HP/EP/AP mini-bars, cooldown chips, status effect badges) and contextual action hints.
-- Expand feedback mapping (category -> sound/animation) to cover damage subtypes and misses/dodges.
+Próximos Passos Sugeridos
+- P0: Replicar no `ActorWidget` e `ReactiveWidget` os recursos listados em “Itens Perdidos” (AP/CD/ENG, mini-barras, ícones AI, detecção, `canAfford`, tooltips) usando os mesmos serviços/stores (CharacterService, SettingsStore, GameStringsStore).
+- P1: Consolidar eventos estruturados de combate e conectar UI (CombatFeed/Timeline) para remover regex.
+- P2: Componentizar chips/barras e aplicar `ChangeDetectionStrategy.OnPush` nos widgets de display.
+- P3: Expandir mapeamento de som/efeito e microinterações (flash de borda por tipo de dano, MISS/DODGE overlays).
 
+Resumo
+- O domínio é robusto e testável; a UI evoluiu bem no `InteractiveWidget`.
+- Para consistência e clareza, é prioritário alinhar `Actor`/`Reactive` ao nível de UX do `Interactive`, exatamente nos pontos levantados em `lost_features.txt`.

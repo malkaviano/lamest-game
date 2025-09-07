@@ -31,24 +31,13 @@
 <section name="content">
   <div class="flex-panel">
     <div class="section content-box character-section">
-      <div class="character-and-actors-container">
-        <!-- Character sheet -->
-        <div class="character-sheet-container" data-testid="character">
-          <app-sheet-panel
-            [characterValues]="characterValues"
-            [inventory]="inventory"
-            (actionSelected)="actionSelected.emit($event)"
-          ></app-sheet-panel>
-        </div>
-
-        <!-- AI Actors panel beside character -->
-        <div class="actors-container">
-          <app-actors-panel
-            [panelName]="'actors'"
-            [interactives]="scene.visibleInteractives"
-            (actionSelected)="actionSelected.emit($event)"
-          ></app-actors-panel>
-        </div>
+      <!-- Character sheet -->
+      <div class="character-sheet-container" data-testid="character">
+        <app-sheet-panel
+          [characterValues]="characterValues"
+          [inventory]="inventory"
+          (actionSelected)="actionSelected.emit($event)"
+        ></app-sheet-panel>
       </div>
 
       <!-- Compact logs panel below both character and actors -->
@@ -75,18 +64,23 @@
       </div>
     </div>
 
-    <div class="section large-box">
-      <div class="vertical-scrollable">
-        <div data-testid="interactives">
-          <app-interactive-panel
-            [panelName]="'interactives'"
-            [interactives]="scene.visibleInteractives"
-            (actionSelected)="actionSelected.emit($event)"
-          ></app-interactive-panel>
-        </div>
-      </div>
+    <!-- Interactive panels in middle column -->
+    <div class="section interactive-panels-section">
+      <app-actors-panel
+        [panelName]="'actors'"
+        [interactives]="scene.visibleInteractives"
+        (actionSelected)="actionSelected.emit($event)"
+      ></app-actors-panel>
+
+      <app-reactives-panel
+        [panelName]="'reactives'"
+        [interactives]="scene.visibleInteractives"
+        (actionSelected)="actionSelected.emit($event)"
+      ></app-reactives-panel>
     </div>
-    <div class="section feedback-area">
+
+    <div class="section feedback-timeline-section">
+      <!-- Feedback area -->
       <div class="feedback-zone">
         <div class="logs-header">
           <span class="logs-title">📣 Feedback</span>
@@ -101,10 +95,8 @@
           </p>
         </div>
       </div>
-    </div>
 
-    <!-- Separate panel for Combat Timeline -->
-    <div class="section timeline-area">
+      <!-- Timeline area below feedback -->
       <div class="timeline-zone">
         <div class="logs-header">
           <span class="logs-title">⚔️ Combat</span>
