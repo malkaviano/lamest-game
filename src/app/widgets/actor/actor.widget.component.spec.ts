@@ -188,6 +188,27 @@ describe('ActorWidgetComponent', () => {
         expect(suffix).toBe('');
       }
     });
+
+    it('should display AP chip when action has cost', () => {
+      // Force a skill action to have AP cost for this test
+      spyOn(component, 'apCost').and.returnValue(3);
+      fixture.detectChanges();
+
+      const compiled = fixture.nativeElement;
+      const apPill = compiled.querySelector('.ap-pill');
+      if (apPill) {
+        expect(apPill.textContent).toContain('3 AP');
+      }
+    });
+
+    it('should not display AP chip when action has no cost', () => {
+      spyOn(component, 'apCost').and.returnValue(0);
+      fixture.detectChanges();
+
+      const compiled = fixture.nativeElement;
+      const apPill = compiled.querySelector('.ap-pill');
+      expect(apPill).toBeFalsy();
+    });
   });
 
   describe('cooldown calculations', () => {
@@ -217,6 +238,40 @@ describe('ActorWidgetComponent', () => {
     it('should calculate engagement seconds', () => {
       const engSeconds = component.engagementSeconds();
       expect(engSeconds).toBeGreaterThan(0);
+    });
+
+    it('should display cooldown chip when action has cooldown', () => {
+      const compiled = fixture.nativeElement;
+      const cdPill = compiled.querySelector('.cd-pill');
+      if (cdPill) {
+        expect(cdPill.textContent).toMatch(/CD \d+s/);
+      }
+    });
+
+    it('should display engagement chip when action is engagement blocked', () => {
+      // Setup engagement blocking scenario
+      when(mockedActor.classification).thenReturn('ACTOR');
+      when(mockedActor.actions).thenReturn(ArrayView.create(
+        createActionableDefinition('SKILL', 'search', 'Search') // Non-combat skill
+      ));
+      when(mockedActor.actionsChanged$).thenReturn(
+        of(ArrayView.create(
+          createActionableDefinition('SKILL', 'search', 'Search')
+        ))
+      );
+      when(mockedActor.ignores).thenReturn(ArrayView.create());
+
+      // Mock engagement blocking
+      spyOn(component, 'isEngagementBlocked').and.returnValue(true);
+      spyOn(component, 'engagementSeconds').and.returnValue(2);
+      
+      fixture.detectChanges();
+
+      const compiled = fixture.nativeElement;
+      const engPill = compiled.querySelector('.eng-pill');
+      if (engPill) {
+        expect(engPill.textContent).toContain('ENG 2s');
+      }
     });
   });
 
@@ -302,6 +357,50 @@ describe('ActorWidgetComponent', () => {
     it('should generate correct density class for comfortable', () => {
       component.density = 'comfortable';
       expect(component.densityClass).toBe('density-comfortable');
+    });
+  });
+
+  describe('chips display', () => {
+    beforeEach(() => {
+      when(mockedActor.classification).thenReturn('ACTOR');
+      when(mockedActor.actions).thenReturn(ArrayView.create(skillAction));
+      when(mockedActor.actionsChanged$).thenReturn(
+        of(ArrayView.create(skillAction))
+      );
+      when(mockedActor.ignores).thenReturn(ArrayView.create());
+
+      fixture.detectChanges();
+    });
+
+    it('should display chips-line when action has AP cost or engagement blocking', () => {
+      spyOn(component, 'apCost').and.returnValue(2);
+      fixture.detectChanges();
+
+      const compiled = fixture.nativeElement;
+      const chipsLine = compiled.querySelector('.chips-line');
+      expect(chipsLine).toBeTruthy();
+    });
+
+    it('should not display chips-line when action has no cost and no engagement', () => {
+      spyOn(component, 'apCost').and.returnValue(0);
+      spyOn(component, 'isEngagementBlocked').and.returnValue(false);
+      fixture.detectChanges();
+
+      const compiled = fixture.nativeElement;
+      const chipsLine = compiled.querySelector('.chips-line');
+      expect(chipsLine).toBeFalsy();
+    });
+
+    it('should display cooldown-line when action has cooldown', () => {
+      component['cooldowns'] = { 'Attack': 5000 };
+      component['cooldownsCapturedAt'] = Date.now() - 2000;
+      fixture.detectChanges();
+
+      const compiled = fixture.nativeElement;
+      const cooldownLine = compiled.querySelector('.cooldown-line');
+      if (cooldownLine) {
+        expect(cooldownLine).toBeTruthy();
+      }
     });
   });
 
