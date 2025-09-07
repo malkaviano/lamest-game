@@ -1,0 +1,80 @@
+.reactives-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.85) !important;
+  border: 2px solid #ff9800 !important;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.panel-header {
+  padding: 8px 12px 6px 12px;
+  border-bottom: 1px solid rgba(255, 152, 0, 0.2);
+  background: rgba(255, 152, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px 10px 0 0;
+}
+
+.panel-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: #ff9800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reactives-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  padding: 6px 10px;
+  overflow-x: auto;
+  overflow-y: visible;
+  max-height: 300px;
+  min-height: 150px;
+  transition: max-height 0.2s ease, padding 0.2s ease;
+}
+
+.reactives-grid.collapsed {
+  max-height: 0;
+  min-height: 0;
+  padding: 0 10px;
+  overflow: hidden;
+}
+
+.collapse-toggle {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.collapse-toggle:hover {
+  opacity: 1;
+}
+
+/* Responsive adjustments for horizontal layout */
+@media (max-width: 768px) {
+  .reactives-grid {
+    gap: 6px;
+    padding: 6px 8px;
+  }
+  
+  .reactives-grid.collapsed {
+    padding: 0 8px;
+  }
+  
+  .panel-header {
+    padding: 6px 8px 4px 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .reactives-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

@@ -54,13 +54,13 @@ describe('GameLayoutComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('interactives panel', () => {
+  describe('actors panel', () => {
     it(`should have values`, () => {
       const result = fixture.debugElement.query(
-        By.css(`app-interactive-panel`)
+        By.css(`app-actors-panel`)
       );
 
-      expect(result.properties['panelName']).toEqual('interactives');
+      expect(result.properties['panelName']).toEqual('actors');
 
       expect(result.properties['interactives']).toEqual(
         ArrayView.create(fakeInteractive)
@@ -70,7 +70,7 @@ describe('GameLayoutComponent', () => {
     it('should send an ActionableEvent', (done) => {
       const event = new ActionableEvent(actionAsk, 'id1');
 
-      const panel = fixture.debugElement.query(By.css(`app-interactive-panel`));
+      const panel = fixture.debugElement.query(By.css(`app-actors-panel`));
 
       let result: ActionableEvent | undefined;
 

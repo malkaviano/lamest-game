@@ -1,0 +1,24 @@
+<div class="reactive-card" *ngIf="isReactive && hasActions" attr.data-testid="reactive-{{ interactive.id }}">
+  <div class="reactive-header">
+    <span class="reactive-icon">⚙️</span>
+    <h3 class="reactive-name">{{ interactive.name }}</h3>
+  </div>
+  
+  <div class="reactive-description">
+    {{ interactive.description }}
+  </div>
+
+  <div class="reactive-actions">
+    <button
+      *ngFor="let action of actions.items"
+      class="reactive-button"
+      mat-raised-button
+      color="primary"
+      (click)="onActionSelected(action)"
+      attr.data-testid="reactive-action-{{ action.name }}"
+      matTooltip="{{ action.label }}">
+      <span class="button-icon">🔧</span>
+      <span class="button-text">{{ action.label }}</span>
+    </button>
+  </div>
+</div>
