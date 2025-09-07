@@ -8,6 +8,7 @@ export interface FloatingNumberData {
   duration?: number;
   effectType?: EffectTypeLiteral; // used to colorize damage types
   label?: string; // used when type is 'text'
+  crit?: boolean; // critical variant for damage
 }
 
 @Component({
@@ -65,6 +66,12 @@ export interface FloatingNumberData {
     .floating-number--info {
       color: #4444ff;
     }
+
+    /* Crit variant: bigger and slight emphasis */
+    .floating-number--crit {
+      font-size: 2rem;
+      text-shadow: 2px 2px 8px rgba(255, 193, 7, 0.9);
+    }
   `]
 })
 export class FloatingNumberWidgetComponent implements OnInit, AfterViewInit {
@@ -89,6 +96,7 @@ export class FloatingNumberWidgetComponent implements OnInit, AfterViewInit {
   private animateFloating(): void {
     const element = this.floatingElement.nativeElement;
     const duration = this.data.duration || 2;
+    const isCrit = !!this.data.crit;
     
     // Create floating animation
     const tl = gsap.timeline({
@@ -100,18 +108,18 @@ export class FloatingNumberWidgetComponent implements OnInit, AfterViewInit {
     tl.to(element, {
       opacity: 1,
       y: -20,
-      scale: 1.2,
+      scale: isCrit ? 1.35 : 1.2,
       duration: 0.1,
       ease: 'back.out(1.7)'
     })
     .to(element, {
-      y: -80,
+      y: isCrit ? -100 : -80,
       duration: duration * 0.7,
       ease: 'power2.out'
     })
     .to(element, {
       opacity: 0,
-      y: -120,
+      y: isCrit ? -150 : -120,
       duration: duration * 0.3,
       ease: 'power2.in'
     }, '-=0.5');
@@ -122,6 +130,17 @@ export class FloatingNumberWidgetComponent implements OnInit, AfterViewInit {
       duration: duration,
       ease: 'power1.out'
     });
+
+    // Add a light shake for CRIT
+    if (isCrit) {
+      gsap.to(element, {
+        rotation: 2,
+        yoyo: true,
+        repeat: 5,
+        duration: 0.06,
+        ease: 'sine.inOut'
+      });
+    }
   }
 
   public formatValue(): string {
@@ -149,6 +168,10 @@ export class FloatingNumberWidgetComponent implements OnInit, AfterViewInit {
     const subtype = this.data.type === 'damage' && this.data.effectType
       ? `floating-number--${this.data.effectType.toLowerCase()}`
       : '';
-    return subtype ? ['floating-number', base, subtype] : ['floating-number', base];
+    const crit = this.data.type === 'damage' && this.data.crit ? 'floating-number--crit' : '';
+    const arr = ['floating-number', base];
+    if (subtype) arr.push(subtype);
+    if (crit) arr.push(crit);
+    return arr;
   }
 }

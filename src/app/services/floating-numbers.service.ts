@@ -35,11 +35,12 @@ export class FloatingNumbersService {
     componentRef.instance.startY = y;
   }
 
-  public showDamage(damage: number, x: number, y: number, effectType?: EffectTypeLiteral): void {
+  public showDamage(damage: number, x: number, y: number, effectType?: EffectTypeLiteral, crit?: boolean): void {
     this.showFloatingNumber({
       value: damage,
       type: 'damage',
-      effectType
+      effectType,
+      crit
     }, x, y);
   }
 

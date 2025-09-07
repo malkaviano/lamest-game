@@ -8,10 +8,6 @@ Interactivity Suggestions (GPT)
 - Show status effect chips (e.g., Burning, Poisoned) with timers; fade when expired.
 - Display cooldown badges for actions that a target imposes (e.g., engagement timer) with countdown.
 
-3) Action Affordances [DONE]
-- Contextual hints on actionable buttons (AP cost, cooldown remaining, hit chance estimate) shown as small pill labels. [DONE]
-- Disable buttons with tooltip explaining reason (e.g., “Insufficient AP” or “Engagement timer”). [DONE]
-
 4) Targeted Animations
 - Expand floating numbers: offset and color per subtype are in place; add critical hit variant (bigger, shake, flash).
 - Apply subtle hit flash on the target card (border glow by effect type; short pulse via CSS/GSAP).
@@ -20,10 +16,6 @@ Interactivity Suggestions (GPT)
 5) Audio Feedback
 - Map `EffectTypeLiteral` to specific sounds (fire sizzle, acid hiss, kinetic thud, sacred chime, profane distortion).
 - Add cooldown/deny beeps for invalid actions; success/level-up fanfare.
-
-6) Combat Timeline Panel [DONE]
-- Optional side panel that lists recent structured events with icons, amounts, and actor portraits. [DONE]
-- Click an entry to highlight the involved cards briefly (scroll into view if off-screen). [DONE]
 
 7) Input Micro-interactions
 - Hovering an interactive card could reveal quick actions as floating icon buttons.
