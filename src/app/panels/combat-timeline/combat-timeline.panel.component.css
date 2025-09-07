@@ -14,6 +14,9 @@
 
 .controls { display: flex; align-items: center; padding: 4px 0; }
 .controls .spacer { flex: 1; }
+.filters { display: flex; gap: 8px; align-items: center; }
+.filter-field { min-width: 180px; }
+.filter-field.short { min-width: 120px; }
 
 /* header removed; panel title handled by parent layout */
 

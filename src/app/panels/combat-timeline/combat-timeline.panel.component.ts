@@ -15,6 +15,11 @@ export class CombatTimelinePanelComponent implements OnInit, OnDestroy {
   events: ArrayView<CombatEvent> = ArrayView.empty();
   private sub?: Subscription;
 
+  // Filters
+  public filterText = '';
+  public filterOutcome: 'ALL' | 'HIT' | 'CRIT' | 'HEAL' | 'MISS' | 'DODGE' = 'ALL';
+  public filterEffect: 'ALL' | 'KINETIC' | 'FIRE' | 'ACID' | 'PROFANE' | 'SACRED' = 'ALL';
+
   constructor(
     private readonly gameLoop: GameLoopService,
     private readonly highlight: HighlightService
@@ -62,5 +67,21 @@ export class CombatTimelinePanelComponent implements OnInit, OnDestroy {
 
   onHighlight(ev: CombatEvent): void {
     if (ev.targetId) this.highlight.flashInteractiveCard(ev.targetId, ev.effectType);
+  }
+
+  public get displayed(): ArrayView<CombatEvent> {
+    const text = this.filterText.trim().toLowerCase();
+    const outcome = this.filterOutcome;
+    const effect = this.filterEffect;
+    const filtered = this.events.items.filter((ev) => {
+      if (outcome !== 'ALL' && ev.outcome !== outcome) return false;
+      if (effect !== 'ALL' && ev.effectType !== effect) return false;
+      if (text) {
+        const hay = `${ev.actorName ?? ''} ${ev.targetName ?? ''}`.toLowerCase();
+        if (!hay.includes(text)) return false;
+      }
+      return true;
+    });
+    return ArrayView.fromArray(filtered);
   }
 }

@@ -1,12 +1,40 @@
 <div class="combat-timeline">
   <div class="controls">
+    <div class="filters">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter actor/target</mat-label>
+        <input matInput [(ngModel)]="filterText" placeholder="Type a name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field short">
+        <mat-label>Outcome</mat-label>
+        <mat-select [(ngModel)]="filterOutcome">
+          <mat-option value="ALL">All</mat-option>
+          <mat-option value="HIT">Hit</mat-option>
+          <mat-option value="CRIT">Crit</mat-option>
+          <mat-option value="HEAL">Heal</mat-option>
+          <mat-option value="MISS">Miss</mat-option>
+          <mat-option value="DODGE">Dodge</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field short">
+        <mat-label>Effect</mat-label>
+        <mat-select [(ngModel)]="filterEffect">
+          <mat-option value="ALL">All</mat-option>
+          <mat-option value="KINETIC">Kinetic</mat-option>
+          <mat-option value="FIRE">Fire</mat-option>
+          <mat-option value="ACID">Acid</mat-option>
+          <mat-option value="PROFANE">Profane</mat-option>
+          <mat-option value="SACRED">Sacred</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <span class="spacer"></span>
     <button mat-stroked-button color="warn" (click)="clear()">Clear</button>
   </div>
-  <div class="list" *ngIf="events.items.length; else empty">
+  <div class="list" *ngIf="displayed.items.length; else empty">
     <div
       class="event"
-      *ngFor="let ev of events.items; index as i"
+      *ngFor="let ev of displayed.items; index as i"
       (click)="onHighlight(ev)"
       [attr.data-testid]="'combat-event-' + i"
     >
