@@ -13,6 +13,7 @@ import {
   equipActionable,
   readActionable,
   wearActionable,
+  createActionableDefinition,
 } from '@definitions/actionable.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ArrayView } from '@wrappers/array.view';
@@ -216,6 +217,8 @@ export class GameLoopService {
         return consumeActionable;
       case 'READABLE':
         return readActionable;
+      case 'USABLE':
+        return createActionableDefinition('USE');
       case 'ARMOR':
         return wearActionable;
       default:

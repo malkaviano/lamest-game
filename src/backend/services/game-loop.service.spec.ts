@@ -10,9 +10,9 @@ import { ArrayView } from '@wrappers/array.view';
 import {
   affectActionable,
   consumeActionable,
-  dropActionable,
   equipActionable,
   readActionable,
+  createActionableDefinition,
 } from '@definitions/actionable.definition';
 
 import {
@@ -116,7 +116,10 @@ describe('GameLoopService', () => {
       },
       {
         invEvent: new InventoryEvent('STORE', playerInfo.id, discardKey),
-        expected: new ActionableItemDefinition(discardKey, dropActionable),
+        expected: new ActionableItemDefinition(
+          discardKey,
+          createActionableDefinition('USE')
+        ),
         item: discardKey,
       },
       {
