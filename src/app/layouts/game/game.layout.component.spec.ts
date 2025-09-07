@@ -4,12 +4,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+import { instance, mock, when } from 'ts-mockito';
+import { of } from 'rxjs';
+
 import { GameLayoutComponent } from './game.layout.component';
 import { ArrayView } from '@wrappers/array.view';
 import { ActionableEvent } from '@events/actionable.event';
-import { SimpleState } from '@states/simple.state';
 import { unarmedWeapon } from '@behaviors/equipment.behavior';
-import { InteractiveEntity } from '@entities/interactive.entity';
 import { ViewableInterface } from '../../interfaces/viewable.interface';
 import { SceneEntity } from '@entities/scene.entity';
 
@@ -19,6 +20,8 @@ import {
   fakeCharacterStatusView,
 } from '../../../../tests/fakes';
 import { setupMocks } from '../../../../tests/mocks';
+import { ActorEntity } from '../../../backend/entities/actor.entity';
+import { createActionableDefinition } from '@definitions/actionable.definition';
 
 describe('GameLayoutComponent', () => {
   let component: GameLayoutComponent;
@@ -56,15 +59,11 @@ describe('GameLayoutComponent', () => {
 
   describe('actors panel', () => {
     it(`should have values`, () => {
-      const result = fixture.debugElement.query(
-        By.css(`app-actors-panel`)
-      );
+      const result = fixture.debugElement.query(By.css(`app-actors-panel`));
 
       expect(result.properties['panelName']).toEqual('actors');
 
-      expect(result.properties['interactives']).toEqual(
-        ArrayView.create(fakeInteractive)
-      );
+      expect(result.properties['actors']).toEqual(ArrayView.create(fakeActor));
     });
 
     it('should send an ActionableEvent', (done) => {
@@ -131,18 +130,38 @@ describe('GameLayoutComponent', () => {
   });
 });
 
-const fakeInteractive = new InteractiveEntity(
-  'id1',
-  'props1',
-  'This is props1',
-  new SimpleState(ArrayView.create(actionAsk)),
-  true,
-  'VISIBLE'
+const mockedActor = mock(ActorEntity);
+
+when(mockedActor.id).thenReturn('orc1');
+when(mockedActor.name).thenReturn('Orc Warrior');
+when(mockedActor.description).thenReturn(
+  'A fierce orc warrior ready for battle'
 );
+when(mockedActor.classification).thenReturn('ACTOR');
+when(mockedActor.behavior).thenReturn('AGGRESSIVE');
+when(mockedActor.situation).thenReturn('ALIVE');
+when(mockedActor.visibility).thenReturn('VISIBLE');
+when(mockedActor.actions).thenReturn(
+  ArrayView.create(
+    createActionableDefinition('AFFECT', 'attack', 'Attack'),
+    createActionableDefinition('SKILL', 'intimidation', 'Intimidation')
+  )
+);
+when(mockedActor.actionsChanged$).thenReturn(
+  of(
+    ArrayView.create(
+      createActionableDefinition('AFFECT', 'attack', 'Attack'),
+      createActionableDefinition('SKILL', 'intimidation', 'Intimidation')
+    )
+  )
+);
+when(mockedActor.ignores).thenReturn(ArrayView.create());
+
+const fakeActor = instance(mockedActor);
 
 const scene = new SceneEntity(
   'scene',
   'this is a test',
-  ArrayView.create(fakeInteractive),
+  ArrayView.create(fakeActor),
   'gg.jpg'
 );

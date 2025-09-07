@@ -60,29 +60,6 @@
   opacity: 1;
 }
 
-.equipment-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-}
-
-.equipment-widget {
-  flex: 1;
-}
-
-/* Override equipped widget styles */
-.equipment-widget ::ng-deep .equipped-widget {
-  background: rgba(0, 0, 0, 0.3) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 6px !important;
-  padding: 8px !important;
-  transition: all 0.2s ease;
-}
-
-.equipment-widget ::ng-deep .equipped-widget:hover {
-  border-color: rgba(255, 255, 255, 0.2) !important;
-  background: rgba(0, 0, 0, 0.4) !important;
-}
 
 .combat-options {
   display: flex;
@@ -187,6 +164,43 @@
 .global-actions-panel .skill-actions ::ng-deep * {
   --mdc-fab-container-color: rgba(76, 175, 80, 0.2) !important;
   --mdc-fab-icon-color: rgba(76, 175, 80, 0.9) !important;
+}
+
+/* Enhanced Action Button Styles */
+.action-button {
+  min-width: 100px !important;
+  height: 36px !important;
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s ease-in-out !important;
+  border: 1px solid transparent !important;
+}
+
+.action-button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.action-button:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.action-icon {
+  margin-right: 8px !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.action-text {
+  font-size: 12px !important;
+  text-transform: uppercase !important;
 }
 
 /* Scene Button Styling */

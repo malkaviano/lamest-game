@@ -24,12 +24,32 @@
     <!-- Equipment info -->
     <div class="equipment-section">
       <div class="equipment-item">
-        <span class="equipment-label">🗡️</span>
-        <span class="equipment-name">{{ status.weapon.identity.label }}</span>
+        <div class="equipment-info">
+          <span class="equipment-label">🗡️</span>
+          <span class="equipment-name">{{ status.weapon.identity.label }}</span>
+        </div>
+        <button 
+          *ngIf="status.weapon.identity.name !== 'unarmedWeapon'"
+          mat-icon-button
+          class="unequip-button"
+          (click)="onUnequipWeapon()"
+          matTooltip="Unequip weapon">
+          U
+        </button>
       </div>
       <div class="equipment-item">
-        <span class="equipment-label">🛡️</span>
-        <span class="equipment-name">{{ status.armor.identity.label }}</span>
+        <div class="equipment-info">
+          <span class="equipment-label">🛡️</span>
+          <span class="equipment-name">{{ status.armor.identity.label }}</span>
+        </div>
+        <button 
+          *ngIf="status.armor.identity.name !== 'clothArmor'"
+          mat-icon-button
+          class="unequip-button"
+          (click)="onUnequipArmor()"
+          matTooltip="Strip armor">
+          U
+        </button>
       </div>
     </div>
     

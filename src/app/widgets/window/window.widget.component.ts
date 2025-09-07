@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 import { KeyValueDescriptionView } from '../../view-models/key-value-description.view';
 
@@ -7,49 +7,52 @@ import { KeyValueDescriptionView } from '../../view-models/key-value-description
   templateUrl: './window.widget.component.html',
   styleUrls: ['./window.widget.component.css'],
 })
-export class WindowWidgetComponent {
+export class WindowWidgetComponent implements OnChanges {
   @Input() public keyValue!: KeyValueDescriptionView;
+  
+  // Computed properties - calculated once when input changes
+  public isNumeric: boolean = false;
+  public isStat: boolean = false;
+  public tooltipText: string = '';
 
-  /**
-   * Check if a value is numeric (keeping for backward compatibility)
-   */
-  public isNumeric(value: string): boolean {
-    return !isNaN(Number(value)) && !isNaN(parseFloat(value));
+  public ngOnChanges(): void {
+    this.updateComputedProperties();
   }
 
-  /**
-   * Check if a key represents a stat value based on category
-   */
-  public isStatValue(keyValue: KeyValueDescriptionView): boolean {
-    return keyValue.category === 'characteristic' || keyValue.category === 'derived-attribute';
+  private updateComputedProperties(): void {
+    // Compute isNumeric once
+    this.isNumeric = !isNaN(Number(this.keyValue.value)) && !isNaN(parseFloat(this.keyValue.value));
+    
+    // Compute isStat once  
+    this.isStat = this.keyValue.category === 'characteristic' || this.keyValue.category === 'derived-attribute';
+    
+    // Compute tooltipText once
+    this.tooltipText = this.computeTooltipText();
   }
 
-  /**
-   * Get tooltip text with fallback based on category
-   */
-  public getTooltipText(keyValue: KeyValueDescriptionView): string {
+  private computeTooltipText(): string {
     // Always prefer the original description if available
-    if (keyValue.description && keyValue.description.trim().length > 0) {
-      return keyValue.description;
+    if (this.keyValue.description && this.keyValue.description.trim().length > 0) {
+      return this.keyValue.description;
     }
     
-    // Fallback tooltips based on category (no fragile heuristics!)
-    switch (keyValue.category) {
+    // Fallback tooltips based on category
+    switch (this.keyValue.category) {
       case 'identity':
-        return `Character Identity: ${keyValue.key} = ${keyValue.value}`;
+        return `Character Identity: ${this.keyValue.key} = ${this.keyValue.value}`;
       
       case 'characteristic':
-        return `Characteristic: ${keyValue.key} with value ${keyValue.value}`;
+        return `Characteristic: ${this.keyValue.key} with value ${this.keyValue.value}`;
       
       case 'derived-attribute':
-        return `Derived Attribute: ${keyValue.key} = ${keyValue.value}`;
+        return `Derived Attribute: ${this.keyValue.key} = ${this.keyValue.value}`;
       
       case 'skill':
-        return `Skill: ${keyValue.key} at level ${keyValue.value}`;
+        return `Skill: ${this.keyValue.key} at level ${this.keyValue.value}`;
       
       case 'unknown':
       default:
-        return `${keyValue.key}: ${keyValue.value}`;
+        return `${this.keyValue.key}: ${this.keyValue.value}`;
     }
   }
 }

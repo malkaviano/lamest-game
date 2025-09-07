@@ -12,23 +12,6 @@
   </div>
   
   <div class="actions-content" [class.collapsed]="isCollapsed">
-    <!-- Equipment Actions -->
-    <div class="equipment-actions">
-      <app-equipped-widget
-        [item]="status.weapon"
-        [label]="'Equipped'"
-        (actionSelected)="actionSelected.emit($event)"
-        class="equipment-widget"
-      ></app-equipped-widget>
-
-      <app-equipped-widget
-        [item]="status.armor"
-        [label]="'Wearing'"
-        (actionSelected)="actionSelected.emit($event)"
-        class="equipment-widget"
-      ></app-equipped-widget>
-    </div>
-
     <!-- Combat Options -->
     <div class="combat-options">
       <div class="dodge-option">
@@ -42,15 +25,6 @@
 
     <!-- Skill Actions -->
     <div class="skill-actions">
-      <app-action-widget
-        *ngIf="isVisible"
-        [icon]="disguise.icon"
-        [alt]="disguise.alt"
-        [tooltip]="disguise.tooltip"
-        [actionEvent]="disguise.actionEvent"
-        (actionSelected)="actionSelected.emit($event)"
-        class="skill-button"
-      ></app-action-widget>
 
       <app-action-widget
         *ngIf="isVisible"

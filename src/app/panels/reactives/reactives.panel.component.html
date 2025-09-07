@@ -1,21 +1,29 @@
-<div class="reactives-panel" *ngIf="hasReactives" attr.data-testid="{{ panelName }}">
+<div
+  class="reactives-panel"
+  *ngIf="hasReactives"
+  attr.data-testid="{{ panelName }}"
+>
   <div class="panel-header">
     <h2 class="panel-title">⚙️ Objects & Items</h2>
-    <button 
-      mat-icon-button 
+    <button
+      mat-icon-button
       class="collapse-toggle"
       (click)="toggleCollapse()"
-      [attr.aria-label]="isCollapsed ? 'Expand objects panel' : 'Collapse objects panel'"
-      matTooltip="{{ isCollapsed ? 'Expand' : 'Collapse' }} objects & items">
-      <mat-icon>{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+      [attr.aria-label]="
+        isCollapsed ? 'Expand objects panel' : 'Collapse objects panel'
+      "
+      matTooltip="{{ isCollapsed ? 'Expand' : 'Collapse' }} objects & items"
+    >
+      <mat-icon>{{ isCollapsed ? "expand_more" : "expand_less" }}</mat-icon>
     </button>
   </div>
-  
+
   <div class="reactives-grid" [class.collapsed]="isCollapsed">
     <app-reactive-widget
-      *ngFor="let interactive of reactiveInteractives.items"
+      *ngFor="let interactive of reactives.items"
       [interactive]="interactive"
-      (actionSelected)="onActionSelected($event)">
+      (actionSelected)="onActionSelected($event)"
+    >
     </app-reactive-widget>
   </div>
 </div>

@@ -15,6 +15,8 @@ export class EquipmentWidgetComponent implements OnInit {
 
   private readonly basePath: string;
 
+  readonly actionClass: { [key: string]: string };
+
   public icon?: string;
   public tooltip?: string;
 
@@ -22,29 +24,42 @@ export class EquipmentWidgetComponent implements OnInit {
     this.actionSelected = new EventEmitter<ActionableEvent>();
 
     this.basePath = '../../../assets/icons';
+
+    this.actionClass = {
+      WEAR: 'wear-action',
+      EQUIP: 'equip-action',
+      READ: 'read-action',
+      CONSUME: 'consume-action',
+      USE: 'use-action',
+      DROP: 'drop-action',
+    };
   }
 
   private setIcon() {
     switch (this.equipment.action.actionable) {
       case 'WEAR':
         this.icon = `${this.basePath}/wear.svg`;
-        this.tooltip = 'WEAR';
+        this.tooltip = 'Wear';
         break;
       case 'EQUIP':
         this.icon = `${this.basePath}/equip.svg`;
-        this.tooltip = 'EQUIP';
+        this.tooltip = 'Equip';
         break;
       case 'READ':
         this.icon = `${this.basePath}/read.svg`;
-        this.tooltip = 'READ';
+        this.tooltip = 'Read';
         break;
       case 'CONSUME':
         this.icon = `${this.basePath}/consume.svg`;
-        this.tooltip = 'CONSUME';
+        this.tooltip = 'Consume';
+        break;
+      case 'USE':
+        this.icon = `${this.basePath}/use.svg`;
+        this.tooltip = 'Use';
         break;
       default:
         this.icon = `${this.basePath}/drop.svg`;
-        this.tooltip = 'DROP';
+        this.tooltip = 'Drop';
         break;
     }
   }

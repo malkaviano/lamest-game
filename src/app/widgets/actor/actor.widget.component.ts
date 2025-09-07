@@ -11,7 +11,6 @@ import {
 
 import { interval, Subscription } from 'rxjs';
 
-import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ActionableEvent } from '@events/actionable.event';
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ArrayView } from '@wrappers/array.view';
@@ -22,6 +21,7 @@ import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableLiteral } from '@literals/actionable.literal';
 import skillsData from '@assets/skills.json';
 import { PlayerInterface } from '../../../backend/interfaces/player.interface';
+import { ActorInterface } from '../../../backend/interfaces/actor.interface';
 
 @Component({
   selector: 'app-actor-widget',
@@ -30,7 +30,7 @@ import { PlayerInterface } from '../../../backend/interfaces/player.interface';
   providers: [WithSubscriptionHelper],
 })
 export class ActorWidgetComponent implements OnInit, OnDestroy {
-  @Input() public interactive!: InteractiveInterface;
+  @Input() public interactive!: ActorInterface;
   @Input() public density: 'compact' | 'cozy' | 'comfortable' = 'cozy';
   @Output() public actionSelected = new EventEmitter<ActionableEvent>();
 

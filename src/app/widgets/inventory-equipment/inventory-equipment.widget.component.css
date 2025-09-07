@@ -1,15 +1,113 @@
-.card-box {
-  padding: 5px;
+.item-card {
+  padding: 12px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease-in-out;
 }
 
-.label {
-  display: inline-block;
+.item-card:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
-.action {
-  display: inline-block;
+.item-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-right: 12px;
+}
+
+.item-label {
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.item-action {
+  display: flex;
+  align-items: center;
+}
+
+/* Inherit action button styles */
+.action-button {
+  min-width: 100px !important;
+  height: 32px !important;
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.action-button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.action-button:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.action-icon {
+  margin-right: 6px !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.action-image {
+  width: 14px !important;
+  height: 14px !important;
+  filter: brightness(0) invert(1) !important;
+}
+
+.action-text {
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+}
+
+/* Action-specific button colors */
+.action-button.equip-action {
+  background-color: #4CAF50 !important;
+  color: white !important;
+}
+
+.action-button.unequip-action {
+  background-color: #FF9800 !important;
+  color: white !important;
+}
+
+.action-button.read-action {
+  background-color: #2196F3 !important;
+  color: white !important;
+}
+
+.action-button.drop-action {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+.action-button.consume-action {
+  background-color: #9C27B0 !important;
+  color: white !important;
+}
+
+.action-button.wear-action {
+  background-color: #607D8B !important;
+  color: white !important;
+}
+
+.action-button.use-action {
+  background-color: #FF5722 !important;
+  color: white !important;
 }

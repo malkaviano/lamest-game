@@ -1,21 +1,25 @@
 <div class="actors-panel" *ngIf="hasActors" attr.data-testid="{{ panelName }}">
   <div class="panel-header">
     <h2 class="panel-title">🤖 AI Actors</h2>
-    <button 
-      mat-icon-button 
+    <button
+      mat-icon-button
       class="collapse-toggle"
       (click)="toggleCollapse()"
-      [attr.aria-label]="isCollapsed ? 'Expand actors panel' : 'Collapse actors panel'"
-      matTooltip="{{ isCollapsed ? 'Expand' : 'Collapse' }} AI actors">
-      <mat-icon>{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+      [attr.aria-label]="
+        isCollapsed ? 'Expand actors panel' : 'Collapse actors panel'
+      "
+      matTooltip="{{ isCollapsed ? 'Expand' : 'Collapse' }} AI actors"
+    >
+      <mat-icon>{{ isCollapsed ? "expand_more" : "expand_less" }}</mat-icon>
     </button>
   </div>
-  
+
   <div class="actors-grid" [class.collapsed]="isCollapsed">
     <app-actor-widget
-      *ngFor="let interactive of actorInteractives.items"
+      *ngFor="let interactive of actors.items"
       [interactive]="interactive"
-      (actionSelected)="onActionSelected($event)">
+      (actionSelected)="onActionSelected($event)"
+    >
     </app-actor-widget>
   </div>
 </div>
