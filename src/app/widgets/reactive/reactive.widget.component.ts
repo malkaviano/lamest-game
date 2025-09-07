@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Optional, Output, NgZone } from '@angular/core';
 
 import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { ActionableEvent } from '@events/actionable.event';
@@ -61,6 +61,7 @@ export class ReactiveWidgetComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
+    private readonly ngZone: NgZone,
     @Optional() private readonly characterService?: CharacterService
   ) {}
 
@@ -76,6 +77,7 @@ export class ReactiveWidgetComponent implements OnInit, OnDestroy {
           } catch {}
           this.cooldowns = c.cooldowns as { [key: string]: number };
           this.cooldownsCapturedAt = Date.now();
+          this.ensureTicker();
         })
       );
     } else {
@@ -83,16 +85,8 @@ export class ReactiveWidgetComponent implements OnInit, OnDestroy {
     }
 
     this.withSubscriptionHelper.addSubscription(
-      this.interactive.actionsChanged$.subscribe((actions) => {
-        if (!this.tickerSub) {
-          const hasSkill = !!actions.items.find((a) => a.actionable === 'SKILL');
-          if (hasSkill) {
-            this.tickerSub = interval(1000).subscribe(() => {
-              this.cooldownsCapturedAt = this.cooldownsCapturedAt - 0;
-            });
-            this.withSubscriptionHelper.addSubscription(this.tickerSub);
-          }
-        }
+      this.interactive.actionsChanged$.subscribe(() => {
+        this.ensureTicker();
       })
     );
 
@@ -142,7 +136,11 @@ export class ReactiveWidgetComponent implements OnInit, OnDestroy {
   }
 
   private hasEngagement(): boolean {
-    return !!this.cooldowns && typeof this.cooldowns['ENGAGEMENT'] === 'number' && this.cooldowns['ENGAGEMENT'] > 0;
+    if (!this.cooldowns) return false;
+    const base = this.cooldowns['ENGAGEMENT'];
+    if (typeof base !== 'number' || base <= 0) return false;
+    const elapsed = Date.now() - this.cooldownsCapturedAt;
+    return base - elapsed > 0;
   }
 
   private isNonCombatSkill(action: ActionableDefinition): boolean {
@@ -164,6 +162,22 @@ export class ReactiveWidgetComponent implements OnInit, OnDestroy {
     const remaining = base - elapsed;
     if (remaining > 0) return Math.ceil(remaining / 1000);
     return null;
+  }
+
+  private ensureTicker(): void {
+    if (this.tickerSub) return;
+    const hasSkill = !!this.interactive.actions.items.find((a) => a.actionable === 'SKILL');
+    const hasEng = this.hasEngagement();
+    if (hasSkill || hasEng) {
+      this.ngZone.runOutsideAngular(() => {
+        this.tickerSub = interval(1000).subscribe(() => {
+          this.cooldownsCapturedAt = this.cooldownsCapturedAt - 0;
+        });
+      });
+      if (this.tickerSub) {
+        this.withSubscriptionHelper.addSubscription(this.tickerSub);
+      }
+    }
   }
 
   public setIcon(actionable: ActionableLiteral) {
