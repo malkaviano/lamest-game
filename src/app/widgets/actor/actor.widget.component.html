@@ -1,4 +1,5 @@
-<div class="actor-card" *ngIf="isActor && hasActions" attr.data-testid="actor-{{ interactive.id }}">
+<div *ngIf="isActor && hasActions" [attr.data-testid]="'interactive-' + interactive.id">
+  <div class="actor-card" [ngClass]="densityClass" attr.data-testid="actor-{{ interactive.id }}">
   <div class="actor-header">
     <span class="actor-icon">🤖</span>
     <h3 class="actor-name">{{ interactive.name }}</h3>
@@ -40,22 +41,28 @@
 
 
   <div class="actor-actions">
-    <button
-      *ngFor="let action of actions.items"
-      class="actor-button"
-      mat-raised-button
-      color="primary"
-      (click)="onActionSelected(action)"
-      [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
-      attr.data-testid="actor-action-{{ action.name }}"
-      matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}">
-      <div class="button-content">
-        <span class="button-icon" aria-hidden="true">{{ actionEmoji(action.actionable) }}</span>
-        <span class="button-text">{{ action.label }}</span>
+    <div class="action-row" *ngFor="let action of actions.items">
+      <button
+        class="actor-button"
+        mat-raised-button
+        color="primary"
+        (click)="onActionSelected(action)"
+        [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
+        attr.data-testid="actor-action-{{ action.name }}"
+        matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}">
+        <div class="button-content">
+          <span class="button-icon" aria-hidden="true">{{ actionEmoji(action.actionable) }}</span>
+          <span class="button-text">{{ action.label }}</span>
+        </div>
+      </button>
+      <div class="chips-line" *ngIf="(apCost(action) > 0) || isEngagementBlocked(action)">
         <span class="ap-pill" *ngIf="apCost(action) > 0">{{ apCost(action) }} AP</span>
-        <span class="cd-pill" *ngIf="cooldownSeconds(action) as cd">CD {{ cd }}s</span>
         <span class="eng-pill" *ngIf="isEngagementBlocked(action) && engagementSeconds() as eng">ENG {{ eng }}s</span>
       </div>
-    </button>
+      <div class="cooldown-line" *ngIf="cooldownSeconds(action) as cd">
+        <span class="cd-pill">CD {{ cd }}s</span>
+      </div>
+    </div>
+  </div>
   </div>
 </div>

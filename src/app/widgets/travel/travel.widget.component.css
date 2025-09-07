@@ -74,6 +74,12 @@
   justify-content: center !important;
 }
 
+.travel-button[disabled] {
+  background: var(--btn-disabled-bg) !important;
+  border-color: var(--btn-disabled-border) !important;
+  color: var(--btn-disabled-text) !important;
+}
+
 .travel-button:hover {
   background: rgba(33, 150, 243, 0.3) !important;
   border-color: rgba(33, 150, 243, 0.7) !important;

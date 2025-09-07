@@ -126,6 +126,12 @@
   transition: all 0.2s ease !important;
 }
 
+.skill-button ::ng-deep button[disabled] {
+  background: var(--btn-disabled-bg) !important;
+  border-color: var(--btn-disabled-border) !important;
+  color: var(--btn-disabled-text) !important;
+}
+
 .skill-button ::ng-deep button:hover {
   background: rgba(76, 175, 80, 0.3) !important;
   border-color: rgba(76, 175, 80, 0.7) !important;
@@ -190,6 +196,11 @@
   width: 44px !important;
   height: 44px !important;
   transition: all 0.2s ease;
+}
+
+.scene-button[disabled] {
+  background: var(--btn-disabled-bg) !important;
+  border-color: var(--btn-disabled-border) !important;
 }
 
 .scene-button:hover {

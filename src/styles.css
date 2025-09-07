@@ -3,6 +3,64 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; font-size: larger; }
 
+/* Shared panel sizing variables */
+:root {
+  --panel-grid-max-height: 300px;
+  --panel-grid-min-height: 150px;
+  /* Shared disabled button tokens */
+  --btn-disabled-bg: rgba(158, 158, 158, 0.2);
+  --btn-disabled-border: rgba(158, 158, 158, 0.5);
+  --btn-disabled-text: #9e9e9e;
+  /* Shared button interactions */
+  --btn-hover-translate-y: -1px;
+  --btn-transition: all 0.2s ease;
+  /* Shared pill tokens */
+  --pill-font-size: 11px;
+  --pill-font-weight: 600;
+  --pill-radius: 999px;
+  --pill-gap: 6px;
+  --pill-padding-y: 2px;
+  --pill-padding-x: 6px;
+  --pill-line-height: 1;
+  /* Pill palette */
+  --pill-ap-bg: rgba(255, 235, 59, 0.2);
+  --pill-ap-border: rgba(255, 235, 59, 0.6);
+  --pill-ap-text: #ffeb3b;
+  --pill-cd-bg: rgba(96, 125, 139, 0.2);
+  --pill-cd-border: rgba(96, 125, 139, 0.6);
+  --pill-cd-text: #b0bec5;
+  --pill-eng-bg: rgba(176, 132, 245, 0.2);
+  --pill-eng-border: rgba(176, 132, 245, 0.6);
+  --pill-eng-text: #b084f5;
+}
+
+/* Global pill base */
+.pill,
+.ap-pill,
+.cd-pill,
+.eng-pill {
+  display: inline-flex;
+  padding: var(--pill-padding-y) var(--pill-padding-x);
+  border-radius: var(--pill-radius);
+  font-size: var(--pill-font-size);
+  font-weight: var(--pill-font-weight);
+  line-height: var(--pill-line-height);
+  align-self: center;
+}
+
+/* Specific pill variants */
+.ap-pill { background: var(--pill-ap-bg); border: 1px solid var(--pill-ap-border); color: var(--pill-ap-text); }
+.cd-pill { background: var(--pill-cd-bg); border: 1px solid var(--pill-cd-border); color: var(--pill-cd-text); }
+.eng-pill { background: var(--pill-eng-bg); border: 1px solid var(--pill-eng-border); color: var(--pill-eng-text); }
+
+/* Global responsive tuning for pills (optional baseline) */
+@media (max-width: 600px) {
+  .pill, .ap-pill, .cd-pill, .eng-pill { font-size: 10px; padding: 1px 4px; }
+}
+@media (max-width: 400px) {
+  .pill, .ap-pill, .cd-pill, .eng-pill { font-size: 9px; padding: 1px 3px; }
+}
+
 .debug {
   border: 1px solid;
 }

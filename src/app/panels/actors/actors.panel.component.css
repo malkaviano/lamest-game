@@ -35,8 +35,8 @@
   padding: 6px 10px;
   overflow-x: auto;
   overflow-y: visible;
-  max-height: 130px;
-  min-height: 80px;
+  max-height: var(--panel-grid-max-height);
+  min-height: var(--panel-grid-min-height);
   transition: max-height 0.2s ease, padding 0.2s ease;
 }
 

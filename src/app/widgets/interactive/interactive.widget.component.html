@@ -37,25 +37,29 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <ng-template ngFor let-action [ngForOf]="actions.items">
-          <div class="buttons">
-            <button
-              class="action-button"
-              mat-raised-button color="primary"
-              (click)="onActionSelected(action)"
-              [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
-              attr.data-testid="actionable-{{ action.name }}"
-              matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}">
-              <div class="button-content">
-                <span class="action-emoji" aria-hidden="true">{{ actionEmoji(action.actionable) }}</span>
-                <span class="label">{{ action.label }}</span>
-                <span class="ap-pill" *ngIf="apCost(action) > 0">{{ apCost(action) }} AP</span>
-                <span class="cd-pill" *ngIf="cooldownSeconds(action) as cd">CD {{ cd }}s</span>
-                <span class="eng-pill" *ngIf="isEngagementBlocked(action) && engagementSeconds() as eng">ENG {{ eng }}s</span>
-              </div>
-            </button>
+      <div class="buttons">
+        <div class="action-row" *ngFor="let action of actions.items">
+          <button
+            class="action-button"
+            mat-raised-button color="primary"
+            (click)="onActionSelected(action)"
+            [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
+            attr.data-testid="actionable-{{ action.name }}"
+            matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}">
+            <div class="button-content">
+              <span class="action-emoji" aria-hidden="true">{{ actionEmoji(action.actionable) }}</span>
+              <span class="label">{{ action.label }}</span>
+            </div>
+          </button>
+          <div class="chips-line" *ngIf="(apCost(action) > 0) || isEngagementBlocked(action)">
+            <span class="ap-pill" *ngIf="apCost(action) > 0">{{ apCost(action) }} AP</span>
+            <span class="eng-pill" *ngIf="isEngagementBlocked(action) && engagementSeconds() as eng">ENG {{ eng }}s</span>
           </div>
-      </ng-template>
+          <div class="cooldown-line" *ngIf="cooldownSeconds(action) as cd">
+            <span class="cd-pill">CD {{ cd }}s</span>
+          </div>
+        </div>
+      </div>
     </mat-card-actions>
   </mat-card>
 </div>

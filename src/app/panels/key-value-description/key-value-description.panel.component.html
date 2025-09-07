@@ -3,5 +3,7 @@
     class="panel-item"
     *ngFor="let keyValue of items.items"
     [keyValue]="keyValue"
+    [ngClass]="panelName + '-panel'"
   ></app-window-widget>
+  
 </div>

@@ -20,6 +20,7 @@ import { interval, Subscription } from 'rxjs';
 })
 export class ReactiveWidgetComponent implements OnInit, OnDestroy {
   @Input() public interactive!: InteractiveInterface;
+  @Input() public density: 'compact' | 'cozy' | 'comfortable' = 'cozy';
   @Output() public actionSelected = new EventEmitter<ActionableEvent>();
 
   public get actions(): ArrayView<ActionableDefinition> {
@@ -37,6 +38,10 @@ export class ReactiveWidgetComponent implements OnInit, OnDestroy {
   public onActionSelected(action: ActionableDefinition): void {
     const event = new ActionableEvent(action, this.interactive.id);
     this.actionSelected.emit(event);
+  }
+
+  public get densityClass(): string {
+    return `density-${this.density}`;
   }
 
   // Tooltips
