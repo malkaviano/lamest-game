@@ -1,13 +1,15 @@
 <div class="item-card" matTooltip="{{ equipment.item.identity.description }}">
   <div class="item-info">
-    <span class="item-label" attr.data-testid="equip-label-{{ equipment.item.identity.name }}">{{
-      equipment.item.identity.label
-    }}</span>
+    <span
+      class="item-label"
+      attr.data-testid="equip-label-{{ equipment.item.identity.name }}"
+      >{{ equipment.item.identity.label }}</span
+    >
   </div>
   <div class="item-action">
     <button
       mat-raised-button
-      [class]="'action-button ' + getActionClass()"
+      [class]="'action-button ' + actionClass[equipment.action.actionable]"
       (click)="onActionSelected(equipment.action)"
       attr.data-testid="equip-action-{{ equipment.action.name }}"
       matTooltip="{{ tooltip }}"

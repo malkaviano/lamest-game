@@ -1,0 +1,30 @@
+Arquivos que usam method binding em property binding:
+
+=== Dynamic CSS Classes ===
+/home/malkaviano/Code/lamest-game/src/app/widgets/inventory-equipment/inventory-equipment.widget.component.html
+- [class]="'action-button ' + getActionClass()"
+
+/home/malkaviano/Code/lamest-game/src/app/widgets/window/window.widget.component.html
+- [ngClass]="{ 'numeric': isNumeric(keyValue.value), 'stat': isStatValue(keyValue) }"
+
+=== Dynamic Content ===
+/home/malkaviano/Code/lamest-game/src/app/widgets/window/window.widget.component.html
+- [matTooltip]="getTooltipText(keyValue)"
+
+=== Conditional Logic (Multiple Conditions) ===
+/home/malkaviano/Code/lamest-game/src/app/widgets/actor/actor.widget.component.html
+- [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
+- matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}"
+
+/home/malkaviano/Code/lamest-game/src/app/widgets/interactive/interactive.widget.component.html
+- [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
+- matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}"
+
+/home/malkaviano/Code/lamest-game/src/app/widgets/reactive/reactive.widget.component.html
+- [disabled]="!canAfford(action) || (cooldownSeconds(action) !== null) || isEngagementBlocked(action)"
+- matTooltip="{{ setIcon(action.actionable).tooltip }}{{ apTooltipSuffix(action) }}"
+
+=== Pattern Summary ===
+- Method binding é usado extensivamente no projeto
+- Padrões comuns: lógica condicional, computação dinâmica, CSS classes
+- Validação para implementar getAvailableActions(item) seguindo mesmo padrão

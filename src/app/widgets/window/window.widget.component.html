@@ -1,6 +1,6 @@
 <div
   class="window-widget"
-  [matTooltip]="getTooltipText(keyValue)"
+  [matTooltip]="tooltipText"
   matTooltipPosition="above"
   attr.data-testid="tooltip-{{ keyValue.key }}"
 >
@@ -10,8 +10,8 @@
   <div 
     class="window-value"
     [ngClass]="{
-      'numeric': isNumeric(keyValue.value),
-      'stat': isStatValue(keyValue)
+      'numeric': isNumeric,
+      'stat': isStat
     }"
     attr.data-testid="value-{{ keyValue.key }}"
   >

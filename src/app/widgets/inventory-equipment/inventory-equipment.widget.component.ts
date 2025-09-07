@@ -15,6 +15,8 @@ export class EquipmentWidgetComponent implements OnInit {
 
   private readonly basePath: string;
 
+  readonly actionClass: { [key: string]: string };
+
   public icon?: string;
   public tooltip?: string;
 
@@ -22,6 +24,15 @@ export class EquipmentWidgetComponent implements OnInit {
     this.actionSelected = new EventEmitter<ActionableEvent>();
 
     this.basePath = '../../../assets/icons';
+
+    this.actionClass = {
+      WEAR: 'wear-action',
+      EQUIP: 'equip-action',
+      READ: 'read-action',
+      CONSUME: 'consume-action',
+      USE: 'use-action',
+      DROP: 'drop-action',
+    };
   }
 
   private setIcon() {
@@ -55,23 +66,6 @@ export class EquipmentWidgetComponent implements OnInit {
 
   public ngOnInit() {
     this.setIcon();
-  }
-
-  public getActionClass(): string {
-    switch (this.equipment.action.actionable) {
-      case 'WEAR':
-        return 'wear-action';
-      case 'EQUIP':
-        return 'equip-action';
-      case 'READ':
-        return 'read-action';
-      case 'CONSUME':
-        return 'consume-action';
-      case 'USE':
-        return 'use-action';
-      default:
-        return 'drop-action';
-    }
   }
 
   onActionSelected(action: ActionableDefinition): void {
