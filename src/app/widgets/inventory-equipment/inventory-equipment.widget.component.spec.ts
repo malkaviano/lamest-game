@@ -11,7 +11,7 @@ import {
   equipActionable,
 } from '@definitions/actionable.definition';
 
-import { actionableItemView, simpleSword } from '../../../../tests/fakes';
+import { actionableItemView, simpleSword, heroDisguise, actionUseHeroDisguise } from '../../../../tests/fakes';
 import { testButtonEvent } from '../../../../tests/scenarios';
 
 describe('EquipmentWidgetComponent', () => {
@@ -63,5 +63,19 @@ describe('EquipmentWidgetComponent', () => {
     expect(result).toEqual(
       new ActionableEvent(dropActionable, simpleSword.identity.name)
     );
+  });
+
+  it('use disguise from inventory emits USE event for the item', async () => {
+    fixture.componentInstance.equipment = actionableItemView(
+      heroDisguise,
+      actionUseHeroDisguise
+    );
+    fixture.detectChanges();
+
+    const result = await testButtonEvent(loader, fixture, 0);
+    expect(result).toBeTruthy();
+    // Inventory does not decide target; eventId is the item identity name
+    expect(result!.eventId).toBe(heroDisguise.identity.name);
+    expect(result!.actionableDefinition.equals(actionUseHeroDisguise)).toBeTrue();
   });
 });

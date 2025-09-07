@@ -31,8 +31,6 @@ export class UseRule extends RuleAbstraction {
   ): RuleResult {
     this.ruleResult = {};
 
-    const target = this.checkedService.getRuleTargetOrThrow(extras);
-
     const { actionableDefinition } = event;
 
     const used = this.inventoryService.look<UsableDefinition>(
@@ -41,6 +39,13 @@ export class UseRule extends RuleAbstraction {
     );
 
     let ruleResult: RuleResultLiteral = 'DENIED';
+
+    // Determine target semantics
+    let target = extras.target;
+    const skillName = used?.skillName;
+    if (!target && skillName) {
+      target = actor;
+    }
 
     this.ruleResult.target = target;
 
@@ -54,8 +59,6 @@ export class UseRule extends RuleAbstraction {
     } else {
       this.ruleResult.used = used;
 
-      const skillName = used.skillName;
-
       this.ruleResult.skillName = skillName;
 
       if (skillName) {
@@ -68,10 +71,12 @@ export class UseRule extends RuleAbstraction {
           checkRoll: roll,
           result,
         };
+        ruleResult =
+          this.ruleResult.roll?.result !== 'FAILURE' ? 'EXECUTED' : 'AVOIDED';
+      } else {
+        // Items without skill require an explicit target (e.g., keys on containers)
+        ruleResult = target ? 'EXECUTED' : 'DENIED';
       }
-
-      ruleResult =
-        this.ruleResult.roll?.result !== 'FAILURE' ? 'EXECUTED' : 'AVOIDED';
     }
 
     return this.getResult(event, actor, ruleResult);

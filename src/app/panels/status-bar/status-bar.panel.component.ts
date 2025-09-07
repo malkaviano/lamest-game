@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 import { CharacterStatusView } from '../../view-models/character-status.view';
 import { ActionableEvent } from '@events/actionable.event';
@@ -33,8 +26,6 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
     readonly visible?: boolean;
   }>;
 
-  public disguise!: Action;
-
   public hide!: Action;
 
   public detect!: Action;
@@ -54,16 +45,6 @@ export class StatusBarPanelComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.disguise = {
-      icon: '../../../assets/icons/disguise.svg',
-      tooltip: 'Disguise yourself',
-      alt: 'DISGUISE',
-      actionEvent: new ActionableEvent(
-        createActionableDefinition('USE', 'disguise'),
-        this.status.playerId
-      ),
-    };
-
     this.hide = {
       icon: '../../../assets/icons/hide.svg',
       tooltip: 'Hide yourself',

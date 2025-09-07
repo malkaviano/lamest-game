@@ -118,7 +118,11 @@ describe('GameLoopService', () => {
         invEvent: new InventoryEvent('STORE', playerInfo.id, discardKey),
         expected: new ActionableItemDefinition(
           discardKey,
-          createActionableDefinition('USE')
+          createActionableDefinition(
+            'USE',
+            discardKey.identity.name,
+            discardKey.identity.label
+          )
         ),
         item: discardKey,
       },

@@ -218,7 +218,11 @@ export class GameLoopService {
       case 'READABLE':
         return readActionable;
       case 'USABLE':
-        return createActionableDefinition('USE');
+        return createActionableDefinition(
+          'USE',
+          item.identity.name,
+          item.identity.label
+        );
       case 'ARMOR':
         return wearActionable;
       default:

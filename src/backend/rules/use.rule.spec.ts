@@ -164,6 +164,65 @@ describe('UseRule', () => {
           expect(result).toEqual(expected);
         });
       });
+
+      it('defaults target to actor when none provided (self-use)', () => {
+        // For disguises (USABLE with skillName), if no target is provided, the rule should default to the actor
+        when(mockedRpgService.actorSkillCheck(actor, 'Disguise')).thenReturn({
+          result: 'SUCCESS',
+          roll: 7,
+        });
+
+        const result = rule.execute(actor, eventUseHeroDisguise, {});
+
+        expect(result).toEqual({
+          name: 'USE' as RuleNameLiteral,
+          event: eventUseHeroDisguise,
+          result: 'EXECUTED' as RuleResultLiteral,
+          actor,
+          target: actor,
+          used: heroDisguise,
+          skillName: heroDisguise.skillName,
+          roll: {
+            checkRoll: 7,
+            result: 'SUCCESS' as CheckResultLiteral,
+          },
+        });
+      });
+
+      it('defaults target to actor and returns AVOIDED on failure (self-use)', () => {
+        when(mockedRpgService.actorSkillCheck(actor, 'Disguise')).thenReturn({
+          result: 'FAILURE',
+          roll: 78,
+        });
+
+        const result = rule.execute(actor, eventUseHeroDisguise, {});
+
+        expect(result).toEqual({
+          name: 'USE' as RuleNameLiteral,
+          event: eventUseHeroDisguise,
+          result: 'AVOIDED' as RuleResultLiteral,
+          actor,
+          target: actor,
+          used: heroDisguise,
+          skillName: heroDisguise.skillName,
+          roll: {
+            checkRoll: 78,
+            result: 'FAILURE' as CheckResultLiteral,
+          },
+        });
+      });
+
+      it('requires explicit target for usable without skillName', () => {
+        const result = rule.execute(actor, eventUseDiscardKey, {});
+
+        expect(result).toEqual({
+          name: 'USE' as RuleNameLiteral,
+          event: eventUseDiscardKey,
+          result: 'DENIED' as RuleResultLiteral,
+          actor,
+          used: discardKey,
+        });
+      });
     });
   });
 });
