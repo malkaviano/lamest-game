@@ -4,6 +4,7 @@
     <app-tactical-status-panel
       [status]="characterStatus"
       [sceneLabel]="scene.label"
+      (actionSelected)="actionSelected.emit($event)"
     ></app-tactical-status-panel>
   </div>
   

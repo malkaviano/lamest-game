@@ -12,23 +12,6 @@
   </div>
   
   <div class="actions-content" [class.collapsed]="isCollapsed">
-    <!-- Equipment Actions -->
-    <div class="equipment-actions">
-      <app-equipped-widget
-        [item]="status.weapon"
-        [label]="'Equipped'"
-        (actionSelected)="actionSelected.emit($event)"
-        class="equipment-widget"
-      ></app-equipped-widget>
-
-      <app-equipped-widget
-        [item]="status.armor"
-        [label]="'Wearing'"
-        (actionSelected)="actionSelected.emit($event)"
-        class="equipment-widget"
-      ></app-equipped-widget>
-    </div>
-
     <!-- Combat Options -->
     <div class="combat-options">
       <div class="dodge-option">
