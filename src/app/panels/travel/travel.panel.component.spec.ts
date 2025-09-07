@@ -26,15 +26,7 @@ describe('TravelPanelComponent', () => {
   });
 
   it('should hide panel when no travel options available', () => {
-    const regularInteractive = {
-      id: 'regular',
-      name: 'Regular Item',
-      actions: ArrayView.create(
-        createActionableDefinition('PICK', 'pickup', 'Pick Up')
-      ),
-    } as InteractiveInterface;
-
-    component.interactives = ArrayView.create(regularInteractive);
+    component.travels = ArrayView.empty();
     fixture.detectChanges();
 
     expect(component.hasTravelOptions).toBe(false);
@@ -53,7 +45,7 @@ describe('TravelPanelComponent', () => {
       ),
     } as InteractiveInterface;
 
-    component.interactives = ArrayView.create(travelInteractive);
+    component.travels = ArrayView.create(travelInteractive);
     fixture.detectChanges();
 
     expect(component.hasTravelOptions).toBe(true);
@@ -61,43 +53,6 @@ describe('TravelPanelComponent', () => {
       '[data-testid="travel-test"]'
     );
     expect(panelElement).toBeTruthy();
-  });
-
-  it('should filter only interactives with scene actions', () => {
-    const regularInteractive = {
-      id: 'regular',
-      name: 'Regular Item',
-      actions: ArrayView.create(
-        createActionableDefinition('PICK', 'pickup', 'Pick Up')
-      ),
-    } as InteractiveInterface;
-
-    const travelInteractive = {
-      id: 'travel-1',
-      name: 'Exit Point',
-      actions: ArrayView.create(
-        createActionableDefinition('SCENE', 'exit', 'Exit')
-      ),
-    } as InteractiveInterface;
-
-    const mixedInteractive = {
-      id: 'mixed',
-      name: 'Mixed Item',
-      actions: ArrayView.create(
-        createActionableDefinition('SKILL', 'perception', 'Perception'),
-        createActionableDefinition('SCENE', 'teleport', 'Teleport')
-      ),
-    } as InteractiveInterface;
-
-    component.interactives = ArrayView.create(
-      regularInteractive,
-      travelInteractive,
-      mixedInteractive
-    );
-
-    expect(component.travelInteractives.items.length).toBe(2);
-    expect(component.travelInteractives.items[0].id).toBe('travel-1');
-    expect(component.travelInteractives.items[1].id).toBe('mixed');
   });
 
   it('should emit actionSelected event', () => {

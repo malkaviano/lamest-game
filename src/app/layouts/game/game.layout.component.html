@@ -23,7 +23,7 @@
   <div class="header-panel travel-header-panel">
     <app-travel-panel
       [panelName]="'travel'"
-      [interactives]="scene.visibleInteractives"
+      [travels]="scene.visibleTravels"
       (actionSelected)="actionSelected.emit($event)"
     ></app-travel-panel>
   </div>

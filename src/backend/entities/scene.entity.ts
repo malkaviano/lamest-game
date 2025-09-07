@@ -34,6 +34,16 @@ export class SceneEntity {
     );
   }
 
+  public get visibleTravels(): ArrayView<InteractiveInterface> {
+    return this.visibleInteractives.filter(
+      (interactive) =>
+        interactive.classification === 'REACTIVE' &&
+        interactive.actions.items.some(
+          (action) => action.actionable === 'SCENE'
+        )
+    );
+  }
+
   public reset(): void {
     this.mInteractives.items.forEach((i) => i.reset());
   }
