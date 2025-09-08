@@ -9,10 +9,10 @@ import { InventoryService } from '@services/inventory.service';
 import {
   ActionableDefinition,
   consumeActionable,
-  dropActionable,
   equipActionable,
   readActionable,
   wearActionable,
+  createActionableDefinition,
 } from '@definitions/actionable.definition';
 import { GameItemDefinition } from '@definitions/game-item.definition';
 import { ArrayView } from '@wrappers/array.view';
@@ -208,7 +208,9 @@ export class GameLoopService {
     return ArrayView.fromArray(items);
   }
 
-  private inventoryAction(item: GameItemDefinition): ActionableDefinition {
+  private inventoryAction(
+    item: GameItemDefinition
+  ): ActionableDefinition | undefined {
     switch (item.category) {
       case 'WEAPON':
         return equipActionable;
@@ -216,10 +218,20 @@ export class GameLoopService {
         return consumeActionable;
       case 'READABLE':
         return readActionable;
+      case 'ACCESSORY':
+        return createActionableDefinition(
+          'ACCESSORY',
+          item.identity.name,
+          item.identity.label
+        );
+      case 'USABLE':
+        return createActionableDefinition(
+          'USE',
+          item.identity.name,
+          item.identity.label
+        );
       case 'ARMOR':
         return wearActionable;
-      default:
-        return dropActionable;
     }
   }
 

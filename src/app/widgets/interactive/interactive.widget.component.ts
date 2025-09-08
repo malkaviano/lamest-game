@@ -4,9 +4,11 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
 } from '@angular/core';
+import { NgZone } from '@angular/core';
+
+import { interval, Subscription } from 'rxjs';
 
 import { ActionableDefinition } from '@definitions/actionable.definition';
 import { ActionableEvent } from '@events/actionable.event';
@@ -15,11 +17,10 @@ import { InteractiveInterface } from '@interfaces/interactive.interface';
 import { WithSubscriptionHelper } from '../../helpers/with-subscription.helper';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableLiteral } from '@literals/actionable.literal';
+import { ActionMetaService } from '../../services/action-meta.service';
 import { SettingsStore } from '@stores/settings.store';
 import { CharacterService } from '@services/character.service';
 import skillsData from '@assets/skills.json';
-import { interval, Subscription } from 'rxjs';
-import { NgZone } from '@angular/core';
 
 type PlayerLike = {
   readonly derivedAttributes: { [key: string]: { value: number } };
@@ -58,7 +59,8 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
   constructor(
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly ngZone: NgZone,
-    @Optional() private readonly characterService?: CharacterService
+    private readonly characterService: CharacterService,
+    private readonly actionMeta: ActionMetaService
   ) {
     this.actionSelected = new EventEmitter<ActionableEvent>();
     this.actions = ArrayView.empty();
@@ -79,7 +81,10 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
     if (this.characterService) {
       // Initialize current AP synchronously
       try {
-        this.currentAP = this.characterService.currentCharacter.derivedAttributes['CURRENT AP'].value;
+        this.currentAP =
+          this.characterService.currentCharacter.derivedAttributes[
+            'CURRENT AP'
+          ].value;
       } catch (e) {
         // ignore
       }
@@ -141,7 +146,8 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
 
   public apCost(action: ActionableDefinition): number {
     // Actionable literals match rule names in settings
-    const key = action.actionable as unknown as keyof typeof SettingsStore.settings.ruleCost;
+    const key =
+      action.actionable as unknown as keyof typeof SettingsStore.settings.ruleCost;
     const cost = SettingsStore.settings.ruleCost[key] ?? 0;
     return cost;
   }
@@ -206,77 +212,25 @@ export class InteractiveWidgetComponent implements OnInit, OnDestroy {
   }
 
   public setIcon(actionable: ActionableLiteral) {
-    switch (actionable) {
-      case 'SCENE':
-        return {
-          tooltip: 'Transit to next scene',
-        };
-      case 'SKILL':
-        return {
-          tooltip: `Skill check`,
-        };
-      case 'PICK':
-        return {
-          tooltip: `Pick up item`,
-        };
-      case 'AFFECT':
-        return {
-          tooltip: `Use equipped weapon on target`,
-        };
-      case 'USE':
-        return {
-          tooltip: `Use item from inventory`,
-        };
-      case 'INTERACTION':
-        return {
-          tooltip: `Interact with the target`,
-        };
-      default:
-        return {
-          tooltip: 'Action not recognized',
-        };
-    }
+    return { tooltip: this.actionMeta.getTooltip(actionable) };
   }
 
   public actionEmoji(actionable: ActionableLiteral): string {
-    switch (actionable) {
-      case 'SCENE':
-        return '🗺️';
-      case 'SKILL':
-        return '🎯';
-      case 'PICK':
-        return '📦';
-      case 'AFFECT':
-        return '⚔️';
-      case 'USE':
-        return '🛠️';
-      case 'INTERACTION':
-        return '💬';
-      case 'EQUIP':
-        return '🗡️';
-      case 'UNEQUIP':
-        return '📥';
-      case 'READ':
-        return '📖';
-      case 'DROP':
-        return '🗑️';
-      case 'WEAR':
-        return '🛡️';
-      case 'STRIP':
-        return '🧥';
-      default:
-        return '❔';
-    }
+    return this.actionMeta.getEmoji(actionable);
   }
 
   // --- Mini-bars helpers (HP/EP/AP) ---
   public hasDerivedAttributes(): boolean {
-    const i = this.interactive as unknown as { derivedAttributes?: Record<string, { value: number }> };
+    const i = this.interactive as unknown as {
+      derivedAttributes?: Record<string, { value: number }>;
+    };
     return !!i?.derivedAttributes;
   }
 
   public attrValue(key: string): number | null {
-    const i = this.interactive as unknown as { derivedAttributes?: Record<string, { value: number }> };
+    const i = this.interactive as unknown as {
+      derivedAttributes?: Record<string, { value: number }>;
+    };
     const v = i?.derivedAttributes?.[key]?.value;
     return typeof v === 'number' ? v : null;
   }

@@ -7,17 +7,10 @@
       "usability": "PERMANENT"
     },
     {
-      "name": "masterKey",
-      "label": "Master Key",
+      "name": "moldedKey",
+      "label": "Molded Key",
       "description": "Use to open locked containers",
-      "usability": "PERMANENT"
-    },
-    {
-      "name": "disguise",
-      "label": "Villager Disguise",
-      "description": "Use looks like a villager",
-      "usability": "DISPOSABLE",
-      "skillName": "Disguise"
+      "usability": "DISPOSABLE"
     },
     {
       "name": "rawMeat",

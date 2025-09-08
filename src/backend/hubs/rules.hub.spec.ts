@@ -11,7 +11,7 @@ import {
   mockedSceneRule,
   mockedSkillRule,
   mockedUnEquipRule,
-  mockedUseRule,
+  mockedAccessoryRule,
   mockedReadRule,
 } from '../../../tests/mocks';
 
@@ -25,7 +25,7 @@ describe('RulesHub', () => {
     instance(mockedAffectRule),
     instance(mockedConsumeRule),
     instance(mockedInteractionRule),
-    instance(mockedUseRule),
+    instance(mockedAccessoryRule),
     instance(mockedReadRule)
   );
 

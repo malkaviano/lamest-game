@@ -1,6 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ActionableDefinition } from '@definitions/actionable.definition';
+import {
+  ActionableDefinition,
+  dropActionable,
+} from '@definitions/actionable.definition';
 import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { ActionableEvent } from '@events/actionable.event';
 
@@ -9,7 +12,7 @@ import { ActionableEvent } from '@events/actionable.event';
   templateUrl: './inventory-equipment.widget.component.html',
   styleUrls: ['./inventory-equipment.widget.component.css'],
 })
-export class EquipmentWidgetComponent implements OnInit {
+export class EquipmentWidgetComponent {
   @Input() equipment!: ActionableItemDefinition;
   @Output() actionSelected: EventEmitter<ActionableEvent>;
 
@@ -17,8 +20,7 @@ export class EquipmentWidgetComponent implements OnInit {
 
   readonly actionClass: { [key: string]: string };
 
-  public icon?: string;
-  public tooltip?: string;
+  public dropAction = dropActionable;
 
   constructor() {
     this.actionSelected = new EventEmitter<ActionableEvent>();
@@ -31,41 +33,61 @@ export class EquipmentWidgetComponent implements OnInit {
       READ: 'read-action',
       CONSUME: 'consume-action',
       USE: 'use-action',
+      ACCESSORY: 'use-action',
       DROP: 'drop-action',
     };
   }
 
-  private setIcon() {
-    switch (this.equipment.action.actionable) {
+  metaFor(actionable: string): {
+    icon: string;
+    tooltip: string;
+    css: string;
+  } {
+    switch (actionable) {
       case 'WEAR':
-        this.icon = `${this.basePath}/wear.svg`;
-        this.tooltip = 'Wear';
-        break;
+        return {
+          icon: `${this.basePath}/wear.svg`,
+          tooltip: 'Wear',
+          css: this.actionClass['WEAR'],
+        };
       case 'EQUIP':
-        this.icon = `${this.basePath}/equip.svg`;
-        this.tooltip = 'Equip';
-        break;
+        return {
+          icon: `${this.basePath}/equip.svg`,
+          tooltip: 'Equip',
+          css: this.actionClass['EQUIP'],
+        };
       case 'READ':
-        this.icon = `${this.basePath}/read.svg`;
-        this.tooltip = 'Read';
-        break;
+        return {
+          icon: `${this.basePath}/read.svg`,
+          tooltip: 'Read',
+          css: this.actionClass['READ'],
+        };
       case 'CONSUME':
-        this.icon = `${this.basePath}/consume.svg`;
-        this.tooltip = 'Consume';
-        break;
+        return {
+          icon: `${this.basePath}/consume.svg`,
+          tooltip: 'Consume',
+          css: this.actionClass['CONSUME'],
+        };
       case 'USE':
-        this.icon = `${this.basePath}/use.svg`;
-        this.tooltip = 'Use';
-        break;
+        return {
+          icon: `${this.basePath}/use.svg`,
+          tooltip: 'Use',
+          css: this.actionClass['USE'],
+        };
+      case 'ACCESSORY':
+        return {
+          icon: `${this.basePath}/use.svg`,
+          tooltip: 'Use',
+          css: this.actionClass['ACCESSORY'],
+        };
+      case 'DROP':
       default:
-        this.icon = `${this.basePath}/drop.svg`;
-        this.tooltip = 'Drop';
-        break;
+        return {
+          icon: `${this.basePath}/drop.svg`,
+          tooltip: 'Drop',
+          css: this.actionClass['DROP'],
+        };
     }
-  }
-
-  public ngOnInit() {
-    this.setIcon();
   }
 
   onActionSelected(action: ActionableDefinition): void {

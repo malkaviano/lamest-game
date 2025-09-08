@@ -5,6 +5,7 @@ import { LogMessageDefinition } from '@definitions/log-message.definition';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { CheckResultLiteral } from '@literals/check-result.literal';
+import { createActionableDefinition } from '@definitions/actionable.definition';
 
 import {
   mockedCheckedService,
@@ -17,28 +18,43 @@ import {
 import {
   playerInfo,
   interactiveInfo,
-  actionUseDiscardKey,
-  discardKey,
   actionableEvent,
   heroDisguise,
-  actionUseHeroDisguise,
-  actorInfo,
-  actionUsePermanentKey,
+  discardKey,
+  permanentKey,
 } from '../../../tests/fakes';
 import { ruleScenario } from '../../../tests/scenarios';
 
-const eventUseDiscardKey = actionableEvent(
-  actionUseDiscardKey,
+const actionAccessoryDiscardKey = createActionableDefinition(
+  'USE',
+  discardKey.identity.name,
+  discardKey.identity.label
+);
+
+const eventAccessoryDiscardKey = actionableEvent(
+  actionAccessoryDiscardKey,
   interactiveInfo.id
 );
 
-const eventUseHeroDisguise = actionableEvent(
-  actionUseHeroDisguise,
-  actorInfo.id
+const actionAccessoryHeroDisguise = createActionableDefinition(
+  'USE',
+  heroDisguise.identity.name,
+  heroDisguise.identity.label
 );
 
-const eventUsePermanentKey = actionableEvent(
-  actionUsePermanentKey,
+const eventAccessoryHeroDisguise = actionableEvent(
+  actionAccessoryHeroDisguise,
+  interactiveInfo.id
+);
+
+const actionAccessoryPermanentKey = createActionableDefinition(
+  'USE',
+  permanentKey.identity.name,
+  permanentKey.identity.label
+);
+
+const eventAccessoryPermanentKey = actionableEvent(
+  actionAccessoryPermanentKey,
   interactiveInfo.id
 );
 
@@ -85,7 +101,7 @@ describe('UseRule', () => {
         ruleScenario(
           rule,
           actor,
-          eventUsePermanentKey,
+          eventAccessoryPermanentKey,
           extras,
           [notFoundLog],
           done
@@ -96,22 +112,11 @@ describe('UseRule', () => {
     describe('when item was found', () => {
       [
         {
-          event: eventUsePermanentKey,
+          event: eventAccessoryDiscardKey,
           target: instance(mockedInteractiveEntity),
           expected: {
             name: 'USE' as RuleNameLiteral,
-            event: eventUsePermanentKey,
-            result: 'DENIED' as RuleResultLiteral,
-            actor,
-            target: instance(mockedInteractiveEntity),
-          },
-        },
-        {
-          event: eventUseDiscardKey,
-          target: instance(mockedInteractiveEntity),
-          expected: {
-            name: 'USE' as RuleNameLiteral,
-            event: eventUseDiscardKey,
+            event: eventAccessoryDiscardKey,
             result: 'EXECUTED' as RuleResultLiteral,
             actor,
             target: instance(mockedInteractiveEntity),
@@ -119,14 +124,14 @@ describe('UseRule', () => {
           },
         },
         {
-          event: eventUseHeroDisguise,
-          target: instance(mockedPlayerEntity),
+          event: eventAccessoryHeroDisguise,
+          target: instance(mockedInteractiveEntity),
           expected: {
             name: 'USE' as RuleNameLiteral,
-            event: eventUseHeroDisguise,
+            event: eventAccessoryHeroDisguise,
             result: 'EXECUTED' as RuleResultLiteral,
             actor,
-            target: instance(mockedPlayerEntity),
+            target: instance(mockedInteractiveEntity),
             used: heroDisguise,
             skillName: heroDisguise.skillName,
             roll: {
@@ -136,14 +141,14 @@ describe('UseRule', () => {
           },
         },
         {
-          event: eventUseHeroDisguise,
-          target: instance(mockedPlayerEntity),
+          event: eventAccessoryHeroDisguise,
+          target: instance(mockedInteractiveEntity),
           expected: {
             name: 'USE' as RuleNameLiteral,
-            event: eventUseHeroDisguise,
+            event: eventAccessoryHeroDisguise,
             result: 'AVOIDED' as RuleResultLiteral,
             actor,
-            target: instance(mockedPlayerEntity),
+            target: instance(mockedInteractiveEntity),
             used: heroDisguise,
             skillName: heroDisguise.skillName,
             roll: {
@@ -153,7 +158,7 @@ describe('UseRule', () => {
           },
         },
       ].forEach(({ event, target, expected }) => {
-        it('return used result', () => {
+        it('return accessory result', () => {
           when(mockedRpgService.actorSkillCheck(actor, 'Disguise')).thenReturn({
             result: expected.roll?.result ?? 'FAILURE',
             roll: expected.roll?.checkRoll ?? 100,

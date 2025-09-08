@@ -15,7 +15,10 @@ import { CharacteristicValues } from '@values/characteristic.value';
 import { CharacteristicDefinition } from '@definitions/characteristic.definition';
 import { ItemUsabilityLiteral } from '@literals/item-usability';
 import { ActorStoreInterface } from '@interfaces/stores/actor-store.interface';
-import { UsablesStoreInterface } from '@interfaces/stores/item-store.interface';
+import {
+  AccessoriesStoreInterface,
+  UsablesStoreInterface,
+} from '@interfaces/stores/item-store.interface';
 import { LockedContainerStateStoreInterface } from '@interfaces/stores/locked-container-state-store';
 import { ProfessionStoreInterface } from '@interfaces/stores/profession-store.interface';
 import { SkillStoreInterface } from '@interfaces/stores/skill-store.interface';
@@ -41,6 +44,7 @@ import actionableStore from '@assets/actionables.json';
 import messageStore from '@assets/messages.json';
 import actorStore from '@assets/actors.json';
 import usablesStore from '@assets/items/usables.json';
+import accessoriesStore from '@assets/items/accessories.json';
 import lockedContainerStateStore from '@assets/states/locked-container-state.json';
 import professionStore from '@assets/professions.json';
 import skillStore from '@assets/skills.json';
@@ -73,6 +77,8 @@ export class ResourcesStore {
   public readonly messageStore: MessageStoreInterface;
 
   public readonly usablesStore: UsablesStoreInterface;
+
+  public readonly accessoriesStore: AccessoriesStoreInterface;
 
   public readonly lockedContainerStateStore: LockedContainerStateStoreInterface;
 
@@ -122,6 +128,9 @@ export class ResourcesStore {
     const usables = this.extractUsables();
 
     this.usablesStore = { usables };
+
+    const accessories = this.extractAccessories();
+    this.accessoriesStore = { accessories };
 
     this.lockedContainerStateStore = lockedContainerStateStore;
 
@@ -236,6 +245,19 @@ export class ResourcesStore {
 
   private extractUsables() {
     return usablesStore.usables.map((u) => {
+      return {
+        name: u.name,
+        label: u.label,
+        description: u.description,
+        usability: u.usability as ItemUsabilityLiteral,
+        // TODO: Enable this when adding a usable with skill check
+        // skillName: u.skillName,
+      };
+    });
+  }
+
+  private extractAccessories() {
+    return accessoriesStore.accessories.map((u) => {
       return {
         name: u.name,
         label: u.label,

@@ -171,7 +171,12 @@ export const fakeSceneActorsInfo: ArrayView<SceneActorsInfoValues> =
   });
 
 export const fakeCharacterSheetIdentity = ArrayView.create(
-  KeyValueDescriptionView.create('NAME', 'Some Name', 'Character name', 'identity'),
+  KeyValueDescriptionView.create(
+    'NAME',
+    'Some Name',
+    'Character name',
+    'identity'
+  ),
   KeyValueDescriptionView.create(
     'PROFESSION',
     'Police Detective',
@@ -180,8 +185,18 @@ export const fakeCharacterSheetIdentity = ArrayView.create(
   ),
   KeyValueDescriptionView.create('AGE', 'YOUNG', 'Character age', 'identity'),
   KeyValueDescriptionView.create('RACE', 'HUMAN', 'Character race', 'identity'),
-  KeyValueDescriptionView.create('HEIGHT', 'SHORT', 'Character height', 'identity'),
-  KeyValueDescriptionView.create('WEIGHT', 'LIGHT', 'Character weight', 'identity'),
+  KeyValueDescriptionView.create(
+    'HEIGHT',
+    'SHORT',
+    'Character height',
+    'identity'
+  ),
+  KeyValueDescriptionView.create(
+    'WEIGHT',
+    'LIGHT',
+    'Character weight',
+    'identity'
+  ),
   KeyValueDescriptionView.create(
     'VISIBILITY',
     'VISIBLE',
@@ -191,12 +206,42 @@ export const fakeCharacterSheetIdentity = ArrayView.create(
 );
 
 export const fakeCharacterSheetCharacteristics = ArrayView.create(
-  KeyValueDescriptionView.create('STR', '8', 'The character physical force', 'characteristic'),
-  KeyValueDescriptionView.create('VIT', '9', 'The character vitality', 'characteristic'),
-  KeyValueDescriptionView.create('AGI', '11', 'The character agility', 'characteristic'),
-  KeyValueDescriptionView.create('INT', '12', 'The character intelligence', 'characteristic'),
-  KeyValueDescriptionView.create('ESN', '13', 'The character essence', 'characteristic'),
-  KeyValueDescriptionView.create('APP', '14', 'The character looks', 'characteristic')
+  KeyValueDescriptionView.create(
+    'STR',
+    '8',
+    'The character physical force',
+    'characteristic'
+  ),
+  KeyValueDescriptionView.create(
+    'VIT',
+    '9',
+    'The character vitality',
+    'characteristic'
+  ),
+  KeyValueDescriptionView.create(
+    'AGI',
+    '11',
+    'The character agility',
+    'characteristic'
+  ),
+  KeyValueDescriptionView.create(
+    'INT',
+    '12',
+    'The character intelligence',
+    'characteristic'
+  ),
+  KeyValueDescriptionView.create(
+    'ESN',
+    '13',
+    'The character essence',
+    'characteristic'
+  ),
+  KeyValueDescriptionView.create(
+    'APP',
+    '14',
+    'The character looks',
+    'characteristic'
+  )
 );
 
 export const fakeCharacterSheetDerivedAttributes = ArrayView.create(
@@ -242,7 +287,12 @@ export const fakeCharacterSheetSkills = ArrayView.create(
   KeyValueDescriptionView.create('Bargain', '25', 'Better prices', 'skill'),
   KeyValueDescriptionView.create('Brawl', '45', 'Fighting unarmed', 'skill'),
   KeyValueDescriptionView.create('Dodge', '30', 'Avoid damage', 'skill'),
-  KeyValueDescriptionView.create('Firearm (Handgun)', '28', 'Shoot people', 'skill'),
+  KeyValueDescriptionView.create(
+    'Firearm (Handgun)',
+    '28',
+    'Shoot people',
+    'skill'
+  ),
   KeyValueDescriptionView.create(
     'First Aid',
     '45',
@@ -333,7 +383,7 @@ export const heroDisguise = new UsableDefinition(
 );
 
 export const actionUseHeroDisguise = createActionableDefinition(
-  'USE',
+  'ACCESSORY',
   heroDisguise.identity.name,
   heroDisguise.identity.label
 );

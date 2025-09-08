@@ -9,7 +9,7 @@ import { PickRule } from '@rules/pick.rule';
 import { SceneRule } from '@rules/scene.rule';
 import { SkillRule } from '@rules/skill.rule';
 import { UnEquipRule } from '@rules/unequip.rule';
-import { UseRule } from '@rules/use.rule';
+import { AccessoryRule } from '@rules/accessory.rule';
 import { CharacterService } from '@services/character.service';
 import { GeneratorService } from '@services/generator.service';
 import { InventoryService } from '@services/inventory.service';
@@ -143,7 +143,7 @@ export const mockedSkillService = mock(SkillService);
 
 export const mockedSceneEntity = mock(SceneEntity);
 
-export const mockedUseRule = mock(UseRule);
+export const mockedAccessoryRule = mock(AccessoryRule);
 
 export const mockedGameEventsValues = mock(GameEventsValues);
 
@@ -311,6 +311,11 @@ export const setupMocks = () => {
     usables: [],
   });
 
+  // Accessories store default
+  when(mockedResourcesStore.accessoriesStore).thenReturn({
+    accessories: [],
+  });
+
   when(mockedResourcesStore.skillStateStore).thenReturn({
     states: [],
   });
@@ -440,7 +445,7 @@ const resetMocks = () => {
 
   reset(mockedSceneEntity);
 
-  reset(mockedUseRule);
+  reset(mockedAccessoryRule);
 
   reset(mockedGameEventsValues);
 

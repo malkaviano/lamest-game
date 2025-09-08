@@ -4,7 +4,6 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
   NgZone,
 } from '@angular/core';
@@ -19,6 +18,7 @@ import { CharacterService } from '@services/character.service';
 import { SettingsStore } from '@stores/settings.store';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { ActionableLiteral } from '@literals/actionable.literal';
+import { ActionMetaService } from '../../services/action-meta.service';
 import skillsData from '@assets/skills.json';
 import { PlayerInterface } from '../../../backend/interfaces/player.interface';
 import { ActorInterface } from '../../../backend/interfaces/actor.interface';
@@ -79,7 +79,8 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
   constructor(
     private readonly withSubscriptionHelper: WithSubscriptionHelper,
     private readonly ngZone: NgZone,
-    @Optional() private readonly characterService?: CharacterService
+    private readonly characterService: CharacterService,
+    private readonly actionMeta: ActionMetaService
   ) {}
 
   ngOnInit(): void {
@@ -210,53 +211,11 @@ export class ActorWidgetComponent implements OnInit, OnDestroy {
   }
 
   public setIcon(actionable: ActionableLiteral) {
-    switch (actionable) {
-      case 'SCENE':
-        return { tooltip: 'Transit to next scene' };
-      case 'SKILL':
-        return { tooltip: 'Skill check' };
-      case 'PICK':
-        return { tooltip: 'Pick up item' };
-      case 'AFFECT':
-        return { tooltip: 'Use equipped weapon on target' };
-      case 'USE':
-        return { tooltip: 'Use item from inventory' };
-      case 'INTERACTION':
-        return { tooltip: 'Interact with the target' };
-      default:
-        return { tooltip: 'Action not recognized' };
-    }
+    return { tooltip: this.actionMeta.getTooltip(actionable) };
   }
 
   public actionEmoji(actionable: ActionableLiteral): string {
-    switch (actionable) {
-      case 'SCENE':
-        return '🗺️';
-      case 'SKILL':
-        return '🎯';
-      case 'PICK':
-        return '📦';
-      case 'AFFECT':
-        return '⚔️';
-      case 'USE':
-        return '🛠️';
-      case 'INTERACTION':
-        return '💬';
-      case 'EQUIP':
-        return '🗡️';
-      case 'UNEQUIP':
-        return '📥';
-      case 'READ':
-        return '📖';
-      case 'DROP':
-        return '🗑️';
-      case 'WEAR':
-        return '🛡️';
-      case 'STRIP':
-        return '🧥';
-      default:
-        return '❔';
-    }
+    return this.actionMeta.getEmoji(actionable);
   }
 
   // Mini-bars helpers

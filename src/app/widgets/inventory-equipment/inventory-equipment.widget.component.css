@@ -32,11 +32,14 @@
 .item-action {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 /* Inherit action button styles */
 .action-button {
-  min-width: 100px !important;
+  min-width: 88px !important;
   height: 32px !important;
   padding: 6px 12px !important;
   border-radius: 6px !important;

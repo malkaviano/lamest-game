@@ -15,13 +15,41 @@ import { InteractiveEntity } from '@entities/interactive.entity';
 
 import { testButtonEvent } from '../../../../tests/scenarios';
 
+import { CharacterService } from '@services/character.service';
+import { ActionMetaService } from '../../services/action-meta.service';
+import { PlayerInterface } from '../../../backend/interfaces/player.interface';
+import { DerivedAttributeDefinition } from '../../../backend/conceptual/definitions/derived-attribute.definition';
+
 describe('InteractiveWidgetComponent', () => {
   let fixture: ComponentFixture<InteractiveWidgetComponent>;
 
   beforeEach(async () => {
+    const characterServiceMock = mock(CharacterService);
+    const playerMock = mock<PlayerInterface>();
+
+    when(characterServiceMock.characterChanged$).thenReturn(
+      of(instance(playerMock))
+    );
+    when(characterServiceMock.currentCharacter).thenReturn(
+      instance(playerMock)
+    );
+    when(playerMock.derivedAttributes).thenReturn({
+      'CURRENT AP': new DerivedAttributeDefinition('CURRENT AP', 10),
+      'MAX AP': new DerivedAttributeDefinition('MAX AP', 10),
+      'CURRENT HP': new DerivedAttributeDefinition('CURRENT HP', 100),
+      'MAX HP': new DerivedAttributeDefinition('MAX HP', 100),
+      'CURRENT EP': new DerivedAttributeDefinition('CURRENT EP', 50),
+      'MAX EP': new DerivedAttributeDefinition('MAX EP', 50),
+    });
+    when(playerMock.cooldowns).thenReturn({});
+
     await TestBed.configureTestingModule({
       declarations: [InteractiveWidgetComponent],
       imports: [MaterialModule],
+      providers: [
+        ActionMetaService,
+        { provide: CharacterService, useValue: instance(characterServiceMock) },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(InteractiveWidgetComponent);

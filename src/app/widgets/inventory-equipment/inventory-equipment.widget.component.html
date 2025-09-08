@@ -7,17 +7,39 @@
     >
   </div>
   <div class="item-action">
+    <!-- Primary action -->
     <button
+      *ngIf="!!equipment.action && equipment.action.actionable !== 'USE'"
       mat-raised-button
-      [class]="'action-button ' + actionClass[equipment.action.actionable]"
+      [class]="'action-button ' + metaFor(equipment.action.actionable).css"
       (click)="onActionSelected(equipment.action)"
       attr.data-testid="equip-action-{{ equipment.action.name }}"
-      matTooltip="{{ tooltip }}"
+      matTooltip="{{ metaFor(equipment.action.actionable).tooltip }}"
     >
       <mat-icon class="action-icon">
-        <img src="{{ icon }}" alt="{{ tooltip }}" class="action-image" />
+        <img
+          [src]="metaFor(equipment.action.actionable).icon"
+          [alt]="metaFor(equipment.action.actionable).tooltip"
+          class="action-image"
+        />
       </mat-icon>
-      <span class="action-text">{{ tooltip }}</span>
+      <span class="action-text">{{
+        metaFor(equipment.action.actionable).tooltip
+      }}</span>
+    </button>
+
+    <!-- Drop action (always present) -->
+    <button
+      mat-raised-button
+      [class]="'action-button ' + metaFor('DROP').css"
+      (click)="onActionSelected(dropAction)"
+      data-testid="equip-action-DROP"
+      matTooltip="{{ metaFor('DROP').tooltip }}"
+    >
+      <mat-icon class="action-icon">
+        <img [src]="metaFor('DROP').icon" alt="Drop" class="action-image" />
+      </mat-icon>
+      <span class="action-text">{{ metaFor("DROP").tooltip }}</span>
     </button>
   </div>
 </div>

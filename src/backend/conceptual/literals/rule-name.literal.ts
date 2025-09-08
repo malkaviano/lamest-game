@@ -8,6 +8,7 @@ export type RuleNameLiteral =
   | 'SCENE'
   | 'SKILL'
   | 'UNEQUIP'
+  | 'ACCESSORY'
   | 'USE'
   | 'DROP'
   | 'WEAR'

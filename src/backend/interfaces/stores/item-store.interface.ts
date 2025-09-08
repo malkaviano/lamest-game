@@ -9,3 +9,13 @@ export interface UsablesStoreInterface {
     readonly skillName?: string;
   }[];
 }
+
+export interface AccessoriesStoreInterface {
+  readonly accessories: {
+    readonly name: string;
+    readonly label: string;
+    readonly description: string;
+    readonly usability: ItemUsabilityLiteral;
+    readonly skillName?: string;
+  }[];
+}
