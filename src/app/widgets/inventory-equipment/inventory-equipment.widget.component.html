@@ -7,9 +7,9 @@
     >
   </div>
   <div class="item-action">
-    <!-- Primary action (hidden if it's DROP to avoid duplication) -->
+    <!-- Primary action -->
     <button
-      *ngIf="equipment.action.actionable !== 'DROP'"
+      *ngIf="!!equipment.action && equipment.action.actionable !== 'USE'"
       mat-raised-button
       [class]="'action-button ' + metaFor(equipment.action.actionable).css"
       (click)="onActionSelected(equipment.action)"

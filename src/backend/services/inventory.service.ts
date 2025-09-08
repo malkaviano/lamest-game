@@ -10,6 +10,7 @@ import { ArrayView } from '@wrappers/array.view';
 import { InventoryEvent } from '@events/inventory.event';
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { StatesStore } from '@stores/states.store';
+import { AccessoryDefinition } from '@definitions/accessory.definition';
 
 export class InventoryService {
   private readonly inventoryChanged: Subject<InventoryEvent>;
@@ -122,6 +123,7 @@ export class InventoryService {
         item instanceof ConsumableDefinition) ||
       (item.category === 'READABLE' && item instanceof ReadableDefinition) ||
       (item.category === 'USABLE' && item instanceof UsableDefinition) ||
+      (item.category === 'ACCESSORY' && item instanceof AccessoryDefinition) ||
       (item.category === 'WEAPON' && item instanceof WeaponDefinition) ||
       (item.category === 'ARMOR' && item instanceof ArmorDefinition)
     );

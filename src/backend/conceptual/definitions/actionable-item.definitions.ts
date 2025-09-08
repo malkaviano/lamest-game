@@ -4,6 +4,6 @@ import { GameItemDefinition } from '@definitions/game-item.definition';
 export class ActionableItemDefinition {
   constructor(
     public readonly item: GameItemDefinition,
-    public readonly action: ActionableDefinition
+    public readonly action?: ActionableDefinition
   ) {}
 }

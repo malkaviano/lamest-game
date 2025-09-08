@@ -39,7 +39,7 @@
 
     {
       "id": "villagerLoot",
-      "items": ["lockpick", "rawMeat", "rawMeat"],
+      "items": ["moldedKey", "rawMeat", "rawMeat"],
       "interactiveId": "villager"
     },
     {

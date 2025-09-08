@@ -12,6 +12,7 @@ import { ReadableDefinition } from '@definitions/readable.definition';
 import { ArrayView } from '@wrappers/array.view';
 import { ArmorDefinition } from '@definitions/armor.definition';
 import { createDamageReduction } from '@definitions/damage-reduction.definition';
+import { AccessoryDefinition } from '@definitions/accessory.definition';
 
 export class ItemStore {
   private readonly store: Map<string, GameItemDefinition>;
@@ -24,6 +25,8 @@ export class ItemStore {
     this.loadConsumables(resourcesStore);
 
     this.loadUsables(resourcesStore);
+
+    this.loadAccessories(resourcesStore);
 
     this.loadReadables(resourcesStore);
 
@@ -54,6 +57,19 @@ export class ItemStore {
       this.store.set(
         item.name,
         new UsableDefinition(
+          new ItemIdentityDefinition(item.name, item.label, item.description),
+          item.usability,
+          item.skillName
+        )
+      );
+    });
+  }
+
+  private loadAccessories(resourcesStore: ResourcesStore) {
+    resourcesStore.accessoriesStore.accessories.forEach((item) => {
+      this.store.set(
+        item.name,
+        new AccessoryDefinition(
           new ItemIdentityDefinition(item.name, item.label, item.description),
           item.usability,
           item.skillName

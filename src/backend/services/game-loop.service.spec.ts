@@ -10,9 +10,9 @@ import { ArrayView } from '@wrappers/array.view';
 import {
   affectActionable,
   consumeActionable,
+  createActionableDefinition,
   equipActionable,
   readActionable,
-  createActionableDefinition,
 } from '@definitions/actionable.definition';
 
 import {

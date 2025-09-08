@@ -1,0 +1,12 @@
+{
+  "accessories": [
+    {
+      "name": "disguise",
+      "label": "Villager Disguise",
+      "description": "Use looks like a villager",
+      "usability": "DISPOSABLE",
+      "skillName": "Disguise"
+    }
+  ]
+}
+

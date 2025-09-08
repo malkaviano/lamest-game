@@ -11,7 +11,9 @@ import {
   equipActionable,
 } from '@definitions/actionable.definition';
 
-import { actionableItemView, simpleSword, heroDisguise, actionUseHeroDisguise } from '../../../../tests/fakes';
+import { actionableItemView, simpleSword, heroDisguise, actionUseHeroDisguise, discardKey } from '../../../../tests/fakes';
+import { createActionableDefinition } from '@definitions/actionable.definition';
+import { ActionableItemDefinition } from '@definitions/actionable-item.definitions';
 import { testButtonEvent } from '../../../../tests/scenarios';
 
 describe('EquipmentWidgetComponent', () => {
@@ -65,17 +67,53 @@ describe('EquipmentWidgetComponent', () => {
     );
   });
 
-  it('use disguise from inventory emits USE event for the item', async () => {
+  it('renders only one Drop button when there is no primary action (e.g., discardKey)', async () => {
+    // Simulate an inventory item without a primary action
+    fixture.componentInstance.equipment = new ActionableItemDefinition(discardKey);
+    fixture.detectChanges();
+
+    const buttons = await loader.getAllHarnesses(MatButtonHarness);
+    expect(buttons.length).toBe(1);
+    // Clicking the only button should emit a Drop event
+    const result = await testButtonEvent(loader, fixture, 0);
+    expect(result).toEqual(
+      new ActionableEvent(dropActionable, discardKey.identity.name)
+    );
+  });
+
+  it('renders only Drop when primary is USE', async () => {
+    // Simulate item with USE-v2 as primary (should not render primary in inventory)
+    fixture.componentInstance.equipment = actionableItemView(
+      discardKey,
+      createActionableDefinition(
+        'USE',
+        discardKey.identity.name,
+        discardKey.identity.label
+      )
+    );
+    fixture.detectChanges();
+
+    const buttons = await loader.getAllHarnesses(MatButtonHarness);
+    expect(buttons.length).toBe(1);
+
+    const result = await testButtonEvent(loader, fixture, 0);
+    expect(result).toEqual(
+      new ActionableEvent(dropActionable, discardKey.identity.name)
+    );
+  });
+
+  it('use disguise from inventory shows Use + Drop, clicking Use emits ACCESSORY', async () => {
     fixture.componentInstance.equipment = actionableItemView(
       heroDisguise,
       actionUseHeroDisguise
     );
     fixture.detectChanges();
 
+    const buttons = await loader.getAllHarnesses(MatButtonHarness);
+    expect(buttons.length).toBe(2);
     const result = await testButtonEvent(loader, fixture, 0);
     expect(result).toBeTruthy();
-    // Inventory does not decide target; eventId is the item identity name
-    expect(result!.eventId).toBe(heroDisguise.identity.name);
     expect(result!.actionableDefinition.equals(actionUseHeroDisguise)).toBeTrue();
+    expect(result!.eventId).toBe(heroDisguise.identity.name);
   });
 });

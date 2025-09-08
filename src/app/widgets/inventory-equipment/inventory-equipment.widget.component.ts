@@ -33,6 +33,7 @@ export class EquipmentWidgetComponent {
       READ: 'read-action',
       CONSUME: 'consume-action',
       USE: 'use-action',
+      ACCESSORY: 'use-action',
       DROP: 'drop-action',
     };
   }
@@ -72,6 +73,12 @@ export class EquipmentWidgetComponent {
           icon: `${this.basePath}/use.svg`,
           tooltip: 'Use',
           css: this.actionClass['USE'],
+        };
+      case 'ACCESSORY':
+        return {
+          icon: `${this.basePath}/use.svg`,
+          tooltip: 'Use',
+          css: this.actionClass['ACCESSORY'],
         };
       case 'DROP':
       default:

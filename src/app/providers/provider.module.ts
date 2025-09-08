@@ -26,6 +26,7 @@ import { PickRule } from '@rules/pick.rule';
 import { SceneRule } from '@rules/scene.rule';
 import { SkillRule } from '@rules/skill.rule';
 import { UnEquipRule } from '@rules/unequip.rule';
+import { AccessoryRule } from '@rules/accessory.rule';
 import { UseRule } from '@rules/use.rule';
 import { NarrativeService } from '@services/narrative.service';
 import { RulesHub } from '@hubs/rules.hub';
@@ -104,7 +105,8 @@ const pickRule = new PickRule(inventoryService, checkedService);
 const sceneRule = new SceneRule(narrativeService, checkedService);
 const skillRule = new SkillRule(rollService, checkedService, gamePredicate);
 const unEquipRule = new UnEquipRule(inventoryService);
-const useRule = new UseRule(inventoryService, checkedService, rollService);
+const accessoryRule = new AccessoryRule(inventoryService, rollService);
+const useV2Rule = new UseRule(inventoryService, checkedService, rollService);
 const dropRule = new DropRule(inventoryService, checkedService);
 const wearRule = new WearRule(inventoryService, checkedService);
 const stripRule = new StripRule(inventoryService);
@@ -118,7 +120,8 @@ const rulesHub = new RulesHub(
   combatRule,
   consumeRule,
   interactionRule,
-  useRule,
+  accessoryRule,
+  useV2Rule,
   inspectRule,
   dropRule,
   wearRule,
@@ -207,7 +210,8 @@ const gameLoopService = new GameLoopService(
     { provide: SceneRule, useValue: sceneRule },
     { provide: SkillRule, useValue: skillRule },
     { provide: UnEquipRule, useValue: unEquipRule },
-    { provide: UseRule, useValue: useRule },
+    { provide: AccessoryRule, useValue: accessoryRule },
+    { provide: UseRule, useValue: useV2Rule },
 
     { provide: RulesHub, useValue: rulesHub },
     { provide: PolicyHub, useValue: policyHub },

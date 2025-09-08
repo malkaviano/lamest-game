@@ -7,6 +7,7 @@ export type ActionableLiteral =
   | 'EQUIP'
   | 'UNEQUIP'
   | 'CONSUME'
+  | 'ACCESSORY'
   | 'USE'
   | 'DROP'
   | 'READ'

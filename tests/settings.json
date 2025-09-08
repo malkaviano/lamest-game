@@ -21,6 +21,7 @@
       "SCENE": 1,
       "SKILL": 2,
       "UNEQUIP": 1,
+      "ACCESSORY": 1,
       "USE": 1,
       "DROP": 0,
       "WEAR": 2,
@@ -86,7 +87,7 @@
           "EQUIP",
           "INTERACTION",
           "SKILL",
-          "UNEQUIP",
+          "UNEQUIP",          
           "USE",
           "WEAR",
           "STRIP"

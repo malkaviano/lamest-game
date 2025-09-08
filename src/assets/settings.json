@@ -22,6 +22,7 @@
       "SKILL": 2,
       "UNEQUIP": 1,
       "USE": 1,
+      "ACCESSORY": 1,
       "DROP": 0,
       "WEAR": 2,
       "STRIP": 2

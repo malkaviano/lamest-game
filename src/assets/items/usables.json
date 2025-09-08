@@ -7,17 +7,10 @@
       "usability": "PERMANENT"
     },
     {
-      "name": "lockpick",
-      "label": "Lockpick",
+      "name": "moldedKey",
+      "label": "Molded Key",
       "description": "Use to open locked containers",
       "usability": "DISPOSABLE"
-    },
-    {
-      "name": "disguise",
-      "label": "Villager Disguise",
-      "description": "Use looks like a villager",
-      "usability": "DISPOSABLE",
-      "skillName": "Disguise"
     },
     {
       "name": "rawMeat",

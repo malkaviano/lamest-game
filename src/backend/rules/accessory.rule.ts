@@ -1,38 +1,31 @@
 import { UsableDefinition } from '@definitions/usable.definition';
 import { ActorInterface } from '@interfaces/actor.interface';
-import { RuleValues } from '@values/rule.value';
 import { InventoryService } from '@services/inventory.service';
 import { GameStringsStore } from '@stores/game-strings.store';
 import { RuleAbstraction } from '@abstractions/rule.abstraction';
 import { ActionableEvent } from '@events/actionable.event';
-import { CheckedService } from '@services/checked.service';
 import { RuleResult } from '@results/rule.result';
 import { RuleNameLiteral } from '@literals/rule-name.literal';
 import { RuleResultLiteral } from '@literals/rule-result.literal';
 import { RpgService } from '@services/rpg.service';
 
-export class UseRule extends RuleAbstraction {
+export class AccessoryRule extends RuleAbstraction {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly checkedService: CheckedService,
     private readonly rollService: RpgService
   ) {
     super();
   }
 
   public override get name(): RuleNameLiteral {
-    return 'USE';
+    return 'ACCESSORY';
   }
 
   public override execute(
     actor: ActorInterface,
-    event: ActionableEvent,
-    extras: RuleValues
+    event: ActionableEvent
   ): RuleResult {
     this.ruleResult = {};
-
-    // Must have explicit target (set by actionable)
-    const target = this.checkedService.getRuleTargetOrThrow(extras);
 
     const { actionableDefinition } = event;
 
@@ -43,7 +36,9 @@ export class UseRule extends RuleAbstraction {
 
     let ruleResult: RuleResultLiteral = 'DENIED';
 
-    this.ruleResult.target = target;
+    // Accessory always applies to the player (self-target)
+    this.ruleResult.target = actor;
+    const skillName = used?.skillName;
 
     if (!used) {
       const logMessage = GameStringsStore.createNotFoundLogMessage(
@@ -54,8 +49,6 @@ export class UseRule extends RuleAbstraction {
       this.ruleLog.next(logMessage);
     } else {
       this.ruleResult.used = used;
-
-      const skillName = used.skillName;
 
       this.ruleResult.skillName = skillName;
 
@@ -69,10 +62,10 @@ export class UseRule extends RuleAbstraction {
           checkRoll: roll,
           result,
         };
-
         ruleResult =
           this.ruleResult.roll?.result !== 'FAILURE' ? 'EXECUTED' : 'AVOIDED';
       } else {
+        // No skill: accessory use on self succeeds
         ruleResult = 'EXECUTED';
       }
     }
