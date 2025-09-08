@@ -7,10 +7,10 @@
       "usability": "PERMANENT"
     },
     {
-      "name": "masterKey",
-      "label": "Master Key",
+      "name": "lockpick",
+      "label": "Lockpick",
       "description": "Use to open locked containers",
-      "usability": "PERMANENT"
+      "usability": "DISPOSABLE"
     },
     {
       "name": "disguise",

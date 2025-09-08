@@ -11,7 +11,7 @@
     },
     {
       "id": "ambulatoryLocked1",
-      "keyName": "masterKey",
+      "keyName": "lockpick",
       "openedState": "ambulatoryLocked1Loot",
       "lockPicking": {
         "complexity": 3,
@@ -20,7 +20,7 @@
     },
     {
       "id": "storageLocked1",
-      "keyName": "masterKey",
+      "keyName": "lockpick",
       "openedState": "storageLocked1Loot",
       "lockPicking": {
         "complexity": 4,
